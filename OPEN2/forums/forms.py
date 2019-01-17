@@ -28,3 +28,14 @@ class NewForumForm(forms.ModelForm):
     model = Forum
     fields = ['name', 'description']
     # exclude = ['author']
+
+class NewCommentForm(forms.ModelForm):
+  message = forms.CharField(
+    widget = forms.Textarea(),
+    max_length = 400,
+    help_text = 'The max length for a comment is 400.'
+  )
+
+  class Meta:
+    model = Comment
+    fields = ['message']

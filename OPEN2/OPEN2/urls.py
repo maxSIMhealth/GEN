@@ -22,8 +22,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('forums/', views.home, name='home'),
     path('forums/new/', views.new_forum, name='new_forum'),
-    path('forums/<int:pk>/new_media/', views.new_media, name='new_media'),
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
+    path('forums/<int:pk>/new_media/', views.new_media, name='new_media'),
+    path('forums/<int:pk>/new_comment/', views.new_comment, name='new_comment'),
     # path('forums/<pk>/new/', views.new_comment, name='new_comment'),
     path('admin/', admin.site.urls),
 ]

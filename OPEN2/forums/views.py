@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
-from .forms import NewForumForm, NewMediaForm
+from .forms import NewForumForm, NewMediaForm, NewCommentForm
 from .models import Forum, Comment, Media
 
 
@@ -44,6 +44,7 @@ def new_forum(request):
 
   return render(request, 'new_forum.html', {'forums': forums, 'form': form})
 
+
 def new_media(request, pk):
   forum = get_object_or_404(Forum, pk=pk)
   user = User.objects.first()
@@ -64,22 +65,21 @@ def new_media(request, pk):
   
   return render(request, 'new_media.html', {'forum': forum, 'form': form}) 
 
-# def new_comment(request, pk):
-#   forum = get_object_or_404(Forum, pk=pk)
-#   user = User.objects.first()  # TODO: get the currently logged in user
-#   if request.method == 'POST':
-#     form = NewForumForm(request.POST)
-#     if form.is_valid():
-#       comment = form.save(commit=False)
-#       comment.board = board
-#       comment.starter = user
-#       comment.save()
-#       post = Post.objects.create(
-#         message=form.cleaned_data.get('message'),
-#         topic=topic,
-#         created_by=user
-#       )
-#       return redirect('board_topics', pk=board.pk)  # TODO: redirect to the created topic page
-#   else:
-#       form = NewTopicForm()
-#   return render(request, 'new_topic.html', {'board': board, 'form': form})
+
+def new_comment(request, pk):
+  forum = get_object_or_404(Forum, pk=pk)
+  user = User.objects.first()
+
+  if request.method == 'POST':
+    form = NewCommentForm(request.POST)
+    if form.is_valid():
+      comment = Comment.objects.create(
+        message = form.cleaned_data.get('message'),
+        forum = forum,
+        author = user
+      )
+      return redirect('forum_comments', pk=forum.pk)
+  else:
+    form = NewCommentForm()
+
+  return render(request, 'new_comment.html', {'forum': forum, 'form': form})

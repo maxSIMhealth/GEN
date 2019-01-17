@@ -15,7 +15,6 @@ class Forum(models.Model):
     
 
 class Media(models.Model):
-
     YOUTUBE = 'YTB'
     PDF = 'PDF'
 
