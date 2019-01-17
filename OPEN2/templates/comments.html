@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
   {{ forum.name }} - {{ block.super }}
 {% endblock %}
@@ -10,6 +12,46 @@
 {% endblock %}
 
 {% block content %}
-    <!-- just leaving it empty for now. we will add core here soon. -->
-    <p>{{ forum.description }}</p>
+  <!-- just leaving it empty for now. we will add core here soon. -->
+  <div class="card mb-2">
+    <div class="card-body p-3">
+      {{ forum.description }}
+    </div>
+  </div>
+
+  {% for comment in forum.comments.all %}
+    <div class="card mb-2">
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-2">
+            <img src="{% static 'img/avatar.jpg' %}" alt="{{ comment.author.username }}" class="w-100">
+            <small>Comments: {{ comment.author.comments.count }}</small>
+          </div>
+          <div class="col-10">
+            <div class="row mb-3">
+              <div class="col-6">
+                <strong class="text-muted">{{ comment.author.username }}</strong>
+              </div>
+              <div class="col-6 text-right">
+                <small class="text-muted">{{ comment.created_at }}</small>
+              </div>
+            </div>
+            {{ comment.message }}
+            {% if comment.author == user %}
+              <div class="mt-3">
+                <a href="#" class="btn btn-primary btn-sm" role="button">Edit</a> <!-- TODO: implement edit and authentication -->
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <div class="card mb-2">
+        <div class="card-body p-3">
+          This forum has no comments.
+        </div>
+      </div>
+  {% endfor %}
+
 {% endblock %}
