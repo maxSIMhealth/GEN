@@ -25,7 +25,7 @@
         <div class="row">
           <div class="col-2">
             <img src="{% static 'img/avatar.jpg' %}" alt="{{ comment.author.username }}" class="w-100">
-            <small>Comments: {{ comment.author.comments.count }}</small>
+            <small>Comments: {{ comment.author.comments.count }}</small> <!-- TODO: improve this count code -->
           </div>
           <div class="col-10">
             <div class="row mb-3">

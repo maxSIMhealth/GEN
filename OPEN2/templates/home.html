@@ -5,12 +5,16 @@
 {% endblock breadcrumb %}
 
 {% block content %}
+  <div class="mb-4">
+    <a href="{% url 'new_forum' %}" class="btn btn-primary">New topic</a>
+  </div>
+
   <table class="table">
     <thead class="thead-dark">
       <tr>
         <th>Forum</th>
-        <th>Posts</th>
-        <th>Topics</th>
+        <th>Comments</th>
+        <th>Author</th>
       </tr>
     </thead>
     <tbody>
@@ -20,8 +24,12 @@
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
           </td>
-          <td class="align-middle">0</td>
-          <td class="align-middle">0</td>
+          <td class="align-middle">
+            {{ forum.get_comment_count }}
+          </td>
+          <td class="align-middle">
+            {{ forum.author }}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
