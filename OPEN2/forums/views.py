@@ -12,7 +12,8 @@ def home(request):
 
 def forum_comments(request, pk):
   forum = get_object_or_404(Forum, pk=pk)
-  return render(request, 'comments.html', {'forum': forum})
+  media = Media.objects.get(forum=forum)
+  return render(request, 'comments.html', {'forum': forum, 'media': media})
 
 
 # def new_comment(request, pk):

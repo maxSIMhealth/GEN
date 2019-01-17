@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load embed_video_tags %}
 
 {% block title %}
   {{ forum.name }} - {{ block.super }}
@@ -15,7 +16,11 @@
   <!-- just leaving it empty for now. we will add core here soon. -->
   <div class="card mb-2">
     <div class="card-body p-3">
-      {{ forum.description }}
+      <h1>{{ forum.name }}</h1>
+      <span>{{ forum.description }}</span>
+      <div class="center">
+        {% video media.url '800x600' %} 
+      </div>
     </div>
   </div>
 
