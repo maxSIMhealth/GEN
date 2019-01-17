@@ -1,5 +1,16 @@
 from django import forms
-from .models import Forum, Comment
+from .models import Forum, Comment, Media
+
+class NewMediaForm(forms.ModelForm):
+  description = forms.CharField(
+    widget = forms.Textarea(),
+    max_length = 100,
+    help_text = 'The max length for the forum description is 100.'
+  )
+
+  class Meta:
+    model = Media
+    fields = ['url', 'kind', 'description']
 
 class NewForumForm(forms.ModelForm):
   name = forms.CharField(
@@ -16,3 +27,4 @@ class NewForumForm(forms.ModelForm):
   class Meta:
     model = Forum
     fields = ['name', 'description']
+    # exclude = ['author']
