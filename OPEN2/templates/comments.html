@@ -18,9 +18,14 @@
     <div class="card-body p-3">
       <h1>{{ forum.name }}</h1>
       <span>{{ forum.description }}</span>
-      <div class="center">
-        {% video media.url '800x600' %} 
-      </div>
+
+      {% if media.kind == 'YTB' %}
+        <div class="center">
+          {% video media.url '800x600' %} 
+        </div>
+      {% else %}
+        <p>Find a way to embed PDF :D</p>
+      {% endif %}
     </div>
   </div>
 
