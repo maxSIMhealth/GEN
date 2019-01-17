@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Forums</title>
+  </head>
+  <body>
+    <h1>Forums</h1>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Forum</th>
+          <th>Posts</th>
+          <th>Topics</th>
+          <th>Last Post</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for forum in forums %}
+          <tr>
+            <td>
+              {{ forum.name }}<br>
+              <small style="color: #888">{{ forum.description }}</small>
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

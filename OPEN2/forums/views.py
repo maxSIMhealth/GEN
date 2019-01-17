@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from .models import Forum
 
-# Create your views here.
 def home(request):
-    return HttpResponse('bla')
+  forums = Forum.objects.all()
+
+  return render(request, 'home.html', {'forums': forums})
