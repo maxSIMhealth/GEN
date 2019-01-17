@@ -1,34 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Forums</title>
-  </head>
-  <body>
-    <h1>Forums</h1>
+{% extends 'base.html' %}
 
-    <table border="1">
-      <thead>
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Forums</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Forum</th>
+        <th>Posts</th>
+        <th>Topics</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for forum in forums %}
         <tr>
-          <th>Forum</th>
-          <th>Posts</th>
-          <th>Topics</th>
-          <th>Last Post</th>
+          <td>
+            <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
+            <small class="text-muted d-block">{{ forum.description }}</small>
+          </td>
+          <td class="align-middle">0</td>
+          <td class="align-middle">0</td>
         </tr>
-      </thead>
-      <tbody>
-        {% for forum in forums %}
-          <tr>
-            <td>
-              {{ forum.name }}<br>
-              <small style="color: #888">{{ forum.description }}</small>
-            </td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
-</html>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

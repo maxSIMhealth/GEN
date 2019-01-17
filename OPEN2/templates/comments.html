@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ forum.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Forums</a></li>
+  <li class="breadcrumb-item active">{{ forum.name }}</li>
+{% endblock %}
+
+{% block content %}
+    <!-- just leaving it empty for now. we will add core here soon. -->
+    <p>{{ forum.description }}</p>
+{% endblock %}
