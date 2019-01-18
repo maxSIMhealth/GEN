@@ -14,14 +14,18 @@
 
 {% block content %}
   <!-- just leaving it empty for now. we will add core here soon. -->
-  <div class="card mb-2">
+  <div class="card bg-light border-primary mb-2">
+    {% comment %} <div class="card-header">Forum info</div> {% endcomment %}
     <div class="card-body p-3">
-      <h1>{{ forum.name }}</h1>
-      <span>{{ forum.description }}</span>
-
-      {% if media.kind == 'YTB' %}
-        <div class="center">
-          {% video media.url '800x600' %} 
+      <h5 class="card-title">{{ forum.name }}</h5>
+      <p class="card-text">{{ forum.description }}</p>
+      <p class="card-text"><small class="text-muted">Author: {{ forum.author }}</small></p>
+      {% if forum.kind == 'YTB' %}
+        {% comment %} <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="{{ forum.url }}" allowfullscreen></iframe>
+        </div> {% endcomment %}
+        <div class="embed-responsive embed-responsive-16by9">
+          {% video forum.url '800x600' %} 
         </div>
       {% else %}
         <p>Find a way to embed PDF :D</p>
@@ -47,11 +51,12 @@
               </div>
             </div>
             {{ comment.message }}
-            {% if comment.author == user %}
-              <div class="mt-3">
-                <a href="#" class="btn btn-primary btn-sm" role="button">Edit</a> <!-- TODO: implement edit and authentication -->
-              </div>
-            {% endif %}
+            <div class="mt-3">
+              <a href="{% url 'new_comment' forum.pk %}" class="btn btn-primary btn-sm" role="button">Reply</a>
+              {% if comment.author == user %}
+              <a href="#" class="btn btn-warning btn-sm" role="button">Edit</a> <!-- TODO: implement edit and authentication -->
+              {% endif %}
+            </div>
           </div>
         </div>
       </div>
