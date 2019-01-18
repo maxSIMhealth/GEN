@@ -12,7 +12,21 @@ def home(request):
 
 def forum_comments(request, pk):
   forum = get_object_or_404(Forum, pk=pk)
-  return render(request, 'comments.html', {'forum': forum})
+  user = User.objects.first()
+
+  if request.method == 'POST':
+    form = NewCommentForm(request.POST)
+    if form.is_valid():
+      comment = Comment.objects.create(
+        message = form.cleaned_data.get('message'),
+        forum = forum,
+        author = user
+      )
+      return redirect('forum_comments', pk=forum.pk)
+  else:
+    form = NewCommentForm()
+
+  return render(request, 'comments.html', {'forum': forum, 'form': form})
 
 
 def new_forum(request):
@@ -34,22 +48,3 @@ def new_forum(request):
     form = NewForumForm()
 
   return render(request, 'new_forum.html', {'forums': forums, 'form': form})
-
-
-def new_comment(request, pk):
-  forum = get_object_or_404(Forum, pk=pk)
-  user = User.objects.first()
-
-  if request.method == 'POST':
-    form = NewCommentForm(request.POST)
-    if form.is_valid():
-      comment = Comment.objects.create(
-        message = form.cleaned_data.get('message'),
-        forum = forum,
-        author = user
-      )
-      return redirect('forum_comments', pk=forum.pk)
-  else:
-    form = NewCommentForm()
-
-  return render(request, 'new_comment.html', {'forum': forum, 'form': form})

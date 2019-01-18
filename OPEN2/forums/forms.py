@@ -24,7 +24,11 @@ class NewForumForm(forms.ModelForm):
 
 class NewCommentForm(forms.ModelForm):
   message = forms.CharField(
-    widget = forms.Textarea(),
+    widget = forms.Textarea(
+      attrs= {
+        'rows': 4
+      }
+    ),
     max_length = 400,
     help_text = 'The max length for a comment is 400.'
   )

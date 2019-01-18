@@ -15,9 +15,8 @@
 {% block content %}
   <!-- just leaving it empty for now. we will add core here soon. -->
   <div class="card bg-light border-primary mb-2">
-    {% comment %} <div class="card-header">Forum info</div> {% endcomment %}
+    <h5 class="card-header">{{ forum.name }}</h5>
     <div class="card-body p-3">
-      <h5 class="card-title">{{ forum.name }}</h5>
       <p class="card-text">{{ forum.description }}</p>
       <p class="card-text"><small class="text-muted">Author: {{ forum.author }}</small></p>
       {% if forum.kind == 'YTB' %}
@@ -30,6 +29,19 @@
       {% else %}
         <p>Find a way to embed PDF :D</p>
       {% endif %}
+    </div>
+  </div>
+
+  <div class="card bg-light mb-2">
+    <h5 class="card-header">New comment</h5>
+    <div class="card-body p-3">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% include 'includes/form.html' %}
+
+        <button type="submit" class="btn btn-success">Post</button>
+      </form>
     </div>
   </div>
 
@@ -52,7 +64,6 @@
             </div>
             {{ comment.message }}
             <div class="mt-3">
-              <a href="{% url 'new_comment' forum.pk %}" class="btn btn-primary btn-sm" role="button">Reply</a>
               {% if comment.author == user %}
               <a href="#" class="btn btn-warning btn-sm" role="button">Edit</a> <!-- TODO: implement edit and authentication -->
               {% endif %}
