@@ -14,9 +14,9 @@
 
 {% block content %}
   <!-- just leaving it empty for now. we will add core here soon. -->
-  <div class="card bg-light border-primary mb-2">
+  <div class="card bg-dark text-white border-dark mb-2">
     <h5 class="card-header">{{ forum.name }}</h5>
-    <div class="card-body p-3">
+    <div class="card-body bg-light text-dark p-3">
       <p class="card-text">{{ forum.description }}</p>
       <p class="card-text"><small class="text-muted">Author: {{ forum.author }}</small></p>
       {% if forum.kind == 'YTB' %}
@@ -45,8 +45,11 @@
     </div>
   </div>
 
-  {% for comment in forum.comments.all %}
-    <div class="card mb-2">
+  <div class="card bg-light mb-2">
+    <h5 class="card-header">Comments</h5>
+
+    {% for comment in forum.comments.all %}
+    
       <div class="card-body p-3">
         <div class="row">
           <div class="col-2">
@@ -63,21 +66,20 @@
               </div>
             </div>
             {{ comment.message }}
-            <div class="mt-3">
+            {% comment %} TODO: add edit feature and user authentication {% endcomment %}
+            {% comment %} <div class="mt-3">
               {% if comment.author == user %}
-              <a href="#" class="btn btn-warning btn-sm" role="button">Edit</a> <!-- TODO: implement edit and authentication -->
+              <a href="#" class="btn btn-warning btn-sm" role="button">Edit</a>
               {% endif %}
-            </div>
+            </div> {% endcomment %}
           </div>
         </div>
       </div>
-    </div>
     {% empty %}
-      <div class="card mb-2">
-        <div class="card-body p-3">
-          This forum has no comments.
-        </div>
+      <div class="card-body p-3">
+        This forum has no comments.
       </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
 
 {% endblock %}
