@@ -1,0 +1,24 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+
+{% block title %}Sign up to OPEN2{% endblock title %}
+
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    <h3 class="card-title">Log in</h3>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% include 'includes/form.html' %}
+      <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>
+  </div>
+  <div class="card-footer bg-light text-muted text-center">
+    New to OPEN2? <a href="{% url 'signup' %}">Sign up</a>
+  </div>
+  <div class="text-center py-2">
+    <small>
+      <a href="#" class="text-light">Forgot your password?</a>
+    </small>
+  </div>
+{% endblock content %}

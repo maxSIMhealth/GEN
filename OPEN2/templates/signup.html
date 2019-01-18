@@ -1,32 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'base_accounts.html' %}
 
 {% load static %}
 
-{% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
-{% endblock %}
+{% block title %}Log in to OPEN2{% endblock title %}
 
-{% block body %}
-  <div class="container">
-    <div class="row justify-content-center mt-3 mb-3">
-      <div class="col-lg-8 col-md-10 col-sm-12">
-        <div class="card bg-dark text-white">
-          <h1 class="card-header">
-            <a href="{% url 'home' %}">OPEN2</a>
-          </h1>
-          <div class="card-body bg-light text-dark">
-            <h3 class="card-title">Sign up</h3>
-            <form method="post" novalidate>
-              {% csrf_token %}
-              {% include 'includes/form.html' %}
-              <button type="submit" class="btn btn-primary btn-block">Create an account</button>
-            </form>
-          </div>
-          <div class="card-footer bg-light text-muted text-center">
-            Already have an account? <a href="#">Log in</a>
-          </div>
-        </div>
-      </div>
-    </div>
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    <h3 class="card-title">Sign up</h3>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% include 'includes/form.html' %}
+      <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+    </form>
   </div>
-{% endblock %}
+  <div class="card-footer bg-light text-muted text-center">
+    Already have an account? <a href="{% url 'login' %}">Log in</a>
+  </div>
+{% endblock content %}
