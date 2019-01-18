@@ -1,16 +1,5 @@
 from django import forms
-from .models import Forum, Comment, Media
-
-class NewMediaForm(forms.ModelForm):
-  description = forms.CharField(
-    widget = forms.Textarea(),
-    max_length = 100,
-    help_text = 'The max length for the forum description is 100.'
-  )
-
-  class Meta:
-    model = Media
-    fields = ['url', 'kind', 'description']
+from .models import Forum, Comment
 
 class NewForumForm(forms.ModelForm):
   name = forms.CharField(
@@ -23,11 +12,15 @@ class NewForumForm(forms.ModelForm):
     max_length = 100,
     help_text = 'The max length for the forum description is 100.'
   )
+  url = forms.URLField(
+    widget = forms.URLInput(),
+    help_text = 'Make sure that the URL is valid.'
+  )
 
   class Meta:
     model = Forum
-    fields = ['name', 'description']
-    # exclude = ['author']
+    # fields = ['name', 'description']
+    exclude = ['author']
 
 class NewCommentForm(forms.ModelForm):
   message = forms.CharField(

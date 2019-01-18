@@ -2,19 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Forum(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    description = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
-    # media = models.OneToOneField(Media, on_delete=models.CASCADE, related_name='media')
-
-    def __str__(self):
-        return self.name
-
-    def get_comment_count(self):
-        return Forum.objects.filter(comments__forum=self).count()
-    
-
-class Media(models.Model):
     YOUTUBE = 'YTB'
     PDF = 'PDF'
 
@@ -23,18 +10,21 @@ class Media(models.Model):
         (YOUTUBE, 'Youtube Video'),
     ]
 
+    name = models.CharField(max_length=30, unique=True)
+    description = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
     kind = models.CharField(
         max_length=3,
         choices=ATTACHMENT_KINDS,
         default=YOUTUBE
     )
     url = models.URLField(max_length=200)
-    description = models.CharField(max_length=100)
-    forum = models.OneToOneField(Forum, on_delete=models.PROTECT, related_name='media')
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='media')
 
     def __str__(self):
-        return self.description
+        return self.name
+
+    def get_comment_count(self):
+        return Forum.objects.filter(comments__forum=self).count()
 
 
 class Comment(models.Model):
