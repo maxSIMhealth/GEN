@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from accounts import views as account_views
 from forums import views
 
 urlpatterns = [    
     path('', views.home, name='home'),
+    path('signup/', account_views.signup, name='signup'),
     path('forums/', views.home, name='home'),
     path('forums/new/', views.new_forum, name='new_forum'),
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),

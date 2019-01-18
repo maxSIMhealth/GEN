@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'embed_video',
 
+    'accounts',
     'forums',
-    'courses',
+    # 'courses',
 ]
 
 MIDDLEWARE = [

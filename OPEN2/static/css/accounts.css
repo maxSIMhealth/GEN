@@ -1,0 +1,7 @@
+body {
+  background-color: #6c757d;
+}
+
+h1.card-header a {
+  color: rgba(255,255,255,0.9);
+}

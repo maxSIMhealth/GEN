@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from .forms import NewForumForm, NewCommentForm
 from .models import Forum, Comment
@@ -29,6 +30,7 @@ def forum_comments(request, pk):
   return render(request, 'comments.html', {'forum': forum, 'form': form})
 
 
+@login_required
 def new_forum(request):
   forums = Forum.objects.all()
   user = User.objects.first()
