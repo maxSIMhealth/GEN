@@ -32,5 +32,6 @@ urlpatterns = [
     path('forums/', views.ForumListView.as_view(), name='home'),
     path('forums/new/', views.new_forum, name='new_forum'),
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
+    path('forums/<int:pk>/upvote', views.upvote, name='forum_upvote'),
     path('admin/', admin.site.urls),
 ]

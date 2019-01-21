@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from vote.models import VoteModel
 
-class Forum(models.Model):
+class Forum(VoteModel, models.Model):
     YOUTUBE = 'YTB'
     PDF = 'PDF'
 

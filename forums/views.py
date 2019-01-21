@@ -56,3 +56,9 @@ def new_forum(request):
     form = NewForumForm()
 
   return render(request, 'new_forum.html', {'forums': forums, 'form': form})
+
+def upvote(request, pk):
+  forum = Forum.objects.get(pk=pk)
+  forum.votes.up(request.user.id)
+
+  return redirect('home')

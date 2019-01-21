@@ -28,6 +28,11 @@
           <td>
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
+            {% if forum.votes.count > 0 %}
+              Upvoted {{ forum.votes.count }}
+            {% else %}
+              No vote {{ forum.votes.count }}
+            {% endif %}
           </td>
           <td>{{ forum.get_comment_count }}</td>
           <td>{{ forum.author }}</td>
