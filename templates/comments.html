@@ -3,6 +3,7 @@
 {% load static %}
 {% load embed_video_tags %}
 {% load humanize %}
+{% load gravatar %}
 
 {% block title %}
   {{ forum.name }} - {{ block.super }}
@@ -52,7 +53,7 @@
       <div class="card-body p-3">
         <div class="row">
           <div class="col-2">
-            <img src="{% static 'img/avatar.jpg' %}" alt="{{ comment.author.username }}" class="w-100">
+            <img src="{{ comment.author|gravatar }}" alt="{{ comment.author.username }}" class="w-100">
             <small>Comments: {{ comment.author.comments.count }}</small> <!-- TODO: improve this count code -->
           </div>
           <div class="col-10">
