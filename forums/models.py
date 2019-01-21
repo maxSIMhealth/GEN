@@ -13,6 +13,7 @@ class Forum(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
+    last_updated = models.DateTimeField(auto_now_add=True)
     kind = models.CharField(
         max_length=3,
         choices=ATTACHMENT_KINDS,

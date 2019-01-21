@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.views.generic import ListView
+from django.utils import timezone
 from .forms import NewForumForm, NewCommentForm
 from .models import Forum, Comment
 
@@ -23,6 +24,8 @@ def forum_comments(request, pk):
   if request.method == 'POST':
     form = NewCommentForm(request.POST)
     if form.is_valid():
+      forum.last_updated = timezone.now()
+      forum.save()
       comment = Comment.objects.create(
         message = form.cleaned_data.get('message'),
         forum = forum,

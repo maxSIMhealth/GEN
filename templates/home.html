@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load humanize %}
+
 {% block breadcrumb %}
   <li class="breadcrumb-item active">Forums</li>
 {% endblock breadcrumb %}
@@ -15,6 +17,7 @@
         <th>Forum</th>
         <th>Comments</th>
         <th>Author</th>
+        <th>Last update</th>
       </tr>
     </thead>
     <tbody>
@@ -24,12 +27,9 @@
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
           </td>
-          <td class="align-middle">
-            {{ forum.get_comment_count }}
-          </td>
-          <td class="align-middle">
-            {{ forum.author }}
-          </td>
+          <td>{{ forum.get_comment_count }}</td>
+          <td>{{ forum.author }}</td>
+          <td>{{ forum.last_updated|naturaltime }}</td>
         </tr>
       {% endfor %}
     </tbody>

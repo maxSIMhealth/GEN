@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load embed_video_tags %}
+{% load humanize %}
 
 {% block title %}
   {{ forum.name }} - {{ block.super }}
@@ -60,7 +61,7 @@
                 <strong class="text-muted">{{ comment.author.username }}</strong>
               </div>
               <div class="col-6 text-right">
-                <small class="text-muted">{{ comment.created_at }}</small>
+                <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
               </div>
             </div>
             {{ comment.message }}
