@@ -19,7 +19,6 @@ class ForumListView(ListView):
 
 def forum_comments(request, pk):
   forum = get_object_or_404(Forum, pk=pk)
-  user = User.objects.first()
 
   if request.method == 'POST':
     form = NewCommentForm(request.POST)
@@ -29,7 +28,7 @@ def forum_comments(request, pk):
       comment = Comment.objects.create(
         message = form.cleaned_data.get('message'),
         forum = forum,
-        author = user
+        author = request.user
       )
       return redirect('forum_comments', pk=forum.pk)
   else:
@@ -41,7 +40,6 @@ def forum_comments(request, pk):
 @login_required
 def new_forum(request):
   forums = Forum.objects.all()
-  user = User.objects.first()
 
   if request.method == 'POST':
     form = NewForumForm(request.POST)
@@ -51,7 +49,7 @@ def new_forum(request):
         description = form.cleaned_data.get('description'),
         kind = form.cleaned_data.get('kind'),
         url = form.cleaned_data.get('url'),
-        author = user
+        author = request.user
       )
       return redirect('home')
   else:

@@ -7,9 +7,11 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-  <div class="mb-4">
-    <a href="{% url 'new_forum' %}" class="btn btn-primary">New topic</a>
-  </div>
+  {% if user.is_authenticated %}
+    <div class="mb-4">
+      <a href="{% url 'new_forum' %}" class="btn btn-primary">New topic</a>
+    </div>
+  {% endif %}
 
   <table class="table">
     <thead class="thead-dark">
