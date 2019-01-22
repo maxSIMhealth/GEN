@@ -29,7 +29,7 @@ class Forum(VoteModel, models.Model):
         return Forum.objects.filter(comments__forum=self).count()
 
 
-class Comment(models.Model):
+class Comment(VoteModel, models.Model):
     message = models.TextField(max_length=400)
     forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='comments')
     created_at = models.DateTimeField(auto_now_add=True)
