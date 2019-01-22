@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load humanize %}
+{% load checkvotes %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item active">Forums</li>
@@ -24,14 +25,17 @@
       </tr>
     </thead>
     <tbody>
+      {% if debug == True %}user_id: {{ user.id }} <br />{% endif %}
       {% for forum in forums %}
+        {% comment %} Using custom template tag to check if the user voted {% endcomment %}
+        {% checkvotes_forum user.id forum.pk as forum_vote_status %}
         <tr>
           <td class="text-center table-active">
             {% if user.is_authenticated %}
-              {% if forum.votes.count == 0 %}
-                <a href="{% url 'forum_upvote' forum.pk %}"  class="btn btn-dark"><i class="far fa-heart"></i></a>
-              {% else %}
+              {% if forum_vote_status %}
                 <a href="{% url 'forum_clearvote' forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+              {% else %}
+                <a href="{% url 'forum_upvote' forum.pk %}"  class="btn btn-dark"><i class="far fa-heart"></i></a>
               {% endif %}
             {% else %}
               <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
@@ -43,8 +47,9 @@
           <td>
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
-            Did this user vote? {{ forum.votes.count }} <br />
-            user_ids {{ forum.votes.user_ids }}
+            {% if debug == True %}
+              Did this user vote? {{ forum_vote_status }} <br />
+            {% endif %}
           </td>
           <td>{{ forum.get_comment_count }}</td>
           <td>{{ forum.author }}</td>

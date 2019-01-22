@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.views.generic import ListView
 from django.utils import timezone
+
 from .forms import NewForumForm, NewCommentForm
 from .models import Forum, Comment
-
 
 class ForumListView(ListView):
   # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
