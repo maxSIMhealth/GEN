@@ -17,7 +17,6 @@
     <thead class="thead-dark">
       <tr>
         <th style="width:5%"></th>
-        <th class="text-center" style="width:7%">Score</th>
         <th>Forum</th>
         <th>Comments</th>
         <th>Author</th>
@@ -39,15 +38,13 @@
                 <a href="#"  class="btn btn-light disabled"><i class="far fa-heart"></i></a>
               </span>
             {% endif %}
-          </td>
-          <td class="text-center">
-            {{ forum.vote_score }}
-            {% comment %} <a href="{% url 'forum_downvote' forum.pk %}">d</a> {% endcomment %}
+            <div class="mt-1">{{ forum.vote_score }}</div>
           </td>
           <td>
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
-            {{ forum.votes.count }}
+            Did this user vote? {{ forum.votes.count }} <br />
+            user_ids {{ forum.votes.user_ids }}
           </td>
           <td>{{ forum.get_comment_count }}</td>
           <td>{{ forum.author }}</td>
