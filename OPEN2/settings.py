@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default = False, cast = bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
+INTERNAL_IPS = config('INTERNAL_IPS')
 
 # Application definition
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'embed_video',
     'vote',
+    'debug_toolbar',
 
     'accounts',
     'forums',
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'OPEN2.urls'
