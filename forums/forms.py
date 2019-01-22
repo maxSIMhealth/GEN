@@ -20,7 +20,7 @@ class NewForumForm(forms.ModelForm):
   class Meta:
     model = Forum
     # fields = ['name', 'description']
-    exclude = ['author']
+    exclude = ['author', 'vote_score', 'num_vote_up', 'num_vote_down']
 
 class NewCommentForm(forms.ModelForm):
   message = forms.CharField(

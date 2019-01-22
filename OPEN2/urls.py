@@ -33,5 +33,7 @@ urlpatterns = [
     path('forums/new/', views.new_forum, name='new_forum'),
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
     path('forums/<int:pk>/upvote', views.upvote, name='forum_upvote'),
+    # path('forums/<int:pk>/downvote', views.downvote, name='forum_downvote'),
+    path('forums/<int:pk>/clearvote', views.clearvote, name='forum_clearvote'),
     path('admin/', admin.site.urls),
 ]

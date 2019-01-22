@@ -16,6 +16,8 @@
   <table class="table">
     <thead class="thead-dark">
       <tr>
+        <th style="width:5%"></th>
+        <th class="text-center" style="width:7%">Score</th>
         <th>Forum</th>
         <th>Comments</th>
         <th>Author</th>
@@ -25,14 +27,27 @@
     <tbody>
       {% for forum in forums %}
         <tr>
+          <td class="text-center table-active">
+            {% if user.is_authenticated %}
+              {% if forum.votes.count == 0 %}
+                <a href="{% url 'forum_upvote' forum.pk %}"  class="btn btn-dark"><i class="far fa-heart"></i></a>
+              {% else %}
+                <a href="{% url 'forum_clearvote' forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+              {% endif %}
+            {% else %}
+              <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+                <a href="#"  class="btn btn-light disabled"><i class="far fa-heart"></i></a>
+              </span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+            {{ forum.vote_score }}
+            {% comment %} <a href="{% url 'forum_downvote' forum.pk %}">d</a> {% endcomment %}
+          </td>
           <td>
             <a href="{% url 'forum_comments' forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
-            {% if forum.votes.count > 0 %}
-              Upvoted {{ forum.votes.count }}
-            {% else %}
-              No vote {{ forum.votes.count }}
-            {% endif %}
+            {{ forum.votes.count }}
           </td>
           <td>{{ forum.get_comment_count }}</td>
           <td>{{ forum.author }}</td>

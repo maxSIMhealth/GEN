@@ -62,3 +62,15 @@ def upvote(request, pk):
   forum.votes.up(request.user.id)
 
   return redirect('home')
+
+def downvote(request, pk):
+  forum = Forum.objects.get(pk=pk)
+  forum.votes.down(request.user.id)
+
+  return redirect('home')
+
+def clearvote(request, pk):
+  forum = Forum.objects.get(pk=pk)
+  forum.votes.delete(request.user.id)
+
+  return redirect('home')
