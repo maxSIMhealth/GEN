@@ -18,7 +18,21 @@
 {% block content %}
 
   <div class="card bg-dark text-white border-dark mb-2">
-    <h5 class="card-header">{{ forum.name }}</h5>
+    <h5 class="card-header">
+      {% checkvotes_forum user.id forum.pk as forum_vote_status %}
+      {% if user.is_authenticated %}
+        {% if forum_vote_status %}
+          <a href="{% url 'forum_clearvote' forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+        {% else %}
+          <a href="{% url 'forum_upvote' forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+        {% endif %}
+      {% else %}
+        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+          <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
+        </span>
+      {% endif %}
+      {{ forum.name }}
+    </h5>
     <div class="card-body bg-light text-dark p-3">
       <p class="card-text">{{ forum.description }}</p>
       <p class="card-text"><small class="text-muted">Author: {{ forum.author }}</small></p>

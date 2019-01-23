@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.views.generic import ListView
 from django.utils import timezone
+from urllib.parse import urlparse
 
 from .forms import NewForumForm, NewCommentForm
 from .models import Forum, Comment
@@ -61,13 +62,25 @@ def upvote_forum(request, pk):
   forum = Forum.objects.get(pk=pk)
   forum.votes.up(request.user.id)
 
-  return redirect('home')
+  # checking if the user is voting from the forums list or from forum itself
+  path = urlparse(request.META['HTTP_REFERER']).path + "upvote"
+
+  if request.path == path:
+    return redirect('forum_comments', pk=pk)
+  else:
+    return redirect('home')
 
 def clearvote_forum(request, pk):
   forum = Forum.objects.get(pk=pk)
   forum.votes.delete(request.user.id)
 
-  return redirect('home')
+  # checking if the user is voting from the forums list or from forum itself
+  path = urlparse(request.META['HTTP_REFERER']).path + "clearvote"
+
+  if request.path == path:
+    return redirect('forum_comments', pk=pk)
+  else:
+    return redirect('home')
 
 def upvote_comment(request, forum_pk, comment_pk):
   comment = get_object_or_404(Comment, pk=comment_pk)
