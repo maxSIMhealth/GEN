@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'forums',
+    'dashboard',
     # 'courses',
 ]
 

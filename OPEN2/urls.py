@@ -19,8 +19,9 @@ from django.conf.urls import url
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
-from accounts import views as account_views
 from forums import views
+from accounts import views as account_views
+from dashboard import views as dashboard_views
 
 urlpatterns = [    
     path('', views.ForumListView.as_view(), name='home'),
@@ -35,9 +36,9 @@ urlpatterns = [
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
     path('forums/<int:pk>/upvote', views.upvote_forum, name='forum_upvote'),
     path('forums/<int:pk>/clearvote', views.clearvote_forum, name='forum_clearvote'),
-    # path('forums/<int:pk>/downvote', views.downvote, name='forum_downvote'),
     path('forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
     path('forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
+    path('dashboard/', dashboard_views.dashboard, name='dashboard'),
     path('admin/', admin.site.urls),
 ]
 

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load gravatar %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">User Dashboard</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+  <div class="card mb-3">
+    <h5 class="card-header bg-dark text-white"> {{ user.username }} </h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col col-2">
+          <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
+        </div>
+        <div class="col col-10">
+          <ul class="list-unstyled">
+            <li><span class="font-weight-bold">First name: </span>{{ user.first_name }}</li>
+            <li><span class="font-weight-bold">Last name: </span>{{ user.last_name }}</li>
+            <li><span class="font-weight-bold">E-mail: </span>{{ user.email }}</li>
+          </ul>
+          <a href="{% url 'my_account' %}" class="btn btn-primary">Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-deck">
+    <div class="card">
+      <h5 class="card-header">Scoreboard</h5>
+      <div class="card-body">
+        - Forum score: 10
+        - Comments score: 0
+        - Quiz: 5
+      </div>
+    </div>
+    <div class="card">
+      <h5 class="card-header">Leaderboard</h5>
+      <div class="card-body">
+        - Top 5 Forum poster
+        - You never posted a comment :(
+        - Best quiz score
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello dashboard</h1>
+  <ul>
+    <li>User general info (First name, last name, </li>
+    <li>Forum score</li>
+    <li>Comments score</li>
+    <li>Quiz score</li>
+    <li>Leaderboard</li>
+  </ul>
+</body>
+</html>
+-->
