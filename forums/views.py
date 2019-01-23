@@ -69,16 +69,14 @@ def clearvote_forum(request, pk):
 
   return redirect('home')
 
-def upvote_comment(request, pk, comment_pk):
-  forum = get_object_or_404(Forum, pk=pk)
+def upvote_comment(request, forum_pk, comment_pk):
   comment = get_object_or_404(Comment, pk=comment_pk)
   comment.votes.up(request.user.id)
 
-  return render(request, 'comments.html', {'forum': forum})
+  return redirect('forum_comments', pk=forum_pk)
 
-# def clearvote_comment(request, pk, comment_pk):
-#   forum = get_object_or_404(Forum, pk=pk)
-#   comment = get_object_or_404(Comment, pk=comment_pk)
-#   comment.comment.votes.delete(request.user.id)
+def clearvote_comment(request, forum_pk, comment_pk):
+  comment = get_object_or_404(Comment, pk=comment_pk)
+  comment.votes.delete(request.user.id)
 
-#   return render(request, 'comments.html', {'forum': forum})
+  return redirect('forum_comments', pk=forum_pk)

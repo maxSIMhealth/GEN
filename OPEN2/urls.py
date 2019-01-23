@@ -36,8 +36,8 @@ urlpatterns = [
     path('forums/<int:pk>/upvote', views.upvote_forum, name='forum_upvote'),
     path('forums/<int:pk>/clearvote', views.clearvote_forum, name='forum_clearvote'),
     # path('forums/<int:pk>/downvote', views.downvote, name='forum_downvote'),
-    path('forums/<int:pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
-    # path('forums/<int:pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
+    path('forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
+    path('forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
     path('admin/', admin.site.urls),
 ]
 

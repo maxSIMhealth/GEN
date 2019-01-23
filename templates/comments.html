@@ -59,15 +59,13 @@
           <div class="col-1">
             {% if user.is_authenticated %}
               {% if comment_vote_status %}
-                {% comment %} <a href="{% url 'comment_clearvote' comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a> {% endcomment %}
-                <a href="#" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                <a href="{% url 'comment_clearvote' forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
               {% else %}
-                {% comment %} <a href="{% url 'comment_upvote' comment.pk %}"  class="btn btn-dark"><i class="far fa-heart"></i></a> {% endcomment %}
-                <a href="#"  class="btn btn-dark"><i class="far fa-heart"></i></a>
+                <a href="{% url 'comment_upvote' forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
               {% endif %}
             {% else %}
               <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-                <a href="#"  class="btn btn-light disabled"><i class="far fa-heart"></i></a>
+                <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
               </span>
             {% endif %}
             <div class="mt-1">{{ comment.vote_score }}</div>
