@@ -57,20 +57,28 @@ def new_forum(request):
 
   return render(request, 'new_forum.html', {'forums': forums, 'form': form})
 
-def upvote(request, pk):
+def upvote_forum(request, pk):
   forum = Forum.objects.get(pk=pk)
   forum.votes.up(request.user.id)
 
   return redirect('home')
 
-def downvote(request, pk):
-  forum = Forum.objects.get(pk=pk)
-  forum.votes.down(request.user.id)
-
-  return redirect('home')
-
-def clearvote(request, pk):
+def clearvote_forum(request, pk):
   forum = Forum.objects.get(pk=pk)
   forum.votes.delete(request.user.id)
 
   return redirect('home')
+
+def upvote_comment(request, pk, comment_pk):
+  forum = get_object_or_404(Forum, pk=pk)
+  comment = get_object_or_404(Comment, pk=comment_pk)
+  comment.votes.up(request.user.id)
+
+  return render(request, 'comments.html', {'forum': forum})
+
+# def clearvote_comment(request, pk, comment_pk):
+#   forum = get_object_or_404(Forum, pk=pk)
+#   comment = get_object_or_404(Comment, pk=comment_pk)
+#   comment.comment.votes.delete(request.user.id)
+
+#   return render(request, 'comments.html', {'forum': forum})
