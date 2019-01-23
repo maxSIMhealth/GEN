@@ -2,6 +2,7 @@
 
 {% load humanize %}
 {% load gravatar %}
+{% load countvotes %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item active">User Dashboard</li>
@@ -31,9 +32,11 @@
     <div class="card">
       <h5 class="card-header">Scoreboard</h5>
       <div class="card-body">
-        - Forum score: 10
-        - Comments score: 0
-        - Quiz: 5
+        <ul>
+          <li>Forum score: {% countvotes user.id "forum" %}</li>
+          <li>Comments score: {% countvotes user.id "comment" %}</li>
+          <li>Quiz: *NOT DONE*</li>
+        </ul>
       </div>
     </div>
     <div class="card">
