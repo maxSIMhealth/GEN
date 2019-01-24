@@ -15,6 +15,12 @@ def course(request, pk):
 
   return render(request, 'course.html', {'course': course})
 
+def course_forums(request, pk):
+  course = get_object_or_404(Course, pk=pk)
+  forums = course.forums.all()
+  
+  return render(request, 'course_forums.html', {'course': course, 'forums': forums})
+
 class ForumListView(ListView):
   # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
   # Render some list of objects, set by `self.model` or `self.queryset`.

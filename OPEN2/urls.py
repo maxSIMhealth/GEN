@@ -32,6 +32,7 @@ urlpatterns = [
     path("settings/password/done", auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'), name="password_change_done"),
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
     path('courses/<int:pk>/', views.course, name='course'),
+    path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
     path('forums/', views.ForumListView.as_view(), name='home'),
     path('forums/new/', views.new_forum, name='new_forum'),
     path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
