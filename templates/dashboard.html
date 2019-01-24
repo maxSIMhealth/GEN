@@ -37,9 +37,9 @@
     </h5>
     <div class="card-body p-0">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-        <li class="list-group-item"><a href="#">Dapibus ac facilisis in</a></li>
-        <li class="list-group-item"><a href="#">Vestibulum at eros</a></li>
+        {% for course in user.member.all %}
+          <li class="list-group-item"><a href="#">{{ course.code }} - {{ course.name }}</a></li>
+        {% endfor %}
       </ul>
     </div>
   </div>
