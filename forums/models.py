@@ -2,6 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from vote.models import VoteModel
 
+
+class Course(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course')
+    start_date = models.DateTimeField('start date', blank=True, null=True)
+    end_date = models.DateTimeField('end date', blank=True, null=True)
+    code = models.CharField('course code', max_length=30)
+    students = models.ManyToManyField(User, related_name='member')
+
+    def __str__(self):
+        return self.name
+
+
 class Forum(VoteModel, models.Model):
     YOUTUBE = 'YTB'
     PDF = 'PDF'
@@ -11,6 +24,7 @@ class Forum(VoteModel, models.Model):
         (YOUTUBE, 'Youtube Video'),
     ]
 
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
