@@ -71,7 +71,9 @@
             <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a>
             <small class="text-muted d-block">{{ forum.description }}</small>
             {% if debug == True %}
-              Did this user vote? {{ forum_vote_status }} <br />
+              <div class="alert alert-warning" role="alert">
+                *DEBUG* Did this user vote? {{ forum_vote_status }} <br />
+              </div>
             {% endif %}
           </td>
           <td>{{ forum.get_comment_count }}</td>
