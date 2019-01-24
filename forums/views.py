@@ -30,8 +30,9 @@ class ForumListView(ListView):
   template_name = 'home.html'
 
 
-def forum_comments(request, pk):
-  forum = get_object_or_404(Forum, pk=pk)
+def forum_comments(request, pk, forum_pk):
+  course = get_object_or_404(Course, pk=pk)
+  forum = get_object_or_404(Forum, pk=forum_pk)
 
   if request.method == 'POST':
     form = NewCommentForm(request.POST)
@@ -43,11 +44,15 @@ def forum_comments(request, pk):
         forum = forum,
         author = request.user
       )
-      return redirect('forum_comments', pk=forum.pk)
+      my_kwargs = dict(
+        pk = course.pk,
+        forum_pk = forum.pk
+      )
+      return redirect('forum_comments', **my_kwargs)
   else:
     form = NewCommentForm()
 
-  return render(request, 'comments.html', {'forum': forum, 'form': form})
+  return render(request, 'comments.html', {'forum': forum, 'course': course, 'form': form})
 
 
 @login_required
@@ -72,38 +77,52 @@ def new_forum(request, pk):
 
   return render(request, 'new_forum.html', {'forums': forums, 'form': form})
 
-def upvote_forum(request, pk):
-  forum = Forum.objects.get(pk=pk)
+def upvote_forum(request, pk, forum_pk):
+  course = get_object_or_404(Course, pk=pk)
+  forum = Forum.objects.get(pk=forum_pk)
   forum.votes.up(request.user.id)
 
   # checking if the user is voting from the forums list or from forum itself
   path = urlparse(request.META['HTTP_REFERER']).path + "upvote"
 
-  if request.path == path:
-    return redirect('forum_comments', pk=pk)
-  else:
-    return redirect('forums')
+  my_kwargs = dict(
+    pk = course.pk,
+    forum_pk = forum.pk
+  )
 
-def clearvote_forum(request, pk):
-  forum = Forum.objects.get(pk=pk)
+  if request.path == path:
+    return redirect('forum_comments', **my_kwargs)
+  else:
+    return redirect('course_forums', pk=course.pk)
+
+def clearvote_forum(request, pk, forum_pk):
+  course = get_object_or_404(Course, pk=pk)
+  forum = Forum.objects.get(pk=forum_pk)
   forum.votes.delete(request.user.id)
 
   # checking if the user is voting from the forums list or from forum itself
   path = urlparse(request.META['HTTP_REFERER']).path + "clearvote"
 
-  if request.path == path:
-    return redirect('forum_comments', pk=pk)
-  else:
-    return redirect('forums')
+  my_kwargs = dict(
+    pk = course.pk,
+    forum_pk = forum.pk
+  )
 
-def upvote_comment(request, forum_pk, comment_pk):
+  if request.path == path:
+    return redirect('forum_comments', **my_kwargs)
+  else:
+    return redirect('course_forums', pk=course.pk)
+
+def upvote_comment(request, pk, forum_pk, comment_pk):
+  course = get_object_or_404(Course, pk=pk)
   comment = get_object_or_404(Comment, pk=comment_pk)
   comment.votes.up(request.user.id)
 
-  return redirect('forum_comments', pk=forum_pk)
+  return redirect('forum_comments', kwargs={pk:pk, forum_pk:forum.pk})
 
-def clearvote_comment(request, forum_pk, comment_pk):
+def clearvote_comment(request, pk, forum_pk, comment_pk):
+  course = get_object_or_404(Course, pk=pk)
   comment = get_object_or_404(Comment, pk=comment_pk)
   comment.votes.delete(request.user.id)
 
-  return redirect('forum_comments', pk=forum_pk)
+  return redirect('forum_comments', kwargs={pk:pk, forum_pk:forum.pk})
