@@ -29,7 +29,7 @@
 {% block content %}
   {% if user.is_authenticated %}
     <div class="mb-4">
-      <a href="{% url 'new_forum' %}" class="btn btn-primary">New topic</a>
+      <a href="{% url 'new_forum' %}" class="btn btn-primary">New forum</a>
     </div>
   {% endif %}
 
@@ -44,7 +44,11 @@
       </tr>
     </thead>
     <tbody>
-      {% if debug == True %}user_id: {{ user.id }} <br />{% endif %}
+      {% if debug == True %}
+      <div class="alert alert-warning" role="alert">
+        *DEBUG* user_id: {{ user.id }} <br />
+      </div>
+      {% endif %}
       {% for forum in forums %}
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
         {% checkvotes_forum user.id forum.pk as forum_vote_status %}

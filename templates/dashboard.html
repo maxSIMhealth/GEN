@@ -38,7 +38,7 @@
     <div class="card-body p-0">
       <ul class="list-group list-group-flush">
         {% for course in user.member.all %}
-          <li class="list-group-item"><a href="#">{{ course.code }} - {{ course.name }}</a></li>
+          <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
         {% endfor %}
       </ul>
     </div>
