@@ -51,20 +51,22 @@ def forum_comments(request, pk):
 
 
 @login_required
-def new_forum(request):
+def new_forum(request, pk):
+  course = get_object_or_404(Course, pk=pk)
   forums = Forum.objects.all()
 
   if request.method == 'POST':
     form = NewForumForm(request.POST)
     if form.is_valid():
       forum = Forum.objects.create(
+        course = course,
         name = form.cleaned_data.get('name'),
         description = form.cleaned_data.get('description'),
         kind = form.cleaned_data.get('kind'),
         url = form.cleaned_data.get('url'),
         author = request.user
       )
-      return redirect('home')
+      return redirect('course_forums', pk=course.pk)
   else:
     form = NewForumForm()
 
@@ -80,7 +82,7 @@ def upvote_forum(request, pk):
   if request.path == path:
     return redirect('forum_comments', pk=pk)
   else:
-    return redirect('home')
+    return redirect('forums')
 
 def clearvote_forum(request, pk):
   forum = Forum.objects.get(pk=pk)
@@ -92,7 +94,7 @@ def clearvote_forum(request, pk):
   if request.path == path:
     return redirect('forum_comments', pk=pk)
   else:
-    return redirect('home')
+    return redirect('forums')
 
 def upvote_comment(request, forum_pk, comment_pk):
   comment = get_object_or_404(Comment, pk=comment_pk)

@@ -29,7 +29,7 @@
 {% block content %}
   {% if user.is_authenticated %}
     <div class="mb-4">
-      <a href="{% url 'new_forum' %}" class="btn btn-primary">New forum</a>
+      <a href="{% url 'new_forum' course.pk %}" class="btn btn-primary">New forum</a>
     </div>
   {% endif %}
 
