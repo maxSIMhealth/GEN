@@ -24,7 +24,9 @@ from accounts import views as account_views
 from dashboard import views as dashboard_views
 
 urlpatterns = [    
-    path('', views.ForumListView.as_view(), name='home'),
+    # path('', views.ForumListView.as_view(), name='home'),
+    path('', dashboard_views.dashboard, name='home'),
+    path('dashboard/', dashboard_views.dashboard, name='dashboard'),
     path('signup/', account_views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -40,7 +42,6 @@ urlpatterns = [
     path('forums/<int:pk>/clearvote', views.clearvote_forum, name='forum_clearvote'),
     path('forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
     path('forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
-    path('dashboard/', dashboard_views.dashboard, name='dashboard'),
     path('admin/', admin.site.urls),
 ]
 
