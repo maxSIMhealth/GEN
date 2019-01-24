@@ -1,0 +1,37 @@
+{% extends 'base_course.html' %}
+
+{% load humanize %}
+{% load gravatar %}
+
+{% block title %}OPEN2 - {{ course.code }} - {{course.name}} {% endblock title %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">{{ course.code }}</li>
+{% endblock breadcrumb %}
+
+{% block content_tabs %}
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Info</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Forums</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Videos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">PDFs</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Quizzes</a>
+  </li>
+{% endblock content_tabs %}
+
+{% block content %}
+  <h5 class="card-title">{{ course.name }}</h5>
+  <p class="card-text">Code: {{ course.code}}</p>
+  <p class="card-text">Starting date: {{ course.start_date}} | <small>{{ course.start_date|naturaltime}}</small></p>
+  <p class="card-text">Ending date: {{ course.end_date}} | <small>{{ course.end_date|naturaltime}}</small></p>
+  <p class="card-text">Description: blasdkasdoasmdo as</p>
+  {% comment %} <p class="card-text">{{ course.description }}</p> {% endcomment %}
+{% endblock content %}

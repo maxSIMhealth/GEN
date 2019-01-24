@@ -7,7 +7,13 @@ from django.utils import timezone
 from urllib.parse import urlparse
 
 from .forms import NewForumForm, NewCommentForm
-from .models import Forum, Comment
+from .models import Course, Forum, Comment
+
+
+def course(request, pk):
+  course = get_object_or_404(Course, pk=pk)
+
+  return render(request, 'course.html', {'course': course})
 
 class ForumListView(ListView):
   # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
