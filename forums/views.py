@@ -114,15 +114,23 @@ def clearvote_forum(request, pk, forum_pk):
     return redirect('course_forums', pk=course.pk)
 
 def upvote_comment(request, pk, forum_pk, comment_pk):
-  course = get_object_or_404(Course, pk=pk)
   comment = get_object_or_404(Comment, pk=comment_pk)
   comment.votes.up(request.user.id)
 
-  return redirect('forum_comments', kwargs={pk:pk, forum_pk:forum.pk})
+  my_kwargs = dict(
+    pk = pk,
+    forum_pk = forum_pk
+  )
+
+  return redirect('forum_comments', **my_kwargs)
 
 def clearvote_comment(request, pk, forum_pk, comment_pk):
-  course = get_object_or_404(Course, pk=pk)
   comment = get_object_or_404(Comment, pk=comment_pk)
   comment.votes.delete(request.user.id)
 
-  return redirect('forum_comments', kwargs={pk:pk, forum_pk:forum.pk})
+  my_kwargs = dict(
+    pk = pk,
+    forum_pk = forum_pk
+  )
+
+  return redirect('forum_comments', **my_kwargs)
