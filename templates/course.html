@@ -32,6 +32,5 @@
   <p class="card-text">Code: {{ course.code}}</p>
   <p class="card-text">Starting date: {{ course.start_date}} | <small>{{ course.start_date|naturaltime}}</small></p>
   <p class="card-text">Ending date: {{ course.end_date}} | <small>{{ course.end_date|naturaltime}}</small></p>
-  <p class="card-text">Description: blasdkasdoasmdo as</p>
-  {% comment %} <p class="card-text">{{ course.description }}</p> {% endcomment %}
+  <p class="card-text">Description: {{ course.description }}</p>
 {% endblock content %}
