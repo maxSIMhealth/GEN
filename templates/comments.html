@@ -54,15 +54,15 @@
     </h5>
     <div class="card-body bg-light text-dark p-3">
       <p class="card-text">{{ forum.description }}</p>
-      {% if forum.kind == 'YTB' %}
+      {% if forum.media.kind == 'YTB' %}
         {% comment %} <div class="embed-responsive embed-responsive-16by9">
           <iframe class="embed-responsive-item" src="{{ forum.url }}" allowfullscreen></iframe>
         </div> {% endcomment %}
         <div class="embed-responsive embed-responsive-16by9">
-          {% video forum.url '800x600' %} 
+          {% video forum.media.url '800x600' %} 
         </div>
       {% else %}
-        <object data="{{ forum.url }}" style="width:100%; height: 400px"></object> <!-- TODO: remove inline CSS-->
+        <object data="{{ forum.media.url }}" style="width:100%; height: 400px"></object> <!-- TODO: remove inline CSS-->
       {% endif %}
     </div>
   </div>

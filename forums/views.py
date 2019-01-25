@@ -6,8 +6,8 @@ from django.views.generic import ListView
 from django.utils import timezone
 from urllib.parse import urlparse
 
-from .forms import NewForumForm, NewCommentForm
-from .models import Course, Forum, Comment
+from .forms import NewForumForm, NewCommentForm, NewMediaForm
+from .models import Course, Forum, Comment, MediaFile
 
 
 def course(request, pk):
@@ -74,20 +74,30 @@ def new_forum(request, pk):
 
   if request.method == 'POST':
     form = NewForumForm(request.POST)
-    if form.is_valid():
+    media_form = NewMediaForm(request.POST)
+    if form.is_valid() and media_form.is_valid() :
+      media = MediaFile.objects.create(
+        name = media_form.cleaned_data.get('media_name'),
+        kind = media_form.cleaned_data.get('kind'),
+        author = request.user,
+        url = media_form.cleaned_data.get('url'),
+      )
       forum = Forum.objects.create(
         course = course,
         name = form.cleaned_data.get('name'),
         description = form.cleaned_data.get('description'),
-        kind = form.cleaned_data.get('kind'),
+        # kind = form.cleaned_data.get('kind'),
         url = form.cleaned_data.get('url'),
+        media = media,
         author = request.user
       )
+      
       return redirect('course_forums', pk=course.pk)
   else:
     form = NewForumForm()
+    media_form = NewMediaForm()
 
-  return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form})
+  return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form, 'media_form': media_form})
 
 def upvote_forum(request, pk, forum_pk):
   course = get_object_or_404(Course, pk=pk)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Forum, Comment
+from .models import MediaFile, Forum, Comment
 
 class NewForumForm(forms.ModelForm):
   name = forms.CharField(
@@ -20,7 +20,22 @@ class NewForumForm(forms.ModelForm):
   class Meta:
     model = Forum
     # fields = ['name', 'description']
-    exclude = ['course', 'author', 'vote_score', 'num_vote_up', 'num_vote_down']
+    exclude = ['course', 'author', 'vote_score', 'num_vote_up', 'num_vote_down', 'media']
+
+class NewMediaForm(forms.ModelForm):
+  media_name = forms.CharField(
+    widget = forms.TextInput(),
+    max_length = 30,
+    help_text = 'The max length for the forum name is 30.'
+  )
+  url = forms.URLField(
+    widget = forms.URLInput(),
+    help_text = 'Make sure that the URL is valid.'
+  )
+  class Meta:
+    model = MediaFile
+    # fields = ['name', 'description']
+    exclude = ['author', 'name']
 
 class NewCommentForm(forms.ModelForm):
   message = forms.CharField(

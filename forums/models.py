@@ -18,7 +18,7 @@ class Course(models.Model):
         return self.name
 
 
-class Forum(VoteModel, models.Model):
+class MediaFile(models.Model):
     YOUTUBE = 'YTB'
     PDF = 'PDF'
 
@@ -27,24 +27,34 @@ class Forum(VoteModel, models.Model):
         (YOUTUBE, 'Youtube Video'),
     ]
 
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
     name = models.CharField(max_length=30, unique=True)
-    description = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
-    last_updated = models.DateTimeField(auto_now_add=True)
     kind = models.CharField(
         max_length=3,
         choices=ATTACHMENT_KINDS,
         default=YOUTUBE
     )
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='medias')
     url = models.URLField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class Forum(VoteModel, models.Model):
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
+    name = models.CharField(max_length=30, unique=True)
+    description = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
+    last_updated = models.DateTimeField(auto_now_add=True)
+    url = models.URLField(max_length=200)
+    media = models.ForeignKey(MediaFile, on_delete=models.CASCADE, related_name='forums')
 
     def __str__(self):
         return self.name
 
     def get_comment_count(self):
         return Forum.objects.filter(comments__forum=self).count()
-
+ 
 
 class Comment(VoteModel, models.Model):
     message = models.TextField(max_length=400)

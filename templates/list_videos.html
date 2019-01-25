@@ -31,13 +31,13 @@
 {% block content %}
   <ul class="list-group">
       {% for forum in forums %}
-        {% if forum.kind == 'YTB' %}
+        {% if forum.media.kind == 'YTB' %}
           <li class="list-group-item">
-            {% video forum.url as my_video %}
+            {% video forum.media.url as my_video %}
               <div class="media">
-                <a href="{{ forum.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a> <!-- TODO: remove inline CSS-->
+                <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a> <!-- TODO: remove inline CSS-->
                 <div class="media-body">
-                  <span><a href="{{ forum.url }}">{{ forum.url }}</a></span>
+                  <a href="{{ forum.media.url }}"><span>{{ forum.media.name }} - {{ forum.media.url }}</a></span>
                   <div>
                     <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
                   </div>
@@ -45,7 +45,7 @@
               </div>
             {% endvideo %}
           </li>
-        {% elif forum.kind == 'PDF' and forloop.first %}
+        {% elif forum.media.kind == 'PDF' and forloop.first %}
           Nothing to show
         {% endif %}
       {% empty %}

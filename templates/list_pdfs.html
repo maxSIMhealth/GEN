@@ -31,14 +31,14 @@
 {% block content %}
   <ul class="list-group">
       {% for forum in forums %}
-        {% if forum.kind == 'PDF' %}
+        {% if forum.media.kind == 'PDF' %}
           <li class="list-group-item">
-            <a href="{{ forum.url }}">{{ forum.url }}</a>
+            <span><a href="{{ forum.media.url }}">{{ forum.media.name }} - {{ forum.media.url }}</a></span>
             <div>
               <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
             </div>
           </li>
-        {% elif forum.kind == 'YTB' and forloop.first %}
+        {% elif forum.media.kind == 'YTB' and forloop.first %}
           Nothing to show.
         {% endif %}
       {% empty %}
