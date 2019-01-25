@@ -87,7 +87,7 @@ def new_forum(request, pk):
   else:
     form = NewForumForm()
 
-  return render(request, 'new_forum.html', {'forums': forums, 'form': form})
+  return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form})
 
 def upvote_forum(request, pk, forum_pk):
   course = get_object_or_404(Course, pk=pk)
