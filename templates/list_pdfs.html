@@ -35,9 +35,11 @@
           <li class="list-group-item">
             <a href="{{ forum.url }}">{{ forum.url }}</a>
             <div>
-              <small><a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+              <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
             </div>
           </li>
+        {% elif forum.kind == 'YTB' and forloop.first %}
+          Nothing to show.
         {% endif %}
       {% empty %}
         Nothing to show.

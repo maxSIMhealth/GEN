@@ -39,12 +39,14 @@
                 <div class="media-body">
                   <span><a href="{{ forum.url }}">{{ forum.url }}</a></span>
                   <div>
-                    <small><a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+                    <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
                   </div>
                 </div>
               </div>
             {% endvideo %}
           </li>
+        {% elif forum.kind == 'PDF' and forloop.first %}
+          Nothing to show
         {% endif %}
       {% empty %}
         Nothing to show.
