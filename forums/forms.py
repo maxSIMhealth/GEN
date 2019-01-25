@@ -4,13 +4,18 @@ from .models import MediaFile, Forum, Comment
 class NewForumForm(forms.ModelForm):
   name = forms.CharField(
     widget = forms.TextInput(),
-    max_length = 30,
-    help_text = 'The max length for the forum name is 30.'
+    max_length = 100,
+    label = 'Forum name',
+    help_text = 'The max length for the forum name is 100.'
   )
   description = forms.CharField(
-    widget = forms.Textarea(),
-    max_length = 100,
-    help_text = 'The max length for the forum description is 100.'
+    widget = forms.Textarea(
+      attrs= {
+        'rows': 4
+      }
+    ),
+    max_length = 400,
+    help_text = 'The max length for the forum description is 400.'
   )
 
   class Meta:
@@ -21,8 +26,9 @@ class NewForumForm(forms.ModelForm):
 class NewMediaForm(forms.ModelForm):
   title = forms.CharField(
     widget = forms.TextInput(),
-    max_length = 30,
-    help_text = 'The max length for the media title is 30.'
+    max_length = 100,
+    label = 'Media name',
+    help_text = 'The max length for the media title is 100.'
   )
   url = forms.URLField(
     widget = forms.URLInput(),

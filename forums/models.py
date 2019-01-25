@@ -2,13 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from vote.models import VoteModel
-# from embed_video.fields import EmbedVideoField
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    code = models.CharField('course code', max_length=30)
-    description = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+    code = models.CharField('course code', max_length=10)
+    description = models.CharField(max_length=400)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='course')
     start_date = models.DateTimeField('start date', blank=True, null=True)
     end_date = models.DateTimeField('end date', blank=True, null=True)
@@ -27,7 +26,7 @@ class MediaFile(models.Model):
         (YOUTUBE, 'Youtube Video'),
     ]
 
-    title = models.CharField(max_length=30, unique=True)
+    title = models.CharField(max_length=100, unique=True)
     kind = models.CharField(
         max_length=3,
         choices=ATTACHMENT_KINDS,
@@ -37,13 +36,13 @@ class MediaFile(models.Model):
     url = models.URLField(max_length=200)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Forum(VoteModel, models.Model):
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
-    name = models.CharField(max_length=30, unique=True)
-    description = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+    description = models.CharField(max_length=400)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
     last_updated = models.DateTimeField(auto_now_add=True)
     media = models.ForeignKey(MediaFile, on_delete=models.CASCADE, related_name='forums')
