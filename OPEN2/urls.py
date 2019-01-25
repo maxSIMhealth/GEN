@@ -25,6 +25,7 @@ from dashboard import views as dashboard_views
 
 urlpatterns = [    
     # path('', views.ForumListView.as_view(), name='home'),
+
     path('', dashboard_views.dashboard, name='home'),
     path('dashboard/', dashboard_views.dashboard, name='dashboard'),
 
@@ -37,6 +38,7 @@ urlpatterns = [
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
 
     path('courses/<int:pk>/', views.course, name='course'),
+    path('courses/<int:pk>/videos', views.list_videos, name='list_videos'),
     path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
     path('courses/<int:pk>/forums/new/', views.new_forum, name='new_forum'),
     path('courses/<int:pk>/forums/<int:forum_pk>/', views.forum_comments, name='forum_comments'),
@@ -45,13 +47,8 @@ urlpatterns = [
     path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
     path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
 
-    path('forums/', views.ForumListView.as_view(), name='forums'),
-    # path('forums/new/', views.new_forum, name='new_forum'),
-    # path('forums/<int:pk>/', views.forum_comments, name='forum_comments'),
-    # path('forums/<int:pk>/upvote', views.upvote_forum, name='forum_upvote'),
-    # path('forums/<int:pk>/clearvote', views.clearvote_forum, name='forum_clearvote'),
-    # path('forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
-    # path('forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
+    # path('forums/', views.ForumListView.as_view(), name='forums'),
+
     path('admin/', admin.site.urls),
 ]
 
