@@ -39,6 +39,7 @@ urlpatterns = [
 
     path('courses/<int:pk>/', views.course, name='course'),
     path('courses/<int:pk>/videos', views.list_videos, name='list_videos'),
+    path('courses/<int:pk>/pdfs', views.list_pdfs, name='list_pdfs'),
     path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
     path('courses/<int:pk>/forums/new/', views.new_forum, name='new_forum'),
     path('courses/<int:pk>/forums/<int:forum_pk>/', views.forum_comments, name='forum_comments'),
