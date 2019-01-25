@@ -2,10 +2,12 @@
 
 {% load humanize %}
 {% load checkvotes %}
+{% load embed_video_tags %}
 
 {% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item active">Forums</li>
+  <li class="breadcrumb-item active">Videos</li>
 {% endblock breadcrumb %}
 
 {% block content_tabs %}
@@ -13,7 +15,7 @@
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Forums</a>
+    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">Videos</a>
@@ -27,24 +29,19 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  <div class="card mb-3">
-    <h5 class="card-header bg-light">
-      <div class="row">
-        <div class="col-10 pt-2">Enrolled Courses</div>
-        <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Add</a></div>
-      </div>
-    </h5>
-    <div class="card-body p-0">
-      <ul class="list-group list-group-flush">
-        {% for course in user.member.all %}
-          {% comment %} <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li> {% endcomment %}
-          <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
-        {% endfor %}
-        {% for forum in forums %}
-          {% comment %} <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li> {% endcomment %}
-          <li class="list-group-item"><a href="#">{{ forum.name }} - {{ forum.url }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+  <ul class="list-group">
+      {% for forum in forums %}
+        <li class="list-group-item">
+          {% video forum.url as my_video %}
+            <div class="media">
+              <a href="{{ forum.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a>
+              <div class="media-body">
+                <h5 class="mt-0 mb-1">{{ forum.name }}</h5>
+                <span class="text-muted"><a href="{{ forum.url }}">{{ forum.url }}</a></span>
+              </div>
+            </div>
+          {% endvideo %}
+        </li>
+      {% endfor %}
+  </ul>
 {% endblock content %}
