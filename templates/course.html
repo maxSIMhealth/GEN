@@ -6,6 +6,7 @@
 {% block title %}OPEN2 - {{ course.code }} - {{course.name}} {% endblock title %}
 
 {% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item active">{{ course.code }}</li>
 {% endblock breadcrumb %}
 
@@ -17,7 +18,7 @@
     <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Videos</a>
+    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">PDFs</a>

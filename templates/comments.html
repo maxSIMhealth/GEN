@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course_forums' course.pk %}">Forums</a></li>
   <li class="breadcrumb-item active">{{ forum.name }}</li>
