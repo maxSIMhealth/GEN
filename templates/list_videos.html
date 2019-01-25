@@ -18,10 +18,10 @@
     <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">Videos</a>
+    <a class="nav-link active">Videos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">PDFs</a>
+    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
   <li class="nav-item">
     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Quizzes</a>
@@ -31,17 +31,23 @@
 {% block content %}
   <ul class="list-group">
       {% for forum in forums %}
-        <li class="list-group-item">
-          {% video forum.url as my_video %}
-            <div class="media">
-              <a href="{{ forum.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a>
-              <div class="media-body">
-                <h5 class="mt-0 mb-1">{{ forum.name }}</h5>
-                <span class="text-muted"><a href="{{ forum.url }}">{{ forum.url }}</a></span>
+        {% if forum.kind == 'YTB' %}
+          <li class="list-group-item">
+            {% video forum.url as my_video %}
+              <div class="media">
+                <a href="{{ forum.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a> <!-- TODO: remove inline CSS-->
+                <div class="media-body">
+                  <span><a href="{{ forum.url }}">{{ forum.url }}</a></span>
+                  <div>
+                    <small><a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+                  </div>
+                </div>
               </div>
-            </div>
-          {% endvideo %}
-        </li>
+            {% endvideo %}
+          </li>
+        {% endif %}
+      {% empty %}
+        Nothing to show.
       {% endfor %}
   </ul>
 {% endblock content %}
