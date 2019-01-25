@@ -62,7 +62,7 @@
           {% video forum.url '800x600' %} 
         </div>
       {% else %}
-        <p>Find a way to embed PDF :D</p>
+        <object data="{{ forum.url }}" style="width:100%; height: 400px"></object> <!-- TODO: remove inline CSS-->
       {% endif %}
     </div>
   </div>
