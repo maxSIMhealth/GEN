@@ -37,7 +37,7 @@
               <div class="media">
                 <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a> <!-- TODO: remove inline CSS-->
                 <div class="media-body">
-                  <a href="{{ forum.media.url }}"><span>{{ forum.media.name }} - {{ forum.media.url }}</a></span>
+                  <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
                   <div>
                     <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
                   </div>

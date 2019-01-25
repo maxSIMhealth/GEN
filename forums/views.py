@@ -77,7 +77,7 @@ def new_forum(request, pk):
     media_form = NewMediaForm(request.POST)
     if form.is_valid() and media_form.is_valid() :
       media = MediaFile.objects.create(
-        name = media_form.cleaned_data.get('media_name'),
+        title = media_form.cleaned_data.get('title'),
         kind = media_form.cleaned_data.get('kind'),
         author = request.user,
         url = media_form.cleaned_data.get('url'),
@@ -86,8 +86,6 @@ def new_forum(request, pk):
         course = course,
         name = form.cleaned_data.get('name'),
         description = form.cleaned_data.get('description'),
-        # kind = form.cleaned_data.get('kind'),
-        url = form.cleaned_data.get('url'),
         media = media,
         author = request.user
       )

@@ -33,7 +33,7 @@
       {% for forum in forums %}
         {% if forum.media.kind == 'PDF' %}
           <li class="list-group-item">
-            <span><a href="{{ forum.media.url }}">{{ forum.media.name }} - {{ forum.media.url }}</a></span>
+            <span><a href="{{ forum.media.url }}">{{ forum.media.title }} - {{ forum.media.url }}</a></span>
             <div>
               <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
             </div>

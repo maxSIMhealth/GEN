@@ -27,7 +27,7 @@ class MediaFile(models.Model):
         (YOUTUBE, 'Youtube Video'),
     ]
 
-    name = models.CharField(max_length=30, unique=True)
+    title = models.CharField(max_length=30, unique=True)
     kind = models.CharField(
         max_length=3,
         choices=ATTACHMENT_KINDS,
@@ -46,7 +46,6 @@ class Forum(VoteModel, models.Model):
     description = models.CharField(max_length=100)
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
     last_updated = models.DateTimeField(auto_now_add=True)
-    url = models.URLField(max_length=200)
     media = models.ForeignKey(MediaFile, on_delete=models.CASCADE, related_name='forums')
 
     def __str__(self):
