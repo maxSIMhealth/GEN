@@ -14,7 +14,7 @@
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course_forums' course.pk %}">Forums</a></li>
-  <li class="breadcrumb-item active">{{ forum.name }}</li>
+  <li class="breadcrumb-item active">{{ forum.name|truncatechars:50 }}</li>
 {% endblock %}
 
 {% block content %}
@@ -55,9 +55,6 @@
     <div class="card-body bg-light text-dark p-3">
       <p class="card-text">{{ forum.description }}</p>
       {% if forum.media.kind == 'YTB' %}
-        {% comment %} <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="{{ forum.url }}" allowfullscreen></iframe>
-        </div> {% endcomment %}
         <div class="embed-responsive embed-responsive-16by9">
           {% video forum.media.url '800x600' %} 
         </div>
