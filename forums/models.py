@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from vote.models import VoteModel
+from embed_video.fields import EmbedVideoField
 
 
 class Course(models.Model):
@@ -35,7 +37,7 @@ class Forum(VoteModel, models.Model):
         choices=ATTACHMENT_KINDS,
         default=YOUTUBE
     )
-    url = models.URLField(max_length=200)
+    url = EmbedVideoField()
 
     def __str__(self):
         return self.name
