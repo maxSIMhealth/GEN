@@ -10,5 +10,8 @@ class Quiz(models.Model):
   course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='quizzes')
   video = models.ForeignKey(MediaFile, on_delete=models.PROTECT, related_name='quizzes')
 
+  class Meta:
+    verbose_name_plural = "quizzes"
+
   def __str__(self):
       return self.name
