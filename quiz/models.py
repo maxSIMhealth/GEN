@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from model_utils.models import TimeStampedModel
+from model_utils.managers import InheritanceManager
 
 from forums.models import Course, MediaFile
 
@@ -14,5 +15,70 @@ class Quiz(TimeStampedModel):
     class Meta:
         verbose_name_plural = "quizzes"
 
+    def get_questions(self):
+        return self.question_set.all().select_subclasses()
+
     def __str__(self):
         return self.name
+
+class Question(TimeStampedModel):
+    quiz = models.ManyToManyField(
+        Quiz,
+        verbose_name='Quiz',
+        blank=True)
+        # on_delete=models.PROTECT)
+    content = models.CharField(
+        max_length=1000,
+        blank=False,
+        help_text="Enter the question text that you want displayed ",
+        verbose_name="Question")
+    explanation = models.TextField(
+        blank=True,
+        help_text="Explanation to be shown after the question has been answered.")
+
+    objects = InheritanceManager()
+
+    def __str__(self):
+        return self.content
+
+class MCQuestion(Question):
+    def check_if_correct(self, guess):
+        answer = Answer.objects.get(id=guess)
+
+        if answer.correct is True:
+            return True
+        else:
+            return False
+    
+    def get_answers(self):
+        return self.order_answers(Answer.objects.filter(question=self))
+
+    def get_answers_list(self):
+        return [(answer.id, answer.content) for answer in self.order_answers(Answer.objects.filter(question=self))]
+
+    class Meta:
+        verbose_name = "Multiple Choice Question"
+        verbose_name_plural = "Multiple Choice Questions"
+
+class Answer(models.Model):
+    question = models.ForeignKey(
+        MCQuestion,
+        on_delete=models.CASCADE,
+        related_name='answers'
+    )
+
+    content = models.CharField(
+        max_length=1000,
+        blank=False,
+        help_text="Enter the answer text that you want displayed"
+    )
+
+    correct = models.BooleanField(
+        blank=False,
+        default=False,
+        help_text="Is this the correct answer?"
+    )
+
+    def __str__(self):
+        return self.content
+    
