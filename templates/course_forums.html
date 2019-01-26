@@ -23,7 +23,7 @@
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Quizzes</a>
+    <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>
 {% endblock content_tabs %}
 

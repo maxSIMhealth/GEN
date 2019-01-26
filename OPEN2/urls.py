@@ -48,6 +48,8 @@ urlpatterns = [
     path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/upvote', views.upvote_comment, name='comment_upvote'),
     path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
 
+    path('courses/<int:pk>/quiz', views.list_quiz, name='list_quiz'),
+
     # path('forums/', views.ForumListView.as_view(), name='forums'),
 
     path('admin/', admin.site.urls),

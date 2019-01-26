@@ -32,6 +32,12 @@ def list_pdfs(request, pk):
 
   return render(request, 'list_pdfs.html', {'course': course, 'forums': forums})
 
+def list_quiz(request, pk):
+  course = get_object_or_404(Course, pk=pk)
+  quizzes = course.quizzes.all()
+
+  return render(request, 'list_quiz.html', {'course': course, 'quizzes': quizzes})
+
 class ForumListView(ListView):
   # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
   # Render some list of objects, set by `self.model` or `self.queryset`.
