@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from model_utils.models import TimeStampedModel
+from model_utils import Choices
+from model_utils.models import TimeStampedModel, StatusModel
 from model_utils.managers import InheritanceManager
 
 from forums.models import Course, MediaFile
@@ -82,4 +83,18 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.content
-    
+
+class MCQuestionAttempt(TimeStampedModel):
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
+    correct = models.NullBooleanField(blank=True, null=True)
+    attempt = models.PositiveIntegerField(default = 0)
+
+    def __str__(self):
+        return "User %s - quiz %s - course %s - attempt %s" % (self.student.username, self.quiz.name, self.course.name, self.attempt)
+
+    class Meta:
+        verbose_name = "multiple choice question attempt"
+        verbose_name_plural = "multiple choice question attempts"

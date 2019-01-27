@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Course, MediaFile, Forum, Comment
-from quiz.models import Quiz, Question, MCQuestion, Answer
+from quiz.models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -63,6 +63,14 @@ class MCQuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
 
 
+class MCQuestionAttempAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'quiz', 'question' )
+    list_filter = ('course', 'quiz')
+
+    search_fields = ('quiz', 'course', 'question')
+    # filter_horizontal = ('student',)
+
+
 class CourseAdmin(admin.ModelAdmin):
     # fields = ('name', 'students')
     filter_horizontal = ('students',)
@@ -75,4 +83,5 @@ admin.site.register(Comment)
 admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
+admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
 # admin.site.register(Answer)
