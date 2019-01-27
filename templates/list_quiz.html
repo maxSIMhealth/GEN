@@ -42,7 +42,7 @@
       {% for quiz in quizzes %}
         <tr>
           <td>
-            <a href="#">{{quiz.name}}</a>
+            <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
             <small class="text-muted d-block">{{quiz.description}}</small>
           </td>
           <td>--</td>

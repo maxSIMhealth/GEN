@@ -22,6 +22,7 @@ from django.contrib.auth import views as auth_views
 from forums import views
 from accounts import views as account_views
 from dashboard import views as dashboard_views
+from quiz import views as quiz_views
 
 urlpatterns = [    
     # path('', views.ForumListView.as_view(), name='home'),
@@ -49,6 +50,7 @@ urlpatterns = [
     path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote', views.clearvote_comment, name='comment_clearvote'),
 
     path('courses/<int:pk>/quiz', views.list_quiz, name='list_quiz'),
+    path('courses/<int:pk>/quiz/<int:quiz_pk>', quiz_views.quiz, name='quiz'),
 
     # path('forums/', views.ForumListView.as_view(), name='forums'),
 
