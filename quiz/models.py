@@ -16,7 +16,7 @@ class Quiz(TimeStampedModel):
         verbose_name_plural = "quizzes"
 
     def get_questions(self):
-        return self.question_set.all().select_subclasses()
+        return self.questions.all().select_subclasses()
 
     def __str__(self):
         return self.name
@@ -25,6 +25,7 @@ class Question(TimeStampedModel):
     quiz = models.ManyToManyField(
         Quiz,
         verbose_name='Quiz',
+        related_name='questions',
         blank=True)
         # on_delete=models.PROTECT)
     content = models.CharField(
