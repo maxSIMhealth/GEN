@@ -62,7 +62,13 @@ class MCQuestionAdmin(admin.ModelAdmin):
 
     inlines = [AnswerInline]
 
-admin.site.register(Course)
+
+class CourseAdmin(admin.ModelAdmin):
+    # fields = ('name', 'students')
+    filter_horizontal = ('students',)
+
+
+admin.site.register(Course, CourseAdmin)
 admin.site.register(MediaFile)
 admin.site.register(Forum)
 admin.site.register(Comment)
