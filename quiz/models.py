@@ -53,10 +53,10 @@ class MCQuestion(Question):
             return False
     
     def get_answers(self):
-        return self.order_answers(Answer.objects.filter(question=self))
+        return Answer.objects.filter(question=self)
 
     def get_answers_list(self):
-        return [(answer.id, answer.content) for answer in self.order_answers(Answer.objects.filter(question=self))]
+        return [(answer.id, answer.content) for answer in Answer.objects.filter(question=self)]
 
     class Meta:
         verbose_name = "Multiple Choice Question"
