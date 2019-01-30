@@ -64,7 +64,7 @@ class MCQuestionAdmin(admin.ModelAdmin):
 
 
 class MCQuestionAttempAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'quiz', 'question' )
+    list_display = ('student', 'course', 'quiz', 'question', 'created')
     list_filter = ('course', 'quiz')
 
     search_fields = ('quiz', 'course', 'question')

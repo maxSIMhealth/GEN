@@ -90,6 +90,7 @@ class MCQuestionAttempt(TimeStampedModel):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
     correct = models.NullBooleanField(blank=True, null=True)
+    answer = models.CharField('student answer', max_length=1000)
     attempt = models.PositiveIntegerField(default = 0)
 
     def __str__(self):
