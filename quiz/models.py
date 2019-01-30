@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from model_utils import Choices
-from model_utils.models import TimeStampedModel, StatusModel
+from model_utils.models import TimeStampedModel
 from model_utils.managers import InheritanceManager
 
 from forums.models import Course, MediaFile
+
 
 class Quiz(TimeStampedModel):
     name = models.CharField(max_length=30, unique=True)
@@ -22,13 +22,14 @@ class Quiz(TimeStampedModel):
     def __str__(self):
         return self.name
 
+
 class Question(TimeStampedModel):
     quiz = models.ManyToManyField(
         Quiz,
         verbose_name='Quiz',
         related_name='questions',
         blank=True)
-        # on_delete=models.PROTECT)
+    # on_delete=models.PROTECT)
     content = models.CharField(
         max_length=1000,
         blank=False,
@@ -43,6 +44,7 @@ class Question(TimeStampedModel):
     def __str__(self):
         return self.content
 
+
 class MCQuestion(Question):
     def check_if_correct(self, guess):
         answer = Answer.objects.get(id=guess)
@@ -51,7 +53,7 @@ class MCQuestion(Question):
             return True
         else:
             return False
-    
+
     def get_answers(self):
         return Answer.objects.filter(question=self)
 
@@ -61,6 +63,7 @@ class MCQuestion(Question):
     class Meta:
         verbose_name = "Multiple Choice Question"
         verbose_name_plural = "Multiple Choice Questions"
+
 
 class Answer(models.Model):
     question = models.ForeignKey(
@@ -84,6 +87,7 @@ class Answer(models.Model):
     def __str__(self):
         return self.content
 
+
 class MCQuestionAttempt(TimeStampedModel):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
     quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
@@ -91,7 +95,7 @@ class MCQuestionAttempt(TimeStampedModel):
     question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
     correct = models.NullBooleanField(blank=True, null=True)
     answer = models.CharField('student answer', max_length=1000)
-    attempt = models.PositiveIntegerField(default = 0)
+    attempt = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "User %s - quiz %s - course %s - attempt %s" % (self.student.username, self.quiz.name, self.course.name, self.attempt)

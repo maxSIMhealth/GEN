@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls import url
+# from django.conf.urls import url
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
@@ -24,7 +24,7 @@ from accounts import views as account_views
 from dashboard import views as dashboard_views
 from quiz import views as quiz_views
 
-urlpatterns = [    
+urlpatterns = [
     # path('', views.ForumListView.as_view(), name='home'),
 
     path('', dashboard_views.dashboard, name='home'),
