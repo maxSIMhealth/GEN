@@ -3,12 +3,13 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 
-from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer
+from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore
 from forums.models import Course
 
 
 @login_required
 def quiz(request, pk, quiz_pk):
+    # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
 
@@ -23,10 +24,11 @@ def quiz(request, pk, quiz_pk):
             quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
         # removing csrf token from items list
         items.pop(0)
+        score = 0
 
+        # get each question id and get answer related to it
         for item in items:
             try:
-                # question_id = key.split('_')[1]
                 question_id = item.split('_')[1]
             except:
                 question_id = None
@@ -42,41 +44,58 @@ def quiz(request, pk, quiz_pk):
             except:
                 answer = None
 
+            # check if the question is correct
             if MCQuestion.check_if_correct(mcquestion, answer.pk):
                 flag = True
+                score += 1
 
+            # store the answers as a new attempt
             attempt = MCQuestionAttempt.objects.create(
                 student=request.user,
-                quiz=Quiz.objects.get(pk=quiz.pk),
-                course=Course.objects.get(pk=course.pk),
+                quiz=quiz,
+                course=course,
                 question=MCQuestion.objects.get(pk=question_id),
+                correct=flag,
                 # I've decided to save a pure text versio of the answer, in
                 # case the answer object is altered in the future
-                answer=answer.content,
-                correct=flag
+                answer=answer.content
             )
 
+            # increase attempt number
             attempt.attempt_no = attempt_no['attempt_no__max'] + 1
 
-            # if attempt_no['attempt_no__max']:
-            #     attempt.attempt_no = attempt_no['attempt_no__max'] + 1
-
+            # save attempt data
             attempt.save()
 
             # change session variable to indicate that the
             # user completed the quiz
             request.session['quiz_complete'] = True
 
+        # check if user has quiz score
+        if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
+            # get student quiz score
+            quiz_score = QuizScore.objects.get(
+                student=request.user,
+                course=course,
+                quiz=quiz
+            )
+            # update score
+            quiz_score.score = score
+
+        else:
+            # create student quiz score
+            quiz_score = QuizScore.objects.create(
+                student=request.user,
+                quiz=quiz,
+                course=course,
+                score=score
+            )
+
+        # save score data
+        quiz_score.save()
+
         # if flag:
         return HttpResponseRedirect(reverse('quiz_result', args=[pk, quiz.pk]))
-            # return redirect('quiz_result', pk=pk, quiz_pk=quiz.pk)
-
-        # return render(
-        #     request,
-        #     'quiz_result.html',
-        #     {'course': course, "quiz": quiz})
-
-        # return redirect('quiz_result')
 
     else:
         return render(

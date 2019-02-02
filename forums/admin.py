@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Course, MediaFile, Forum, Comment
-from quiz.models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt
+from quiz.models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, QuizScore
 
 
 class AnswerInline(admin.TabularInline):
@@ -86,3 +86,4 @@ admin.site.register(Quiz, QuizAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
 # admin.site.register(Answer)
+admin.site.register(QuizScore)

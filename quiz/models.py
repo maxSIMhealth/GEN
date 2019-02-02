@@ -103,3 +103,13 @@ class MCQuestionAttempt(TimeStampedModel):
     class Meta:
         verbose_name = "Multiple Choice Questions Attempt"
         verbose_name_plural = "Multiple Choice Questions Attempts"
+
+
+class QuizScore(models.Model):
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    score = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return "Score for user %s - quiz %s - course %s" % (self.student.username, self.quiz.name, self.course.name)
