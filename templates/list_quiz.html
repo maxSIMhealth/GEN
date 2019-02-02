@@ -45,8 +45,21 @@
             <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
             <small class="text-muted d-block">{{quiz.description}}</small>
           </td>
-          <td>--</td>
-          <td>--</td>
+          {% if quiz.quizscore_set.exists %}
+            <td>
+              Done
+            </td>
+            <td>
+              {{quiz.quizscore_set.get.score}}
+            </td>
+          {% else %}
+            <td>
+              To do
+            </td>
+            <td>
+              --
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
       </tbody>

@@ -50,7 +50,7 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Quiz</h5>
+      <h5 class="card-header bg-light">Quiz - Correct Answers</h5>
       <div class="card-body">
         {% comment %} {% include includes/form.html %} {% endcomment %}
         {% for question in quiz.questions.all %}
@@ -64,7 +64,7 @@
             {{choice.correct}} {% endcomment %}
             {% for choice in question.mcquestion.get_answers %}
               {% if choice.correct %}
-                <li class="list-group-item list-group-item-success">{{choice.content}}</li>
+                <li class="list-group-item list-group-item-primary">{{choice.content}}</li>
               {% else %}
                 <li class="list-group-item">{{choice.content}}</li>
               {% endif %}
@@ -73,6 +73,7 @@
           {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
           {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
         {% endfor %}
+        <a href="{% url 'list_quiz' course.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
       </div>
     </div>
   </div>
