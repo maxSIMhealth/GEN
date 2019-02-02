@@ -62,6 +62,7 @@ def quiz(request, pk, quiz_pk):
             )
 
             # increase attempt number
+            # FIXME: there is an error when there are no attempts
             attempt.attempt_no = attempt_no['attempt_no__max'] + 1
 
             # save attempt data
@@ -109,12 +110,12 @@ def quiz_result(request, pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
-    my_kwargs = dict(
+    quiz_score_kwargs = dict(
         student=request.user,
         quiz=quiz,
         course=course
     )
-    quiz_score = get_object_or_404(QuizScore, **my_kwargs)
+    quiz_score = get_object_or_404(QuizScore, **quiz_score_kwargs)
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
