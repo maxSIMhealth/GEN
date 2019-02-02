@@ -3,16 +3,42 @@ from forums.models import Forum, Comment
 
 register = template.Library()
 
+
+def countitem_score(items, current_score):
+    score = current_score
+
+    for item in items:
+        score += item.votes.count()
+
+    return score
+
+
 @register.simple_tag
 def countvotes(user_id, kind):
-  if kind == "forum":
-    items = Forum.objects.filter(author = user_id)
-  elif kind == "comment":
-    items = Comment.objects.filter(author = user_id)
+    score = 0
 
-  score = 0
+    if kind == "forum":
+        items = Forum.objects.filter(author=user_id)
+        score = countitem_score(items, score)
+    elif kind == "comment":
+        items = Comment.objects.filter(author=user_id)
+        score = countitem_score(items, score)
 
-  for item in items:
-    score += item.votes.count()
+    return score
 
-  return score
+
+@register.simple_tag
+def countvotes_course(user_id, course_id, kind):
+    forums = Forum.objects.filter(author=user_id, course=course_id)
+    score = 0
+
+    if kind == "forum":
+        items = forums
+        score = countitem_score(items, score)
+    elif kind == "comment":
+        for forum in forums:
+            if Comment.objects.filter(author=user_id, forum=forum.id).exists():
+                items = Comment.objects.filter(author=user_id, forum=forum.id)
+                score = countitem_score(items, score)
+
+    return score
