@@ -41,10 +41,39 @@
   </div>
   {% endif %}
 
-<div class="card mb-3">
-    <h5 class="card-header">Quiz Results</h5>
-    <div class="card-body">
-        
+  <div class="card-deck mb-3">
+    <div class="card bg-secondary text-white">
+      <h5 class="card-header bg-dark">Result</h5>
+      <div class="card-body">
+        Your score is {{score}}.
+      </div>
     </div>
-</div>
+
+    <div class="card">
+      <h5 class="card-header bg-light">Quiz</h5>
+      <div class="card-body">
+        {% comment %} {% include includes/form.html %} {% endcomment %}
+        {% for question in quiz.questions.all %}
+          <h6 class="card-title">
+            <strong>{{question.mcquestion}}</strong>
+          </h6> 
+
+          <ul class="list-group mb-3">
+            {% comment %} {{choice.pk}} - 
+            {{choice.content}} - 
+            {{choice.correct}} {% endcomment %}
+            {% for choice in question.mcquestion.get_answers %}
+              {% if choice.correct %}
+                <li class="list-group-item list-group-item-success">{{choice.content}}</li>
+              {% else %}
+                <li class="list-group-item">{{choice.content}}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
+          {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock content %}

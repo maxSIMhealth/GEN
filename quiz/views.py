@@ -109,30 +109,38 @@ def quiz_result(request, pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    my_kwargs = dict(
+        student=request.user,
+        quiz=quiz,
+        course=course
+    )
+    quiz_score = get_object_or_404(QuizScore, **my_kwargs)
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
     if request.session.get('quiz_complete') is False:
         return HttpResponseRedirect(reverse('list_quiz', args=[pk]))
 
-    # get latest attempt number
-    attempt_no = MCQuestionAttempt.objects.filter(
-        quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
+    score = quiz_score.score
 
-    # get questions from the latest attemp
-    questions = MCQuestionAttempt.objects.filter(
-        quiz=quiz,
-        student=request.user,
-        attempt_no=attempt_no['attempt_no__max']
-    )
+    # # get latest attempt number
+    # attempt_no = MCQuestionAttempt.objects.filter(
+    #     quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
 
-    # base score
-    score = 0
+    # # get questions from the latest attemp
+    # questions = MCQuestionAttempt.objects.filter(
+    #     quiz=quiz,
+    #     student=request.user,
+    #     attempt_no=attempt_no['attempt_no__max']
+    # )
 
-    # increment score by 1 for each correct answer
-    for question in questions:
-        if question.correct:
-            score += 1
+    # # base score
+    # score = 0
+
+    # # increment score by 1 for each correct answer
+    # for question in questions:
+    #     if question.correct:
+    #         score += 1
 
     # reset the session variable
     request.session['quiz_complete'] = False
@@ -140,5 +148,6 @@ def quiz_result(request, pk, quiz_pk):
     # return render page
     return render(request, 'quiz_result.html', {
         'course': course,
-        'quiz': quiz
+        'quiz': quiz,
+        'score': score
     })
