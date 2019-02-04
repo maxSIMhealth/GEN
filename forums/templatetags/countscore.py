@@ -20,7 +20,7 @@ def countitem_score(items, current_score):
 
 
 @register.simple_tag
-def countvotes(user_id, kind):
+def countscore(user_id, kind):
     score = 0
 
     if kind == "forum":
@@ -36,7 +36,7 @@ def countvotes(user_id, kind):
 
 
 @register.simple_tag
-def countvotes_course(user_id, course_id, kind):
+def countscore_course(user_id, course_id, kind):
     forums = Forum.objects.filter(author=user_id, course=course_id)
     quizzes = QuizScore.objects.filter(student=user_id, course=course_id)
     score = 0

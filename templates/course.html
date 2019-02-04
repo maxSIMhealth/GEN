@@ -2,7 +2,7 @@
 
 {% load humanize %}
 {% load gravatar %}
-{% load countvotes %}
+{% load countscore %}
 
 {% block title %}OPEN2 - {{ course.code }} - {{course.name}} {% endblock title %}
 
@@ -70,15 +70,15 @@
           <tbody>
             <tr>
               <td>Forums</td>
-              <td class="text-center">{% countvotes_course user.id course.pk "forum" %}</td>
+              <td class="text-center">{% countscore_course user.id course.pk "forum" %}</td>
             </tr>
             <tr>
               <td>Comments</td>
-              <td class="text-center">{% countvotes_course user.id course.pk "comment" %}</td>
+              <td class="text-center">{% countscore_course user.id course.pk "comment" %}</td>
             </tr>
             <tr>
               <td>Quizzes</td>
-              <td class="text-center">{% countvotes_course user.id course.pk "quiz" %}</td>
+              <td class="text-center">{% countscore_course user.id course.pk "quiz" %}</td>
             </tr>
           </tbody>
         </table>

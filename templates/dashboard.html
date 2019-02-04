@@ -2,7 +2,7 @@
 
 {% load humanize %}
 {% load gravatar %}
-{% load countvotes %}
+{% load countscore %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item active">User Dashboard</li>
@@ -52,15 +52,15 @@
           <tbody>
             <tr>
               <td>Forums</td>
-              <td class="text-center">{% countvotes user.id "forum" %}</td>
+              <td class="text-center">{% countscore user.id "forum" %}</td>
             </tr>
             <tr>
               <td>Comments</td>
-              <td class="text-center">{% countvotes user.id "comment" %}</td>
+              <td class="text-center">{% countscore user.id "comment" %}</td>
             </tr>
             <tr>
               <td>Quizzes</td>
-              <td class="text-center">{% countvotes user.id "quiz" %}</td>
+              <td class="text-center">{% countscore user.id "quiz" %}</td>
             </tr>
           </tbody>
         </table>
