@@ -24,15 +24,25 @@ def course_forums(request, pk):
 def list_videos(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
+    media_list = []
 
-    return render(request, 'list_videos.html', {'course': course, 'forums': forums})
+    for forum in forums:
+        if forum.media.kind == 'YTB':
+            media_list.append(forum)
+
+    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'media_list': media_list})
 
 
 def list_pdfs(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
+    media_list = []
 
-    return render(request, 'list_pdfs.html', {'course': course, 'forums': forums})
+    for forum in forums:
+        if forum.media.kind == 'PDF':
+            media_list.append(forum)
+
+    return render(request, 'list_pdfs.html', {'course': course, 'forums': forums, 'media_list': media_list})
 
 
 def list_quiz(request, pk):

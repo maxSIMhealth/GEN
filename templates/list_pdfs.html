@@ -30,17 +30,13 @@
 
 {% block content %}
   <ul class="list-group">
-      {% for forum in forums %}
-        {% if forum.media.kind == 'PDF' %}
-          <li class="list-group-item">
-            <span><a href="{{ forum.media.url }}">{{ forum.media.title }} - {{ forum.media.url }}</a></span>
-            <div>
-              <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
-            </div>
-          </li>
-        {% elif forum.media.kind == 'YTB' and forloop.first %}
-          Nothing to show.
-        {% endif %}
+      {% for forum in media_list %}
+        <li class="list-group-item">
+          <span><a href="{{ forum.media.url }}">{{ forum.media.title }} - {{ forum.media.url }}</a></span>
+          <div>
+            <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+          </div>
+        </li>
       {% empty %}
         Nothing to show.
       {% endfor %}
