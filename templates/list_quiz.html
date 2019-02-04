@@ -34,33 +34,31 @@
       <thead class="thead-dark">
         <tr>
           <th>Name</th>
-          <th>Status</th>
-          <th>Score</th>
+          <th style="width:12%" class="text-center">Status</th> <!-- FIXME: remove inline style -->
+          <th style="width:12%" class="text-center">Score</th>
         </tr>
       </thead>
       <tbody>
       {% for quiz in quizzes %}
+        {% if quiz.quizscore_set.exists %}
+        <tr>
+          <td>
+            <span class="text-muted">{{quiz.name}}</span>
+            <small class="text-muted d-block">{{quiz.description}}</small>
+          </td>
+          <td class="text-center">Done</td>
+          <td class="text-center">{{quiz.quizscore_set.get.score}}</td>
+        </tr>
+        {% else %}
         <tr>
           <td>
             <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
             <small class="text-muted d-block">{{quiz.description}}</small>
           </td>
-          {% if quiz.quizscore_set.exists %}
-            <td>
-              Done
-            </td>
-            <td>
-              {{quiz.quizscore_set.get.score}}
-            </td>
-          {% else %}
-            <td>
-              To do
-            </td>
-            <td>
-              --
-            </td>
-          {% endif %}
+          <td class="text-center">To do</td>
+          <td class="text-center">--</td>
         </tr>
+        {% endif %}
       {% endfor %}
       </tbody>
     </table>
