@@ -9,7 +9,12 @@ def countitem_score(items, current_score):
     score = current_score
 
     for item in items:
-        score += item.votes.count()
+        # for forums and comments votes
+        if hasattr(item, 'votes'):
+            score += item.votes.count()
+        # for quiz scores
+        elif hasattr(item, 'score'):
+            score += item.score
 
     return score
 
@@ -20,14 +25,12 @@ def countvotes(user_id, kind):
 
     if kind == "forum":
         items = Forum.objects.filter(author=user_id)
-        score = countitem_score(items, score)
     elif kind == "comment":
         items = Comment.objects.filter(author=user_id)
-        score = countitem_score(items, score)
     elif kind == "quiz":
         items = QuizScore.objects.filter(student=user_id)
-        for item in items:
-            score += item.score
+
+    score = countitem_score(items, score)
 
     return score
 
@@ -48,8 +51,6 @@ def countvotes_course(user_id, course_id, kind):
                 score = countitem_score(items, score)
     elif kind == "quiz":
         items = quizzes
-
-        for item in items:
-            score += item.score
+        score = countitem_score(items, score)
 
     return score
