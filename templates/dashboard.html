@@ -48,7 +48,7 @@
     <div class="card">
       <h5 class="card-header bg-light">Scoreboard</h5>
       <div class="card-body">
-        <table class="table table-hover">
+        <table class="table table-hover mb-0">
           <tbody>
             <tr>
               <td>Forums</td>
@@ -60,7 +60,7 @@
             </tr>
             <tr>
               <td>Quizzes</td>
-              <td class="text-center">*WIP*</td>
+              <td class="text-center">{% countvotes user.id "quiz" %}</td>
             </tr>
           </tbody>
         </table>
