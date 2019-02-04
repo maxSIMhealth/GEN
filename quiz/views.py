@@ -62,8 +62,10 @@ def quiz(request, pk, quiz_pk):
             )
 
             # increase attempt number
-            # FIXME: there is an error when there are no attempts
-            attempt.attempt_no = attempt_no['attempt_no__max'] + 1
+            if attempt_no['attempt_no__max']:
+                attempt.attempt_no = attempt_no['attempt_no__max'] + 1
+            else:
+                attempt.attempt_no = 1
 
             # save attempt data
             attempt.save()
