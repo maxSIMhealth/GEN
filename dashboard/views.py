@@ -17,7 +17,7 @@ def dashboard(request):
         forums_progress = progress(request, forums)
         quizzes_progress = progress(request, quizzes)
         course_progress = {
-            'name': course.name,
+            'name': course.code,
             'forums': forums_progress,
             'quizzes': quizzes_progress,
             'max': forums_progress['max'] + quizzes_progress['max']
