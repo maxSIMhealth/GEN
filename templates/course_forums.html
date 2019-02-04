@@ -46,11 +46,11 @@
         </tr>
       </thead>
       <tbody>
-        {% if debug == True %}
+        {% comment %} {% if debug == True %}
         <div class="alert alert-warning" role="alert">
           *DEBUG* user_id: {{ user.id }} <br />
         </div>
-        {% endif %}
+        {% endif %} {% endcomment %}
         {% for forum in forums %}
           {% comment %} Using custom template tag to check if the user voted {% endcomment %}
           {% checkvotes_forum user.id forum.pk as forum_vote_status %}
@@ -72,11 +72,11 @@
             <td>
               <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a>
               <small class="text-muted d-block">{{ forum.description }}</small>
-              {% if debug == True %}
+              {% comment %} {% if debug == True %}
                 <div class="alert alert-warning" role="alert">
                   *DEBUG* Did this user vote? {{ forum_vote_status }} <br />
                 </div>
-              {% endif %}
+              {% endif %} {% endcomment %}
             </td>
             <td>{{ forum.get_comment_count }}</td>
             <td>{{ forum.author }}</td>
