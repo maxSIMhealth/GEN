@@ -8,10 +8,36 @@ from .forms import NewForumForm, NewCommentForm, NewMediaForm
 from .models import Course, Forum, Comment, MediaFile
 
 
+def progress(request, items):
+    items_total = items.__len__()
+    items_participation = 0
+
+    for item in items:
+        if item._meta.model_name == 'forum':
+            if item.comments.filter(author=request.user).exists():
+                items_participation += 1
+        if item._meta.model_name == 'quiz':
+            if item.quizscore_set.filter(student=request.user).exists():
+                items_participation += 1
+
+    items_progress = {
+        'max': items_total,
+        'current': items_participation
+    }
+
+    return items_progress
+
+
 def course(request, pk):
     course = get_object_or_404(Course, pk=pk)
+    forums = course.forums.all()
+    quizzes = course.quizzes.all()
 
-    return render(request, 'course.html', {'course': course})
+    # progress status
+    forums_progress = progress(request, forums)
+    quizzes_progress = progress(request, quizzes)
+
+    return render(request, 'course.html', {'course': course, 'forums_progress': forums_progress, 'quizzes_progress': quizzes_progress})
 
 
 def course_forums(request, pk):
