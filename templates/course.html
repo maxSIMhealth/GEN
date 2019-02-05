@@ -56,12 +56,6 @@
     </div>
   </div>
 
-  {% comment %} <h4 class="card-title">{{ course.name }}</h4>
-  <p class="card-text">Code: {{ course.code}}</p>
-  <p class="card-text">Starting date: {{ course.start_date}} | <small>{{ course.start_date|naturaltime}}</small></p>
-  <p class="card-text">Ending date: {{ course.end_date}} | <small>{{ course.end_date|naturaltime}}</small></p>
-  <p class="card-text">Description: {{ course.description }}</p> {% endcomment %}
-
   <div class="card-deck">
     <div class="card">
       <h5 class="card-header bg-light">Scoreboard</h5>
@@ -119,7 +113,7 @@
             {{quizzes_progress.current}} / {{quizzes_progress.max}}
             {% widthratio quizzes_progress.current quizzes_progress.max 100 as quizzes_progress_percent %}
             <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{quizzes_progress_percent}}%">
-              <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </li>
         </ul>
