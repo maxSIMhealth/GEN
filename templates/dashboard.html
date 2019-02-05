@@ -86,10 +86,10 @@
               <div class="progress mt-1 mb-3">
                 {% comment %} Forum progress bar {% endcomment %}
                 {% widthratio course.forums.current course.max 100 as course_forums_progress_percent %}
-                <div class="progress-bar" role="progressbar" style="width: {{course_forums_progress_percent}}%" aria-valuenow="{{course_forums_progress_percent}}" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="Forums participation: {{course_forums_progress_percent}}%"></div>
+                <div class="progress-bar" role="progressbar" style="width: {{course_forums_progress_percent}}%" aria-valuenow="{{course_forums_progress_percent}}" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="{{course_forums_progress_percent}}% from forums"></div>
                 {% comment %} Quiz progress bar {% endcomment %}
                 {% widthratio course.quizzes.current course.max 100 as course_quizzes_progress_percent %}
-                <div class="progress-bar bg-warning" role="progressbar" style="width: {{course_quizzes_progress_percent}}%" aria-valuenow="{{course_quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="Quizzes completed: {{course_quizzes_progress_percent}}%"></div>
+                <div class="progress-bar bg-warning" role="progressbar" style="width: {{course_quizzes_progress_percent}}%" aria-valuenow="{{course_quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="{{course_quizzes_progress_percent}}% from quizzes"></div>
               </div>
             </li>
           {% endfor %}
