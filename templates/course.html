@@ -58,7 +58,7 @@
 
   <div class="card-deck">
     <div class="card">
-      <h5 class="card-header bg-light">Scoreboard</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
       <div class="card-body pb-0">
         <table class="table table-hover">
           <tbody>
@@ -80,12 +80,12 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Leaderboard</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
       <div class="card-body pb-0">
         <table class="table table-hover">
           <tbody>
             <tr>
-              <td>Top 5 Forum poster</td>
+              <td>Forum: {% rank_course user.id course.pk "forum" %}</td>
             </tr>
             <tr>
               <td>You never posted a comment :(</td>
@@ -99,7 +99,7 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Course Progress</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</h5>
       <div class="card-body pb-0">
         <ul class="list-unstyled">
           <li>Forums participation:
