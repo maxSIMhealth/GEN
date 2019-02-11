@@ -31,14 +31,16 @@
   <div class="card mb-3">
     <h5 class="card-header bg-light">
       <div class="row">
-        <div class="col-10 pt-2">Enrolled Courses</div>
-        <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Add</a></div>
+        <div class="col-10 pt-2"><i class="fas fa-laptop-code pr-1"></i> Courses</div>
+        <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Enroll</a></div>
       </div>
     </h5>
     <div class="card-body p-0">
       <ul class="list-group list-group-flush">
         {% for course in user.member.all %}
           <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
+        {% empty %}
+          <li class="list-group-item">Not enrolled in any course.</li>
         {% endfor %}
       </ul>
     </div>
@@ -46,7 +48,7 @@
 
   <div class="card-deck mb-3">
     <div class="card">
-      <h5 class="card-header bg-light">Scoreboard</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
       <div class="card-body">
         <table class="table table-hover mb-0">
           <tbody>
@@ -68,16 +70,26 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Leaderboard</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
       <div class="card-body">
-        - Top 5 Forum poster
-        - You never posted a comment :(
-        - Best quiz score
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td>Forum: bla</td>
+            </tr>
+            <tr>
+              <td>You never posted a comment :(</td>
+            </tr>
+            <tr>
+              <td>Best quiz score</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Progress</h5>
+      <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i> Progress</h5>
       <div class="card-body">
         <ul class="list-unstyled">
           {% for course in user_progress %}
@@ -99,4 +111,3 @@
   </div>
 
 {% endblock content %}
-
