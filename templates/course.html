@@ -1,8 +1,13 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load gravatar %}
 {% load countscore %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block title %}OPEN2 - {{ course.code }} - {{course.name}} {% endblock title %}
 
