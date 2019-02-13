@@ -64,8 +64,10 @@ def rank(user_id, course_id, kind):
     # dashboard/home has no course_id
     if course_id == '':
         forums = Forum.objects.all()
+        quizscore = QuizScore.objects.all()
     else:
         forums = Forum.objects.filter(course=course_id)
+        quizscore = QuizScore.objects.filter(course=course_id)
     username = User.objects.get(pk=user_id).username
     rank = 0
     rank_user = 0
@@ -88,10 +90,16 @@ def rank(user_id, course_id, kind):
 
         items = items.order_by('-votes__count')
 
+    elif kind == 'quiz':
+        items = quizscore.values('student').annotate(Count('score')).order_by('-score__count')
+
     for item in items:
         rank += 1
-        print(item['author__username'])
-        if item['author__username'] == username:
-            rank_user = rank
+        if kind == 'quiz':
+            if item['student'] == user_id:
+                rank_user = rank
+        else:
+            if item['author__username'] == username:
+                rank_user = rank
 
     return rank_user
