@@ -1,5 +1,6 @@
 from django import template
 from django.db.models import Count
+from django.contrib.auth.models import User
 
 from forums.models import Forum, Comment
 from quiz.models import QuizScore
@@ -88,39 +89,53 @@ def rank(user_id, course_id, kind):
 @register.simple_tag
 def rank_course(user_id, course_id, kind):
     forums = Forum.objects.filter(course=course_id)
-    # username = User.objects.get(pk=user_id).username
-    # rank = 0
-    # rank_user = 0
+    username = User.objects.get(pk=user_id).username
+    rank = 0
+    rank_user = 0
 
     if kind == 'forum':
 
         # get forums by authors (username), counts the likes (votes)
         # and order them from highest to lowest
         items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
-        # filter the forum list to the current user id
-        # (list is empty if the user never created a forum)
-        item_user = items.filter(author=user_id)
 
-        # check if user created a forum
-        if item_user.exists():
-            # get user forum vote score and check if there are
-            # other forums with higher scores
-            # (list begins with 0, that's why I add 1)
-            rank_user = items.filter(votes__count__gt=item_user[0]['votes__count']).count() + 1
-        else:
-            # otherwise, the user never created a forum and so
-            # the rank position is 0
-            rank_user = 0
+    elif kind == 'comment':
+        counter = 0
 
-        # alternative method, but using a for isn't a good pratice
-        # because it would check every item in the list
-        # rank_user = items.filter(votes__count__gt=item['votes__count']).count() + 1
+        for forum in forums:
+            if counter == 0:
+                items = forum.comments.values('author__username').annotate(Count('votes'))
+            else:
+                items = items | forum.comments.values('author__username').annotate(Count('votes'))
+            counter += 1
 
-        # items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
-        # for item in items:
-        #     rank += 1
-        #     print(item['author__username'])
-        #     if item['author__username'] == username:
-        #         rank_user = rank
+        items = items.order_by('-votes__count')
+
+        # rank_user = 0
+
+    # filter the items list to the current user id
+    # (list is empty if the user never created a forum/comment)
+    # item_user = items.filter(author=user_id)
+
+    # check if user created a forum or comment
+    # if item_user.exists():
+    #     # get user forum/comment vote score and check if there
+    #     # are other items with higher scores
+    #     # (list begins with 0, that's why I add 1)
+    #     rank_user = items.filter(votes__count__gt=item_user[0]['votes__count']).count() + 1
+    # else:
+    #     # otherwise, the user never created a forum/comment
+    #     # and so the rank position is 0
+    #     rank_user = 0
+
+    # alternative method, but using a for isn't a good pratice
+    # because it would check every item in the list
+
+    # items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
+    for item in items:
+        rank += 1
+        print(item['author__username'])
+        if item['author__username'] == username:
+            rank_user = rank
 
     return rank_user
