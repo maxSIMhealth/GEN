@@ -1,24 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
+# from django.views.generic import ListView
 from django.utils import timezone
 from urllib.parse import urlparse
 
 from .forms import NewForumForm, NewCommentForm, NewMediaForm
-from .models import Course, Forum, Comment, MediaFile
-from .progress import progress
-
-
-def course(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    forums = course.forums.all()
-    quizzes = course.quizzes.all()
-
-    # progress status
-    forums_progress = progress(request, forums)
-    quizzes_progress = progress(request, quizzes)
-
-    return render(request, 'course.html', {'course': course, 'forums_progress': forums_progress, 'quizzes_progress': quizzes_progress})
+from .models import Forum, Comment, MediaFile
+from courses.models import Course
 
 
 def course_forums(request, pk):
@@ -59,13 +47,13 @@ def list_quiz(request, pk):
     return render(request, 'list_quiz.html', {'course': course, 'quizzes': quizzes})
 
 
-class ForumListView(ListView):
+# class ForumListView(ListView):
     # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
     # Render some list of objects, set by `self.model` or `self.queryset`.
     # `self.queryset` can actually be any iterable of items, not just a queryset.
-    model = Forum
-    context_object_name = 'forums'
-    template_name = 'home.html'
+    # model = Forum
+    # context_object_name = 'forums'
+    # template_name = 'home.html'
 
 
 def forum_comments(request, pk, forum_pk):

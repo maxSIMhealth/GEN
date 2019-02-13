@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'accounts',
+    'courses',
     'forums',
     'dashboard',
     'quiz',
-    # 'courses',
 ]
 
 MIDDLEWARE = [
