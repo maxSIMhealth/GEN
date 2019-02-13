@@ -2,6 +2,7 @@
 
 {% load humanize %}
 {% load checkvotes %}
+{% load quizscore_check %}
 {% load embed_video_tags %}
 
 {% block breadcrumb %}
@@ -40,24 +41,25 @@
       </thead>
       <tbody>
       {% for quiz in quizzes %}
-        {% if quiz.quizscore_set.exists %}
-        <tr>
-          <td>
-            <span class="text-muted">{{quiz.name}}</span>
-            <small class="text-muted d-block">{{quiz.description}}</small>
-          </td>
-          <td class="text-center">Done</td>
-          <td class="text-center">{{quiz.quizscore_set.get.score}}</td>
-        </tr>
+        {% quizscore_check user course quiz as quizscore %}
+        {% if quizscore.exists %}
+          <tr>
+            <td>
+              <span class="text-muted">{{quiz.name}}</span>
+              <small class="text-muted d-block">{{quiz.description}}</small>
+            </td>
+            <td class="text-center">Done</td>
+            <td class="text-center">{{quizscore.get.score}}</td>
+          </tr>
         {% else %}
-        <tr>
-          <td>
-            <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
-            <small class="text-muted d-block">{{quiz.description}}</small>
-          </td>
-          <td class="text-center">To do</td>
-          <td class="text-center">--</td>
-        </tr>
+          <tr>
+            <td>
+              <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+              <small class="text-muted d-block">{{quiz.description}}</small>
+            </td>
+            <td class="text-center">To do</td>
+            <td class="text-center">--</td>
+          </tr>
         {% endif %}
       {% endfor %}
       </tbody>
