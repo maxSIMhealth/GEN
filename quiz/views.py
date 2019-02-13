@@ -30,7 +30,7 @@ def quiz(request, pk, quiz_pk):
         for item in items:
             try:
                 question_id = item.split('_')[1]
-            except:
+            except IndexError:
                 question_id = None
 
             try:
@@ -41,7 +41,7 @@ def quiz(request, pk, quiz_pk):
             try:
                 answer = Answer.objects.get(
                     content=request.POST.getlist(item)[0])
-            except:
+            except IndexError:
                 answer = None
 
             # check if the question is correct

@@ -52,7 +52,7 @@ class Forum(VoteModel, models.Model):
 
     def get_comment_count(self):
         return Forum.objects.filter(comments__forum=self).count()
- 
+
 
 class Comment(VoteModel, models.Model):
     message = models.TextField(max_length=400)
@@ -62,4 +62,3 @@ class Comment(VoteModel, models.Model):
 
     def __str__(self):
         return self.message
-    
