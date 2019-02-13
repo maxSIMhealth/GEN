@@ -77,6 +77,14 @@ class CourseAdmin(admin.ModelAdmin):
     filter_horizontal = ('students',)
 
 
+class QuizScoreAdmin(admin.ModelAdmin):
+    list_display = ('student', 'quiz', 'course', 'score')
+    list_filter = ('quiz', 'course', 'student')
+
+    # search_fields = ('student', 'quiz', 'course')
+    # filter_horizontal = ('student',)
+
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(MediaFile)
 admin.site.register(Forum)
@@ -86,4 +94,4 @@ admin.site.register(Quiz, QuizAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
 # admin.site.register(Answer)
-admin.site.register(QuizScore)
+admin.site.register(QuizScore, QuizScoreAdmin)
