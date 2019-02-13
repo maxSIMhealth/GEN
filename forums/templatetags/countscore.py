@@ -73,33 +73,39 @@ def rank(user_id, course_id, kind):
     rank_user = 0
 
     if kind == 'forum':
-
-        # get forums by authors (username), counts the likes (votes)
-        # and order them from highest to lowest
-        items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
+        if forums.exists():
+            # get forums by authors (username), counts the likes (votes)
+            # and order them from highest to lowest
+            items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
 
     elif kind == 'comment':
         counter = 0
 
-        for forum in forums:
-            if counter == 0:
-                items = forum.comments.values('author__username').annotate(Count('votes'))
-            else:
-                items = items | forum.comments.values('author__username').annotate(Count('votes'))
-            counter += 1
+        if forums.exists():
+            for forum in forums:
+                if counter == 0:
+                    items = forum.comments.values('author__username').annotate(Count('votes'))
+                else:
+                    items = items | forum.comments.values('author__username').annotate(Count('votes'))
+                counter += 1
 
-        items = items.order_by('-votes__count')
+            items = items.order_by('-votes__count')
 
     elif kind == 'quiz':
-        items = quizscore.values('student').annotate(Count('score')).order_by('-score__count')
+        if quizscore.exists():
+            items = quizscore.values('student').annotate(Count('score')).order_by('-score__count')
 
-    for item in items:
-        rank += 1
-        if kind == 'quiz':
-            if item['student'] == user_id:
-                rank_user = rank
-        else:
-            if item['author__username'] == username:
-                rank_user = rank
+    # check if variable 'items' exists
+    if 'items' in locals():
+        for item in items:
+            rank += 1
+            if kind == 'quiz':
+                if item['student'] == user_id:
+                    rank_user = rank
+            else:
+                if item['author__username'] == username:
+                    rank_user = rank
+    # except:
+    #     rank_user = 0
 
     return rank_user
