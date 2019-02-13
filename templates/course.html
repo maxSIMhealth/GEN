@@ -33,22 +33,22 @@
   <div class="card mb-3">
     <h5 class="card-header bg-light">{{ course.name }}</h5>
     <div class="card-body pb-0">
-      <table class="table table-hover">
+      <table class="table table-hover course-info">
         <tbody>
           <tr>
-            <th scope="row" style="width:12%">Code</th>
+            <th scope="row" class="th-small">Code</th>
             <td>{{course.code}}</td>
           </tr>
           <tr>
-            <th scope="row" style="width:12%">Starting date</th>
+            <th scope="row" class="th-small">Starting date</th>
             <td>{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
           </tr>
           <tr>
-            <th scope="row" style="width:12%">Ending date</th>
+            <th scope="row" class="th-small">Ending date</th>
             <td>{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
           </tr>
           <tr>
-            <th scope="row" style="width:12%">Description</th>
+            <th scope="row" class="th-small">Description</th>
             <td>{{course.description }}</td>
           </tr>
         </tbody>

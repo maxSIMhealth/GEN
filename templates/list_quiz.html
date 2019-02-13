@@ -1,9 +1,14 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load checkvotes %}
 {% load quizscore_check %}
 {% load embed_video_tags %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -31,12 +36,12 @@
 
 {% block content %}
   {% if quizzes %}
-    <table class="table">
+    <table class="table quiz-list">
       <thead class="thead-dark">
         <tr>
           <th>Name</th>
-          <th style="width:12%" class="text-center">Status</th> <!-- FIXME: remove inline style -->
-          <th style="width:12%" class="text-center">Score</th>
+          <th class="text-center th-small">Status</th>
+          <th class="text-center th-small">Score</th>
         </tr>
       </thead>
       <tbody>

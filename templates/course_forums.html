@@ -1,7 +1,12 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load checkvotes %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -35,10 +40,10 @@
   {% endif %}
 
   {% if forums %}
-    <table class="table">
+    <table class="table forum-list">
       <thead class="thead-dark">
         <tr>
-          <th style="width:5%"></th>
+          <th class="th-small"></th>
           <th>Name</th>
           <th>Comments</th>
           <th>Author</th>

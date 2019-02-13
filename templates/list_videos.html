@@ -1,8 +1,13 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load checkvotes %}
 {% load embed_video_tags %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -34,7 +39,7 @@
         <li class="list-group-item">
           {% video forum.media.url as my_video %}
             <div class="media">
-              <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3" alt="Video thumbnail" style="width: 96px; height: 54px"></a> <!-- TODO: remove inline CSS-->
+              <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
               <div class="media-body">
                 <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
                 <div>

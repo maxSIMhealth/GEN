@@ -1,0 +1,22 @@
+/* videos list */
+.video-thumbnail {
+    width: 96px;
+    height: 54px
+}
+
+/* forum comments */
+.user-thumbnail {
+    width: 100%;
+    height: 400px;
+}
+
+/* quiz list, course home (info) */
+.quiz-list .th-small,
+.course-info .th-small {
+    width: 12%;
+}
+
+/* forum list */
+.forum-list .th-small {
+    width: 5%;
+}
