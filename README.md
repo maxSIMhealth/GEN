@@ -1,4 +1,4 @@
-# OPEN2
+# OPEN2 - Educational networking web site for research purposes
 
 ## Installation instructions
 - Clone this repo
