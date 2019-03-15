@@ -35,22 +35,26 @@
   <div class="card bg-dark text-white border-dark mb-2">
     <h5 class="card-header">
       <div class="row">
-        <div class="col col-2 col-sm-2 col-md-auto col-lg-1 text-center">
-          {% checkvotes_forum user.id forum.pk as forum_vote_status %}
-          {% if user.is_authenticated %}
-            {% if forum_vote_status %}
-              <a href="{% url 'forum_clearvote' course.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+        {% if gamification %}
+          <div class="col col-2 col-sm-2 col-md-auto col-lg-1 text-center">
+            {% checkvotes_forum user.id forum.pk as forum_vote_status %}
+            {% if user.is_authenticated %}
+              {% if forum_vote_status %}
+                <a href="{% url 'forum_clearvote' course.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+              {% else %}
+                <a href="{% url 'forum_upvote' course.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+              {% endif %}
             {% else %}
-              <a href="{% url 'forum_upvote' course.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+              <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+                <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
+              </span>
             {% endif %}
-          {% else %}
-            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-              <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
-            </span>
-          {% endif %}
-          <div><small class="mt-1">{{ forum.vote_score }}</small></div>
-        </div>
-        <div class="col col-10 col-sm-10 col-md-10 col-lg-11 p-1">
+            <div><small class="mt-1">{{ forum.vote_score }}</small></div>
+          </div>
+          <div class="col col-10 col-sm-10 col-md-10 col-lg-11 p-1">
+        {% else %}
+          <div class="col col-12 col-sm-12 col-md-12 col-lg-11 p-1 pl-2">
+        {% endif %}
           <div>{{ forum.name }}</div>
           <small class="text-muted">By: {{ forum.author }}</small>
         </div>
@@ -69,7 +73,7 @@
   </div>
 
   <div class="card bg-light mb-2">
-    <h5 class="card-header">New comment</h5>
+    <h5 class="card-header pl-3">New comment</h5>
     <div class="card-body p-3">
       <form method="post" novalidate>
         {% csrf_token %}
@@ -90,24 +94,30 @@
 
         <li class="list-group-item">
           <div class="row">
-            <div class="col col-2 col-sm-2 col-md-2 col-lg-auto text-center">
-              {% if user.is_authenticated %}
-                {% if comment_vote_status %}
-                  <a href="{% url 'comment_clearvote' course.pk forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+            {% if gamification %}
+              <div class="col col-2 col-sm-2 col-md-2 col-lg-auto text-center">
+                {% if user.is_authenticated %}
+                  {% if comment_vote_status %}
+                    <a href="{% url 'comment_clearvote' course.pk forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                  {% else %}
+                    <a href="{% url 'comment_upvote' course.pk  forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                  {% endif %}
                 {% else %}
-                  <a href="{% url 'comment_upvote' course.pk  forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                  <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+                    <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
+                  </span>
                 {% endif %}
-              {% else %}
-                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-                  <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
-                </span>
-              {% endif %}
-              <div class="mt-1">{{ comment.vote_score }}</div>
-            </div>
+                <div class="mt-1">{{ comment.vote_score }}</div>
+              </div>
+            {% endif %}
             <div class="col col-2 col-sm-2 col-md-2 col-lg-2">
               <img src="{{ comment.author|gravatar }}" alt="{{ comment.author.username }}" class="w-100">
             </div>
-            <div class="col col-8 col-sm-8 col-md-8 col-lg-9">
+            {% if gamification %}
+              <div class="col col-8 col-sm-8 col-md-8 col-lg-9">
+            {% else %}
+              <div class="col col-10 col-sm-10 col-md-10 col-lg-10">
+            {% endif %}
               <div class="row mb-3">
                 <div class="col-6">
                   <strong class="text-muted">{{ comment.author.username }}</strong><br />

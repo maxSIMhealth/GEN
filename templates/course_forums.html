@@ -43,7 +43,9 @@
     <table class="table forum-list">
       <thead class="thead-dark">
         <tr>
+          {% if gamification %}
           <th class="th-small"></th>
+          {% endif %}
           <th>Name</th>
           <th>Comments</th>
           <th>Author</th>
@@ -60,20 +62,22 @@
           {% comment %} Using custom template tag to check if the user voted {% endcomment %}
           {% checkvotes_forum user.id forum.pk as forum_vote_status %}
           <tr>
-            <td class="text-center table-active">
-              {% if user.is_authenticated %}
-                {% if forum_vote_status %}
-                  <a href="{% url 'forum_clearvote' course.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+            {% if gamification %}
+              <td class="text-center table-active">
+                {% if user.is_authenticated %}
+                  {% if forum_vote_status %}
+                    <a href="{% url 'forum_clearvote' course.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                  {% else %}
+                    <a href="{% url 'forum_upvote' course.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                  {% endif %}
                 {% else %}
-                  <a href="{% url 'forum_upvote' course.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                  <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+                    <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
+                  </span>
                 {% endif %}
-              {% else %}
-                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-                  <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
-                </span>
-              {% endif %}
-              <div class="mt-1">{{ forum.vote_score }}</div>
-            </td>
+                <div class="mt-1">{{ forum.vote_score }}</div>
+              </td>
+            {% endif %}
             <td>
               <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a>
               <small class="text-muted d-block">{{ forum.description }}</small>

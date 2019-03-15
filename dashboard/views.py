@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from courses.progress import progress
+from OPEN2 import settings
 
 
 @login_required
 def dashboard(request):
     user_progress = []
+    gamification = False
 
     for course in request.user.member.all():
         forums = course.forums.all()
@@ -23,4 +25,7 @@ def dashboard(request):
         }
         user_progress.append(course_progress)
 
-    return render(request, 'dashboard.html', {'user_progress': user_progress})
+    if settings.GAMIFICATION:
+        gamification = True
+
+    return render(request, 'dashboard.html', {'user_progress': user_progress, 'gamification': gamification})

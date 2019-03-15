@@ -61,87 +61,90 @@
     </div>
   </div>
 
-  <div class="card-deck">
-    <div class="card">
-      <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
-      <div class="card-body pb-0">
-        <table class="table table-hover">
-          <tbody>
-            <tr>
-              <td>Forums</td>
-              <td class="text-center">{% countscore_course user.id course.pk "forum" %}</td>
-            </tr>
-            <tr>
-              <td>Comments</td>
-              <td class="text-center">{% countscore_course user.id course.pk "comment" %}</td>
-            </tr>
-            <tr>
-              <td>Quizzes</td>
-              <td class="text-center">{% countscore_course user.id course.pk "quiz" %}</td>
-            </tr>
-          </tbody>
-        </table>
+  {% if gamification == True %}
+    <div class="card-deck">
+      <div class="card">
+        <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
+        <div class="card-body pb-0">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>Forums</td>
+                <td class="text-center">{% countscore_course user.id course.pk "forum" %}</td>
+              </tr>
+              <tr>
+                <td>Comments</td>
+                <td class="text-center">{% countscore_course user.id course.pk "comment" %}</td>
+              </tr>
+              <tr>
+                <td>Quizzes</td>
+                <td class="text-center">{% countscore_course user.id course.pk "quiz" %}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
+        <div class="card-body pb-0">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>Forum likes</td>
+                <td>#{% rank user.id course.pk "forum" %}</td>
+              </tr>
+              <tr>
+                <td>Comments</td>
+                <td>#{% rank user.id course.pk "comment" %}</td>
+              </tr>
+              <tr>
+                <td>Quiz</td>
+                <td>#{% rank user.id course.pk "quiz" %}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h5 class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</h5>
+        <div class="card-body pb-0">
+          <ul class="list-unstyled">
+            <li>Forums participation:
+              {{forums_progress.current}} / {{forums_progress.max}}
+
+              {% if forums_progress.max > 0 %}
+
+                {% widthratio forums_progress.current forums_progress.max 100 as forums_progress_percent %}
+                <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{forums_progress_percent}}%">
+                  <div class="progress-bar {% if forums_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{forums_progress_percent}}%;" aria-valuenow="{{forums_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              {% else %}
+                <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no forums">
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              {% endif %}
+            </li>
+
+            <li>Quizzes answered:
+              {{quizzes_progress.current}} / {{quizzes_progress.max}}
+
+              {% if quizzes_progress.max > 0 %}
+                {% widthratio quizzes_progress.current quizzes_progress.max 100 as quizzes_progress_percent %}
+                <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{quizzes_progress_percent}}%">
+                  <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              {% else %}
+                <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no quizzes">
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+  {% endif %}
 
-    <div class="card">
-      <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
-      <div class="card-body pb-0">
-        <table class="table table-hover">
-          <tbody>
-            <tr>
-              <td>Forum likes</td>
-              <td>#{% rank user.id course.pk "forum" %}</td>
-            </tr>
-            <tr>
-              <td>Comments</td>
-              <td>#{% rank user.id course.pk "comment" %}</td>
-            </tr>
-            <tr>
-              <td>Quiz</td>
-              <td>#{% rank user.id course.pk "quiz" %}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <h5 class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</h5>
-      <div class="card-body pb-0">
-        <ul class="list-unstyled">
-          <li>Forums participation:
-            {{forums_progress.current}} / {{forums_progress.max}}
-
-            {% if forums_progress.max > 0 %}
-
-              {% widthratio forums_progress.current forums_progress.max 100 as forums_progress_percent %}
-              <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{forums_progress_percent}}%">
-                <div class="progress-bar {% if forums_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{forums_progress_percent}}%;" aria-valuenow="{{forums_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            {% else %}
-              <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no forums">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            {% endif %}
-          </li>
-
-          <li>Quizzes answered:
-            {{quizzes_progress.current}} / {{quizzes_progress.max}}
-
-            {% if quizzes_progress.max > 0 %}
-              {% widthratio quizzes_progress.current quizzes_progress.max 100 as quizzes_progress_percent %}
-              <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{quizzes_progress_percent}}%">
-                <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            {% else %}
-              <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no quizzes">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            {% endif %}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
 {% endblock content %}

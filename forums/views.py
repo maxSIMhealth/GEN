@@ -7,13 +7,18 @@ from urllib.parse import urlparse
 from .forms import NewForumForm, NewCommentForm, NewMediaForm
 from .models import Forum, Comment, MediaFile
 from courses.models import Course
+from OPEN2 import settings
 
 
 def course_forums(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
+    gamification = False
 
-    return render(request, 'course_forums.html', {'course': course, 'forums': forums})
+    if settings.GAMIFICATION:
+        gamification = True
+
+    return render(request, 'course_forums.html', {'course': course, 'forums': forums, 'gamification': gamification})
 
 
 def list_videos(request, pk):
@@ -59,6 +64,10 @@ def list_quiz(request, pk):
 def forum_comments(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = get_object_or_404(Forum, pk=forum_pk)
+    gamification = False
+
+    if settings.GAMIFICATION:
+        gamification = True
 
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
@@ -79,7 +88,7 @@ def forum_comments(request, pk, forum_pk):
     else:
         form = NewCommentForm()
 
-    return render(request, 'comments.html', {'forum': forum, 'course': course, 'form': form})
+    return render(request, 'comments.html', {'forum': forum, 'course': course, 'form': form, 'gamification': gamification})
 
 
 @login_required
