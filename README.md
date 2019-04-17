@@ -1,4 +1,4 @@
-# OPEN2 - Educational networking web site for research purposes
+# GEN - Gamified Educational Network
 
 ## Installation instructions
 - Clone this repo

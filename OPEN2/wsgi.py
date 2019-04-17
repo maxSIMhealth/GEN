@@ -1,5 +1,5 @@
 """
-WSGI config for OPEN2 project.
+WSGI config for GEN project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
