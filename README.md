@@ -4,7 +4,8 @@
 - Clone this repo
 - This project is based on python 3.x, and I recommend using a python environment tool such as [virtualenv](https://virtualenv.pypa.io/en/stable/):
 ```
-pip install virtualenv
+# venv should be included in python3 by default
+# otherwise, check your distro for installing instructions
 python -m venv venv
 source venv/bin/activate
 ```
