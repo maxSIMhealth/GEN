@@ -30,7 +30,7 @@
 {% endblock content_tabs %}
 
 {% block content %}
-   {% if debug == True %}
+  {% if debug == True %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
     user_id: {{ user.id }} <br />
@@ -55,10 +55,10 @@
         {% comment %} {% include includes/form.html %} {% endcomment %}
         {% for question in quiz.questions.all %}
           <h6 class="card-title">
-            <strong>{{question.mcquestion}}</strong>
+            <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
           </h6> 
 
-          <ul class="list-group mb-3">
+          <ul class="list-group mb-2">
             {% comment %} {{choice.pk}} - 
             {{choice.content}} - 
             {{choice.correct}} {% endcomment %}
@@ -70,6 +70,14 @@
               {% endif %}
             {% endfor %}
           </ul>
+          <span></span>
+          <div class="card bg-light mr-0 ml-0 mb-4">
+            <div class="card-body">
+              <h6 class="card-subtitle bg-light">
+                <p class="card-text"><strong>Explanation:</strong> <span>{{question.explanation}}</span></p>
+              </h6>
+            </div>
+          </div>
           {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
           {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
         {% endfor %}

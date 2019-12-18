@@ -64,7 +64,7 @@
           {% comment %} {% include includes/form.html %} {% endcomment %}
           {% for question in quiz.questions.all %}
             <h6 class="card-title">
-              <strong>{{question.mcquestion}}</strong>
+              <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
             </h6> 
 
             <ul class="list-group mb-3">
