@@ -48,6 +48,8 @@ def quiz(request, pk, quiz_pk):
             if MCQuestion.check_if_correct(mcquestion, answer.pk):
                 flag = True
                 score += 1
+            else:
+                flag = False
 
             # store the answers as a new attempt
             attempt = MCQuestionAttempt.objects.create(
@@ -70,9 +72,9 @@ def quiz(request, pk, quiz_pk):
             # save attempt data
             attempt.save()
 
-            # change session variable to indicate that the
-            # user completed the quiz
-            request.session['quiz_complete'] = True
+        # change session variable to indicate that the
+        # user completed the quiz
+        request.session['quiz_complete'] = True
 
         # check if user has quiz score
         if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
@@ -124,26 +126,28 @@ def quiz_result(request, pk, quiz_pk):
     if request.session.get('quiz_complete') is False:
         return HttpResponseRedirect(reverse('list_quiz', args=[pk]))
 
-    score = quiz_score.score
+    # score = quiz_score.score
 
-    # # get latest attempt number
+    # get latest attempt number
     # attempt_no = MCQuestionAttempt.objects.filter(
     #     quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
+    attempt_no = MCQuestionAttempt.objects.filter(
+        quiz=quiz, student=request.user).latest('attempt_no').attempt_no
 
-    # # get questions from the latest attemp
-    # questions = MCQuestionAttempt.objects.filter(
-    #     quiz=quiz,
-    #     student=request.user,
-    #     attempt_no=attempt_no['attempt_no__max']
-    # )
+    # get questions from the latest attemp
+    questions_attempt = MCQuestionAttempt.objects.filter(
+        quiz=quiz,
+        student=request.user,
+        attempt_no=attempt_no
+    )
 
-    # # base score
-    # score = 0
+    # base score
+    score = 0
 
-    # # increment score by 1 for each correct answer
-    # for question in questions:
-    #     if question.correct:
-    #         score += 1
+    # increment score by 1 for each correct answer
+    for question in questions_attempt:
+        if question.correct:
+            score += 1
 
     # reset the session variable
     request.session['quiz_complete'] = False

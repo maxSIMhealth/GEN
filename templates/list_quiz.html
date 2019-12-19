@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load checkvotes %}
 {% load quizscore_check %}
+{% load quizattempt_check %}
 {% load embed_video_tags %}
 
 {% block stylesheet %}
@@ -41,19 +42,23 @@
         <tr>
           <th>Name</th>
           <th class="text-center th-small">Status</th>
+          <th class="text-center th-small">Attempts</th>
           <th class="text-center th-small">Score</th>
         </tr>
       </thead>
       <tbody>
       {% for quiz in quizzes %}
         {% quizscore_check user course quiz as quizscore %}
+        {% quizattempt_check user course quiz as quizattempt %}
         {% if quizscore.exists %}
           <tr>
             <td>
-              <span class="text-muted">{{quiz.name}}</span>
+              <!-- <span class="text-muted">{{quiz.name}}</span> -->
+              <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
               <small class="text-muted d-block">{{quiz.description}}</small>
             </td>
             <td class="text-center">Done</td>
+            <td class="text-center">{{quizattempt.attempt_no}}</td>
             <td class="text-center">{{quizscore.get.score}}</td>
           </tr>
         {% else %}
@@ -63,6 +68,7 @@
               <small class="text-muted d-block">{{quiz.description}}</small>
             </td>
             <td class="text-center">To do</td>
+            <td class="text-center">0</td>
             <td class="text-center">--</td>
           </tr>
         {% endif %}
