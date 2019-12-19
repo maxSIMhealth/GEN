@@ -40,7 +40,7 @@ def quiz(request, pk, quiz_pk):
 
             try:
                 answer = Answer.objects.get(
-                    content=request.POST.getlist(item)[0])
+                    pk=request.POST.getlist(item)[0])
             except IndexError:
                 answer = None
 
