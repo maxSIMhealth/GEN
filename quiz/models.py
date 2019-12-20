@@ -94,11 +94,12 @@ class MCQuestionAttempt(TimeStampedModel):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
     correct = models.NullBooleanField(blank=True, null=True)
-    answer = models.CharField('student answer', max_length=1000)
+    answer = models.ForeignKey(Answer, on_delete=models.PROTECT)
+    answer_content = models.CharField('student answer', max_length=1000)
     attempt_no = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "User %s - quiz %s - course %s - attempt %s" % (self.student.username, self.quiz.name, self.course.name, self.attempt_no)
+        return "User %s - quiz %s - course %s - attempt %s - answer id %s" % (self.student.username, self.quiz.name, self.course.name, self.attempt_no, self.answer_id)
 
     class Meta:
         verbose_name = "Multiple Choice Questions Attempt"

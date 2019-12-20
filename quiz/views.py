@@ -60,7 +60,8 @@ def quiz(request, pk, quiz_pk):
                 correct=flag,
                 # I've decided to save a pure text versio of the answer, in
                 # case the answer object is altered in the future
-                answer=answer.content
+                answer=answer.content,
+                answer_id=Answer.objects.get(pk=answer.pk)
             )
 
             # increase attempt number
@@ -129,16 +130,14 @@ def quiz_result(request, pk, quiz_pk):
     # score = quiz_score.score
 
     # get latest attempt number
-    # attempt_no = MCQuestionAttempt.objects.filter(
-    #     quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
-    attempt_no = MCQuestionAttempt.objects.filter(
+    latest_attempt_no = MCQuestionAttempt.objects.filter(
         quiz=quiz, student=request.user).latest('attempt_no').attempt_no
 
-    # get questions from the latest attemp
+    # get questions and answers from the latest attemp
     questions_attempt = MCQuestionAttempt.objects.filter(
         quiz=quiz,
         student=request.user,
-        attempt_no=attempt_no
+        attempt_no=latest_attempt_no
     )
 
     # base score
