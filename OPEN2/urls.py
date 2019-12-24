@@ -35,9 +35,12 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
+    # path("settings/", account_views.UserUpdateView.as_view(), name='my_account'),
     path("settings/password", auth_views.PasswordChangeView.as_view(template_name='password_change.html'), name="password_change"),
     path("settings/password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'), name="password_change_done"),
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
+    path("settings/", account_views.settings, name="settings"),
+    path("settings/pwd", account_views.password, name="password"),
 
     path('courses/<int:pk>/', course_views.course, name='course'),
     path('courses/<int:pk>/videos/', views.list_videos, name='list_videos'),
@@ -55,6 +58,8 @@ urlpatterns = [
     path('courses/<int:pk>/quiz/<int:quiz_pk>/result/', quiz_views.quiz_result, name='quiz_result'),
 
     # path('forums/', views.ForumListView.as_view(), name='forums'),
+
+    path('oauth/', include('social_django.urls', namespace='social')),
 
     path('admin/', admin.site.urls),
 ]
