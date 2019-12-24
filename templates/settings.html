@@ -1,22 +1,64 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2>Settings</h2>
+{% load humanize %}
+{% load gravatar %}
 
-  <h3>GitHub</h3>
-  {% if github_login %}
-    <p>Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p>
-    {% if can_disconnect %}
-      <form method="post" action="{% url 'social:disconnect' 'github' %}">
-        {% csrf_token %}
-        <button type="submit">Disconnect from GitHub</button>
-      </form>
-    {% else %}
-      <button type="button" disabled>Disconnect from GitHub</button>
-      <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Github.</p>
-    {% endif %}
-  {% else %}
-    <a href="{% url 'social:begin' 'github' %}">Connect to GitHub</a>
-  {% endif %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Settings</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+
+<div class="card-deck">
+    <div class="card bg-secondary text-white">
+        <h5 class="card-header bg-dark">Your info</h5>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% include 'includes/form.html' %}
+                <button type="submit" class="btn btn-success">Save changes</button>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header bg-light">Social accounts</h5>
+        <div class="card-body">
+            <h3>GitHub</h3>
+            {% if github_login %}
+                <p>Connected as <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p>
+                {% if can_disconnect %}
+                <form method="post" action="{% url 'social:disconnect' 'github' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect from GitHub</button>
+                </form>
+                {% else %}
+                <button type="button" disabled>Disconnect from GitHub</button>
+                <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Github.</p>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'social:begin' 'github' %}">Connect to GitHub</a>
+            {% endif %}
+
+            <h3>Google</h3>
+            {% if google_login %}
+                <p>Connected as {{ google_login.uid }} - {{ google_login.user.first_name}} {{ google_login.user.last_name}}</p>
+                {% if can_disconnect %}
+                <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                    {% csrf_token %}
+                    <button type="submit">Disconnect from Google</button>
+                </form>
+                {% else %}
+                <button type="button" disabled>Disconnect from Google</button>
+                <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Google.</p>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Connect to Google</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+  
 
 {% endblock %}

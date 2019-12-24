@@ -33,6 +33,11 @@ def settings(request):
     except UserSocialAuth.DoesNotExist:
         github_login = None
 
+    try:
+        google_login = user.social_auth.get(provider='google-oauth2')
+    except UserSocialAuth.DoesNotExist:
+        google_login = None
+
     # try:
     #     twitter_login = user.social_auth.get(provider='twitter')
     # except UserSocialAuth.DoesNotExist:
@@ -47,6 +52,7 @@ def settings(request):
 
     return render(request, 'settings.html', {
         'github_login': github_login,
+        'google_login': google_login,
         # 'twitter_login': twitter_login,
         # 'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
