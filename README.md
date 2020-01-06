@@ -15,6 +15,13 @@ source venv/bin/activate
 - Create a super user: `python manage.py createsuperuser`
 - Run the project: `python manage.py runserver`
 
+## Locale (i18n) messages
+- This project is currenctly configured to support *en* and *fr*
+- To regenerate locale messages for French (fr) run: `python manage.py makemessage -l 'fr' --ignore venv --ignore static`
+  - The *-i* flag is necessary to make it ignore the venv (virtualenv) directory
+- And to compile it, go to the locales directory and run: `python ../manage.py compilemessages`
+  - You **SHOULD NOT** run `compilemessages` from the project main directory, because it will try to compile the translation messages for all of the packages at *venv* directory.
+
 ## Production
 
 ### Install packages
