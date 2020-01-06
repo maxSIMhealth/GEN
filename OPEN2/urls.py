@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 # from django.conf.urls import url
 from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth import views as auth_views
 
 from forums import views
@@ -61,8 +62,14 @@ urlpatterns = [
 
     path('oauth/', include('social_django.urls', namespace='social')),
 
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
 ]
+
+urlpatterns += i18n_patterns(
+    # Django Admin
+    # url(r’^{}/’.format(settings.DJANGO_ADMIN_URL), admin.site.urls),
+    path('admin/', admin.site.urls),
+)
 
 if settings.DEBUG:
     import debug_toolbar
