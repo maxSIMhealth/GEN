@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Course
 from .progress import progress
-from OPEN2 import settings
+from GEN import settings
 
 
 def course(request, pk):

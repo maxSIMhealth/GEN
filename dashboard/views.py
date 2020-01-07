@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from courses.progress import progress
-from OPEN2 import settings
+from GEN import settings
 
 
 @login_required
