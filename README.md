@@ -45,9 +45,9 @@ server {
 - Restart service: `sudo service nginx restart`
 
 ### GEN settings
-- Edit `OPEN2/settings.py` and add `STATIC_ROOT=/opt/GEN_static/` before `STATIC_URL`
+- Edit `GEN/settings.py` and add `STATIC_ROOT=/opt/GEN_static/` before `STATIC_URL`
 - Edit `.env` and set `DEBUG=False`
 - Colllect static files: `python manage.py collectstatic`
 
 ### Start the server
-- Gunicorn: `gunicorn OPEN2.wsgi`
+- Gunicorn: `gunicorn GEN.wsgi`
