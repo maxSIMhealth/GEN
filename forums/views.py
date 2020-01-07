@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 from .forms import NewForumForm, NewCommentForm, NewMediaForm
 from .models import Forum, Comment, MediaFile
 from courses.models import Course
-from OPEN2 import settings
+from GEN import settings
 
 
 def course_forums(request, pk):
