@@ -19,6 +19,8 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 from forums import views
 from courses import views as course_views
@@ -28,6 +30,7 @@ from quiz import views as quiz_views
 
 urlpatterns = [
     # path('', views.ForumListView.as_view(), name='home'),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('im/favicon.ico'))),
 
     path('', dashboard_views.dashboard, name='home'),
     path('dashboard/', dashboard_views.dashboard, name='dashboard'),
