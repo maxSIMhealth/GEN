@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 18:04-0500\n"
+"POT-Creation-Date: 2020-01-07 23:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\OPEN2\settings.py:78
+#: .\GEN\settings.py:78
 msgid "English"
 msgstr "Anglais"
 
-#: .\OPEN2\settings.py:79
+#: .\GEN\settings.py:79
 msgid "French"
 msgstr "Français"
+
+#: .\templates\dashboard.html:9
+msgid "Home"
+msgstr "Accueil"
+
+#: .\templates\dashboard.html:22
+msgid "First name:"
+msgstr "Prénom:"
+
+#: .\templates\dashboard.html:23
+msgid "Last name:"
+msgstr "Nom de famille:"
+
+#: .\templates\dashboard.html:24
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: .\templates\dashboard.html:26
+msgid "Edit"
+msgstr "Éditer"
 
 #: .\templates\dashboard.html:35
 msgid "Courses"

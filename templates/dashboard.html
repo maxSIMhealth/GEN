@@ -6,7 +6,7 @@
 {% load countscore %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item active">Home</li>
+  <li class="breadcrumb-item active">{% trans "Home" %}</li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -19,11 +19,11 @@
         </div>
         <div class="col col-10">
           <ul class="list-unstyled">
-            <li><span class="font-weight-bold">First name: </span>{{ user.first_name }}</li>
-            <li><span class="font-weight-bold">Last name: </span>{{ user.last_name }}</li>
-            <li><span class="font-weight-bold">E-mail: </span>{{ user.email }}</li>
+            <li><span class="font-weight-bold">{% trans "First name:" %} </span>{{ user.first_name }}</li>
+            <li><span class="font-weight-bold">{% trans "Last name:" %} </span>{{ user.last_name }}</li>
+            <li><span class="font-weight-bold">{% trans "E-mail:" %} </span>{{ user.email }}</li>
           </ul>
-          <a href="{% url 'my_account' %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'my_account' %}" class="btn btn-primary">{% trans "Edit" %}</a>
         </div>
       </div>
     </div>
