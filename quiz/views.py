@@ -60,8 +60,8 @@ def quiz(request, pk, quiz_pk):
                 correct=flag,
                 # I've decided to save a pure text versio of the answer, in
                 # case the answer object is altered in the future
-                answer=answer.content,
-                answer_id=Answer.objects.get(pk=answer.pk)
+                answer_content=answer.content,
+                answer=Answer.objects.get(pk=answer.pk)
             )
 
             # increase attempt number
