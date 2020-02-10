@@ -23,6 +23,7 @@
 
 {% block content %}
 
+  {% comment %}
   {% if debug == True %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
@@ -31,6 +32,7 @@
     forum_pk: {{ forum.pk }}
   </div>
   {% endif %}
+  {% endcomment %}
 
   <div class="card bg-dark text-white border-dark mb-2">
     <h5 class="card-header">

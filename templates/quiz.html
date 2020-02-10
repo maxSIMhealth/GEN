@@ -29,7 +29,9 @@
 {% endblock content_tabs %}
 
 {% block content %}
-   {% comment %} {% if debug == True %}
+
+  {% comment %}
+  {% if debug == True %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
     user_id: {{ user.id }} <br />
@@ -38,7 +40,8 @@
     quiz.video.url: {{quiz.video.url}} <br />
     quiz.get_questions: {{quiz.get_questions}}
   </div>
-  {% endif %} {% endcomment %}
+  {% endif %}
+  {% endcomment %}
 
   <div class="card-deck">
     <div class="card bg-secondary text-white">
