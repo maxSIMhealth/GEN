@@ -7,7 +7,7 @@ from django.utils import timezone
 from urllib.parse import urlparse
 
 from .forms import NewForumForm, NewCommentForm, NewMediaForm, UploadVideoForm
-from .models import Forum, Comment, MediaFile
+from .models import Forum, Comment, MediaFile, VideoFile
 from courses.models import Course
 from GEN import settings
 
@@ -147,13 +147,21 @@ def new_forum(request, pk):
 @login_required
 def upload_video(request, pk):
     course = get_object_or_404(Course, pk=pk)
+    # FIXME: the forums object will probably have to be removed later on
     forums = course.forums.all()
 
     if request.method == 'POST':
         form = UploadVideoForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            video = VideoFile.objects.create(
+                title=form.cleaned_data.get('title'),
+                description=form.cleaned_data.get('description'),
+                author=request.user,
+                course=course,
+                video=form.files.get('video')
+            )
+            video.save()
             return redirect('list_videos', pk=course.pk)
     else:
         form = UploadVideoForm()
@@ -163,6 +171,7 @@ def upload_video(request, pk):
         'course': course,
         'forums': forums
     })
+
 
 def upvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)

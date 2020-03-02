@@ -20,7 +20,8 @@ class MediaFile(models.Model):
         choices=ATTACHMENT_KINDS,
         default=YOUTUBE
     )
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='medias')
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name='medias')
     url = models.URLField(max_length=200)
 
     def __str__(self):
@@ -31,8 +32,10 @@ class VideoFile(models.Model):
     related_name = 'videos'
     title = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name=related_name)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name=related_name)
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name=related_name)
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, related_name=related_name)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     video = models.FileField(upload_to='videos/')
 
@@ -41,12 +44,15 @@ class VideoFile(models.Model):
 
 
 class Forum(VoteModel, models.Model):
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, related_name='forums')
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=400)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name='forums')
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name='forums')
     last_updated = models.DateTimeField(auto_now_add=True)
-    media = models.ForeignKey(MediaFile, on_delete=models.CASCADE, related_name='forums')
+    media = models.ForeignKey(
+        MediaFile, on_delete=models.CASCADE, related_name='forums')
 
     def __str__(self):
         return self.name
@@ -57,9 +63,11 @@ class Forum(VoteModel, models.Model):
 
 class Comment(VoteModel, models.Model):
     message = models.TextField(max_length=400)
-    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name='comments')
+    forum = models.ForeignKey(
+        Forum, on_delete=models.CASCADE, related_name='comments')
     created_at = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
         return self.message
