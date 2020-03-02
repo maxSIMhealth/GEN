@@ -27,6 +27,19 @@ class MediaFile(models.Model):
         return self.title
 
 
+class VideoFile(models.Model):
+    related_name = 'videos'
+    title = models.CharField(max_length=100, unique=True)
+    description = models.CharField(max_length=255)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name=related_name)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name=related_name)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    video = models.FileField(upload_to='videos/')
+
+    def __str__(self):
+        return self.title
+
+
 class Forum(VoteModel, models.Model):
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='forums')
     name = models.CharField(max_length=100, unique=True)

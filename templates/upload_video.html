@@ -35,6 +35,8 @@
 
 {% block content %}
   {% if user.is_authenticated %}
+
+    {% comment %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="user_video">
@@ -46,5 +48,13 @@
     {% endif %}
 
     <p><a href="{% url 'home' %}">Return to home</a></p>
+    {% endcomment %}
+
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload video</button>
+    </form>
+
   {% endif %}
 {% endblock %}

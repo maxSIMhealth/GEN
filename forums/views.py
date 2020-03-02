@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
 from urllib.parse import urlparse
 
-from .forms import NewForumForm, NewCommentForm, NewMediaForm
+from .forms import NewForumForm, NewCommentForm, NewMediaForm, UploadVideoForm
 from .models import Forum, Comment, MediaFile
 from courses.models import Course
 from GEN import settings
@@ -26,13 +26,14 @@ def course_forums(request, pk):
 def list_videos(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
+    videos = course.videos.all()
     media_list = []
 
     for forum in forums:
         if forum.media.kind == 'YTB':
             media_list.append(forum)
 
-    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'media_list': media_list})
+    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'media_list': media_list, 'videos': videos})
 
 
 def list_pdfs(request, pk):
@@ -125,23 +126,43 @@ def new_forum(request, pk):
     return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form, 'media_form': media_form})
 
 
+# @login_required
+# def upload_video(request, pk):
+#     course = get_object_or_404(Course, pk=pk)
+#     forums = course.forums.all()
+
+#     if request.method == 'POST' and request.FILES['user_video']:
+#         file = request.FILES['user_video']
+#         fs = FileSystemStorage()
+#         filename = fs.save(file.name, file)
+#         uploaded_file_url = fs.url(filename)
+#         return render(request, 'upload_video.html', {
+#             'uploaded_file_url': uploaded_file_url,
+#             'course': course,
+#             'forums': forums
+#         })
+
+#     return render(request, 'upload_video.html', {'course': course, 'forums': forums})
+
 @login_required
 def upload_video(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
 
-    if request.method == 'POST' and request.FILES['user_video']:
-        file = request.FILES['user_video']
-        fs = FileSystemStorage()
-        filename = fs.save(file.name, file)
-        uploaded_file_url = fs.url(filename)
-        return render(request, 'upload_video.html', {
-            'uploaded_file_url': uploaded_file_url,
-            'course': course,
-            'forums': forums
-        })
+    if request.method == 'POST':
+        form = UploadVideoForm(request.POST, request.FILES)
 
-    return render(request, 'upload_video.html', {'course': course, 'forums': forums})
+        if form.is_valid():
+            form.save()
+            return redirect('list_videos', pk=course.pk)
+    else:
+        form = UploadVideoForm()
+
+    return render(request, 'upload_video.html', {
+        'form': form,
+        'course': course,
+        'forums': forums
+    })
 
 def upvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)

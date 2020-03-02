@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MediaFile, Forum, Comment
+from .models import MediaFile, Forum, Comment, VideoFile
 
 
 class CommentsAdmin(admin.ModelAdmin):
@@ -12,5 +12,6 @@ class CommentsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MediaFile)
+admin.site.register(VideoFile)
 admin.site.register(Forum)
 admin.site.register(Comment, CommentsAdmin)

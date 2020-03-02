@@ -1,5 +1,5 @@
 from django import forms
-from .models import MediaFile, Forum, Comment
+from .models import MediaFile, Forum, Comment, VideoFile
 
 
 class NewForumForm(forms.ModelForm):
@@ -57,3 +57,9 @@ class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['message']
+
+
+class UploadVideoForm(forms.ModelForm):
+    class Meta:
+        model = VideoFile
+        fields = ['title', 'description', 'video']
