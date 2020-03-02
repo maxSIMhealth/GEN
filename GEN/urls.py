@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-# from django.conf.urls import url
+from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -29,7 +29,8 @@ from quiz import views as quiz_views
 
 urlpatterns = [
     # path('', views.ForumListView.as_view(), name='home'),
-    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('im/favicon.ico'))),
+    path('favicon.ico', RedirectView.as_view(
+        url=staticfiles_storage.url('im/favicon.ico'))),
 
     path('', dashboard_views.dashboard, name='home'),
     path('dashboard/', dashboard_views.dashboard, name='dashboard'),
@@ -39,26 +40,36 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     # path("settings/", account_views.UserUpdateView.as_view(), name='my_account'),
-    path("settings/password", auth_views.PasswordChangeView.as_view(template_name='password_change.html'), name="password_change"),
-    path("settings/password/done/", auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'), name="password_change_done"),
+    path("settings/password", auth_views.PasswordChangeView.as_view(
+        template_name='password_change.html'), name="password_change"),
+    path("settings/password/done/", auth_views.PasswordChangeDoneView.as_view(
+        template_name='password_change_done.html'), name="password_change_done"),
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
     path("settings/", account_views.settings, name="settings"),
     path("settings/pwd", account_views.password, name="password"),
 
     path('courses/<int:pk>/', course_views.course, name='course'),
     path('courses/<int:pk>/videos/', views.list_videos, name='list_videos'),
+    path('courses/<int:pk>/videos/upload', views.upload_video, name='upload_video'),
+    # path('courses/<int:pk>/videos/new/', views.new_media, name='new_media'),
     path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
     path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
     path('courses/<int:pk>/forums/new/', views.new_forum, name='new_forum'),
-    path('courses/<int:pk>/forums/<int:forum_pk>/', views.forum_comments, name='forum_comments'),
-    path('courses/<int:pk>/forums/<int:forum_pk>/upvote/', views.upvote_forum, name='forum_upvote'),
-    path('courses/<int:pk>/forums/<int:forum_pk>/clearvote/', views.clearvote_forum, name='forum_clearvote'),
-    path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/upvote/', views.upvote_comment, name='comment_upvote'),
-    path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote/', views.clearvote_comment, name='comment_clearvote'),
+    path('courses/<int:pk>/forums/<int:forum_pk>/',
+         views.forum_comments, name='forum_comments'),
+    path('courses/<int:pk>/forums/<int:forum_pk>/upvote/',
+         views.upvote_forum, name='forum_upvote'),
+    path('courses/<int:pk>/forums/<int:forum_pk>/clearvote/',
+         views.clearvote_forum, name='forum_clearvote'),
+    path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/upvote/',
+         views.upvote_comment, name='comment_upvote'),
+    path('courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote/',
+         views.clearvote_comment, name='comment_clearvote'),
 
     path('courses/<int:pk>/quiz/', views.list_quiz, name='list_quiz'),
     path('courses/<int:pk>/quiz/<int:quiz_pk>/', quiz_views.quiz, name='quiz'),
-    path('courses/<int:pk>/quiz/<int:quiz_pk>/result/', quiz_views.quiz_result, name='quiz_result'),
+    path('courses/<int:pk>/quiz/<int:quiz_pk>/result/',
+         quiz_views.quiz_result, name='quiz_result'),
 
     # path('forums/', views.ForumListView.as_view(), name='forums'),
 
@@ -68,6 +79,10 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    # access to media files during development
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    
+    # django toolbar
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),

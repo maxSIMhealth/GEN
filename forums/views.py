@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 # from django.views.generic import ListView
 from django.utils import timezone
 from urllib.parse import urlparse
@@ -122,6 +124,24 @@ def new_forum(request, pk):
 
     return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form, 'media_form': media_form})
 
+
+@login_required
+def upload_video(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    forums = course.forums.all()
+
+    if request.method == 'POST' and request.FILES['user_video']:
+        file = request.FILES['user_video']
+        fs = FileSystemStorage()
+        filename = fs.save(file.name, file)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'upload_video.html', {
+            'uploaded_file_url': uploaded_file_url,
+            'course': course,
+            'forums': forums
+        })
+
+    return render(request, 'upload_video.html', {'course': course, 'forums': forums})
 
 def upvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)

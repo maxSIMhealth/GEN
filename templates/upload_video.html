@@ -35,31 +35,16 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <div class="mb-4">
-      {% comment %}
-      <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">New video</a>
-      {% endcomment %}
-      <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">New video</a>
-    </div>
-  {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="user_video">
+        <button type="submit">Upload video</button>
+    </form>
 
-  <ul class="list-group">
-      {% for forum in media_list %}
-        <li class="list-group-item">
-          {% video forum.media.url as my_video %}
-            <div class="media">
-              <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
-              <div class="media-body">
-                <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
-                <div>
-                  <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
-                </div>
-              </div>
-            </div>
-          {% endvideo %}
-        </li>
-      {% empty %}
-        Nothing to show.
-      {% endfor %}
-  </ul>
-{% endblock content %}
+    {% if uploaded_file_url %}
+        <p>Video uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+    {% endif %}
+
+    <p><a href="{% url 'home' %}">Return to home</a></p>
+  {% endif %}
+{% endblock %}
