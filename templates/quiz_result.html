@@ -30,6 +30,8 @@
 {% endblock content_tabs %}
 
 {% block content %}
+
+  {% comment %}
   {% if debug == True %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
@@ -40,6 +42,7 @@
     quiz.get_questions: {{quiz.get_questions}}
   </div>
   {% endif %}
+  {% endcomment %}
 
   <div class="card-deck mb-3">
     <div class="card bg-secondary text-white">
