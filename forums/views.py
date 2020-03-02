@@ -159,7 +159,7 @@ def upload_video(request, pk):
                 description=form.cleaned_data.get('description'),
                 author=request.user,
                 course=course,
-                video=form.files.get('video')
+                file=form.files.get('video')
             )
             video.save()
             return redirect('list_videos', pk=course.pk)

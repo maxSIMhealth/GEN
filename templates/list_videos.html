@@ -45,14 +45,15 @@
 
   <ul class="list-group">
     {% for video in videos %}
-      <span>{{ video.title }} - {{ video.video.url }}</span>
+      <span>{{ video.title }} - <a href="{{ video.file.url }}">{{ video.file.url }}</a></span>
       <span>{{ video.description }} </span>
+      <span>127.0.0.1{{ video.file.url }} </span>
       <li class="list-group-item">
-        {% video video.video.url as my_video %}
+        {% video "https://www.youtube.com/watch?v=16f4RwxP9n0" as my_video %}
           <div class="media">
-            <a href="{{ video.video.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
+            <a href="{{ video.file.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
             <div class="media-body">
-              <a href="#"><span>{{ video.title }} - {{ video.video.url }}</span></a>
+              <a href="#"><span>{{ video.title }} - {{ video.file.url }}</span></a>
               <span>{{ video.description }} </span>
             </div>
           </div>
@@ -65,6 +66,7 @@
 
   <ul class="list-group">
       {% for forum in media_list %}
+        <span>{{ forum.media.url }}</span>
         <li class="list-group-item">
           {% video forum.media.url as my_video %}
             <div class="media">

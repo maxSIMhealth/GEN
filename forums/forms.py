@@ -22,7 +22,8 @@ class NewForumForm(forms.ModelForm):
     class Meta:
         model = Forum
         # fields = ['name', 'description']
-        exclude = ['course', 'author', 'vote_score', 'num_vote_up', 'num_vote_down', 'media']
+        exclude = ['course', 'author', 'vote_score',
+                   'num_vote_up', 'num_vote_down', 'media']
 
 
 class NewMediaForm(forms.ModelForm):
@@ -62,4 +63,4 @@ class NewCommentForm(forms.ModelForm):
 class UploadVideoForm(forms.ModelForm):
     class Meta:
         model = VideoFile
-        fields = ['title', 'description', 'video']
+        fields = ['title', 'description', 'file']
