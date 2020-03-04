@@ -46,6 +46,10 @@ class VideoFile(models.Model):
     file = models.FileField(upload_to=user_directory_path)
     validators = [FileExtensionValidator(allowed_extensions=('mp4'))]
 
+    def delete(self, *args, **kwargs):
+        self.file.delete()  # Delete the actual video file
+        super().delete(*args, **kwargs)  # Call the "real" delete() method.
+
     def __str__(self):
         return self.title
 
