@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'vote',
     'debug_toolbar',
     'social_django',
+    'crispy_forms',
 
     'accounts',
     'courses',
@@ -55,6 +56,8 @@ INSTALLED_APPS = [
     'dashboard',
     'quiz',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

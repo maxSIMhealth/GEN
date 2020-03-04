@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 from django.contrib.auth.models import User
 
 from courses.models import Course
@@ -7,7 +8,7 @@ from vote.models import VoteModel
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return 'user_{0}/{1}'.format(instance.author.id, filename)
 
 
 class MediaFile(models.Model):
@@ -43,6 +44,7 @@ class VideoFile(models.Model):
         Course, on_delete=models.PROTECT, related_name=related_name)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to=user_directory_path)
+    validators = [FileExtensionValidator(allowed_extensions=('mp4'))]
 
     def __str__(self):
         return self.title
