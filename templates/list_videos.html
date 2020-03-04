@@ -3,7 +3,6 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
-{% load embed_video_tags %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -34,27 +33,52 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    <div class="mb-4">
-      {% comment %}
-      <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">New video</a>
-      {% endcomment %}
-      <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">New video</a>
-    </div>
-  {% endif %}
+  <div class="mb-3">
+    <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new video</a>
+  </div>
 
   <ul class="list-group">
     {% for video in videos %}
-      <span>{{ video.title }} - <a href="{{ video.file.url }}">{{ video.file.url }}</a></span>
-      <span>{{ video.description }} </span>
-      <span>127.0.0.1{{ video.file.url }} </span>
       <li class="list-group-item">
-        {% video "https://www.youtube.com/watch?v=16f4RwxP9n0" as my_video %}
+        <div class="media">
+          {% comment %}
+            <img src="{{ video.thumbnail }}" class="mr-3" alt="Video thumbnail">
+          {% endcomment %}
+          <img src="https://via.placeholder.com/80" class="mr-3" alt="Video thumbnail">
+          <div class="media-body">
+            <h5 class="mb-0 mt-1"><a href="{{ video.file.url }}">{{ video.title }}</a></h5>
+            <small>{{ video.description }}</small>
+          </div>
+          <div class="media-buttons btn-group" role="group" aria-label="Buttons to access video's discussion board and quiz">
+            <button class='btn btn-outline-primary'> 
+              <div style='text-align:center;'><i class="far fa-comment"></i></div>  
+                Discuss
+            </button>
+            <button class='btn btn-success' disabled> 
+              <div style='text-align:center;'><i class="far fa-check-circle"></i></div>  
+                Take quiz
+            </button>
+          </div>
+        </div>
+      </li>
+    {% empty %}
+      Nothing to show.
+    {% endfor %}
+</ul>
+
+  {% comment %}
+  <ul class="list-group">
+    {% for forum in media_list %}
+      <span>{{ forum.media.url }}</span>
+      <li class="list-group-item">
+        {% video forum.media.url as my_video %}
           <div class="media">
-            <a href="{{ video.file.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
+            <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
             <div class="media-body">
-              <a href="#"><span>{{ video.title }} - {{ video.file.url }}</span></a>
-              <span>{{ video.description }} </span>
+              <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
+              <div>
+                <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+              </div>
             </div>
           </div>
         {% endvideo %}
@@ -62,26 +86,7 @@
     {% empty %}
       Nothing to show.
     {% endfor %}
-</ul>
-
-  <ul class="list-group">
-      {% for forum in media_list %}
-        <span>{{ forum.media.url }}</span>
-        <li class="list-group-item">
-          {% video forum.media.url as my_video %}
-            <div class="media">
-              <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
-              <div class="media-body">
-                <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
-                <div>
-                  <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
-                </div>
-              </div>
-            </div>
-          {% endvideo %}
-        </li>
-      {% empty %}
-        Nothing to show.
-      {% endfor %}
   </ul>
+  {% endcomment %}
+  
 {% endblock content %}
