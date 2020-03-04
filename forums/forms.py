@@ -1,5 +1,8 @@
 from django import forms
+from django.core.validators import FileExtensionValidator
 from .models import MediaFile, Forum, Comment, VideoFile
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class NewForumForm(forms.ModelForm):
@@ -52,7 +55,7 @@ class NewCommentForm(forms.ModelForm):
             }
         ),
         max_length=400,
-        help_text='The max length for a comment is 400.'
+        help_text='The max length for a comment is 400 characters.'
     )
 
     class Meta:
@@ -61,6 +64,26 @@ class NewCommentForm(forms.ModelForm):
 
 
 class UploadVideoForm(forms.ModelForm):
+    description = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4
+            }
+        ),
+        max_length=255,
+        help_text='The max length for a description is 255 characters.'
+    )
+    file = forms.FileField(
+        help_text='Please upload a video file (mp4 or mov)',
+        widget=forms.FileInput(
+            attrs={'accept': 'video/mp4'}
+        )
+    )
+
     class Meta:
         model = VideoFile
         fields = ['title', 'description', 'file']
+
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
+    helper.form_method = 'POST'
