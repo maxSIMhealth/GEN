@@ -12,6 +12,7 @@ from courses.models import Course
 from GEN import settings
 
 
+@login_required
 def course_forums(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
@@ -23,6 +24,7 @@ def course_forums(request, pk):
     return render(request, 'course_forums.html', {'course': course, 'forums': forums, 'gamification': gamification})
 
 
+@login_required
 def list_videos(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
@@ -36,6 +38,7 @@ def list_videos(request, pk):
     return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'media_list': media_list, 'videos': videos})
 
 
+@login_required
 def list_pdfs(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
@@ -48,6 +51,7 @@ def list_pdfs(request, pk):
     return render(request, 'list_pdfs.html', {'course': course, 'forums': forums, 'media_list': media_list})
 
 
+@login_required
 def list_quiz(request, pk):
     course = get_object_or_404(Course, pk=pk)
     quizzes = course.quizzes.all()
@@ -64,6 +68,7 @@ def list_quiz(request, pk):
     # template_name = 'home.html'
 
 
+@login_required
 def forum_comments(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = get_object_or_404(Forum, pk=forum_pk)
@@ -173,6 +178,7 @@ def upload_video(request, pk):
     })
 
 
+@login_required
 def upvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = Forum.objects.get(pk=forum_pk)
@@ -192,6 +198,7 @@ def upvote_forum(request, pk, forum_pk):
         return redirect('course_forums', pk=course.pk)
 
 
+@login_required
 def clearvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = Forum.objects.get(pk=forum_pk)
@@ -211,6 +218,7 @@ def clearvote_forum(request, pk, forum_pk):
         return redirect('course_forums', pk=course.pk)
 
 
+@login_required
 def upvote_comment(request, pk, forum_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.up(request.user.id)
@@ -223,6 +231,7 @@ def upvote_comment(request, pk, forum_pk, comment_pk):
     return redirect('forum_comments', **my_kwargs)
 
 
+@login_required
 def clearvote_comment(request, pk, forum_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.delete(request.user.id)

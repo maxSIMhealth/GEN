@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Course
 from .progress import progress
 from GEN import settings
 
 
+@login_required
 def course(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
