@@ -58,7 +58,9 @@
           <div class="col col-12 col-sm-12 col-md-12 col-lg-11 p-1 pl-2">
         {% endif %}
           <div>{{ forum.name }}</div>
+          {% comment %}
           <small class="text-muted">By: {{ forum.author }}</small>
+          {% endcomment %}
         </div>
       </div>
     </h5>
@@ -113,23 +115,23 @@
                     <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
+                
+                {% comment %}
                 <div class="mt-1">{{ comment.vote_score }}</div>
+                {% endcomment %}
+                  
               </div>
             {% endif %}
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
-              <img src="{{ comment.author|gravatar }}" alt="{{ comment.author.username }}" class="w-100">
+              <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
             </div>
             {% if gamification %}
               <div class="col col-9 col-sm-9 col-md-10 col-lg-10">
             {% else %}
               <div class="col col-10 col-sm-10 col-md-10 col-lg-10">
             {% endif %}
-              <div class="row mb-3">
+              <div class="row mb-0">
                 <div class="col-6">
-                  <strong class="text-muted">{{ comment.author.username }}</strong><br />
-                  <small class="text-muted">Comments: {{ comment.author.comments.count }}</small><br />
-                </div>
-                <div class="col-6 text-right">
                   <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
                   <!-- {% if debug %}
                   <br><small class="text-muted">PK: {{ comment.pk }}</small>
