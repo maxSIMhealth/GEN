@@ -10,29 +10,10 @@
 
 {% block content %}
   <div class="card mb-3">
-    <h5 class="card-header bg-dark text-white"> {{ user.username }} </h5>
-    <div class="card-body">
-      <div class="row">
-        <div class="col col-2">
-          <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
-        </div>
-        <div class="col col-10">
-          <ul class="list-unstyled">
-            <li><span class="font-weight-bold">First name: </span>{{ user.first_name }}</li>
-            <li><span class="font-weight-bold">Last name: </span>{{ user.last_name }}</li>
-            <li><span class="font-weight-bold">E-mail: </span>{{ user.email }}</li>
-          </ul>
-          <a href="{% url 'my_account' %}" class="btn btn-primary">Edit</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card mb-3">
     <h5 class="card-header bg-light">
       <div class="row">
-        <div class="col-10 pt-2"><i class="fas fa-laptop-code pr-1"></i> Courses</div>
-        <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Enroll</a></div>
+        <div class="col-10 pt-0"><i class="fas fa-laptop-code pr-1"></i> Courses</div>
+        <!-- <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Enroll</a></div> -->
       </div>
     </h5>
     <div class="card-body p-0">
