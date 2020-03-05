@@ -38,11 +38,10 @@
               </li>
             </ul>
           </div>
-          
-
         </div>
       </nav>
 
+      {% block container %}
       <div class="container">
         <ol class="breadcrumb my-3">
           {% block breadcrumb %}
@@ -51,6 +50,7 @@
         {% block content %}
         {% endblock content %}
       </div>
+      {% endblock container %}
     {% endblock body %}
 
     <div class="footer mb-2">
