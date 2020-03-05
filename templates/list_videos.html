@@ -19,14 +19,14 @@
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link active">Videos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
+    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
   </li>
+  <!-- <li class="nav-item">
+    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
+  </li> -->
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>
