@@ -11,6 +11,7 @@ def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.author.id, filename)
 
 
+# FIXME: this should be renamed to DocumentFile or something like that
 class MediaFile(models.Model):
     YOUTUBE = 'YTB'
     PDF = 'PDF'
@@ -62,8 +63,11 @@ class Forum(VoteModel, models.Model):
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name='forums')
     last_updated = models.DateTimeField(auto_now_add=True)
-    media = models.ForeignKey(
-        MediaFile, on_delete=models.CASCADE, related_name='forums')
+    # FIXME: media should be renamed to document or something like that
+    # media = models.ForeignKey(
+    #     MediaFile, on_delete=models.CASCADE, related_name='forums')
+    video = models.ForeignKey(
+        VideoFile, on_delete=models.PROTECT, related_name='forums', blank=True, null=True)
 
     def __str__(self):
         return self.name

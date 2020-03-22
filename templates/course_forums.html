@@ -48,7 +48,6 @@
           {% endif %}
           <th>Name</th>
           <th>Comments</th>
-          <th>Author</th>
           <th>Last update</th>
         </tr>
       </thead>
@@ -88,7 +87,6 @@
               {% endif %} {% endcomment %}
             </td>
             <td>{{ forum.get_comment_count }}</td>
-            <td>{{ forum.author }}</td>
             <td>{{ forum.last_updated|naturaltime }}</td>
           </tr>
         {% endfor %}

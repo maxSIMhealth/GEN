@@ -29,13 +29,13 @@ def list_videos(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
     videos = course.videos.all()
-    media_list = []
+    # media_list = []
 
-    for forum in forums:
-        if forum.media.kind == 'YTB':
-            media_list.append(forum)
+    # for forum in forums:
+    #     if forum.media.kind == 'YTB':
+    #         media_list.append(forum)
 
-    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'media_list': media_list, 'videos': videos})
+    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'videos': videos})
 
 
 @login_required
@@ -72,6 +72,7 @@ def list_quiz(request, pk):
 def forum_comments(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = get_object_or_404(Forum, pk=forum_pk)
+    video = forum.video
     gamification = False
 
     if settings.GAMIFICATION:
@@ -96,7 +97,7 @@ def forum_comments(request, pk, forum_pk):
     else:
         form = NewCommentForm()
 
-    return render(request, 'comments.html', {'forum': forum, 'course': course, 'form': form, 'gamification': gamification})
+    return render(request, 'comments.html', {'forum': forum, 'course': course, 'video': video, 'form': form, 'gamification': gamification})
 
 
 @login_required
@@ -106,29 +107,40 @@ def new_forum(request, pk):
 
     if request.method == 'POST':
         form = NewForumForm(request.POST)
-        media_form = NewMediaForm(request.POST)
-        if form.is_valid() and media_form.is_valid():
-            media = MediaFile.objects.create(
-                title=media_form.cleaned_data.get('title'),
-                kind=media_form.cleaned_data.get('kind'),
-                author=request.user,
-                url=media_form.cleaned_data.get('url'),
-            )
+        if form.is_valid:
             forum = Forum.objects.create(
                 course=course,
                 name=form.cleaned_data.get('name'),
                 description=form.cleaned_data.get('description'),
-                media=media,
+                video=form.cleaned_data.get('video'),
                 author=request.user
             )
-            media.save()
             forum.save()
             return redirect('course_forums', pk=course.pk)
+        # media_form = NewMediaForm(request.POST)
+        # if form.is_valid() and media_form.is_valid():
+        #     media = MediaFile.objects.create(
+        #         title=media_form.cleaned_data.get('title'),
+        #         kind=media_form.cleaned_data.get('kind'),
+        #         author=request.user,
+        #         url=media_form.cleaned_data.get('url'),
+        #     )
+        #     forum = Forum.objects.create(
+        #         course=course,
+        #         name=form.cleaned_data.get('name'),
+        #         description=form.cleaned_data.get('description'),
+        #         media=media,
+        #         author=request.user
+        #     )
+        #     media.save()
+        #     forum.save()
+        #     return redirect('course_forums', pk=course.pk)
     else:
         form = NewForumForm()
-        media_form = NewMediaForm()
+        # media_form = NewMediaForm()
 
-    return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form, 'media_form': media_form})
+    # return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form, 'media_form': media_form})
+    return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form})
 
 
 # @login_required
