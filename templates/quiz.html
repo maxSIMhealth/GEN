@@ -1,7 +1,6 @@
 {% extends 'base_course.html' %}
 
 {% load humanize %}
-{% load embed_video_tags %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -37,7 +36,7 @@
     user_id: {{ user.id }} <br />
     course_pk: {{ course.pk }} <br />
     quiz_pk: {{ quiz.pk }} <br />
-    quiz.video.url: {{quiz.video.url}} <br />
+    quiz.video.file.url: {{quiz.video.file.url}} <br />
     quiz.get_questions: {{quiz.get_questions}}
   </div>
   {% endif %}
@@ -51,7 +50,10 @@
           <tbody>
             <tr>
               <div class="embed-responsive embed-responsive-16by9">
-                {% video quiz.video.url '800x600' %} 
+                <video controls>
+                  <source src="{{ quiz.video.file.url }}" type="video/mp4">
+                  Sorry, your browse does not support embedded videos.
+                </video>
               </div>
             </tr>
           </tbody>
