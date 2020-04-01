@@ -182,7 +182,15 @@ def upload_video(request, pk):
                 course=course,
                 file=form.files.get('file')
             )
+            forum = Forum.objects.create(
+                course=course,
+                name=form.cleaned_data.get('title'),
+                description=form.cleaned_data.get('description'),
+                video=video,
+                author=request.user
+            )
             video.save()
+            forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
         form = UploadVideoForm()
@@ -192,6 +200,39 @@ def upload_video(request, pk):
         'course': course,
         'forums': forums
     })
+
+
+@login_required
+def video_comments(request, pk, video_pk):
+    course = get_object_or_404(Course, pk=pk)
+    forums = course.forums.all()
+    video = get_object_or_404(VideoFile, pk=video_pk)
+    forum = forums.filter(name=video.title)[0]
+    gamification = False
+
+    if settings.GAMIFICATION:
+        gamification = True
+
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            forum.last_updated = timezone.now()
+            forum.save()
+            comment = Comment.objects.create(
+                message=form.cleaned_data.get('message'),
+                forum=forum,
+                author=request.user
+            )
+            comment.save()
+            my_kwargs = dict(
+                pk=course.pk,
+                video_pk=video.pk
+            )
+            return redirect('video_comments', **my_kwargs)
+    else:
+        form = NewCommentForm()
+
+    return render(request, 'video_comments.html', {'forum': forum, 'course': course, 'video': video, 'form': form, 'gamification': gamification})
 
 
 @login_required

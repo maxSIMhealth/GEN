@@ -50,7 +50,10 @@ urlpatterns = [
 
     path('courses/<int:pk>/', course_views.course, name='course'),
     path('courses/<int:pk>/videos/', views.list_videos, name='list_videos'),
-    path('courses/<int:pk>/videos/upload', views.upload_video, name='upload_video'),
+    path('courses/<int:pk>/videos/upload',
+         views.upload_video, name='upload_video'),
+    path('courses/<int:pk>/videos/<int:video_pk>/comments',
+         views.video_comments, name='video_comments'),
     # path('courses/<int:pk>/videos/new/', views.new_media, name='new_media'),
     path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
     path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
@@ -80,8 +83,9 @@ urlpatterns = [
 
 if settings.DEBUG:
     # access to media files during development
-    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-    
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+
     # django toolbar
     import debug_toolbar
     urlpatterns = [

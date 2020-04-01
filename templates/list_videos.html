@@ -50,10 +50,10 @@
             <small>{{ video.description }}</small>
           </div>
           <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
-            <button class='btn btn-outline-primary'> 
+            <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}"> 
               <div style='text-align:center;'><i class="far fa-comment"></i></div>  
                 Discuss
-            </button>
+            </a>
             <button class='btn btn-success' disabled> 
               <div style='text-align:center;'><i class="far fa-check-circle"></i></div>  
                 Take quiz
