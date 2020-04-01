@@ -2,7 +2,8 @@ from django import forms
 from django.core.validators import FileExtensionValidator
 from .models import MediaFile, Forum, Comment, VideoFile
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Layout, Fieldset, Submit, Button
+from crispy_forms.bootstrap import FormActions
 
 
 class NewForumForm(forms.ModelForm):
@@ -24,9 +25,27 @@ class NewForumForm(forms.ModelForm):
 
     class Meta:
         model = Forum
-        # fields = ['name', 'description']
-        exclude = ['course', 'author', 'vote_score',
-                   'num_vote_up', 'num_vote_down', 'media']
+        fields = ['name', 'description', 'video']
+        # exclude = ['course', 'vote_score',
+        #    'num_vote_up', 'num_vote_down']
+
+    def __init__(self, *args, **kwargs):
+        super(NewForumForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                'Create new forum',
+                'name',
+                'description',
+                'video'
+            ),
+            FormActions(
+                Submit('submit', 'Submit', css_class='btn btn-primary'),
+                Submit('submit', 'Cancel', css_class='btn btn-danger',
+                       formnovalidate='formnovalidate')
+            )
+        )
+        self.helper.form_method = 'POST'
 
 
 class NewMediaForm(forms.ModelForm):
@@ -84,6 +103,20 @@ class UploadVideoForm(forms.ModelForm):
         model = VideoFile
         fields = ['title', 'description', 'file']
 
-    helper = FormHelper()
-    helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
-    helper.form_method = 'POST'
+    def __init__(self, *args, **kwargs):
+        super(UploadVideoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                'Upload a new video',
+                'title',
+                'description',
+                'file'
+            ),
+            FormActions(
+                Submit('submit', 'Submit', css_class='btn btn-primary'),
+                Submit('submit', 'Cancel', css_class='btn btn-danger',
+                       formnovalidate='formnovalidate')
+            )
+        )
+        self.helper.form_method = 'POST'

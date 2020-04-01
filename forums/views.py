@@ -107,7 +107,9 @@ def new_forum(request, pk):
 
     if request.method == 'POST':
         form = NewForumForm(request.POST)
-        if form.is_valid:
+        if 'Cancel' in request.POST['submit']:
+            return redirect('course_forums', pk=course.pk)
+        if 'submit' in request.POST and form.is_valid():
             forum = Forum.objects.create(
                 course=course,
                 name=form.cleaned_data.get('name'),
@@ -170,7 +172,9 @@ def upload_video(request, pk):
     if request.method == 'POST':
         form = UploadVideoForm(request.POST, request.FILES)
 
-        if form.is_valid():
+        if 'Cancel' in request.POST['submit']:
+            return redirect('list_videos', pk=course.pk)
+        if 'submit' in request.POST and form.is_valid():
             video = VideoFile.objects.create(
                 title=form.cleaned_data.get('title'),
                 description=form.cleaned_data.get('description'),

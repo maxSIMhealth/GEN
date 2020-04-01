@@ -1,4 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base_course.html' %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block title %}Start a New Forum{% endblock %}
 
@@ -9,12 +12,26 @@
   <li class="breadcrumb-item active">New forum</li>
 {% endblock breadcrumb %}
 
-{% block content %}
-  <form method="post" novalidate>
-    {% csrf_token %}
-    
-    {% include 'includes/form_forum_media.html' %}
+{% block content_tabs %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active">Forums</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
+  </li>
+{% endblock content_tabs %}
 
-    <button type="submit" class="btn btn-success">Post</button>
+{% block content %}
+  <form enctype="multipart/form-data" method="post">
+    {% crispy form %}
   </form>
 {% endblock content %}
