@@ -47,7 +47,7 @@
           <th class="th-small"></th>
           {% endif %}
           <th>Name</th>
-          <th>Comments</th>
+          <th class="th-small text-center">Comments</th>
           <th>Last update</th>
         </tr>
       </thead>
@@ -74,7 +74,6 @@
                     <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
-                <div class="mt-1">{{ forum.vote_score }}</div>
               </td>
             {% endif %}
             <td>
@@ -86,7 +85,7 @@
                 </div>
               {% endif %} {% endcomment %}
             </td>
-            <td>{{ forum.get_comment_count }}</td>
+            <td class="text-center">{{ forum.get_comment_count }}</td>
             <td>{{ forum.last_updated|naturaltime }}</td>
           </tr>
         {% endfor %}
