@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
+{% load video_thumbnail %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -44,7 +45,7 @@
           {% comment %}
             <img src="{{ video.thumbnail }}" class="mr-3" alt="Video thumbnail">
           {% endcomment %}
-          <img src="https://via.placeholder.com/80" class="mr-3" alt="Video thumbnail">
+          <img src="{{ video.file.url|video_thumbnail }}" class="mr-3" alt="Video thumbnail">
           <div class="media-body">
             <h5 class="mb-0 mt-1"><a href="{{ video.file.url }}">{{ video.title }}</a></h5>
             <small>{{ video.description }}</small>

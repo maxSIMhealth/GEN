@@ -1,3 +1,6 @@
+import subprocess
+import os
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -190,6 +193,7 @@ def upload_video(request, pk):
                 author=request.user
             )
             video.save()
+            video_generate_thumbnail(request, video.pk)
             forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -200,6 +204,17 @@ def upload_video(request, pk):
         'course': course,
         'forums': forums
     })
+
+
+@login_required
+def video_generate_thumbnail(request, video_pk):
+    video = get_object_or_404(VideoFile, pk=video_pk)
+    video_path = '.' + video.file.url
+    video_filename = os.path.splitext(video.file.name)[0]
+    video_thumbnail_output = '.' + settings.MEDIA_URL + video_filename + '_thumb.jpg'
+
+    subprocess.call(['ffmpeg', '-i', video_path, '-ss',
+                     '00:00:00.000', '-vframes', '1', video_thumbnail_output])
 
 
 @login_required
