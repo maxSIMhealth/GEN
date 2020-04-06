@@ -1,18 +1,18 @@
 import subprocess
 import os
 
+from urllib.parse import urlparse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 # from django.views.generic import ListView
 from django.utils import timezone
-from urllib.parse import urlparse
+from PIL import Image
 
+from courses.models import Course
 from .forms import NewForumForm, NewCommentForm, NewMediaForm, UploadVideoForm
 from .models import Forum, Comment, MediaFile, VideoFile
-from courses.models import Course
-from GEN import settings
 
 
 @login_required
@@ -193,7 +193,7 @@ def upload_video(request, pk):
                 author=request.user
             )
             video.save()
-            video_generate_thumbnail(request, video.pk)
+            video_generate_thumbnail(video.pk)
             forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -207,14 +207,52 @@ def upload_video(request, pk):
 
 
 @login_required
-def video_generate_thumbnail(request, video_pk):
+def video_generate_thumbnail(video_pk):
+    """Generates video thumbnail (square proportion)"""
     video = get_object_or_404(VideoFile, pk=video_pk)
     video_path = '.' + video.file.url
     video_filename = os.path.splitext(video.file.name)[0]
     video_thumbnail_output = '.' + settings.MEDIA_URL + video_filename + '_thumb.jpg'
+    size = (128, 128)
 
-    subprocess.call(['ffmpeg', '-i', video_path, '-ss',
-                     '00:00:00.000', '-vframes', '1', video_thumbnail_output])
+    cmd = ['ffmpeg', '-i', video_path, '-ss',
+           '00:00:01.000', '-vframes', '1', video_thumbnail_output]
+
+    # subprocess.call(['ffmpeg', '-i', video_path, '-ss',
+    #                  '00:00:00.000', '-vframes', '1', video_thumbnail_output])
+
+    process = subprocess.run(cmd, capture_output=True, check=True)
+
+    if process.returncode == 0:
+        print('Thumbnail generated ok')
+        image = Image.open(video_thumbnail_output)
+        image = crop_image(image)
+        image.thumbnail(size)
+        image.save(video_thumbnail_output)
+        print('Thumbnail resized ok')
+    else:
+        raise ValueError('Error generating thumbnail:' + process.stderr)
+
+
+def crop_image(image):
+    """Generates a square cropped image based on its center"""
+    width, height = image.size
+    if width > height:
+        crop = (width - height) / 2
+        left = crop
+        top = 0
+        right = height + crop
+        bottom = height
+    else:
+        crop = (height - width) / 2
+        left = 0
+        top = crop
+        right = width
+        bottom = width + crop
+
+    result = image.crop((left, top, right, bottom))
+
+    return result
 
 
 @login_required
