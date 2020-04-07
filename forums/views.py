@@ -1,21 +1,23 @@
-import subprocess
 import os
+import io
 import tempfile
 
 from urllib.parse import urlparse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.core.files import File
+# from django.core.files import File
 # from django.core.files.storage import FileSystemStorage
-from django.core.files.images import ImageFile
+# from django.core.files.images import ImageFile
 # from django.views.generic import ListView
 from django.utils import timezone
 from PIL import Image
 
+import ffmpeg
+
 from courses.models import Course
-from .forms import NewForumForm, NewCommentForm, NewMediaForm, UploadVideoForm
-from .models import Forum, Comment, MediaFile, VideoFile
+from .forms import NewForumForm, NewCommentForm, UploadVideoForm
+from .models import Forum, Comment, VideoFile
 
 
 @login_required
@@ -27,7 +29,8 @@ def course_forums(request, pk):
     if settings.GAMIFICATION:
         gamification = True
 
-    return render(request, 'course_forums.html', {'course': course, 'forums': forums, 'gamification': gamification})
+    return render(request, 'course_forums.html',
+                  {'course': course, 'forums': forums, 'gamification': gamification})
 
 
 @login_required
@@ -41,7 +44,8 @@ def list_videos(request, pk):
     #     if forum.media.kind == 'YTB':
     #         media_list.append(forum)
 
-    return render(request, 'list_videos.html', {'course': course, 'forums': forums, 'videos': videos})
+    return render(request, 'list_videos.html',
+                  {'course': course, 'forums': forums, 'videos': videos})
 
 
 @login_required
@@ -54,7 +58,8 @@ def list_pdfs(request, pk):
         if forum.media.kind == 'PDF':
             media_list.append(forum)
 
-    return render(request, 'list_pdfs.html', {'course': course, 'forums': forums, 'media_list': media_list})
+    return render(request, 'list_pdfs.html',
+                  {'course': course, 'forums': forums, 'media_list': media_list})
 
 
 @login_required
@@ -62,7 +67,8 @@ def list_quiz(request, pk):
     course = get_object_or_404(Course, pk=pk)
     quizzes = course.quizzes.all()
 
-    return render(request, 'list_quiz.html', {'course': course, 'quizzes': quizzes})
+    return render(request, 'list_quiz.html',
+                  {'course': course, 'quizzes': quizzes})
 
 
 # class ForumListView(ListView):
@@ -103,7 +109,12 @@ def forum_comments(request, pk, forum_pk):
     else:
         form = NewCommentForm()
 
-    return render(request, 'comments.html', {'forum': forum, 'course': course, 'video': video, 'form': form, 'gamification': gamification})
+    return render(request, 'comments.html',
+                  {'forum': forum,
+                   'course': course,
+                   'video': video,
+                   'form': form,
+                   'gamification': gamification})
 
 
 @login_required
@@ -151,24 +162,6 @@ def new_forum(request, pk):
     return render(request, 'new_forum.html', {'forums': forums, 'course': course, 'form': form})
 
 
-# @login_required
-# def upload_video(request, pk):
-#     course = get_object_or_404(Course, pk=pk)
-#     forums = course.forums.all()
-
-#     if request.method == 'POST' and request.FILES['user_video']:
-#         file = request.FILES['user_video']
-#         fs = FileSystemStorage()
-#         filename = fs.save(file.name, file)
-#         uploaded_file_url = fs.url(filename)
-#         return render(request, 'upload_video.html', {
-#             'uploaded_file_url': uploaded_file_url,
-#             'course': course,
-#             'forums': forums
-#         })
-
-#     return render(request, 'upload_video.html', {'course': course, 'forums': forums})
-
 @login_required
 def upload_video(request, pk):
     course = get_object_or_404(Course, pk=pk)
@@ -196,10 +189,12 @@ def upload_video(request, pk):
                 author=request.user
             )
             video.save()
-            thumbnail_filename = video_generate_thumbnail(video.pk)
-            # video.thumbnail.save(thumbnail_filename, thumbnail_file)
-            video.thumbnail = ImageFile(open(thumbnail_filename, 'rb'))
-            video.save()
+            # generates thumbnail and store in a temporary file
+            (thumbnail_filename, thumbnail_tempfile) = video_generate_thumbnail(video.pk)
+            # save thumbnail file in user directory and link it to video object
+            video.thumbnail.save(thumbnail_filename, thumbnail_tempfile)
+            # closes temporary file and allows it to be deleted
+            thumbnail_tempfile.close()
             forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -212,46 +207,55 @@ def upload_video(request, pk):
     })
 
 
+def read_frame_as_jpeg(in_filename, time):
+    # based on: https://github.com/kkroening/ffmpeg-python/blob/master/examples/read_frame_as_jpeg.py
+    out, err = (
+        ffmpeg
+        .input(in_filename, ss=time)
+        # .filter('select', 'gte(n,{})'.format(frame_num))
+        .output('pipe:', vframes=1, format='image2', vcodec='mjpeg')
+        .run(capture_stdout=True)
+    )
+    return (out, err)
+
+
 def video_generate_thumbnail(video_pk):
     """Generates video thumbnail (square proportion)"""
     video = get_object_or_404(VideoFile, pk=video_pk)
     video_path = '.' + video.file.url
     video_filename = os.path.splitext(video.file.name)[0]
-    thumbnail_filename = video_filename + '_thumb.jpg'
-    video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
+    thumbnail_filename = os.path.split(video_filename)[1] + '_thumb.jpg'
+    ffmpeg_tempfile = tempfile.NamedTemporaryFile()
+    # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
     size = (128, 128)
 
-    cmd = ['ffmpeg', '-i', video_path, '-ss',
-           '00:00:01.000', '-vframes', '1', video_thumbnail_output]
+    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(video_path, '00:00:01.000')
 
-    process = subprocess.run(cmd, capture_output=True, check=True)
-
-    if process.returncode == 0:
+    if ffmpeg_error is None:
         print('Thumbnail generated ok')
-        image = Image.open(video_thumbnail_output)
-        image = crop_image(image)
-        image.thumbnail(size)
-        image.save(video_thumbnail_output)
-        # thumbnail_filename = os.path.split(thumbnail_filename)[
-        #     1]  # removing directory from path
-        # file = open(video_thumbnail_output, "rb")  # [r]ead as [b]inary
+        thumbnail = Image.open(io.BytesIO(ffmpeg_output))
+        thumbnail = crop_image(thumbnail)
+        thumbnail.thumbnail(size)
+        thumbnail.save(ffmpeg_tempfile, 'JPEG')
+        ffmpeg_tempfile.seek(0)
         print('Thumbnail resized ok')
     else:
-        raise ValueError('Error generating thumbnail:' + process.stderr)
+        raise ValueError('Error generating thumbnail:' + ffmpeg_error)
 
-    return video_thumbnail_output
+    return (thumbnail_filename, ffmpeg_tempfile)
 
 
 def crop_image(image):
     """Generates a square cropped image based on its center"""
     width, height = image.size
+
     if width > height:
         crop = (width - height) / 2
         left = crop
         top = 0
         right = height + crop
         bottom = height
-    else:
+    if width < height:
         crop = (height - width) / 2
         left = 0
         top = crop
@@ -293,7 +297,12 @@ def video_comments(request, pk, video_pk):
     else:
         form = NewCommentForm()
 
-    return render(request, 'video_comments.html', {'forum': forum, 'course': course, 'video': video, 'form': form, 'gamification': gamification})
+    return render(request, 'video_comments.html',
+                  {'forum': forum,
+                   'course': course,
+                   'video': video,
+                   'form': form,
+                   'gamification': gamification})
 
 
 @login_required
