@@ -1,11 +1,14 @@
 import subprocess
 import os
+import tempfile
 
 from urllib.parse import urlparse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+from django.core.files import File
+# from django.core.files.storage import FileSystemStorage
+from django.core.files.images import ImageFile
 # from django.views.generic import ListView
 from django.utils import timezone
 from PIL import Image
@@ -193,7 +196,10 @@ def upload_video(request, pk):
                 author=request.user
             )
             video.save()
-            video_generate_thumbnail(video.pk)
+            thumbnail_filename = video_generate_thumbnail(video.pk)
+            # video.thumbnail.save(thumbnail_filename, thumbnail_file)
+            video.thumbnail = ImageFile(open(thumbnail_filename, 'rb'))
+            video.save()
             forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -206,20 +212,17 @@ def upload_video(request, pk):
     })
 
 
-@login_required
 def video_generate_thumbnail(video_pk):
     """Generates video thumbnail (square proportion)"""
     video = get_object_or_404(VideoFile, pk=video_pk)
     video_path = '.' + video.file.url
     video_filename = os.path.splitext(video.file.name)[0]
-    video_thumbnail_output = '.' + settings.MEDIA_URL + video_filename + '_thumb.jpg'
+    thumbnail_filename = video_filename + '_thumb.jpg'
+    video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
     size = (128, 128)
 
     cmd = ['ffmpeg', '-i', video_path, '-ss',
            '00:00:01.000', '-vframes', '1', video_thumbnail_output]
-
-    # subprocess.call(['ffmpeg', '-i', video_path, '-ss',
-    #                  '00:00:00.000', '-vframes', '1', video_thumbnail_output])
 
     process = subprocess.run(cmd, capture_output=True, check=True)
 
@@ -229,9 +232,14 @@ def video_generate_thumbnail(video_pk):
         image = crop_image(image)
         image.thumbnail(size)
         image.save(video_thumbnail_output)
+        # thumbnail_filename = os.path.split(thumbnail_filename)[
+        #     1]  # removing directory from path
+        # file = open(video_thumbnail_output, "rb")  # [r]ead as [b]inary
         print('Thumbnail resized ok')
     else:
         raise ValueError('Error generating thumbnail:' + process.stderr)
+
+    return video_thumbnail_output
 
 
 def crop_image(image):

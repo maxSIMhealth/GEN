@@ -45,10 +45,15 @@ class VideoFile(models.Model):
         Course, on_delete=models.PROTECT, related_name=related_name)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to=user_directory_path)
+    thumbnail = models.ImageField(
+        upload_to=None, blank=True, null=True)
+    # forum = models.ForeignKey(
+    #     Forum, on_delete=models.CASCADE, related_name='video')
     validators = [FileExtensionValidator(allowed_extensions=('mp4'))]
 
     def delete(self, *args, **kwargs):
         self.file.delete()  # Delete the actual video file
+        self.thumbnail.delete()  # Delete the thumbnail file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
     def __str__(self):
@@ -67,7 +72,7 @@ class Forum(VoteModel, models.Model):
     # media = models.ForeignKey(
     #     MediaFile, on_delete=models.CASCADE, related_name='forums')
     video = models.ForeignKey(
-        VideoFile, on_delete=models.PROTECT, related_name='forums', blank=True, null=True)
+        VideoFile, on_delete=models.CASCADE, related_name='forums', blank=True, null=True)
 
     def __str__(self):
         return self.name
