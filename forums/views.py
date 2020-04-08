@@ -249,20 +249,23 @@ def crop_image(image):
     """Generates a square cropped image based on its center"""
     width, height = image.size
 
-    if width > height:
-        crop = (width - height) / 2
-        left = crop
-        top = 0
-        right = height + crop
-        bottom = height
-    if width < height:
-        crop = (height - width) / 2
-        left = 0
-        top = crop
-        right = width
-        bottom = width + crop
+    if width != height:
+        if width > height:
+            crop = (width - height) / 2
+            left = crop
+            top = 0
+            right = height + crop
+            bottom = height
+        elif width < height:
+            crop = (height - width) / 2
+            left = 0
+            top = crop
+            right = width
+            bottom = width + crop
 
-    result = image.crop((left, top, right, bottom))
+        result = image.crop((left, top, right, bottom))
+    else:
+        result = image
 
     return result
 
