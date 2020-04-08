@@ -35,7 +35,17 @@ class MediaFile(models.Model):
         return self.title
 
 
+class VideoFileQuerySet(models.QuerySet):
+
+    def delete(self, *args, **kwargs):
+        for obj in self:
+            obj.file.delete()
+            obj.thumbnail.delete()
+        super().delete(*args, **kwargs)
+
+
 class VideoFile(models.Model):
+    objects = VideoFileQuerySet.as_manager()
     related_name = 'videos'
     title = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=255)
