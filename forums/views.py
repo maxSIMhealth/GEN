@@ -189,12 +189,7 @@ def upload_video(request, pk):
                 author=request.user
             )
             video.save()
-            # generates thumbnail and store in a temporary file
-            (thumbnail_filename, thumbnail_tempfile) = video_generate_thumbnail(video.pk)
-            # save thumbnail file in user directory and link it to video object
-            video.thumbnail.save(thumbnail_filename, thumbnail_tempfile)
-            # closes temporary file and allows it to be deleted
-            thumbnail_tempfile.close()
+            generate_video_thumbnail(video.pk)
             forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -208,6 +203,7 @@ def upload_video(request, pk):
 
 
 def read_frame_as_jpeg(in_filename, time):
+    """extracts singlke frame from video based on a specific timestamp"""
     # based on: https://github.com/kkroening/ffmpeg-python/blob/master/examples/read_frame_as_jpeg.py
     out, err = (
         ffmpeg
@@ -219,7 +215,7 @@ def read_frame_as_jpeg(in_filename, time):
     return (out, err)
 
 
-def video_generate_thumbnail(video_pk):
+def generate_video_thumbnail(video_pk):
     """Generates video thumbnail (square proportion)"""
     video = get_object_or_404(VideoFile, pk=video_pk)
     video_path = '.' + video.file.url
@@ -242,7 +238,10 @@ def video_generate_thumbnail(video_pk):
     else:
         raise ValueError('Error generating thumbnail:' + ffmpeg_error)
 
-    return (thumbnail_filename, ffmpeg_tempfile)
+    # save thumbnail file in user directory and link it to video object
+    video.thumbnail.save(thumbnail_filename, ffmpeg_tempfile)
+    # closes temporary file and allows it to be deleted
+    ffmpeg_tempfile.close()
 
 
 def crop_image(image):
