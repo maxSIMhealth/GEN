@@ -218,14 +218,13 @@ def read_frame_as_jpeg(in_filename, time):
 def generate_video_thumbnail(video_pk):
     """Generates video thumbnail (square proportion)"""
     video = get_object_or_404(VideoFile, pk=video_pk)
-    video_path = '.' + video.file.url
     video_filename = os.path.splitext(video.file.name)[0]
     thumbnail_filename = os.path.split(video_filename)[1] + '_thumb.jpg'
     ffmpeg_tempfile = tempfile.NamedTemporaryFile()
     # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
     size = (128, 128)
 
-    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(video_path, '00:00:01.000')
+    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(video.file.path, '00:00:01.000')
 
     if ffmpeg_error is None:
         print('Thumbnail generated ok')
