@@ -28,4 +28,6 @@ def dashboard(request):
     if settings.GAMIFICATION:
         gamification = True
 
-    return render(request, 'dashboard.html', {'user_progress': user_progress, 'gamification': gamification})
+    return render(request, 'dashboard.html',
+                  {'user_progress': user_progress,
+                   'gamification': gamification})

@@ -2,8 +2,8 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth.models import User
 
-from courses.models import Course
 from vote.models import VoteModel
+from courses.models import Course
 
 
 def user_directory_path(instance, filename):

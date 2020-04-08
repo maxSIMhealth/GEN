@@ -70,7 +70,8 @@ urlpatterns = [
          views.clearvote_comment, name='comment_clearvote'),
 
     path('courses/<int:pk>/quiz/', views.list_quiz, name='list_quiz'),
-    path('courses/<int:pk>/quiz/<int:quiz_pk>/', quiz_views.quiz, name='quiz'),
+    path('courses/<int:pk>/quiz/<int:quiz_pk>/',
+         quiz_views.quiz_page, name='quiz'),
     path('courses/<int:pk>/quiz/<int:quiz_pk>/result/',
          quiz_views.quiz_result, name='quiz_result'),
 

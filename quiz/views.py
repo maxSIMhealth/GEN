@@ -3,12 +3,12 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 
-from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore
 from forums.models import Course
+from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore
 
 
 @login_required
-def quiz(request, pk, quiz_pk):
+def quiz_page(request, pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
@@ -115,12 +115,12 @@ def quiz_result(request, pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
-    quiz_score_kwargs = dict(
-        student=request.user,
-        quiz=quiz,
-        course=course
-    )
-    quiz_score = get_object_or_404(QuizScore, **quiz_score_kwargs)
+    # quiz_score_kquiz_score_kwargs = dict(
+    #     student=request.user,
+    #     quiz=quiz,
+    #     course=course
+    # )
+    # quiz_score = get_object_or_404(QuizScore, **quiz_score_kwargs)
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list

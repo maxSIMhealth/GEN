@@ -52,16 +52,14 @@ class MCQuestion(Question):
     def check_if_correct(self, guess):
         answer = Answer.objects.get(id=guess)
 
-        if answer.correct is True:
-            return True
-        else:
-            return False
+        return bool(answer.correct)
 
     def get_answers(self):
         return Answer.objects.filter(question=self)
 
     def get_answers_list(self):
-        return [(answer.id, answer.content) for answer in Answer.objects.filter(question=self)]
+        return [(answer.id, answer.content) for answer in
+                Answer.objects.filter(question=self)]
 
     class Meta:
         verbose_name = "Multiple Choice Question"
@@ -102,7 +100,12 @@ class MCQuestionAttempt(TimeStampedModel):
     attempt_no = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "User %s - quiz %s - course %s - attempt %s - answer id %s" % (self.student.username, self.quiz.name, self.course.name, self.attempt_no, self.answer_id)
+        return "User %s - quiz %s - course %s - attempt %s - answer id %s" % \
+            (self.student.username,
+             self.quiz.name,
+             self.course.name,
+             self.attempt_no,
+             self.answer_id)
 
     class Meta:
         verbose_name = "Multiple Choice Questions Attempt"
@@ -116,4 +119,7 @@ class QuizScore(models.Model):
     score = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "Score for user %s - quiz %s - course %s" % (self.student.username, self.quiz.name, self.course.name)
+        return "Score for user %s - quiz %s - course %s" % \
+            (self.student.username,
+             self.quiz.name,
+             self.course.name)
