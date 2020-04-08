@@ -9,7 +9,9 @@
 		"python.linting.pylintEnabled": true,
 		"python.linting.pylintArgs": [
 			"--load-plugins",
-			"pylint_django"
+			"pylint_django",
+			"--good-names",
+			"i,j,k,ex,Run,_,pk,x,y"
 		]
 	}
 }
