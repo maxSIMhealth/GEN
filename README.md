@@ -13,6 +13,7 @@ source venv/bin/activate
 - Instal project dependencies: `pip install -r requirements.txt`
 - Generate database: `python manage.py migrate`
 - Create a super user: `python manage.py createsuperuser`
+- Install dependencies: `sudo apt install ffmpeg`
 - Run the project: `python manage.py runserver`
 
 ## Production
@@ -32,6 +33,10 @@ server {
                 # files that will be gathered by manage.py collecstatic
                 alias /opt/GEN_static/;
         }
+	location /media/ {
+		# media files uploaded by users
+		alias /opt/GEN_media/;
+	}
         location / {
                 proxy_pass http://127.0.0.1:8000;
                 proxy_set_header X-Forwarded-Host $server_name;
@@ -41,12 +46,17 @@ server {
 }
 ```
 - Create static files directory: `sudo mkdir /opt/GEN_static/`
+- Create media files directory: `sudo mkdir /opt/GEN_media/`
+- Change ownership of static and media directories to user that will run GEN (e.g., `sudo chown user:usergroup /opt/GEN_static`
 - Enable GEN on nginx: `sudo ln -s /etc/nginx/sites-available/GEN /etc/nginx/sites-enabled/GEN`
+- Remove default nginx site (if it exists): `sudo rm /etc/nginx/sites-enabled/default`
 - Restart service: `sudo service nginx restart`
 
 ### GEN settings
-- Edit `GEN/settings.py` and add `STATIC_ROOT=/opt/GEN_static/` before `STATIC_URL`
-- Edit `.env` and set `DEBUG=False`
+- Edit `GEN/settings.py` and modify the following:
+  - add `STATIC_ROOT=/opt/GEN_static/` before `STATIC_URL`
+  - change `MEDIA_ROOT` to `/opt/GEN_media/`
+- Edit `.env` and set `DEBUG=False`y
 - Colllect static files: `python manage.py collectstatic`
 
 ### Start the server
