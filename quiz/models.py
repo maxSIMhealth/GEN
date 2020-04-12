@@ -7,6 +7,10 @@ from forums.models import Course, VideoFile
 
 
 class Quiz(TimeStampedModel):
+    """
+    Quiz model
+    """
+
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
     author = models.ForeignKey(
@@ -27,6 +31,11 @@ class Quiz(TimeStampedModel):
 
 
 class Question(TimeStampedModel):
+    """
+    Question model
+    Parent for Multiple Choice, Likert Scale and Open Ended questions
+    """
+
     quiz = models.ManyToManyField(
         Quiz,
         verbose_name='Quiz',
@@ -46,6 +55,110 @@ class Question(TimeStampedModel):
 
     def __str__(self):
         return self.content
+
+
+class Likert(Question):
+    """Likert Model"""
+
+    def __str__(self):
+        return ("%s") % (self.content)
+
+    class Meta:
+        verbose_name = "Likert scale question"
+        verbose_name_plural = "Likert scale questions"
+
+
+class LikertAnswer(TimeStampedModel):
+    """
+    Likert Answer Model
+    """
+
+    SCALE_CHOICES = (
+        ('', ''),
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    )
+
+    question = models.ForeignKey(Likert, on_delete=models.PROTECT)
+    correct = models.CharField(max_length=2,
+                               choices=SCALE_CHOICES,
+                               blank=True,
+                               null=True,
+                               default='')
+
+    class Meta:
+        verbose_name = 'Likert answer'
+        verbose_name_plural = 'Likert answers'
+
+
+class LikertAttempt(TimeStampedModel):
+    """
+    Liket Attempt model
+    """
+
+    SCALE_CHOICES = (
+        ('', ''),
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    )
+
+    likert = models.ForeignKey(Likert, on_delete=models.PROTECT)
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    correct = models.NullBooleanField(blank=True, null=True)
+    no_of_attempt = models.PositiveIntegerField(default=1)
+    scale = models.CharField(max_length=2,
+                             choices=SCALE_CHOICES,
+                             blank=True,
+                             null=True,
+                             default='')
+
+    def __str__(self):
+        return ("%s_%s_%s") % (self.student.username, self.likert.quiz, self.no_of_attempt)
+
+    class Meta:
+        verbose_name = "likert scale attempt"
+        verbose_name_plural = "likert scale attempts"
+
+
+class OpenEnded(Question):
+    """
+    Open Ended model
+    """
+
+    # def __str__(self):
+    #     return ("%s") % (self.content)
+
+    class Meta:
+        verbose_name = "Open ended Question"
+        verbose_name_plural = "Open ended questions"
+
+
+class OpenEndedAttempt(TimeStampedModel):
+    """
+    Open Ended Attempt model
+    """
+
+    openended = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    answer = models.TextField(('answer'), null=True, blank=True)
+    no_of_attempt = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return ("%s_%s_%s") % (self.student.get_full_name(), self.openended.quiz, self.no_of_attempt)
+
+    class Meta:
+        verbose_name = "open ended attempt"
+        verbose_name_plural = "open ended attempts"
 
 
 class MCQuestion(Question):

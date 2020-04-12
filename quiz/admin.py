@@ -2,7 +2,8 @@ from django.contrib import admin
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
-from .models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, QuizScore
+from .models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, \
+    QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
 
 
 class AnswerInline(admin.TabularInline):
@@ -79,9 +80,34 @@ class QuizScoreAdmin(admin.ModelAdmin):
     # filter_horizontal = ('student',)
 
 
+class LikertAdmin(admin.ModelAdmin):
+    pass
+
+
+class LikertAnswerAdmin(admin.ModelAdmin):
+    pass
+
+
+class LikertAttempAdmin(admin.ModelAdmin):
+    pass
+
+
+class OpenEndedAdmin(admin.ModelAdmin):
+    pass
+
+
+class OpenEndedAttempAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
 # admin.site.register(Answer)
 admin.site.register(QuizScore, QuizScoreAdmin)
+admin.site.register(Likert, LikertAdmin)
+admin.site.register(LikertAnswer, LikertAnswerAdmin)
+admin.site.register(LikertAttempt, LikertAttempAdmin)
+admin.site.register(OpenEnded, OpenEndedAdmin)
+admin.site.register(OpenEndedAttempt, OpenEndedAttempAdmin)

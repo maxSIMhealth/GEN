@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 
 from forums.models import Course
-from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore
+from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore,\
+    Likert, LikertAnswer, OpenEnded, OpenEndedAttempt
 
 
 @login_required
@@ -104,6 +105,11 @@ def quiz_page(request, pk, quiz_pk):
         return HttpResponseRedirect(reverse('quiz_result', args=[pk, quiz.pk]))
 
     else:
+        # mcquestions = MCQuestion.objects.filter(
+        #     quiz=quiz)  # .order_by("-date_added")
+        # likert = Likert.objects.filter(quiz=quiz)  # .order_by("-date_added")
+        # openended = OpenEnded.objects.filter(quiz=quiz)
+
         return render(
             request,
             'quiz.html',

@@ -1,6 +1,7 @@
 {% extends 'base_course.html' %}
 
 {% load humanize %}
+{% load check_attribute %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -69,9 +70,11 @@
           {% comment %} {% include includes/form.html %} {% endcomment %}
           {% for question in quiz.questions.all %}
             <h6 class="card-title">
-              <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
+              <strong>{{ forloop.counter }} - {{question.content}}</strong>
             </h6> 
-
+             
+            
+            {% if question|check_attribute:'mcquestion' %}
             <ul class="list-group mb-3">
               {% comment %} {{choice.pk}} - 
               {{choice.content}} - 
@@ -86,6 +89,40 @@
             </ul>
             {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
             {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
+            
+            {% elif question|check_attribute:'likert' %}
+            
+            <div class="mb-3">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                <label class="form-check-label" for="inlineRadio3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+                <label class="form-check-label" for="inlineRadio4">4</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5">
+                <label class="form-check-label" for="inlineRadio5">5</label>
+              </div>
+            </div>
+
+            {% elif question|check_attribute:'openended' %}
+              
+            <div class="mb-3">
+              <textarea name="question_{{ question.id }}" rows="5" class="form-control"></textarea>
+            </div>
+
+            {% endif %}
+
           {% endfor %}
           <button type="submit" class="btn btn-block btn-primary">Submit</button>
         </form>
