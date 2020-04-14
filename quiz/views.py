@@ -5,11 +5,15 @@ from django.db.models import Max
 
 from forums.models import Course
 from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore,\
-    Likert, LikertAnswer, OpenEnded, OpenEndedAttempt
+    Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
 
 
 @login_required
 def quiz_page(request, pk, quiz_pk):
+    """
+    Renders quiz page and handles submission requests
+    """
+
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
@@ -30,49 +34,74 @@ def quiz_page(request, pk, quiz_pk):
         # get each question id and get answer related to it
         for item in items:
             try:
-                question_id = item.split('_')[1]
+                question_type, question_id = item.split('_')
             except IndexError:
                 question_id = None
 
-            try:
-                mcquestion = MCQuestion.objects.get(pk=question_id)
-            except MCQuestion.DoesNotExist:
-                mcquestion = None
+            if question_type == 'mcquestion':
+                try:
+                    mcquestion = MCQuestion.objects.get(pk=question_id)
+                except MCQuestion.DoesNotExist:
+                    mcquestion = None
 
-            try:
-                answer = Answer.objects.get(
-                    pk=request.POST.getlist(item)[0])
-            except IndexError:
-                answer = None
+                try:
+                    answer = Answer.objects.get(
+                        pk=request.POST.getlist(item)[0])
+                except IndexError:
+                    answer = None
 
-            # check if the question is correct
-            if MCQuestion.check_if_correct(mcquestion, answer.pk):
-                flag = True
-                score += 1
-            else:
-                flag = False
+                # check if the question is correct
+                if MCQuestion.check_if_correct(mcquestion, answer.pk):
+                    flag = True
+                    score += 1
+                else:
+                    flag = False
 
-            # store the answers as a new attempt
-            attempt = MCQuestionAttempt.objects.create(
-                student=request.user,
-                quiz=quiz,
-                course=course,
-                question=MCQuestion.objects.get(pk=question_id),
-                correct=flag,
-                # I've decided to save a pure text versio of the answer, in
-                # case the answer object is altered in the future
-                answer_content=answer.content,
-                answer=Answer.objects.get(pk=answer.pk)
-            )
+                # store the answers as a new attempt
+                attempt = MCQuestionAttempt.objects.create(
+                    student=request.user,
+                    quiz=quiz,
+                    course=course,
+                    question=MCQuestion.objects.get(pk=question_id),
+                    correct=flag,
+                    # I've decided to save a pure text versio of the answer, in
+                    # case the answer object is altered in the future
+                    answer_content=answer.content,
+                    answer=Answer.objects.get(pk=answer.pk)
+                )
 
-            # increase attempt number
-            if attempt_no['attempt_no__max']:
-                attempt.attempt_no = attempt_no['attempt_no__max'] + 1
-            else:
-                attempt.attempt_no = 1
+                # increase attempt number
+                if attempt_no['attempt_no__max']:
+                    attempt.attempt_no = attempt_no['attempt_no__max'] + 1
+                else:
+                    attempt.attempt_no = 1
 
-            # save attempt data
-            attempt.save()
+                # save attempt data
+                attempt.save()
+
+            elif question_type == 'likert':
+                try:
+                    likert = Likert.objects.get(pk=question_id)
+                except Likert.DoesNotExist:
+                    likert = None
+
+                # check if the question is correct
+                try:
+                    answer = LikertAnswer.objects.get(question=likert)
+                except LikertAnswer.DoesNotExist:
+                    answer = None
+                if answer:
+                    flag = True
+                    score += 1
+                else:
+                    flag = False
+
+                # store the answers as a new attempt
+                attempt = LikertAttempt.objects.create(
+                    likert=likert,
+                    student=request.user,
+                    scale=value
+                )
 
         # change session variable to indicate that the
         # user completed the quiz
