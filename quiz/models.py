@@ -114,7 +114,7 @@ class LikertAttempt(TimeStampedModel):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
 
     correct = models.NullBooleanField(blank=True, null=True)
-    no_of_attempt = models.PositiveIntegerField(default=1)
+    attempt_number = models.PositiveIntegerField(default=1)
     scale = models.CharField(max_length=2,
                              choices=SCALE_CHOICES,
                              blank=True,
@@ -151,7 +151,7 @@ class OpenEndedAttempt(TimeStampedModel):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
 
     answer = models.TextField(('answer'), null=True, blank=True)
-    no_of_attempt = models.PositiveIntegerField(default=1)
+    attempt_number = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return ("%s_%s_%s") % (self.student.get_full_name(), self.openended.quiz, self.no_of_attempt)
@@ -210,14 +210,14 @@ class MCQuestionAttempt(TimeStampedModel):
     correct = models.NullBooleanField(blank=True, null=True)
     answer = models.ForeignKey(Answer, on_delete=models.PROTECT)
     answer_content = models.CharField('student answer', max_length=1000)
-    attempt_no = models.PositiveIntegerField(default=0)
+    attempt_number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "User %s - quiz %s - course %s - attempt %s - answer id %s" % \
             (self.student.username,
              self.quiz.name,
              self.course.name,
-             self.attempt_no,
+             self.attempt_number,
              self.answer_id)
 
     class Meta:

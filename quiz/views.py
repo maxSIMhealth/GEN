@@ -25,8 +25,8 @@ def quiz_page(request, pk, quiz_pk):
     if request.method == 'POST':
         flag = False
         items = list(request.POST)
-        attempt_no = MCQuestionAttempt.objects.filter(
-            quiz=quiz, student=request.user).aggregate(Max('attempt_no'))
+        attempt_number = MCQuestionAttempt.objects.filter(
+            quiz=quiz, student=request.user).aggregate(Max('attempt_number'))
         # removing csrf token from items list
         items.pop(0)
         score = 0
@@ -46,11 +46,11 @@ def quiz_page(request, pk, quiz_pk):
 
                 try:
                     answer = Answer.objects.get(
-                        pk=request.POST.getlist(item)[0])
+                        pk=request.POST.get(item))
                 except IndexError:
                     answer = None
 
-                # check if the question is correct
+                # check if the answer is correct
                 if MCQuestion.check_if_correct(mcquestion, answer.pk):
                     flag = True
                     score += 1
@@ -71,10 +71,28 @@ def quiz_page(request, pk, quiz_pk):
                 )
 
                 # increase attempt number
-                if attempt_no['attempt_no__max']:
-                    attempt.attempt_no = attempt_no['attempt_no__max'] + 1
+                if attempt_number['attempt_number__max']:
+                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
                 else:
-                    attempt.attempt_no = 1
+                    attempt.attempt_number = 1
+
+                # save attempt data
+                attempt.save()
+
+            elif question_type == 'openended':
+                try:
+                    openended = OpenEnded.objects.get(pk=question_id)
+                except OpenEnded.DoesNotExist:
+                    openended = None
+
+                value = request.POST.get(item)
+
+                # store answers
+                attempt = OpenEnded.objects.create(
+                    openended=openended,
+                    student=request.user,
+                    answer=value
+                )
 
                 # save attempt data
                 attempt.save()
@@ -85,23 +103,37 @@ def quiz_page(request, pk, quiz_pk):
                 except Likert.DoesNotExist:
                     likert = None
 
-                # check if the question is correct
+                # check if the answer is valid
                 try:
                     answer = LikertAnswer.objects.get(question=likert)
                 except LikertAnswer.DoesNotExist:
                     answer = None
-                if answer:
-                    flag = True
-                    score += 1
-                else:
-                    flag = False
+                # FIXME: disabled because it does not make sense to check
+                # if a likert answer is correct or not
+                # if answer:
+                #     flag = True
+                #     score += 1
+                # else:
+                #     flag = False
 
-                # store the answers as a new attempt
+                # get the likert scale value chosen by the participant
+                value = request.POST.get(item)
+
+                # store the answer as a new attempt
                 attempt = LikertAttempt.objects.create(
                     likert=likert,
                     student=request.user,
                     scale=value
                 )
+
+                # increase attempt number
+                if attempt_number['attempt_number__max']:
+                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
+                else:
+                    attempt.attempt_number = 1
+
+                # save attempt data
+                attempt.save()
 
         # change session variable to indicate that the
         # user completed the quiz
@@ -165,14 +197,14 @@ def quiz_result(request, pk, quiz_pk):
     # score = quiz_score.score
 
     # get latest attempt number
-    latest_attempt_no = MCQuestionAttempt.objects.filter(
-        quiz=quiz, student=request.user).latest('attempt_no').attempt_no
+    latest_attempt_number = MCQuestionAttempt.objects.filter(
+        quiz=quiz, student=request.user).latest('attempt_number').attempt_number
 
     # get questions and answers from the latest attemp
     questions_attempt = MCQuestionAttempt.objects.filter(
         quiz=quiz,
         student=request.user,
-        attempt_no=latest_attempt_no
+        attempt_number=latest_attempt_number
     )
 
     # base score
