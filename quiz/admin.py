@@ -10,6 +10,10 @@ class AnswerInline(admin.TabularInline):
     model = Answer
 
 
+class LikertAnswerInline(admin.TabularInline):
+    model = LikertAnswer
+
+
 class QuizAdminForm(forms.ModelForm):
     """
         part of the code below is from
@@ -81,7 +85,13 @@ class QuizScoreAdmin(admin.ModelAdmin):
 
 
 class LikertAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('content', )
+    fields = ('content', 'quiz', 'explanation')
+
+    search_fields = ('content', 'explanation')
+    filter_horizontal = ('quiz', )
+
+    inlines = [LikertAnswerInline]
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
@@ -104,7 +114,7 @@ admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
-# admin.site.register(Answer)
+admin.site.register(Answer)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 admin.site.register(LikertAnswer, LikertAnswerAdmin)
