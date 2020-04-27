@@ -79,7 +79,7 @@ class LikertAnswer(TimeStampedModel):
     scale_max = models.PositiveIntegerField(default=5)
 
     def __str__(self):
-        return ("%s : %s to %s") % (self.question.content, self.scale_min, self.scale_max)
+        return ("%s : scale %s to %s") % (self.question.content, self.scale_min, self.scale_max)
 
     def clean(self):
         # Don't allow max scale to be equal of lower than min scale
@@ -89,38 +89,26 @@ class LikertAnswer(TimeStampedModel):
         return super().clean()
 
     class Meta:
-        verbose_name = 'Likert answer'
-        verbose_name_plural = 'Likert answers'
+        verbose_name = 'Likert answer (scale)'
+        verbose_name_plural = 'Likert answers (scales)'
 
 
 class LikertAttempt(TimeStampedModel):
     """
-    Liket Attempt model
+    Likert Attempt model
     """
-
-    SCALE_CHOICES = (
-        ('', ''),
-        ('0', '0'),
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('4', '4'),
-        ('5', '5'),
-    )
 
     likert = models.ForeignKey(Likert, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.PROTECT)
 
-    correct = models.NullBooleanField(blank=True, null=True)
     attempt_number = models.PositiveIntegerField(default=0)
-    scale = models.CharField(max_length=2,
-                             choices=SCALE_CHOICES,
-                             blank=True,
-                             null=True,
-                             default='')
+    scale_answer = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
-        return ("%s_%s_%s") % (self.student.username, self.likert.quiz, self.attempt_number)
+        return ("%s_%s (attempt %s): %s") % (self.student.username,
+                                             self.likert.quiz,
+                                             self.attempt_number,
+                                             self.scale_answer)
 
     class Meta:
         verbose_name = "likert scale attempt"

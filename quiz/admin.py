@@ -1,16 +1,38 @@
 from django.contrib import admin
 from django import forms
+from django.forms import ModelForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, \
     QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
 
 
+# Classes AlwaysChangedModelForm and CheckerInline were based on:
+# https://stackoverflow.com/questions/34355406/django-admin-not-saving-pre-populated-inline-fields-which-are-left-in-their-init
+
+class AlwaysChangedModelForm(ModelForm):
+    """ Should returns True if data differs from initial.
+        By always returning true even unchanged inlines will get validated and saved."""
+
+    def has_changed(self):
+        return True
+
+
+class CheckerInline(admin.StackedInline):
+    """ Base class for checker inlines """
+    extra = 1  # defines the initial number of fields
+    form = AlwaysChangedModelForm
+
+
 class AnswerInline(admin.TabularInline):
+    """Model to show multiple choice answers inline (tabular)"""
     model = Answer
 
 
-class LikertAnswerInline(admin.TabularInline):
+class LikertAnswerInline(CheckerInline):
+    """Model to show likert answers inline (stacked), and based on
+    CheckerInline to always save while submitting/creating a Likert
+    object (even if the LikertAnswer fields are using the default values) """
     model = LikertAnswer
 
 
