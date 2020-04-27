@@ -122,7 +122,7 @@ class LikertAttempt(TimeStampedModel):
                              default='')
 
     def __str__(self):
-        return ("%s_%s_%s") % (self.student.username, self.likert.quiz, self.no_of_attempt)
+        return ("%s_%s_%s") % (self.student.username, self.likert.quiz, self.attempt_number)
 
     class Meta:
         verbose_name = "likert scale attempt"
@@ -154,7 +154,7 @@ class OpenEndedAttempt(TimeStampedModel):
     attempt_number = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return ("%s_%s_%s") % (self.student.get_full_name(), self.openended.quiz, self.no_of_attempt)
+        return ("%s_%s_%s") % (self.student.get_full_name(), self.openended.quiz, self.attempt_number)
 
     class Meta:
         verbose_name = "open ended attempt"
