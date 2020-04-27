@@ -2,6 +2,7 @@
 
 {% load humanize %}
 {% load check_attribute %}
+{% load likert_range %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -64,7 +65,7 @@
       <div class="card-body">
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
-          {% comment %} {% include includes/form.html %} {% endcomment %}
+
           {% for question in quiz.questions.all %}
             <h6 class="card-title">
               <strong>{{ forloop.counter }} - {{question.content}}</strong>
@@ -84,32 +85,24 @@
                 </li>
               {% endfor %}
             </ul>
-            {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
-            {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
             
             {% elif question|check_attribute:'likert' %}
-            
+
             <div class="mb-3">
+            
+            {% for answer in question.likert.get_answers %}
+
+              {% for value in answer.scale_min|likert_range:answer.scale_max %}
+
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="1">
-                <label class="form-check-label" for="inlineRadio1">1</label>
+                <input type="radio" class="form-check-input" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                <label for="inlineRadio{{value}}" class="form-check-label">{{value}}</label>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="2">
-                <label class="form-check-label" for="inlineRadio2">2</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="3">
-                <label class="form-check-label" for="inlineRadio3">3</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="4">
-                <label class="form-check-label" for="inlineRadio4">4</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="5">
-                <label class="form-check-label" for="inlineRadio5">5</label>
-              </div>
+
+              {% endfor %}
+
+            {% endfor %}
+
             </div>
 
             {% elif question|check_attribute:'openended' %}

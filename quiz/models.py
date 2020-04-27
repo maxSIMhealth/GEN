@@ -61,6 +61,9 @@ class Question(TimeStampedModel):
 class Likert(Question):
     """Likert Model"""
 
+    def get_answers(self):
+        return LikertAnswer.objects.filter(question=self)
+
     def __str__(self):
         return ("%s") % (self.content)
 
