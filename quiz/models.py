@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from model_utils.models import TimeStampedModel
 from model_utils.managers import InheritanceManager
 
@@ -73,27 +74,19 @@ class LikertAnswer(TimeStampedModel):
     Likert Answer Model
     """
 
-    # SCALE_CHOICES = (
-    #     ('', ''),
-    #     ('0', '0'),
-    #     ('1', '1'),
-    #     ('2', '2'),
-    #     ('3', '3'),
-    #     ('4', '4'),
-    #     ('5', '5'),
-    # )
-
     question = models.OneToOneField(Likert, on_delete=models.PROTECT)
     scale_min = models.PositiveIntegerField(default=1)
     scale_max = models.PositiveIntegerField(default=5)
-    # correct = models.CharField(max_length=2,
-    #                            choices=SCALE_CHOICES,
-    #                            blank=True,
-    #                            null=True,
-    #                            default='')
 
     def __str__(self):
         return ("%s : %s to %s") % (self.question.content, self.scale_min, self.scale_max)
+
+    def clean(self):
+        # Don't allow max scale to be equal of lower than min scale
+        if self.scale_max <= self.scale_min:
+            raise ValidationError(
+                'Maximum scale value cannot be equal or lower than minimum scale value.')
+        return super().clean()
 
     class Meta:
         verbose_name = 'Likert answer'
