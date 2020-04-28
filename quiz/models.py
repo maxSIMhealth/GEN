@@ -101,7 +101,7 @@ class LikertAttempt(TimeStampedModel):
     Likert Attempt model
     """
 
-    likert = models.ForeignKey(Likert, on_delete=models.PROTECT)
+    question = models.ForeignKey(Likert, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.PROTECT)
     quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
@@ -114,7 +114,7 @@ class LikertAttempt(TimeStampedModel):
              self.quiz.name,
              self.course.name,
              self.attempt_number,
-             self.likert)
+             self.question)
 
     class Meta:
         verbose_name = "Likert Scale Attempt"
@@ -139,7 +139,7 @@ class OpenEndedAttempt(TimeStampedModel):
     Open Ended Attempt model
     """
 
-    openended = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
+    question = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.PROTECT)
     quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
@@ -152,7 +152,7 @@ class OpenEndedAttempt(TimeStampedModel):
              self.quiz.name,
              self.course.name,
              self.attempt_number,
-             self.openended)
+             self.question)
 
     class Meta:
         verbose_name = "Open Ended Attempt"

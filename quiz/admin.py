@@ -11,28 +11,39 @@ from .models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, \
 # https://stackoverflow.com/questions/34355406/django-admin-not-saving-pre-populated-inline-fields-which-are-left-in-their-init
 
 class AlwaysChangedModelForm(ModelForm):
-    """ Should returns True if data differs from initial.
-        By always returning true even unchanged inlines will get validated and saved."""
+    """
+    Should returns True if data differs from initial.
+    By always returning true even unchanged inlines will get validated and saved.
+    """
 
     def has_changed(self):
         return True
 
 
 class CheckerInline(admin.StackedInline):
-    """ Base class for checker inlines """
+    """
+    Base class for checker inlines
+    """
+
     extra = 1  # defines the initial number of fields
     form = AlwaysChangedModelForm
 
 
 class AnswerInline(admin.TabularInline):
-    """Model to show multiple choice answers inline (tabular)"""
+    """
+    Class to show multiple choice answers inline (tabular)
+    """
+
     model = Answer
 
 
 class LikertAnswerInline(CheckerInline):
-    """Model to show likert answers inline (stacked), and based on
+    """
+    Class to show likert answers inline (stacked), and based on
     CheckerInline to always save while submitting/creating a Likert
-    object (even if the LikertAnswer fields are using the default values) """
+    object (even if the LikertAnswer fields are using the default values)
+    """
+
     model = LikertAnswer
 
 
@@ -80,23 +91,22 @@ class QuizAdmin(admin.ModelAdmin):
     # filter_horizontal = ('questions', )
 
 
-class MCQuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(admin.ModelAdmin):
+    """
+    Base class for questions admin layout (editing).
+    """
     list_display = ('content', )
     fields = ('content', 'quiz', 'explanation')
 
     search_fields = ('content', 'explanation')
     filter_horizontal = ('quiz',)
 
+
+class MCQuestionAdmin(QuestionAdmin):
+    """
+    Class for multiple choice question editing
+    """
     inlines = [AnswerInline]
-
-
-class MCQuestionAttemptAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'quiz',
-                    'question', 'attempt_number', 'created')
-    list_filter = ('course', 'quiz', 'question', 'attempt_number')
-
-    # search_fields = ('question', )
-    # filter_horizontal = ('student',)
 
 
 class QuizScoreAdmin(admin.ModelAdmin):
@@ -107,13 +117,10 @@ class QuizScoreAdmin(admin.ModelAdmin):
     # filter_horizontal = ('student',)
 
 
-class LikertAdmin(admin.ModelAdmin):
-    list_display = ('content', )
-    fields = ('content', 'quiz', 'explanation')
-
-    search_fields = ('content', 'explanation')
-    filter_horizontal = ('quiz', )
-
+class LikertAdmin(QuestionAdmin):
+    """
+    Class for likert question editing
+    """
     inlines = [LikertAnswerInline]
 
 
@@ -121,34 +128,30 @@ class LikertAnswerAdmin(admin.ModelAdmin):
     pass
 
 
-class LikertAttemptAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'quiz',
-                    'likert', 'attempt_number', 'created')
-    list_filter = ('course', 'quiz', 'likert', 'attempt_number')
-
-    # search_fields = ('quiz', 'course', 'likert', 'student')
-
-
-class OpenEndedAdmin(admin.ModelAdmin):
+class OpenEndedAdmin(QuestionAdmin):
     pass
 
 
-class OpenEndedAttemptAdmin(admin.ModelAdmin):
+class QuestionAttemptAdmin(admin.ModelAdmin):
+    """
+    Base class for quiz questions (likert, multiple choice, and open ended).
+    All questions models follow the same naming pattern.
+    """
     list_display = ('student', 'course', 'quiz',
-                    'openended', 'attempt_number', 'created')
-    list_filter = ('course', 'quiz', 'openended', 'attempt_number')
+                    'question', 'attempt_number', 'created')
+    list_filter = ('course', 'quiz', 'question', 'attempt_number')
 
-    # search_fields = ('quiz', 'course', 'openended', 'student')
+    # search_fields = ('quiz', 'course', 'question', 'student')
 
 
 admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
-admin.site.register(MCQuestionAttempt, MCQuestionAttemptAdmin)
+admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
 admin.site.register(Answer)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 admin.site.register(LikertAnswer, LikertAnswerAdmin)
-admin.site.register(LikertAttempt, LikertAttemptAdmin)
+admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
-admin.site.register(OpenEndedAttempt, OpenEndedAttemptAdmin)
+admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
