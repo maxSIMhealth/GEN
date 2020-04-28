@@ -121,7 +121,10 @@ class LikertAnswerAdmin(admin.ModelAdmin):
 
 
 class LikertAttempAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('student', 'likert', 'attempt_number', 'created')
+    list_filter = ('student', 'likert', 'attempt_number')
+
+    search_fields = ('student', 'likert', )
 
 
 class OpenEndedAdmin(admin.ModelAdmin):

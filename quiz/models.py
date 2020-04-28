@@ -108,10 +108,10 @@ class LikertAttempt(TimeStampedModel):
     scale_answer = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
-        return ("%s_%s (attempt %s): %s") % (self.student.username,
-                                             self.likert.quiz,
-                                             self.attempt_number,
-                                             self.scale_answer)
+        return ("User %s - %s (attempt %s): %s") % (self.student.username,
+                                                    self.likert,
+                                                    self.attempt_number,
+                                                    self.scale_answer)
 
     class Meta:
         verbose_name = "likert scale attempt"
