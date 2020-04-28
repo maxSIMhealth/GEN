@@ -64,7 +64,7 @@ def quiz_page(request, pk, quiz_pk):
                     course=course,
                     question=MCQuestion.objects.get(pk=question_id),
                     correct=flag,
-                    # I've decided to save a pure text versio of the answer, in
+                    # I've decided to save a pure text version of the answer, in
                     # case the answer object is altered in the future
                     answer_content=answer.content,
                     answer=Answer.objects.get(pk=answer.pk)
@@ -88,11 +88,17 @@ def quiz_page(request, pk, quiz_pk):
                 value = request.POST.get(item)
 
                 # store answers
-                attempt = OpenEnded.objects.create(
+                attempt = OpenEndedAttempt.objects.create(
                     openended=openended,
                     student=request.user,
                     answer=value
                 )
+
+                # increase attempt number
+                if attempt_number['attempt_number__max']:
+                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
+                else:
+                    attempt.attempt_number = 1
 
                 # save attempt data
                 attempt.save()
@@ -123,7 +129,7 @@ def quiz_page(request, pk, quiz_pk):
                 attempt = LikertAttempt.objects.create(
                     likert=likert,
                     student=request.user,
-                    scale=value
+                    scale_answer=value
                 )
 
                 # increase attempt number
