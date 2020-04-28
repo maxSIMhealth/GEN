@@ -20,3 +20,49 @@
 .forum-list .th-small {
     width: 5%;
 }
+
+/* quiz: likert scale */
+.likert {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 10px;
+}
+
+.likert .item:first-child:before {
+    left: 50%;
+    width: 50%;
+}
+
+.likert .item:last-child:before {
+    right: 50%;
+    width: 50%;
+}
+
+.likert .item:before {
+    left: 0%;
+    width: 100%;
+    content: "";
+    position: relative;
+    top: 9px;
+    display: block;
+    background-color: #efefef;
+    height: 4px;
+}
+
+.likert .item {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.likert .item input[type="radio"] {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 50%;
+    margin-left: -6px;
+}  

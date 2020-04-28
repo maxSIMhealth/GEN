@@ -1,8 +1,13 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load check_attribute %}
 {% load likert_range %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -87,16 +92,15 @@
             </ul>
             
             {% elif question|check_attribute:'likert' %}
-
-            <div class="mb-3">
             
+            <div class="likert mb-3">
             {% for answer in question.likert.get_answers %}
 
               {% for value in answer.scale_min|likert_range:answer.scale_max %}
 
-              <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
-                <label for="inlineRadio{{value}}" class="form-check-label">{{value}}</label>
+              <div class="item">
+                <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                <label for="likert_{{question.id}}">{{value}}</label>
               </div>
 
               {% endfor %}
