@@ -74,6 +74,8 @@
             {% endfor %}
           </ul>
           <span></span>
+          
+          {% if question.explanation %}
           <div class="card bg-light mr-0 ml-0 mb-4">
             <div class="card-body">
               <h6 class="card-subtitle bg-light">
@@ -81,8 +83,8 @@
               </h6>
             </div>
           </div>
-          {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
-          {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
+          {% endif %}
+
         {% endfor %}
         <a href="{% url 'list_quiz' course.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
       </div>
