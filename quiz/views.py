@@ -85,7 +85,7 @@ def quiz_page(request, pk, quiz_pk):
                 except OpenEnded.DoesNotExist:
                     question = None
 
-                value = request.POST.get(item)
+                student_answer = request.POST.get(item)
 
                 # store answers
                 attempt = OpenEndedAttempt.objects.create(
@@ -93,7 +93,7 @@ def quiz_page(request, pk, quiz_pk):
                     quiz=quiz,
                     course=course,
                     question=question,
-                    answer=value
+                    answer=student_answer
                 )
 
                 # increase attempt number
@@ -111,30 +111,36 @@ def quiz_page(request, pk, quiz_pk):
                 except Likert.DoesNotExist:
                     question = None
 
-                # check if the answer is valid
+                # try to get answer (scale) object
                 try:
-                    answer = LikertAnswer.objects.get(question=question)
+                    scale = LikertAnswer.objects.get(question=question)
                 except LikertAnswer.DoesNotExist:
-                    answer = None
-                # FIXME: disabled because it does not make sense to check
-                # if a likert answer is correct or not
-                # if answer:
-                #     flag = True
-                #     score += 1
-                # else:
-                #     flag = False
+                    scale = None
 
                 # get the likert scale value chosen by the participant
-                value = request.POST.get(item)
+                student_answer = request.POST.get(item)
 
-                # store the answer as a new attempt
+                # check if the student answer is within defined scale
+                # TODO: decided to not change student answer and treat it on the
+                # generated report afterwards
+                if not scale.scale_min <= int(student_answer) <= scale.scale_max:
+                    # student_answer = None
+                    pass
+
+                # create new attempt
                 attempt = LikertAttempt.objects.create(
                     student=request.user,
                     quiz=quiz,
                     course=course,
-                    question=question,
-                    scale_answer=value
+                    question=question
                 )
+
+                # check if the submitted answer is valid (integer)
+                try:
+                    attempt.scale_answer = student_answer
+                    attempt.save()
+                except ValueError:
+                    attempt.scale_answer = None
 
                 # increase attempt number
                 if attempt_number['attempt_number__max']:
