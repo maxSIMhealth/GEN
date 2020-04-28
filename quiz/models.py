@@ -68,8 +68,8 @@ class Likert(Question):
         return ("%s") % (self.content)
 
     class Meta:
-        verbose_name = "Likert scale question"
-        verbose_name_plural = "Likert scale questions"
+        verbose_name = "Likert Scale Question"
+        verbose_name_plural = "Likert Scale Questions"
 
 
 class LikertAnswer(TimeStampedModel):
@@ -92,8 +92,8 @@ class LikertAnswer(TimeStampedModel):
         return super().clean()
 
     class Meta:
-        verbose_name = 'Likert answer (scale)'
-        verbose_name_plural = 'Likert answers (scales)'
+        verbose_name = 'Likert Answer (scale)'
+        verbose_name_plural = 'Likert Answers (scales)'
 
 
 class LikertAttempt(TimeStampedModel):
@@ -103,19 +103,22 @@ class LikertAttempt(TimeStampedModel):
 
     likert = models.ForeignKey(Likert, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.PROTECT)
-
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
     attempt_number = models.PositiveIntegerField(default=0)
     scale_answer = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
-        return ("User %s - %s (attempt %s): %s") % (self.student.username,
-                                                    self.likert,
-                                                    self.attempt_number,
-                                                    self.scale_answer)
+        return "%s - %s - Course %s (attempt %s): %s" % \
+            (self.student.get_full_name(),
+             self.quiz.name,
+             self.course.name,
+             self.attempt_number,
+             self.likert)
 
     class Meta:
-        verbose_name = "likert scale attempt"
-        verbose_name_plural = "likert scale attempts"
+        verbose_name = "Likert Scale Attempt"
+        verbose_name_plural = "Likert Scale Attempts"
 
 
 class OpenEnded(Question):
@@ -138,16 +141,22 @@ class OpenEndedAttempt(TimeStampedModel):
 
     openended = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
     student = models.ForeignKey(User, on_delete=models.PROTECT)
-
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
     answer = models.TextField(('answer'), null=True, blank=True)
     attempt_number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return ("%s_%s_%s") % (self.student.get_full_name(), self.openended.quiz, self.attempt_number)
+        return "%s - %s - Course %s (attempt %s): %s" % \
+            (self.student.get_full_name(),
+             self.quiz.name,
+             self.course.name,
+             self.attempt_number,
+             self.openended)
 
     class Meta:
-        verbose_name = "open ended attempt"
-        verbose_name_plural = "open ended attempts"
+        verbose_name = "Open Ended Attempt"
+        verbose_name_plural = "Open Ended Attempts"
 
 
 class MCQuestion(Question):
@@ -202,8 +211,8 @@ class MCQuestionAttempt(TimeStampedModel):
     attempt_number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "User %s - quiz %s - course %s - attempt %s - answer id %s" % \
-            (self.student.username,
+        return "Student %s - quiz %s - course %s (attempt %s): answer id %s" % \
+            (self.student.get_full_name(),
              self.quiz.name,
              self.course.name,
              self.attempt_number,

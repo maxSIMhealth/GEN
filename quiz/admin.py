@@ -90,11 +90,12 @@ class MCQuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]
 
 
-class MCQuestionAttempAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'quiz', 'question', 'created')
-    list_filter = ('course', 'quiz')
+class MCQuestionAttemptAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'quiz',
+                    'question', 'attempt_number', 'created')
+    list_filter = ('course', 'quiz', 'question', 'attempt_number')
 
-    search_fields = ('quiz', 'course', 'question')
+    # search_fields = ('question', )
     # filter_horizontal = ('student',)
 
 
@@ -120,29 +121,34 @@ class LikertAnswerAdmin(admin.ModelAdmin):
     pass
 
 
-class LikertAttempAdmin(admin.ModelAdmin):
-    list_display = ('student', 'likert', 'attempt_number', 'created')
-    list_filter = ('student', 'likert', 'attempt_number')
+class LikertAttemptAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'quiz',
+                    'likert', 'attempt_number', 'created')
+    list_filter = ('course', 'quiz', 'likert', 'attempt_number')
 
-    search_fields = ('student', 'likert', )
+    # search_fields = ('quiz', 'course', 'likert', 'student')
 
 
 class OpenEndedAdmin(admin.ModelAdmin):
     pass
 
 
-class OpenEndedAttempAdmin(admin.ModelAdmin):
-    pass
+class OpenEndedAttemptAdmin(admin.ModelAdmin):
+    list_display = ('student', 'course', 'quiz',
+                    'openended', 'attempt_number', 'created')
+    list_filter = ('course', 'quiz', 'openended', 'attempt_number')
+
+    # search_fields = ('quiz', 'course', 'openended', 'student')
 
 
 admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
-admin.site.register(MCQuestionAttempt, MCQuestionAttempAdmin)
+admin.site.register(MCQuestionAttempt, MCQuestionAttemptAdmin)
 admin.site.register(Answer)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 admin.site.register(LikertAnswer, LikertAnswerAdmin)
-admin.site.register(LikertAttempt, LikertAttempAdmin)
+admin.site.register(LikertAttempt, LikertAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
-admin.site.register(OpenEndedAttempt, OpenEndedAttempAdmin)
+admin.site.register(OpenEndedAttempt, OpenEndedAttemptAdmin)
