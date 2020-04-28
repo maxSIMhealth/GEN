@@ -74,7 +74,8 @@ class Likert(Question):
 
 class LikertAnswer(TimeStampedModel):
     """
-    Likert Answer Model
+    Likert answer (scale) model.
+    Minimum and maximum values are used to generate the scale layout.
     """
 
     question = models.OneToOneField(Likert, on_delete=models.PROTECT)
@@ -161,23 +162,27 @@ class OpenEndedAttempt(TimeStampedModel):
 
 class MCQuestion(Question):
     def check_if_correct(self, guess):
-        answer = Answer.objects.get(id=guess)
+        answer = MCAnswer.objects.get(id=guess)
 
         return bool(answer.correct)
 
     def get_answers(self):
-        return Answer.objects.filter(question=self)
+        return MCAnswer.objects.filter(question=self)
 
     def get_answers_list(self):
         return [(answer.id, answer.content) for answer in
-                Answer.objects.filter(question=self)]
+                MCAnswer.objects.filter(question=self)]
 
     class Meta:
         verbose_name = "Multiple Choice Question"
         verbose_name_plural = "Multiple Choice Questions"
 
 
-class Answer(models.Model):
+class MCAnswer(TimeStampedModel):
+    """
+    Multiple choice question answer
+    """
+
     question = models.ForeignKey(
         MCQuestion,
         on_delete=models.CASCADE,
@@ -199,6 +204,10 @@ class Answer(models.Model):
     def __str__(self):
         return self.content
 
+    class Meta:
+        verbose_name = 'Multiple Choice Answer'
+        verbose_name_plural = 'Multiple Choice Answers'
+
 
 class MCQuestionAttempt(TimeStampedModel):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -206,7 +215,7 @@ class MCQuestionAttempt(TimeStampedModel):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
     correct = models.NullBooleanField(blank=True, null=True)
-    answer = models.ForeignKey(Answer, on_delete=models.PROTECT)
+    answer = models.ForeignKey(MCAnswer, on_delete=models.PROTECT)
     answer_content = models.CharField('student answer', max_length=1000)
     attempt_number = models.PositiveIntegerField(default=0)
 

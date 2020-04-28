@@ -3,7 +3,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
-from .models import Quiz, Question, MCQuestion, Answer, MCQuestionAttempt, \
+from .models import Quiz, Question, MCQuestion, MCAnswer, MCQuestionAttempt, \
     QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
 
 
@@ -27,24 +27,6 @@ class CheckerInline(admin.StackedInline):
 
     extra = 1  # defines the initial number of fields
     form = AlwaysChangedModelForm
-
-
-class AnswerInline(admin.TabularInline):
-    """
-    Class to show multiple choice answers inline (tabular)
-    """
-
-    model = Answer
-
-
-class LikertAnswerInline(CheckerInline):
-    """
-    Class to show likert answers inline (stacked), and based on
-    CheckerInline to always save while submitting/creating a Likert
-    object (even if the LikertAnswer fields are using the default values)
-    """
-
-    model = LikertAnswer
 
 
 class QuizAdminForm(forms.ModelForm):
@@ -91,6 +73,32 @@ class QuizAdmin(admin.ModelAdmin):
     # filter_horizontal = ('questions', )
 
 
+class QuizScoreAdmin(admin.ModelAdmin):
+    list_display = ('student', 'quiz', 'course', 'score')
+    list_filter = ('quiz', 'course', 'student')
+
+    # search_fields = ('student', 'quiz', 'course')
+    # filter_horizontal = ('student',)
+
+
+class MCAnswerInline(admin.TabularInline):
+    """
+    Class to show multiple choice answers inline (tabular)
+    """
+
+    model = MCAnswer
+
+
+class LikertAnswerInline(CheckerInline):
+    """
+    Class to show likert answers inline (stacked), and based on
+    CheckerInline to always save while submitting/creating a Likert
+    object (even if the LikertAnswer fields are using the default values)
+    """
+
+    model = LikertAnswer
+
+
 class QuestionAdmin(admin.ModelAdmin):
     """
     Base class for questions admin layout (editing).
@@ -106,15 +114,7 @@ class MCQuestionAdmin(QuestionAdmin):
     """
     Class for multiple choice question editing
     """
-    inlines = [AnswerInline]
-
-
-class QuizScoreAdmin(admin.ModelAdmin):
-    list_display = ('student', 'quiz', 'course', 'score')
-    list_filter = ('quiz', 'course', 'student')
-
-    # search_fields = ('student', 'quiz', 'course')
-    # filter_horizontal = ('student',)
+    inlines = [MCAnswerInline]
 
 
 class LikertAdmin(QuestionAdmin):
@@ -148,7 +148,7 @@ admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-admin.site.register(Answer)
+admin.site.register(MCAnswer)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 admin.site.register(LikertAnswer, LikertAnswerAdmin)
