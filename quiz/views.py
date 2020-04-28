@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 
 from forums.models import Course
-from .models import MCQuestion, MCQuestionAttempt, Quiz, Answer, QuizScore,\
+from .models import Quiz, QuizScore, MCQuestion, MCQuestionAttempt, MCAnswer,\
     Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
 
 
@@ -45,7 +45,7 @@ def quiz_page(request, pk, quiz_pk):
                     mcquestion = None
 
                 try:
-                    answer = Answer.objects.get(
+                    answer = MCAnswer.objects.get(
                         pk=request.POST.get(item))
                 except IndexError:
                     answer = None
@@ -67,7 +67,7 @@ def quiz_page(request, pk, quiz_pk):
                     # I've decided to save a pure text version of the answer, in
                     # case the answer object is altered in the future
                     answer_content=answer.content,
-                    answer=Answer.objects.get(pk=answer.pk)
+                    answer=MCAnswer.objects.get(pk=answer.pk)
                 )
 
                 # increase attempt number
@@ -81,16 +81,18 @@ def quiz_page(request, pk, quiz_pk):
 
             elif question_type == 'openended':
                 try:
-                    openended = OpenEnded.objects.get(pk=question_id)
+                    question = OpenEnded.objects.get(pk=question_id)
                 except OpenEnded.DoesNotExist:
-                    openended = None
+                    question = None
 
                 value = request.POST.get(item)
 
                 # store answers
                 attempt = OpenEndedAttempt.objects.create(
-                    openended=openended,
                     student=request.user,
+                    quiz=quiz,
+                    course=course,
+                    question=question,
                     answer=value
                 )
 
@@ -105,13 +107,13 @@ def quiz_page(request, pk, quiz_pk):
 
             elif question_type == 'likert':
                 try:
-                    likert = Likert.objects.get(pk=question_id)
+                    question = Likert.objects.get(pk=question_id)
                 except Likert.DoesNotExist:
-                    likert = None
+                    question = None
 
                 # check if the answer is valid
                 try:
-                    answer = LikertAnswer.objects.get(question=likert)
+                    answer = LikertAnswer.objects.get(question=question)
                 except LikertAnswer.DoesNotExist:
                     answer = None
                 # FIXME: disabled because it does not make sense to check
@@ -127,8 +129,10 @@ def quiz_page(request, pk, quiz_pk):
 
                 # store the answer as a new attempt
                 attempt = LikertAttempt.objects.create(
-                    likert=likert,
                     student=request.user,
+                    quiz=quiz,
+                    course=course,
+                    question=question,
                     scale_answer=value
                 )
 
