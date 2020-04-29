@@ -121,7 +121,7 @@ def quiz_page(request, pk, quiz_pk):
                 student_answer = request.POST.get(item)
 
                 # check if the student answer is within defined scale
-                # TODO: decided to not change student answer and treat it on the
+                # INFO: decided to not change student answer and treat it on the
                 # generated report afterwards
                 if not scale.scale_min <= int(student_answer) <= scale.scale_max:
                     # student_answer = None

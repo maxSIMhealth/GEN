@@ -72,10 +72,20 @@
           {% csrf_token %}
 
           {% for question in quiz.questions.all %}
+            
+            {% if question|check_attribute:'questiongroupheader' %}
+            <h5 class="card-title">
+              <strong>{{question.content}}</strong>
+              <hr />
+            </h5>
+            {% else %}
             <h6 class="card-title">
+              {% comment %}
               <strong>{{ forloop.counter }} - {{question.content}}</strong>
-            </h6> 
-             
+              {% endcomment %}
+              <strong>{{question.content}}</strong>
+            </h6>
+            {% endif %}
             
             {% if question|check_attribute:'mcquestion' %}
             <ul class="list-group mb-3">

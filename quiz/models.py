@@ -33,8 +33,8 @@ class Quiz(TimeStampedModel):
 
 class Question(TimeStampedModel):
     """
-    Question model
-    Parent for Multiple Choice, Likert Scale and Open Ended questions
+    Parent class for questions (Multiple Choice, Likert Scale and Open Ended)
+    and for question headers.
     """
 
     quiz = models.ManyToManyField(
@@ -46,8 +46,8 @@ class Question(TimeStampedModel):
     content = models.CharField(
         max_length=1000,
         blank=False,
-        help_text="Enter the question text that you want displayed ",
-        verbose_name="Question")
+        help_text="Enter the content that you want displayed.",
+        verbose_name="Content")
     explanation = models.TextField(
         blank=True,
         help_text="Explanation to be shown after the question has been answered.")
@@ -243,3 +243,9 @@ class QuizScore(models.Model):
             (self.student.username,
              self.quiz.name,
              self.course.name)
+
+
+class QuestionGroupHeader(Question):
+
+    def __str__(self):
+        return self.content

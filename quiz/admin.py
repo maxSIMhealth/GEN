@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Quiz, Question, MCQuestion, MCAnswer, MCQuestionAttempt, \
-    QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
+    QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt, \
+    QuestionGroupHeader
 
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
@@ -144,6 +145,12 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
     # search_fields = ('quiz', 'course', 'question', 'student')
 
 
+class QuestionGroupHeaderAdmin(admin.ModelAdmin):
+    list_display = ('content',)
+    filter_horizontal = ('quiz',)
+    exclude = ('explanation',)
+
+
 admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question)
 admin.site.register(MCQuestion, MCQuestionAdmin)
@@ -155,3 +162,4 @@ admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
+admin.site.register(QuestionGroupHeader, QuestionGroupHeaderAdmin)
