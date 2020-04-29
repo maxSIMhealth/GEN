@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.forms import ModelForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 from .models import Quiz, Question, MCQuestion, MCAnswer, MCQuestionAttempt, \
     QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt, \
@@ -30,46 +31,24 @@ class CheckerInline(admin.StackedInline):
     form = AlwaysChangedModelForm
 
 
-class QuizAdminForm(forms.ModelForm):
+class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
     """
-        part of the code below is from
-        http://stackoverflow.com/questions/11657682/
-        django-admin-interface-using-horizontal-filter-with-
-        inline-manytomany-field
+    Class for creating a sortable inline tabular layout for questions.
     """
-
-    class Meta:
-        model = Quiz
-        exclude = []
-
-    questions = forms.ModelMultipleChoiceField(
-        queryset=Question.objects.all().select_subclasses(),
-        required=False,
-        label="Questions",
-        widget=FilteredSelectMultiple(
-            verbose_name="Questions",
-            is_stacked=False))
-
-    def __init__(self, *args, **kwargs):
-        super(QuizAdminForm, self).__init__(*args, **kwargs)
-        if self.instance.pk:
-            self.fields['questions'].initial = \
-                self.instance.questions.all().select_subclasses()
-
-    def save(self, commit=True):
-        quiz = super(QuizAdminForm, self).save(commit=False)
-        quiz.save()
-        quiz.questions.set(self.cleaned_data['questions'])
-        self.save_m2m()
-        return quiz
+    # Tip: admin.TabularInline can be switched with admin.StackedInline
+    # Documentation at
+    # https://django-admin-sortable2.readthedocs.io/en/latest/usage.html#make-a-stacked-or-tabular-inline-view-sortable
+    model = Question
+    # include = ['quiz', 'content']
+    exclude = ['explanation', ]
+    extra = 1
 
 
 class QuizAdmin(admin.ModelAdmin):
-    form = QuizAdminForm
-
     list_display = ('name', 'course', )
     list_filter = ('course', )
-    search_fields = ('description', 'course', )
+    # search_fields = ('description', 'course', )
+    inlines = (QuestionInline,)
 
     # filter_horizontal = ('questions', )
 
@@ -82,12 +61,13 @@ class QuizScoreAdmin(admin.ModelAdmin):
     # filter_horizontal = ('student',)
 
 
-class MCAnswerInline(admin.TabularInline):
+class MCAnswerInline(SortableInlineAdminMixin, admin.TabularInline):
     """
     Class to show multiple choice answers inline (tabular)
     """
 
     model = MCAnswer
+    extra = 0
 
 
 class LikertAnswerInline(CheckerInline):
@@ -104,18 +84,26 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     Base class for questions admin layout (editing).
     """
-    list_display = ('content', )
+    list_display = ('content', 'quiz', 'created')
+    list_filter = ('quiz', 'content')
     fields = ('content', 'quiz', 'explanation')
-
     search_fields = ('content', 'explanation')
-    filter_horizontal = ('quiz',)
+    # filter_horizontal = ('quiz',)
 
 
 class MCQuestionAdmin(QuestionAdmin):
     """
     Class for multiple choice question editing
     """
+    # list_display = ('quiz',
+    #                 'content', 'created')
+    # list_filter = ('quiz', 'content')
     inlines = [MCAnswerInline]
+
+
+class MCAnswerAdmin(admin.ModelAdmin):
+    list_display = ('question', 'content', 'correct')
+    list_filter = ('question', )
 
 
 class LikertAdmin(QuestionAdmin):
@@ -126,7 +114,8 @@ class LikertAdmin(QuestionAdmin):
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('question', 'scale_min', 'scale_max')
+    list_filter = ('question',)
 
 
 class OpenEndedAdmin(QuestionAdmin):
@@ -145,17 +134,19 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
     # search_fields = ('quiz', 'course', 'question', 'student')
 
 
-class QuestionGroupHeaderAdmin(admin.ModelAdmin):
-    list_display = ('content',)
-    filter_horizontal = ('quiz',)
+class QuestionGroupHeaderAdmin(QuestionAdmin):
+    # list_display = ('content',)
+    # filter_horizontal = ('quiz',)
     exclude = ('explanation',)
 
 
+# TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
+# question page and are only useful during testing and development)
 admin.site.register(Quiz, QuizAdmin)
-# admin.site.register(Question)
+# admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-admin.site.register(MCAnswer)
+admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 admin.site.register(LikertAnswer, LikertAnswerAdmin)

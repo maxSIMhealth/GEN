@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'social_django',
     'crispy_forms',
+    'adminsortable2',
 
     'accounts',
     'courses',

@@ -37,12 +37,12 @@ class Question(TimeStampedModel):
     and for question headers.
     """
 
-    quiz = models.ManyToManyField(
+    quiz = models.ForeignKey(
         Quiz,
         verbose_name='Quiz',
         related_name='questions',
-        blank=True)
-    # on_delete=models.PROTECT)
+        blank=False,
+        on_delete=models.PROTECT)
     content = models.CharField(
         max_length=1000,
         blank=False,
@@ -51,8 +51,16 @@ class Question(TimeStampedModel):
     explanation = models.TextField(
         blank=True,
         help_text="Explanation to be shown after the question has been answered.")
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
 
     objects = InheritanceManager()
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return self.content
@@ -68,8 +76,8 @@ class Likert(Question):
         return ("%s") % (self.content)
 
     class Meta:
-        verbose_name = "Likert Scale Question"
-        verbose_name_plural = "Likert Scale Questions"
+        verbose_name = "Likert question"
+        verbose_name_plural = "Likert questions"
 
 
 class LikertAnswer(TimeStampedModel):
@@ -93,8 +101,8 @@ class LikertAnswer(TimeStampedModel):
         return super().clean()
 
     class Meta:
-        verbose_name = 'Likert Answer (scale)'
-        verbose_name_plural = 'Likert Answers (scales)'
+        verbose_name = 'Likert answer (scale definition)'
+        verbose_name_plural = 'Likert answers (scale definition)'
 
 
 class LikertAttempt(TimeStampedModel):
@@ -118,8 +126,8 @@ class LikertAttempt(TimeStampedModel):
              self.question)
 
     class Meta:
-        verbose_name = "Likert Scale Attempt"
-        verbose_name_plural = "Likert Scale Attempts"
+        verbose_name = "Likert attempt"
+        verbose_name_plural = "Likert attempts"
 
 
 class OpenEnded(Question):
@@ -131,7 +139,7 @@ class OpenEnded(Question):
     #     return ("%s") % (self.content)
 
     class Meta:
-        verbose_name = "Open ended Question"
+        verbose_name = "Open ended question"
         verbose_name_plural = "Open ended questions"
 
 
@@ -156,8 +164,8 @@ class OpenEndedAttempt(TimeStampedModel):
              self.question)
 
     class Meta:
-        verbose_name = "Open Ended Attempt"
-        verbose_name_plural = "Open Ended Attempts"
+        verbose_name = "Open ended attempt"
+        verbose_name_plural = "Open ended attempts"
 
 
 class MCQuestion(Question):
@@ -174,8 +182,8 @@ class MCQuestion(Question):
                 MCAnswer.objects.filter(question=self)]
 
     class Meta:
-        verbose_name = "Multiple Choice Question"
-        verbose_name_plural = "Multiple Choice Questions"
+        verbose_name = "Multiple choice question"
+        verbose_name_plural = "Multiple choice questions"
 
 
 class MCAnswer(TimeStampedModel):
@@ -201,12 +209,19 @@ class MCAnswer(TimeStampedModel):
         help_text="Is this the correct answer?"
     )
 
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
+
     def __str__(self):
         return self.content
 
     class Meta:
-        verbose_name = 'Multiple Choice Answer'
-        verbose_name_plural = 'Multiple Choice Answers'
+        verbose_name = 'Multiple choice answer'
+        verbose_name_plural = 'Multiple choice answers'
+        ordering = ['order']
 
 
 class MCQuestionAttempt(TimeStampedModel):
@@ -228,8 +243,8 @@ class MCQuestionAttempt(TimeStampedModel):
              self.answer_id)
 
     class Meta:
-        verbose_name = "Multiple Choice Questions Attempt"
-        verbose_name_plural = "Multiple Choice Questions Attempts"
+        verbose_name = "Multiple choice questions attempt"
+        verbose_name_plural = "Multiple choice questions attempts"
 
 
 class QuizScore(models.Model):
