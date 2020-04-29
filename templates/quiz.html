@@ -74,7 +74,7 @@
           {% for question in quiz.questions.all %}
             
             {% if question|check_attribute:'questiongroupheader' %}
-            <h5 class="card-title">
+            <h5>
               <strong>{{question.content}}</strong>
               <hr />
             </h5>
@@ -103,21 +103,27 @@
             
             {% elif question|check_attribute:'likert' %}
             
-            <div class="likert mb-3">
+            <div class="card ml-0 mr-0 mb-4">
             {% for answer in question.likert.get_answers %}
-
-              {% for value in answer.scale_min|likert_range:answer.scale_max %}
-
-              <div class="item">
-                <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
-                <label for="likert_{{question.id}}">{{value}}</label>
+              <div class="card-body likert">
+                {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                <div class="item">
+                  <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                  <label for="likert_{{question.id}}">{{value}}</label>
+                </div>
+                {% endfor %}
               </div>
-
-              {% endfor %}
-
+              
+              {% if answer.legend %}
+              <div class="likert-legend card-footer text-muted">
+                <em>Scale legend:</em>
+                {{answer.legend|linebreaks}}
+              </div>  
+              {% endif %}
+              
             {% endfor %}
-
             </div>
+
 
             {% elif question|check_attribute:'openended' %}
               

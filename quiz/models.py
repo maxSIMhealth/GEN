@@ -89,6 +89,9 @@ class LikertAnswer(TimeStampedModel):
     question = models.OneToOneField(Likert, on_delete=models.PROTECT)
     scale_min = models.PositiveIntegerField(default=1)
     scale_max = models.PositiveIntegerField(default=5)
+    legend = models.TextField(
+        blank=True,
+        help_text="Legend for the likert scale values.")
 
     def __str__(self):
         return ("%s : scale %s to %s") % (self.question.content, self.scale_min, self.scale_max)

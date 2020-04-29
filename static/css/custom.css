@@ -30,6 +30,10 @@
     padding: 20px 10px;
 }
 
+.likert label {
+    margin: 0;
+}
+
 .likert .item:first-child:before {
     left: 50%;
     width: 50%;
@@ -65,4 +69,12 @@
     top: 0;
     left: 50%;
     margin-left: -6px;
-}  
+}
+
+.likert-legend {
+    font-size: 0.9rem;
+}
+
+.likert-legend p {
+    margin: 0;
+}

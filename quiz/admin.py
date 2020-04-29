@@ -41,7 +41,7 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Question
     # include = ['quiz', 'content']
     exclude = ['explanation', ]
-    extra = 1
+    extra = 0
 
 
 class QuizAdmin(admin.ModelAdmin):
@@ -86,7 +86,6 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     list_display = ('content', 'quiz', 'created')
     list_filter = ('quiz', 'content')
-    fields = ('content', 'quiz', 'explanation')
     search_fields = ('content', 'explanation')
     # filter_horizontal = ('quiz',)
 
@@ -98,6 +97,7 @@ class MCQuestionAdmin(QuestionAdmin):
     # list_display = ('quiz',
     #                 'content', 'created')
     # list_filter = ('quiz', 'content')
+    fields = ('content', 'quiz', 'explanation')
     inlines = [MCAnswerInline]
 
 
@@ -110,6 +110,7 @@ class LikertAdmin(QuestionAdmin):
     """
     Class for likert question editing
     """
+    fields = ('content', 'quiz')
     inlines = [LikertAnswerInline]
 
 
@@ -119,7 +120,7 @@ class LikertAnswerAdmin(admin.ModelAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    pass
+    fields = ('content', 'quiz')
 
 
 class QuestionAttemptAdmin(admin.ModelAdmin):
@@ -137,7 +138,7 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    exclude = ('explanation',)
+    fields = ('content', 'quiz')
 
 
 # TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
@@ -146,10 +147,10 @@ admin.site.register(Quiz, QuizAdmin)
 # admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-admin.site.register(MCAnswer, MCAnswerAdmin)
+# admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
-admin.site.register(LikertAnswer, LikertAnswerAdmin)
+# admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
