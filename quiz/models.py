@@ -15,11 +15,19 @@ class Quiz(TimeStampedModel):
     name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=100)
     author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name='quizzes')
+        User,
+        on_delete=models.PROTECT,
+        related_name='quizzes')
     course = models.ForeignKey(
-        Course, on_delete=models.PROTECT, related_name='quizzes')
+        Course,
+        on_delete=models.PROTECT,
+        related_name='quizzes')
     video = models.ForeignKey(
-        VideoFile, on_delete=models.PROTECT, related_name='quizzes')
+        VideoFile,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name='quizzes')
 
     class Meta:
         verbose_name_plural = "quizzes"

@@ -16,13 +16,13 @@
     width: 12%;
 }
 
-/* quiz */
-.quiz .card-body {
+/* quiz with video */
+.video+.quiz .card-body {
     max-height: 350px;
     overflow-y: auto;
 }
 
-.quiz .card-body form {
+.video+.quiz .card-body form {
     margin-bottom: 20px;
 }
 

@@ -47,7 +47,9 @@
   {% endcomment %}
 
   <div class="card-deck">
-    <div class="card bg-secondary text-white">
+    
+    {% if quiz.video %}
+    <div class="card bg-secondary text-white video">
       <h5 class="card-header bg-dark">Video</h5>
       <div class="card-body">
         <table class="table table-hover">
@@ -64,6 +66,7 @@
         </table>
       </div>
     </div>
+    {% endif %}
 
     <div class="card quiz">
       <h5 class="card-header bg-light">{{quiz.name}}</h5>
@@ -133,7 +136,8 @@
             {% endif %}
 
           {% endfor %}
-          <button type="submit" class="btn btn-block btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a class="btn btn-danger" href="{% url 'list_quiz' course.pk %}" role="button">Cancel</a>
         </form>
       </div>
     </div>
