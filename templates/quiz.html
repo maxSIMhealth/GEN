@@ -65,8 +65,8 @@
       </div>
     </div>
 
-    <div class="card">
-      <h5 class="card-header bg-light">Quiz</h5>
+    <div class="card quiz">
+      <h5 class="card-header bg-light">{{quiz.name}}</h5>
       <div class="card-body">
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
@@ -123,7 +123,6 @@
               
             {% endfor %}
             </div>
-
 
             {% elif question|check_attribute:'openended' %}
               
