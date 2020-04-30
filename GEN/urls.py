@@ -75,6 +75,9 @@ urlpatterns = [
     path('courses/<int:pk>/quiz/<int:quiz_pk>/result/',
          quiz_views.quiz_result, name='quiz_result'),
 
+    path('courses/user_attempt/',
+         quiz_views.user_attempt, name='quiz_user_attempt'),
+
     # path('forums/', views.ForumListView.as_view(), name='forums'),
 
     path('oauth/', include('social_django.urls', namespace='social')),

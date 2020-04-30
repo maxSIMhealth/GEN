@@ -1,6 +1,10 @@
+import xlsxwriter
+import io
+
 from django.shortcuts import render, get_object_or_404, reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.db.models import Max
 
 from forums.models import Course
@@ -240,3 +244,49 @@ def quiz_result(request, pk, quiz_pk):
         'quiz': quiz,
         'score': score
     })
+
+
+@login_required
+def user_attempt(request):
+    """
+    Create an excel file with Participant Attempts
+    """
+    # Create an in-memory output file for the new workbook
+    output = io.BytesIO()
+
+    # Creating workbook in memory
+    workbook = xlsxwriter.Workbook(output)
+
+    # Getting data
+    users = User.objects.all()
+    for user in users:
+        workbook = create_attempt_sheet(workbook, user)
+
+    # Close the workbook before sending the data
+    workbook.close()
+
+    # Rewind the buffer
+    output.seek(0)
+
+    # Set up the Http response
+    filename = "attempt.xlsx"
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    return response
+
+
+def create_attempt_sheet(workbook, user):
+    """
+    Create an excel sheet for Participant attempt
+    """
+    worksheet = workbook.add_worksheet(user.username)
+    bold = workbook.add_format({'bold': True})
+
+    # Write some data headers
+    worksheet.write('A1', 'Test', bold)
+
+    return workbook
