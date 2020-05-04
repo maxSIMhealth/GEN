@@ -12,7 +12,7 @@ source venv/bin/activate
 - Create a `.env` file based on `.env-example`
 - Instal project dependencies: `pip install -r requirements.txt`
 - Generate database: `python manage.py migrate`
-- Create a super user: `python manage.py createsuperuser`
+- Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
 - Install dependencies: `sudo apt install ffmpeg`
 - Run the project: `python manage.py runserver`
 
