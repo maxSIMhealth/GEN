@@ -7,5 +7,5 @@ register = template.Library()
 
 
 @register.simple_tag
-def quizscore_check(user, course, quiz):
+def quiz_score_check(user, course, quiz):
     return quiz.quizscore_set.filter(student=user, course=course, quiz=quiz)

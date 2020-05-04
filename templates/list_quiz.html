@@ -3,8 +3,8 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
-{% load quizscore_check %}
-{% load quizattempt_check %}
+{% load quiz_score_check %}
+{% load quiz_attempt_check %}
 {% load embed_video_tags %}
 
 {% block stylesheet %}
@@ -48,13 +48,19 @@
       </thead>
       <tbody>
       {% for quiz in quizzes %}
-        {% quizscore_check user course quiz as quizscore %}
-        {% quizattempt_check user course quiz as quizattempt %}
-        {% if quizscore.exists %}
+        {% quiz_score_check user course quiz as quiz_score %}
+        {% quiz_attempt_check user course quiz as quiz_attempt %}
+        TEST: quiz_attempt {{quiz_attempt}}<br />
+        TEST: quiz_max_attempts: {{quiz.attempts_max_number}}<br />
+
+        {% if quiz_score.exists %}
+          {% quiz_attempt_check user course quiz as quiz_attempt %}
+          TEST: quiz_requirement_attempt {{quiz_requirement_attempt}}
+          TEST: quiz_max_attempts: {{quiz.attempts_max_number}}
           <tr>
             <td>
               {% if quiz.requirement %}
-                {% quizattempt_check user course quiz as quiz_requirement_attempt %}
+                {% quiz_attempt_check user course quiz as quiz_requirement_attempt %}
                 DEBUG attempt number: {{quiz_requirement_attempt}}
                 {% if quiz_requirement_attempt > 0 %}
                   <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
@@ -69,14 +75,14 @@
               <small class="text-muted d-block">{{quiz.description}}</small>
             </td>
             <td class="text-center">Done</td>
-            <td class="text-center">{{quizattempt}}</td>
-            <td class="text-center">{{quizscore.get.score}}</td>
+            <td class="text-center">{{quiz_attempt}}</td>
+            <td class="text-center">{{quiz_score.get.score}}</td>
           </tr>
         {% else %}
           <tr>
             <td>
               {% if quiz.requirement %}
-                {% quizattempt_check user course quiz as quiz_requirement_attempt %}
+                {% quiz_attempt_check user course quiz as quiz_requirement_attempt %}
                 DEBUG attempt number: {{quiz_requirement_attempt}}
                 {% if quiz_requirement_attempt > 0 %}
                   <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>

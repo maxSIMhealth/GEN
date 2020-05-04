@@ -5,7 +5,7 @@ register = template.Library()
 
 
 @register.simple_tag
-def quizattempt_check(user, course, quiz):
+def quiz_attempt_check(user, course, quiz):
     try:
         attempt_number = quiz.questionattempt_set.filter(
             student=user, course=course, quiz=quiz).latest('attempt_number').attempt_number
