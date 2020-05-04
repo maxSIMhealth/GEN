@@ -12,6 +12,7 @@
 			"pylint_django",
 			"--good-names",
 			"i,j,k,ex,Run,_,pk,x,y"
-		]
+		],
+		"python.pythonPath": "venv\\Scripts\\python.exe"
 	}
 }
