@@ -5,6 +5,7 @@
 {% load checkvotes %}
 {% load quiz_score_check %}
 {% load quiz_attempt_check %}
+{% load quiz_enable_check %}
 {% load embed_video_tags %}
 
 {% block stylesheet %}
@@ -50,57 +51,48 @@
       {% for quiz in quizzes %}
         {% quiz_score_check user course quiz as quiz_score %}
         {% quiz_attempt_check user course quiz as quiz_attempt %}
-        TEST: quiz_attempt {{quiz_attempt}}<br />
-        TEST: quiz_max_attempts: {{quiz.attempts_max_number}}<br />
+        <tr>
+          <td>
+            {% quiz_enable_check user course quiz as quiz_enabled %}
+            DEBUG: quiz enable?: {{quiz_enabled}}<br />
 
-        {% if quiz_score.exists %}
-          {% quiz_attempt_check user course quiz as quiz_attempt %}
-          TEST: quiz_requirement_attempt {{quiz_requirement_attempt}}
-          TEST: quiz_max_attempts: {{quiz.attempts_max_number}}
-          <tr>
-            <td>
-              {% if quiz.requirement %}
-                {% quiz_attempt_check user course quiz as quiz_requirement_attempt %}
-                DEBUG attempt number: {{quiz_requirement_attempt}}
-                {% if quiz_requirement_attempt > 0 %}
-                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
-                {% else %}
-                  <div class="text-muted">{{quiz.name}}</div>
-                  <div class="text-muted"><em>Requires <u>{{quiz.requirement.name}}</u> to be completed.</em></div>
-                {% endif %}
-              {% else %}
+
+            DEBUG: quiz max attempts: {{quiz.attempts_max_number}}<br />
+            {% if quiz.requirement %}
+              {% quiz_score_check user course quiz.requirement as quiz_requirement_score %}
+              {% if quiz_requirement_score.exists %}
                 <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
-              {% endif %}
-              
-              <small class="text-muted d-block">{{quiz.description}}</small>
-            </td>
-            <td class="text-center">Done</td>
-            <td class="text-center">{{quiz_attempt}}</td>
-            <td class="text-center">{{quiz_score.get.score}}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td>
-              {% if quiz.requirement %}
-                {% quiz_attempt_check user course quiz as quiz_requirement_attempt %}
-                DEBUG attempt number: {{quiz_requirement_attempt}}
-                {% if quiz_requirement_attempt > 0 %}
-                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
-                {% else %}
-                  <div class="text-muted">{{quiz.name}}</div>
-                  <div class="text-muted"><em>Requires <u>{{quiz.requirement.name}}</u> to be completed.</em></div>
-                {% endif %}
               {% else %}
-                <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+                <div class="text-muted">{{quiz.name}}</div>
+                <div class="text-muted"><em>Requires <u>{{quiz.requirement.name}}</u> to be completed first.</em></div>
               {% endif %}
-              
-              <small class="text-muted d-block">{{quiz.description}}</small>
-            </td>
-            <td class="text-center">To do</td>
-            <td class="text-center">0</td>
-            <td class="text-center">--</td>
-          </tr>
-        {% endif %}
+            {% else %}
+              <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+            {% endif %}
+            <small class="text-muted d-block">{{quiz.description}}</small>
+          </td>
+          <!-- <td>
+            <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+            <small class="text-muted d-block">{{quiz.description}}</small>
+          </td> -->
+          <td class="text-center">
+            {% if quiz_score.exists %}
+              Done
+            {% else %}
+              To do
+            {% endif %}
+          </td>
+          <td class="text-center">
+            {{quiz_attempt}}
+          </td>
+          <td class="text-center">
+            {% if quiz_score.exists %}
+              {{quiz_score.get.score}}  
+            {% else %}
+              0
+            {% endif %}
+          </td>
+        </tr>
       {% endfor %}
       </tbody>
     </table>
