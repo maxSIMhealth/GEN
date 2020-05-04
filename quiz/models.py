@@ -35,6 +35,11 @@ class Quiz(TimeStampedModel):
         null=True,
         related_name='quizzes'
     )
+    attempts_max_number = models.PositiveIntegerField(
+        default=1,
+        blank=False,
+        null=False
+    )
 
     class Meta:
         verbose_name_plural = "quizzes"
