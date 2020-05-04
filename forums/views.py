@@ -65,7 +65,7 @@ def list_pdfs(request, pk):
 @login_required
 def list_quiz(request, pk):
     course = get_object_or_404(Course, pk=pk)
-    quizzes = course.quizzes.all()
+    quizzes = course.quizzes.all().filter(published=True)
 
     return render(request, 'list_quiz.html',
                   {'course': course, 'quizzes': quizzes})
@@ -224,7 +224,8 @@ def generate_video_thumbnail(video_pk):
     # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
     size = (128, 128)
 
-    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(video.file.path, '00:00:01.000')
+    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(
+        video.file.path, '00:00:01.000')
 
     if ffmpeg_error is None:
         print('Thumbnail generated ok')

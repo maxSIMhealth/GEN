@@ -22,6 +22,8 @@ class Quiz(TimeStampedModel):
         Course,
         on_delete=models.PROTECT,
         related_name='quizzes')
+    start_date = models.DateTimeField('start date', blank=True, null=True)
+    end_date = models.DateTimeField('end date', blank=True, null=True)
     video = models.ForeignKey(
         VideoFile,
         on_delete=models.PROTECT,
@@ -40,6 +42,7 @@ class Quiz(TimeStampedModel):
         blank=False,
         null=False
     )
+    published = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "quizzes"
