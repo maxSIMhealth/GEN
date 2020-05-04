@@ -28,6 +28,13 @@ class Quiz(TimeStampedModel):
         blank=True,
         null=True,
         related_name='quizzes')
+    requirement = models.ForeignKey(
+        'self',
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name='quizzes'
+    )
 
     class Meta:
         verbose_name_plural = "quizzes"
@@ -74,6 +81,19 @@ class Question(TimeStampedModel):
         return self.content
 
 
+class QuestionAttempt(TimeStampedModel):
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    attempt_number = models.PositiveIntegerField(default=0)
+
+    objects = InheritanceManager()
+
+    class Meta:
+        verbose_name = "Question attempt"
+        verbose_name_plural = "Question attempts"
+
+
 class Likert(Question):
     """Likert Model"""
 
@@ -116,16 +136,12 @@ class LikertAnswer(TimeStampedModel):
         verbose_name_plural = 'Likert answers (scale definition)'
 
 
-class LikertAttempt(TimeStampedModel):
+class LikertAttempt(QuestionAttempt):
     """
     Likert Attempt model
     """
 
     question = models.ForeignKey(Likert, on_delete=models.PROTECT)
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    attempt_number = models.PositiveIntegerField(default=0)
     scale_answer = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):

@@ -53,18 +53,41 @@
         {% if quizscore.exists %}
           <tr>
             <td>
-              <!-- <span class="text-muted">{{quiz.name}}</span> -->
-              <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+              {% if quiz.requirement %}
+                {% quizattempt_check user course quiz as quiz_requirement_attempt %}
+                DEBUG attempt number: {{quiz_requirement_attempt}}
+                {% if quiz_requirement_attempt > 0 %}
+                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+                {% else %}
+                  <div class="text-muted">{{quiz.name}}</div>
+                  <div class="text-muted"><em>Requires <u>{{quiz.requirement.name}}</u> to be completed.</em></div>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+              {% endif %}
+              
               <small class="text-muted d-block">{{quiz.description}}</small>
             </td>
             <td class="text-center">Done</td>
-            <td class="text-center">{{quizattempt.attempt_number}}</td>
+            <td class="text-center">{{quizattempt}}</td>
             <td class="text-center">{{quizscore.get.score}}</td>
           </tr>
         {% else %}
           <tr>
             <td>
-              <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+              {% if quiz.requirement %}
+                {% quizattempt_check user course quiz as quiz_requirement_attempt %}
+                DEBUG attempt number: {{quiz_requirement_attempt}}
+                {% if quiz_requirement_attempt > 0 %}
+                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+                {% else %}
+                  <div class="text-muted">{{quiz.name}}</div>
+                  <div class="text-muted"><em>Requires <u>{{quiz.requirement.name}}</u> to be completed.</em></div>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'quiz' course.pk quiz.pk %}">{{quiz.name}}</a>
+              {% endif %}
+              
               <small class="text-muted d-block">{{quiz.description}}</small>
             </td>
             <td class="text-center">To do</td>
