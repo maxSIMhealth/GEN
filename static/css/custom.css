@@ -16,6 +16,12 @@
     width: 12%;
 }
 
+/* text */
+.highlight {
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid rgba(86,61,124,.15);
+}
+
 /* quiz with video */
 .video+.quiz .card-body {
     max-height: 350px;

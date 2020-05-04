@@ -6,7 +6,7 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 
 from .models import Quiz, Question, MCQuestion, MCAnswer, MCQuestionAttempt, \
     QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt, \
-    QuestionGroupHeader
+    QuestionGroupHeader, QuestionAttempt
 
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
@@ -155,3 +155,4 @@ admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
 admin.site.register(QuestionGroupHeader, QuestionGroupHeaderAdmin)
+admin.site.register(QuestionAttempt)

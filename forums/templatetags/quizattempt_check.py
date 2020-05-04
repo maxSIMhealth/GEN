@@ -1,4 +1,5 @@
 from django import template
+from quiz.models import QuestionAttempt
 
 register = template.Library()
 
@@ -6,9 +7,9 @@ register = template.Library()
 @register.simple_tag
 def quizattempt_check(user, course, quiz):
     try:
-        attempt_number = quiz.mcquestionattempt_set.filter(
-            student=user, course=course, quiz=quiz).latest('attempt_number')
-    except:
-        attempt_number = 0  # this value isn't going to be used
+        attempt_number = quiz.questionattempt_set.filter(
+            student=user, course=course, quiz=quiz).latest('attempt_number').attempt_number
+    except QuestionAttempt.DoesNotExist:
+        attempt_number = 0
         print("No quiz attempt found")
     return attempt_number
