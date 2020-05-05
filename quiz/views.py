@@ -9,7 +9,7 @@ from django.db.models import Max
 
 from forums.models import Course
 from .models import Quiz, QuizScore, MCQuestion, MCQuestionAttempt, MCAnswer,\
-    Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt
+    Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt, QuestionAttempt
 
 
 @login_required
@@ -217,23 +217,35 @@ def quiz_result(request, pk, quiz_pk):
     # score = quiz_score.score
 
     # get latest attempt number
-    latest_attempt_number = MCQuestionAttempt.objects.filter(
+    latest_attempt_number = QuestionAttempt.objects.filter(
         quiz=quiz, student=request.user).latest('attempt_number').attempt_number
 
-    # get questions and answers from the latest attemp
-    questions_attempt = MCQuestionAttempt.objects.filter(
+    # get questions and answers from the latest attempt
+    questions_attempt = QuestionAttempt.objects.filter(
         quiz=quiz,
         student=request.user,
         attempt_number=latest_attempt_number
     )
 
-    # base score
-    score = 0
+    # split attempts into different categories
+    attempt_likert = []
+    attempt_mcquestion = []
+    attempt_openended = []
 
-    # increment score by 1 for each correct answer
-    for question in questions_attempt:
-        if question.correct:
-            score += 1
+    for item in questions_attempt:
+        if hasattr(item, 'likertattempt'):
+            attempt_likert.append(item.likertattempt)
+        elif hasattr(item, 'mcquestionattempt'):
+            attempt_mcquestion.append(item.mcquestionattempt)
+        elif hasattr(item, 'openendedattempt'):
+            attempt_openended.append(item.openendedattempt)
+
+    # get quiz score object
+    score = QuizScore.objects.get(
+        student=request.user,
+        course=course,
+        quiz=quiz
+    ).score
 
     # reset the session variable
     request.session['quiz_complete'] = False
@@ -242,6 +254,9 @@ def quiz_result(request, pk, quiz_pk):
     return render(request, 'quiz_result.html', {
         'course': course,
         'quiz': quiz,
+        'attempt_likert': attempt_likert,
+        'attempt_mcquestion': attempt_mcquestion,
+        'attempt_openended': attempt_openended,
         'score': score
     })
 

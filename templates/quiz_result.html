@@ -1,7 +1,13 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
-{% load embed_video_tags %}
+{% load check_attribute %}
+{% load likert_range %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -53,18 +59,23 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Quiz - Correct Answers</h5>
+      <h5 class="card-header bg-light">{{quiz.name}} - Results</h5>
       <div class="card-body">
-        {% comment %} {% include includes/form.html %} {% endcomment %}
         {% for question in quiz.questions.all %}
-          <h6 class="card-title">
-            <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
-          </h6> 
 
-          <ul class="list-group mb-2">
-            {% comment %} {{choice.pk}} - 
-            {{choice.content}} - 
-            {{choice.correct}} {% endcomment %}
+          {% if question|check_attribute:'questiongroupheader' %}
+          <h5 class="card-title">
+            <strong>{{question.content}}</strong>
+            <hr />
+          </h5> 
+          {% else %}
+          <h6 class="card-title">
+            <strong>{{question.content}}</strong>
+          </h6>
+          {% endif %}
+
+          {% if question|check_attribute:'mcquestion' %}
+          <ul class="list-group mb-3">
             {% for choice in question.mcquestion.get_answers %}
               {% if choice.correct %}
                 <li class="list-group-item list-group-item-primary">{{choice.content}}</li>
@@ -73,7 +84,34 @@
               {% endif %}
             {% endfor %}
           </ul>
-          <span></span>
+
+          {% elif question|check_attribute:'likert' %}
+            <div class="card ml-0 mr-0 mb-4">
+              {% for answer in question.likert.get_answers %}
+                <div class="card-body likert">
+                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                  <div class="item">
+                    {% for attempt in attempt_likert %}
+                      {% if attempt.scale_answer == value %}
+                      <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled checked>
+                      {% else %}
+                      <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled>
+                      {% endif %}
+                    {% endfor %}
+                    <label for="likert_{{question.id}}">{{value}}</label>
+                  </div>
+                  {% endfor %}
+                </div>
+                
+                {% if answer.legend %}
+                <div class="likert-legend card-footer text-muted">
+                  <em>Scale legend:</em>
+                  {{answer.legend|linebreaks}}
+                </div>  
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
           
           {% if question.explanation %}
           <div class="card bg-light mr-0 ml-0 mb-4">

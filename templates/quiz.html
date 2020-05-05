@@ -83,18 +83,12 @@
             </h5>
             {% else %}
             <h6 class="card-title">
-              {% comment %}
-              <strong>{{ forloop.counter }} - {{question.content}}</strong>
-              {% endcomment %}
               <strong>{{question.content}}</strong>
             </h6>
             {% endif %}
             
             {% if question|check_attribute:'mcquestion' %}
             <ul class="list-group mb-3">
-              {% comment %} {{choice.pk}} - 
-              {{choice.content}} - 
-              {{choice.correct}} {% endcomment %}
               {% for choice in question.mcquestion.get_answers %}
                 <li class="list-group-item">
                   <label class="radio"></label>
@@ -105,26 +99,24 @@
             </ul>
             
             {% elif question|check_attribute:'likert' %}
-            
             <div class="card ml-0 mr-0 mb-4">
-            {% for answer in question.likert.get_answers %}
-              <div class="card-body likert">
-                {% for value in answer.scale_min|likert_range:answer.scale_max %}
-                <div class="item">
-                  <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
-                  <label for="likert_{{question.id}}">{{value}}</label>
+              {% for answer in question.likert.get_answers %}
+                <div class="card-body likert">
+                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                  <div class="item">
+                    <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                    <label for="likert_{{question.id}}">{{value}}</label>
+                  </div>
+                  {% endfor %}
                 </div>
-                {% endfor %}
-              </div>
-              
-              {% if answer.legend %}
-              <div class="likert-legend card-footer text-muted">
-                <em>Scale legend:</em>
-                {{answer.legend|linebreaks}}
-              </div>  
-              {% endif %}
-              
-            {% endfor %}
+                
+                {% if answer.legend %}
+                <div class="likert-legend card-footer text-muted">
+                  <em>Scale legend:</em>
+                  {{answer.legend|linebreaks}}
+                </div>  
+                {% endif %}
+              {% endfor %}
             </div>
 
             {% elif question|check_attribute:'openended' %}
