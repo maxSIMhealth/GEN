@@ -178,17 +178,13 @@ class OpenEnded(Question):
         verbose_name_plural = "Open ended questions"
 
 
-class OpenEndedAttempt(TimeStampedModel):
+class OpenEndedAttempt(QuestionAttempt):
     """
     Open Ended Attempt model
     """
 
     question = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
     answer = models.TextField(('answer'), null=True, blank=True)
-    attempt_number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "%s - %s - Course %s (attempt %s): %s" % \
@@ -259,18 +255,14 @@ class MCAnswer(TimeStampedModel):
         ordering = ['order']
 
 
-class MCQuestionAttempt(TimeStampedModel):
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+class MCQuestionAttempt(QuestionAttempt):
     question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
     correct = models.NullBooleanField(blank=True, null=True)
     answer = models.ForeignKey(MCAnswer, on_delete=models.PROTECT)
     answer_content = models.CharField('student answer', max_length=1000)
-    attempt_number = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "Student %s - quiz %s - course %s (attempt %s): answer id %s" % \
+        return "%s - %s - Course %s (attempt %s): answer id %s" % \
             (self.student.get_full_name(),
              self.quiz.name,
              self.course.name,
