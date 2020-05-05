@@ -1,13 +1,18 @@
 from django import template
 from quiz.models import QuestionAttempt
 
-# from forums.models import Forum, Comment
-# from quiz.models import QuizScore
-
 register = template.Library()
 
 
-def get_quiz_attempts(user, course, quiz):
+class QuizDetails:
+
+    def __init__(self, enabled, attempts, score):
+        self.enabled = enabled
+        self.attempts = attempts
+        self.score = score
+
+
+def quiz_attempts_get(user, course, quiz):
     '''
     Get user current attempt number for this quiz
     '''
@@ -24,11 +29,10 @@ def get_quiz_attempts(user, course, quiz):
     return current_attempt_number
 
 
-def get_quiz_score(user, course, quiz):
+def quiz_score_get(user, course, quiz):
     return quiz.quizscore_set.filter(student=user, course=course, quiz=quiz)
 
 
-@register.simple_tag
 def quiz_enable_check(user, course, quiz):
     '''
     Check if quiz should still be enabled for the user to answer
@@ -38,7 +42,7 @@ def quiz_enable_check(user, course, quiz):
     quiz_enable = False
 
     # get current attempt number
-    current_attempt_number = get_quiz_attempts(user, course, quiz)
+    current_attempt_number = quiz_attempts_get(user, course, quiz)
 
     # check if user has reached the limit of attempts
     if current_attempt_number < quiz.attempts_max_number:
@@ -49,7 +53,7 @@ def quiz_enable_check(user, course, quiz):
     # check if course has a requirement
     if quiz.requirement:
         # get current attempt number for requirement
-        requirement_quiz_score = get_quiz_score(
+        requirement_quiz_score = quiz_score_get(
             user, course, quiz.requirement)
 
         # check if quiz requirement has been fulfilled
@@ -62,4 +66,12 @@ def quiz_enable_check(user, course, quiz):
     if not attempts_limit_reached and requirement_fulfilled:
         quiz_enable = True
 
-    return quiz_enable
+    return (quiz_enable, current_attempt_number)
+
+
+@register.simple_tag
+def quiz_details_get(user, course, quiz):
+    enabled, attempts = quiz_enable_check(user, course, quiz)
+    score = quiz_score_get(user, course, quiz)
+
+    return QuizDetails(enabled, attempts, score)
