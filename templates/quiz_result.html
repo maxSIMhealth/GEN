@@ -54,12 +54,13 @@
     <div class="card bg-secondary text-white">
       <h5 class="card-header bg-dark">Result</h5>
       <div class="card-body">
+        Thank you for your submission for <em>{{quiz.name}}</em>.<br />
         Your score is {{score}}.
       </div>
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">{{quiz.name}} - Results</h5>
+      <h5 class="card-header bg-light">Feedback</h5>
       <div class="card-body">
         {% for question in quiz.questions.all %}
 
