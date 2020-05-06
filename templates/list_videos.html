@@ -4,7 +4,6 @@
 {% load humanize %}
 {% load checkvotes %}
 {% load is_instructor %}
-{% load video_thumbnail %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -45,10 +44,7 @@
     {% for video in videos %}
       <li class="list-group-item">
         <div class="media">
-          {% comment %}
-            <img src="{{ video.thumbnail }}" class="mr-3" alt="Video thumbnail">
-          {% endcomment %}
-          <img src="{{ video.file.url|video_thumbnail }}" class="mr-3" alt="Video thumbnail">
+          <img src="{{ video.thumbnail.url }}" class="mr-3" alt="Video thumbnail">
           <div class="media-body">
             <h5 class="mb-0 mt-1"><a href="{{ video.file.url }}">{{ video.title }}</a></h5>
             <small>{{ video.description }}</small>
