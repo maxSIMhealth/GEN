@@ -179,15 +179,33 @@ def quiz_page(request, pk, quiz_pk):
         return HttpResponseRedirect(reverse('quiz_result', args=[pk, quiz.pk]))
 
     else:
-        # mcquestions = MCQuestion.objects.filter(
-        #     quiz=quiz)  # .order_by("-date_added")
-        # likert = Likert.objects.filter(quiz=quiz)  # .order_by("-date_added")
-        # openended = OpenEnded.objects.filter(quiz=quiz)
+        # get latest user attempt number (if it exists)
+        try:
+            latest_attempt_number = QuestionAttempt.objects.filter(
+                quiz=quiz,
+                student=request.user
+            ).latest('attempt_number').attempt_number
+        except QuestionAttempt.DoesNotExist:
+            latest_attempt_number = 0
 
-        return render(
-            request,
-            'quiz.html',
-            {'course': course, 'quiz': quiz})
+        # check if user reached the maximum number of attempts
+        # check if user has reached the limit of attempts
+        if latest_attempt_number < quiz.attempts_max_number:
+            attempts_limit_reached = False
+        else:
+            attempts_limit_reached = True
+
+        # if the max number of attempts has been reached, redirect back to quiz list
+        if attempts_limit_reached:
+            # FIXME: show a message stating that the user has reached the
+            # maximum number of attempts
+            return HttpResponseRedirect(reverse('list_quiz', args=[pk]))
+
+        else:
+            return render(
+                request,
+                'quiz.html',
+                {'course': course, 'quiz': quiz})
 
 
 @login_required
