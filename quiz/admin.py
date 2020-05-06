@@ -97,7 +97,7 @@ class MCQuestionAdmin(QuestionAdmin):
     # list_display = ('quiz',
     #                 'content', 'created')
     # list_filter = ('quiz', 'content')
-    fields = ('content', 'quiz', 'explanation')
+    fields = ('content', 'quiz', 'explanation', 'multiple_correct_answers')
     inlines = [MCAnswerInline]
 
 

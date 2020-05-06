@@ -200,6 +200,13 @@ class OpenEndedAttempt(QuestionAttempt):
 
 
 class MCQuestion(Question):
+    multiple_correct_answers = models.BooleanField(
+        blank=False,
+        default=False,
+        help_text="Does this question have multiple correct answers \
+            (allow user to select multiple answer items)?"
+    )
+
     def check_if_correct(self, guess):
         answer = MCAnswer.objects.get(id=guess)
 
