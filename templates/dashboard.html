@@ -58,15 +58,15 @@
             <tbody>
               <tr>
                 <td>Forum likes</td>
-                <td>#{% rank user.id course.pk "forum" %}</td>
+                <td>#{% rank_get user.id None "forum" %}</td>
               </tr>
               <tr>
                 <td>Comments</td>
-                <td>#{% rank user.id course.pk "comment" %}</td>
+                <td>#{% rank_get user.id None "comment" %}</td>
               </tr>
               <tr>
                 <td>Quiz</td>
-                <td>#{% rank user.id course.pk "quiz" %}</td>
+                <td>#{% rank_get user.id None "quiz" %}</td>
               </tr>
             </tbody>
           </table>

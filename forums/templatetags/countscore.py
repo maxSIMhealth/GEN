@@ -60,9 +60,9 @@ def countscore_course(user_id, course_id, kind):
 
 
 @register.simple_tag
-def rank(user_id, course_id, kind):
+def rank_get(user_id, course_id, kind):
     # dashboard/home has no course_id
-    if course_id == '':
+    if course_id is None:
         forums = Forum.objects.all()
         quizscore = QuizScore.objects.all()
     else:
@@ -76,7 +76,8 @@ def rank(user_id, course_id, kind):
         if forums.exists():
             # get forums by authors (username), counts the likes (votes)
             # and order them from highest to lowest
-            items = forums.values('author__username').annotate(Count('votes')).order_by('-votes__count')
+            items = forums.values('author__username').annotate(
+                Count('votes')).order_by('-votes__count')
 
     elif kind == 'comment':
         counter = 0
@@ -84,16 +85,19 @@ def rank(user_id, course_id, kind):
         if forums.exists():
             for forum in forums:
                 if counter == 0:
-                    items = forum.comments.values('author__username').annotate(Count('votes'))
+                    items = forum.comments.values(
+                        'author__username').annotate(Count('votes'))
                 else:
-                    items = items | forum.comments.values('author__username').annotate(Count('votes'))
+                    items = items | forum.comments.values(
+                        'author__username').annotate(Count('votes'))
                 counter += 1
 
             items = items.order_by('-votes__count')
 
     elif kind == 'quiz':
         if quizscore.exists():
-            items = quizscore.values('student').annotate(Count('score')).order_by('-score__count')
+            items = quizscore.values('student').annotate(
+                Count('score')).order_by('-score__count')
 
     # check if variable 'items' exists
     if 'items' in locals():
