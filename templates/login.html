@@ -15,9 +15,11 @@
   </div>
   <div class="card-footer bg-light text-muted text-center">
     New to GEN? <a href="{% url 'signup' %}">Sign up</a>
+    {% comment %}
     <br>
     <p><strong>-- OR --</strong></p>
-    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>  
+    {% endcomment %}
   </div>
   <div class="text-center py-2">
     <small>
@@ -25,3 +27,12 @@
     </small>
   </div>
 {% endblock content %}
+
+{% block footer %}
+<div class="footer mb-2">
+  <div class="text-center text-light">
+    <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+  </div>
+</div>
+{% endblock footer %}
