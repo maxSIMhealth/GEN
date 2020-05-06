@@ -35,6 +35,12 @@ def quiz_page(request, pk, quiz_pk):
         items.pop(0)
         score = 0
 
+        # increase attempt number
+        if attempt_number['attempt_number__max']:
+            current_attempt_number = attempt_number['attempt_number__max'] + 1
+        else:
+            current_attempt_number = 1
+
         # get each question id and get answer related to it
         for item in items:
             try:
@@ -49,39 +55,36 @@ def quiz_page(request, pk, quiz_pk):
                     mcquestion = None
 
                 try:
-                    answer = MCAnswer.objects.get(
-                        pk=request.POST.get(item))
+                    user_answers = MCAnswer.objects.filter(
+                        id__in=request.POST.getlist(item))
                 except IndexError:
-                    answer = None
+                    user_answers = None
 
                 # check if the answer is correct
-                if MCQuestion.check_if_correct(mcquestion, answer.pk):
-                    flag = True
-                    score += 1
-                else:
-                    flag = False
+                for answer in user_answers:
+                    if MCQuestion.check_if_correct(mcquestion, answer.pk):
+                        # FIXME: consider changing flag to consider partially correct answers
+                        flag = True
+                        score += 1
+                    else:
+                        flag = False
 
-                # store the answers as a new attempt
-                attempt = MCQuestionAttempt.objects.create(
-                    student=request.user,
-                    quiz=quiz,
-                    course=course,
-                    question=MCQuestion.objects.get(pk=question_id),
-                    correct=flag,
-                    # I've decided to save a pure text version of the answer, in
-                    # case the answer object is altered in the future
-                    answer_content=answer.content,
-                    answer=MCAnswer.objects.get(pk=answer.pk)
-                )
+                    # store the answers as a new attempt
+                    attempt = MCQuestionAttempt.objects.create(
+                        student=request.user,
+                        quiz=quiz,
+                        course=course,
+                        question=MCQuestion.objects.get(pk=question_id),
+                        correct=flag,
+                        # I've decided to save a pure text version of the answer, in
+                        # case the answer object is altered in the future
+                        answer_content=answer.content,
+                        answer=MCAnswer.objects.get(pk=answer.pk),
+                        attempt_number=current_attempt_number
+                    )
 
-                # increase attempt number
-                if attempt_number['attempt_number__max']:
-                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
-                else:
-                    attempt.attempt_number = 1
-
-                # save attempt data
-                attempt.save()
+                    # save attempt data
+                    attempt.save()
 
             elif question_type == 'openended':
                 try:
@@ -97,14 +100,9 @@ def quiz_page(request, pk, quiz_pk):
                     quiz=quiz,
                     course=course,
                     question=question,
-                    answer=student_answer
+                    answer=student_answer,
+                    attempt_number=current_attempt_number
                 )
-
-                # increase attempt number
-                if attempt_number['attempt_number__max']:
-                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
-                else:
-                    attempt.attempt_number = 1
 
                 # save attempt data
                 attempt.save()
@@ -136,7 +134,8 @@ def quiz_page(request, pk, quiz_pk):
                     student=request.user,
                     quiz=quiz,
                     course=course,
-                    question=question
+                    question=question,
+                    attempt_number=current_attempt_number
                 )
 
                 # check if the submitted answer is valid (integer)
@@ -145,12 +144,6 @@ def quiz_page(request, pk, quiz_pk):
                     attempt.save()
                 except ValueError:
                     attempt.scale_answer = None
-
-                # increase attempt number
-                if attempt_number['attempt_number__max']:
-                    attempt.attempt_number = attempt_number['attempt_number__max'] + 1
-                else:
-                    attempt.attempt_number = 1
 
                 # save attempt data
                 attempt.save()
@@ -202,19 +195,18 @@ def quiz_result(request, pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
-    # quiz_score_kquiz_score_kwargs = dict(
-    #     student=request.user,
-    #     quiz=quiz,
-    #     course=course
-    # )
-    # quiz_score = get_object_or_404(QuizScore, **quiz_score_kwargs)
+    # get quiz score object
+    quiz_score_kwargs = dict(
+        student=request.user,
+        quiz=quiz,
+        course=course
+    )
+    score = get_object_or_404(QuizScore, **quiz_score_kwargs).score
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
     if request.session.get('quiz_complete') is False:
         return HttpResponseRedirect(reverse('list_quiz', args=[pk]))
-
-    # score = quiz_score.score
 
     # get latest attempt number
     latest_attempt_number = QuestionAttempt.objects.filter(
@@ -239,13 +231,6 @@ def quiz_result(request, pk, quiz_pk):
             attempt_mcquestion.append(item.mcquestionattempt)
         elif hasattr(item, 'openendedattempt'):
             attempt_openended.append(item.openendedattempt)
-
-    # get quiz score object
-    score = QuizScore.objects.get(
-        student=request.user,
-        course=course,
-        quiz=quiz
-    ).score
 
     # reset the session variable
     request.session['quiz_complete'] = False

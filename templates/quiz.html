@@ -91,8 +91,8 @@
             <ul class="list-group mb-3">
               {% for choice in question.mcquestion.get_answers %}
               <li class="list-group-item">
-                <label class="radio mb-0">
-                  <input type="radio" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
+                <label class="checkbox mb-0">
+                  <input type="checkbox" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
                 </label>
               </li>
               {% endfor %}

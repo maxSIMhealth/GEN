@@ -77,7 +77,7 @@
           {% endif %}
 
           {% if question|check_attribute:'mcquestion' %}
-          {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answer %}  
+          {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}  
           <ul class="list-group mb-3">
           {% for choice in question.mcquestion.get_answers %}
             {% if choice.correct %}
@@ -86,11 +86,14 @@
             <li class="list-group-item">
             {% endif %}
               <label class="radio mb-0">
-                {% if choice.id == mcquestion_user_answer %}
-                <input type="radio" value="{{choice.pk}}" disabled checked> {{choice.content}}
-                {% else %}
-                <input type="radio" disabled> {{choice.content}}
-                {% endif %}
+                <input type="checkbox" value="{{choice.pk}}" disabled
+                {% for user_answer in mcquestion_user_answers %}
+                    {% if choice.id == user_answer %}
+                    checked
+                    {% endif %}
+                {% endfor %}
+                >
+                {{choice.content}}
               </label>
             </li>
           {% endfor %}
