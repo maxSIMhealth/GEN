@@ -16,6 +16,12 @@ source venv/bin/activate
 - Install dependencies: `sudo apt install ffmpeg`
 - Run the project: `python manage.py runserver`
 
+## General settings
+`WIP: these groups will be used to set permissions, and later they will be automatically created while generating the database`
+- Create the following groups in the admin page:
+  - admin
+  - instructor
+
 ## Production
 
 ### Install packages
