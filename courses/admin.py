@@ -5,7 +5,7 @@ from .models import Course
 
 class CourseAdmin(admin.ModelAdmin):
     # fields = ('name', 'students')
-    filter_horizontal = ('students',)
+    filter_horizontal = ('students', 'instructors')
 
 
 admin.site.register(Course, CourseAdmin)

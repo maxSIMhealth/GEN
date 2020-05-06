@@ -4,6 +4,8 @@
 {% load humanize %}
 {% load gravatar %}
 {% load checkvotes %}
+{% load has_group %}
+{% load is_instructor %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -23,7 +25,7 @@
 {% block content %}
 
   {% comment %}
-  {% if debug == True %}
+  {% if debug %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
     user_id: {{ user.id }} <br />
@@ -109,7 +111,7 @@
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
         {% checkvotes_comment user.id comment.pk as comment_vote_status %}
 
-        <li class="list-group-item">
+        <li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author|has_group:'admin'|yesno:'list-group-item-danger,'}}">
           <div class="row">
             {% if gamification %}
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
@@ -133,6 +135,9 @@
             {% endif %}
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
               <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
+              {% if comment.author|has_group:'admin' %}
+              <div class="text-center"><strong>ADMIN</strong></div>  
+              {% endif %}
             </div>
             {% if gamification %}
               <div class="col col-9 col-sm-9 col-md-10 col-lg-10">
@@ -141,6 +146,11 @@
             {% endif %}
               <div class="row mb-0">
                 <div class="col-6">
+                  {% if debug %}
+                  DEBUG: <br />
+                  author: {{comment.author}}<br />
+                  is a course instructor? {{comment.author|is_instructor:course}}<br />
+                  {% endif %}
                   <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
                   <!-- {% if debug %}
                   <br><small class="text-muted">PK: {{ comment.pk }}</small>
