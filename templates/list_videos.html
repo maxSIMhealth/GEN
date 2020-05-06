@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
+{% load is_instructor %}
 {% load video_thumbnail %}
 
 {% block stylesheet %}
@@ -35,7 +36,9 @@
 
 {% block content %}
   <div class="mb-3">
+    {% if user|is_instructor:course %}
     <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new video</a>
+    {% endif %}
   </div>
 
   <ul class="list-group">

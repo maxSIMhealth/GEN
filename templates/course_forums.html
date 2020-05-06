@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
+{% load is_instructor %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -33,11 +34,12 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    <div class="mb-4">
+    <div class="mb-3">
+      {% if user|is_instructor:course %}
       <a href="{% url 'new_forum' course.pk %}" class="btn btn-primary">New forum</a>
+      {% endif %}
     </div>
-  {% endif %}
+
 
   {% if forums %}
     <table class="table forum-list">
