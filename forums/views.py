@@ -188,9 +188,17 @@ def upload_video(request, pk):
                 video=video,
                 author=request.user
             )
+            # TODO: this forum code is functional but will not be used for now
+            # forum = Forum.objects.create(
+            #     course=course,
+            #     name=form.cleaned_data.get('title'),
+            #     description=form.cleaned_data.get('description'),
+            #     video=video,
+            #     author=request.user
+            # )
             video.save()
             generate_video_thumbnail(video.pk)
-            forum.save()
+            # forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
         form = UploadVideoForm()
