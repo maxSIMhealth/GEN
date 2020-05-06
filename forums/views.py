@@ -185,7 +185,7 @@ def upload_video(request, pk):
             #     author=request.user
             # )
             video.save()
-            # video.generate_video_thumbnail(video.pk)
+            video.generate_video_thumbnail()
             # forum.save()
             return redirect('list_videos', pk=course.pk)
     else:

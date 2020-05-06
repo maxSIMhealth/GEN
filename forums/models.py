@@ -125,50 +125,30 @@ class VideoFile(models.Model):
 
         if ffmpeg_error is None:
             logger.info('Video thumbnail generated ok')
-            # output (file like object)
-            output = io.BytesIO()
             thumbnail = Image.open(io.BytesIO(ffmpeg_output))
             thumbnail = crop_image(thumbnail)
             thumbnail.thumbnail(size)
-            thumbnail.save(output, 'JPEG')
-            # ffmpeg_tempfile.seek(0)
-            # reset to beginning of file-like object
-            output.seek(0)
-            # closes temporary file and allows it to be deleted
-            ffmpeg_tempfile.close()
+            thumbnail.save(ffmpeg_tempfile, 'JPEG')
+            ffmpeg_tempfile.seek(0)
             logger.info('Video thumbnail resized ok')
         else:
             logger.error('Error generating thumbnail')
             raise ValueError('Error generating thumbnail:' + ffmpeg_error)
 
-        return (output, thumbnail_filename)
+        # link thumbnail to video object
+        # self.thumbnail = InMemoryUploadedFile(
+            # output, 'ImageField', thumbnail_filename, 'image/jpeg', output.tell(), None)
+
+        # save thumbnail file in user directory and link it to video object
+        self.thumbnail.save(thumbnail_filename, ffmpeg_tempfile)
+
+        # closes temporary file and allows it to be deleted
+        ffmpeg_tempfile.close()
 
     def delete(self, *args, **kwargs):
         self.file.delete()  # Delete the actual video file
         self.thumbnail.delete()  # Delete the thumbnail file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
-
-    def save(self, *args, **kwargs):
-        # FIXME: this can be improved, the video thumbnail is being created
-        # every time the video model is being saved
-
-        # try to delete current thumbnail (if it exists)
-        try:
-            self.thumbnail.delete(save=False)
-        except FileNotFoundError:
-            logger.warning(
-                "Video thumbnail file not found. Proceeding anyway.")
-            pass
-
-        # generate new thumbnail
-        (thumbnail, thumbnail_filename) = self.generate_video_thumbnail()
-
-        # link thumbnail to video object
-        self.thumbnail = InMemoryUploadedFile(
-            thumbnail, 'ImageField', thumbnail_filename, 'image/jpeg', thumbnail.tell(), None)
-
-        # finally save the video object
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
