@@ -1,6 +1,4 @@
-import os
-import io
-import tempfile
+
 
 from urllib.parse import urlparse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -11,9 +9,6 @@ from django.conf import settings
 # from django.core.files.images import ImageFile
 # from django.views.generic import ListView
 from django.utils import timezone
-from PIL import Image
-
-import ffmpeg
 
 from courses.models import Course
 from .forms import NewForumForm, NewCommentForm, UploadVideoForm
@@ -181,13 +176,6 @@ def upload_video(request, pk):
                 course=course,
                 file=form.files.get('file')
             )
-            forum = Forum.objects.create(
-                course=course,
-                name=form.cleaned_data.get('title'),
-                description=form.cleaned_data.get('description'),
-                video=video,
-                author=request.user
-            )
             # TODO: this forum code is functional but will not be used for now
             # forum = Forum.objects.create(
             #     course=course,
@@ -197,7 +185,7 @@ def upload_video(request, pk):
             #     author=request.user
             # )
             video.save()
-            generate_video_thumbnail(video.pk)
+            # video.generate_video_thumbnail(video.pk)
             # forum.save()
             return redirect('list_videos', pk=course.pk)
     else:
@@ -208,73 +196,6 @@ def upload_video(request, pk):
         'course': course,
         'forums': forums
     })
-
-
-def read_frame_as_jpeg(in_filename, time):
-    """extracts singlke frame from video based on a specific timestamp"""
-    # based on: https://github.com/kkroening/ffmpeg-python/blob/master/examples/read_frame_as_jpeg.py
-    out, err = (
-        ffmpeg
-        .input(in_filename, ss=time)
-        # .filter('select', 'gte(n,{})'.format(frame_num))
-        .output('pipe:', vframes=1, format='image2', vcodec='mjpeg')
-        .run(capture_stdout=True)
-    )
-    return (out, err)
-
-
-def generate_video_thumbnail(video_pk):
-    """Generates video thumbnail (square proportion)"""
-    video = get_object_or_404(VideoFile, pk=video_pk)
-    video_filename = os.path.splitext(video.file.name)[0]
-    thumbnail_filename = os.path.split(video_filename)[1] + '_thumb.jpg'
-    ffmpeg_tempfile = tempfile.NamedTemporaryFile()
-    # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
-    size = (128, 128)
-
-    (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(
-        video.file.path, '00:00:01.000')
-
-    if ffmpeg_error is None:
-        print('Thumbnail generated ok')
-        thumbnail = Image.open(io.BytesIO(ffmpeg_output))
-        thumbnail = crop_image(thumbnail)
-        thumbnail.thumbnail(size)
-        thumbnail.save(ffmpeg_tempfile, 'JPEG')
-        ffmpeg_tempfile.seek(0)
-        print('Thumbnail resized ok')
-    else:
-        raise ValueError('Error generating thumbnail:' + ffmpeg_error)
-
-    # save thumbnail file in user directory and link it to video object
-    video.thumbnail.save(thumbnail_filename, ffmpeg_tempfile)
-    # closes temporary file and allows it to be deleted
-    ffmpeg_tempfile.close()
-
-
-def crop_image(image):
-    """Generates a square cropped image based on its center"""
-    width, height = image.size
-
-    if width != height:
-        if width > height:
-            crop = (width - height) / 2
-            left = crop
-            top = 0
-            right = height + crop
-            bottom = height
-        elif width < height:
-            crop = (height - width) / 2
-            left = 0
-            top = crop
-            right = width
-            bottom = width + crop
-
-        result = image.crop((left, top, right, bottom))
-    else:
-        result = image
-
-    return result
 
 
 @login_required
