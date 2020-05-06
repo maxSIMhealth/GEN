@@ -122,6 +122,11 @@
             {% endif %}
           {% endfor %}
           </div>
+
+          {% elif question|check_attribute:'openended' %}
+          <div class="mb-3">
+            <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer}}{% endif %}{% endfor %}</textarea>
+          </div>
           {% endif %}
           
           {% if question.explanation %}
