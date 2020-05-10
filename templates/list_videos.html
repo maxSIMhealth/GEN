@@ -49,6 +49,8 @@
             <h5 class="mb-0 mt-1"><a href="{{ video.file.url }}">{{ video.title }}</a></h5>
             <small>{{ video.description }}</small>
           </div>
+          
+          {% comment %}  
           <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
             <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}"> 
               <div style='text-align:center;'><i class="far fa-comment"></i></div>  
@@ -59,6 +61,7 @@
                 Take quiz
             </button>
           </div>
+          {% endcomment %}
         </div>
       </li>
     {% empty %}
