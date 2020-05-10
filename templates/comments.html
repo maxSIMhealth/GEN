@@ -146,15 +146,14 @@
             {% endif %}
               <div class="row mb-0">
                 <div class="col-6">
+                  {% comment %}
                   {% if debug %}
                   DEBUG: <br />
                   author: {{comment.author}}<br />
                   is a course instructor? {{comment.author|is_instructor:course}}<br />
                   {% endif %}
+                  {% endcomment %}
                   <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
-                  <!-- {% if debug %}
-                  <br><small class="text-muted">PK: {{ comment.pk }}</small>
-                  {% endif %} -->
                 </div>
               </div>
               {{ comment.message }}
