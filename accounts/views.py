@@ -2,6 +2,7 @@ from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.backends import ModelBackend
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -18,11 +19,12 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
 
 @login_required
 def settings(request):
@@ -48,7 +50,8 @@ def settings(request):
     # except UserSocialAuth.DoesNotExist:
     #     facebook_login = None
 
-    can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
+    can_disconnect = (user.social_auth.count() >
+                      1 or user.has_usable_password())
 
     return render(request, 'settings.html', {
         'github_login': github_login,
@@ -57,6 +60,7 @@ def settings(request):
         # 'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
+
 
 @login_required
 def password(request):
@@ -70,13 +74,15 @@ def password(request):
         if form.is_valid():
             form.save()
             update_session_auth_hash(request, form.user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(
+                request, 'Your password was successfully updated!')
             return redirect('password')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordForm(request.user)
     return render(request, 'password.html', {'form': form})
+
 
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(UpdateView):
