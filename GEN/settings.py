@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'social_django',
     'crispy_forms',
     'adminsortable2',
+    'django_extensions',
 
     'accounts',
     'courses',
