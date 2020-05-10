@@ -105,13 +105,13 @@
             <div class="card-body likert">
               {% for value in answer.scale_min|likert_range:answer.scale_max %}
               <div class="item">
+                <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
                 {% for attempt in attempt_likert %}
-                  {% if attempt.question_id == question.id and attempt.scale_answer == value %}
-                  <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled checked>
-                  {% else %}
-                  <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled>
-                  {% endif %}
+                   {% if attempt.question_id == question.id and attempt.scale_answer == value %}
+                   checked
+                   {% endif %}
                 {% endfor %}
+                >
                 <label for="likert_{{question.id}}">{{value}}</label>
               </div>
               {% endfor %}
