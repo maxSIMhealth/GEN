@@ -2,7 +2,6 @@ from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth.backends import ModelBackend
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
