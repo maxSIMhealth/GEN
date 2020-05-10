@@ -122,7 +122,7 @@ class LikertAnswer(TimeStampedModel):
     Minimum and maximum values are used to generate the scale layout.
     """
 
-    question = models.OneToOneField(Likert, on_delete=models.PROTECT)
+    question = models.OneToOneField(Likert, on_delete=models.CASCADE)
     scale_min = models.PositiveIntegerField(default=1)
     scale_max = models.PositiveIntegerField(default=5)
     legend = models.TextField(
