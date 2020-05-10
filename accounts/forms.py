@@ -11,6 +11,7 @@ class SignUpForm(UserCreationForm):
         required=True,
         widget=forms.EmailInput()
     )
+    institution = forms.CharField(max_length=50)
 
     def clean_email(self):
         '''
@@ -28,4 +29,5 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username',
-                  'email', 'password1', 'password2')
+                  'email', 'institution',
+                  'password1', 'password2')

@@ -45,7 +45,8 @@ urlpatterns = [
     path("settings/password/done/", auth_views.PasswordChangeDoneView.as_view(
         template_name='password_change_done.html'), name="password_change_done"),
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
-    path("settings/", account_views.settings, name="settings"),
+    # FIXME: finish implementing social login
+    #path("settings/", account_views.settings, name="settings"),
     path("settings/pwd", account_views.password, name="password"),
 
     path('courses/<int:pk>/', course_views.course, name='course'),
