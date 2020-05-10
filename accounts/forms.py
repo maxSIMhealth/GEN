@@ -14,9 +14,10 @@ class SignUpForm(UserCreationForm):
     institution = forms.CharField(max_length=50)
 
     def clean_email(self):
-        '''
-        Checks if the user email domain is part of the permitted list
-        '''
+        """
+        Checks if the user email domain is part of the permitted list and
+        if it is already registered to another user
+        """
         data = self.cleaned_data['email']
         email_domain = data.split('@')[-1].split('.')[0]
         permitted_domains = ['ontariotechu', 'umontreal']
@@ -24,6 +25,11 @@ class SignUpForm(UserCreationForm):
             raise forms.ValidationError(
                 "E-mail address must be from one of the allowed domains: "
                 + ", ".join(permitted_domains))
+
+        if User.objects.all().filter(email=data).exists():
+            raise forms.ValidationError(
+                "E-mail address is already being used.")
+
         return data
 
     class Meta:
