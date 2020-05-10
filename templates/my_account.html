@@ -22,6 +22,10 @@
             <label for="username">Institution:</label>
             <input type="text" class="form-control" name="username" id="username" value="{{user.profile.institution}}" disabled></input>
           </div>
+          <div class="form-group">
+            <label for="username">Email address:</label>
+            <input type="text" class="form-control" name="username" id="username" value="{{user.email}}" disabled></input>
+          </div>
           <form method="post" novalidate>
             {% csrf_token %}
             {% include 'includes/form.html' %}

@@ -88,8 +88,9 @@ def password(request):
 
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(UpdateView):
+    # FIXME: improve user account info page to allow updating profile fields
     model = User
-    fields = ('first_name', 'last_name', 'email', )
+    fields = ('first_name', 'last_name', )
     template_name = 'my_account.html'
     success_url = reverse_lazy('home')
 
