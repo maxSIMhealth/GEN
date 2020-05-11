@@ -237,6 +237,16 @@ def video_comments(request, pk, video_pk):
 
 
 @login_required
+def video_player(request, pk, video_pk):
+    course = get_object_or_404(Course, pk=pk)
+    video = get_object_or_404(VideoFile, pk=video_pk)
+
+    return render(request, 'video_player.html',
+                  {'course': course,
+                   'video': video})
+
+
+@login_required
 def upvote_forum(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = Forum.objects.get(pk=forum_pk)
