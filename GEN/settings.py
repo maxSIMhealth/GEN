@@ -155,6 +155,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+if not DEBUG:
+    STATIC_ROOT = '/opt/GEN_static/'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
@@ -162,7 +164,10 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if not DEBUG:
+    MEDIA_ROOT = '/opt/GEN_media/'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Login settings
 
@@ -170,6 +175,17 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+if not DEBUG:
+    # Security / HTTPS / TLS
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+    SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_REFERRER_POLICY = 'same-origin'
 
 # E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
