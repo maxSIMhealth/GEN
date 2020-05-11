@@ -22,9 +22,11 @@
   <li class="nav-item">
     <a class="nav-link active">Forums</a>
   </li>
+  {% comment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
+  {% endcomment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>

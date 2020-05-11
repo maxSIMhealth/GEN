@@ -70,6 +70,8 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('home')
+        # FIXME: finish implementing 'activation confirmed' page
+        # return render(request, 'account_activation_valid.html')
     else:
         return render(request, 'account_activation_invalid.html')
 
@@ -108,28 +110,6 @@ def settings(request):
         # 'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
     })
-
-
-@login_required
-def password(request):
-    if request.user.has_usable_password():
-        PasswordForm = PasswordChangeForm
-    else:
-        PasswordForm = AdminPasswordChangeForm
-
-    if request.method == 'POST':
-        form = PasswordForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.success(
-                request, 'Your password was successfully updated!')
-            return redirect('password')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordForm(request.user)
-    return render(request, 'password.html', {'form': form})
 
 
 @method_decorator(login_required, name='dispatch')

@@ -1,0 +1,22 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+
+{% block title %}GEN - Activation confirmed{% endblock title %}
+
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    <h3 class="card-title">Activation confirmed</h3>
+    <p class="card-text">Your account has been activated. Please return to the login page and access GEN.</p>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Return to login page</a>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+<div class="footer mb-2">
+  <div class="text-center text-light">
+    <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+  </div>
+</div>
+{% endblock footer %}

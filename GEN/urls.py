@@ -48,16 +48,18 @@ urlpatterns = [
     path("settings/account", account_views.UserUpdateView.as_view(), name='my_account'),
     # FIXME: finish implementing social login
     #path("settings/", account_views.settings, name="settings"),
-    path("settings/pwd", account_views.password, name="password"),
 
     path('courses/<int:pk>/', course_views.course, name='course'),
     path('courses/<int:pk>/videos/', views.list_videos, name='list_videos'),
-    path('courses/<int:pk>/videos/upload',
-         views.upload_video, name='upload_video'),
-    path('courses/<int:pk>/videos/<int:video_pk>/comments',
-         views.video_comments, name='video_comments'),
-    # path('courses/<int:pk>/videos/new/', views.new_media, name='new_media'),
-    path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
+    # TODO: video_upload is functional but is not being used for now
+    # path('courses/<int:pk>/videos/upload',
+    #      views.upload_video, name='upload_video'),
+    # FIXME: video_comment is functional but needs some adjustments and also
+    # have to decided if it will continue to exist or not
+    # path('courses/<int:pk>/videos/<int:video_pk>/comments',
+    #      views.video_comments, name='video_comments'),
+    # FIXME: list_pdfs has to be reimplemented
+    # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
     path('courses/<int:pk>/forums/', views.course_forums, name='course_forums'),
     path('courses/<int:pk>/forums/new/', views.new_forum, name='new_forum'),
     path('courses/<int:pk>/forums/<int:forum_pk>/',
@@ -87,7 +89,7 @@ urlpatterns = [
 
     # path('forums/', views.ForumListView.as_view(), name='forums'),
 
-    path('oauth/', include('social_django.urls', namespace='social')),
+    # path('oauth/', include('social_django.urls', namespace='social')),
 
     path('admin/', admin.site.urls),
 ]
