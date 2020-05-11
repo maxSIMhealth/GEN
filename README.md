@@ -27,9 +27,32 @@ source venv/bin/activate
 
 ## Production
 
-### Install packages
-- Install nginx (use your distro install command, e.g., `sudo apt install nginx`)
-- Install gunicorn: `pip install gunicorn`
+### Install and configure packages
+- Install nginx, postgresql, supervisor, python development, and postgresql development lib (necessary for psycopg2): `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev`)
+  - **Note:** if you are using a different version of python than your distro default, install the correct dev package (e.g.: `python3.8-dev`)
+- Enable and start supervisor:
+```
+sudo systemctl enable supervisor
+sudo systemctl start supervisor
+```
+- Install gunicorn and psycopg2 (postgresql driver): `pip install gunicorn psycopg2`
+  - **Note:** if you are using virtualenv, don't forget to enable it **BEFORE** using pip
+
+## Create user
+- This user will be used exclusively to run GEN:
+- Create user and add it to sudoers list:
+```
+adduser gen
+gpasswd -a gen sudo
+```
+
+## PostgreSQL
+- Switch to postgres user: `sudo su - postgres`
+- Create database user: `createuser u_gen`
+- Create a new database and set the user as the owner: `createdb django_gen --owner u_gen`
+- Define a strong password for the user: `psql -c "ALTER USER u_boards WITH PASSWORD 'PUT_DB_USER_PASSWORD_HERE'"`
+- Exist postgres user: `exit`
+- Edit `.env`, uncomment `DATABASE_URL` line and update it with your postgresql server settings (default port is 5432)
 
 ### NGINX
 - Create `/etc/nginx/sites-available/GEN` with the following content:
