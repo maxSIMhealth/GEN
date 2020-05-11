@@ -93,7 +93,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('courses/<int:pk>/media/<int:video_pk>/',
+    path('courses/<int:pk>/videos/<int:video_pk>/',
          views.video_player, name='video_player'),
 ]
 
