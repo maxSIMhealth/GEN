@@ -16,6 +16,9 @@ source venv/bin/activate
 - Install dependencies: `sudo apt install ffmpeg`
 - Run the project: `python manage.py runserver`
 
+## Notes
+- On `DEBUG`, no email is sent and the output is echoed into stdout.
+
 ## General settings
 `WIP: these groups will be used to set permissions, and later they will be automatically created while generating the database`
 - Create the following groups in the admin page:
@@ -58,6 +61,14 @@ server {
 - Enable GEN on nginx: `sudo ln -s /etc/nginx/sites-available/GEN /etc/nginx/sites-enabled/GEN`
 - Remove default nginx site (if it exists): `sudo rm /etc/nginx/sites-enabled/default`
 - Restart service: `sudo service nginx restart`
+
+### UFW (firewall)
+- If UFW is enabled:
+```
+sudo ufw allow http
+sudo ufw allow https
+```
+- To enable UFW: `sudo ufw enable`
 
 ### GEN settings
 - Edit `GEN/settings.py` and modify the following:
