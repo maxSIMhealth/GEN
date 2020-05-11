@@ -35,10 +35,11 @@ source venv/bin/activate
 - Install necessary packages: `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev ffmpeg`
   - **Note:** if you are using a different version of python than your distro default, install the correct dev package (e.g.: `python3.8-dev`)
 - Enable and start supervisor:
-```
-sudo systemctl enable supervisor
-sudo systemctl start supervisor
-```
+  - **Warning:** on ubuntu 18.04 LTS, the supervisor package only runs when using python2.7 as the default system python version. If necessary, use `sudo update-alternatives --config python`
+  ```
+  sudo systemctl enable supervisor
+  sudo systemctl start supervisor
+  ```
 - Install gunicorn and psycopg2 (postgresql driver): `pip install gunicorn psycopg2`
   - **Note:** if you are using virtualenv, don't forget to enable it **BEFORE** using pip
 
