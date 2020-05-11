@@ -21,7 +21,7 @@
         {% for course in user.member.all %}
           <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
         {% empty %}
-          <li class="list-group-item">Not enrolled in any course.</li>
+          <li class="list-group-item">Not enrolled in any course. Please wait for the administrator to assign you.</li>
         {% endfor %}
       </ul>
     </div>
