@@ -1,6 +1,7 @@
 # GEN - Gamified Educational Network
 
-## Installation instructions
+## General instructions
+- **Note:** these instructions are for Ubuntu 18.04 LTS.
 - Clone this repo
 - This project is based on python 3.x, and I recommend using a python environment tool such as [virtualenv](https://virtualenv.pypa.io/en/stable/):
 ```
@@ -11,24 +12,27 @@ source venv/bin/activate
 ```
 - Create a `.env` file based on `.env-example`
 - Instal project dependencies: `pip install -r requirements.txt`
+
+### Notes
+- On development mode (`DEBUG`), no email is sent and the output is echoed into stdout.
+#### WIP
+`these groups will be used to set permissions, and later they will be automatically created while generating the database`
+- Create the following groups in the admin page:
+  - admin
+  - instructor
+
+## Development
+
+### Set up GEN
 - Generate database: `python manage.py migrate`
 - Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
 - Install dependencies: `sudo apt install ffmpeg`
 - Run the project: `python manage.py runserver`
 
-## Notes
-- On `DEBUG`, no email is sent and the output is echoed into stdout.
-
-## General settings
-`WIP: these groups will be used to set permissions, and later they will be automatically created while generating the database`
-- Create the following groups in the admin page:
-  - admin
-  - instructor
-
 ## Production
 
 ### Install and configure packages
-- Install nginx, postgresql, supervisor, python development, and postgresql development lib (necessary for psycopg2): `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev`)
+- Install necessary packages: `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev ffmpeg`
   - **Note:** if you are using a different version of python than your distro default, install the correct dev package (e.g.: `python3.8-dev`)
 - Enable and start supervisor:
 ```
@@ -38,7 +42,7 @@ sudo systemctl start supervisor
 - Install gunicorn and psycopg2 (postgresql driver): `pip install gunicorn psycopg2`
   - **Note:** if you are using virtualenv, don't forget to enable it **BEFORE** using pip
 
-## Create user
+### Create user
 - This user will be used exclusively to run GEN:
 - Create user and add it to sudoers list:
 ```
@@ -46,7 +50,7 @@ adduser gen
 gpasswd -a gen sudo
 ```
 
-## PostgreSQL
+### PostgreSQL
 - Switch to postgres user: `sudo su - postgres`
 - Create database user: `createuser u_gen`
 - Create a new database and set the user as the owner: `createdb django_gen --owner u_gen`
@@ -93,12 +97,16 @@ sudo ufw allow https
 ```
 - To enable UFW: `sudo ufw enable`
 
+### Set up GEN database and superuser (admin)
+- Generate database: `python manage.py migrate`
+- Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
+
 ### GEN settings
 - Edit `GEN/settings.py` and modify the following:
   - add `STATIC_ROOT=/opt/GEN_static/` before `STATIC_URL`
   - change `MEDIA_ROOT` to `/opt/GEN_media/`
 - Edit `.env` and set `DEBUG=False`y
-- Colllect static files: `python manage.py collectstatic`
+- Collect static files: `python manage.py collectstatic`
 
 ### Start the server
 - Gunicorn: `gunicorn GEN.wsgi`
