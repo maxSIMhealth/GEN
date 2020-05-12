@@ -45,7 +45,8 @@ def list_videos(request, pk):
     if course in user.instructor.all():
         # returns all participants videos to the instructor (excluding his own)
         participants_videos = course.videos.exclude(author=user)
-    # else:
+    else:
+        participants_videos = ""
     #     # returns only videos submitted by current user
     #     user_videos = user.videos.get_queryset()
 
