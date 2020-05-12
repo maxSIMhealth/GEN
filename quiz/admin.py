@@ -44,7 +44,7 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
 
-class QuizAdmin(admin.ModelAdmin):
+class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'course', )
     list_filter = ('course', )
     # search_fields = ('description', 'course', )

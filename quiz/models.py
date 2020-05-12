@@ -43,9 +43,15 @@ class Quiz(TimeStampedModel):
         null=False
     )
     published = models.BooleanField(default=False)
+    order = models.PositiveIntegerField(
+        default=0,
+        blank=False,
+        null=False
+    )
 
     class Meta:
         verbose_name_plural = "quizzes"
+        ordering = ['order']
 
     def get_questions(self):
         return self.questions.all().select_subclasses()
