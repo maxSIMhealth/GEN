@@ -39,7 +39,7 @@ def list_videos(request, pk):
     course_videos = course.videos.filter(author__in=course_instructors)
 
     # gets the videos submitted by the user
-    user_videos = user.videos.get_queryset()
+    user_videos = user.videos.get_queryset().filter(course=course)
 
     # checks if the current user is a course instructor
     if course in user.instructor.all():
