@@ -46,9 +46,15 @@
     {% for video in videos %}
       <li class="list-group-item">
         <div class="media">
-          <img src="{{ video.thumbnail.url }}" class="mr-3" alt="Video thumbnail">
+          <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="mr-3 thumbnail" alt="Video thumbnail"></a>
+          {% comment %}
+          <video controls poster="{{ video.thumbnail.url }}">
+            <source src="{{ video.file.url }}" type="video/mp4">
+            Sorry, your browser doesn't support embedded videos.
+          </video>  
+          {% endcomment %}
           <div class="media-body">
-            <h5 class="mb-0 mt-1"><a href="{{ video.file.url }}">{{ video.title }}</a></h5>
+            <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
             <small>{{ video.description }}</small>
           </div>
           

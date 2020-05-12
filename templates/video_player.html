@@ -4,22 +4,16 @@
 
 {% block title %}GEN - Video player{% endblock title %}
 
-{% block content %}
-  <div class="card-body bg-light text-dark">
-    <h3 class="card-title">{{video.title}}</h3>
-    <p class="card-text">
-        DEBUG: course {{ course }} <br>
-        DEBUG: video {{ video }}
-        <video controls width="100%">
-        
+{% block body %}
+  <div class="card-body">
+    <p class="card-text embed-responsive embed-responsive-16by9">
+        <video controls poster="{{ video.thumbnail.url }}">
             <source src="{{ video.file.url }}" type="video/mp4">
-        
             Sorry, your browser doesn't support embedded videos.
         </video>
     </p>
-    <!-- <a href="{% url 'home' %}" class="btn btn-secondary">Return to login page</a> -->
   </div>
-{% endblock content %}
+{% endblock body %}
 
 {% block footer %}
 
