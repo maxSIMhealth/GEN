@@ -49,6 +49,7 @@ class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ('course', )
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
+    save_as = True
 
     # filter_horizontal = ('questions', )
 

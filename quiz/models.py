@@ -12,7 +12,7 @@ class Quiz(TimeStampedModel):
     Quiz model
     """
 
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30, unique=False)
     description = models.CharField(max_length=100)
     author = models.ForeignKey(
         User,
