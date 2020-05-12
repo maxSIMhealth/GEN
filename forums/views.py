@@ -38,13 +38,16 @@ def list_videos(request, pk):
     course_instructors = course.instructors.all()
     course_videos = course.videos.filter(author__in=course_instructors)
 
+    # gets the videos submitted by the user
+    user_videos = user.videos.get_queryset()
+
     # checks if the current user is a course instructor
     if course in user.instructor.all():
         # returns all participants videos to the instructor (excluding his own)
-        user_videos = course.videos.exclude(author=user)
-    else:
-        # returns only videos submitted by current user
-        user_videos = user.videos.get_queryset()
+        participants_videos = course.videos.exclude(author=user)
+    # else:
+    #     # returns only videos submitted by current user
+    #     user_videos = user.videos.get_queryset()
 
     # TODO: old code, check if it should be deleted
     # media_list = []
@@ -56,7 +59,8 @@ def list_videos(request, pk):
                   {'course': course,
                    'forums': forums,
                    'course_videos': course_videos,
-                   'user_videos': user_videos})
+                   'user_videos': user_videos,
+                   'participants_videos': participants_videos})
 
 
 @login_required

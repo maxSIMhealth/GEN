@@ -45,11 +45,15 @@
     {% endif %}
   </div>
 
-  {% if not user|is_instructor:course %}
+  
   <div class="card mb-3">
     <h5 class="card-header bg-light">User Videos</h5>
     <div class="card-body pb-0">
+      {% if not user|is_instructor:course %}
       <h6 class="card-subtitle mb-2 text-muted">These videos are private, only accessible by you and by the course instructor(s).</h6>
+      {% else %}
+      <h6 class="card-subtitle mb-2 text-muted">These are the videos that you submitted. As an instructor, they will be visible to the course participants as <strong>course videos</strong>.</h6>
+      {% endif %}
       <table class="table mb-0 user-videos">
         <tbody>
           {% for video in user_videos %}
@@ -80,7 +84,6 @@
       </table>
     </div>
   </div>
-  {% endif %}
 
   <div class="card mb-3">
     <h5 class="card-header bg-light">Course Videos</h5>
@@ -133,7 +136,7 @@
       <h6 class="card-subtitle mb-2 text-muted">These are the videos that have been submitted by the participants.</h6>
       <table class="table mb-0 user-videos">
         <tbody>
-          {% for video in user_videos %}
+          {% for video in participants_videos %}
           <tr>
             <th scope="row" class="th-small">
               <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
