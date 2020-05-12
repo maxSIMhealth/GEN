@@ -40,7 +40,7 @@ source venv/bin/activate
   sudo systemctl enable supervisor
   sudo systemctl start supervisor
   ```
-- Install gunicorn and psycopg2 (postgresql driver): `pip install gunicorn psycopg2`
+- Install gunicorn: `pip install gunicorn`
   - **Note:** if you are using virtualenv, don't forget to enable it **BEFORE** using pip
 
 ### Create user
@@ -55,7 +55,7 @@ gpasswd -a gen sudo
 - Switch to postgres user: `sudo su - postgres`
 - Create database user: `createuser u_gen`
 - Create a new database and set the user as the owner: `createdb django_gen --owner u_gen`
-- Define a strong password for the user: `psql -c "ALTER USER u_boards WITH PASSWORD 'PUT_DB_USER_PASSWORD_HERE'"`
+- Define a strong password for the user: `psql -c "ALTER USER u_gen WITH PASSWORD 'PUT_DB_USER_PASSWORD_HERE'"`
 - Exist postgres user: `exit`
 - Edit `.env`, uncomment `DATABASE_URL` line and update it with your postgresql server settings (default port is 5432)
 
