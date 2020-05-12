@@ -43,7 +43,7 @@ class Quiz(TimeStampedModel):
         null=False
     )
     published = models.BooleanField(default=False)
-    order = models.PositiveIntegerField(
+    custom_order = models.PositiveIntegerField(
         default=0,
         blank=False,
         null=False
@@ -51,7 +51,7 @@ class Quiz(TimeStampedModel):
 
     class Meta:
         verbose_name_plural = "quizzes"
-        ordering = ['order']
+        ordering = ['custom_order']
 
     def get_questions(self):
         return self.questions.all().select_subclasses()
@@ -80,7 +80,7 @@ class Question(TimeStampedModel):
     explanation = models.TextField(
         blank=True,
         help_text="Explanation to be shown after the question has been answered.")
-    order = models.PositiveIntegerField(
+    custom_order = models.PositiveIntegerField(
         default=0,
         blank=False,
         null=False
@@ -89,7 +89,7 @@ class Question(TimeStampedModel):
     objects = InheritanceManager()
 
     class Meta:
-        ordering = ['order']
+        ordering = ['custom_order']
 
     def __str__(self):
         return self.content
@@ -253,7 +253,7 @@ class MCAnswer(TimeStampedModel):
         help_text="Is this the correct answer?"
     )
 
-    order = models.PositiveIntegerField(
+    custom_order = models.PositiveIntegerField(
         default=0,
         blank=False,
         null=False
@@ -265,7 +265,7 @@ class MCAnswer(TimeStampedModel):
     class Meta:
         verbose_name = 'Multiple choice answer'
         verbose_name_plural = 'Multiple choice answers'
-        ordering = ['order']
+        ordering = ['custom_order']
 
 
 class MCQuestionAttempt(QuestionAttempt):
