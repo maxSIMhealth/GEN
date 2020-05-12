@@ -10,9 +10,11 @@
     height: 400px;
 }
 
-/* quiz list, course home (info) */
+/* quiz list, course home (info), course video list */
 .quiz-list .th-small,
-.course-info .th-small {
+.course-info .th-small,
+.user-videos .th-small,
+.course-videos .th-small {
     width: 12%;
 }
 

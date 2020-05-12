@@ -10,7 +10,7 @@ from django.conf import settings
 # from django.views.generic import ListView
 from django.utils import timezone
 
-from courses.models import Course
+from courses.models import Course, User
 from .forms import NewForumForm, NewCommentForm, UploadVideoForm
 from .models import Forum, Comment, VideoFile
 
@@ -32,15 +32,31 @@ def course_forums(request, pk):
 def list_videos(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
-    videos = course.videos.all()
-    # media_list = []
+    user = request.user
 
+    # filter videos submitted by instructors
+    course_instructors = course.instructors.all()
+    course_videos = course.videos.filter(author__in=course_instructors)
+
+    # checks if the current user is a course instructor
+    if course in user.instructor.all():
+        # returns all participants videos to the instructor (excluding his own)
+        user_videos = course.videos.exclude(author=user)
+    else:
+        # returns only videos submitted by current user
+        user_videos = user.videos.get_queryset()
+
+    # TODO: old code, check if it should be deleted
+    # media_list = []
     # for forum in forums:
     #     if forum.media.kind == 'YTB':
     #         media_list.append(forum)
 
     return render(request, 'list_videos.html',
-                  {'course': course, 'forums': forums, 'videos': videos})
+                  {'course': course,
+                   'forums': forums,
+                   'course_videos': course_videos,
+                   'user_videos': user_videos})
 
 
 @login_required
@@ -196,6 +212,26 @@ def upload_video(request, pk):
         'course': course,
         'forums': forums
     })
+
+
+@login_required
+def delete_video(request, pk, video_pk):
+    course = get_object_or_404(Course, pk=pk)
+    video = get_object_or_404(VideoFile, pk=video_pk)
+    user = get_object_or_404(User, pk=request.user.pk)
+
+    if video.author == user:
+        if request.method == 'POST':
+            if 'confirm' in request.POST:
+                video.delete()
+                return redirect('list_videos', pk=course.pk)
+        else:
+            return render(request, 'delete_video_confirmation.html', {
+                'course': course,
+                'video': video
+            })
+    else:
+        return render(request, 'permission_error.html')
 
 
 @login_required

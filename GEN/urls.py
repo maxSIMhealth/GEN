@@ -53,6 +53,9 @@ urlpatterns = [
     path('courses/<int:pk>/videos/', views.list_videos, name='list_videos'),
     path('courses/<int:pk>/videos/upload',
          views.upload_video, name='upload_video'),
+
+    path('courses/<int:pk>/videos/<int:video_pk>/delete',
+         views.delete_video, name='delete_video'),
     # FIXME: video_comment is functional but needs some adjustments and also
     # have to decided if it will continue to exist or not
     # path('courses/<int:pk>/videos/<int:video_pk>/comments',

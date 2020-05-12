@@ -36,46 +36,127 @@
 {% endblock content_tabs %}
 
 {% block content %}
+  
   <div class="mb-3">
     {% if user|is_instructor:course %}
-    <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new video</a>
+    <a href="{% url 'upload_video' course.pk %}" class="btn btn-warning">Submit new course video</a>
+    {% else %}
+    <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new user video</a>
     {% endif %}
   </div>
 
-  <ul class="list-group">
-    {% for video in videos %}
-      <li class="list-group-item">
-        <div class="media">
-          <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="mr-3 thumbnail" alt="Video thumbnail"></a>
-          {% comment %}
-          <video controls poster="{{ video.thumbnail.url }}">
-            <source src="{{ video.file.url }}" type="video/mp4">
-            Sorry, your browser doesn't support embedded videos.
-          </video>  
-          {% endcomment %}
-          <div class="media-body">
-            <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
-            <small>{{ video.description }}</small>
+  {% if not user|is_instructor:course %}
+  <div class="card mb-3">
+    <h5 class="card-header bg-light">User Videos</h5>
+    <div class="card-body pb-0">
+      <h6 class="card-subtitle mb-2 text-muted">These videos are private, only accessible by you and by the course instructor(s).</h6>
+      <table class="table mb-0 user-videos">
+        <tbody>
+          {% for video in user_videos %}
+          <tr>
+            <th scope="row" class="th-small">
+              <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+              <div class="text-center mt-1">
+                <a href="{% url 'delete_video' course.pk video.pk %}" class="btn btn-danger">Delete</a>
+              </div>
+              {% comment %}
+              <video controls poster="{{ video.thumbnail.url }}">
+                <source src="{{ video.file.url }}" type="video/mp4">
+                Sorry, your browser doesn't support embedded videos.
+              </video>  
+              {% endcomment %}
+            </th>
+            <td>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <small>{{ video.description }}</small>
+            </td>
+          </tr>
+          {% empty %}
+          <div class="mb-3">
+            You haven't submitted any video.
           </div>
-          
-          {% comment %}  
-          <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
-            <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}"> 
-              <div style='text-align:center;'><i class="far fa-comment"></i></div>  
-                Discuss
-            </a>
-            <button class='btn btn-success' disabled> 
-              <div style='text-align:center;'><i class="far fa-check-circle"></i></div>  
-                Take quiz
-            </button>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="card mb-3">
+    <h5 class="card-header bg-light">Course Videos</h5>
+    <div class="card-body pb-0">
+      <h6 class="card-subtitle mb-2 text-muted">These are the course videos published by the instructor(s).</h6>
+      <table class="table mb-0 course-videos">
+        <tbody>
+          {% for video in course_videos %}
+          <tr>
+            <th scope="row" class="th-small">
+              <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+              {% comment %}
+              <video controls poster="{{ video.thumbnail.url }}">
+                <source src="{{ video.file.url }}" type="video/mp4">
+                Sorry, your browser doesn't support embedded videos.
+              </video>  
+              {% endcomment %}
+            </th>
+            <td>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <small>{{ video.description }}</small>
+              {% comment %}  
+              <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
+                <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}"> 
+                  <div style='text-align:center;'><i class="far fa-comment"></i></div>  
+                    Discuss
+                </a>
+                <button class='btn btn-success' disabled> 
+                  <div style='text-align:center;'><i class="far fa-check-circle"></i></div>  
+                    Take quiz
+                </button>
+              </div>
+              {% endcomment %}
+            </td>
+          </tr>
+          {% empty %}
+          <div class="mb-3">
+            Nothing to show.
           </div>
-          {% endcomment %}
-        </div>
-      </li>
-    {% empty %}
-      Nothing to show.
-    {% endfor %}
-</ul>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if user|is_instructor:course %}
+  <div class="card mb-3">
+    <h5 class="card-header bg-light">Participants' Videos</h5>
+    <div class="card-body pb-0">
+      <h6 class="card-subtitle mb-2 text-muted">These are the videos that have been submitted by the participants.</h6>
+      <table class="table mb-0 user-videos">
+        <tbody>
+          {% for video in user_videos %}
+          <tr>
+            <th scope="row" class="th-small">
+              <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+            </th>
+            <td>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <div class="video-user-info">
+                <em>By:</em> {{video.author.first_name}} {{video.author.last_name}} ({{video.author}}) <br />
+                <em>Submission date:</em> {{video.uploaded_at}}
+              </div>
+              <small>{{ video.description }}</small>
+            </td>
+          </tr>
+          {% empty %}
+          <div class="mb-3">
+            No participant has submitted a video yet.
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
 
   {% comment %}
   <ul class="list-group">

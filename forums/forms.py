@@ -115,7 +115,7 @@ class UploadVideoForm(forms.ModelForm):
             ),
             FormActions(
                 Submit('submit', 'Submit', css_class='btn btn-primary'),
-                Submit('submit', 'Cancel', css_class='btn btn-danger',
+                Submit('submit', 'Cancel', css_class='btn btn-secondary',
                        formnovalidate='formnovalidate')
             )
         )
