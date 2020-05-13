@@ -100,7 +100,7 @@ def quiz_page(request, pk, quiz_pk):
                     quiz=quiz,
                     course=course,
                     question=question,
-                    answer=student_answer,
+                    answer_content=student_answer,
                     attempt_number=current_attempt_number
                 )
 
@@ -140,10 +140,10 @@ def quiz_page(request, pk, quiz_pk):
 
                 # check if the submitted answer is valid (integer)
                 try:
-                    attempt.scale_answer = student_answer
+                    attempt.answer_content = student_answer
                     attempt.save()
                 except ValueError:
-                    attempt.scale_answer = None
+                    attempt.answer_content = None
 
                 # save attempt data
                 attempt.save()

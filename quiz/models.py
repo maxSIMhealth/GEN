@@ -156,7 +156,7 @@ class LikertAttempt(QuestionAttempt):
     """
 
     question = models.ForeignKey(Likert, on_delete=models.PROTECT)
-    scale_answer = models.PositiveIntegerField(blank=True, null=True)
+    answer_content = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return "%s - %s - Course %s (attempt %s): %s" % \
@@ -190,7 +190,7 @@ class OpenEndedAttempt(QuestionAttempt):
     """
 
     question = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
-    answer = models.TextField(('answer'), null=True, blank=True)
+    answer_content = models.TextField(('answer'), null=True, blank=True)
 
     def __str__(self):
         return "%s - %s - Course %s (attempt %s): %s" % \
