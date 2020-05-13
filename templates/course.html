@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  {% if gamification == True %}
+  {% if course.show_scoreboard %}
     <div class="card-deck">
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
@@ -83,7 +83,9 @@
           </table>
         </div>
       </div>
-
+    {% endif %}
+    
+    {% if course.show_leaderboard %}
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
         <div class="card-body pb-0">
@@ -105,7 +107,9 @@
           </table>
         </div>
       </div>
+    {% endif %}
 
+    {% if course.show_progress_tracker %}
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</h5>
         <div class="card-body pb-0">

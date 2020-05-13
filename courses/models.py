@@ -12,6 +12,10 @@ class Course(models.Model):
     end_date = models.DateTimeField('end date', blank=True, null=True)
     students = models.ManyToManyField(User, related_name='member')
     instructors = models.ManyToManyField(User, related_name='instructor')
+    enable_gamification = models.BooleanField(default=True)
+    show_scoreboard = models.BooleanField(default=True)
+    show_leaderboard = models.BooleanField(default=True)
+    show_progress_tracker = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

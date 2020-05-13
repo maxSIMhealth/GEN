@@ -19,10 +19,7 @@ from .models import Forum, Comment, VideoFile
 def course_forums(request, pk):
     course = get_object_or_404(Course, pk=pk)
     forums = course.forums.all()
-    gamification = False
-
-    if settings.GAMIFICATION:
-        gamification = True
+    gamification = course.enable_gamification
 
     return render(request, 'course_forums.html',
                   {'course': course, 'forums': forums, 'gamification': gamification})
@@ -101,10 +98,7 @@ def forum_comments(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
     forum = get_object_or_404(Forum, pk=forum_pk)
     video = forum.video
-    gamification = False
-
-    if settings.GAMIFICATION:
-        gamification = True
+    gamification = course.enable_gamification
 
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
@@ -245,10 +239,7 @@ def video_comments(request, pk, video_pk):
     forums = course.forums.all()
     video = get_object_or_404(VideoFile, pk=video_pk)
     forum = forums.filter(name=video.title)[0]
-    gamification = False
-
-    if settings.GAMIFICATION:
-        gamification = True
+    gamification = course.enable_gamification
 
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
