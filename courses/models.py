@@ -30,6 +30,10 @@ class Course(models.Model):
         return self.name
 
     def clean(self):
+        # check course dates
+        if self.end_date <= self.start_date:
+            raise ValidationError(
+                _('Course end date can not be equal or earlier than the start date.'))
         # check gamification components
         if self.show_scoreboard and not self.enable_gamification:
             raise ValidationError(
