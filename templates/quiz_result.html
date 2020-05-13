@@ -109,7 +109,7 @@
               <div class="item">
                 <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
                 {% for attempt in attempt_likert %}
-                   {% if attempt.question_id == question.id and attempt.scale_answer == value %}
+                   {% if attempt.question_id == question.id and attempt.answer_content == value %}
                    checked
                    {% endif %}
                 {% endfor %}

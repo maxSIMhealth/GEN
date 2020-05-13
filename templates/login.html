@@ -21,7 +21,7 @@
     <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>  
     {% endcomment %}
   </div>
-  <div class="text-center py-2">
+  <div class="text-center bg-dark text-white py-2">
     <small>
       <a href="#" class="text-light">Forgot your password?</a>
     </small>
@@ -31,8 +31,11 @@
 {% block footer %}
 <div class="footer mb-2">
   <div class="text-center text-light">
-    <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
-    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+    <div class="text-center">
+      <a href="http://www.ontariotechu.ca"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="Ontario Tech University colour logo in a white background" width="200px"></a>
+      <p class="mb-0">Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+      <p>GEN - Gamified Educational Network (2020)</p>
+    </div>
   </div>
 </div>
 {% endblock footer %}

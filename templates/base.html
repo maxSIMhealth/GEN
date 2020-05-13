@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}GEN Forums{% endblock %}</title>
+    <title>{% block title %}GEN{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -18,7 +18,9 @@
     {% block body %}
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}">GEN</a>
+          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}">
+            <img src="{% static 'img/GEN-logo-alt-dark.png' %}" height="45" class="d-inline-block align-top" alt="GEN logo">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -56,8 +58,9 @@
     {% block footer %}
     <div class="footer mb-2">
       <div class="text-center text-muted">
-        <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
-        <p>Developed at <a href="http://www.ontariotechu.ca">Ontario Tech University</a></p>
+        <a href="http://www.ontariotechu.ca"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="Ontario Tech University colour logo in a white background" width="200px"></a>
+        <p class="mb-0">Developed at <a href="http://www.ontariotechu.ca"><u>Ontario Tech University</u></a></p>
+        <p>GEN - Gamified Educational Network (2020)</p>
       </div>
     </div>
     {% endblock footer %}
