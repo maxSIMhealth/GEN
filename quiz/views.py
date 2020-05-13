@@ -297,6 +297,15 @@ def user_attempt(request):
     return response
 
 
+@login_required
+def list_quiz(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    quizzes = course.quizzes.all().filter(published=True)
+
+    return render(request, 'list_quiz.html',
+                  {'course': course, 'quizzes': quizzes})
+
+
 def create_attempt_sheet(workbook, user):
     """
     Create an excel sheet for Participant attempt

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'forums',
     'dashboard',
     'quiz',
+    'videos',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
