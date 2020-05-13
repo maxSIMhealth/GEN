@@ -58,12 +58,15 @@
       <h5 class="card-header bg-dark">Result</h5>
       <div class="card-body">
         Thank you for your submission for <em>{{quiz.name}}</em>.<br />
-        Your score is {{score}}.
+        
+        {% if quiz.show_score %}
+          Your score is {{score}}.
+        {% endif %}
       </div>
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Feedback</h5>
+      <h5 class="card-header bg-light">Your submission</h5>
       <div class="card-body">
         {% for question in quiz.questions.all %}
 
@@ -79,59 +82,76 @@
           {% endif %}
 
           {% if question|check_attribute:'mcquestion' %}
-          {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}  
-          <ul class="list-group mb-3">
-          {% for choice in question.mcquestion.get_answers %}
-            {% if choice.correct %}
-            <li class="list-group-item list-group-item-success">
-            {% else %}
-            <li class="list-group-item">
-            {% endif %}
-            <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
-                {% for user_answer in mcquestion_user_answers %}
-                    {% if choice.id == user_answer %}
-                    checked
-                    {% endif %}
+            {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}  
+            <ul class="list-group mb-3">
+              {% if quiz.show_correct_answers %}
+                {% for choice in question.mcquestion.get_answers %}
+                  {% if choice.correct %}
+                    <li class="list-group-item list-group-item-success">
+                  {% else %}
+                    <li class="list-group-item">
+                  {% endif %}
+                    <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                      <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                      {% for user_answer in mcquestion_user_answers %}
+                          {% if choice.id == user_answer %}
+                          checked
+                          {% endif %}
+                      {% endfor %}
+                      >
+                      {{choice.content}}
+                      </label>  
+                    </li>
                 {% endfor %}
-                >
-                {{choice.content}}
-              </label>  
-            </li>
-          {% endfor %}
-          </ul>
+              {% else %}
+                {% for choice in question.mcquestion.get_answers %}
+                  <li class="list-group-item">
+                  <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                    <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                    {% for user_answer in mcquestion_user_answers %}
+                        {% if choice.id == user_answer %}
+                        checked
+                        {% endif %}
+                    {% endfor %}
+                    >
+                    {{choice.content}}
+                    </label>  
+                  </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
 
           {% elif question|check_attribute:'likert' %}
-          <div class="card ml-0 mr-0 mb-4">
-            {% for answer in question.likert.get_answers %}
-            <div class="card-body likert">
-              {% for value in answer.scale_min|likert_range:answer.scale_max %}
-              <div class="item">
-                <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
-                {% for attempt in attempt_likert %}
-                   {% if attempt.question_id == question.id and attempt.answer_content == value %}
-                   checked
-                   {% endif %}
-                {% endfor %}
-                >
-                <label for="likert_{{question.id}}">{{value}}</label>
-              </div>
+            <div class="card ml-0 mr-0 mb-4">
+              {% for answer in question.likert.get_answers %}
+                <div class="card-body likert">
+                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                    <div class="item">
+                      <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
+                      {% for attempt in attempt_likert %}
+                        {% if attempt.question_id == question.id and attempt.answer_content == value %}
+                        checked
+                        {% endif %}
+                      {% endfor %}
+                      >
+                      <label for="likert_{{question.id}}">{{value}}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+                
+                {% if answer.legend %}
+                  <div class="likert-legend card-footer text-muted">
+                    <em>Scale legend:</em>
+                    {{answer.legend|linebreaks}}
+                  </div>  
+                {% endif %}
               {% endfor %}
             </div>
-              
-            {% if answer.legend %}
-            <div class="likert-legend card-footer text-muted">
-              <em>Scale legend:</em>
-              {{answer.legend|linebreaks}}
-            </div>  
-            {% endif %}
-          {% endfor %}
-          </div>
 
           {% elif question|check_attribute:'openended' %}
-          <div class="mb-3">
-            <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer}}{% endif %}{% endfor %}</textarea>
-          </div>
+            <div class="mb-3">
+              <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer}}{% endif %}{% endfor %}</textarea>
+            </div>
           {% endif %}
           
           {% if question.explanation %}

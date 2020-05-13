@@ -43,6 +43,8 @@ class Quiz(TimeStampedModel):
         null=False
     )
     published = models.BooleanField(default=False)
+    show_score = models.BooleanField(default=False)
+    show_correct_answers = models.BooleanField(default=False)
     custom_order = models.PositiveIntegerField(
         default=0,
         blank=False,
