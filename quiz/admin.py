@@ -22,7 +22,8 @@ from .models import (
 
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
-# https://stackoverflow.com/questions/34355406/django-admin-not-saving-pre-populated-inline-fields-which-are-left-in-their-init
+# https://stackoverflow.com/questions/34355406/django-admin-not-saving-\
+# pre-populated-inline-fields-which-are-left-in-their-init
 
 
 class AlwaysChangedModelForm(ModelForm):
@@ -51,7 +52,8 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
 
     # Tip: admin.TabularInline can be switched with admin.StackedInline
     # Documentation at
-    # https://django-admin-sortable2.readthedocs.io/en/latest/usage.html#make-a-stacked-or-tabular-inline-view-sortable
+    # https://django-admin-sortable2.readthedocs.io/en/latest/usage.html\
+    # make-a-stacked-or-tabular-inline-view-sortable
     model = Question
     # include = ['quiz', 'content']
     exclude = [

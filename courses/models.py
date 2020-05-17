@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from model_utils.managers import InheritanceManager
+from model_utils.models import TimeStampedModel
 
 
 class Course(models.Model):
@@ -50,3 +52,60 @@ class Course(models.Model):
             raise ValidationError(_("Scoreboard requires gamification to be enabled"))
         if self.show_leaderboard and not self.enable_gamification:
             raise ValidationError(_("Leaderboard requires gamification to be enabled"))
+
+
+class Section(models.Model):
+    SECTION_TYPES = [
+        ("D", "Discussion boards"),
+        ("V", "Videos"),
+        ("Q", "Quizzes"),
+        ("U", "Uploads"),
+    ]
+
+    name = models.CharField(
+        max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name="sections"
+    )
+    section_type = models.CharField(max_length=1, choices=SECTION_TYPES)
+    requirement = models.ForeignKey(
+        "self", on_delete=models.PROTECT, blank=True, null=True, related_name="sections"
+    )
+    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "sections"
+        ordering = ["custom_order"]
+
+
+class SectionItem(TimeStampedModel):
+    name = models.CharField(max_length=30, unique=False)
+    related_name = "section_items"
+    description = models.CharField(max_length=200)
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name=related_name
+    )
+    start_date = models.DateTimeField("start date", blank=True, null=True)
+    end_date = models.DateTimeField("end date", blank=True, null=True)
+    section = models.ForeignKey(
+        Section,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name=related_name,
+    )
+    published = models.BooleanField(default=False)
+    show_score = models.BooleanField(default=False)
+    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    objects = InheritanceManager()
+
+    class Meta:
+        ordering = ["custom_order"]
+
+    def __str__(self):
+        return self.name

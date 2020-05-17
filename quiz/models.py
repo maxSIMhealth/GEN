@@ -4,20 +4,16 @@ from django.db import models
 from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 
-from forums.models import Course, VideoFile
+from courses.models import Course, SectionItem
+from forums.models import VideoFile
 
 
-class Quiz(TimeStampedModel):
+class Quiz(SectionItem):
     """
     Quiz model
     """
 
-    name = models.CharField(max_length=30, unique=False)
-    description = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="quizzes")
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="quizzes")
-    start_date = models.DateTimeField("start date", blank=True, null=True)
-    end_date = models.DateTimeField("end date", blank=True, null=True)
     video = models.ForeignKey(
         VideoFile,
         on_delete=models.PROTECT,
@@ -31,14 +27,10 @@ class Quiz(TimeStampedModel):
     attempts_max_number = models.PositiveIntegerField(
         default=1, blank=False, null=False
     )
-    published = models.BooleanField(default=False)
-    show_score = models.BooleanField(default=False)
     show_correct_answers = models.BooleanField(default=False)
-    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:
         verbose_name_plural = "quizzes"
-        ordering = ["custom_order"]
 
     def get_questions(self):
         return self.questions.all().select_subclasses()

@@ -1,6 +1,8 @@
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 
-from .models import Course
+# from quiz.models import Quiz
+from .models import Course, Section, SectionItem
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -11,4 +13,18 @@ class CourseAdmin(admin.ModelAdmin):
     save_as = True
 
 
+class SectionInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = SectionItem
+    extra = 0
+
+
+class SectionAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = (
+        "name",
+        "course",
+    )
+    inlines = (SectionInline,)
+
+
 admin.site.register(Course, CourseAdmin)
+admin.site.register(Section, SectionAdmin)

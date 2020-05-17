@@ -34,6 +34,17 @@
 {% endblock content_tabs %}
 
 {% block content %}
+  {% for section in course.sections.all %}
+    DEBUG: <br />
+    <strong> {{ section }} </strong> <br />
+    type: {{ section.section_type }} <br>
+    requirement: {{ section.requirement  }} <br />
+    <strong> Items </strong> <br />
+    {% for item in section.section_items.all %}
+    name: {{ item }} (id/pk: {{item.pk}}) <br />
+    {% endfor %}
+    <br />
+  {% endfor %}
   <div class="card mb-3">
     <h5 class="card-header bg-light">Course Info</h5>
     <div class="card-body pb-0">
@@ -84,7 +95,7 @@
         </div>
       </div>
     {% endif %}
-    
+
     {% if course.show_leaderboard %}
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>

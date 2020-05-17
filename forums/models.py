@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from vote.models import VoteModel
 
-from courses.models import Course
+from courses.models import Course, SectionItem
 from videos.models import VideoFile
 
 
@@ -31,11 +31,8 @@ class MediaFile(models.Model):
         return self.title
 
 
-class Forum(VoteModel, models.Model):
+class Forum(VoteModel, SectionItem):
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="forums")
-    name = models.CharField(max_length=100, unique=True)
-    description = models.CharField(max_length=400)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="forums")
     last_updated = models.DateTimeField(auto_now_add=True)
     # FIXME: media should be renamed to document or something like that
     # media = models.ForeignKey(
