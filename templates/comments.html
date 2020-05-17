@@ -4,7 +4,7 @@
 {% load humanize %}
 {% load gravatar %}
 {% load checkvotes %}
-{% load has_group %}
+{% comment %}{% load has_group %}{% endcomment %}
 {% load is_instructor %}
 
 {% block stylesheet %}
@@ -77,13 +77,13 @@
       {% comment %}
         {% if forum.media.kind == 'YTB' %}
           <div class="embed-responsive embed-responsive-16by9">
-            {% video forum.media.url '800x600' %} 
+            {% video forum.media.url '800x600' %}
           </div>
         {% else %}
           <object data="{{ forum.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
         {% endif %}
       {% endcomment %}
-      
+
     </div>
   </div>
 
@@ -93,7 +93,7 @@
       {% if user.is_authenticated %}
         <form method="post" novalidate>
           {% csrf_token %}
-          
+
           {% include 'includes/form.html' %}
 
           <button type="submit" class="btn btn-success">Post</button>
@@ -111,7 +111,8 @@
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
         {% checkvotes_comment user.id comment.pk as comment_vote_status %}
 
-        <li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author|has_group:'admin'|yesno:'list-group-item-danger,'}}">
+        {% comment %}<li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author|has_group:'admin'|yesno:'list-group-item-danger,'}}">{% endcomment %}
+        <li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author.is_staff|yesno:'list-group-item-danger,'}}">
           <div class="row">
             {% if gamification %}
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
@@ -126,17 +127,17 @@
                     <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
-                
+
                 {% comment %}
                 <div class="mt-1">{{ comment.vote_score }}</div>
                 {% endcomment %}
-                  
+
               </div>
             {% endif %}
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
               <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
-              {% if comment.author|has_group:'admin' %}
-              <div class="text-center"><strong>ADMIN</strong></div>  
+              {% if comment.author.is_staff %}
+              <div class="text-center"><strong>ADMIN</strong></div>
               {% endif %}
             </div>
             {% if gamification %}
