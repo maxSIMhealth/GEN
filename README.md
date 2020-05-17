@@ -113,5 +113,6 @@ sudo ufw allow https
 - Edit `.env` and set `DEBUG=False`y
 - Collect static files: `python manage.py collectstatic`
 
-### Start the server
-- Gunicorn: `gunicorn GEN.wsgi`
+### Start/stop the server
+- Start: `sudo systemctl start gunicorn`
+- Stop: `sudo systemctl stop gunicorn.socket gunicorn.service`
