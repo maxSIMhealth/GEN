@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "adminsortable2",
     "django_extensions",
+    "core",
     "accounts",
     "courses",
     "forums",
