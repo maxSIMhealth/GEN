@@ -30,7 +30,7 @@
 ### Set up GEN
 - Generate database: `python manage.py migrate`
 - Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
-- Install dependencies: `sudo apt install ffmpeg`
+- Install dependencies: `sudo apt install -y postgresql postgresql-contrib python-dev libpq-dev ffmpeg`
 - Run the project: `python manage.py runserver`
 
 ## Production
