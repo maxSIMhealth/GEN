@@ -1,0 +1,48 @@
+from django import forms
+#from django.core.validators import FileExtensionValidator
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Submit
+from crispy_forms.bootstrap import FormActions
+
+from .models import VideoFile
+
+
+class UploadVideoForm(forms.ModelForm):
+    description = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'rows': 4
+            }
+        ),
+        max_length=255,
+        help_text='The max length for a description is 255 characters.'
+    )
+    file = forms.FileField(
+        help_text='Please upload a video file (mp4 or mov)',
+        widget=forms.FileInput(
+            attrs={'accept': 'video/mp4'}
+        )
+    )
+
+    class Meta:
+        model = VideoFile
+        fields = ['title', 'description', 'file']
+
+    def __init__(self, *args, **kwargs):
+        super(UploadVideoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                'Upload a new video',
+                'title',
+                'description',
+                'file'
+            ),
+            FormActions(
+                Submit('submit', 'Submit', css_class='btn btn-primary'),
+                Submit('submit', 'Cancel', css_class='btn btn-secondary',
+                       formnovalidate='formnovalidate')
+            )
+        )
+        self.helper.form_method = 'POST'

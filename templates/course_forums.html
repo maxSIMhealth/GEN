@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load checkvotes %}
+{% load is_instructor %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -19,25 +20,28 @@
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="#">Forums</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link active" href="#">Forums</a>
+  </li>
+  {% comment %}
+  <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
+  {% endcomment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>
 {% endblock content_tabs %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    <div class="mb-4">
+    <div class="mb-3">
+      {% if user|is_instructor:course %}
       <a href="{% url 'new_forum' course.pk %}" class="btn btn-primary">New forum</a>
+      {% endif %}
     </div>
-  {% endif %}
+
 
   {% if forums %}
     <table class="table forum-list">
@@ -47,8 +51,7 @@
           <th class="th-small"></th>
           {% endif %}
           <th>Name</th>
-          <th>Comments</th>
-          <th>Author</th>
+          <th class="th-small text-center">Comments</th>
           <th>Last update</th>
         </tr>
       </thead>
@@ -75,7 +78,6 @@
                     <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
-                <div class="mt-1">{{ forum.vote_score }}</div>
               </td>
             {% endif %}
             <td>
@@ -87,8 +89,7 @@
                 </div>
               {% endif %} {% endcomment %}
             </td>
-            <td>{{ forum.get_comment_count }}</td>
-            <td>{{ forum.author }}</td>
+            <td class="text-center">{{ forum.get_comment_count }}</td>
             <td>{{ forum.last_updated|naturaltime }}</td>
           </tr>
         {% endfor %}

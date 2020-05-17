@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"debug.console.closeOnEnd": true,
+		"python.linting.pylintEnabled": true,
+		"python.linting.pylintArgs": [
+			"--load-plugins",
+			"pylint_django",
+			"--good-names",
+			"i,j,k,ex,Run,_,pk,x,y",
+			"--disable",
+			"no-else-return"
+		],
+		"python.pythonPath": "venv\\Scripts\\python.exe"
+	}
+}

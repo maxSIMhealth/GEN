@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load embed_video_tags %}
 {% load humanize %}
 {% load gravatar %}
 {% load checkvotes %}
+{% comment %}{% load has_group %}{% endcomment %}
+{% load is_instructor %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -24,7 +25,7 @@
 {% block content %}
 
   {% comment %}
-  {% if debug == True %}
+  {% if debug %}
   <div class="alert alert-warning" role="alert">
     *DEBUG* <br />
     user_id: {{ user.id }} <br />
@@ -51,26 +52,38 @@
                 <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
               </span>
             {% endif %}
-            <div><small class="mt-1">{{ forum.vote_score }}</small></div>
           </div>
           <div class="col col-10 col-sm-10 col-md-10 col-lg-11 p-1">
         {% else %}
           <div class="col col-12 col-sm-12 col-md-12 col-lg-11 p-1 pl-2">
         {% endif %}
           <div>{{ forum.name }}</div>
+          {% comment %}
           <small class="text-muted">By: {{ forum.author }}</small>
+          {% endcomment %}
         </div>
       </div>
     </h5>
     <div class="card-body bg-light text-dark p-3">
       <p class="card-text">{{ forum.description }}</p>
-      {% if forum.media.kind == 'YTB' %}
-        <div class="embed-responsive embed-responsive-16by9">
-          {% video forum.media.url '800x600' %} 
-        </div>
-      {% else %}
-        <object data="{{ forum.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
+      {% if forum.video %}
+      <div class="embed-responsive embed-responsive-16by9">
+        <video controls>
+          <source src="{{ video.file.url }}" type="video/mp4">
+          Sorry, your browse does not support embedded videos.
+        </video>
+      </div>
       {% endif %}
+      {% comment %}
+        {% if forum.media.kind == 'YTB' %}
+          <div class="embed-responsive embed-responsive-16by9">
+            {% video forum.media.url '800x600' %}
+          </div>
+        {% else %}
+          <object data="{{ forum.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
+        {% endif %}
+      {% endcomment %}
+
     </div>
   </div>
 
@@ -80,7 +93,7 @@
       {% if user.is_authenticated %}
         <form method="post" novalidate>
           {% csrf_token %}
-          
+
           {% include 'includes/form.html' %}
 
           <button type="submit" class="btn btn-success">Post</button>
@@ -98,7 +111,8 @@
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
         {% checkvotes_comment user.id comment.pk as comment_vote_status %}
 
-        <li class="list-group-item">
+        {% comment %}<li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author|has_group:'admin'|yesno:'list-group-item-danger,'}}">{% endcomment %}
+        <li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author.is_staff|yesno:'list-group-item-danger,'}}">
           <div class="row">
             {% if gamification %}
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
@@ -113,27 +127,34 @@
                     <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
+
+                {% comment %}
                 <div class="mt-1">{{ comment.vote_score }}</div>
+                {% endcomment %}
+
               </div>
             {% endif %}
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
-              <img src="{{ comment.author|gravatar }}" alt="{{ comment.author.username }}" class="w-100">
+              <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
+              {% if comment.author.is_staff %}
+              <div class="text-center"><strong>ADMIN</strong></div>
+              {% endif %}
             </div>
             {% if gamification %}
               <div class="col col-9 col-sm-9 col-md-10 col-lg-10">
             {% else %}
               <div class="col col-10 col-sm-10 col-md-10 col-lg-10">
             {% endif %}
-              <div class="row mb-3">
+              <div class="row mb-0">
                 <div class="col-6">
-                  <strong class="text-muted">{{ comment.author.username }}</strong><br />
-                  <small class="text-muted">Comments: {{ comment.author.comments.count }}</small><br />
-                </div>
-                <div class="col-6 text-right">
+                  {% comment %}
+                  {% if debug %}
+                  DEBUG: <br />
+                  author: {{comment.author}}<br />
+                  is a course instructor? {{comment.author|is_instructor:course}}<br />
+                  {% endif %}
+                  {% endcomment %}
                   <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
-                  <!-- {% if debug %}
-                  <br><small class="text-muted">PK: {{ comment.pk }}</small>
-                  {% endif %} -->
                 </div>
               </div>
               {{ comment.message }}

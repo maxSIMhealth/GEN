@@ -79,6 +79,7 @@ coverage.xml
 *.log
 local_settings.py
 db.sqlite3
+*.settings.py.swp
 
 # Flask stuff:
 instance/
@@ -110,6 +111,7 @@ celerybeat-schedule
 .venv
 env/
 venv/
+venv-django3/
 ENV/
 env.bak/
 venv.bak/
@@ -126,3 +128,31 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# user uploaded file
+media/
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+
+# Auto-generated tag files
+tags
+
+# Persistent undo
+[._]*.un~
+
+# Coc configuration directory
+.vim

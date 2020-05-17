@@ -1,0 +1,22 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+
+{% block title %}GEN - Permission error{% endblock title %}
+
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    <h3 class="card-title">Permission error</h3>
+    <p class="card-text">You don't have permission to do this.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Return to dashboard</a>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+<div class="footer mb-2">
+  <div class="text-center text-light">
+    <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+  </div>
+</div>
+{% endblock footer %}

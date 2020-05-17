@@ -1,0 +1,33 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+
+{% block title %}GEN - Delete video confirmation{% endblock title %}
+
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    <h3 class="card-title">Confirmation</h3>
+    <p class="card-text">Are you sure that you want to delete the following video?</p>
+    <div class="media border mb-2 pb-2">
+      <img src="{{ video.thumbnail.url }}" class="mr-3" alt="Video thumbnail">
+      <div class="media-body">
+        <h5 class="mt-2">{{video}}</h5>
+        {{video.description}}
+      </div>
+    </div>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <button type="submit" name="confirm" value="confirm" class="btn btn-danger">Yes, delete video</button>
+        <a href="{% url 'list_videos' course.pk %}" class="btn btn-secondary">No, cancel</a>
+      </form>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+<div class="footer mb-2">
+  <div class="text-center text-light">
+    <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a></p>
+  </div>
+</div>
+{% endblock footer %}

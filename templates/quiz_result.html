@@ -1,7 +1,14 @@
 {% extends 'base_course.html' %}
 
+{% load static %}
 {% load humanize %}
-{% load embed_video_tags %}
+{% load check_attribute %}
+{% load quiz_mcquestion_check %}
+{% load likert_range %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -21,9 +28,11 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
+  {% comment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
+  {% endcomment %}
   <li class="nav-item">
     <a class="nav-link active" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>
@@ -48,32 +57,104 @@
     <div class="card bg-secondary text-white">
       <h5 class="card-header bg-dark">Result</h5>
       <div class="card-body">
-        Your score is {{score}}.
+        Thank you for your submission for <em>{{quiz.name}}</em>.<br />
+        
+        {% if quiz.show_score %}
+          Your score is {{score}}.
+        {% endif %}
       </div>
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Quiz - Correct Answers</h5>
+      <h5 class="card-header bg-light">Your submission</h5>
       <div class="card-body">
-        {% comment %} {% include includes/form.html %} {% endcomment %}
         {% for question in quiz.questions.all %}
-          <h6 class="card-title">
-            <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
-          </h6> 
 
-          <ul class="list-group mb-2">
-            {% comment %} {{choice.pk}} - 
-            {{choice.content}} - 
-            {{choice.correct}} {% endcomment %}
-            {% for choice in question.mcquestion.get_answers %}
-              {% if choice.correct %}
-                <li class="list-group-item list-group-item-primary">{{choice.content}}</li>
+          {% if question|check_attribute:'questiongroupheader' %}
+          <h5 class="card-title">
+            <strong>{{question.content}}</strong>
+            <hr />
+          </h5> 
+          {% else %}
+          <h6 class="card-title">
+            <strong>{{question.content}}</strong>
+          </h6>
+          {% endif %}
+
+          {% if question|check_attribute:'mcquestion' %}
+            {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}  
+            <ul class="list-group mb-3">
+              {% if quiz.show_correct_answers %}
+                {% for choice in question.mcquestion.get_answers %}
+                  {% if choice.correct %}
+                    <li class="list-group-item list-group-item-success">
+                  {% else %}
+                    <li class="list-group-item">
+                  {% endif %}
+                    <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                      <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                      {% for user_answer in mcquestion_user_answers %}
+                          {% if choice.id == user_answer %}
+                          checked
+                          {% endif %}
+                      {% endfor %}
+                      >
+                      {{choice.content}}
+                      </label>  
+                    </li>
+                {% endfor %}
               {% else %}
-                <li class="list-group-item">{{choice.content}}</li>
+                {% for choice in question.mcquestion.get_answers %}
+                  <li class="list-group-item">
+                  <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                    <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                    {% for user_answer in mcquestion_user_answers %}
+                        {% if choice.id == user_answer %}
+                        checked
+                        {% endif %}
+                    {% endfor %}
+                    >
+                    {{choice.content}}
+                    </label>  
+                  </li>
+                {% endfor %}
               {% endif %}
-            {% endfor %}
-          </ul>
-          <span></span>
+            </ul>
+
+          {% elif question|check_attribute:'likert' %}
+            <div class="card ml-0 mr-0 mb-4">
+              {% for answer in question.likert.get_answers %}
+                <div class="card-body likert">
+                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                    <div class="item">
+                      <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
+                      {% for attempt in attempt_likert %}
+                        {% if attempt.question_id == question.id and attempt.answer_content == value %}
+                        checked
+                        {% endif %}
+                      {% endfor %}
+                      >
+                      <label for="likert_{{question.id}}">{{value}}</label>
+                    </div>
+                  {% endfor %}
+                </div>
+                
+                {% if answer.legend %}
+                  <div class="likert-legend card-footer text-muted">
+                    <em>Scale legend:</em>
+                    {{answer.legend|linebreaks}}
+                  </div>  
+                {% endif %}
+              {% endfor %}
+            </div>
+
+          {% elif question|check_attribute:'openended' %}
+            <div class="mb-3">
+              <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer}}{% endif %}{% endfor %}</textarea>
+            </div>
+          {% endif %}
+          
+          {% if question.explanation %}
           <div class="card bg-light mr-0 ml-0 mb-4">
             <div class="card-body">
               <h6 class="card-subtitle bg-light">
@@ -81,8 +162,8 @@
               </h6>
             </div>
           </div>
-          {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
-          {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
+          {% endif %}
+
         {% endfor %}
         <a href="{% url 'list_quiz' course.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
       </div>

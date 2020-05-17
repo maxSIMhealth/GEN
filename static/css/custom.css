@@ -10,13 +10,89 @@
     height: 400px;
 }
 
-/* quiz list, course home (info) */
+/* quiz list, course home (info), course video list */
 .quiz-list .th-small,
-.course-info .th-small {
+.course-info .th-small,
+.user-videos .th-small,
+.course-videos .th-small {
     width: 12%;
+}
+
+/* text */
+.highlight {
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid rgba(86,61,124,.15);
+}
+
+/* quiz with video */
+.video+.quiz .card-body {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.video+.quiz .card-body form {
+    margin-bottom: 20px;
 }
 
 /* forum list */
 .forum-list .th-small {
     width: 5%;
+}
+
+/* quiz: likert scale */
+.likert {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 10px;
+}
+
+.likert label {
+    margin: 0;
+}
+
+.likert .item:first-child:before {
+    left: 50%;
+    width: 50%;
+}
+
+.likert .item:last-child:before {
+    right: 50%;
+    width: 50%;
+}
+
+.likert .item:before {
+    left: 0%;
+    width: 100%;
+    content: "";
+    position: relative;
+    top: 9px;
+    display: block;
+    background-color: #efefef;
+    height: 4px;
+}
+
+.likert .item {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.likert .item input[type="radio"] {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 50%;
+    margin-left: -6px;
+}
+
+.likert-legend {
+    font-size: 0.9rem;
+}
+
+.likert-legend p {
+    margin: 0;
 }

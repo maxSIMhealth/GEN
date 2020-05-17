@@ -2,14 +2,11 @@
 
 {% load static %}
 {% load humanize %}
-{% load gravatar %}
 {% load countscore %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
-
-{% block title %}GEN - {{ course.code }} - {{course.name}} {% endblock title %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
@@ -21,14 +18,16 @@
     <a class="nav-link active" href="#">Info</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
-  <li class="nav-item">
     <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
+  </li>
+  {% comment %}
+  <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
   </li>
+  {% endcomment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
   </li>
@@ -36,7 +35,7 @@
 
 {% block content %}
   <div class="card mb-3">
-    <h5 class="card-header bg-light">{{ course.name }}</h5>
+    <h5 class="card-header bg-light">Course Info</h5>
     <div class="card-body pb-0">
       <table class="table table-hover course-info">
         <tbody>
@@ -61,7 +60,7 @@
     </div>
   </div>
 
-  {% if gamification == True %}
+  {% if course.show_scoreboard %}
     <div class="card-deck">
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
@@ -84,7 +83,9 @@
           </table>
         </div>
       </div>
-
+    {% endif %}
+    
+    {% if course.show_leaderboard %}
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
         <div class="card-body pb-0">
@@ -92,21 +93,23 @@
             <tbody>
               <tr>
                 <td>Forum likes</td>
-                <td>#{% rank user.id course.pk "forum" %}</td>
+                <td>#{% rank_get user.id course.pk "forum" %}</td>
               </tr>
               <tr>
                 <td>Comments</td>
-                <td>#{% rank user.id course.pk "comment" %}</td>
+                <td>#{% rank_get user.id course.pk "comment" %}</td>
               </tr>
               <tr>
                 <td>Quiz</td>
-                <td>#{% rank user.id course.pk "quiz" %}</td>
+                <td>#{% rank_get user.id course.pk "quiz" %}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+    {% endif %}
 
+    {% if course.show_progress_tracker %}
       <div class="card">
         <h5 class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</h5>
         <div class="card-body pb-0">

@@ -1,4 +1,9 @@
 from django import forms
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Submit
+from crispy_forms.bootstrap import FormActions
+
 from .models import MediaFile, Forum, Comment
 
 
@@ -21,8 +26,27 @@ class NewForumForm(forms.ModelForm):
 
     class Meta:
         model = Forum
-        # fields = ['name', 'description']
-        exclude = ['course', 'author', 'vote_score', 'num_vote_up', 'num_vote_down', 'media']
+        fields = ['name', 'description', 'video']
+        # exclude = ['course', 'vote_score',
+        #    'num_vote_up', 'num_vote_down']
+
+    def __init__(self, *args, **kwargs):
+        super(NewForumForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                'Create new forum',
+                'name',
+                'description',
+                'video'
+            ),
+            FormActions(
+                Submit('submit', 'Submit', css_class='btn btn-primary'),
+                Submit('submit', 'Cancel', css_class='btn btn-danger',
+                       formnovalidate='formnovalidate')
+            )
+        )
+        self.helper.form_method = 'POST'
 
 
 class NewMediaForm(forms.ModelForm):
@@ -51,7 +75,7 @@ class NewCommentForm(forms.ModelForm):
             }
         ),
         max_length=400,
-        help_text='The max length for a comment is 400.'
+        help_text='The max length for a comment is 400 characters.'
     )
 
     class Meta:
