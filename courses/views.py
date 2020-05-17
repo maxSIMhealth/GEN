@@ -1,7 +1,6 @@
-from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render
 
-from GEN import settings
 from .models import Course
 from .progress import progress
 
@@ -16,7 +15,12 @@ def course(request, pk):
     forums_progress = progress(request, forums)
     quizzes_progress = progress(request, quizzes)
 
-    return render(request, 'course.html',
-                  {'course': course_object,
-                   'forums_progress': forums_progress,
-                   'quizzes_progress': quizzes_progress})
+    return render(
+        request,
+        "course.html",
+        {
+            "course": course_object,
+            "forums_progress": forums_progress,
+            "quizzes_progress": quizzes_progress,
+        },
+    )

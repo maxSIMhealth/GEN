@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from courses.models import Course, User
 from .forms import UploadVideoForm
@@ -34,12 +34,17 @@ def list_videos(request, pk):
     #     if forum.media.kind == 'YTB':
     #         media_list.append(forum)
 
-    return render(request, 'list_videos.html',
-                  {'course': course,
-                   'forums': forums,
-                   'course_videos': course_videos,
-                   'user_videos': user_videos,
-                   'participants_videos': participants_videos})
+    return render(
+        request,
+        "list_videos.html",
+        {
+            "course": course,
+            "forums": forums,
+            "course_videos": course_videos,
+            "user_videos": user_videos,
+            "participants_videos": participants_videos,
+        },
+    )
 
 
 @login_required
@@ -48,18 +53,18 @@ def upload_video(request, pk):
     # FIXME: the forums object will probably have to be removed later on
     forums = course.forums.all()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UploadVideoForm(request.POST, request.FILES)
 
-        if 'Cancel' in request.POST['submit']:
-            return redirect('list_videos', pk=course.pk)
-        if 'submit' in request.POST and form.is_valid():
+        if "Cancel" in request.POST["submit"]:
+            return redirect("list_videos", pk=course.pk)
+        if "submit" in request.POST and form.is_valid():
             video = VideoFile.objects.create(
-                title=form.cleaned_data.get('title'),
-                description=form.cleaned_data.get('description'),
+                title=form.cleaned_data.get("title"),
+                description=form.cleaned_data.get("description"),
                 author=request.user,
                 course=course,
-                file=form.files.get('file')
+                file=form.files.get("file"),
             )
             # TODO: this forum code is functional but will not be used for now
             # forum = Forum.objects.create(
@@ -72,15 +77,13 @@ def upload_video(request, pk):
             video.save()
             video.generate_video_thumbnail()
             # forum.save()
-            return redirect('list_videos', pk=course.pk)
+            return redirect("list_videos", pk=course.pk)
     else:
         form = UploadVideoForm()
 
-    return render(request, 'upload_video.html', {
-        'form': form,
-        'course': course,
-        'forums': forums
-    })
+    return render(
+        request, "upload_video.html", {"form": form, "course": course, "forums": forums}
+    )
 
 
 @login_required
@@ -90,17 +93,18 @@ def delete_video(request, pk, video_pk):
     user = get_object_or_404(User, pk=request.user.pk)
 
     if video.author == user:
-        if request.method == 'POST':
-            if 'confirm' in request.POST:
+        if request.method == "POST":
+            if "confirm" in request.POST:
                 video.delete()
-                return redirect('list_videos', pk=course.pk)
+                return redirect("list_videos", pk=course.pk)
         else:
-            return render(request, 'delete_video_confirmation.html', {
-                'course': course,
-                'video': video
-            })
+            return render(
+                request,
+                "delete_video_confirmation.html",
+                {"course": course, "video": video},
+            )
     else:
-        return render(request, 'permission_error.html')
+        return render(request, "permission_error.html")
 
 
 @login_required
@@ -108,9 +112,7 @@ def video_player(request, pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     video = get_object_or_404(VideoFile, pk=video_pk)
 
-    return render(request, 'video_player.html',
-                  {'course': course,
-                   'video': video})
+    return render(request, "video_player.html", {"course": course, "video": video})
 
 
 # @login_required

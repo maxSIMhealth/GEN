@@ -1,15 +1,16 @@
 from django.contrib import admin
 
-from .models import Forum, Comment
-#from .models import MediaFile
+from .models import Comment, Forum
+
+# from .models import MediaFile
 
 
 class CommentsAdmin(admin.ModelAdmin):
     # fields = ('author', 'message')
     # filter_horizontal = ('author', )
-    list_display = ('author', 'message', 'forum')
-    list_display_links = ('message', )
-    list_filter = ('author', 'forum')
+    list_display = ("author", "message", "forum")
+    list_display_links = ("message",)
+    list_filter = ("author", "forum")
 
 
 # admin.site.register(MediaFile)

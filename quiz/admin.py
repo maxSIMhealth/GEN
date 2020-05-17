@@ -1,16 +1,29 @@
-from django.contrib import admin
-from django import forms
-from django.forms import ModelForm
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+from django.contrib import admin
+from django.forms import ModelForm
 
-from .models import Quiz, Question, MCQuestion, MCAnswer, MCQuestionAttempt, \
-    QuizScore, Likert, LikertAnswer, LikertAttempt, OpenEnded, OpenEndedAttempt, \
-    QuestionGroupHeader, QuestionAttempt
+# from django.contrib.admin.widgets import FilteredSelectMultiple
+
+from .models import (
+    Likert,
+    LikertAnswer,
+    LikertAttempt,
+    MCAnswer,
+    MCQuestion,
+    MCQuestionAttempt,
+    OpenEnded,
+    OpenEndedAttempt,
+    Question,
+    QuestionAttempt,
+    QuestionGroupHeader,
+    Quiz,
+    QuizScore,
+)
 
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
 # https://stackoverflow.com/questions/34355406/django-admin-not-saving-pre-populated-inline-fields-which-are-left-in-their-init
+
 
 class AlwaysChangedModelForm(ModelForm):
     """
@@ -35,18 +48,24 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
     """
     Class for creating a sortable inline tabular layout for questions.
     """
+
     # Tip: admin.TabularInline can be switched with admin.StackedInline
     # Documentation at
     # https://django-admin-sortable2.readthedocs.io/en/latest/usage.html#make-a-stacked-or-tabular-inline-view-sortable
     model = Question
     # include = ['quiz', 'content']
-    exclude = ['explanation', ]
+    exclude = [
+        "explanation",
+    ]
     extra = 0
 
 
 class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'course', )
-    list_filter = ('course', )
+    list_display = (
+        "name",
+        "course",
+    )
+    list_filter = ("course",)
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
     save_as = True
@@ -55,8 +74,8 @@ class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 
 class QuizScoreAdmin(admin.ModelAdmin):
-    list_display = ('student', 'quiz', 'course', 'score')
-    list_filter = ('quiz', 'course', 'student')
+    list_display = ("student", "quiz", "course", "score")
+    list_filter = ("quiz", "course", "student")
 
     # search_fields = ('student', 'quiz', 'course')
     # filter_horizontal = ('student',)
@@ -85,9 +104,10 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     Base class for questions admin layout (editing).
     """
-    list_display = ('content', 'quiz', 'created')
-    list_filter = ('quiz', 'content')
-    search_fields = ('content', 'explanation')
+
+    list_display = ("content", "quiz", "created")
+    list_filter = ("quiz", "content")
+    search_fields = ("content", "explanation")
     # filter_horizontal = ('quiz',)
 
 
@@ -95,33 +115,35 @@ class MCQuestionAdmin(QuestionAdmin):
     """
     Class for multiple choice question editing
     """
+
     # list_display = ('quiz',
     #                 'content', 'created')
     # list_filter = ('quiz', 'content')
-    fields = ('content', 'quiz', 'explanation', 'multiple_correct_answers')
+    fields = ("content", "quiz", "explanation", "multiple_correct_answers")
     inlines = [MCAnswerInline]
 
 
 class MCAnswerAdmin(admin.ModelAdmin):
-    list_display = ('question', 'content', 'correct')
-    list_filter = ('question', )
+    list_display = ("question", "content", "correct")
+    list_filter = ("question",)
 
 
 class LikertAdmin(QuestionAdmin):
     """
     Class for likert question editing
     """
-    fields = ('content', 'quiz')
+
+    fields = ("content", "quiz")
     inlines = [LikertAnswerInline]
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
-    list_display = ('question', 'scale_min', 'scale_max')
-    list_filter = ('question',)
+    list_display = ("question", "scale_min", "scale_max")
+    list_filter = ("question",)
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ('content', 'quiz')
+    fields = ("content", "quiz")
 
 
 class QuestionAttemptAdmin(admin.ModelAdmin):
@@ -129,9 +151,16 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
     Base class for quiz questions (likert, multiple choice, and open ended).
     All questions models follow the same naming pattern.
     """
-    list_display = ('student', 'course', 'quiz',
-                    'question', 'attempt_number', 'created')
-    list_filter = ('course', 'quiz', 'question', 'attempt_number')
+
+    list_display = (
+        "student",
+        "course",
+        "quiz",
+        "question",
+        "attempt_number",
+        "created",
+    )
+    list_filter = ("course", "quiz", "question", "attempt_number")
 
     # search_fields = ('quiz', 'course', 'question', 'student')
 
@@ -139,7 +168,7 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ('content', 'quiz')
+    fields = ("content", "quiz")
 
 
 # TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
