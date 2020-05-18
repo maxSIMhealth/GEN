@@ -80,6 +80,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 *.settings.py.swp
+media
 
 # Flask stuff:
 instance/
