@@ -17,6 +17,11 @@
   <li class="nav-item">
     <a class="nav-link active" href="#">Info</a>
   </li>
+  {% for section in course.sections.all %}
+  <li class="nav-item">
+    <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
+  </li>
+  {% endfor %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
@@ -34,17 +39,19 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  {% for section in course.sections.all %}
-    DEBUG: <br />
-    <strong> {{ section }} </strong> <br />
-    type: {{ section.section_type }} <br>
-    requirement: {{ section.requirement  }} <br />
-    <strong> Items </strong> <br />
-    {% for item in section.section_items.all %}
-    name: {{ item }} (id/pk: {{item.pk}}) <br />
+  {% comment %}
+    {% for section in course.sections.all %}
+      DEBUG: <br />
+      <strong> {{ section }} </strong> <br />
+      type: {{ section.section_type }} <br>
+      requirement: {{ section.requirement  }} <br />
+      <strong> Items </strong> <br />
+      {% for item in section.section_items.all %}
+      name: {{ item }} (id/pk: {{item.pk}}) <br />
+      {% endfor %}
+      <br />
     {% endfor %}
-    <br />
-  {% endfor %}
+  {% endcomment %}
   <div class="card mb-3">
     <h5 class="card-header bg-light">Course Info</h5>
     <div class="card-body pb-0">

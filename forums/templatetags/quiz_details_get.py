@@ -5,7 +5,6 @@ register = template.Library()
 
 
 class QuizDetails:
-
     def __init__(self, enabled, attempts, score):
         self.enabled = enabled
         self.attempts = attempts
@@ -13,15 +12,15 @@ class QuizDetails:
 
 
 def quiz_attempts_get(user, course, quiz):
-    '''
+    """
     Get user current attempt number for this quiz
-    '''
+    """
     try:
-        current_attempt_number = quiz.questionattempt_set.filter(
-            student=user,
-            course=course,
-            quiz=quiz
-        ).latest('attempt_number').attempt_number
+        current_attempt_number = (
+            quiz.questionattempt_set.filter(student=user, course=course, quiz=quiz)
+            .latest("attempt_number")
+            .attempt_number
+        )
     except QuestionAttempt.DoesNotExist:
         # if there are no questionAttempt objects it means that the user
         # never answered this quiz
@@ -34,9 +33,9 @@ def quiz_score_get(user, course, quiz):
 
 
 def quiz_enable_check(user, course, quiz):
-    '''
+    """
     Check if quiz should still be enabled for the user to answer
-    '''
+    """
     attempts_limit_reached = False
     requirement_fulfilled = False
     quiz_enable = False
@@ -50,11 +49,10 @@ def quiz_enable_check(user, course, quiz):
     else:
         attempts_limit_reached = True
 
-    # check if course has a requirement
+    # check if quiz has a requirement
     if quiz.requirement:
         # get current attempt number for requirement
-        requirement_quiz_score = quiz_score_get(
-            user, course, quiz.requirement)
+        requirement_quiz_score = quiz_score_get(user, course, quiz.requirement)
 
         # check if quiz requirement has been fulfilled
         requirement_fulfilled = bool(requirement_quiz_score.exists())

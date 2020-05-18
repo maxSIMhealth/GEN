@@ -1,3 +1,8 @@
+/* section: quiz */
+.list-group-item div span.badge {
+  line-height: 1.4;
+}
+
 /* videos list */
 .video-thumbnail {
     width: 96px;
