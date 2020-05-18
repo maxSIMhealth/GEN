@@ -1,0 +1,29 @@
+{% extends 'base_section.html' %}
+
+{% load humanize %}
+{% load check_attribute %}
+{% load quiz_details_get %}
+
+{% block content %}
+    <div class="card mb-3">
+      <h5 class="card-header bg-light">Quizzes</h5>
+      <ul class="list-group list-group-flush">
+        {% for item in current_section.section_items.all %}
+          {% if item.published %}
+            {% quiz_details_get user course item.quiz as quiz_details %}
+            <li class="list-group-item">
+              {% if quiz_details.enabled %}
+                <a href="{% url 'quiz' course.pk item.quiz.pk %}">{{item}}</a>
+              {% else %}
+                <div class="text-muted">{{item}}</div>
+              {% endif %}
+                <small class="text-muted d-block">{{item.description}}</small>
+              {% if item.quiz.requirement %}
+                <small class="text-muted">Note: <em>Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.</em></div>
+              {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+{% endblock content %}

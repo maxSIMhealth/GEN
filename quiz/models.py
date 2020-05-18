@@ -22,7 +22,7 @@ class Quiz(SectionItem):
         related_name="quizzes",
     )
     requirement = models.ForeignKey(
-        "self", on_delete=models.PROTECT, blank=True, null=True, related_name="quizzes"
+        "self", on_delete=models.PROTECT, blank=True, null=True
     )
     attempts_max_number = models.PositiveIntegerField(
         default=1, blank=False, null=False

@@ -37,6 +37,9 @@ class Forum(VoteModel, SectionItem):
     # FIXME: media should be renamed to document or something like that
     # media = models.ForeignKey(
     #     MediaFile, on_delete=models.CASCADE, related_name='forums')
+    requirement = models.ForeignKey(
+        "self", on_delete=models.PROTECT, blank=True, null=True,
+    )
     video = models.ForeignKey(
         VideoFile,
         on_delete=models.CASCADE,
