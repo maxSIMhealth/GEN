@@ -72,6 +72,7 @@ class Section(models.Model):
     requirement = models.ForeignKey(
         "self", on_delete=models.PROTECT, blank=True, null=True, related_name="sections"
     )
+    published = models.BooleanField(default=False)
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def __str__(self):

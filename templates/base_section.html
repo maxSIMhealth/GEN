@@ -17,14 +17,16 @@
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
   {% for section in course.sections.all %}
-    {% if current_section == section %}
-      <li class="nav-item">
-        <a href="#" class="nav-link active">{{section}}</a>
-      </li>
-    {% else %}
-      <li class="nav-item">
-        <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
-      </li>
+    {% if section.published %}
+      {% if current_section == section %}
+        <li class="nav-item">
+          <a href="#" class="nav-link active">{{section}}</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
+        </li>
+      {% endif %}
     {% endif %}
   {% endfor %}
 {% endblock content_tabs %}

@@ -1,13 +1,14 @@
 from django import template
 
-from forums.models import Forum
+# from forums.models import Forum
 
 register = template.Library()
 
 
 class DiscussionDetails:
-    def __init__(self, enabled):
+    def __init__(self, enabled, voted):
         self.enabled = enabled
+        self.voted = voted
 
 
 def discussion_enable_check(user, discussion):
@@ -37,8 +38,13 @@ def discussion_enable_check(user, discussion):
     return discussion_enable
 
 
+def has_user_voted(user, discussion):
+    return bool(discussion.votes.exists(user.pk))
+
+
 @register.simple_tag
 def discussion_details_get(user, discussion):
     enabled = discussion_enable_check(user, discussion)
+    voted = has_user_voted(user, discussion)
 
-    return DiscussionDetails(enabled)
+    return DiscussionDetails(enabled, voted)
