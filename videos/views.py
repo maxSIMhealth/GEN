@@ -60,7 +60,7 @@ def upload_video(request, pk):
             return redirect("list_videos", pk=course.pk)
         if "submit" in request.POST and form.is_valid():
             video = VideoFile.objects.create(
-                title=form.cleaned_data.get("title"),
+                name=form.cleaned_data.get("name"),
                 description=form.cleaned_data.get("description"),
                 author=request.user,
                 course=course,

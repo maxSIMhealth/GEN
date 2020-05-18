@@ -1,6 +1,7 @@
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 
-from .models import VideoFile
+from .models import Playlist, VideoFile
 
 
 def update_thumbnails(modeladmin, request, queryset):
@@ -12,8 +13,22 @@ update_thumbnails.short_description = "Update thumbnail of selected videos"
 
 
 class VideoFileAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "author", "course", "file", "thumbnail")
+    list_display = ("name", "description", "author", "course", "file", "thumbnail")
     actions = [update_thumbnails]
 
 
+class PlaylistInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = VideoFile
+    extra = 0
+
+
+class PlaylistAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = (
+        "name",
+        "course",
+    )
+    inlines = (PlaylistInline,)
+
+
 admin.site.register(VideoFile, VideoFileAdmin)
+admin.site.register(Playlist, PlaylistAdmin)

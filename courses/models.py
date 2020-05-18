@@ -65,6 +65,7 @@ class Section(models.Model):
     name = models.CharField(
         max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
     )
+    description = models.CharField(max_length=200, blank=True, null=True)
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="sections"
     )

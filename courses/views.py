@@ -37,6 +37,8 @@ def section_page(request, pk, section_pk):
         section_template = "section_quiz.html"
     elif section_object.section_type == "D":
         section_template = "section_discussion.html"
+    elif section_object.section_type == "V":
+        section_template = "section_videos.html"
 
     return render(
         request,

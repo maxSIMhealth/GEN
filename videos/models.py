@@ -11,7 +11,7 @@ from PIL import Image
 
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from courses.models import Course
+from courses.models import Course, SectionItem
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -69,14 +69,15 @@ class VideoFileQuerySet(models.QuerySet):
         super().delete(*args, **kwargs)
 
 
-class VideoFile(models.Model):
+class Playlist(SectionItem):
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, related_name="videolists"
+    )
+
+
+class VideoFile(SectionItem):
     objects = VideoFileQuerySet.as_manager()
     related_name = "videos"
-    title = models.CharField(max_length=100, unique=True)
-    description = models.CharField(max_length=255)
-    author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name=related_name
-    )
     course = models.ForeignKey(
         Course, on_delete=models.PROTECT, related_name=related_name
     )
@@ -128,4 +129,4 @@ class VideoFile(models.Model):
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
     def __str__(self):
-        return self.title
+        return self.name

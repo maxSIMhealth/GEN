@@ -1,0 +1,73 @@
+{% extends 'base_section.html' %}
+
+{% load static %}
+{% load humanize %}
+{% load is_instructor %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+  {% if user|is_instructor:course %}
+  <div class="mb-3">
+    <a href="{% url 'upload_video' course.pk %}" class="btn btn-warning">Submit new video</a>
+  </div>
+  {% endif %}
+
+
+  {% if current_section.description %}
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <p class="card-text">{{current_section.description}}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="card mb-3">
+    <h5 class="card-header bg-light">Videos</h5>
+    <div class="card-body pb-0">
+      {% comment %}
+      <h6 class="card-subtitle mb-2 text-muted">These are the course videos published by the instructor(s).</h6>
+      {% endcomment %}
+      <table class="table mb-0 course-videos">
+        <tbody>
+          {% for item in current_section.section_items.all %}
+          <tr>
+            <th scope="row" class="th-small">
+              <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+              {% comment %}
+              <video controls poster="{{ item.videofile.thumbnail.url }}">
+                <source src="{{ item.videofile.file.url }}" type="video/mp4">
+                Sorry, your browser doesn't support embedded videos.
+              </video>
+              {% endcomment %}
+            </th>
+            <td>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+              <small>{{ item.videofile.description }}</small>
+              {% comment %}
+              <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
+                <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk item.videofile.pk %}">
+                  <div style='text-align:center;'><i class="far fa-comment"></i></div>
+                    Discuss
+                </a>
+                <button class='btn btn-success' disabled>
+                  <div style='text-align:center;'><i class="far fa-check-circle"></i></div>
+                    Take quiz
+                </button>
+              </div>
+              {% endcomment %}
+            </td>
+          </tr>
+          {% empty %}
+          <div class="mb-3">
+            Nothing to show.
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock content %}

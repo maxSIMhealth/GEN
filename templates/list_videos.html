@@ -36,7 +36,7 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  
+
   <div class="mb-3">
     {% if user|is_instructor:course %}
     <a href="{% url 'upload_video' course.pk %}" class="btn btn-warning">Submit new course video</a>
@@ -45,7 +45,7 @@
     {% endif %}
   </div>
 
-  
+
   <div class="card mb-3">
     <h5 class="card-header bg-light">User Videos</h5>
     <div class="card-body pb-0">
@@ -67,11 +67,11 @@
               <video controls poster="{{ video.thumbnail.url }}">
                 <source src="{{ video.file.url }}" type="video/mp4">
                 Sorry, your browser doesn't support embedded videos.
-              </video>  
+              </video>
               {% endcomment %}
             </th>
             <td>
-              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.name }}</a></h5>
               <small>{{ video.description }}</small>
             </td>
           </tr>
@@ -99,20 +99,20 @@
               <video controls poster="{{ video.thumbnail.url }}">
                 <source src="{{ video.file.url }}" type="video/mp4">
                 Sorry, your browser doesn't support embedded videos.
-              </video>  
+              </video>
               {% endcomment %}
             </th>
             <td>
-              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.name }}</a></h5>
               <small>{{ video.description }}</small>
-              {% comment %}  
+              {% comment %}
               <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
-                <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}"> 
-                  <div style='text-align:center;'><i class="far fa-comment"></i></div>  
+                <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk video.pk %}">
+                  <div style='text-align:center;'><i class="far fa-comment"></i></div>
                     Discuss
                 </a>
-                <button class='btn btn-success' disabled> 
-                  <div style='text-align:center;'><i class="far fa-check-circle"></i></div>  
+                <button class='btn btn-success' disabled>
+                  <div style='text-align:center;'><i class="far fa-check-circle"></i></div>
                     Take quiz
                 </button>
               </div>
@@ -142,7 +142,7 @@
               <a href="{% url 'video_player' course.pk video.pk %}"><img src="{{ video.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
             </th>
             <td>
-              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.title }}</a></h5>
+              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk video.pk %}">{{ video.name }}</a></h5>
               <div class="video-user-info">
                 <em>By:</em> {{video.author.first_name}} {{video.author.last_name}} ({{video.author}}) <br />
                 <em>Submission date:</em> {{video.uploaded_at}}
@@ -170,7 +170,7 @@
           <div class="media">
             <a href="{{ forum.media.url }}"><img src="{{ my_video.thumbnail }}" class="mr-3 video-thumbnail" alt="Video thumbnail"></a>
             <div class="media-body">
-              <a href="{{ forum.media.url }}"><span>{{ forum.media.title }} - {{ forum.media.url }}</a></span>
+              <a href="{{ forum.media.url }}"><span>{{ forum.media.name }} - {{ forum.media.url }}</a></span>
               <div>
                 <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
               </div>
@@ -183,5 +183,5 @@
     {% endfor %}
   </ul>
   {% endcomment %}
-  
+
 {% endblock content %}

@@ -10,14 +10,14 @@
 {% endblock %}
 
 {% block title %}
-  {{ video.title }} - {{ block.super }}
+  {{ video.name }} - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'list_videos' course.pk %}">Videos</a></li>
-  <li class="breadcrumb-item active">{{ video.title|truncatechars:50 }}</li>
+  <li class="breadcrumb-item active">{{ video.name|truncatechars:50 }}</li>
 {% endblock %}
 
 {% block content %}
@@ -75,13 +75,13 @@
       {% comment %}
         {% if forum.media.kind == 'YTB' %}
           <div class="embed-responsive embed-responsive-16by9">
-            {% video forum.media.url '800x600' %} 
+            {% video forum.media.url '800x600' %}
           </div>
         {% else %}
           <object data="{{ forum.media.url }}" class="user-thumbnail"></object>
         {% endif %}
       {% endcomment %}
-      
+
     </div>
   </div>
 
@@ -91,7 +91,7 @@
       {% if user.is_authenticated %}
         <form method="post" novalidate>
           {% csrf_token %}
-          
+
           {% include 'includes/form.html' %}
 
           <button type="submit" class="btn btn-success">Post</button>
@@ -124,11 +124,11 @@
                     <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
                   </span>
                 {% endif %}
-                
+
                 {% comment %}
                 <div class="mt-1">{{ comment.vote_score }}</div>
                 {% endcomment %}
-                  
+
               </div>
             {% endif %}
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
