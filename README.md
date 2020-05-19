@@ -17,6 +17,14 @@
 - Create a `.env` file based on `.env-example`
 - Instal project dependencies: `pip install -r requirements.txt`
 
+### PostgreSQL
+- Switch to postgres user: `sudo su - postgres`
+- Create database user: `createuser u_gen`
+- Create a new database and set the user as the owner: `createdb django_gen --owner u_gen`
+- Define a strong password for the user: `psql -c "ALTER USER u_gen WITH PASSWORD 'PUT_DB_USER_PASSWORD_HERE'"`
+- Exist postgres user: `exit`
+- Edit `.env`, uncomment `DATABASE_URL` line and update it with your postgresql server settings (default port is 5432)
+
 ### Notes
 - On development mode (`DEBUG`), no email is sent and the output is echoed into stdout.
 #### WIP
@@ -28,15 +36,15 @@
 ## Development
 
 ### Set up GEN
+- Install dependencies: `sudo apt install -y postgresql postgresql-contrib python-dev libpq-dev ffmpeg`
 - Generate database: `python manage.py migrate`
 - Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
-- Install dependencies: `sudo apt install -y postgresql postgresql-contrib python-dev libpq-dev ffmpeg`
 - Run the project: `python manage.py runserver`
 
 ## Production
 
 ### Install and configure packages
-- Install necessary packages: `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev ffmpeg`
+- Install dependencies: `sudo apt install -y nginx postgresql postgresql-contrib supervisor python-dev libpq-dev ffmpeg`
   - **Note:** if you are using a different version of python than your distro default, install the correct dev package (e.g.: `python3.8-dev`)
 - Enable and start supervisor:
   - **Warning:** on ubuntu 18.04 LTS, the supervisor package only runs when using python2.7 as the default system python version. If necessary, use `sudo update-alternatives --config python`
@@ -54,14 +62,6 @@
 adduser gen
 gpasswd -a gen sudo
 ```
-
-### PostgreSQL
-- Switch to postgres user: `sudo su - postgres`
-- Create database user: `createuser u_gen`
-- Create a new database and set the user as the owner: `createdb django_gen --owner u_gen`
-- Define a strong password for the user: `psql -c "ALTER USER u_gen WITH PASSWORD 'PUT_DB_USER_PASSWORD_HERE'"`
-- Exist postgres user: `exit`
-- Edit `.env`, uncomment `DATABASE_URL` line and update it with your postgresql server settings (default port is 5432)
 
 ### NGINX
 - Create `/etc/nginx/sites-available/GEN` with the following content:
