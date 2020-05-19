@@ -13,7 +13,7 @@ class Course(models.Model):
     code = models.CharField(
         "course code", max_length=10, help_text=_("Course code (max 10 characters)")
     )
-    description = models.CharField(
+    description = models.TextField(
         max_length=400, help_text=_("Course description (max 400 characters)")
     )
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="course")
@@ -65,7 +65,7 @@ class Section(models.Model):
     name = models.CharField(
         max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
     )
-    description = models.CharField(
+    description = models.TextField(
         max_length=200,
         blank=True,
         null=True,
@@ -92,7 +92,7 @@ class Section(models.Model):
 class SectionItem(TimeStampedModel):
     name = models.CharField(max_length=30, unique=False)
     related_name = "section_items"
-    description = models.CharField(
+    description = models.TextField(
         max_length=200, help_text=_("Brief description (max 200 characters)")
     )
     author = models.ForeignKey(
