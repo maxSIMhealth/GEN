@@ -15,6 +15,7 @@
 			"--disable",
 			"no-else-return"
 		],
-		"python.pythonPath": "venv\\Scripts\\python.exe"
+		"python.pythonPath": "venv\\Scripts\\python.exe",
+		"python.formatting.provider": "black"
 	}
 }
