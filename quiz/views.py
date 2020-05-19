@@ -49,7 +49,7 @@ def quiz_page(request, pk, quiz_pk):
             if request.method == "POST":
                 flag = False
                 items = list(request.POST)
-                attempt_number = MCQuestionAttempt.objects.filter(
+                attempt_number = QuestionAttempt.objects.filter(
                     quiz=quiz, student=request.user
                 ).aggregate(Max("attempt_number"))
                 # removing csrf token from items list
