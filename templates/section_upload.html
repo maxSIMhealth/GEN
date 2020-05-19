@@ -11,7 +11,7 @@
 
 {% block content %}
   <div class="mb-3">
-    <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new user video</a>
+    <a href="{% url 'upload_video' course.pk current_section.pk %}" class="btn btn-primary">Submit new user video</a>
   </div>
 
   {% if current_section.description %}

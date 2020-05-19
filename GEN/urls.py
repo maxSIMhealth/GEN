@@ -114,6 +114,7 @@ urlpatterns = [
         name="quiz_result",
     ),
     path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
+    # account activation
     url(
         r"^account_activation_sent/$",
         account_views.account_activation_sent,
@@ -124,14 +125,21 @@ urlpatterns = [
         account_views.activate,
         name="activate",
     ),
+    # sections
     path(
         "courses/<int:pk>/section/<int:section_pk>/",
         course_views.section_page,
         name="section",
     ),
-    # path('forums/', views.ForumListView.as_view(), name='forums'),
-    # path('oauth/', include('social_django.urls', namespace='social')),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/upload/",
+        video_views.upload_video,
+        name="upload_video",
+    ),
+    # admin
     path("admin/", admin.site.urls),
+    # tests
+    # path('oauth/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:

@@ -12,7 +12,7 @@
 {% block content %}
   {% if user|is_instructor:course %}
   <div class="mb-3">
-    <a href="{% url 'upload_video' course.pk %}" class="btn btn-warning">Submit new video</a>
+    <a href="{% url 'upload_video' course.pk current_section.pk %}" class="btn btn-warning">Submit new video</a>
   </div>
   {% endif %}
 
