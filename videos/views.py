@@ -16,7 +16,7 @@ def upload_video(request, pk, section_pk):
 
     # check if section type is upload
 
-    if section.section_type == "U":
+    if section.section_type == "U" or section.section_type == "V":
 
         if request.method == "POST":
             form = UploadVideoForm(request.POST, request.FILES)

@@ -17,7 +17,7 @@
   <li class="nav-item">
     <a class="nav-link active" href="#">Info</a>
   </li>
-  {% for section in course.sections.all %}
+  {% for section in sections.all %}
   <li class="nav-item">
     <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
   </li>

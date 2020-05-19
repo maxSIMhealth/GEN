@@ -69,10 +69,10 @@
           <li class="list-group-item">
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+                <a href="{% url 'video_player' course.pk current_section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
               </div>
               <div class="w-100">
-                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk current_section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <div class="video-user-info">
                   <em>By:</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}}) <br />
                   <em>Submission date:</em> {{item.videofile.uploaded_at}}

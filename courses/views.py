@@ -8,6 +8,7 @@ from .progress import progress
 @login_required
 def course(request, pk):
     course_object = get_object_or_404(Course, pk=pk)
+    sections = course_object.sections.filter(published=True)
     forums = course_object.forums.all()
     quizzes = course_object.quizzes.all()
 
@@ -20,6 +21,7 @@ def course(request, pk):
         "course.html",
         {
             "course": course_object,
+            "sections": sections,
             "forums_progress": forums_progress,
             "quizzes_progress": quizzes_progress,
         },
