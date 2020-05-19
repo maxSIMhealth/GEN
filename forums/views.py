@@ -10,24 +10,10 @@ from django.utils import timezone
 # from django.core.files.images import ImageFile
 # from django.views.generic import ListView
 
-from courses.models import Course
+from courses.models import Course, Section
 from .forms import NewCommentForm, NewForumForm
 from .models import Comment, Forum
 from .support_methods import discussion_enable_check
-
-
-@login_required
-def course_forums(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    forums = course.forums.all()
-    gamification = course.enable_gamification
-
-    return render(
-        request,
-        "course_forums.html",
-        {"course": course, "forums": forums, "gamification": gamification},
-    )
-
 
 # @login_required
 # def list_pdfs(request, pk):
@@ -53,8 +39,9 @@ def course_forums(request, pk):
 
 
 @login_required
-def discussion_comments(request, pk, forum_pk):
+def discussion_comments(request, pk, section_pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     discussion = get_object_or_404(Forum, pk=forum_pk)
     video = discussion.video
     gamification = course.enable_gamification
@@ -77,7 +64,9 @@ def discussion_comments(request, pk, forum_pk):
                         author=request.user,
                     )
                     comment.save()
-                    my_kwargs = dict(pk=course.pk, forum_pk=discussion.pk)
+                    my_kwargs = dict(
+                        pk=course.pk, section_pk=section.pk, forum_pk=discussion.pk
+                    )
                     return redirect("discussion_comments", **my_kwargs)
             else:
                 form = NewCommentForm()
@@ -88,6 +77,7 @@ def discussion_comments(request, pk, forum_pk):
                 {
                     "forum": discussion,
                     "course": course,
+                    "current_section": section,
                     "video": video,
                     "form": form,
                     "gamification": gamification,
@@ -100,24 +90,27 @@ def discussion_comments(request, pk, forum_pk):
 
 
 @login_required
-def new_forum(request, pk):
+def new_forum(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     forums = Forum.objects.all()
 
     if request.method == "POST":
         form = NewForumForm(request.POST)
         if "Cancel" in request.POST["submit"]:
-            return redirect("course_forums", pk=course.pk)
+            pass
         if "submit" in request.POST and form.is_valid():
             forum = Forum.objects.create(
                 course=course,
+                section=section,
+                published=True,
                 name=form.cleaned_data.get("name"),
                 description=form.cleaned_data.get("description"),
                 video=form.cleaned_data.get("video"),
                 author=request.user,
             )
             forum.save()
-            return redirect("course_forums", pk=course.pk)
+        return redirect("section", pk=course.pk, section_pk=section.pk)
         # media_form = NewMediaForm(request.POST)
         # if form.is_valid() and media_form.is_valid():
         #     media = MediaFile.objects.create(
@@ -141,59 +134,63 @@ def new_forum(request, pk):
         # media_form = NewMediaForm()
 
     return render(
-        request, "new_forum.html", {"forums": forums, "course": course, "form": form}
+        request,
+        "new_forum.html",
+        {"forums": forums, "course": course, "current_section": section, "form": form},
     )
 
 
 @login_required
-def upvote_forum(request, pk, forum_pk):
+def upvote_forum(request, pk, section_pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     forum = Forum.objects.get(pk=forum_pk)
     forum.votes.up(request.user.id)
 
     # checking if the user is voting from the forums list or from forum itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "upvote"
 
-    my_kwargs = dict(pk=course.pk, forum_pk=forum.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, forum_pk=forum.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
     else:
-        return redirect("course_forums", pk=course.pk)
+        return redirect("section", pk=course.pk, section_pk=section.pk)
 
 
 @login_required
-def clearvote_forum(request, pk, forum_pk):
+def clearvote_forum(request, pk, section_pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     forum = Forum.objects.get(pk=forum_pk)
     forum.votes.delete(request.user.id)
 
     # checking if the user is voting from the forums list or from forum itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "clearvote"
 
-    my_kwargs = dict(pk=course.pk, forum_pk=forum.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, forum_pk=forum.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
     else:
-        return redirect("course_forums", pk=course.pk)
+        return redirect("section", pk=course.pk, section_pk=section.pk)
 
 
 @login_required
-def upvote_comment(request, pk, forum_pk, comment_pk):
+def upvote_comment(request, pk, section_pk, forum_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.up(request.user.id)
 
-    my_kwargs = dict(pk=pk, forum_pk=forum_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, forum_pk=forum_pk)
 
     return redirect("discussion_comments", **my_kwargs)
 
 
 @login_required
-def clearvote_comment(request, pk, forum_pk, comment_pk):
+def clearvote_comment(request, pk, section_pk, forum_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.delete(request.user.id)
 
-    my_kwargs = dict(pk=pk, forum_pk=forum_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, forum_pk=forum_pk)
 
     return redirect("discussion_comments", **my_kwargs)

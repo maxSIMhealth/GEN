@@ -22,9 +22,6 @@
     <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
   </li>
   {% endfor %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
   {% comment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>

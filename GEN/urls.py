@@ -57,33 +57,6 @@ urlpatterns = [
     ),
     path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
     path("courses/<int:pk>/", course_views.course, name="course"),
-    path("courses/<int:pk>/forums/", forum_views.course_forums, name="course_forums"),
-    path("courses/<int:pk>/forums/new/", forum_views.new_forum, name="new_forum"),
-    path(
-        "courses/<int:pk>/forums/<int:forum_pk>/",
-        forum_views.discussion_comments,
-        name="discussion_comments",
-    ),
-    path(
-        "courses/<int:pk>/forums/<int:forum_pk>/upvote/",
-        forum_views.upvote_forum,
-        name="forum_upvote",
-    ),
-    path(
-        "courses/<int:pk>/forums/<int:forum_pk>/clearvote/",
-        forum_views.clearvote_forum,
-        name="forum_clearvote",
-    ),
-    path(
-        "courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/upvote/",
-        forum_views.upvote_comment,
-        name="comment_upvote",
-    ),
-    path(
-        "courses/<int:pk>/forums/<int:forum_pk>/comment/<int:comment_pk>/clearvote/",
-        forum_views.clearvote_comment,
-        name="comment_clearvote",
-    ),
     # account activation
     url(
         r"^account_activation_sent/$",
@@ -129,6 +102,37 @@ urlpatterns = [
         name="quiz_result",
     ),
     path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
+    # sections > discussion
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/new/",
+        forum_views.new_forum,
+        name="new_forum",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/",
+        forum_views.discussion_comments,
+        name="discussion_comments",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/upvote/",
+        forum_views.upvote_forum,
+        name="forum_upvote",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/clearvote/",
+        forum_views.clearvote_forum,
+        name="forum_clearvote",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/comment/<int:comment_pk>/upvote/",
+        forum_views.upvote_comment,
+        name="comment_upvote",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/comment/<int:comment_pk>/clearvote/",
+        forum_views.clearvote_comment,
+        name="comment_clearvote",
+    ),
     # admin
     path("admin/", admin.site.urls),
     # tests

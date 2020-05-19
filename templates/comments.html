@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -18,23 +18,11 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'course_forums' course.pk %}">Forums</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
   <li class="breadcrumb-item active">{{ forum.name|truncatechars:50 }}</li>
 {% endblock %}
 
 {% block content %}
-
-  {% comment %}
-  {% if debug %}
-  <div class="alert alert-warning" role="alert">
-    *DEBUG* <br />
-    user_id: {{ user.id }} <br />
-    course_pk: {{ course.pk }} <br />
-    forum_pk: {{ forum.pk }}
-  </div>
-  {% endif %}
-  {% endcomment %}
-
   <div class="card bg-dark text-white border-dark mb-2">
     <h5 class="card-header">
       <div class="row">
@@ -43,9 +31,9 @@
             {% checkvotes_forum user.id forum.pk as forum_vote_status %}
             {% if user.is_authenticated %}
               {% if forum_vote_status %}
-                <a href="{% url 'forum_clearvote' course.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                <a href="{% url 'forum_clearvote' course.pk current_section.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
               {% else %}
-                <a href="{% url 'forum_upvote' course.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                <a href="{% url 'forum_upvote' course.pk current_section.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
               {% endif %}
             {% else %}
               <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
@@ -118,9 +106,9 @@
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
                 {% if user.is_authenticated %}
                   {% if comment_vote_status %}
-                    <a href="{% url 'comment_clearvote' course.pk forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                    <a href="{% url 'comment_clearvote' course.pk current_section.pk forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
                   {% else %}
-                    <a href="{% url 'comment_upvote' course.pk  forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                    <a href="{% url 'comment_upvote' course.pk current_section.pk forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
                   {% endif %}
                 {% else %}
                   <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
