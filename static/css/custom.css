@@ -33,6 +33,11 @@
     border: 1px solid rgba(86,61,124,.15);
 }
 
+.text-underline-dashed {
+  text-decoration:underline;
+  text-decoration-style: dotted;
+}
+
 /* quiz with video */
 .video+.quiz .card-body {
     max-height: 350px;

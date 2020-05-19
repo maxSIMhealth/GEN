@@ -49,11 +49,20 @@
                   {% for quiz in item.videofile.quizzes.all  %}
                   {% quiz_details_get user quiz as quiz_details %}
                   <li>
-                    <a href="{% url 'quiz' course.pk current_section.pk quiz.pk %}">{{ quiz }}</a>
-                    {% if quiz_details.score.exists %}
-                    <span class="badge badge-success badge-pill">Submitted</span>
+                    {% if quiz_details.enabled %}
+                      <a href="{% url 'quiz' course.pk current_section.pk quiz.pk %}">{{ quiz }}</a>
                     {% else %}
-                    <span class="badge badge-warning badge-pill">To do</span>
+                      {% if quiz.requirement %}
+                        <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{quiz.requirement.name}}</u> to be completed first.">{{ quiz }}</span>
+                      {% else %}
+                        <span class="text-muted">{{ quiz }}</span>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if quiz_details.score.exists %}
+                      <span class="badge badge-success badge-pill">Submitted</span>
+                    {% else %}
+                      <span class="badge badge-warning badge-pill">To do</span>
                     {% endif %}
                   </li>
                   {% endfor %}

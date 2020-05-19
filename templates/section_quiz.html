@@ -31,7 +31,11 @@
               {% if quiz_details.enabled %}
                 <a href="{% url 'quiz' course.pk current_section.pk item.quiz.pk %}">{{ item }}</a>
               {% else %}
-                <span class="text-muted">{{ item }}</span>
+                {% if item.quiz.requirement %}
+                  <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.">{{ item }}</span>
+                {% else %}
+                  <span class="text-muted">{{ item }}</span>
+                {% endif %}
               {% endif %}
               {% if quiz_details.score.exists %}
                 <span class="badge badge-success badge-pill float-right">Submitted</span>
@@ -54,9 +58,6 @@
                   {% endif %}
                 </small>
               </p>
-              {% endif %}
-              {% if item.quiz.requirement %}
-              <small class="text-muted">Note: <em>Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.</em></small>
               {% endif %}
             </div>
           </div>
