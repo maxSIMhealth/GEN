@@ -16,6 +16,7 @@
 			"no-else-return"
 		],
 		"python.pythonPath": "venv\\Scripts\\python.exe",
-		"python.formatting.provider": "black"
+		"python.formatting.provider": "black",
+		"terminal.integrated.inheritEnv": false
 	}
 }
