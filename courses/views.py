@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
-from .models import Course, Section, SectionItem
+from courses.support_methods import requirement_fulfilled
+from .models import Course, Section
 from .progress import progress
 
 
@@ -11,6 +13,9 @@ def course(request, pk):
     sections = course_object.sections.filter(published=True)
     discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
+    # TODO: improve this: I've hard-corded this section name because
+    # info isn't a dynamic section item
+    section_name = "Info"
 
     # progress status
     discussions_progress = progress(request, discussions)
@@ -22,6 +27,7 @@ def course(request, pk):
         {
             "course": course_object,
             "sections": sections,
+            "section_name": section_name,
             "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
         },
@@ -34,8 +40,17 @@ def section_page(request, pk, section_pk):
     section_object = get_object_or_404(Section, pk=section_pk)
     section_items = section_object.section_items.filter(published=True)
     gamification = course_object.enable_gamification
+    user = request.user
+    requirement = section_object.requirement
 
-    # section_types = Section.SECTION_TYPES
+    # only allow participant to access section if requirements have been fulfilled
+    if requirement:
+        fulfilled = requirement_fulfilled(user, section_object)
+
+        if not fulfilled:
+            raise Http404(
+                "You have not fulfilled the requirements to access this section."
+            )
 
     if section_object.section_type == "Q":
         section_template = "section_quiz.html"

@@ -1,0 +1,17 @@
+{% for section in sections %}
+  {% if section.requirement %}
+    {% if section.requirement.fulfilled %}
+      <li class="nav-item">
+        <a href="{% url 'section' section.course.pk section.pk %}" class="nav-link {% if section == current_section %} active {% endif %}">{{section}}</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link text-underline-dashed disabled" href="#" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{section.requirement}}</u> to be completed first.">{{section}}</a>
+      </li>
+    {% endif %}
+  {% else %}
+    <li class="nav-item">
+      <a href="{% url 'section' section.course.pk section.pk %}" class="nav-link {% if section == current_section %} active {% endif %}">{{section}}</a>
+    </li>
+  {% endif %}
+{% endfor %}

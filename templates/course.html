@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load countscore %}
+{% load show_sections %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -17,11 +18,9 @@
   <li class="nav-item">
     <a class="nav-link active" href="#">Info</a>
   </li>
-  {% for section in sections.all %}
-  <li class="nav-item">
-    <a href="{% url 'section' course.pk section.pk %}" class="nav-link">{{section}}</a>
-  </li>
-  {% endfor %}
+
+  {% show_sections sections %}
+
   {% comment %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
@@ -30,19 +29,6 @@
 {% endblock content_tabs %}
 
 {% block content %}
-  {% comment %}
-    {% for section in course.sections.all %}
-      DEBUG: <br />
-      <strong> {{ section }} </strong> <br />
-      type: {{ section.section_type }} <br>
-      requirement: {{ section.requirement  }} <br />
-      <strong> Items </strong> <br />
-      {% for item in section.section_items.all %}
-      name: {{ item }} (id/pk: {{item.pk}}) <br />
-      {% endfor %}
-      <br />
-    {% endfor %}
-  {% endcomment %}
   <div class="card mb-3">
     <h5 class="card-header bg-light">Course Info</h5>
     <div class="card-body pb-0">

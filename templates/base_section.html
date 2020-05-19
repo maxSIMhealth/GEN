@@ -1,5 +1,7 @@
 {% extends 'base_course.html' %}
 
+{% load show_sections %}
+
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
@@ -10,17 +12,5 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
-  {% for item in course.sections.all %}
-    {% if item.published %}
-      {% if item == section %}
-        <li class="nav-item">
-          <a href="#" class="nav-link active">{{ item }}</a>
-        </li>
-      {% else %}
-        <li class="nav-item">
-          <a href="{% url 'section' course.pk item.pk %}" class="nav-link">{{ item }}</a>
-        </li>
-      {% endif %}
-    {% endif %}
-  {% endfor %}
+  {% show_sections course.sections %}
 {% endblock content_tabs %}
