@@ -10,10 +10,10 @@
 {% endblock stylesheet %}
 
 {% block content %}
-  {% if current_section.description %}
+  {% if section.description %}
   <div class="card bg-light mb-3">
     <div class="card-body">
-      <p class="card-text">{{current_section.description}}</p>
+      <p class="card-text">{{section.description}}</p>
     </div>
   </div>
   {% endif %}
@@ -29,7 +29,7 @@
           <div class="d-flex">
             <div class="w-100">
               {% if quiz_details.enabled %}
-                <a href="{% url 'quiz' course.pk current_section.pk item.quiz.pk %}">{{ item }}</a>
+                <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item }}</a>
               {% else %}
                 {% if item.quiz.requirement %}
                   <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.">{{ item }}</span>

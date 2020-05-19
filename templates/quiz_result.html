@@ -13,8 +13,8 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'quiz' course.pk current_section.pk quiz.pk%}">{{quiz.name}}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'quiz' course.pk section.pk quiz.pk%}">{{quiz.name}}</a></li>
   <li class="breadcrumb-item active">Results</li>
 {% endblock breadcrumb %}
 
@@ -131,7 +131,7 @@
           {% endif %}
 
         {% endfor %}
-        <a href="{% url 'section' course.pk current_section.pk %}" class="btn btn-block btn-primary">Return to {{ current_section }}</a>
+        <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">Return to {{ section }}</a>
       </div>
     </div>
   </div>

@@ -233,7 +233,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                     return render(
                         request,
                         "quiz.html",
-                        {"course": course, "current_section": section, "quiz": quiz},
+                        {"course": course, "section": section, "quiz": quiz},
                     )
         else:
             raise Http404("You do not fulfill the requirements to access this page.")
@@ -290,7 +290,7 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         "quiz_result.html",
         {
             "course": course,
-            "current_section": section,
+            "section": section,
             "quiz": quiz,
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,

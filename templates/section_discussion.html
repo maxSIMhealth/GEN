@@ -8,14 +8,14 @@
 {% block content %}
   {% if user|is_instructor:course %}
   <div class="mb-3">
-    <a href="{% url 'new_discussion' course.pk current_section.pk %}" class="btn btn-warning">New discussion board</a>
+    <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-warning">New discussion board</a>
   </div>
   {% endif %}
 
-  {% if current_section.description %}
+  {% if section.description %}
   <div class="card bg-light mb-3">
     <div class="card-body">
-      <p class="card-text">{{current_section.description}}</p>
+      <p class="card-text">{{section.description}}</p>
     </div>
   </div>
   {% endif %}
@@ -34,9 +34,9 @@
                 <div class="flex-shrink-1 pr-3">
                   {% if discussion_details.enabled %}
                     {% if discussion_details.voted %}
-                    <a href="{% url 'discussion_clearvote' course.pk current_section.pk item.discussion.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
                     {% else %}
-                    <a href="{% url 'discussion_upvote' course.pk current_section.pk item.discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
                     {% endif %}
                   {% else %}
                     <a href="#" class="btn btn-outline-secondary disabled"><i class="far fa-thumbs-up"></i></a>
@@ -46,7 +46,7 @@
 
               <div class="w-100">
                 {% if discussion_details.enabled %}
-                  <a href="{% url 'discussion_comments' course.pk current_section.pk item.discussion.pk %}">{{ item }}</a>
+                  <a href="{% url 'discussion_comments' course.pk section.pk item.discussion.pk %}">{{ item }}</a>
                 {% else %}
                   <span class="text-muted">{{ item }}</span>
                 {% endif %}

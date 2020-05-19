@@ -8,7 +8,7 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
   <li class="breadcrumb-item active">New discussion board</li>
 {% endblock breadcrumb %}
 

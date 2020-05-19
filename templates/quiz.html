@@ -12,7 +12,7 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
   <li class="breadcrumb-item active">{{quiz.name}}</li>
 {% endblock breadcrumb %}
 
@@ -41,7 +41,7 @@
     <div class="card quiz">
       <h5 class="card-header bg-light">{{quiz.name}}</h5>
       <div class="card-body">
-        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk current_section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
 
           {% for question in quiz.questions.all %}
@@ -99,7 +99,7 @@
 
           {% endfor %}
           <button type="submit" class="btn btn-primary">Submit</button>
-          <a class="btn btn-danger" href="{% url 'section' course.pk current_section.pk %}" role="button">Cancel</a>
+          <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">Cancel</a>
         </form>
       </div>
     </div>

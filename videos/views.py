@@ -39,7 +39,7 @@ def upload_video(request, pk, section_pk):
         return render(
             request,
             "upload_video.html",
-            {"form": form, "course": course, "current_section": section},
+            {"form": form, "course": course, "section": section},
         )
     else:
         raise Http404("This section does not support uploads.")
@@ -61,7 +61,7 @@ def delete_video(request, pk, section_pk, video_pk):
             return render(
                 request,
                 "delete_video_confirmation.html",
-                {"course": course, "current_section": section, "video": video},
+                {"course": course, "section": section, "video": video},
             )
     else:
         return render(request, "permission_error.html")
@@ -76,5 +76,5 @@ def video_player(request, pk, section_pk, video_pk):
     return render(
         request,
         "video_player.html",
-        {"course": course, "current_section": section, "video": video},
+        {"course": course, "section": section, "video": video},
     )

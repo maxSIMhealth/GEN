@@ -52,7 +52,7 @@ def section_page(request, pk, section_pk):
         section_template,
         {
             "course": course_object,
-            "current_section": section_object,
+            "section": section_object,
             "section_items": section_items,
             "gamification": gamification,
         },

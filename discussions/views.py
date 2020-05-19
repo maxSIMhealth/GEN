@@ -77,7 +77,7 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
                 {
                     "discussion": discussion,
                     "course": course,
-                    "current_section": section,
+                    "section": section,
                     "video": video,
                     "form": form,
                     "gamification": gamification,
@@ -136,12 +136,7 @@ def new_discussion(request, pk, section_pk):
     return render(
         request,
         "new_discussion.html",
-        {
-            "discussion": discussion,
-            "course": course,
-            "current_section": section,
-            "form": form,
-        },
+        {"discussion": discussion, "course": course, "section": section, "form": form,},
     )
 
 

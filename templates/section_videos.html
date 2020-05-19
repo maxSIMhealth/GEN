@@ -12,15 +12,15 @@
 {% block content %}
   {% if user|is_instructor:course %}
   <div class="mb-3">
-    <a href="{% url 'upload_video' course.pk current_section.pk %}" class="btn btn-warning">Submit new video</a>
+    <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-warning">Submit new video</a>
   </div>
   {% endif %}
 
 
-  {% if current_section.description %}
+  {% if section.description %}
   <div class="card bg-light mb-3">
     <div class="card-body">
-      <p class="card-text">{{current_section.description}}</p>
+      <p class="card-text">{{section.description}}</p>
     </div>
   </div>
   {% endif %}
@@ -34,13 +34,13 @@
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
                 {% if item.videofile.thumbnail %}
-                <a href="{% url 'video_player' course.pk current_section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail" class="video-thumbnail"></a>
+                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail" class="video-thumbnail"></a>
                 {% else %}
-                <a href="{% url 'video_player' course.pk current_section.pk item.videofile.pk %}"><img src="{% static 'img/thumbnail_missing.png' %}" class="thumbnail" alt="Video thumbnail missing." class="video-thumbnail"></a>
+                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{% static 'img/thumbnail_missing.png' %}" class="thumbnail" alt="Video thumbnail missing." class="video-thumbnail"></a>
                 {% endif %}
               </div>
               <div class="w-100">
-                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk current_section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <p>{{ item.videofile.description }}</p>
 
                 {% if item.videofile.quizzes.all %}
@@ -50,7 +50,7 @@
                   {% quiz_details_get user quiz as quiz_details %}
                   <li>
                     {% if quiz_details.enabled %}
-                      <a href="{% url 'quiz' course.pk current_section.pk quiz.pk %}">{{ quiz }}</a>
+                      <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz }}</a>
                     {% else %}
                       {% if quiz.requirement %}
                         <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{quiz.requirement.name}}</u> to be completed first.">{{ quiz }}</span>
