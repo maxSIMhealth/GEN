@@ -33,6 +33,7 @@ def section_page(request, pk, section_pk):
     course_object = get_object_or_404(Course, pk=pk)
     section_object = get_object_or_404(Section, pk=section_pk)
     section_items = section_object.section_items.filter(published=True)
+    gamification = course_object.enable_gamification
 
     # section_types = Section.SECTION_TYPES
 
@@ -53,5 +54,6 @@ def section_page(request, pk, section_pk):
             "course": course_object,
             "current_section": section_object,
             "section_items": section_items,
+            "gamification": gamification,
         },
     )
