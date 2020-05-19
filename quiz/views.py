@@ -3,7 +3,7 @@ import io
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Max
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 import xlsxwriter
 
@@ -21,6 +21,7 @@ from .models import (
     Quiz,
     QuizScore,
 )
+from .support_methods import quiz_enable_check
 
 
 # FIXME: split quiz_page into multiple methods
@@ -38,182 +39,199 @@ def quiz_page(request, pk, quiz_pk):
     # not completed the quiz
     request.session["quiz_complete"] = False
 
-    if request.method == "POST":
-        flag = False
-        items = list(request.POST)
-        attempt_number = MCQuestionAttempt.objects.filter(
-            quiz=quiz, student=request.user
-        ).aggregate(Max("attempt_number"))
-        # removing csrf token from items list
-        items.pop(0)
-        score = 0
+    if quiz.published:
 
-        # increase attempt number
-        if attempt_number["attempt_number__max"]:
-            current_attempt_number = attempt_number["attempt_number__max"] + 1
-        else:
-            current_attempt_number = 1
+        # check if quiz has a requirement and if it should be enabled
+        (quiz_enabled, _) = quiz_enable_check(request.user, quiz)
 
-        # get each question id and get answer related to it
-        for item in items:
-            try:
-                question_type, question_id = item.split("_")
-            except IndexError:
-                question_id = None
+        if quiz_enabled:
 
-            if question_type == "mcquestion":
-                try:
-                    mcquestion = MCQuestion.objects.get(pk=question_id)
-                except MCQuestion.DoesNotExist:
-                    mcquestion = None
+            if request.method == "POST":
+                flag = False
+                items = list(request.POST)
+                attempt_number = MCQuestionAttempt.objects.filter(
+                    quiz=quiz, student=request.user
+                ).aggregate(Max("attempt_number"))
+                # removing csrf token from items list
+                items.pop(0)
+                score = 0
 
-                try:
-                    user_answers = MCAnswer.objects.filter(
-                        id__in=request.POST.getlist(item)
+                # increase attempt number
+                if attempt_number["attempt_number__max"]:
+                    current_attempt_number = attempt_number["attempt_number__max"] + 1
+                else:
+                    current_attempt_number = 1
+
+                # get each question id and get answer related to it
+                for item in items:
+                    try:
+                        question_type, question_id = item.split("_")
+                    except IndexError:
+                        question_id = None
+
+                    if question_type == "mcquestion":
+                        try:
+                            mcquestion = MCQuestion.objects.get(pk=question_id)
+                        except MCQuestion.DoesNotExist:
+                            mcquestion = None
+
+                        try:
+                            user_answers = MCAnswer.objects.filter(
+                                id__in=request.POST.getlist(item)
+                            )
+                        except IndexError:
+                            user_answers = None
+
+                        # check if the answer is correct
+                        for answer in user_answers:
+                            if MCQuestion.check_if_correct(mcquestion, answer.pk):
+                                # FIXME: consider changing flag to consider
+                                # partially correct answers
+                                flag = True
+                                score += 1
+                            else:
+                                flag = False
+
+                            # store the answers as a new attempt
+                            attempt = MCQuestionAttempt.objects.create(
+                                student=request.user,
+                                quiz=quiz,
+                                course=course,
+                                question=MCQuestion.objects.get(pk=question_id),
+                                correct=flag,
+                                # I've decided to save a pure text version of the answer, in
+                                # case the answer object is altered in the future
+                                answer_content=answer.content,
+                                answer=MCAnswer.objects.get(pk=answer.pk),
+                                attempt_number=current_attempt_number,
+                            )
+
+                            # save attempt data
+                            attempt.save()
+
+                    elif question_type == "openended":
+                        try:
+                            question = OpenEnded.objects.get(pk=question_id)
+                        except OpenEnded.DoesNotExist:
+                            question = None
+
+                        student_answer = request.POST.get(item)
+
+                        # store answers
+                        attempt = OpenEndedAttempt.objects.create(
+                            student=request.user,
+                            quiz=quiz,
+                            course=course,
+                            question=question,
+                            answer_content=student_answer,
+                            attempt_number=current_attempt_number,
+                        )
+
+                        # save attempt data
+                        attempt.save()
+
+                    elif question_type == "likert":
+                        try:
+                            question = Likert.objects.get(pk=question_id)
+                        except Likert.DoesNotExist:
+                            question = None
+
+                        # try to get answer (scale) object
+                        try:
+                            scale = LikertAnswer.objects.get(question=question)
+                        except LikertAnswer.DoesNotExist:
+                            scale = None
+
+                        # get the likert scale value chosen by the participant
+                        student_answer = request.POST.get(item)
+
+                        # check if the student answer is within defined scale
+                        # INFO: decided to not change student answer and treat it on the
+                        # generated report afterwards
+                        if (
+                            not scale.scale_min
+                            <= int(student_answer)
+                            <= scale.scale_max
+                        ):
+                            # student_answer = None
+                            pass
+
+                        # create new attempt
+                        attempt = LikertAttempt.objects.create(
+                            student=request.user,
+                            quiz=quiz,
+                            course=course,
+                            question=question,
+                            attempt_number=current_attempt_number,
+                        )
+
+                        # check if the submitted answer is valid (integer)
+                        try:
+                            attempt.answer_content = student_answer
+                            attempt.save()
+                        except ValueError:
+                            attempt.answer_content = None
+
+                        # save attempt data
+                        attempt.save()
+
+                # change session variable to indicate that the
+                # user completed the quiz
+                request.session["quiz_complete"] = True
+
+                # check if user has quiz score
+                if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
+                    # get student quiz score
+                    quiz_score = QuizScore.objects.get(
+                        student=request.user, course=course, quiz=quiz
                     )
-                except IndexError:
-                    user_answers = None
+                    # update score
+                    quiz_score.score = score
 
-                # check if the answer is correct
-                for answer in user_answers:
-                    if MCQuestion.check_if_correct(mcquestion, answer.pk):
-                        # FIXME: consider changing flag to consider
-                        # partially correct answers
-                        flag = True
-                        score += 1
-                    else:
-                        flag = False
-
-                    # store the answers as a new attempt
-                    attempt = MCQuestionAttempt.objects.create(
-                        student=request.user,
-                        quiz=quiz,
-                        course=course,
-                        question=MCQuestion.objects.get(pk=question_id),
-                        correct=flag,
-                        # I've decided to save a pure text version of the answer, in
-                        # case the answer object is altered in the future
-                        answer_content=answer.content,
-                        answer=MCAnswer.objects.get(pk=answer.pk),
-                        attempt_number=current_attempt_number,
+                else:
+                    # create student quiz score
+                    quiz_score = QuizScore.objects.create(
+                        student=request.user, quiz=quiz, course=course, score=score
                     )
 
-                    # save attempt data
-                    attempt.save()
+                # save score data
+                quiz_score.save()
 
-            elif question_type == "openended":
+                # if flag:
+                return HttpResponseRedirect(reverse("quiz_result", args=[pk, quiz.pk]))
+
+            else:
+                # get latest user attempt number (if it exists)
                 try:
-                    question = OpenEnded.objects.get(pk=question_id)
-                except OpenEnded.DoesNotExist:
-                    question = None
+                    latest_attempt_number = (
+                        QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
+                        .latest("attempt_number")
+                        .attempt_number
+                    )
+                except QuestionAttempt.DoesNotExist:
+                    latest_attempt_number = 0
 
-                student_answer = request.POST.get(item)
+                # check if user reached the maximum number of attempts
+                # check if user has reached the limit of attempts
+                if latest_attempt_number < quiz.attempts_max_number:
+                    attempts_limit_reached = False
+                else:
+                    attempts_limit_reached = True
 
-                # store answers
-                attempt = OpenEndedAttempt.objects.create(
-                    student=request.user,
-                    quiz=quiz,
-                    course=course,
-                    question=question,
-                    answer_content=student_answer,
-                    attempt_number=current_attempt_number,
-                )
+                # if the max number of attempts has been reached, redirect back to quiz list
+                if attempts_limit_reached:
+                    # FIXME: show a message stating that the user has reached the
+                    # maximum number of attempts
+                    return HttpResponseRedirect(reverse("list_quiz", args=[pk]))
 
-                # save attempt data
-                attempt.save()
-
-            elif question_type == "likert":
-                try:
-                    question = Likert.objects.get(pk=question_id)
-                except Likert.DoesNotExist:
-                    question = None
-
-                # try to get answer (scale) object
-                try:
-                    scale = LikertAnswer.objects.get(question=question)
-                except LikertAnswer.DoesNotExist:
-                    scale = None
-
-                # get the likert scale value chosen by the participant
-                student_answer = request.POST.get(item)
-
-                # check if the student answer is within defined scale
-                # INFO: decided to not change student answer and treat it on the
-                # generated report afterwards
-                if not scale.scale_min <= int(student_answer) <= scale.scale_max:
-                    # student_answer = None
-                    pass
-
-                # create new attempt
-                attempt = LikertAttempt.objects.create(
-                    student=request.user,
-                    quiz=quiz,
-                    course=course,
-                    question=question,
-                    attempt_number=current_attempt_number,
-                )
-
-                # check if the submitted answer is valid (integer)
-                try:
-                    attempt.answer_content = student_answer
-                    attempt.save()
-                except ValueError:
-                    attempt.answer_content = None
-
-                # save attempt data
-                attempt.save()
-
-        # change session variable to indicate that the
-        # user completed the quiz
-        request.session["quiz_complete"] = True
-
-        # check if user has quiz score
-        if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
-            # get student quiz score
-            quiz_score = QuizScore.objects.get(
-                student=request.user, course=course, quiz=quiz
-            )
-            # update score
-            quiz_score.score = score
-
+                else:
+                    return render(
+                        request, "quiz.html", {"course": course, "quiz": quiz}
+                    )
         else:
-            # create student quiz score
-            quiz_score = QuizScore.objects.create(
-                student=request.user, quiz=quiz, course=course, score=score
-            )
-
-        # save score data
-        quiz_score.save()
-
-        # if flag:
-        return HttpResponseRedirect(reverse("quiz_result", args=[pk, quiz.pk]))
-
+            raise Http404("You do not fulfill the requirements to access this page.")
     else:
-        # get latest user attempt number (if it exists)
-        try:
-            latest_attempt_number = (
-                QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
-                .latest("attempt_number")
-                .attempt_number
-            )
-        except QuestionAttempt.DoesNotExist:
-            latest_attempt_number = 0
-
-        # check if user reached the maximum number of attempts
-        # check if user has reached the limit of attempts
-        if latest_attempt_number < quiz.attempts_max_number:
-            attempts_limit_reached = False
-        else:
-            attempts_limit_reached = True
-
-        # if the max number of attempts has been reached, redirect back to quiz list
-        if attempts_limit_reached:
-            # FIXME: show a message stating that the user has reached the
-            # maximum number of attempts
-            return HttpResponseRedirect(reverse("list_quiz", args=[pk]))
-
-        else:
-            return render(request, "quiz.html", {"course": course, "quiz": quiz})
+        raise Http404("Quiz does not exist.")
 
 
 @login_required

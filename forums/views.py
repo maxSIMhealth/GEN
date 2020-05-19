@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
 
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -12,6 +13,7 @@ from django.utils import timezone
 from courses.models import Course
 from .forms import NewCommentForm, NewForumForm
 from .models import Comment, Forum
+from .support_methods import discussion_enable_check
 
 
 @login_required
@@ -51,39 +53,50 @@ def course_forums(request, pk):
 
 
 @login_required
-def forum_comments(request, pk, forum_pk):
+def discussion_comments(request, pk, forum_pk):
     course = get_object_or_404(Course, pk=pk)
-    forum = get_object_or_404(Forum, pk=forum_pk)
-    video = forum.video
+    discussion = get_object_or_404(Forum, pk=forum_pk)
+    video = discussion.video
     gamification = course.enable_gamification
 
-    if request.method == "POST":
-        form = NewCommentForm(request.POST)
-        if form.is_valid():
-            forum.last_updated = timezone.now()
-            forum.save()
-            comment = Comment.objects.create(
-                message=form.cleaned_data.get("message"),
-                forum=forum,
-                author=request.user,
-            )
-            comment.save()
-            my_kwargs = dict(pk=course.pk, forum_pk=forum.pk)
-            return redirect("forum_comments", **my_kwargs)
-    else:
-        form = NewCommentForm()
+    if discussion.published:
 
-    return render(
-        request,
-        "comments.html",
-        {
-            "forum": forum,
-            "course": course,
-            "video": video,
-            "form": form,
-            "gamification": gamification,
-        },
-    )
+        # check if discussion has a requirement and if it should be enabled
+        discussion_enabled = discussion_enable_check(request.user, discussion)
+
+        if discussion_enabled:
+
+            if request.method == "POST":
+                form = NewCommentForm(request.POST)
+                if form.is_valid():
+                    discussion.last_updated = timezone.now()
+                    discussion.save()
+                    comment = Comment.objects.create(
+                        message=form.cleaned_data.get("message"),
+                        forum=discussion,
+                        author=request.user,
+                    )
+                    comment.save()
+                    my_kwargs = dict(pk=course.pk, forum_pk=discussion.pk)
+                    return redirect("discussion_comments", **my_kwargs)
+            else:
+                form = NewCommentForm()
+
+            return render(
+                request,
+                "comments.html",
+                {
+                    "forum": discussion,
+                    "course": course,
+                    "video": video,
+                    "form": form,
+                    "gamification": gamification,
+                },
+            )
+        else:
+            raise Http404("You do not fulfill the requirements to access this page.")
+    else:
+        raise Http404("Discussion board does not exist.")
 
 
 @login_required
@@ -144,7 +157,7 @@ def upvote_forum(request, pk, forum_pk):
     my_kwargs = dict(pk=course.pk, forum_pk=forum.pk)
 
     if request.path == path:
-        return redirect("forum_comments", **my_kwargs)
+        return redirect("discussion_comments", **my_kwargs)
     else:
         return redirect("course_forums", pk=course.pk)
 
@@ -161,7 +174,7 @@ def clearvote_forum(request, pk, forum_pk):
     my_kwargs = dict(pk=course.pk, forum_pk=forum.pk)
 
     if request.path == path:
-        return redirect("forum_comments", **my_kwargs)
+        return redirect("discussion_comments", **my_kwargs)
     else:
         return redirect("course_forums", pk=course.pk)
 
@@ -173,7 +186,7 @@ def upvote_comment(request, pk, forum_pk, comment_pk):
 
     my_kwargs = dict(pk=pk, forum_pk=forum_pk)
 
-    return redirect("forum_comments", **my_kwargs)
+    return redirect("discussion_comments", **my_kwargs)
 
 
 @login_required
@@ -183,4 +196,4 @@ def clearvote_comment(request, pk, forum_pk, comment_pk):
 
     my_kwargs = dict(pk=pk, forum_pk=forum_pk)
 
-    return redirect("forum_comments", **my_kwargs)
+    return redirect("discussion_comments", **my_kwargs)

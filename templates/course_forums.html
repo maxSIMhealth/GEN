@@ -81,7 +81,7 @@
               </td>
             {% endif %}
             <td>
-              <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a>
+              <a href="{% url 'discussion_comments' course.pk forum.pk %}">{{ forum.name }}</a>
               <small class="text-muted d-block">{{ forum.description }}</small>
               {% comment %} {% if debug == True %}
                 <div class="alert alert-warning" role="alert">

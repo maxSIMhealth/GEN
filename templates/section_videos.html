@@ -43,7 +43,7 @@
                 <h6><em>Quizzes:</em></h6>
                 <ul class="related-quizzes">
                   {% for quiz in item.videofile.quizzes.all  %}
-                  {% quiz_details_get user course quiz as quiz_details %}
+                  {% quiz_details_get user quiz as quiz_details %}
                   <li>
                     <a href="{% url 'quiz' course.pk quiz.pk %}">{{ quiz }}</a>
                     {% if quiz_details.score.exists %}

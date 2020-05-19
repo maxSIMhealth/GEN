@@ -23,7 +23,7 @@
     <ul class="list-group list-group-flush">
     {% if section_items.all %}
       {% for item in section_items.all %}
-        {% quiz_details_get user course item.quiz as quiz_details %}
+        {% quiz_details_get user item.quiz as quiz_details %}
 
         <li class="list-group-item">
           <div class="d-flex">

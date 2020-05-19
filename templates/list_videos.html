@@ -172,7 +172,7 @@
             <div class="media-body">
               <a href="{{ forum.media.url }}"><span>{{ forum.media.name }} - {{ forum.media.url }}</a></span>
               <div>
-                <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+                <small>Forum: <a href="{% url 'discussion_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
               </div>
             </div>
           </div>

@@ -42,7 +42,7 @@
               </div>
               <div class="w-100">
                 {% if discussion_details.enabled %}
-                  <a href="{% url 'forum_comments' course.pk item.forum.pk %}">{{ item }}</a>
+                  <a href="{% url 'discussion_comments' course.pk item.forum.pk %}">{{ item }}</a>
                 {% else %}
                   <span class="text-muted">{{ item }}</span>
                 {% endif %}

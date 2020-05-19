@@ -83,8 +83,8 @@ urlpatterns = [
     path("courses/<int:pk>/forums/new/", forum_views.new_forum, name="new_forum"),
     path(
         "courses/<int:pk>/forums/<int:forum_pk>/",
-        forum_views.forum_comments,
-        name="forum_comments",
+        forum_views.discussion_comments,
+        name="discussion_comments",
     ),
     path(
         "courses/<int:pk>/forums/<int:forum_pk>/upvote/",

@@ -34,7 +34,7 @@
         <li class="list-group-item">
           <span><a href="{{ forum.media.url }}">{{ forum.media.title }} - {{ forum.media.url }}</a></span>
           <div>
-            <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+            <small>Forum: <a href="{% url 'discussion_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
           </div>
         </li>
       {% empty %}
