@@ -11,38 +11,38 @@ from django.utils import timezone
 # from django.views.generic import ListView
 
 from courses.models import Course, Section
-from .forms import NewCommentForm, NewForumForm
-from .models import Comment, Forum
+from .forms import NewCommentForm, NewDiscussionForm
+from .models import Comment, Discussion
 from .support_methods import discussion_enable_check
 
 # @login_required
 # def list_pdfs(request, pk):
 #     course = get_object_or_404(Course, pk=pk)
-#     forums = course.forums.all()
+#     discussions = course.discussions.all()
 #     media_list = []
 
-#     for forum in forums:
-#         if forum.media.kind == 'PDF':
-#             media_list.append(forum)
+#     for discussion in discussions:
+#         if discussion.media.kind == 'PDF':
+#             media_list.append(discussion)
 
 #     return render(request, 'list_pdfs.html',
-#                   {'course': course, 'forums': forums, 'media_list': media_list})
+#                   {'course': course, 'discussions': discussions, 'media_list': media_list})
 
 
-# class ForumListView(ListView):
+# class DiscussionListView(ListView):
 # https://ccbv.co.uk/projects/Django/2.1/django.views.generic.list/ListView/
 # Render some list of objects, set by `self.model` or `self.queryset`.
 # `self.queryset` can actually be any iterable of items, not just a queryset.
-# model = Forum
-# context_object_name = 'forums'
+# model = Discussion
+# context_object_name = 'discussions'
 # template_name = 'home.html'
 
 
 @login_required
-def discussion_comments(request, pk, section_pk, forum_pk):
+def discussion_comments(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    discussion = get_object_or_404(Forum, pk=forum_pk)
+    discussion = get_object_or_404(Discussion, pk=discussion_pk)
     video = discussion.video
     gamification = course.enable_gamification
 
@@ -60,12 +60,12 @@ def discussion_comments(request, pk, section_pk, forum_pk):
                     discussion.save()
                     comment = Comment.objects.create(
                         message=form.cleaned_data.get("message"),
-                        forum=discussion,
+                        discussion=discussion,
                         author=request.user,
                     )
                     comment.save()
                     my_kwargs = dict(
-                        pk=course.pk, section_pk=section.pk, forum_pk=discussion.pk
+                        pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk
                     )
                     return redirect("discussion_comments", **my_kwargs)
             else:
@@ -75,7 +75,7 @@ def discussion_comments(request, pk, section_pk, forum_pk):
                 request,
                 "comments.html",
                 {
-                    "forum": discussion,
+                    "discussion": discussion,
                     "course": course,
                     "current_section": section,
                     "video": video,
@@ -90,17 +90,17 @@ def discussion_comments(request, pk, section_pk, forum_pk):
 
 
 @login_required
-def new_forum(request, pk, section_pk):
+def new_discussion(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    forums = Forum.objects.all()
+    discussion = Discussion.objects.all()
 
     if request.method == "POST":
-        form = NewForumForm(request.POST)
+        form = NewDiscussionForm(request.POST)
         if "Cancel" in request.POST["submit"]:
             pass
         if "submit" in request.POST and form.is_valid():
-            forum = Forum.objects.create(
+            discussion = Discussion.objects.create(
                 course=course,
                 section=section,
                 published=True,
@@ -109,7 +109,7 @@ def new_forum(request, pk, section_pk):
                 video=form.cleaned_data.get("video"),
                 author=request.user,
             )
-            forum.save()
+            discussion.save()
         return redirect("section", pk=course.pk, section_pk=section.pk)
         # media_form = NewMediaForm(request.POST)
         # if form.is_valid() and media_form.is_valid():
@@ -119,7 +119,7 @@ def new_forum(request, pk, section_pk):
         #         author=request.user,
         #         url=media_form.cleaned_data.get('url'),
         #     )
-        #     forum = Forum.objects.create(
+        #     discussion = Discussion.objects.create(
         #         course=course,
         #         name=form.cleaned_data.get('name'),
         #         description=form.cleaned_data.get('description'),
@@ -127,30 +127,35 @@ def new_forum(request, pk, section_pk):
         #         author=request.user
         #     )
         #     media.save()
-        #     forum.save()
-        #     return redirect('course_forums', pk=course.pk)
+        #     discussion.save()
+        #     return redirect('course_discussions', pk=course.pk)
     else:
-        form = NewForumForm()
+        form = NewDiscussionForm()
         # media_form = NewMediaForm()
 
     return render(
         request,
-        "new_forum.html",
-        {"forums": forums, "course": course, "current_section": section, "form": form},
+        "new_discussion.html",
+        {
+            "discussion": discussion,
+            "course": course,
+            "current_section": section,
+            "form": form,
+        },
     )
 
 
 @login_required
-def upvote_forum(request, pk, section_pk, forum_pk):
+def upvote_discussion(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    forum = Forum.objects.get(pk=forum_pk)
-    forum.votes.up(request.user.id)
+    discussion = Discussion.objects.get(pk=discussion_pk)
+    discussion.votes.up(request.user.id)
 
-    # checking if the user is voting from the forums list or from forum itself
+    # checking if the user is voting from the discussions list or from discussion itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "upvote"
 
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, forum_pk=forum.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
@@ -159,16 +164,16 @@ def upvote_forum(request, pk, section_pk, forum_pk):
 
 
 @login_required
-def clearvote_forum(request, pk, section_pk, forum_pk):
+def clearvote_discussion(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    forum = Forum.objects.get(pk=forum_pk)
-    forum.votes.delete(request.user.id)
+    discussion = Discussion.objects.get(pk=discussion_pk)
+    discussion.votes.delete(request.user.id)
 
-    # checking if the user is voting from the forums list or from forum itself
+    # checking if the user is voting from the discussions list or from discussion itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "clearvote"
 
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, forum_pk=forum.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
@@ -177,20 +182,20 @@ def clearvote_forum(request, pk, section_pk, forum_pk):
 
 
 @login_required
-def upvote_comment(request, pk, section_pk, forum_pk, comment_pk):
+def upvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.up(request.user.id)
 
-    my_kwargs = dict(pk=pk, section_pk=section_pk, forum_pk=forum_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, discussion_pk=discussion_pk)
 
     return redirect("discussion_comments", **my_kwargs)
 
 
 @login_required
-def clearvote_comment(request, pk, section_pk, forum_pk, comment_pk):
+def clearvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.delete(request.user.id)
 
-    my_kwargs = dict(pk=pk, section_pk=section_pk, forum_pk=forum_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, discussion_pk=discussion_pk)
 
     return redirect("discussion_comments", **my_kwargs)

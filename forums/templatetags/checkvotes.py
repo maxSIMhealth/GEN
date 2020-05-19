@@ -1,13 +1,14 @@
 from django import template
-from forums.models import Forum, Comment
+
+from forums.models import Comment, Discussion
 
 register = template.Library()
 
 
 @register.simple_tag
-def checkvotes_forum(user_id, pk):
-    forum = Forum.objects.get(pk=pk)
-    if forum.votes.exists(user_id):
+def checkvotes_discussion(user_id, pk):
+    discussion = Discussion.objects.get(pk=pk)
+    if discussion.votes.exists(user_id):
         return True
     else:
         return False

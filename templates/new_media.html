@@ -2,16 +2,10 @@
 
 {% block title %}Add new Media{% endblock %}
 
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Forums</a></li>
-  <li class="breadcrumb-item">Forum</li>
-  <li class="breadcrumb-item active">Media</li>
-{% endblock breadcrumb %}
-
 {% block content %}
   <form method="post" novalidate>
     {% csrf_token %}
-    
+
     {% include 'includes/form.html' %}
 
     <button type="submit" class="btn btn-success">Post</button>

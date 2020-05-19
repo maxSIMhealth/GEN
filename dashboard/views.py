@@ -9,17 +9,17 @@ def dashboard(request):
     user_progress = []
 
     for course in request.user.member.all():
-        forums = course.forums.all()
+        discussions = course.discussions.all()
         quizzes = course.quizzes.all()
 
         # progress status
-        forums_progress = progress(request, forums)
+        discussions_progress = progress(request, discussions)
         quizzes_progress = progress(request, quizzes)
         course_progress = {
             "name": course.code,
-            "forums": forums_progress,
+            "discussions": discussions_progress,
             "quizzes": quizzes_progress,
-            "max": forums_progress["max"] + quizzes_progress["max"],
+            "max": discussions_progress["max"] + quizzes_progress["max"],
         }
         user_progress.append(course_progress)
 

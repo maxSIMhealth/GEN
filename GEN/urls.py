@@ -25,12 +25,11 @@ from django.views.generic.base import RedirectView
 from accounts import views as account_views
 from courses import views as course_views
 from dashboard import views as dashboard_views
-from forums import views as forum_views
+from forums import views as discussion_views
 from quiz import views as quiz_views
 from videos import views as video_views
 
 urlpatterns = [
-    # path('', views.ForumListView.as_view(), name='home'),
     path(
         "favicon.ico",
         RedirectView.as_view(url=staticfiles_storage.url("im/favicon.ico")),
@@ -105,32 +104,32 @@ urlpatterns = [
     # sections > discussion
     path(
         "courses/<int:pk>/section/<int:section_pk>/discussion/new/",
-        forum_views.new_forum,
-        name="new_forum",
+        discussion_views.new_discussion,
+        name="new_discussion",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/",
-        forum_views.discussion_comments,
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:discussion_pk>/",
+        discussion_views.discussion_comments,
         name="discussion_comments",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/upvote/",
-        forum_views.upvote_forum,
-        name="forum_upvote",
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:discussion_pk>/upvote/",
+        discussion_views.upvote_discussion,
+        name="discussion_upvote",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/clearvote/",
-        forum_views.clearvote_forum,
-        name="forum_clearvote",
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:discussion_pk>/clearvote/",
+        discussion_views.clearvote_discussion,
+        name="discussion_clearvote",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/comment/<int:comment_pk>/upvote/",
-        forum_views.upvote_comment,
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:discussion_pk>/comment/<int:comment_pk>/upvote/",
+        discussion_views.upvote_comment,
         name="comment_upvote",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:forum_pk>/comment/<int:comment_pk>/clearvote/",
-        forum_views.clearvote_comment,
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:discussion_pk>/comment/<int:comment_pk>/clearvote/",
+        discussion_views.clearvote_comment,
         name="comment_clearvote",
     ),
     # admin

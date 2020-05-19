@@ -12,14 +12,14 @@
 {% endblock %}
 
 {% block title %}
-  {{ forum.name }} - {{ block.super }}
+  {{ discussion.name }} - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
-  <li class="breadcrumb-item active">{{ forum.name|truncatechars:50 }}</li>
+  <li class="breadcrumb-item active">{{ discussion.name|truncatechars:50 }}</li>
 {% endblock %}
 
 {% block content %}
@@ -28,12 +28,12 @@
       <div class="row">
         {% if gamification %}
           <div class="col col-2 col-sm-2 col-md-auto col-lg-1 text-center">
-            {% checkvotes_forum user.id forum.pk as forum_vote_status %}
+            {% checkvotes_discussion user.id discussion.pk as discussion_vote_status %}
             {% if user.is_authenticated %}
-              {% if forum_vote_status %}
-                <a href="{% url 'forum_clearvote' course.pk current_section.pk forum.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+              {% if discussion_vote_status %}
+                <a href="{% url 'discussion_clearvote' course.pk current_section.pk discussion.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
               {% else %}
-                <a href="{% url 'forum_upvote' course.pk current_section.pk forum.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                <a href="{% url 'discussion_upvote' course.pk current_section.pk discussion.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
               {% endif %}
             {% else %}
               <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
@@ -45,16 +45,16 @@
         {% else %}
           <div class="col col-12 col-sm-12 col-md-12 col-lg-11 p-1 pl-2">
         {% endif %}
-          <div>{{ forum.name }}</div>
+          <div>{{ discussion.name }}</div>
           {% comment %}
-          <small class="text-muted">By: {{ forum.author }}</small>
+          <small class="text-muted">By: {{ discussion.author }}</small>
           {% endcomment %}
         </div>
       </div>
     </h5>
     <div class="card-body bg-light text-dark p-3">
-      <p class="card-text">{{ forum.description }}</p>
-      {% if forum.video %}
+      <p class="card-text">{{ discussion.description }}</p>
+      {% if discussion.video %}
       <div class="embed-responsive embed-responsive-16by9">
         <video controls>
           <source src="{{ video.file.url }}" type="video/mp4">
@@ -63,12 +63,12 @@
       </div>
       {% endif %}
       {% comment %}
-        {% if forum.media.kind == 'YTB' %}
+        {% if discussion.media.kind == 'YTB' %}
           <div class="embed-responsive embed-responsive-16by9">
-            {% video forum.media.url '800x600' %}
+            {% video discussion.media.url '800x600' %}
           </div>
         {% else %}
-          <object data="{{ forum.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
+          <object data="{{ discussion.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
         {% endif %}
       {% endcomment %}
 
@@ -95,7 +95,7 @@
   <div class="card bg-light mb-2">
     <h5 class="card-header">Comments</h5>
     <ul class="list-group list-group-flush">
-      {% for comment in forum.comments.all %}
+      {% for comment in discussion.comments.all %}
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
         {% checkvotes_comment user.id comment.pk as comment_vote_status %}
 
@@ -106,9 +106,9 @@
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
                 {% if user.is_authenticated %}
                   {% if comment_vote_status %}
-                    <a href="{% url 'comment_clearvote' course.pk current_section.pk forum.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                    <a href="{% url 'comment_clearvote' course.pk current_section.pk discussion.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
                   {% else %}
-                    <a href="{% url 'comment_upvote' course.pk current_section.pk forum.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                    <a href="{% url 'comment_upvote' course.pk current_section.pk discussion.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
                   {% endif %}
                 {% else %}
                   <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
@@ -156,7 +156,7 @@
           </div>
         </li>
       {% empty %}
-        <div class="card-body">This forum has no comments.</div>
+        <div class="card-body">This discussion has no comments.</div>
       {% endfor %}
     </ul>
   </div>

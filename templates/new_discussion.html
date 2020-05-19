@@ -3,13 +3,13 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %}Start a New Forum{% endblock %}
+{% block title %}Start a New Discussion Board{% endblock %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
-  <li class="breadcrumb-item active">New forum</li>
+  <li class="breadcrumb-item active">New discussion board</li>
 {% endblock breadcrumb %}
 
 {% block content %}

@@ -24,7 +24,7 @@ class Course(models.Model):
     enable_gamification = models.BooleanField(
         "gamification",
         default=True,
-        help_text=_("Enables voting in forums and comments"),
+        help_text=_("Enables voting in discussions and comments"),
     )
     show_scoreboard = models.BooleanField(
         default=True, help_text=_("Requires gamification")

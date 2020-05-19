@@ -11,11 +11,8 @@ from .models import VideoFile
 def upload_video(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    # FIXME: the forums object will probably have to be removed later on
-    # forums = course.forums.all()
 
     # check if section type is upload
-
     if section.section_type == "U" or section.section_type == "V":
 
         if request.method == "POST":
@@ -33,17 +30,8 @@ def upload_video(request, pk, section_pk):
                     section=section,
                     published=True,
                 )
-                # TODO: this forum code is functional but will not be used for now
-                # forum = Forum.objects.create(
-                #     course=course,
-                #     name=form.cleaned_data.get('title'),
-                #     description=form.cleaned_data.get('description'),
-                #     video=video,
-                #     author=request.user
-                # )
                 video.save()
                 video.generate_video_thumbnail()
-                # forum.save()
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
             form = UploadVideoForm()
@@ -90,38 +78,3 @@ def video_player(request, pk, section_pk, video_pk):
         "video_player.html",
         {"course": course, "current_section": section, "video": video},
     )
-
-
-# @login_required
-# def video_comments(request, pk, video_pk):
-#     course = get_object_or_404(Course, pk=pk)
-#     forums = course.forums.all()
-#     video = get_object_or_404(VideoFile, pk=video_pk)
-#     forum = forums.filter(name=video.title)[0]
-#     gamification = course.enable_gamification
-
-#     if request.method == 'POST':
-#         form = NewCommentForm(request.POST)
-#         if form.is_valid():
-#             forum.last_updated = timezone.now()
-#             forum.save()
-#             comment = Comment.objects.create(
-#                 message=form.cleaned_data.get('message'),
-#                 forum=forum,
-#                 author=request.user
-#             )
-#             comment.save()
-#             my_kwargs = dict(
-#                 pk=course.pk,
-#                 video_pk=video.pk
-#             )
-#             return redirect('video_comments', **my_kwargs)
-#     else:
-#         form = NewCommentForm()
-
-#     return render(request, 'video_comments.html',
-#                   {'forum': forum,
-#                    'course': course,
-#                    'video': video,
-#                    'form': form,
-#                    'gamification': gamification})

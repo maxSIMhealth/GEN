@@ -1,6 +1,6 @@
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from forums.models import VideoFile
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
+# from discussions.models import VideoFile
 
 
 # @receiver(post_save, sender=VideoFile)

@@ -9,11 +9,11 @@ from .progress import progress
 def course(request, pk):
     course_object = get_object_or_404(Course, pk=pk)
     sections = course_object.sections.filter(published=True)
-    forums = course_object.forums.all()
+    discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
 
     # progress status
-    forums_progress = progress(request, forums)
+    discussions_progress = progress(request, discussions)
     quizzes_progress = progress(request, quizzes)
 
     return render(
@@ -22,7 +22,7 @@ def course(request, pk):
         {
             "course": course_object,
             "sections": sections,
-            "forums_progress": forums_progress,
+            "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
         },
     )

@@ -5,7 +5,7 @@ from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 
 from courses.models import Course, SectionItem
-from forums.models import VideoFile
+from videos.models import VideoFile
 
 
 class Quiz(SectionItem):

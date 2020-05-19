@@ -3,15 +3,14 @@ import logging
 import os
 import tempfile
 
-from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.db import models
 import ffmpeg
 from PIL import Image
 
-# from django.core.files.uploadedfile import InMemoryUploadedFile
-
 from courses.models import Course, SectionItem
+
+# from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -84,8 +83,8 @@ class VideoFile(SectionItem):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to=user_directory_path)
     thumbnail = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
-    # forum = models.ForeignKey(
-    #     Forum, on_delete=models.CASCADE, related_name='video')
+    # discussion = models.ForeignKey(
+    #     Discussion, on_delete=models.CASCADE, related_name='video')
     validators = [FileExtensionValidator(allowed_extensions=("mp4"))]
 
     def generate_video_thumbnail(self):
@@ -130,3 +129,23 @@ class VideoFile(SectionItem):
 
     def __str__(self):
         return self.name
+
+
+# class MediaFile(models.Model):
+#     # FIXME: this should be renamed to DocumentFile or something like that
+
+#     YOUTUBE = "YTB"
+#     PDF = "PDF"
+
+#     ATTACHMENT_KINDS = [
+#         (PDF, "PDF Document"),
+#         (YOUTUBE, "Youtube Video"),
+#     ]
+
+#     title = models.CharField(max_length=100, unique=True)
+#     kind = models.CharField(max_length=3, choices=ATTACHMENT_KINDS, default=YOUTUBE)
+#     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="medias")
+#     url = models.URLField(max_length=200)
+
+#     def __str__(self):
+#         return self.title
