@@ -31,9 +31,6 @@ class Discussion(VoteModel, SectionItem):
         null=True,
     )
 
-    def __str__(self):
-        return self.name
-
     def get_comment_count(self):
         return Discussion.objects.filter(comments__discussion=self).count()
 

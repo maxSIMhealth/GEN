@@ -36,9 +36,6 @@ class Quiz(SectionItem):
     def get_questions(self):
         return self.questions.all().select_subclasses()
 
-    def __str__(self):
-        return self.name
-
 
 class Question(TimeStampedModel):
     """

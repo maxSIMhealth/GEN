@@ -127,9 +127,6 @@ class VideoFile(SectionItem):
         self.thumbnail.delete()  # Delete the thumbnail file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
-    def __str__(self):
-        return self.name
-
 
 # class MediaFile(models.Model):
 #     # FIXME: this should be renamed to DocumentFile or something like that

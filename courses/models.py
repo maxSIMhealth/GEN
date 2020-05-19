@@ -35,7 +35,8 @@ class Course(models.Model):
     show_progress_tracker = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        output = "ID {0} - {1}".format(self.pk, self.name)
+        return output
 
     def clean(self):
         # check course dates
@@ -116,4 +117,5 @@ class SectionItem(TimeStampedModel):
         ordering = ["custom_order"]
 
     def __str__(self):
-        return self.name
+        output = "ID {0} - {1}".format(self.pk, self.name)
+        return output
