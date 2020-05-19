@@ -1,4 +1,4 @@
-{% extends 'base_course.html' %}
+{% extends 'base_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -131,7 +131,7 @@
           {% endif %}
 
         {% endfor %}
-        <a href="{% url 'section' course.pk current_section.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
+        <a href="{% url 'section' course.pk current_section.pk %}" class="btn btn-block btn-primary">Return to {{ current_section }}</a>
       </div>
     </div>
   </div>
