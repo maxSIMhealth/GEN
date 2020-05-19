@@ -65,7 +65,12 @@ class Section(models.Model):
     name = models.CharField(
         max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
     )
-    description = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(
+        max_length=200,
+        blank=True,
+        null=True,
+        help_text=_("Course description (max 200 characters)"),
+    )
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="sections"
     )
@@ -87,7 +92,9 @@ class Section(models.Model):
 class SectionItem(TimeStampedModel):
     name = models.CharField(max_length=30, unique=False)
     related_name = "section_items"
-    description = models.CharField(max_length=200)
+    description = models.CharField(
+        max_length=200, help_text=_("Brief description (max 200 characters)")
+    )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name=related_name
     )
@@ -101,7 +108,6 @@ class SectionItem(TimeStampedModel):
         related_name=related_name,
     )
     published = models.BooleanField(default=False)
-    show_score = models.BooleanField(default=False)
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     objects = InheritanceManager()

@@ -13,6 +13,8 @@ class Quiz(SectionItem):
     Quiz model
     """
 
+    show_score = models.BooleanField(default=False)
+    show_correct_answers = models.BooleanField(default=False)
     course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="quizzes")
     video = models.ForeignKey(
         VideoFile,
@@ -27,7 +29,6 @@ class Quiz(SectionItem):
     attempts_max_number = models.PositiveIntegerField(
         default=1, blank=False, null=False
     )
-    show_correct_answers = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "quizzes"

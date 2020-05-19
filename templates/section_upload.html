@@ -1,0 +1,93 @@
+{% extends 'base_section.html' %}
+
+{% load static %}
+{% load humanize %}
+{% load is_instructor %}
+{% load quiz_details_get %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+  <div class="mb-3">
+    <a href="{% url 'upload_video' course.pk %}" class="btn btn-primary">Submit new user video</a>
+  </div>
+
+  {% if current_section.description %}
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <p class="card-text">{{current_section.description}}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="card mb-3 section-upload">
+    <h5 class="card-header bg-light">Upload</h5>
+    <div class="card-body pb-2 pt-2">
+      <div class="alert alert-info mb-0" role="alert">
+        Uploads are <strong>private</strong>, only accessible by you and by the course instructor(s).
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% if section_items.all %}
+        {% for item in section_items.all %}
+          <li class="list-group-item">
+            <div class="d-flex">
+              <div class="flex-shrink-1 pr-3">
+                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+                <div class="text-center mt-1">
+                  <a href="{% url 'delete_video' course.pk item.videofile.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+              </div>
+              <div class="w-100">
+                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                <p>{{ item.videofile.description }}</p>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="list-group-item">
+          <span>You have not submitted any content.</span>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  {% if user|is_instructor:course %}
+  <div class="card border-warning mb-3 section-upload">
+    <h5 class="card-header bg-light">Participants' Uploads</h5>
+    <div class="card-body pb-2 pt-2">
+      <div class="alert alert-warning mb-0" role="alert">
+        These are the videos that have been submitted by the participants.
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% if section_items.all %}
+        {% for item in current_section.section_items.all %}
+          <li class="list-group-item">
+            <div class="d-flex">
+              <div class="flex-shrink-1 pr-3">
+                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+              </div>
+              <div class="w-100">
+                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                <div class="video-user-info">
+                  <em>By:</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}}) <br />
+                  <em>Submission date:</em> {{item.videofile.uploaded_at}}
+                </div>
+                <p>{{ item.videofile.description }}</p>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="list-group-item">
+          <span>No participant has submitted any content.</span>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endif %}
+{% endblock content %}

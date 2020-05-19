@@ -30,6 +30,7 @@ def course(request, pk):
 def section_page(request, pk, section_pk):
     course_object = get_object_or_404(Course, pk=pk)
     section_object = get_object_or_404(Section, pk=section_pk)
+    section_items = section_object.section_items.filter(published=True)
 
     # section_types = Section.SECTION_TYPES
 
@@ -39,9 +40,16 @@ def section_page(request, pk, section_pk):
         section_template = "section_discussion.html"
     elif section_object.section_type == "V":
         section_template = "section_videos.html"
+    elif section_object.section_type == "U":
+        section_template = "section_upload.html"
+        section_items = section_items.filter(author=request.user)
 
     return render(
         request,
         section_template,
-        {"course": course_object, "current_section": section_object},
+        {
+            "course": course_object,
+            "current_section": section_object,
+            "section_items": section_items,
+        },
     )

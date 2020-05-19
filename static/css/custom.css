@@ -1,12 +1,16 @@
 /* section: quiz */
-.list-group-item div span.badge {
+.section-quiz .list-group-item div span.badge {
   line-height: 1.4;
 }
 
-/* videos list */
-.video-thumbnail {
+/* section: video */
+.section-video .video-thumbnail {
     width: 96px;
     height: 54px
+}
+
+.section-video .related-quizzes {
+  padding-left: 30px
 }
 
 /* forum comments */

@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load is_instructor %}
+{% load quiz_details_get %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -24,50 +25,39 @@
   </div>
   {% endif %}
 
-  <div class="card mb-3">
+  <div class="card mb-3 section-video">
     <h5 class="card-header bg-light">Videos</h5>
-    <div class="card-body pb-0">
-      {% comment %}
-      <h6 class="card-subtitle mb-2 text-muted">These are the course videos published by the instructor(s).</h6>
-      {% endcomment %}
-      <table class="table mb-0 course-videos">
-        <tbody>
-          {% for item in current_section.section_items.all %}
-          <tr>
-            <th scope="row" class="th-small">
+    <ul class="list-group list-group-flush">
+      {% for item in section_items.all %}
+        <li class="list-group-item">
+          <div class="d-flex">
+            <div class="flex-shrink-1 pr-3">
               <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
-              {% comment %}
-              <video controls poster="{{ item.videofile.thumbnail.url }}">
-                <source src="{{ item.videofile.file.url }}" type="video/mp4">
-                Sorry, your browser doesn't support embedded videos.
-              </video>
-              {% endcomment %}
-            </th>
-            <td>
+            </div>
+            <div class="w-100">
               <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
-              <small>{{ item.videofile.description }}</small>
-              {% comment %}
-              <div class="media-buttons btn-group mt-2" role="group" aria-label="Buttons to access video's discussion board and quiz">
-                <a class='btn btn-outline-primary' href="{% url 'video_comments' course.pk item.videofile.pk %}">
-                  <div style='text-align:center;'><i class="far fa-comment"></i></div>
-                    Discuss
-                </a>
-                <button class='btn btn-success' disabled>
-                  <div style='text-align:center;'><i class="far fa-check-circle"></i></div>
-                    Take quiz
-                </button>
-              </div>
-              {% endcomment %}
-            </td>
-          </tr>
-          {% empty %}
-          <div class="mb-3">
-            Nothing to show.
-          </div>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+              <p>{{ item.videofile.description }}</p>
 
+              {% if item.videofile.quizzes.all %}
+              <h6><em>Quizzes:</em></h6>
+              <ul class="related-quizzes">
+                {% for quiz in item.videofile.quizzes.all  %}
+                {% quiz_details_get user course quiz as quiz_details %}
+                <li>
+                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{ quiz }}</a>
+                  {% if quiz_details.score.exists %}
+                  <span class="badge badge-success badge-pill">Submitted</span>
+                  {% else %}
+                  <span class="badge badge-warning badge-pill">To do</span>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock content %}
