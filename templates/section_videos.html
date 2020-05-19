@@ -28,36 +28,42 @@
   <div class="card mb-3 section-video">
     <h5 class="card-header bg-light">Videos</h5>
     <ul class="list-group list-group-flush">
-      {% for item in section_items.all %}
-        <li class="list-group-item">
-          <div class="d-flex">
-            <div class="flex-shrink-1 pr-3">
-              <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
-            </div>
-            <div class="w-100">
-              <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
-              <p>{{ item.videofile.description }}</p>
+      {% if section_items.all %}
+        {% for item in section_items.all %}
+          <li class="list-group-item">
+            <div class="d-flex">
+              <div class="flex-shrink-1 pr-3">
+                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+              </div>
+              <div class="w-100">
+                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                <p>{{ item.videofile.description }}</p>
 
-              {% if item.videofile.quizzes.all %}
-              <h6><em>Quizzes:</em></h6>
-              <ul class="related-quizzes">
-                {% for quiz in item.videofile.quizzes.all  %}
-                {% quiz_details_get user course quiz as quiz_details %}
-                <li>
-                  <a href="{% url 'quiz' course.pk quiz.pk %}">{{ quiz }}</a>
-                  {% if quiz_details.score.exists %}
-                  <span class="badge badge-success badge-pill">Submitted</span>
-                  {% else %}
-                  <span class="badge badge-warning badge-pill">To do</span>
-                  {% endif %}
-                </li>
-                {% endfor %}
-              </ul>
-              {% endif %}
+                {% if item.videofile.quizzes.all %}
+                <h6><em>Quizzes:</em></h6>
+                <ul class="related-quizzes">
+                  {% for quiz in item.videofile.quizzes.all  %}
+                  {% quiz_details_get user course quiz as quiz_details %}
+                  <li>
+                    <a href="{% url 'quiz' course.pk quiz.pk %}">{{ quiz }}</a>
+                    {% if quiz_details.score.exists %}
+                    <span class="badge badge-success badge-pill">Submitted</span>
+                    {% else %}
+                    <span class="badge badge-warning badge-pill">To do</span>
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </div>
             </div>
-          </div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <li class="list-group-item">
+          No video available.
         </li>
-      {% endfor %}
+      {% endif %}
     </ul>
   </div>
 {% endblock content %}

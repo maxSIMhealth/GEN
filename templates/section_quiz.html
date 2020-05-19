@@ -21,43 +21,47 @@
   <div class="card mb-3 section-quiz">
     <h5 class="card-header bg-light">Quizzes</h5>
     <div class="list-group list-group-flush">
-    {% for item in section_items.all %}
-      {% quiz_details_get user course item.quiz as quiz_details %}
+    {% if section_items.all %}
+      {% for item in section_items.all %}
+        {% quiz_details_get user course item.quiz as quiz_details %}
 
-      {% if quiz_details.enabled %}
-      <a class="list-group-item" href="{% url 'quiz' course.pk item.quiz.pk %}">
-      {% else %}
-      <a class="list-group-item disabled" href="#">
-      {% endif %}
-        <div class="d-flex w-100 justify-content-between">
-          <h6 class="mb-1">{{ item }}</h6>
-          {% if quiz_details.score.exists %}
-          <span class="badge badge-success badge-pill">Submitted</span>
-          {% else %}
-          <span class="badge badge-warning badge-pill">To do</span>
-          {% endif %}
-
-          {% comment %}
-          <span class="badge badge-danger badge-pill">Did not submit</span>
-          {% endcomment %}
-        </div>
-        <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
-        {% if item.quiz.show_score %}
-        <p class="mb-0">
-          <small class="text-muted">
-            <strong>Score:</strong>
+        {% if quiz_details.enabled %}
+        <a class="list-group-item" href="{% url 'quiz' course.pk item.quiz.pk %}">
+        {% else %}
+        <a class="list-group-item disabled" href="#">
+        {% endif %}
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1">{{ item }}</h6>
             {% if quiz_details.score.exists %}
-              {{quiz_details.score.get.score}}
+            <span class="badge badge-success badge-pill">Submitted</span>
             {% else %}
-              --
+            <span class="badge badge-warning badge-pill">To do</span>
             {% endif %}
-          </small>
-        </p>
-        {% endif %}
-        {% if item.quiz.requirement %}
-        <small class="text-muted">Note: <em>Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.</em></small>
-        {% endif %}
-      </a>
-    {% endfor %}
+
+            {% comment %}
+            <span class="badge badge-danger badge-pill">Did not submit</span>
+            {% endcomment %}
+          </div>
+          <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
+          {% if item.quiz.show_score %}
+          <p class="mb-0">
+            <small class="text-muted">
+              <strong>Score:</strong>
+              {% if quiz_details.score.exists %}
+                {{quiz_details.score.get.score}}
+              {% else %}
+                --
+              {% endif %}
+            </small>
+          </p>
+          {% endif %}
+          {% if item.quiz.requirement %}
+          <small class="text-muted">Note: <em>Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.</em></small>
+          {% endif %}
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="list-group-item">No quiz available.</div>
+    {% endif %}
   </div>
 {% endblock content %}
