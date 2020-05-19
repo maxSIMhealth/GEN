@@ -25,7 +25,7 @@ from django.views.generic.base import RedirectView
 from accounts import views as account_views
 from courses import views as course_views
 from dashboard import views as dashboard_views
-from forums import views as discussion_views
+from discussions import views as discussion_views
 from quiz import views as quiz_views
 from videos import views as video_views
 

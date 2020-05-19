@@ -13,7 +13,7 @@
   padding-left: 30px
 }
 
-/* forum comments */
+/* discussions comments */
 .user-thumbnail {
     width: 100%;
     height: 400px;
@@ -41,11 +41,6 @@
 
 .video+.quiz .card-body form {
     margin-bottom: 20px;
-}
-
-/* forum list */
-.forum-list .th-small {
-    width: 5%;
 }
 
 /* quiz: likert scale */

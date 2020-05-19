@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "core",
     "accounts",
     "courses",
-    "forums",
+    "discussions",
     "dashboard",
     "quiz",
     "videos",
