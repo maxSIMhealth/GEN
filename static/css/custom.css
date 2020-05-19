@@ -5,8 +5,8 @@
 
 /* section: video */
 .section-video .video-thumbnail {
-    width: 96px;
-    height: 54px
+    width: 128px;
+    height: 128px;
 }
 
 .section-video .related-quizzes {

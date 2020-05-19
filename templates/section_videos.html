@@ -33,7 +33,11 @@
           <li class="list-group-item">
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+                {% if item.videofile.thumbnail %}
+                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail" class="video-thumbnail"></a>
+                {% else %}
+                <a href="{% url 'video_player' course.pk item.videofile.pk %}"><img src="{% static 'img/thumbnail_missing.png' %}" class="thumbnail" alt="Video thumbnail missing." class="video-thumbnail"></a>
+                {% endif %}
               </div>
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
