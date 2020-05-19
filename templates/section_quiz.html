@@ -29,7 +29,7 @@
           <div class="d-flex">
             <div class="w-100">
               {% if quiz_details.enabled %}
-                <a href="{% url 'quiz' course.pk item.quiz.pk %}">{{ item }}</a>
+                <a href="{% url 'quiz' course.pk current_section.pk item.quiz.pk %}">{{ item }}</a>
               {% else %}
                 <span class="text-muted">{{ item }}</span>
               {% endif %}

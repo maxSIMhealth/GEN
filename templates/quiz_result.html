@@ -13,52 +13,18 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'list_quiz' course.pk %}">Quiz</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'quiz' course.pk quiz.pk%}">{{quiz.name}}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'quiz' course.pk current_section.pk quiz.pk%}">{{quiz.name}}</a></li>
   <li class="breadcrumb-item active">Results</li>
 {% endblock breadcrumb %}
 
-{% block content_tabs %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
-  </li>
-  {% comment %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
-  </li>
-  {% endcomment %}
-  <li class="nav-item">
-    <a class="nav-link active" href="{% url 'list_quiz' course.pk %}">Quizzes</a>
-  </li>
-{% endblock content_tabs %}
-
 {% block content %}
-
-  {% comment %}
-  {% if debug == True %}
-  <div class="alert alert-warning" role="alert">
-    *DEBUG* <br />
-    user_id: {{ user.id }} <br />
-    course_pk: {{ course.pk }} <br />
-    quiz_pk: {{ quiz.pk }} <br />
-    quiz.video.url: {{quiz.video.url}} <br />
-    quiz.get_questions: {{quiz.get_questions}}
-  </div>
-  {% endif %}
-  {% endcomment %}
-
   <div class="card-deck mb-3">
     <div class="card bg-secondary text-white">
       <h5 class="card-header bg-dark">Result</h5>
       <div class="card-body">
         Thank you for your submission for <em>{{quiz.name}}</em>.<br />
-        
+
         {% if quiz.show_score %}
           Your score is {{score}}.
         {% endif %}
@@ -74,7 +40,7 @@
           <h5 class="card-title">
             <strong>{{question.content}}</strong>
             <hr />
-          </h5> 
+          </h5>
           {% else %}
           <h6 class="card-title">
             <strong>{{question.content}}</strong>
@@ -82,7 +48,7 @@
           {% endif %}
 
           {% if question|check_attribute:'mcquestion' %}
-            {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}  
+            {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
             <ul class="list-group mb-3">
               {% if quiz.show_correct_answers %}
                 {% for choice in question.mcquestion.get_answers %}
@@ -100,7 +66,7 @@
                       {% endfor %}
                       >
                       {{choice.content}}
-                      </label>  
+                      </label>
                     </li>
                 {% endfor %}
               {% else %}
@@ -115,7 +81,7 @@
                     {% endfor %}
                     >
                     {{choice.content}}
-                    </label>  
+                    </label>
                   </li>
                 {% endfor %}
               {% endif %}
@@ -138,12 +104,12 @@
                     </div>
                   {% endfor %}
                 </div>
-                
+
                 {% if answer.legend %}
                   <div class="likert-legend card-footer text-muted">
                     <em>Scale legend:</em>
                     {{answer.legend|linebreaks}}
-                  </div>  
+                  </div>
                 {% endif %}
               {% endfor %}
             </div>
@@ -153,7 +119,7 @@
               <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer}}{% endif %}{% endfor %}</textarea>
             </div>
           {% endif %}
-          
+
           {% if question.explanation %}
           <div class="card bg-light mr-0 ml-0 mb-4">
             <div class="card-body">
@@ -165,7 +131,7 @@
           {% endif %}
 
         {% endfor %}
-        <a href="{% url 'list_quiz' course.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
+        <a href="{% url 'section' course.pk current_section.pk %}" class="btn btn-block btn-primary">Return to quiz list</a>
       </div>
     </div>
   </div>

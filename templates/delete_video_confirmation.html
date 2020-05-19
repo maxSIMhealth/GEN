@@ -18,7 +18,7 @@
     <form method="post" novalidate>
         {% csrf_token %}
         <button type="submit" name="confirm" value="confirm" class="btn btn-danger">Yes, delete video</button>
-        <a href="{% url 'list_videos' course.pk %}" class="btn btn-secondary">No, cancel</a>
+        <a href="{% url 'section' course.pk current_section.pk %}" class="btn btn-secondary">No, cancel</a>
       </form>
   </div>
 {% endblock content %}

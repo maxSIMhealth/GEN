@@ -7,48 +7,6 @@ from .forms import UploadVideoForm
 from .models import VideoFile
 
 
-# TODO: delete
-@login_required
-def list_videos(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    forums = course.forums.all()
-    user = request.user
-
-    # filter videos submitted by instructors
-    course_instructors = course.instructors.all()
-    course_videos = course.videos.filter(author__in=course_instructors)
-
-    # gets the videos submitted by the user
-    user_videos = user.videos.get_queryset().filter(course=course)
-
-    # checks if the current user is a course instructor
-    if course in user.instructor.all():
-        # returns all participants videos to the instructor (excluding his own)
-        participants_videos = course.videos.exclude(author=user)
-    else:
-        participants_videos = ""
-    #     # returns only videos submitted by current user
-    #     user_videos = user.videos.get_queryset()
-
-    # TODO: old code, check if it should be deleted
-    # media_list = []
-    # for forum in forums:
-    #     if forum.media.kind == 'YTB':
-    #         media_list.append(forum)
-
-    return render(
-        request,
-        "list_videos.html",
-        {
-            "course": course,
-            "forums": forums,
-            "course_videos": course_videos,
-            "user_videos": user_videos,
-            "participants_videos": participants_videos,
-        },
-    )
-
-
 @login_required
 def upload_video(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
@@ -93,15 +51,16 @@ def upload_video(request, pk, section_pk):
         return render(
             request,
             "upload_video.html",
-            {"form": form, "course": course, "section": section},
+            {"form": form, "course": course, "current_section": section},
         )
     else:
         raise Http404("This section does not support uploads.")
 
 
 @login_required
-def delete_video(request, pk, video_pk):
+def delete_video(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=video_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
@@ -109,23 +68,28 @@ def delete_video(request, pk, video_pk):
         if request.method == "POST":
             if "confirm" in request.POST:
                 video.delete()
-                return redirect("list_videos", pk=course.pk)
+                return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
             return render(
                 request,
                 "delete_video_confirmation.html",
-                {"course": course, "video": video},
+                {"course": course, "current_section": section, "video": video},
             )
     else:
         return render(request, "permission_error.html")
 
 
 @login_required
-def video_player(request, pk, video_pk):
+def video_player(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=video_pk)
 
-    return render(request, "video_player.html", {"course": course, "video": video})
+    return render(
+        request,
+        "video_player.html",
+        {"course": course, "current_section": section, "video": video},
+    )
 
 
 # @login_required

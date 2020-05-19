@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 import xlsxwriter
 
-from forums.models import Course
+from courses.models import Course, Section
 from .models import (
     Likert,
     LikertAnswer,
@@ -26,13 +26,14 @@ from .support_methods import quiz_enable_check
 
 # FIXME: split quiz_page into multiple methods
 @login_required
-def quiz_page(request, pk, quiz_pk):
+def quiz_page(request, pk, section_pk, quiz_pk):
     """
     Renders quiz page and handles submission requests
     """
 
     # get objects
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
 
     # set session variable to indicate that the user has
@@ -198,7 +199,9 @@ def quiz_page(request, pk, quiz_pk):
                 quiz_score.save()
 
                 # if flag:
-                return HttpResponseRedirect(reverse("quiz_result", args=[pk, quiz.pk]))
+                return HttpResponseRedirect(
+                    reverse("quiz_result", args=[pk, section.pk, quiz.pk])
+                )
 
             else:
                 # get latest user attempt number (if it exists)
@@ -222,11 +225,15 @@ def quiz_page(request, pk, quiz_pk):
                 if attempts_limit_reached:
                     # FIXME: show a message stating that the user has reached the
                     # maximum number of attempts
-                    return HttpResponseRedirect(reverse("list_quiz", args=[pk]))
+                    return HttpResponseRedirect(
+                        reverse("section", args=[pk, section.pk])
+                    )
 
                 else:
                     return render(
-                        request, "quiz.html", {"course": course, "quiz": quiz}
+                        request,
+                        "quiz.html",
+                        {"course": course, "current_section": section, "quiz": quiz},
                     )
         else:
             raise Http404("You do not fulfill the requirements to access this page.")
@@ -235,9 +242,10 @@ def quiz_page(request, pk, quiz_pk):
 
 
 @login_required
-def quiz_result(request, pk, quiz_pk):
+def quiz_result(request, pk, section_pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
     # get quiz score object
     quiz_score_kwargs = dict(student=request.user, quiz=quiz, course=course)
@@ -246,7 +254,7 @@ def quiz_result(request, pk, quiz_pk):
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
     if request.session.get("quiz_complete") is False:
-        return HttpResponseRedirect(reverse("list_quiz", args=[pk]))
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
     # get latest attempt number
     latest_attempt_number = (
@@ -282,6 +290,7 @@ def quiz_result(request, pk, quiz_pk):
         "quiz_result.html",
         {
             "course": course,
+            "current_section": section,
             "quiz": quiz,
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,
@@ -323,14 +332,6 @@ def user_attempt(request):
     response["Content-Disposition"] = "attachment; filename=%s" % filename
 
     return response
-
-
-@login_required
-def list_quiz(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    quizzes = course.quizzes.all().filter(published=True)
-
-    return render(request, "list_quiz.html", {"course": course, "quizzes": quizzes})
 
 
 def create_attempt_sheet(workbook, user):

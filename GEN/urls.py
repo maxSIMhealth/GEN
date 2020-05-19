@@ -56,29 +56,7 @@ urlpatterns = [
         name="password_change_done",
     ),
     path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
-    # FIXME: finish implementing social login
-    # path("settings/", account_views.settings, name="settings"),
     path("courses/<int:pk>/", course_views.course, name="course"),
-    path("courses/<int:pk>/videos/", video_views.list_videos, name="list_videos"),
-    path(
-        "courses/<int:pk>/videos/upload", video_views.upload_video, name="upload_video"
-    ),
-    path(
-        "courses/<int:pk>/videos/<int:video_pk>/delete",
-        video_views.delete_video,
-        name="delete_video",
-    ),
-    path(
-        "courses/<int:pk>/videos/<int:video_pk>/",
-        video_views.video_player,
-        name="video_player",
-    ),
-    # FIXME: video_comment is functional but needs some adjustments and also
-    # have to decided if it will continue to exist or not
-    # path('courses/<int:pk>/videos/<int:video_pk>/comments',
-    #      views.video_comments, name='video_comments'),
-    # FIXME: list_pdfs has to be reimplemented
-    # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
     path("courses/<int:pk>/forums/", forum_views.course_forums, name="course_forums"),
     path("courses/<int:pk>/forums/new/", forum_views.new_forum, name="new_forum"),
     path(
@@ -106,14 +84,6 @@ urlpatterns = [
         forum_views.clearvote_comment,
         name="comment_clearvote",
     ),
-    path("courses/<int:pk>/quiz/", quiz_views.list_quiz, name="list_quiz"),
-    path("courses/<int:pk>/quiz/<int:quiz_pk>/", quiz_views.quiz_page, name="quiz"),
-    path(
-        "courses/<int:pk>/quiz/<int:quiz_pk>/result/",
-        quiz_views.quiz_result,
-        name="quiz_result",
-    ),
-    path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
     # account activation
     url(
         r"^account_activation_sent/$",
@@ -131,15 +101,46 @@ urlpatterns = [
         course_views.section_page,
         name="section",
     ),
+    # sections > video
     path(
         "courses/<int:pk>/section/<int:section_pk>/upload/",
         video_views.upload_video,
         name="upload_video",
     ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/delete",
+        video_views.delete_video,
+        name="delete_video",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/",
+        video_views.video_player,
+        name="video_player",
+    ),
+    # sections > quiz
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/",
+        quiz_views.quiz_page,
+        name="quiz",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/result/",
+        quiz_views.quiz_result,
+        name="quiz_result",
+    ),
+    path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
     # admin
     path("admin/", admin.site.urls),
     # tests
     # path('oauth/', include('social_django.urls', namespace='social')),
+    # FIXME: finish implementing social login
+    # path("settings/", account_views.settings, name="settings"),
+    # FIXME: video_comment is functional but needs some adjustments and also
+    # have to decided if it will continue to exist or not
+    # path('courses/<int:pk>/videos/<int:video_pk>/comments',
+    #      views.video_comments, name='video_comments'),
+    # FIXME: list_pdfs has to be reimplemented
+    # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
 ]
 
 if settings.DEBUG:

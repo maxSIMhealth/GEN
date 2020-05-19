@@ -1,4 +1,4 @@
-{% extends 'base_course.html' %}
+{% extends 'base_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -12,42 +12,12 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'list_quiz' course.pk %}">Quiz</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk current_section.pk %}">{{ current_section }}</a></li>
   <li class="breadcrumb-item active">{{quiz.name}}</li>
 {% endblock breadcrumb %}
 
-{% block content_tabs %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Quizzes</a>
-  </li>
-{% endblock content_tabs %}
-
 {% block content %}
-
-  {% comment %}
-  {% if debug == True %}
-  <div class="alert alert-warning" role="alert">
-    *DEBUG* <br />
-    user_id: {{ user.id }} <br />
-    course_pk: {{ course.pk }} <br />
-    quiz_pk: {{ quiz.pk }} <br />
-    quiz.video.file.url: {{quiz.video.file.url}} <br />
-    quiz.get_questions: {{quiz.get_questions}}
-  </div>
-  {% endif %}
-  {% endcomment %}
-
   <div class="card-deck">
-    
     {% if quiz.video %}
     <div class="card bg-secondary text-white video">
       <h5 class="card-header bg-dark">Video</h5>
@@ -71,11 +41,11 @@
     <div class="card quiz">
       <h5 class="card-header bg-light">{{quiz.name}}</h5>
       <div class="card-body">
-        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk current_section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
 
           {% for question in quiz.questions.all %}
-            
+
             {% if question|check_attribute:'questiongroupheader' %}
             <h5>
               <strong>{{question.content}}</strong>
@@ -86,7 +56,7 @@
               <strong>{{question.content}}</strong>
             </h6>
             {% endif %}
-            
+
             {% if question|check_attribute:'mcquestion' %}
             <ul class="list-group mb-3">
               {% for choice in question.mcquestion.get_answers %}
@@ -97,7 +67,7 @@
               </li>
               {% endfor %}
             </ul>
-            
+
             {% elif question|check_attribute:'likert' %}
             <div class="card ml-0 mr-0 mb-4">
               {% for answer in question.likert.get_answers %}
@@ -109,18 +79,18 @@
                   </div>
                   {% endfor %}
                 </div>
-                
+
                 {% if answer.legend %}
                 <div class="likert-legend card-footer text-muted">
                   <em>Scale legend:</em>
                   {{answer.legend|linebreaks}}
-                </div>  
+                </div>
                 {% endif %}
               {% endfor %}
             </div>
 
             {% elif question|check_attribute:'openended' %}
-              
+
             <div class="mb-3">
               <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>
             </div>
@@ -129,7 +99,7 @@
 
           {% endfor %}
           <button type="submit" class="btn btn-primary">Submit</button>
-          <a class="btn btn-danger" href="{% url 'list_quiz' course.pk %}" role="button">Cancel</a>
+          <a class="btn btn-danger" href="{% url 'section' course.pk current_section.pk %}" role="button">Cancel</a>
         </form>
       </div>
     </div>
