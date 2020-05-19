@@ -31,13 +31,13 @@
             {% checkvotes_discussion user.id discussion.pk as discussion_vote_status %}
             {% if user.is_authenticated %}
               {% if discussion_vote_status %}
-                <a href="{% url 'discussion_clearvote' course.pk current_section.pk discussion.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                <a href="{% url 'discussion_clearvote' course.pk current_section.pk discussion.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
               {% else %}
-                <a href="{% url 'discussion_upvote' course.pk current_section.pk discussion.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                <a href="{% url 'discussion_upvote' course.pk current_section.pk discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
               {% endif %}
             {% else %}
               <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-                <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-heart"></i></a>
+                <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-thumbs-up"></i></a>
               </span>
             {% endif %}
           </div>
@@ -106,13 +106,13 @@
               <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
                 {% if user.is_authenticated %}
                   {% if comment_vote_status %}
-                    <a href="{% url 'comment_clearvote' course.pk current_section.pk discussion.pk comment.pk %}" class="btn btn-danger"><i class="fas fa-heart"></i></a>
+                    <a href="{% url 'comment_clearvote' course.pk current_section.pk discussion.pk comment.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
                   {% else %}
-                    <a href="{% url 'comment_upvote' course.pk current_section.pk discussion.pk comment.pk %}"  class="btn btn-outline-danger"><i class="far fa-heart"></i></a>
+                    <a href="{% url 'comment_upvote' course.pk current_section.pk discussion.pk comment.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
                   {% endif %}
                 {% else %}
                   <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
-                    <a href="#"  class="btn btn-secondary disabled"><i class="far fa-heart"></i></a>
+                    <a href="#"  class="btn btn-secondary disabled"><i class="far fa-thumbs-up"></i></a>
                   </span>
                 {% endif %}
 
