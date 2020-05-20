@@ -27,3 +27,9 @@ def discussion_enable_check(user, discussion):
 
 def has_user_voted(user, discussion):
     return bool(discussion.votes.exists(user.pk))
+
+
+def has_participated(user, discussion):
+    did_user_comment = discussion.comments.filter(author=user).exists()
+
+    return did_user_comment

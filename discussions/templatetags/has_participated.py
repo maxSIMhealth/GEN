@@ -1,10 +1,10 @@
 from django import template
 
+from discussions.support_methods import has_participated
+
 register = template.Library()
 
 
 @register.filter(name="has_participated")
-def has_participated(user, discussion):
-    did_user_comment = discussion.comments.filter(author=user).exists()
-
-    return did_user_comment
+def did_user_comment(user, discussion):
+    return has_participated(user, discussion)
