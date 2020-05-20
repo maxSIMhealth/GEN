@@ -16,6 +16,9 @@ def requirement_fulfilled(user, section):
             items_completed.append(quiz_score_get(user, item.quiz).exists())
         elif requirement.section_type == "D":
             items_completed.append(has_participated(user, item.discussion))
+        elif requirement.section_type == "U":
+            if requirement.section_items.count() > 0:
+                items_completed.append(True)
 
         fulfilled = all(element for element in items_completed)
 
