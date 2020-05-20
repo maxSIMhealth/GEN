@@ -9,8 +9,6 @@
 {% endblock breadcrumb %}
 
 {% block content_tabs %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
-  </li>
+  <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">Info</a>
   {% show_sections course.sections %}
 {% endblock content_tabs %}

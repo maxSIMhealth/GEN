@@ -12,16 +12,36 @@
     </ol>
     <div class="card mb-3">
       <h5 class="card-header bg-dark text-white">{{ course.name }}</h5>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-2 order-md-1">
+        <div class="card mb-3">
+          <ul class="list-group list-group-flush">
+            {% block content_tabs %}
+            {% endblock content_tabs %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-10 order-md-2">
+        {% block content %}
+        {% endblock content %}
+      </div>
+
+    </div>
+    {% comment %}
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           {% block content_tabs %}
           {% endblock content_tabs %}
         </ul>
       </div>
-      <div class="card-body">
-        {% block content %}
-        {% endblock content %}
-      </div>
+    <div class="card-body">
+      {% block content %}
+      {% endblock content %}
     </div>
+    {% endcomment %}
   </div>
 {% endblock container %}
