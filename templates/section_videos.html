@@ -10,18 +10,28 @@
 {% endblock stylesheet %}
 
 {% block content %}
+  {% comment %}
   {% if user|is_instructor:course %}
   <div class="mb-3">
     <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-warning">Submit new video</a>
   </div>
   {% endif %}
+  {% endcomment %}
 
   {% if section.description %}
   <p>{{section.description}}</p>
   {% endif %}
 
   <div class="card mb-3 section-video">
-    <h5 class="card-header bg-light">Videos</h5>
+    <h5 class="card-header bg-light d-flex">
+      <span class="pt-1 mr-auto">Videos</span>
+      {% if user|is_instructor:course %}
+        <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
+          <span class="btn-label"><i class="fas fa-file-upload"></i></span>
+          Submit new video
+        </a>
+      {% endif %}
+    </h5>
     <ul class="list-group list-group-flush">
       {% if section_items.all %}
         {% for item in section_items.all %}

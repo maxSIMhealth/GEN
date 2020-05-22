@@ -25,7 +25,7 @@
 
 {% block content %}
       <div class="card mb-3">
-        <div class="card-header bg-light">Course details</div>
+        <h5 class="card-header bg-light">Course details</h5>
           <table class="table course-info mb-0">
             <tbody>
               <tr>
@@ -59,7 +59,7 @@
       {% if course.show_scoreboard %}
         <div class="card-deck">
           <div class="card gamification-card">
-            <div class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</div>
+            <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Discussions: {% countscore_course user.id course.pk "discussion" %}</li>
@@ -72,7 +72,7 @@
     
         {% if course.show_leaderboard %}
           <div class="card gamification-card">
-            <div class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</div>
+            <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Discussion likes: #{% rank_get user.id course.pk "discussion" %}</li>
@@ -85,7 +85,7 @@
     
         {% if course.show_progress_tracker %}
           <div class="card gamification-card">
-            <div class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  Course Progress</div>
+            <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  Course Progress</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">

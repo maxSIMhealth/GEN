@@ -14,7 +14,7 @@
     {% block stylesheet %}
     {% endblock stylesheet %}
   </head>
-  <body>
+  <body class="bg-light">
     {% block body %}
       <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
         <div class="container">
@@ -46,23 +46,27 @@
         </div>
       </nav>
       
-      {% block container %}
-      <div class="container">
-        {% comment %}
-        <ol class="breadcrumb my-3">
-          {% block breadcrumb %}
-          {% endblock breadcrumb %}
-        </ol>
-        {% endcomment %}
+      <div class="bg-white">
+        <div class="container pt-3 pb-3">
+        {% block container %}
         
-        {% block content %}
-        {% endblock content %}
+          {% comment %}
+          <ol class="breadcrumb my-3">
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+          </ol>
+          {% endcomment %}
+          
+          {% block content %}
+          {% endblock content %}
+        {% endblock container %}
+        </div>
       </div>
-      {% endblock container %}
+
     {% endblock body %}
 
     {% block footer %}
-    <div class="footer bg-light mt-3 pb-2">
+    <div class="footer bg-light pt-1 pb-2">
       <div class="text-center text-muted">
         <a href="http://www.ontariotechu.ca"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="Ontario Tech University colour logo in a white background" width="200px"></a>
         <p class="mb-0">Developed at <a href="http://www.ontariotechu.ca"><u>Ontario Tech University</u></a></p>

@@ -106,3 +106,21 @@
 .likert-legend p {
     margin: 0;
 }
+
+/* buttons with labels (icons) */
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px 0 0 3px;
+}
+.btn-sm .btn-label {
+    /* padding: 6px 14px; */
+    left: -8px;
+}
+.btn-labeled {
+    padding-top: 0;
+    padding-bottom: 0;
+}

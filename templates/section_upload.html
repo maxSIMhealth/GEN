@@ -10,16 +10,18 @@
 {% endblock stylesheet %}
 
 {% block content %}
-  <div class="mb-3">
-    <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-primary">Submit new user video</a>
-  </div>
-
   {% if section.description %}
   <p>{{section.description}}</p>
   {% endif %}
 
   <div class="card mb-3 section-upload">
-    <h5 class="card-header bg-light">Upload</h5>
+    <h5 class="card-header bg-light d-flex">
+      <span class="pt-1 mr-auto">Upload</span>
+        <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-primary">
+          <span class="btn-label"><i class="fas fa-file-upload"></i></span>
+          Submit new video
+        </a>
+    </h5>
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-info mb-0" role="alert">
         Uploads are <strong>private</strong>, only accessible by you and by the course instructor(s).
