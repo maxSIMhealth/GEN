@@ -19,11 +19,12 @@
     height: 400px;
 }
 
-/* quiz list, course home (info), course video list */
-.quiz-list .th-small,
-.course-info .th-small,
-.user-videos .th-small,
-.course-videos .th-small {
+/* course home (info) */
+.course-info tr:first-child td,
+.course-info tr:first-child th{
+    border-top: none;
+}
+.course-info .th-small {
     width: 12%;
 }
 

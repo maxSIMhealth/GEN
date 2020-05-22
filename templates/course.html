@@ -35,101 +35,84 @@
 
       <div class="card mb-3">
         <div class="card-header bg-light">Course details</div>
-        <div class="card-body pb-0">
-          <table class="table table-hover course-info">
+          <table class="table course-info mb-0">
             <tbody>
               <tr>
-                <th scope="row" class="th-small">Code</th>
-                <td>{{course.code}}</td>
+                <th scope="row" class="th-small pl-4">Code</th>
+                <td class="pr-4">{{course.code}}</td>
               </tr>
+              
+              {% if course.start_date %}
               <tr>
-                <th scope="row" class="th-small">Starting date</th>
-                <td>{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
+                <th scope="row" class="th-small pl-4">Start</th>
+                <td class="pr-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
               </tr>
+              {% endif %}
+              
+              {% if course.end_date %}
               <tr>
-                <th scope="row" class="th-small">Ending date</th>
-                <td>{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
+                <th scope="row" class="th-small pl-4">End</th>
+                <td class="pr-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
               </tr>
+              {% endif %}
+              
               <tr>
-                <th scope="row" class="th-small">Description</th>
-                <td>{{course.description }}</td>
+                <th scope="row" class="th-small pl-4">Description</th>
+                <td class="pr-4">{{course.description }}</td>
               </tr>
             </tbody>
           </table>
-        </div>
+        
       </div>
     
       {% if course.show_scoreboard %}
         <div class="card-deck">
-          <div class="card">
+          <div class="card gamification-card">
             <div class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</div>
-            <div class="card-body pb-0">
-              <table class="table table-hover">
-                <tbody>
-                  <tr>
-                    <td>Discussions</td>
-                    <td class="text-center">{% countscore_course user.id course.pk "discussion" %}</td>
-                  </tr>
-                  <tr>
-                    <td>Comments</td>
-                    <td class="text-center">{% countscore_course user.id course.pk "comment" %}</td>
-                  </tr>
-                  <tr>
-                    <td>Quizzes</td>
-                    <td class="text-center">{% countscore_course user.id course.pk "quiz" %}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Discussions: {% countscore_course user.id course.pk "discussion" %}</li>
+                <li class="list-group-item">Comments: {% countscore_course user.id course.pk "comment" %}</li>
+                <li class="list-group-item">Quizzes: {% countscore_course user.id course.pk "quiz" %}</li>
+              </ul>
             </div>
           </div>
         {% endif %}
     
         {% if course.show_leaderboard %}
-          <div class="card">
+          <div class="card gamification-card">
             <div class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</div>
-            <div class="card-body pb-0">
-              <table class="table table-hover">
-                <tbody>
-                  <tr>
-                    <td>Discussion likes</td>
-                    <td>#{% rank_get user.id course.pk "discussion" %}</td>
-                  </tr>
-                  <tr>
-                    <td>Comments</td>
-                    <td>#{% rank_get user.id course.pk "comment" %}</td>
-                  </tr>
-                  <tr>
-                    <td>Quiz</td>
-                    <td>#{% rank_get user.id course.pk "quiz" %}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Discussion likes: #{% rank_get user.id course.pk "discussion" %}</li>
+                <li class="list-group-item">Comments: #{% rank_get user.id course.pk "comment" %}</li>
+                <li class="list-group-item">Quizzes: #{% rank_get user.id course.pk "quiz" %}</li>
+              </ul>
             </div>
           </div>
         {% endif %}
     
         {% if course.show_progress_tracker %}
-          <div class="card">
-            <div class="card-header bg-light"><i class="fas fa-check-square  pr-1"></i>  Course Progress</div>
-            <div class="card-body pb-0">
-              <ul class="list-unstyled">
-                <li>Discussions participation:
+          <div class="card gamification-card">
+            <div class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  Course Progress</div>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  Discussions participation:
                   {{discussions_progress.current}} / {{discussions_progress.max}}
-    
                   {% if discussions_progress.max > 0 %}
-    
                     {% widthratio discussions_progress.current discussions_progress.max 100 as discussions_progress_percent %}
-                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{discussions_progress_percent}}%">
-                      <div class="progress-bar {% if discussions_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{discussions_progress_percent}}%;" aria-valuenow="{{discussions_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress" data-toggle="tooltip" data-placement="top" title="{{discussions_progress_percent}}%">
+                      <div class="progress-bar {% if discussions_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{discussions_progress_percent}}%" aria-valuenow="{{discussions_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% else %}
-                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no discussions">
+                    <div class="progress" data-toggle="tooltip" data-placement="top" title="This course has no discussions">
                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% endif %}
                 </li>
-    
-                <li>Quizzes answered:
+                <li class="list-group-item">
+                  Quizzes answered:
                   {{quizzes_progress.current}} / {{quizzes_progress.max}}
     
                   {% if quizzes_progress.max > 0 %}
@@ -145,6 +128,7 @@
                 </li>
               </ul>
             </div>
+            
           </div>
         </div>
       {% endif %}
