@@ -4,11 +4,19 @@
 {% load gravatar %}
 {% load countscore %}
 
+{% comment %}
 {% block breadcrumb %}
   <li class="breadcrumb-item active">Home</li>
 {% endblock breadcrumb %}
+{% endcomment %}
 
 {% block content %}
+  <div class="card bg-dark mt-3 mb-3">
+    <div class="card-header">
+      <h5 class="card-text text-white p-0">Home</h5>
+    </div>
+  </div>
+
   <div class="card mb-3">
     <h5 class="card-header bg-light">
       <div class="row">

@@ -18,7 +18,7 @@
     {% block body %}
       <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
         <div class="container">
-          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}">
+          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="Returns to GEN home page">
             <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top" alt="GEN logo">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,13 @@
 
       {% block container %}
       <div class="container">
+        {% comment %}
         <ol class="breadcrumb my-3">
           {% block breadcrumb %}
           {% endblock breadcrumb %}
         </ol>
+        {% endcomment %}
+        
         {% block content %}
         {% endblock content %}
       </div>
