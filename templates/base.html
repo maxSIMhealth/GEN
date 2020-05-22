@@ -16,17 +16,20 @@
   </head>
   <body>
     {% block body %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
         <div class="container">
           <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}">
-            <img src="{% static 'img/GEN-logo-alt-dark.png' %}" height="45" class="d-inline-block align-top" alt="GEN logo">
+            <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top" alt="GEN logo">
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mainMenu">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item dropdown">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Help</a>
+              </li>
+              <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src="{{ user|gravatar }}" alt="{{ user.username }} avatar image" style="width: 24px; vertical-align: top;">
                   {{ user.username }}
