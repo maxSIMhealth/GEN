@@ -1,4 +1,4 @@
-{% extends 'base_section.html' %}
+{% extends 'base_course_section.html' %}
 
 {% load humanize %}
 {% load is_instructor %}
@@ -13,11 +13,7 @@
   {% endif %}
 
   {% if section.description %}
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <p class="card-text">{{section.description}}</p>
-    </div>
-  </div>
+  <p>{{section.description}}</p>
   {% endif %}
 
   <div class="card mb-3">

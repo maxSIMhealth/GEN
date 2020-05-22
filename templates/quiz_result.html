@@ -1,4 +1,4 @@
-{% extends 'base_section.html' %}
+{% extends 'base_course_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -18,10 +18,16 @@
   <li class="breadcrumb-item active">Results</li>
 {% endblock breadcrumb %}
 
+{% block content_title %}
+
+<a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }} Results
+  
+{% endblock content_title %}
+
 {% block content %}
   <div class="card-deck mb-3">
     <div class="card bg-secondary text-white">
-      <h5 class="card-header bg-dark">Result</h5>
+      <div class="card-header bg-dark">Result</div>
       <div class="card-body">
         Thank you for your submission for <em>{{quiz.name}}</em>.<br />
 
@@ -32,7 +38,7 @@
     </div>
 
     <div class="card">
-      <h5 class="card-header bg-light">Your submission</h5>
+      <div class="card-header bg-light">Your submission</div>
       <div class="card-body">
         {% for question in quiz.questions.all %}
 

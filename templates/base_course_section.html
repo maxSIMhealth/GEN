@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load show_sections %}
+
+{% block title %}GEN - {{ course.code }} - {{course.name}} {% endblock title %}
+
+{% block container %}
+  <div class="container">
+    {% comment %}
+    <ol class="breadcrumb my-3">
+      {% block breadcrumb %}
+      {% endblock breadcrumb %}
+    </ol>
+    {% endcomment %}
+
+    <div class="card bg-dark mt-3 mb-3">
+      <div class="card-header">
+        <h5 class="card-text text-white p-0">{{ course.name }}</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-2 order-lg-1">
+        <div class="card mb-3">
+          <nav class="card-header navbar navbar-expand-lg navbar-light">
+            <span href="#">Sections</span>
+            <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sections list">
+              <span class="navbar-toggler-icon"></span>
+            </a>
+          </nav>
+          <div class="collapse d-lg-block navbar-collapse" id="sidebar">
+            <ul class="list-group-flush navbar-nav">
+              {% block content_tabs %}
+                <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">Info</a>
+                {% show_sections course.sections %}
+              {% endblock content_tabs %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-10 order-lg-2">
+        <h2 class="mb-3">
+        {% block content_title %}
+          {{ section }}
+        {% endblock content_title %}
+        </h2>
+
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </div>
+  </div>
+{% endblock container %}

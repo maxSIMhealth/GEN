@@ -1,4 +1,4 @@
-{% extends 'base_course.html' %}
+{% extends 'base_course_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -16,23 +16,14 @@
 
 {% block content_tabs %}
   <a class="list-group-item list-group-item-action active" href="#">Info</a>
-
   {% show_sections sections %}
-
-  {% comment %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
-  </li>
-  {% endcomment %}
 {% endblock content_tabs %}
 
-{% block content %}
-  <div class="card">
-    <h5 class="card-header">
-      Info
-    </h5>
-    <div class="card-body">
+{% block content_title %}
+  Info
+{% endblock content_title %}
 
+{% block content %}
       <div class="card mb-3">
         <div class="card-header bg-light">Course details</div>
           <table class="table course-info mb-0">
@@ -133,6 +124,6 @@
         </div>
       {% endif %}
 
-    </div>
-  </div>
+    
+  
 {% endblock content %}
