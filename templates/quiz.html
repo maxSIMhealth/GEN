@@ -17,9 +17,7 @@
 {% endblock breadcrumb %}
 
 {% block content_title %}
-
-<a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }}
-  
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }}
 {% endblock content_title %}
 
 {% block content %}

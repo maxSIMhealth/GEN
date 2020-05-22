@@ -1,7 +1,12 @@
 {% extends 'base_course_section.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load crispy_forms_tags %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block title %}Start a New Discussion Board{% endblock %}
 
@@ -12,8 +17,17 @@
   <li class="breadcrumb-item active">New discussion board</li>
 {% endblock breadcrumb %}
 
+{% block content_title %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / New discussion
+{% endblock content_title %}
+
 {% block content %}
-  <form enctype="multipart/form-data" method="post">
-    {% crispy form %}
-  </form>
-{% endblock content %}
+  <div class="card">
+    <h5 class="card-header">New Discussion</h5>
+    <div class="card-body">
+      <form enctype="multipart/form-data" method="post">
+        {% crispy form %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

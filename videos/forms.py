@@ -3,7 +3,7 @@ from django import forms
 # from django.core.validators import FileExtensionValidator
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Submit
+from crispy_forms.layout import Layout, Fieldset, Submit, Div
 from crispy_forms.bootstrap import FormActions
 
 from .models import VideoFile
@@ -28,7 +28,14 @@ class UploadVideoForm(forms.ModelForm):
         super(UploadVideoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Fieldset("Upload a new video", "name", "description", "file"),
+            # FIXME: find a new to get first fieldset value (the legend) to be
+            # wrapped in a div
+            Fieldset(
+                # "Upload a new video",
+                "",
+                "name",
+                "description",
+                "file"),
             FormActions(
                 Submit("submit", "Submit", css_class="btn btn-primary"),
                 Submit(
