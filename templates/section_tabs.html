@@ -1,17 +1,13 @@
 {% load is_instructor %}
 
 {% for section in sections %}
-  {% if user|is_instructor:course %}
-    <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section}}</a>
-  {% else %}
-    {% if section.requirement %}
-      {% if section.requirement.fulfilled %}
-        <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section}}</a>
-      {% else %}
-        <a href="#" class="list-group-item list-group-item-action text-underline-dashed bg-light disabled" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{section.requirement}}</u> to be completed first.">{{section}}</a>
-      {% endif %}
+  {% if section.requirement %}
+    {% if section.requirement.fulfilled %}
+      <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section}}</a>
     {% else %}
-        <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section}}</a>
+      <a href="#" class="list-group-item list-group-item-action text-underline-dashed bg-light disabled" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{section.requirement}}</u> to be completed first.">{{section}}</a>
     {% endif %}
+  {% else %}
+      <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section}}</a>
   {% endif %}
 {% endfor %}
