@@ -79,17 +79,24 @@ def delete_video(request, pk, section_pk, video_pk):
     video = get_object_or_404(VideoFile, pk=video_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
+    # check if user is a course instructor
+    is_instructor = bool(course in request.user.instructor.all())
+
     if video.author == user:
-        if request.method == "POST":
-            if "confirm" in request.POST:
-                video.delete()
-                return redirect("section", pk=course.pk, section_pk=section.pk)
+        # instructor should be able to delete published videos
+        if is_instructor or (not video.published):
+            if request.method == "POST":
+                if "confirm" in request.POST:
+                    video.delete()
+                    return redirect("section", pk=course.pk, section_pk=section.pk)
+            else:
+                return render(
+                    request,
+                    "delete_video_confirmation.html",
+                    {"course": course, "section": section, "video": video},
+                )
         else:
-            return render(
-                request,
-                "delete_video_confirmation.html",
-                {"course": course, "section": section, "video": video},
-            )
+            return render(request, "permission_error.html")
     else:
         return render(request, "permission_error.html")
 
