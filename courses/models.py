@@ -14,7 +14,7 @@ class Course(models.Model):
         "course code", max_length=10, help_text=_("Course code (max 10 characters)")
     )
     description = models.TextField(
-        max_length=400, help_text=_("Course description (max 400 characters)")
+        max_length=800, help_text=_("Course description (max 800 characters)")
     )
     author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="course")
     start_date = models.DateTimeField("start date", blank=True, null=True)
@@ -67,10 +67,10 @@ class Section(models.Model):
         max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
     )
     description = models.TextField(
-        max_length=200,
+        max_length=800,
         blank=True,
         null=True,
-        help_text=_("Course description (max 200 characters)"),
+        help_text=_("Course description (max 800 characters)"),
     )
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name="sections"
