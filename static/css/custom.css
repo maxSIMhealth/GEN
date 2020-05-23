@@ -1,3 +1,8 @@
+/* general */
+body {
+    background-color: #f8f9fa;
+}
+
 /* section: quiz */
 .section-quiz .list-group-item div span.badge {
   line-height: 1.4;
