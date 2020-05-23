@@ -34,13 +34,20 @@
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
                 <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
-                <div class="text-center mt-1">
-                  <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">Delete</a>
-                </div>
               </div>
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <p>{{ item.videofile.description }}</p>
+                <div>
+                  {% if not item.published %}
+                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="<strong>WARNING:</strong> after publishing you will not be able to delete this submission.">Publish submission</a>
+                    <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">Delete</a>
+                  {% else %}
+                    <div class="alert alert-success" role="alert">
+                      Published - No changes allowed
+                    </div>
+                  {% endif %}
+                </div>
               </div>
             </div>
           </li>

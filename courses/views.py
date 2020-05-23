@@ -60,7 +60,8 @@ def section_page(request, pk, section_pk):
         section_template = "section_videos.html"
     elif section_object.section_type == "U":
         section_template = "section_upload.html"
-        section_items = section_items.filter(author=request.user)
+        # getting all section items (even not published) and filtering by user
+        section_items = section_object.section_items.filter(author=request.user)
 
     return render(
         request,

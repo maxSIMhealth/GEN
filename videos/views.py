@@ -12,6 +12,9 @@ def upload_video(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
 
+    # check if user is a course instructor
+    is_instructor = bool(course in request.user.instructor.all())
+
     # check if section type is upload
     if section.section_type == "U" or section.section_type == "V":
 
@@ -28,7 +31,8 @@ def upload_video(request, pk, section_pk):
                     course=course,
                     file=form.files.get("file"),
                     section=section,
-                    published=True,
+                    # if instructor, the video gets published
+                    published=is_instructor,
                 )
                 video.save()
                 video.generate_video_thumbnail()
@@ -43,6 +47,29 @@ def upload_video(request, pk, section_pk):
         )
     else:
         raise Http404("This section does not support uploads.")
+
+
+@login_required
+def publish_video(request, pk, section_pk, video_pk):
+    course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
+    video = get_object_or_404(VideoFile, pk=video_pk)
+    user = get_object_or_404(User, pk=request.user.pk)
+
+    if video.author == user:
+        if request.method == "POST":
+            if "confirm" in request.POST:
+                video.published = True
+                video.save()
+                return redirect("section", pk=course.pk, section_pk=section.pk)
+        else:
+            return render(
+                request,
+                "publish_video_confirmation.html",
+                {"course": course, "section": section, "video": video},
+            )
+    else:
+        return render(request, "permission_error.html")
 
 
 @login_required
