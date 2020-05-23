@@ -43,8 +43,11 @@ def section_page(request, pk, section_pk):
     user = request.user
     requirement = section_object.requirement
 
+    # check if user is a course instructor
+    is_instructor = bool(course in request.user.instructor.all())
+
     # only allow participant to access section if requirements have been fulfilled
-    if requirement:
+    if requirement and not is_instructor:
         fulfilled = requirement_fulfilled(user, section_object)
 
         if not fulfilled:
