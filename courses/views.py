@@ -45,7 +45,7 @@ def section_page(request, pk, section_pk):
     allow_submission = False
 
     # check if user is a course instructor
-    is_instructor = bool(course in request.user.instructor.all())
+    is_instructor = bool(course_object in request.user.instructor.all())
 
     # only allow participant to access section if requirements have been fulfilled
     if requirement and not is_instructor:
@@ -61,6 +61,9 @@ def section_page(request, pk, section_pk):
     elif section_object.section_type == "D":
         section_template = "section_discussion.html"
     elif section_object.section_type == "V":
+        if is_instructor:
+            # getting all section items (even not published)
+            section_items = section_object.section_items
         section_template = "section_videos.html"
     elif section_object.section_type == "U":
         section_template = "section_upload.html"

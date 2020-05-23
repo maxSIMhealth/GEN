@@ -10,8 +10,10 @@
 {% endblock stylesheet %}
 
 {% block content %}
+  {% with course_instructor=user|is_instructor:course %}
+
   {% comment %}
-  {% if user|is_instructor:course %}
+  {% if course_instructor %}
   <div class="mb-3">
     <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-warning">Submit new video</a>
   </div>
@@ -25,7 +27,7 @@
   <div class="card mb-3 section-video">
     <h5 class="card-header bg-light d-flex">
       <span class="pt-1 mr-auto">Videos</span>
-      {% if user|is_instructor:course %}
+      {% if course_instructor %}
         <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
           <span class="btn-label"><i class="fas fa-file-upload"></i></span>
           Submit new video
@@ -50,7 +52,7 @@
 
                 {% if item.videofile.quizzes.all %}
                 <h6><em>Quizzes:</em></h6>
-                <ul class="related-quizzes">
+                <ul class="related-quizzes pb-2">
                   {% for quiz in item.videofile.quizzes.all  %}
                   {% quiz_details_get user quiz as quiz_details %}
                   <li>
@@ -73,6 +75,18 @@
                   {% endfor %}
                 </ul>
                 {% endif %}
+
+                {% if course_instructor %}
+                <div>
+                  {% if not item.published %}
+                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="Make this video visible by the course participants">Publish</a>
+                  {% else %}
+                    <a href="{% url 'unpublish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-warning" data-toggle="tooltip" data-placement="auto" data-html="true" title="Hide video from the course participants">Unpublish</a>
+                  {% endif %}
+                  <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+                {% endif %}
+
               </div>
             </div>
           </li>
@@ -84,4 +98,5 @@
       {% endif %}
     </ul>
   </div>
+  {% endwith %}
 {% endblock content %}

@@ -85,6 +85,11 @@ urlpatterns = [
         name="publish_video",
     ),
     path(
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/unpublish",
+        video_views.unpublish_video,
+        name="unpublish_video",
+    ),
+    path(
         "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/delete",
         video_views.delete_video,
         name="delete_video",

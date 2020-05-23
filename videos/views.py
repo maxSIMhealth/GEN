@@ -43,7 +43,7 @@ def upload_video(request, pk, section_pk):
                     file=form.files.get("file"),
                     section=section,
                     # if instructor, the video gets published
-                    published=is_instructor,
+                    published=False,
                 )
                 video.save()
                 video.generate_video_thumbnail()
@@ -101,6 +101,36 @@ def publish_video(request, pk, section_pk, video_pk):
 
 
 @login_required
+def unpublish_video(request, pk, section_pk, video_pk):
+    course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
+    video = get_object_or_404(VideoFile, pk=video_pk)
+    user = get_object_or_404(User, pk=request.user.pk)
+
+    # check if user is a course instructor
+    is_instructor = bool(course in request.user.instructor.all())
+
+    if not is_instructor:
+        return render(request, "permission_error.html")
+    elif not video.published:
+        raise Http404("The video is not published.")
+    elif video.author == user:
+        if request.method == "POST":
+            if "confirm" in request.POST:
+                video.published = False
+                video.save()
+                return redirect("section", pk=course.pk, section_pk=section.pk)
+        else:
+            return render(
+                request,
+                "unpublish_video_confirmation.html",
+                {"course": course, "section": section, "video": video},
+            )
+    else:
+        return render(request, "permission_error.html")
+
+
+@login_required
 def delete_video(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -135,8 +165,11 @@ def video_player(request, pk, section_pk, video_pk):
     section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=video_pk)
 
-    return render(
-        request,
-        "video_player.html",
-        {"course": course, "section": section, "video": video},
-    )
+    if video.published:
+        return render(
+            request,
+            "video_player.html",
+            {"course": course, "section": section, "video": video},
+        )
+    else:
+        raise Http404("This video is not published.")
