@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from courses.models import Course, Section, User
+from discussions.models import Discussion
 from .forms import UploadVideoForm
 from .models import VideoFile
 
@@ -59,6 +60,21 @@ def publish_video(request, pk, section_pk, video_pk):
     if video.author == user:
         if request.method == "POST":
             if "confirm" in request.POST:
+                # if section has parameter 'create_discussion' enabled, create
+                # a discussion using the video's parameters and put it on the
+                # 'section_output'
+                if section.create_discussions:
+                    discussion = Discussion.objects.create(
+                        course=course,
+                        section=section.section_output,
+                        published=True,
+                        name=video.name,
+                        description=video.description,
+                        video=video,
+                        author=request.user,
+                    )
+                    discussion.save()
+
                 video.published = True
                 video.save()
                 return redirect("section", pk=course.pk, section_pk=section.pk)

@@ -12,8 +12,8 @@ from .models import VideoFile
 class UploadVideoForm(forms.ModelForm):
     description = forms.CharField(
         widget=forms.Textarea(attrs={"rows": 4}),
-        max_length=255,
-        help_text="The max length for a description is 255 characters.",
+        max_length=400,
+        help_text="The max length for a description is 400 characters.",
     )
     file = forms.FileField(
         help_text="Please upload a video file (mp4 or mov)",
@@ -35,7 +35,8 @@ class UploadVideoForm(forms.ModelForm):
                 "",
                 "name",
                 "description",
-                "file"),
+                "file",
+            ),
             FormActions(
                 Submit("submit", "Submit", css_class="btn btn-primary"),
                 Submit(

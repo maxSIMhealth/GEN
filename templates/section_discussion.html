@@ -49,9 +49,9 @@
 
               <div class="w-100">
                 {% if discussion_details.enabled %}
-                  <a href="{% url 'discussion_comments' course.pk section.pk item.discussion.pk %}">{{ item }}</a>
+                  <a href="{% url 'discussion_comments' course.pk section.pk item.discussion.pk %}">{{ item.name }}</a>
                 {% else %}
-                  <span class="text-muted">{{ item }}</span>
+                  <span class="text-muted">{{ item.name }}</span>
                 {% endif %}
                 {% if user|has_participated:item.discussion %}
                   <span class="badge badge-success badge-pill float-right">Participated</span>

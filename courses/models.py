@@ -63,6 +63,7 @@ class Section(models.Model):
         ("U", "Uploads"),
     ]
 
+    related_name = "sections"
     name = models.CharField(
         max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
     )
@@ -73,14 +74,54 @@ class Section(models.Model):
         help_text=_("Course description (max 800 characters)"),
     )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name="sections"
+        Course, on_delete=models.CASCADE, related_name=related_name
     )
     section_type = models.CharField(max_length=1, choices=SECTION_TYPES)
     requirement = models.ForeignKey(
-        "self", on_delete=models.PROTECT, blank=True, null=True, related_name="sections"
+        "self",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name=related_name,
     )
     published = models.BooleanField(default=False)
+    create_discussions = models.BooleanField(
+        default=False,
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based on participant's video submissions."
+        ),
+    )
+    section_output = models.ForeignKey(
+        "self",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="sections_output",
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the discussion boards."
+        ),
+    )
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    def clean(self):
+        if (
+            self.create_discussions or self.section_output
+        ) and not self.section_type == "U":
+            raise ValidationError(
+                _(
+                    "To set 'create discussion' or 'section output', the section type must be Upload."
+                )
+            )
+        if self.create_discussions and not self.section_output:
+            raise ValidationError(
+                _("To create a discussion you must select a discussion section output.")
+            )
+        if self.section_output and not self.create_discussions:
+            raise ValidationError(
+                _(
+                    "You can not select a section output if 'create discussions' is not enabled."
+                )
+            )
 
     def __str__(self):
         return self.name
@@ -91,10 +132,10 @@ class Section(models.Model):
 
 
 class SectionItem(TimeStampedModel):
-    name = models.CharField(max_length=30, unique=False)
+    name = models.CharField(max_length=80, unique=False)
     related_name = "section_items"
     description = models.TextField(
-        max_length=200, help_text=_("Brief description (max 200 characters)")
+        max_length=400, help_text=_("Brief description (max 400 characters)")
     )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name=related_name
