@@ -55,12 +55,12 @@
                   {% quiz_details_get user quiz as quiz_details %}
                   <li>
                     {% if quiz_details.enabled %}
-                      <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz }}</a>
+                      <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz.name }}</a>
                     {% else %}
                       {% if quiz.requirement %}
-                        <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{quiz.requirement.name}}</u> to be completed first.">{{ quiz }}</span>
+                        <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{quiz.requirement.name}}</u> to be completed first.">{{ quiz.name }}</span>
                       {% else %}
-                        <span class="text-muted">{{ quiz }}</span>
+                        <span class="text-muted">{{ quiz.name }}</span>
                       {% endif %}
                     {% endif %}
 
