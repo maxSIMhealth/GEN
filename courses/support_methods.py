@@ -19,6 +19,10 @@ def requirement_fulfilled(user, section):
         elif requirement.section_type == "U":
             if requirement.section_items.count() > 0:
                 items_completed.append(True)
+        elif requirement.section_type == "V":
+            if item.videofile.quizzes.exists():
+                for quiz in item.videofile.quizzes.all():
+                    items_completed.append(quiz_score_get(user, quiz).exists())
 
         fulfilled = all(element for element in items_completed)
 
