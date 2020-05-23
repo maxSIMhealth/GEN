@@ -12,13 +12,23 @@ from .models import VideoFile
 def upload_video(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
+    allow_submission = False
 
     # check if user is a course instructor
     is_instructor = bool(course in request.user.instructor.all())
 
     # check if section type is upload
-    if section.section_type == "U" or section.section_type == "V":
+    if section.section_type == "U":
+        section_items = section.section_items.filter(author=request.user)
+        if not section_items:
+            allow_submission = True
+    elif section.section_type == "V":
+        if is_instructor:
+            allow_submission = True
+    else:
+        raise Http404("This section does not support uploads.")
 
+    if allow_submission:
         if request.method == "POST":
             form = UploadVideoForm(request.POST, request.FILES)
 
@@ -47,7 +57,7 @@ def upload_video(request, pk, section_pk):
             {"form": form, "course": course, "section": section},
         )
     else:
-        raise Http404("This section does not support uploads.")
+        raise Http404("You don't have permission to upload.")
 
 
 @login_required

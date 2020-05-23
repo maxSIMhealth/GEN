@@ -42,6 +42,7 @@ def section_page(request, pk, section_pk):
     gamification = course_object.enable_gamification
     user = request.user
     requirement = section_object.requirement
+    allow_submission = False
 
     # check if user is a course instructor
     is_instructor = bool(course in request.user.instructor.all())
@@ -65,6 +66,9 @@ def section_page(request, pk, section_pk):
         section_template = "section_upload.html"
         # getting all section items (even not published) and filtering by user
         section_items = section_object.section_items.filter(author=request.user)
+        # if there is no section item, allow submission
+        if not section_items:
+            allow_submission = True
 
     return render(
         request,
@@ -74,5 +78,6 @@ def section_page(request, pk, section_pk):
             "section": section_object,
             "section_items": section_items,
             "gamification": gamification,
+            "allow_submission": allow_submission,
         },
     )

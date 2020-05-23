@@ -17,10 +17,19 @@
   <div class="card mb-3 section-upload">
     <h5 class="card-header bg-light d-flex">
       <span class="pt-1 mr-auto">Upload</span>
+        {% if allow_submission %}
         <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-primary">
           <span class="btn-label"><i class="fas fa-file-upload"></i></span>
           Submit new video
         </a>
+        {% else %}
+        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="auto" data-html="true" title="You already published your submission.">
+          <a href="#" class="btn btn-sm btn-labeled btn-secondary disabled" >
+            <span class="btn-label"><i class="fas fa-file-upload"></i></span>
+            Submit new video
+          </a>
+        </span>
+        {% endif %}
     </h5>
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-info mb-0" role="alert">
