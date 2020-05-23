@@ -57,7 +57,9 @@ def publish_video(request, pk, section_pk, video_pk):
     video = get_object_or_404(VideoFile, pk=video_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
-    if video.author == user:
+    if video.published:
+        return render(request, "permission_error.html")
+    elif video.author == user:
         if request.method == "POST":
             if "confirm" in request.POST:
                 # if section has parameter 'create_discussion' enabled, create
