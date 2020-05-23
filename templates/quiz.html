@@ -1,4 +1,4 @@
-{% extends 'base_section.html' %}
+{% extends 'base_course_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -16,11 +16,15 @@
   <li class="breadcrumb-item active">{{quiz.name}}</li>
 {% endblock breadcrumb %}
 
+{% block content_title %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }}
+{% endblock content_title %}
+
 {% block content %}
   <div class="card-deck">
     {% if quiz.video %}
     <div class="card bg-secondary text-white video">
-      <h5 class="card-header bg-dark">Video</h5>
+      <div class="card-header bg-dark">Video</div>
       <div class="card-body">
         <table class="table table-hover">
           <tbody>
@@ -39,7 +43,7 @@
     {% endif %}
 
     <div class="card quiz">
-      <h5 class="card-header bg-light">{{quiz.name}}</h5>
+      <div class="card-header bg-light">Questions</div>
       <div class="card-body">
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}

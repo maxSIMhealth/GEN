@@ -1,27 +1,30 @@
-{% extends 'base_section.html' %}
+{% extends 'base_course_section.html' %}
 
+{% load static %}
 {% load humanize %}
 {% load is_instructor %}
 {% load has_participated %}
 {% load discussion_details_get %}
 
-{% block content %}
-  {% if user|is_instructor:course %}
-  <div class="mb-3">
-    <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-warning">New discussion board</a>
-  </div>
-  {% endif %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
+{% block content %}
   {% if section.description %}
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <p class="card-text">{{section.description}}</p>
-    </div>
-  </div>
+  <p>{{section.description}}</p>
   {% endif %}
 
   <div class="card mb-3">
-    <h5 class="card-header bg-light">Discussion boards</h5>
+    <h5 class="card-header bg-light d-flex">
+      <span class="pt-1 mr-auto">Discussion boards</span>
+      {% if user|is_instructor:course %}
+        <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
+          <span class="btn-label"><i class="fas fa-plus"></i></span>
+          Create new
+        </a>
+      {% endif %}
+    </h5>
     <ul class="list-group list-group-flush">
       {% if section_items.all %}
         {% for item in section_items.all %}

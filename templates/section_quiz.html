@@ -1,4 +1,4 @@
-{% extends 'base_section.html' %}
+{% extends 'base_course_section.html' %}
 
 {% load static %}
 {% load humanize %}
@@ -10,16 +10,13 @@
 {% endblock stylesheet %}
 
 {% block content %}
+  
   {% if section.description %}
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <p class="card-text">{{section.description}}</p>
-    </div>
-  </div>
+  <p>{{section.description}}</p>
   {% endif %}
-
+  
   <div class="card mb-3 section-quiz">
-    <h5 class="card-header bg-light">Quizzes</h5>
+    <h5 class="card-header">Quizzes</h5>
     <ul class="list-group list-group-flush">
     {% if section_items.all %}
       {% for item in section_items.all %}
@@ -66,5 +63,6 @@
     {% else %}
       <div class="list-group-item">No quiz available.</div>
     {% endif %}
+    </ul>
   </div>
 {% endblock content %}

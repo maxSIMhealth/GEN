@@ -29,7 +29,14 @@ class NewDiscussionForm(forms.ModelForm):
         super(NewDiscussionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
-            Fieldset("Create new discussion board", "name", "description", "video"),
+            # FIXME: find a new to get first fieldset value (the legend) to be
+            # wrapped in a div
+            Fieldset(
+                # "Create new discussion board",
+                "",
+                "name",
+                "description",
+                "video"),
             FormActions(
                 Submit("submit", "Submit", css_class="btn btn-primary"),
                 Submit(
