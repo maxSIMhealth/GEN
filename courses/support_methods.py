@@ -22,7 +22,10 @@ def requirement_fulfilled(user, section):
                 items_completed.append(has_participated(user, item.discussion))
             elif requirement.section_type == "U":
                 item_uploaded = (
-                    requirement.section_items.all().filter(author=user).count() > 0
+                    requirement.section_items.all()
+                    .filter(author=user, published=True)
+                    .count()
+                    > 0
                 )
                 items_completed.append(item_uploaded)
             elif requirement.section_type == "V":
