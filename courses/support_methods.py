@@ -21,12 +21,16 @@ def requirement_fulfilled(user, section):
             elif requirement.section_type == "D":
                 items_completed.append(has_participated(user, item.discussion))
             elif requirement.section_type == "U":
-                if requirement.section_items.count() > 0:
-                    items_completed.append(True)
+                item_uploaded = (
+                    requirement.section_items.all().filter(author=user).count() > 0
+                )
+                items_completed.append(item_uploaded)
             elif requirement.section_type == "V":
                 if item.videofile.quizzes.exists():
                     for quiz in item.videofile.quizzes.all():
                         items_completed.append(quiz_score_get(user, quiz).exists())
+            else:
+                items_completed.append(False)
 
             fulfilled = all(element for element in items_completed)
 
