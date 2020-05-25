@@ -24,6 +24,7 @@ from django.views.generic.base import RedirectView
 
 from accounts import views as account_views
 from courses import views as course_views
+from core import views as core_views
 from dashboard import views as dashboard_views
 from discussions import views as discussion_views
 from quiz import views as quiz_views
@@ -159,6 +160,9 @@ urlpatterns = [
 if settings.DEBUG:
     # access to media files during development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # delete user data
+    urlpatterns += (path("reset/", core_views.reset, name="reset"),)
 
     # django toolbar
     import debug_toolbar
