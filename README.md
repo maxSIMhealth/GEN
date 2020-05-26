@@ -118,7 +118,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - Restart service: `sudo systemctl restart nginx`
 
 ### UFW (firewall)
-(This section is only relevant if you ar eusing UFW)
+(This section is only relevant if you are using UFW)
 - Allow nginx connections: `sudo ufw allow 'Nginx Full'`
   - This will enable ports 80 (http) and 443 (https)
 - If you are using ssh, be sure to also enable it: `sudo ufw allow ssh`
