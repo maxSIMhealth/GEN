@@ -141,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 if not DEBUG:
-    STATIC_ROOT = "/opt/GEN_static/"
+    STATIC_ROOT = "/home/gen/GEN_static/"
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
@@ -150,7 +150,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 if not DEBUG:
-    MEDIA_ROOT = "/opt/GEN_media/"
+    MEDIA_ROOT = "/home/gen/GEN_media/"
 else:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
