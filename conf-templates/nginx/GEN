@@ -3,11 +3,11 @@ server {
         access_log off;
         location /static/ {
                 # files that will be gathered by manage.py collecstatic
-                alias /opt/GEN_static/;
+                alias /home/gen/GEN_static/;
         }
         location /media/ {
                 # media files uploaded by users
-                alias /opt/GEN_media/;
+                alias /home/gen/GEN_media/;
         }
         location / {
                 proxy_pass http://unix:/run/gunicorn.sock;
