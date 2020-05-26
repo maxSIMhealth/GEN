@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=gen
+Group=gen
+WorkingDirectory=/home/gen/GEN
+ExecStart=/home/gen/GEN/venv/bin/gunicorn \
+        --access-logfile -\
+        --workers 3\
+        --log-level DEBUG\
+        --bind unix:/run/gunicorn.sock \
+        GEN.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
