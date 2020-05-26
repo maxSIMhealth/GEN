@@ -47,7 +47,8 @@ def signup(request):
                     "token": account_activation_token.make_token(user),
                 },
             )
-            user.email_user(subject, message, from_email="gen@andreitorres.tech")
+            from_email = "gen@" + current_site.domain
+            user.email_user(subject, message, from_email=from_email)
 
             return redirect("account_activation_sent")
     else:
