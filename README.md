@@ -86,7 +86,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - Create static files directory: `mkdir /home/gen/GEN_static/`
 - Create media files directory: `mkdir /home/gen/GEN_media/`
 - If necessary, change ownership of static and media directories to user that will run GEN (e.g., `sudo chown user:usergroup /home/gen/GEN_static`
-- Add server domain or IP to allowed hosts list in `.env`
+- Add server domain and IP to allowed hosts list in `.env`
 - Open `GEN/settings.py` and check if `STATIC_ROOT` and `MEDIA_ROOT` and pointing to the correct locations
 - Edit `.env` and set `DEBUG=False`
 - Collect static files: `python manage.py collectstatic`
@@ -124,6 +124,50 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - If you are using ssh, be sure to also enable it: `sudo ufw allow ssh`
 - Now enable UFW: `sudo ufw enable`
 - Check UFW status: `sudo ufw status`
+
+### Set up SSL
+- GEN for production is configured to use only https, so you will need to set up SSL
+- We are going to use Certbot to generate a certificate via [Let's Encrpty](https://letsencrypt.org/). For instructions tailored to your specific system, check https://certbot.eff.org/
+- Make sure your DNS records point to your server's public IPv4 and IPv6 addresses.
+- Enable the universe repository:
+  ```
+  sudo apt-get update
+  sudo apt-get install software-properties-common
+  sudo add-apt-repository universe
+  sudo apt-get update
+  ```
+- Install Certbot: `sudo apt-get install certbot python3-certbot-nginx`
+- Run this command to get a certificate and have Certbot edit your Nginx configuration automatically to serve it, turning on HTTPS access in a single step: `sudo certbot --nginx`
+  - When asked, choose **YES** to redirect HTTP traffic to HTTPS.
+- Test automatic renewal: `sudo certbot renew --dry-run`
+- Confirm that Certbot worked by visiting https://www.ssllabs.com/ssltest/
+
+### Set up Sendgrid
+- When a user sets up a new account, GEN will send a verification email to validate the user's email address. For this purpose, we are using Sendgrid but you are free to use any other method. For detailed instructions on using sendgrid, check this guide: [Sending Emails with Django using SendGrid in 3 easy steps](https://simpleit.rocks/python/django/adding-email-to-django-the-easiest-way/) (this part of the README is based on it).
+- Set up an account on [Sendgrid](https://app.sendgrid.com/)
+- Create an API key for the app at https://app.sendgrid.com/settings/api_keys
+  - In name enter something like `GEN_send_mails`
+  - Choose **Restricted Access**, enable **Mail Send** and hit the **Create** button
+- Edit `.env` and set the variable `SENDGRID_API_KEY` with the generated API key
+- Set up **Sender authentication** on Sendgrid: https://app.sendgrid.com/settings/sender_auth
+- Check it is working:
+  ```
+  python manage.py shell
+  > from django.core.mail import send_mail
+  > send_mail('testing', 'my message', 'hello@serverdomain.com', ['personal@example.com'], fail_silently=False)
+  ```
+  - If you see a message similar to `Sendgrid email backend is in sandbox mode!  Emails will not be delivered.` it means everything is ok.
+  - If you get an HTTP 403 Error you probably didn't set up **Sender authentication**.
+- To send a test email:
+   ```
+  python manage.py shell
+  > from django.core.mail import send_mail
+  > from django.conf import settings
+  > settings.SENDGRID_SANDBOX_MODE_IN_DEBUG=False
+  > send_mail('testing', 'my message', 'hello@serverdomain.com', ['personal@example.com'], fail_silently=False)
+  ```
+  - If the command was successfull, the output will be `1` and you should get an email.
+
 
 ### Start/stop the server
 - Start: `sudo systemctl start gunicorn`
