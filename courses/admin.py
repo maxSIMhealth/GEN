@@ -24,6 +24,7 @@ class SectionAdmin(SortableAdminMixin, admin.ModelAdmin):
         "course",
     )
     inlines = (SectionInline,)
+    list_filter = ("course", )
 
 
 admin.site.register(Course, CourseAdmin)
