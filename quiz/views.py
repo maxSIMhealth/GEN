@@ -40,7 +40,14 @@ def quiz_page(request, pk, section_pk, quiz_pk):
     # not completed the quiz
     request.session["quiz_complete"] = False
 
-    if quiz.published and quiz.video.published:
+    if quiz.published:
+
+        # check if the quiz has a related video and if it has been published
+        if quiz.video:
+            if not quiz.video.published:
+                raise Http404("The video this quiz is related to is not published.")
+            else:
+                pass
 
         # check if quiz has a requirement and if it should be enabled
         (quiz_enabled, _) = quiz_enable_check(request.user, quiz)
@@ -237,8 +244,6 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                     )
         else:
             raise Http404("You do not fulfill the requirements to access this page.")
-    elif quiz.published and not quiz.video.published:
-        raise Http404("The video this quiz is related to is not published.")
     else:
         raise Http404("This quiz is not published.")
 
