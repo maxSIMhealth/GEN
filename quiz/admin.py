@@ -108,7 +108,7 @@ class QuestionAdmin(admin.ModelAdmin):
     """
 
     list_display = ("content", "quiz", "created")
-    list_filter = ("quiz", "content")
+    list_filter = ("quiz",)
     search_fields = ("content", "explanation")
     # filter_horizontal = ('quiz',)
 
@@ -121,8 +121,20 @@ class MCQuestionAdmin(QuestionAdmin):
     # list_display = ('quiz',
     #                 'content', 'created')
     # list_filter = ('quiz', 'content')
-    fields = ("content", "quiz", "explanation", "multiple_correct_answers")
+    fields = (
+        "question_type",
+        "content",
+        "quiz",
+        "explanation",
+        "multiple_correct_answers",
+    )
     inlines = [MCAnswerInline]
+
+    # setting question_type value to Multiple Choice
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(MCQuestionAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields["question_type"].initial = "M"
+        return form
 
 
 class MCAnswerAdmin(admin.ModelAdmin):
@@ -135,8 +147,15 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("content", "quiz")
+    fields = ("question_type", "content", "quiz")
     inlines = [LikertAnswerInline]
+    # readonly_fields = ["question_type"]
+
+    # setting question_type value to Likert
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields["question_type"].initial = "L"
+        return form
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
@@ -145,7 +164,13 @@ class LikertAnswerAdmin(admin.ModelAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("content", "quiz")
+    fields = ("question_type", "content", "quiz")
+
+    # setting question_type value to Open Ended
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(OpenEndedAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields["question_type"].initial = "O"
+        return form
 
 
 class QuestionAttemptAdmin(admin.ModelAdmin):
@@ -170,13 +195,19 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("content", "quiz")
+    fields = ("question_type", "content", "quiz")
+
+    # setting question_type value to Group Header
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(QuestionGroupHeaderAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields["question_type"].initial = "H"
+        return form
 
 
 # TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
 # question page and are only useful during testing and development)
 admin.site.register(Quiz, QuizAdmin)
-# admin.site.register(Question, QuestionAdmin)
+admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
 # admin.site.register(MCAnswer, MCAnswerAdmin)

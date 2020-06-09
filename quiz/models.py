@@ -43,6 +43,13 @@ class Question(TimeStampedModel):
     and for question headers.
     """
 
+    QUESTION_TYPES = [
+        ("H", "Header"),
+        ("L", "Likert"),
+        ("O", "Open ended"),
+        ("M", "Multiple choice"),
+    ]
+
     quiz = models.ForeignKey(
         Quiz,
         verbose_name="Quiz",
@@ -60,9 +67,14 @@ class Question(TimeStampedModel):
         blank=True,
         help_text="Explanation to be shown after the question has been answered.",
     )
+    question_type = models.CharField(max_length=1, choices=QUESTION_TYPES)
+    multiple_correct_answers = models.BooleanField(
+        blank=False,
+        default=False,
+        help_text="Does this question have multiple correct answers \
+            (allow user to select multiple answer items)?",
+    )
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
-
-    objects = InheritanceManager()
 
     class Meta:
         ordering = ["custom_order"]
@@ -87,15 +99,19 @@ class QuestionAttempt(TimeStampedModel):
 class Likert(Question):
     """Likert Model"""
 
+    class Meta:
+        proxy = True
+        verbose_name = "Likert question"
+        verbose_name_plural = "Likert questions"
+
     def get_answers(self):
         return LikertAnswer.objects.filter(question=self)
 
     def __str__(self):
         return ("%s") % (self.content)
 
-    class Meta:
-        verbose_name = "Likert question"
-        verbose_name_plural = "Likert questions"
+    # def get_changeform_initial_data(self, request):
+    #     return {"question_type": "L"}
 
 
 class LikertAnswer(TimeStampedModel):
@@ -162,6 +178,7 @@ class OpenEnded(Question):
     #     return ("%s") % (self.content)
 
     class Meta:
+        proxy = True
         verbose_name = "Open ended question"
         verbose_name_plural = "Open ended questions"
 
@@ -189,13 +206,6 @@ class OpenEndedAttempt(QuestionAttempt):
 
 
 class MCQuestion(Question):
-    multiple_correct_answers = models.BooleanField(
-        blank=False,
-        default=False,
-        help_text="Does this question have multiple correct answers \
-            (allow user to select multiple answer items)?",
-    )
-
     def check_if_correct(self, guess):
         answer = MCAnswer.objects.get(id=guess)
 
@@ -211,6 +221,7 @@ class MCQuestion(Question):
         ]
 
     class Meta:
+        proxy = True
         verbose_name = "Multiple choice question"
         verbose_name_plural = "Multiple choice questions"
 
