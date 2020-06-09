@@ -187,7 +187,7 @@ class Question(TimeStampedModel):
         verbose_name="Quiz",
         related_name="questions",
         blank=False,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     content = models.CharField(
         max_length=1000,
@@ -241,6 +241,10 @@ class LikertManager(models.Manager):
     def get_queryset(self):
         queryset = super(LikertManager, self).get_queryset().filter(question_type="L")
         return queryset
+
+    def create(self, **kwargs):
+        kwargs.update({"question_type": "L"})
+        return super(LikertManager, self).create(**kwargs)
 
 
 class OpenEndedManager(models.Manager):
