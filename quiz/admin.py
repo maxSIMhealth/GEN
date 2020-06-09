@@ -159,11 +159,11 @@ class LikertAdmin(QuestionAdmin):
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
-    # # setting question_type value to Likert
-    # def get_form(self, request, obj=None, **kwargs):
-    #     form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
-    #     form.base_fields["question_type"].initial = "L"
-    #     return form
+    # setting question_type value to Likert
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields["question_type"].initial = "L"
+        return form
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
