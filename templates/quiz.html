@@ -46,7 +46,7 @@
       <div class="card-header bg-light">Questions</div>
       <div class="card-body">
 
-	<p>{{ quiz.description }}</p>
+	    <p>{{ quiz.description }}</p>
 
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
@@ -66,7 +66,7 @@
 
             {% if question.question_type == 'M' %}
             <ul class="list-group mb-3">
-              {% for choice in question.mcquestion.get_answers %}
+              {% for choice in question.answers.all %}
               <li class="list-group-item">
                 <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
                   <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}

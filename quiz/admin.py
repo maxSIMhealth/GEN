@@ -21,6 +21,13 @@ from .models import (
 )
 
 
+def duplicate_quiz(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate_quiz()
+
+
+duplicate_quiz.short_description = "Duplicate selected quizzes"
+
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
 # https://stackoverflow.com/questions/34355406/django-admin-not-saving-\
 # pre-populated-inline-fields-which-are-left-in-their-init
@@ -70,6 +77,7 @@ class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_filter = ("course",)
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
+    actions = [duplicate_quiz]
     save_as = True
 
     # filter_horizontal = ('questions', )
@@ -151,11 +159,11 @@ class LikertAdmin(QuestionAdmin):
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
-    # setting question_type value to Likert
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields["question_type"].initial = "L"
-        return form
+    # # setting question_type value to Likert
+    # def get_form(self, request, obj=None, **kwargs):
+    #     form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
+    #     form.base_fields["question_type"].initial = "L"
+    #     return form
 
 
 class LikertAnswerAdmin(admin.ModelAdmin):
@@ -210,7 +218,7 @@ admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-# admin.site.register(MCAnswer, MCAnswerAdmin)
+admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
 # admin.site.register(LikertAnswer, LikertAnswerAdmin)

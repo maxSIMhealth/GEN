@@ -21,7 +21,7 @@
 {% block content_title %}
 
 <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }} Results
-  
+
 {% endblock content_title %}
 
 {% block content %}
@@ -42,7 +42,7 @@
       <div class="card-body">
         {% for question in quiz.questions.all %}
 
-          {% if question|check_attribute:'questiongroupheader' %}
+          {% if question.question_type == 'H' %}
           <h5 class="card-title">
             <strong>{{question.content}}</strong>
             <hr />
@@ -53,11 +53,11 @@
           </h6>
           {% endif %}
 
-          {% if question|check_attribute:'mcquestion' %}
+          {% if question.question_type == 'M' %}
             {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
             <ul class="list-group mb-3">
               {% if quiz.show_correct_answers %}
-                {% for choice in question.mcquestion.get_answers %}
+                {% for choice in question.answers.all %}
                   {% if choice.correct %}
                     <li class="list-group-item list-group-item-success">
                   {% else %}
@@ -76,7 +76,7 @@
                     </li>
                 {% endfor %}
               {% else %}
-                {% for choice in question.mcquestion.get_answers %}
+                {% for choice in question.answers.all %}
                   <li class="list-group-item">
                   <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
                     <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
@@ -93,9 +93,9 @@
               {% endif %}
             </ul>
 
-          {% elif question|check_attribute:'likert' %}
+          {% elif question.question_type == 'L' %}
             <div class="card ml-0 mr-0 mb-4">
-              {% for answer in question.likert.get_answers %}
+              {% with answer=question.likertanswer %}
                 <div class="card-body likert">
                   {% for value in answer.scale_min|likert_range:answer.scale_max %}
                     <div class="item">
@@ -117,10 +117,10 @@
                     {{answer.legend|linebreaks}}
                   </div>
                 {% endif %}
-              {% endfor %}
+              {% endwith %}
             </div>
 
-          {% elif question|check_attribute:'openended' %}
+          {% elif question.question_type == 'O' %}
             <div class="mb-3">
               <textarea rows="5" class="form-control" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{attempt.answer_content}}{% endif %}{% endfor %}</textarea>
             </div>
