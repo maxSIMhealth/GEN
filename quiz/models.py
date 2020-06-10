@@ -385,7 +385,9 @@ class QuestionAttempt(TimeStampedModel):
     answer_content = models.TextField(("student answer"), null=True, blank=True)
     correct = models.NullBooleanField(blank=True, null=True)
     # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
-    # multiple_choice_answer = models.ForeignKey(MCAnswer, on_delete=models.PROTECT)
+    multiplechoice_answer = models.ForeignKey(
+        MCAnswer, blank=True, null=True, on_delete=models.PROTECT
+    )
 
     class Meta:
         verbose_name = "Question attempt"
@@ -422,6 +424,10 @@ class OpenEndedAttemptManager(models.Manager):
         )
         return queryset
 
+    def create(self, **kwargs):
+        kwargs.update({"question_type": "O"})
+        return super(OpenEndedAttemptManager, self).create(**kwargs)
+
 
 class MCQuestionAttemptManager(models.Manager):
     def get_queryset(self):
@@ -431,6 +437,10 @@ class MCQuestionAttemptManager(models.Manager):
             .filter(question_type="M")
         )
         return queryset
+
+    def create(self, **kwargs):
+        kwargs.update({"question_type": "M"})
+        return super(MCQuestionAttemptManager, self).create(**kwargs)
 
 
 class LikertAttempt(QuestionAttempt):
