@@ -46,14 +46,14 @@
       <div class="card-header bg-light">Questions</div>
       <div class="card-body">
 
-	<p>{{ quiz.description }}</p>
+	    <p>{{ quiz.description }}</p>
 
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
 
           {% for question in quiz.questions.all %}
 
-            {% if question|check_attribute:'questiongroupheader' %}
+            {% if question.question_type == 'H' %}
             <h5>
               <strong>{{question.content}}</strong>
               <hr />
@@ -64,9 +64,9 @@
             </h6>
             {% endif %}
 
-            {% if question|check_attribute:'mcquestion' %}
+            {% if question.question_type == 'M' %}
             <ul class="list-group mb-3">
-              {% for choice in question.mcquestion.get_answers %}
+              {% for choice in question.answers.all %}
               <li class="list-group-item">
                 <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
                   <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
@@ -75,9 +75,9 @@
               {% endfor %}
             </ul>
 
-            {% elif question|check_attribute:'likert' %}
+            {% elif question.question_type == 'L' %}
             <div class="card ml-0 mr-0 mb-4">
-              {% for answer in question.likert.get_answers %}
+              {% with answer=question.likertanswer %}
                 <div class="card-body likert">
                   {% for value in answer.scale_min|likert_range:answer.scale_max %}
                   <div class="item">
@@ -93,10 +93,10 @@
                   {{answer.legend|linebreaks}}
                 </div>
                 {% endif %}
-              {% endfor %}
+              {% endwith %}
             </div>
 
-            {% elif question|check_attribute:'openended' %}
+            {% elif question.question_type == 'O' %}
 
             <div class="mb-3">
               <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>

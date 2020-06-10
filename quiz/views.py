@@ -79,9 +79,9 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
                     if question_type == "mcquestion":
                         try:
-                            mcquestion = MCQuestion.objects.get(pk=question_id)
+                            question = MCQuestion.objects.get(pk=question_id)
                         except MCQuestion.DoesNotExist:
-                            mcquestion = None
+                            question = None
 
                         try:
                             user_answers = MCAnswer.objects.filter(
@@ -92,7 +92,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
                         # check if the answer is correct
                         for answer in user_answers:
-                            if MCQuestion.check_if_correct(mcquestion, answer.pk):
+                            if MCQuestion.check_if_correct(question, answer.pk):
                                 # FIXME: consider changing flag to consider
                                 # partially correct answers
                                 flag = True
@@ -105,12 +105,12 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                                 student=request.user,
                                 quiz=quiz,
                                 course=course,
-                                question=MCQuestion.objects.get(pk=question_id),
+                                question=question,
                                 correct=flag,
                                 # I've decided to save a pure text version of the answer, in
                                 # case the answer object is altered in the future
                                 answer_content=answer.content,
-                                answer=MCAnswer.objects.get(pk=answer.pk),
+                                multiplechoice_answer=answer,
                                 attempt_number=current_attempt_number,
                             )
 
@@ -172,6 +172,11 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                             question=question,
                             attempt_number=current_attempt_number,
                         )
+
+                        # add video name, if the quiz has a related video
+                        if quiz.video:
+                            # FIXME: change quiz.video to quiz.video.original_name
+                            attempt.video_name = quiz.video.name
 
                         # check if the submitted answer is valid (integer)
                         try:
@@ -281,12 +286,12 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     attempt_openended = []
 
     for item in questions_attempt:
-        if hasattr(item, "likertattempt"):
-            attempt_likert.append(item.likertattempt)
-        elif hasattr(item, "mcquestionattempt"):
-            attempt_mcquestion.append(item.mcquestionattempt)
-        elif hasattr(item, "openendedattempt"):
-            attempt_openended.append(item.openendedattempt)
+        if item.question_type == "L":
+            attempt_likert.append(item)
+        elif item.question_type == "M":
+            attempt_mcquestion.append(item)
+        elif item.question_type == "O":
+            attempt_openended.append(item)
 
     # reset the session variable
     request.session["quiz_complete"] = False

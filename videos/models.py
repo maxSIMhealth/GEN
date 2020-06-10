@@ -82,6 +82,9 @@ class VideoFile(SectionItem):
     )
     uploaded_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to=user_directory_path)
+    original_name = models.CharField(
+        "video file original name", max_length=255, null=True, blank=True
+    )
     thumbnail = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
     # discussion = models.ForeignKey(
     #     Discussion, on_delete=models.CASCADE, related_name='video')

@@ -12,6 +12,6 @@ def quiz_mcquestion_check(question, attempt_list):
 
     for attempt in attempt_list:
         if question.id == attempt.question_id:
-            user_answers.append(attempt.answer_id)
+            user_answers.append(attempt.multiplechoice_answer_id)
 
     return user_answers
