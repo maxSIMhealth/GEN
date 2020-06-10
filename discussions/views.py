@@ -96,7 +96,7 @@ def new_discussion(request, pk, section_pk):
     discussion = Discussion.objects.all()
 
     if request.method == "POST":
-        form = NewDiscussionForm(request.POST)
+        form = NewDiscussionForm(course, request.POST)
         if "Cancel" in request.POST["submit"]:
             pass
         if "submit" in request.POST and form.is_valid():
@@ -130,7 +130,7 @@ def new_discussion(request, pk, section_pk):
         #     discussion.save()
         #     return redirect('course_discussions', pk=course.pk)
     else:
-        form = NewDiscussionForm()
+        form = NewDiscussionForm(course)
         # media_form = NewMediaForm()
 
     return render(

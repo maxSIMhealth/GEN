@@ -4,6 +4,7 @@ from crispy_forms.layout import Fieldset, Layout, Submit
 from django import forms
 
 from .models import Comment, Discussion
+from videos.models import VideoFile
 
 
 class NewDiscussionForm(forms.ModelForm):
@@ -25,8 +26,9 @@ class NewDiscussionForm(forms.ModelForm):
         # exclude = ['course', 'vote_score',
         #    'num_vote_up', 'num_vote_down']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, course, *args, **kwargs):
         super(NewDiscussionForm, self).__init__(*args, **kwargs)
+        self.fields["video"].queryset = VideoFile.objects.filter(course=course)
         self.helper = FormHelper(self)
         self.helper.layout = Layout(
             # FIXME: find a new to get first fieldset value (the legend) to be
@@ -36,7 +38,8 @@ class NewDiscussionForm(forms.ModelForm):
                 "",
                 "name",
                 "description",
-                "video"),
+                "video",
+            ),
             FormActions(
                 Submit("submit", "Submit", css_class="btn btn-primary"),
                 Submit(
