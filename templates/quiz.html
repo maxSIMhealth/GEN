@@ -68,8 +68,8 @@
             <ul class="list-group mb-3">
               {% for choice in question.answers.all %}
               <li class="list-group-item">
-                <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                  <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
+                <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                  <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
                 </label>
               </li>
               {% endfor %}
