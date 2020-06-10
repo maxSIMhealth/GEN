@@ -379,8 +379,8 @@ class QuestionAttempt(TimeStampedModel):
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     attempt_number = models.PositiveIntegerField(default=0)
     question = models.ForeignKey(Question, on_delete=models.PROTECT)
-    video_name = models.CharField(
-        "video file original name", max_length=255, null=True, blank=True
+    video = models.ForeignKey(
+        VideoFile, blank=True, null=True, on_delete=models.PROTECT
     )
     answer_content = models.TextField(("student answer"), null=True, blank=True)
     correct = models.NullBooleanField(blank=True, null=True)

@@ -176,7 +176,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                         # add video name, if the quiz has a related video
                         if quiz.video:
                             # FIXME: change quiz.video to quiz.video.original_name
-                            attempt.video_name = quiz.video.name
+                            attempt.video = quiz.video
 
                         # check if the submitted answer is valid (integer)
                         try:
