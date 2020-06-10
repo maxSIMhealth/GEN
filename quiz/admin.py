@@ -1,6 +1,7 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 from django.forms import ModelForm
+from import_export import resources
 
 # from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -70,10 +71,8 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
 
 
 class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = (
-        "name",
-        "course",
-    )
+    # list_display = ("name", "course", "quiz_actions")
+    list_display = ("name", "course")
     list_filter = ("course",)
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
@@ -81,6 +80,14 @@ class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
     save_as = True
 
     # filter_horizontal = ('questions', )
+
+    # def get_urls(self):
+    #     urls = super().get_urls()
+    #     custom_urls = [path("copy/", self.duplicate_quiz)]
+    #     return custom_urls + urls
+
+    # def quiz_actions(self, obj):
+    #     return format_html('<a class="button" href="#">Make a copy</a>',)
 
 
 class QuizScoreAdmin(admin.ModelAdmin):
@@ -198,6 +205,20 @@ class QuestionAttemptAdmin(admin.ModelAdmin):
     list_filter = ("course", "quiz", "question", "attempt_number")
 
     # search_fields = ('quiz', 'course', 'question', 'student')
+
+
+class QuestionAttemptResource(resources.ModelResource):
+    class Meta:
+        model = QuestionAttempt
+        fields = (
+            "id",
+            "created",
+            "student",
+            "quiz__name",
+            "course__name",
+            "attempt_number",
+            "question",
+        )
 
 
 class QuestionGroupHeaderAdmin(QuestionAdmin):
