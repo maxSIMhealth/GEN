@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 
 from courses.models import Course, SectionItem
@@ -214,19 +213,6 @@ class Question(TimeStampedModel):
         return self.content
 
 
-class QuestionAttempt(TimeStampedModel):
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    attempt_number = models.PositiveIntegerField(default=0)
-
-    objects = InheritanceManager()
-
-    class Meta:
-        verbose_name = "Question attempt"
-        verbose_name_plural = "Question attempts"
-
-
 class QuestionGroupHeaderManager(models.Manager):
     def get_queryset(self):
         queryset = (
@@ -316,28 +302,6 @@ class LikertAnswer(TimeStampedModel):
         verbose_name_plural = "Likert answers (scale definition)"
 
 
-class LikertAttempt(QuestionAttempt):
-    """
-    Likert Attempt model
-    """
-
-    question = models.ForeignKey(Likert, on_delete=models.PROTECT)
-    answer_content = models.PositiveIntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return "%s - %s - Course %s (attempt %s): %s" % (
-            self.student.get_full_name(),
-            self.quiz.name,
-            self.course.name,
-            self.attempt_number,
-            self.question,
-        )
-
-    class Meta:
-        verbose_name = "Likert attempt"
-        verbose_name_plural = "Likert attempts"
-
-
 class OpenEnded(Question):
     """
     Open Ended model
@@ -352,28 +316,6 @@ class OpenEnded(Question):
         proxy = True
         verbose_name = "Open ended question"
         verbose_name_plural = "Open ended questions"
-
-
-class OpenEndedAttempt(QuestionAttempt):
-    """
-    Open Ended Attempt model
-    """
-
-    question = models.ForeignKey(OpenEnded, on_delete=models.PROTECT)
-    answer_content = models.TextField(("answer"), null=True, blank=True)
-
-    def __str__(self):
-        return "%s - %s - Course %s (attempt %s): %s" % (
-            self.student.get_full_name(),
-            self.quiz.name,
-            self.course.name,
-            self.attempt_number,
-            self.question,
-        )
-
-    class Meta:
-        verbose_name = "Open ended attempt"
-        verbose_name_plural = "Open ended attempts"
 
 
 class MCQuestion(Question):
@@ -430,22 +372,102 @@ class MCAnswer(TimeStampedModel):
         ordering = ["custom_order"]
 
 
-class MCQuestionAttempt(QuestionAttempt):
-    question = models.ForeignKey(MCQuestion, on_delete=models.PROTECT)
+class QuestionAttempt(TimeStampedModel):
+    question_type = models.CharField(max_length=1, choices=QUESTION_TYPES)
+    student = models.ForeignKey(User, on_delete=models.PROTECT)
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    attempt_number = models.PositiveIntegerField(default=0)
+    question = models.ForeignKey(Question, on_delete=models.PROTECT)
+    video_name = models.CharField(
+        "video file original name", max_length=255, null=True, blank=True
+    )
+    answer_content = models.TextField(("student answer"), null=True, blank=True)
     correct = models.NullBooleanField(blank=True, null=True)
-    answer = models.ForeignKey(MCAnswer, on_delete=models.PROTECT)
-    answer_content = models.CharField("student answer", max_length=1000)
+    # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
+    # multiple_choice_answer = models.ForeignKey(MCAnswer, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = "Question attempt"
+        verbose_name_plural = "Question attempts"
 
     def __str__(self):
-        return "%s - %s - Course %s (attempt %s): answer id %s" % (
+        return "%s - %s - Course %s (attempt %s): %s" % (
             self.student.get_full_name(),
             self.quiz.name,
             self.course.name,
             self.attempt_number,
-            self.answer_id,
+            self.question,
         )
 
+
+class LikertAttemptManager(models.Manager):
+    def get_queryset(self):
+        queryset = (
+            super(LikertAttemptManager, self).get_queryset().filter(question_type="L")
+        )
+        return queryset
+
+    def create(self, **kwargs):
+        kwargs.update({"question_type": "L"})
+        return super(LikertAttemptManager, self).create(**kwargs)
+
+
+class OpenEndedAttemptManager(models.Manager):
+    def get_queryset(self):
+        queryset = (
+            super(OpenEndedAttemptManager, self)
+            .get_queryset()
+            .filter(question_type="O")
+        )
+        return queryset
+
+
+class MCQuestionAttemptManager(models.Manager):
+    def get_queryset(self):
+        queryset = (
+            super(MCQuestionAttemptManager, self)
+            .get_queryset()
+            .filter(question_type="M")
+        )
+        return queryset
+
+
+class LikertAttempt(QuestionAttempt):
+    """
+    Likert Attempt model
+    """
+
+    objects = LikertAttemptManager()
+
     class Meta:
+        proxy = True
+        verbose_name = "Likert attempt"
+        verbose_name_plural = "Likert attempts"
+
+
+class OpenEndedAttempt(QuestionAttempt):
+    """
+    Open Ended Attempt model
+    """
+
+    objects = OpenEndedAttemptManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = "Open ended attempt"
+        verbose_name_plural = "Open ended attempts"
+
+
+class MCQuestionAttempt(QuestionAttempt):
+    """
+    Multiple Choice Attempt model
+    """
+
+    objects = MCQuestionAttemptManager()
+
+    class Meta:
+        proxy = True
         verbose_name = "Multiple choice questions attempt"
         verbose_name_plural = "Multiple choice questions attempts"
 
