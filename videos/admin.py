@@ -13,9 +13,10 @@ update_thumbnails.short_description = "Update thumbnail of selected videos"
 
 
 class VideoFileAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "author", "course", "file", "thumbnail")
+    list_display = ("name", "internal_name", "description", "author", "course", "file", "thumbnail")
     actions = [update_thumbnails]
     list_filter = ("course", )
+    save_as = True
 
 
 class PlaylistInline(SortableInlineAdminMixin, admin.TabularInline):
