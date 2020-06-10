@@ -2,6 +2,7 @@ import io
 import logging
 import os
 import tempfile
+import uuid
 
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -17,6 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 def user_directory_path(instance, filename):
+    ext = filename.split(".")[-1]
+    random_filename = str(uuid.uuid4().hex)
+    filename = "%s.%s" % (random_filename, ext)
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return "user_{0}/{1}".format(instance.author.id, filename)
 
