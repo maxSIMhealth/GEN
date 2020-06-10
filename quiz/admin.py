@@ -2,6 +2,7 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
+from import_export.admin import ExportActionMixin
 
 # from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -188,25 +189,6 @@ class OpenEndedAdmin(QuestionAdmin):
         return form
 
 
-class QuestionAttemptAdmin(admin.ModelAdmin):
-    """
-    Base class for quiz questions (likert, multiple choice, and open ended).
-    All questions models follow the same naming pattern.
-    """
-
-    list_display = (
-        "student",
-        "course",
-        "quiz",
-        "question",
-        "attempt_number",
-        "created",
-    )
-    list_filter = ("course", "quiz", "question", "attempt_number")
-
-    # search_fields = ('quiz', 'course', 'question', 'student')
-
-
 class QuestionAttemptResource(resources.ModelResource):
     class Meta:
         model = QuestionAttempt
@@ -217,8 +199,28 @@ class QuestionAttemptResource(resources.ModelResource):
             "quiz__name",
             "course__name",
             "attempt_number",
-            "question",
         )
+
+
+class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
+    """
+    Base class for quiz questions (likert, multiple choice, and open ended).
+    All questions models follow the same naming pattern.
+    """
+
+    list_display = (
+        "student",
+        "course",
+        "quiz",
+        # "question",
+        "attempt_number",
+        "created",
+    )
+    # list_filter = ("course", "quiz", "question", "attempt_number")
+    list_filter = ("course", "quiz", "attempt_number")
+    resource_class = QuestionAttemptResource
+
+    # search_fields = ('quiz', 'course', 'question', 'student')
 
 
 class QuestionGroupHeaderAdmin(QuestionAdmin):
@@ -247,4 +249,4 @@ admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
 admin.site.register(QuestionGroupHeader, QuestionGroupHeaderAdmin)
-admin.site.register(QuestionAttempt)
+admin.site.register(QuestionAttempt, QuestionAttemptAdmin)
