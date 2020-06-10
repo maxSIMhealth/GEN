@@ -63,8 +63,8 @@
                   {% else %}
                     <li class="list-group-item">
                   {% endif %}
-                    <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                      <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                    <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                      <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
                       {% for user_answer in mcquestion_user_answers %}
                           {% if choice.id == user_answer %}
                           checked
@@ -78,8 +78,8 @@
               {% else %}
                 {% for choice in question.answers.all %}
                   <li class="list-group-item">
-                  <label class="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                    <input type="{{question.mcquestion.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
+                  <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                    <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
                     {% for user_answer in mcquestion_user_answers %}
                         {% if choice.id == user_answer %}
                         checked
