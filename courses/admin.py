@@ -3,6 +3,7 @@ from django.contrib import admin
 
 # from quiz.models import Quiz
 from .models import Course, Section, SectionItem
+from .forms import SectionInlineForm
 
 
 class CourseAdmin(admin.ModelAdmin):
@@ -24,7 +25,8 @@ class SectionAdmin(SortableAdminMixin, admin.ModelAdmin):
         "course",
     )
     inlines = (SectionInline,)
-    list_filter = ("course", )
+    list_filter = ("course",)
+    form = SectionInlineForm
 
 
 admin.site.register(Course, CourseAdmin)
