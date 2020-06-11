@@ -198,29 +198,29 @@ class QuestionAttemptResource(resources.ModelResource):
             "student",
             "quiz__name",
             "course__name",
+            "section__name",
             "attempt_number",
             "question_type",
-            "question",
             "question__content",
             "video__name",
             "video__internal_name",
             "answer_content",
-            "correct",
+            # "correct",
         )
         export_order = (
             "id",
             "created",
             "student",
             "course__name",
+            "section__name",
             "quiz__name",
             "attempt_number",
             "video__name",
             "video__internal_name",
             "question_type",
-            "question",
             "question__content",
             "answer_content",
-            "correct",
+            # "correct",
         )
 
 

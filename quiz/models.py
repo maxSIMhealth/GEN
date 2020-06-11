@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from model_utils.models import TimeStampedModel
 
-from courses.models import Course, SectionItem
+from courses.models import Course, Section, SectionItem
 from videos.models import VideoFile
 
 QUESTION_TYPES = [
@@ -377,6 +377,7 @@ class QuestionAttempt(TimeStampedModel):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
     quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    section = models.ForeignKey(Section, on_delete=models.PROTECT)
     attempt_number = models.PositiveIntegerField(default=0)
     question = models.ForeignKey(Question, on_delete=models.PROTECT)
     video = models.ForeignKey(

@@ -105,6 +105,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                                 student=request.user,
                                 quiz=quiz,
                                 course=course,
+                                section=section,
                                 question=question,
                                 correct=flag,
                                 # I've decided to save a pure text version of the answer, in
@@ -113,6 +114,10 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                                 multiplechoice_answer=answer,
                                 attempt_number=current_attempt_number,
                             )
+
+                            # add video name, if the quiz has a related video
+                            if quiz.video:
+                                attempt.video = quiz.video
 
                             # save attempt data
                             attempt.save()
@@ -130,10 +135,15 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                             student=request.user,
                             quiz=quiz,
                             course=course,
+                            section=section,
                             question=question,
                             answer_content=student_answer,
                             attempt_number=current_attempt_number,
                         )
+
+                        # add video name, if the quiz has a related video
+                        if quiz.video:
+                            attempt.video = quiz.video
 
                         # save attempt data
                         attempt.save()
@@ -169,13 +179,13 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                             student=request.user,
                             quiz=quiz,
                             course=course,
+                            section=section,
                             question=question,
                             attempt_number=current_attempt_number,
                         )
 
                         # add video name, if the quiz has a related video
                         if quiz.video:
-                            # FIXME: change quiz.video to quiz.video.original_name
                             attempt.video = quiz.video
 
                         # check if the submitted answer is valid (integer)
