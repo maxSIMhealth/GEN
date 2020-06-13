@@ -386,9 +386,7 @@ class QuestionAttempt(TimeStampedModel):
     answer_content = models.TextField(("student answer"), null=True, blank=True)
     correct = models.NullBooleanField(blank=True, null=True)
     # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
-    multiplechoice_answer = models.ForeignKey(
-        MCAnswer, blank=True, null=True, on_delete=models.PROTECT
-    )
+    multiplechoice_answers = models.ManyToManyField(MCAnswer, blank=True)
 
     class Meta:
         verbose_name = "Question attempt"

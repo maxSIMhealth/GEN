@@ -1,4 +1,5 @@
 import io
+import logging
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -17,11 +18,15 @@ from .models import (
     MCQuestionAttempt,
     OpenEnded,
     OpenEndedAttempt,
+    Question,
     QuestionAttempt,
     Quiz,
     QuizScore,
 )
 from .support_methods import quiz_enable_check
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 # FIXME: split quiz_page into multiple methods
@@ -70,132 +75,104 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 else:
                     current_attempt_number = 1
 
-                # get each question id and get answer related to it
+                # get submitted questions and generate an dictionary list
+                # format: {"question_id": "question_values"}
+                submitted_data = dict()
                 for item in items:
                     try:
-                        question_type, question_id = item.split("_")
+                        _, question_id = item.split("_")
+                        submitted_data[question_id] = request.POST.getlist(item)
+
                     except IndexError:
                         question_id = None
 
-                    if question_type == "mcquestion":
-                        try:
-                            question = MCQuestion.objects.get(pk=question_id)
-                        except MCQuestion.DoesNotExist:
-                            question = None
+                # check if each question was answered by the participant
+                for question in quiz.questions.all():
+                    # create new attempt object
+                    attempt = QuestionAttempt.objects.create(
+                        student=request.user,
+                        quiz=quiz,
+                        course=course,
+                        section=section,
+                        question=question,
+                        question_type=question.question_type,
+                        attempt_number=current_attempt_number,
+                    )
 
-                        try:
-                            user_answers = MCAnswer.objects.filter(
-                                id__in=request.POST.getlist(item)
-                            )
-                        except IndexError:
-                            user_answers = None
+                    # add video name, if the quiz has a related video
+                    if quiz.video:
+                        attempt.video = quiz.video
 
-                        # check if the answer is correct
-                        for answer in user_answers:
-                            if MCQuestion.check_if_correct(question, answer.pk):
-                                # FIXME: consider changing flag to consider
-                                # partially correct answers
-                                flag = True
-                                score += 1
-                            else:
+                    # check if the participant answered the question
+                    if submitted_data.get(str(question.id)):
+                        logger.info("Question answer found")
+                        if question.question_type == "L":
+                            # try to get answer (scale) object
+                            try:
+                                scale = LikertAnswer.objects.get(question=question)
+                            except LikertAnswer.DoesNotExist:
+                                scale = None
+
+                            # get the likert scale value chosen by the participant
+                            student_answer = submitted_data[str(question.id)][0]
+
+                            # check if the student answer is within defined scale
+                            # INFO: decided to not change student answer and treat it on the
+                            # generated report afterwards
+                            if (
+                                not scale.scale_min
+                                <= int(student_answer)
+                                <= scale.scale_max
+                            ):
+                                # student_answer = None
+                                pass
+                        elif question.question_type == "M":
+                            # try to get multiple choice answers objects
+                            try:
+                                user_answers = MCAnswer.objects.filter(
+                                    id__in=submitted_data[str(question.id)]
+                                )
+                            except IndexError:
+                                user_answers = None
+
+                            # save user_answers to attempt object
+                            attempt.multiplechoice_answers.set(user_answers)
+
+                            # check if the answer is correct
+                            flag_mcquestion = []
+                            student_answer = []
+
+                            for answer in user_answers:
+                                if MCQuestion.check_if_correct(question, answer.pk):
+                                    flag_mcquestion.append(True)
+                                    score += 1
+                                else:
+                                    flag_mcquestion.append(False)
+
+                                student_answer.append(answer.content)
+
+                            # FIXME: consider changing flag to consider partially
+                            # correct answers (for questions with multiple answers)
+                            if flag_mcquestion.__contains__(False):
                                 flag = False
+                            else:
+                                flag = True
 
-                            # store the answers as a new attempt
-                            attempt = MCQuestionAttempt.objects.create(
-                                student=request.user,
-                                quiz=quiz,
-                                course=course,
-                                section=section,
-                                question=question,
-                                correct=flag,
-                                # I've decided to save a pure text version of the answer, in
-                                # case the answer object is altered in the future
-                                answer_content=answer.content,
-                                multiplechoice_answer=answer,
-                                attempt_number=current_attempt_number,
-                            )
+                            # set field based on if the answer was correct or not
+                            attempt.correct = flag
 
-                            # add video name, if the quiz has a related video
-                            if quiz.video:
-                                attempt.video = quiz.video
+                        elif question.question_type == "O":
+                            # get the open ended answer
+                            student_answer = submitted_data[str(question.id)][0]
 
-                            # save attempt data
-                            attempt.save()
-
-                    elif question_type == "openended":
-                        try:
-                            question = OpenEnded.objects.get(pk=question_id)
-                        except OpenEnded.DoesNotExist:
-                            question = None
-
-                        student_answer = request.POST.get(item)
-
-                        # store answers
-                        attempt = OpenEndedAttempt.objects.create(
-                            student=request.user,
-                            quiz=quiz,
-                            course=course,
-                            section=section,
-                            question=question,
-                            answer_content=student_answer,
-                            attempt_number=current_attempt_number,
-                        )
-
-                        # add video name, if the quiz has a related video
-                        if quiz.video:
-                            attempt.video = quiz.video
-
-                        # save attempt data
+                        # save participant answer attempt
+                        attempt.answer_content = student_answer
                         attempt.save()
-
-                    elif question_type == "likert":
-                        try:
-                            question = Likert.objects.get(pk=question_id)
-                        except Likert.DoesNotExist:
-                            question = None
-
-                        # try to get answer (scale) object
-                        try:
-                            scale = LikertAnswer.objects.get(question=question)
-                        except LikertAnswer.DoesNotExist:
-                            scale = None
-
-                        # get the likert scale value chosen by the participant
-                        student_answer = request.POST.get(item)
-
-                        # check if the student answer is within defined scale
-                        # INFO: decided to not change student answer and treat it on the
-                        # generated report afterwards
-                        if (
-                            not scale.scale_min
-                            <= int(student_answer)
-                            <= scale.scale_max
-                        ):
-                            # student_answer = None
-                            pass
-
-                        # create new attempt
-                        attempt = LikertAttempt.objects.create(
-                            student=request.user,
-                            quiz=quiz,
-                            course=course,
-                            section=section,
-                            question=question,
-                            attempt_number=current_attempt_number,
-                        )
-
-                        # add video name, if the quiz has a related video
-                        if quiz.video:
-                            attempt.video = quiz.video
-
-                        # check if the submitted answer is valid (integer)
-                        try:
-                            attempt.answer_content = student_answer
-                            attempt.save()
-                        except ValueError:
-                            attempt.answer_content = None
-
-                        # save attempt data
+                    else:
+                        # save attempt with empty 'answer_content',
+                        # since the participant didn't answer it
+                        logger.info("Question answer **NOT** found")
+                        attempt.correct = False
                         attempt.save()
 
                 # change session variable to indicate that the
@@ -263,6 +240,64 @@ def quiz_page(request, pk, section_pk, quiz_pk):
         raise Http404("This quiz is not published.")
 
 
+# def quiz_check_question(request, item):
+#     try:
+#         question_type, question_id = item.split("_")
+#     except IndexError:
+#         question_id = None
+
+#     if question_type == "mcquestion":
+#         try:
+#             question = MCQuestion.objects.get(pk=question_id)
+#         except MCQuestion.DoesNotExist:
+#             question = None
+
+#         try:
+#             user_answers = MCAnswer.objects.filter(id__in=request.POST.getlist(item))
+#         except IndexError:
+#             user_answers = None
+
+#         # check if the answer is correct
+#         for answer in user_answers:
+#             if MCQuestion.check_if_correct(question, answer.pk):
+#                 # FIXME: consider changing flag to consider
+#                 # partially correct answers
+#                 flag = True
+#                 score += 1
+#             else:
+#                 flag = False
+
+#     elif question_type == "openended":
+#         try:
+#             question = OpenEnded.objects.get(pk=question_id)
+#         except OpenEnded.DoesNotExist:
+#             question = None
+
+#         student_answer = request.POST.get(item)
+
+#     # store the answers as a new attempt
+#     attempt = QuestionAttempt.objects.create(
+#         student=request.user,
+#         quiz=quiz,
+#         course=course,
+#         section=section,
+#         question=question,
+#         correct=flag,
+#         # I've decided to save a pure text version of the answer, in
+#         # case the answer object is altered in the future
+#         answer_content=answer.content,
+#         multiplechoice_answer=answer,
+#         attempt_number=current_attempt_number,
+#     )
+
+#     # add video name, if the quiz has a related video
+#     if quiz.video:
+#         attempt.video = quiz.video
+
+#     # save attempt data
+#     attempt.save()
+
+
 @login_required
 def quiz_result(request, pk, section_pk, quiz_pk):
     # get objects
@@ -286,9 +321,12 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     )
 
     # get questions and answers from the latest attempt
-    questions_attempt = QuestionAttempt.objects.filter(
-        quiz=quiz, student=request.user, attempt_number=latest_attempt_number
-    )
+    try:
+        questions_attempt = QuestionAttempt.objects.filter(
+            quiz=quiz, student=request.user, attempt_number=latest_attempt_number
+        )
+    except QuestionAttempt.DoesNotExist:
+        questions_attempt = []
 
     # split attempts into different categories
     attempt_likert = []

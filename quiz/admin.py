@@ -199,13 +199,13 @@ class QuestionAttemptResource(resources.ModelResource):
             "quiz__name",
             "course__name",
             "section__name",
-            "attempt_number",
-            "question_type",
+            # "attempt_number",
+            "question__question_type",
             "question__content",
             "video__name",
             "video__internal_name",
             "answer_content",
-            # "correct",
+            "correct",
         )
         export_order = (
             "id",
@@ -214,13 +214,13 @@ class QuestionAttemptResource(resources.ModelResource):
             "course__name",
             "section__name",
             "quiz__name",
-            "attempt_number",
+            # "attempt_number",
             "video__name",
             "video__internal_name",
-            "question_type",
+            "question__question_type",
             "question__content",
             "answer_content",
-            # "correct",
+            "correct",
         )
 
 
