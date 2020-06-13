@@ -101,6 +101,10 @@ class Section(models.Model):
             "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the discussion boards."
         ),
     )
+    show_thumbnails = models.BooleanField(
+        default=True,
+        help_text=_("* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."),
+    )
     custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def clean(self):
