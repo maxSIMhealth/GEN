@@ -1,88 +1,112 @@
-{% extends 'base_course.html' %}
+{% extends 'base_course_section.html' %}
 
+{% load static %}
 {% load humanize %}
-{% load embed_video_tags %}
+{% load check_attribute %}
+{% load likert_range %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'list_quiz' course.pk %}">Quiz</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
   <li class="breadcrumb-item active">{{quiz.name}}</li>
 {% endblock breadcrumb %}
 
-{% block content_tabs %}
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_pdfs' course.pk %}">PDFs</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Quizzes</a>
-  </li>
-{% endblock content_tabs %}
+{% block content_title %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }}
+{% endblock content_title %}
 
 {% block content %}
-   {% comment %} {% if debug == True %}
-  <div class="alert alert-warning" role="alert">
-    *DEBUG* <br />
-    user_id: {{ user.id }} <br />
-    course_pk: {{ course.pk }} <br />
-    quiz_pk: {{ quiz.pk }} <br />
-    quiz.video.url: {{quiz.video.url}} <br />
-    quiz.get_questions: {{quiz.get_questions}}
-  </div>
-  {% endif %} {% endcomment %}
-
   <div class="card-deck">
-    <div class="card bg-secondary text-white">
-      <h5 class="card-header bg-dark">Video</h5>
+    {% if quiz.video %}
+    <div class="card bg-secondary text-white video">
+      <div class="card-header bg-dark">Video</div>
       <div class="card-body">
         <table class="table table-hover">
           <tbody>
             <tr>
               <div class="embed-responsive embed-responsive-16by9">
-                {% video quiz.video.url '800x600' %} 
+                <video controls>
+                  <source src="{{ quiz.video.file.url }}" type="video/mp4">
+                  Sorry, your browse does not support embedded videos.
+                </video>
               </div>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    {% endif %}
 
-    <div class="card">
-      <h5 class="card-header bg-light">Quiz</h5>
+    <div class="card quiz">
+      <div class="card-header bg-light">Questions</div>
       <div class="card-body">
-        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
-          {% csrf_token %}
-          {% comment %} {% include includes/form.html %} {% endcomment %}
-          {% for question in quiz.questions.all %}
-            <h6 class="card-title">
-              <strong>{{ forloop.counter }} - {{question.mcquestion}}</strong>
-            </h6> 
 
+	    <p>{{ quiz.description }}</p>
+
+        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
+          {% csrf_token %}
+
+          {% for question in quiz.questions.all %}
+
+            {% if question.question_type == 'H' %}
+            <h5>
+              <strong>{{question.content}}</strong>
+              <hr />
+            </h5>
+            {% else %}
+            <h6 class="card-title">
+              <strong>{{question.content}}</strong>
+            </h6>
+            {% endif %}
+
+            {% if question.question_type == 'M' %}
             <ul class="list-group mb-3">
-              {% comment %} {{choice.pk}} - 
-              {{choice.content}} - 
-              {{choice.correct}} {% endcomment %}
-              {% for choice in question.mcquestion.get_answers %}
-                <li class="list-group-item">
-                  <label class="radio"></label>
-                    <input type="radio" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
-                  </label>
-                </li>
+              {% for choice in question.answers.all %}
+              <li class="list-group-item">
+                <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                  <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
+                </label>
+              </li>
               {% endfor %}
             </ul>
-            {% comment %} {{question.mcquestion.get_answers}} <br /> {% endcomment %}
-            {% comment %} {{question.mcquestion.get_answers_list}} <br /> {% endcomment %}
+
+            {% elif question.question_type == 'L' %}
+            <div class="card ml-0 mr-0 mb-4">
+              {% with answer=question.likertanswer %}
+                <div class="card-body likert">
+                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                  <div class="item">
+                    <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                    <label for="likert_{{question.id}}">{{value}}</label>
+                  </div>
+                  {% endfor %}
+                </div>
+
+                {% if answer.legend %}
+                <div class="likert-legend card-footer text-muted">
+                  <em>Scale legend:</em>
+                  {{answer.legend|linebreaks}}
+                </div>
+                {% endif %}
+              {% endwith %}
+            </div>
+
+            {% elif question.question_type == 'O' %}
+
+            <div class="mb-3">
+              <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>
+            </div>
+
+            {% endif %}
+
           {% endfor %}
-          <button type="submit" class="btn btn-block btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">Cancel</a>
         </form>
       </div>
     </div>

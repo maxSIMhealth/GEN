@@ -1,0 +1,7 @@
+[flake8]
+select = B,B9,BLK,C,E,F,I,S,W
+ignore = E203,E231,E501,W503
+max-complexity = 10
+max-line-length = 100
+import-order-style = google
+application-import-names = accounts,courses,dashboard,discussions,quiz,videos

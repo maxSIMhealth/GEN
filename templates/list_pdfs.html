@@ -15,10 +15,10 @@
     <a class="nav-link" href="{% url 'course' course.pk %}">Info</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
+    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'list_videos' course.pk %}">Videos</a>
+    <a class="nav-link" href="{% url 'course_forums' course.pk %}">Forums</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active">PDFs</a>
@@ -34,7 +34,7 @@
         <li class="list-group-item">
           <span><a href="{{ forum.media.url }}">{{ forum.media.title }} - {{ forum.media.url }}</a></span>
           <div>
-            <small>Forum: <a href="{% url 'forum_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
+            <small>Forum: <a href="{% url 'discussion_comments' course.pk forum.pk %}">{{ forum.name }}</a></small>
           </div>
         </li>
       {% empty %}

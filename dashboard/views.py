@@ -1,31 +1,26 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 from courses.progress import progress
-from GEN import settings
 
 
 @login_required
 def dashboard(request):
     user_progress = []
-    gamification = False
 
     for course in request.user.member.all():
-        forums = course.forums.all()
+        discussions = course.discussions.all()
         quizzes = course.quizzes.all()
 
         # progress status
-        forums_progress = progress(request, forums)
+        discussions_progress = progress(request, discussions)
         quizzes_progress = progress(request, quizzes)
         course_progress = {
-            'name': course.code,
-            'forums': forums_progress,
-            'quizzes': quizzes_progress,
-            'max': forums_progress['max'] + quizzes_progress['max']
+            "name": course.code,
+            "discussions": discussions_progress,
+            "quizzes": quizzes_progress,
+            "max": discussions_progress["max"] + quizzes_progress["max"],
         }
         user_progress.append(course_progress)
 
-    if settings.GAMIFICATION:
-        gamification = True
-
-    return render(request, 'dashboard.html', {'user_progress': user_progress, 'gamification': gamification})
+    return render(request, "dashboard.html", {"user_progress": user_progress})

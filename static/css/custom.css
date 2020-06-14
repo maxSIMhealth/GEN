@@ -1,22 +1,131 @@
-/* videos list */
-.video-thumbnail {
-    width: 96px;
-    height: 54px
+/* general */
+body {
+    background-color: #f8f9fa;
 }
 
-/* forum comments */
+/* section: quiz */
+.section-quiz .list-group-item div span.badge {
+  line-height: 1.4;
+}
+
+/* section: video */
+.section-video .video-thumbnail {
+    width: 128px;
+    height: 128px;
+}
+
+.section-video .related-quizzes {
+  padding-left: 30px
+}
+
+/* discussions comments */
 .user-thumbnail {
     width: 100%;
     height: 400px;
 }
 
-/* quiz list, course home (info) */
-.quiz-list .th-small,
+/* course home (info) */
+.course-info tr:first-child td,
+.course-info tr:first-child th{
+    border-top: none;
+}
 .course-info .th-small {
     width: 12%;
 }
 
-/* forum list */
-.forum-list .th-small {
-    width: 5%;
+/* text */
+.highlight {
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid rgba(86,61,124,.15);
+}
+
+.text-underline-dashed {
+  text-decoration:underline;
+  text-decoration-style: dotted;
+}
+
+/* quiz with video */
+.video+.quiz .card-body {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.video+.quiz .card-body form {
+    margin-bottom: 20px;
+}
+
+/* quiz: likert scale */
+.likert {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 10px;
+}
+
+.likert label {
+    margin: 0;
+}
+
+.likert .item:first-child:before {
+    left: 50%;
+    width: 50%;
+}
+
+.likert .item:last-child:before {
+    right: 50%;
+    width: 50%;
+}
+
+.likert .item:before {
+    left: 0%;
+    width: 100%;
+    content: "";
+    position: relative;
+    top: 9px;
+    display: block;
+    background-color: #efefef;
+    height: 4px;
+}
+
+.likert .item {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.likert .item input[type="radio"] {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 50%;
+    margin-left: -6px;
+}
+
+.likert-legend {
+    font-size: 0.9rem;
+}
+
+.likert-legend p {
+    margin: 0;
+}
+
+/* buttons with labels (icons) */
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px 0 0 3px;
+}
+.btn-sm .btn-label {
+    /* padding: 6px 14px; */
+    left: -8px;
+}
+.btn-labeled {
+    padding-top: 0;
+    padding-bottom: 0;
 }

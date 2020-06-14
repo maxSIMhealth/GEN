@@ -1,0 +1,30 @@
+{% extends 'base_course_section.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock stylesheet %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
+  <li class="breadcrumb-item active">Upload video</li>
+{% endblock breadcrumb %}
+
+{% block content_title %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / New video
+{% endblock content_title %}
+
+{% block content %}
+  <div class="card">
+    <h5 class="card-header">New Video Information</h5>
+    <div class="card-body">
+      <form enctype="multipart/form-data" method="post">
+        {% crispy form %}
+      </form>
+    </div>
+  </div>
+{% endblock %}
