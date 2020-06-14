@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -84,9 +84,13 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
                 },
             )
         else:
-            raise Http404("You do not fulfill the requirements to access this page.")
+            messages.error(
+                request, "You do not fulfill the requirements to access this page."
+            )
+            return redirect("section", pk=course.pk, section_pk=section.pk)
     else:
-        raise Http404("Discussion board does not exist.")
+        messages.error(request, "Discussion board does not exist.")
+        return redirect("section", pk=course.pk, section_pk=section.pk)
 
 
 @login_required
@@ -110,6 +114,8 @@ def new_discussion(request, pk, section_pk):
                 author=request.user,
             )
             discussion.save()
+
+        messages.success(request, "Discussion board created.")
         return redirect("section", pk=course.pk, section_pk=section.pk)
         # media_form = NewMediaForm(request.POST)
         # if form.is_valid() and media_form.is_valid():

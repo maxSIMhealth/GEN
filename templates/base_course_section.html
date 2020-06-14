@@ -45,6 +45,11 @@
       {% endblock content_title %}
       </h2>
 
+
+      {% if messages %}
+        {% include 'partials/messages.html' %}
+      {% endif %}
+
       {% block content %}
       {% endblock content %}
     </div>

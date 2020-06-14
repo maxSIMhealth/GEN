@@ -1,6 +1,7 @@
 import io
 import logging
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Max
@@ -10,15 +11,9 @@ import xlsxwriter
 
 from courses.models import Course, Section
 from .models import (
-    Likert,
     LikertAnswer,
-    LikertAttempt,
     MCAnswer,
     MCQuestion,
-    MCQuestionAttempt,
-    OpenEnded,
-    OpenEndedAttempt,
-    Question,
     QuestionAttempt,
     Quiz,
     QuizScore,
@@ -224,6 +219,10 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 if attempts_limit_reached:
                     # FIXME: show a message stating that the user has reached the
                     # maximum number of attempts
+                    messages.error(
+                        request,
+                        "You have already reached the maximum number of attempts.",
+                    )
                     return HttpResponseRedirect(
                         reverse("section", args=[pk, section.pk])
                     )
@@ -235,67 +234,12 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                         {"course": course, "section": section, "quiz": quiz},
                     )
         else:
-            raise Http404("You do not fulfill the requirements to access this page.")
+            messages.error(
+                request, "Access denied.",
+            )
+            return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
         raise Http404("This quiz is not published.")
-
-
-# def quiz_check_question(request, item):
-#     try:
-#         question_type, question_id = item.split("_")
-#     except IndexError:
-#         question_id = None
-
-#     if question_type == "mcquestion":
-#         try:
-#             question = MCQuestion.objects.get(pk=question_id)
-#         except MCQuestion.DoesNotExist:
-#             question = None
-
-#         try:
-#             user_answers = MCAnswer.objects.filter(id__in=request.POST.getlist(item))
-#         except IndexError:
-#             user_answers = None
-
-#         # check if the answer is correct
-#         for answer in user_answers:
-#             if MCQuestion.check_if_correct(question, answer.pk):
-#                 # FIXME: consider changing flag to consider
-#                 # partially correct answers
-#                 flag = True
-#                 score += 1
-#             else:
-#                 flag = False
-
-#     elif question_type == "openended":
-#         try:
-#             question = OpenEnded.objects.get(pk=question_id)
-#         except OpenEnded.DoesNotExist:
-#             question = None
-
-#         student_answer = request.POST.get(item)
-
-#     # store the answers as a new attempt
-#     attempt = QuestionAttempt.objects.create(
-#         student=request.user,
-#         quiz=quiz,
-#         course=course,
-#         section=section,
-#         question=question,
-#         correct=flag,
-#         # I've decided to save a pure text version of the answer, in
-#         # case the answer object is altered in the future
-#         answer_content=answer.content,
-#         multiplechoice_answer=answer,
-#         attempt_number=current_attempt_number,
-#     )
-
-#     # add video name, if the quiz has a related video
-#     if quiz.video:
-#         attempt.video = quiz.video
-
-#     # save attempt data
-#     attempt.save()
 
 
 @login_required

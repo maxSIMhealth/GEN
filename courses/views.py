@@ -1,6 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from courses.support_methods import requirement_fulfilled
 from .models import Course, Section
@@ -52,9 +52,11 @@ def section_page(request, pk, section_pk):
         fulfilled = requirement_fulfilled(user, section_object)
 
         if not fulfilled:
-            raise Http404(
-                "You have not fulfilled the requirements to access this section."
+            messages.error(
+                request,
+                "You have not fulfilled the requirements to access the requested section.",
             )
+            return redirect("course", pk=course_object.pk)
 
     if section_object.section_type == "Q":
         section_template = "section_quiz.html"

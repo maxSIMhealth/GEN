@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 
 from courses.models import Course, Section, User
 from discussions.models import Discussion
@@ -26,7 +27,11 @@ def upload_video(request, pk, section_pk):
         if is_instructor:
             allow_submission = True
     else:
-        raise Http404("This section does not support uploads.")
+        messages.error(
+            request, "This section does not support uploads.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
+        # raise Http404("This section does not support uploads.")
 
     if allow_submission:
         if request.method == "POST":
@@ -47,6 +52,7 @@ def upload_video(request, pk, section_pk):
                 )
                 video.save()
                 video.generate_video_thumbnail()
+                messages.success(request, "Upload successful.")
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
             form = UploadVideoForm()
@@ -57,7 +63,11 @@ def upload_video(request, pk, section_pk):
             {"form": form, "course": course, "section": section},
         )
     else:
-        raise Http404("You don't have permission to upload.")
+        messages.error(
+            request, "You don't have permission to upload.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
+        # raise Http404("You don't have permission to upload.")
 
 
 @login_required
@@ -68,7 +78,10 @@ def publish_video(request, pk, section_pk, video_pk):
     user = get_object_or_404(User, pk=request.user.pk)
 
     if video.published:
-        return render(request, "permission_error.html")
+        messages.warning(
+            request, "The video is already published.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif video.author == user:
         if request.method == "POST":
             if "confirm" in request.POST:
@@ -97,7 +110,10 @@ def publish_video(request, pk, section_pk, video_pk):
                 {"course": course, "section": section, "video": video},
             )
     else:
-        return render(request, "permission_error.html")
+        messages.error(
+            request, "You don't have permission to do that.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
 
 @login_required
@@ -111,9 +127,15 @@ def unpublish_video(request, pk, section_pk, video_pk):
     is_instructor = bool(course in request.user.instructor.all())
 
     if not is_instructor:
-        return render(request, "permission_error.html")
+        messages.error(
+            request, "You don't have permission to do that.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif not video.published:
-        raise Http404("The video is not published.")
+        messages.warning(
+            request, "The requested video is already unpublished.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif video.author == user:
         if request.method == "POST":
             if "confirm" in request.POST:
@@ -127,7 +149,10 @@ def unpublish_video(request, pk, section_pk, video_pk):
                 {"course": course, "section": section, "video": video},
             )
     else:
-        return render(request, "permission_error.html")
+        messages.error(
+            request, "You don't have permission to do that.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
 
 @login_required
@@ -154,9 +179,15 @@ def delete_video(request, pk, section_pk, video_pk):
                     {"course": course, "section": section, "video": video},
                 )
         else:
-            return render(request, "permission_error.html")
+            messages.error(
+                request, "You don't have permission to do that.",
+            )
+            return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
-        return render(request, "permission_error.html")
+        messages.error(
+            request, "You don't have permission to do that.",
+        )
+        return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
 
 @login_required
