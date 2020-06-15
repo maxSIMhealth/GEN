@@ -74,10 +74,10 @@ class Course(models.Model):
 
 class Section(models.Model):
     SECTION_TYPES = [
-        ("D", "Discussion boards"),
-        ("V", "Videos"),
-        ("Q", "Quizzes"),
-        ("U", "Uploads"),
+        ("D", _("Discussion boards")),
+        ("V", _("Videos")),
+        ("Q", _("Quizzes")),
+        ("U", _("Uploads")),
     ]
 
     related_name = "sections"

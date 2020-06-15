@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
 from courses.models import Course, Section, SectionItem
 from videos.models import VideoFile
 
 QUESTION_TYPES = [
-    ("H", "Header"),
-    ("L", "Likert"),
-    ("O", "Open ended"),
-    ("M", "Multiple choice"),
+    ("H", _("Header")),
+    ("L", _("Likert")),
+    ("O", _("Open ended")),
+    ("M", _("Multiple choice")),
 ]
 
 
@@ -147,25 +148,36 @@ class Quiz(SectionItem):
     Quiz model
     """
 
-    show_score = models.BooleanField(default=False)
-    show_correct_answers = models.BooleanField(default=False)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="quizzes")
+    show_score = models.BooleanField(_("show score"), default=False)
+    show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.PROTECT,
+        related_name="quizzes",
+        verbose_name=_("course"),
+    )
     video = models.ForeignKey(
         VideoFile,
         on_delete=models.PROTECT,
         blank=True,
         null=True,
         related_name="quizzes",
+        verbose_name=_("video"),
     )
     requirement = models.ForeignKey(
-        "self", on_delete=models.PROTECT, blank=True, null=True
+        "self",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        verbose_name=_("requirement"),
     )
     attempts_max_number = models.PositiveIntegerField(
-        default=1, blank=False, null=False
+        _("attempts max number"), default=1, blank=False, null=False
     )
 
     class Meta:
-        verbose_name_plural = "quizzes"
+        verbose_name = _("quiz")
+        verbose_name_plural = _("quizzes")
 
     def get_questions(self):
         return self.questions.all().select_subclasses()
@@ -180,33 +192,42 @@ class Question(TimeStampedModel):
     and for question headers.
     """
 
-    question_type = models.CharField(max_length=1, choices=QUESTION_TYPES)
+    question_type = models.CharField(
+        _("question type"), max_length=1, choices=QUESTION_TYPES
+    )
     quiz = models.ForeignKey(
         Quiz,
-        verbose_name="Quiz",
+        verbose_name=_("quiz"),
         related_name="questions",
         blank=False,
         on_delete=models.CASCADE,
     )
     content = models.CharField(
+        _("content"),
         max_length=1000,
         blank=False,
-        help_text="Enter the content that you want displayed.",
-        verbose_name="Content",
+        help_text=_("Enter the content that you want displayed."),
     )
     explanation = models.TextField(
+        _("explanation"),
         blank=True,
-        help_text="Explanation to be shown after the question has been answered.",
+        help_text=_("Explanation to be shown after the question has been answered."),
     )
     multiple_correct_answers = models.BooleanField(
+        _("multiple correct answers"),
         blank=False,
         default=False,
-        help_text="Does this question have multiple correct answers \
-            (allow user to select multiple answer items)?",
+        help_text=_(
+            "Does this question have multiple correct answers (allow user to select multiple answer items)?"
+        ),
     )
-    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
 
     class Meta:
+        verbose_name = _("question")
+        verbose_name_plural = _("questions")
         ordering = ["custom_order"]
 
     def __str__(self):
@@ -256,8 +277,8 @@ class Likert(Question):
 
     class Meta:
         proxy = True
-        verbose_name = "Likert question"
-        verbose_name_plural = "Likert questions"
+        verbose_name = _("likert question")
+        verbose_name_plural = _("likert questions")
 
     def get_answers(self):
         return LikertAnswer.objects.filter(question=self)
@@ -275,11 +296,13 @@ class LikertAnswer(TimeStampedModel):
     Minimum and maximum values are used to generate the scale layout.
     """
 
-    question = models.OneToOneField(Likert, on_delete=models.CASCADE)
-    scale_min = models.PositiveIntegerField(default=1)
-    scale_max = models.PositiveIntegerField(default=5)
+    question = models.OneToOneField(
+        Likert, on_delete=models.CASCADE, verbose_name=_("question")
+    )
+    scale_min = models.PositiveIntegerField(_("scale min"), default=1)
+    scale_max = models.PositiveIntegerField(_("scale max"), default=5)
     legend = models.TextField(
-        blank=True, help_text="Legend for the likert scale values."
+        _("legend"), blank=True, help_text=_("Legend for the likert scale values.")
     )
 
     def __str__(self):
@@ -298,8 +321,8 @@ class LikertAnswer(TimeStampedModel):
         return super().clean()
 
     class Meta:
-        verbose_name = "Likert answer (scale definition)"
-        verbose_name_plural = "Likert answers (scale definition)"
+        verbose_name = _("likert answer (scale definition)")
+        verbose_name_plural = _("likert answers (scale definition)")
 
 
 class OpenEnded(Question):
@@ -314,8 +337,8 @@ class OpenEnded(Question):
 
     class Meta:
         proxy = True
-        verbose_name = "Open ended question"
-        verbose_name_plural = "Open ended questions"
+        verbose_name = _("open ended question")
+        verbose_name_plural = _("open ended questions")
 
 
 class MCQuestion(Question):
@@ -324,8 +347,8 @@ class MCQuestion(Question):
 
     class Meta:
         proxy = True
-        verbose_name = "Multiple choice question"
-        verbose_name_plural = "Multiple choice questions"
+        verbose_name = _("multiple choice question")
+        verbose_name_plural = _("multiple choice questions")
 
     def check_if_correct(self, guess):
         answer = MCAnswer.objects.get(id=guess)
@@ -348,49 +371,74 @@ class MCAnswer(TimeStampedModel):
     """
 
     question = models.ForeignKey(
-        MCQuestion, on_delete=models.CASCADE, related_name="answers"
+        MCQuestion,
+        on_delete=models.CASCADE,
+        related_name="answers",
+        verbose_name=_("question"),
     )
 
     content = models.CharField(
+        _("content"),
         max_length=1000,
         blank=False,
-        help_text="Enter the answer text that you want displayed",
+        help_text=_("Enter the answer text that you want displayed"),
     )
 
     correct = models.BooleanField(
-        blank=False, default=False, help_text="Is this the correct answer?"
+        _("correct"),
+        blank=False,
+        default=False,
+        help_text=_("Is this the correct answer?"),
     )
 
-    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
 
     def __str__(self):
         return self.content
 
     class Meta:
-        verbose_name = "Multiple choice answer"
-        verbose_name_plural = "Multiple choice answers"
+        verbose_name = _("multiple choice answer")
+        verbose_name_plural = _("multiple choice answers")
         ordering = ["custom_order"]
 
 
 class QuestionAttempt(TimeStampedModel):
-    question_type = models.CharField(max_length=1, choices=QUESTION_TYPES)
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    section = models.ForeignKey(Section, on_delete=models.PROTECT)
-    attempt_number = models.PositiveIntegerField(default=0)
-    question = models.ForeignKey(Question, on_delete=models.PROTECT)
-    video = models.ForeignKey(
-        VideoFile, blank=True, null=True, on_delete=models.PROTECT
+    question_type = models.CharField(
+        _("question type"), max_length=1, choices=QUESTION_TYPES
     )
-    answer_content = models.TextField(("student answer"), null=True, blank=True)
-    correct = models.NullBooleanField(blank=True, null=True)
+    student = models.ForeignKey(
+        User, on_delete=models.PROTECT, verbose_name=_("student")
+    )
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT, verbose_name=_("quiz"))
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, verbose_name=_("course")
+    )
+    section = models.ForeignKey(
+        Section, on_delete=models.PROTECT, verbose_name=_("section")
+    )
+    attempt_number = models.PositiveIntegerField(_("attempt number"), default=0)
+    question = models.ForeignKey(
+        Question, on_delete=models.PROTECT, verbose_name=_("question")
+    )
+    video = models.ForeignKey(
+        VideoFile,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("video"),
+    )
+    answer_content = models.TextField(_("student answer"), null=True, blank=True)
+    correct = models.NullBooleanField(_("correct"), blank=True, null=True)
     # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
-    multiplechoice_answers = models.ManyToManyField(MCAnswer, blank=True)
+    multiplechoice_answers = models.ManyToManyField(
+        MCAnswer, blank=True, verbose_name=_("multiple choice answers")
+    )
 
     class Meta:
-        verbose_name = "Question attempt"
-        verbose_name_plural = "Question attempts"
+        verbose_name = _("question attempt")
+        verbose_name_plural = _("question attempts")
 
     def __str__(self):
         return "%s - %s - Course %s (attempt %s): %s" % (
@@ -451,8 +499,8 @@ class LikertAttempt(QuestionAttempt):
 
     class Meta:
         proxy = True
-        verbose_name = "Likert attempt"
-        verbose_name_plural = "Likert attempts"
+        verbose_name = _("likert attempt")
+        verbose_name_plural = _("likert attempts")
 
 
 class OpenEndedAttempt(QuestionAttempt):
@@ -464,8 +512,8 @@ class OpenEndedAttempt(QuestionAttempt):
 
     class Meta:
         proxy = True
-        verbose_name = "Open ended attempt"
-        verbose_name_plural = "Open ended attempts"
+        verbose_name = _("open ended attempt")
+        verbose_name_plural = _("open ended attempts")
 
 
 class MCQuestionAttempt(QuestionAttempt):
@@ -477,15 +525,23 @@ class MCQuestionAttempt(QuestionAttempt):
 
     class Meta:
         proxy = True
-        verbose_name = "Multiple choice questions attempt"
-        verbose_name_plural = "Multiple choice questions attempts"
+        verbose_name = _("multiple choice questions attempt")
+        verbose_name_plural = _("multiple choice questions attempts")
 
 
 class QuizScore(models.Model):
-    student = models.ForeignKey(User, on_delete=models.PROTECT)
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    score = models.PositiveIntegerField(default=0)
+    student = models.ForeignKey(
+        User, on_delete=models.PROTECT, verbose_name=_("student")
+    )
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT, verbose_name=_("quiz"))
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, verbose_name=_("course")
+    )
+    score = models.PositiveIntegerField(_("score"), default=0)
+
+    class Meta:
+        verbose_name = _("quiz score")
+        verbose_name_plural = _("quiz scores")
 
     def __str__(self):
         return "Score for user %s - quiz %s - course %s" % (
@@ -500,6 +556,8 @@ class QuestionGroupHeader(Question):
 
     class Meta:
         proxy = True
+        verbose_name = _("question group header")
+        verbose_name_plural = _("question group headers")
 
     def __str__(self):
         return self.content

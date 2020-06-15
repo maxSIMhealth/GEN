@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 16:25+0000\n"
-"PO-Revision-Date: 2020-06-15 16:26+0000\n"
+"POT-Creation-Date: 2020-06-15 16:51+0000\n"
+"PO-Revision-Date: 2020-06-15 16:51+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -95,7 +95,8 @@ msgstr "afficher le classement"
 msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
-#: courses/models.py:51 courses/models.py:101
+#: courses/models.py:51 courses/models.py:101 quiz/models.py:157
+#: quiz/models.py:416 quiz/models.py:538
 msgid "course"
 msgstr "le cours"
 
@@ -104,9 +105,6 @@ msgid "courses"
 msgstr "les cours"
 
 #: courses/models.py:64
-#| msgid ""
-#| "Course end date can not be equal or                                 earlier "
-#| "than the start date."
 msgid ""
 "Course end date cannot be equal or                         earlier than the "
 "start date."
@@ -122,6 +120,23 @@ msgstr "Le tableau de bord nécessite l'activation de la gamification"
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
+#: courses/models.py:77 templates/section_discussion.html:21
+msgid "Discussion boards"
+msgstr "Forums de discussion"
+
+#: courses/models.py:78 templates/section_videos.html:31
+msgid "Videos"
+msgstr "Vidéos"
+
+#: courses/models.py:79 templates/course.html:68 templates/course.html:81
+#: templates/section_quiz.html:20
+msgid "Quizzes"
+msgstr "Quiz"
+
+#: courses/models.py:80
+msgid "Uploads"
+msgstr "Téléversements"
+
 #: courses/models.py:88
 msgid "Section name (max 15 characters)"
 msgstr "Nom de la section (max 15 caractères)"
@@ -130,7 +145,7 @@ msgstr "Nom de la section (max 15 caractères)"
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:112
+#: courses/models.py:112 quiz/models.py:172
 msgid "requirement"
 msgstr "exigence"
 
@@ -171,7 +186,8 @@ msgid "* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."
 msgstr ""
 "* POUR LA SECTION VIDÉO UNIQUEMENT *: permet d'afficher les vignettes vidéo."
 
-#: courses/models.py:139 courses/models.py:197
+#: courses/models.py:139 courses/models.py:197 quiz/models.py:225
+#: quiz/models.py:395
 msgid "custom order"
 msgstr "commande personnalisée"
 
@@ -196,7 +212,7 @@ msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:166 courses/models.py:193
+#: courses/models.py:166 courses/models.py:193 quiz/models.py:419
 msgid "section"
 msgstr "section"
 
@@ -215,6 +231,220 @@ msgstr "élément de section"
 #: courses/models.py:204
 msgid "section items"
 msgstr "éléments de section"
+
+#: quiz/models.py:11
+msgid "Header"
+msgstr "Entête"
+
+#: quiz/models.py:12
+msgid "Likert"
+msgstr "Likert"
+
+#: quiz/models.py:13
+#| msgid "open ended attempt"
+msgid "Open ended"
+msgstr "Ouvert"
+
+#: quiz/models.py:14
+#| msgid "multiple choice answer"
+msgid "Multiple choice"
+msgstr "Choix multiple"
+
+#: quiz/models.py:151
+msgid "show score"
+msgstr "montrer le score"
+
+#: quiz/models.py:152
+msgid "show correct answers"
+msgstr "afficher les bonnes réponses"
+
+#: quiz/models.py:165 quiz/models.py:430
+msgid "video"
+msgstr "vidéo"
+
+#: quiz/models.py:175
+msgid "attempts max number"
+msgstr "nombre maximal de tentatives"
+
+#: quiz/models.py:179 quiz/models.py:200 quiz/models.py:414 quiz/models.py:536
+msgid "quiz"
+msgstr "quiz"
+
+#: quiz/models.py:180
+msgid "quizzes"
+msgstr "quiz"
+
+#: quiz/models.py:196 quiz/models.py:409
+msgid "question type"
+msgstr "type de question"
+
+#: quiz/models.py:206 quiz/models.py:381
+msgid "content"
+msgstr "contenu"
+
+#: quiz/models.py:209
+msgid "Enter the content that you want displayed."
+msgstr "Entrez le contenu que vous souhaitez afficher."
+
+#: quiz/models.py:212
+msgid "explanation"
+msgstr "explication"
+
+#: quiz/models.py:214
+msgid "Explanation to be shown after the question has been answered."
+msgstr "Explication à afficher après réponse à la question."
+
+#: quiz/models.py:217
+msgid "multiple correct answers"
+msgstr "plusieurs réponses correctes"
+
+#: quiz/models.py:221
+msgid ""
+"Does this question have multiple correct answers (allow user to select "
+"multiple answer items)?"
+msgstr ""
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
+
+#: quiz/models.py:229 quiz/models.py:300 quiz/models.py:377 quiz/models.py:423
+msgid "question"
+msgstr "question"
+
+#: quiz/models.py:230
+msgid "questions"
+msgstr "des questions"
+
+#: quiz/models.py:280
+msgid "likert question"
+msgstr "likert question"
+
+#: quiz/models.py:281
+msgid "likert questions"
+msgstr "likert questions"
+
+#: quiz/models.py:302
+msgid "scale min"
+msgstr "échelle min"
+
+#: quiz/models.py:303
+msgid "scale max"
+msgstr "échelle max"
+
+#: quiz/models.py:305
+msgid "legend"
+msgstr "légende"
+
+#: quiz/models.py:305
+msgid "Legend for the likert scale values."
+msgstr "Légende des valeurs d'échelle likert."
+
+#: quiz/models.py:324
+msgid "likert answer (scale definition)"
+msgstr "réponse likert (définition de l'échelle)"
+
+#: quiz/models.py:325
+msgid "likert answers (scale definition)"
+msgstr "réponses likert (définition de l'échelle)"
+
+#: quiz/models.py:340
+msgid "open ended question"
+msgstr "question ouverte"
+
+#: quiz/models.py:341
+msgid "open ended questions"
+msgstr "questions ouvertes"
+
+#: quiz/models.py:350
+msgid "multiple choice question"
+msgstr "question à choix multiples"
+
+#: quiz/models.py:351
+msgid "multiple choice questions"
+msgstr "questions à choix multiple"
+
+#: quiz/models.py:384
+msgid "Enter the answer text that you want displayed"
+msgstr "Entrez le texte de réponse que vous souhaitez afficher"
+
+#: quiz/models.py:388 quiz/models.py:433
+msgid "correct"
+msgstr "correct"
+
+#: quiz/models.py:391
+msgid "Is this the correct answer?"
+msgstr "Est-ce la bonne réponse?"
+
+#: quiz/models.py:402
+msgid "multiple choice answer"
+msgstr "réponse à choix multiples"
+
+#: quiz/models.py:403 quiz/models.py:436
+msgid "multiple choice answers"
+msgstr "réponses à choix multiples"
+
+#: quiz/models.py:412 quiz/models.py:534
+msgid "student"
+msgstr "l'étudiant"
+
+#: quiz/models.py:421
+msgid "attempt number"
+msgstr "numéro de tentative"
+
+#: quiz/models.py:432
+msgid "student answer"
+msgstr "réponse de l'élève"
+
+#: quiz/models.py:440
+msgid "question attempt"
+msgstr "tentative de question"
+
+#: quiz/models.py:441
+msgid "question attempts"
+msgstr "tentatives de questions"
+
+#: quiz/models.py:502
+msgid "likert attempt"
+msgstr "tentative de likert"
+
+#: quiz/models.py:503
+msgid "likert attempts"
+msgstr "tentatives de likert"
+
+#: quiz/models.py:515
+msgid "open ended attempt"
+msgstr "tentative ouverte"
+
+#: quiz/models.py:516
+msgid "open ended attempts"
+msgstr "tentatives ouverte"
+
+#: quiz/models.py:528
+msgid "multiple choice questions attempt"
+msgstr "tentative de questions à choix multiples"
+
+#: quiz/models.py:529
+msgid "multiple choice questions attempts"
+msgstr "tentatives de questions à choix multiples"
+
+#: quiz/models.py:540
+msgid "score"
+msgstr "score"
+
+#: quiz/models.py:543
+msgid "quiz score"
+msgstr "score du quiz"
+
+#: quiz/models.py:544
+msgid "quiz scores"
+msgstr "scores du quiz"
+
+#: quiz/models.py:559
+msgid "question group header"
+msgstr "en-tête du groupe de questions"
+
+#: quiz/models.py:560
+msgid "question group headers"
+msgstr "en-têtes de groupe de questions"
 
 #: templates/base.html:23
 msgid "Return to GEN home page"
@@ -336,16 +566,11 @@ msgstr "La description"
 
 #: templates/course.html:63
 msgid "Scoreboard"
-msgstr "Tableau d'affichage"
+msgstr "Tableau de bord"
 
 #: templates/course.html:66
 msgid "Discussions"
 msgstr "Discussions"
-
-#: templates/course.html:68 templates/course.html:81
-#: templates/section_quiz.html:20
-msgid "Quizzes"
-msgstr "Quiz"
 
 #: templates/course.html:76
 msgid "Leaderboard"
@@ -574,10 +799,6 @@ msgstr "Explication"
 msgid "Return to %(section)s"
 msgstr "Retourner à %(section)s"
 
-#: templates/section_discussion.html:21
-msgid "Discussion boards"
-msgstr "Forums de discussion"
-
 #: templates/section_discussion.html:58
 msgid "Participated"
 msgstr "Participé"
@@ -616,7 +837,7 @@ msgstr "Envoyées"
 
 #: templates/section_quiz.html:52
 msgid "Score:"
-msgstr "But:"
+msgstr "Score:"
 
 #: templates/section_quiz.html:66
 msgid "No quiz available."
@@ -687,10 +908,6 @@ msgstr "Date de soumission:"
 #: templates/section_upload.html:102
 msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
-
-#: templates/section_videos.html:31
-msgid "Videos"
-msgstr "Vidéos"
 
 #: templates/section_videos.html:49
 msgid "Video thumbnail missing."
