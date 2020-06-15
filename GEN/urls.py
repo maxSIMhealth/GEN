@@ -113,7 +113,6 @@ urlpatterns = [
         quiz_views.quiz_result,
         name="quiz_result",
     ),
-    path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
     # sections > discussion
     path(
         "courses/<int:pk>/section/<int:section_pk>/discussion/new/",
@@ -148,6 +147,7 @@ urlpatterns = [
     # admin
     # path("admin/", admin.site.urls),
     # tests
+    # path("courses/user_attempt/", quiz_views.user_attempt, name="quiz_user_attempt"),
     # path('oauth/', include('social_django.urls', namespace='social')),
     # FIXME: finish implementing social login
     # path("settings/", account_views.settings, name="settings"),

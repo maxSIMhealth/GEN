@@ -305,48 +305,49 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     )
 
 
-@login_required
-def user_attempt(request):
-    """
-    Create an excel file with Participant Attempts
-    """
-    # Create an in-memory output file for the new workbook
-    output = io.BytesIO()
+# FIXME: code below is WIP
+# @login_required
+# def user_attempt(request):
+#     """
+#     Create an excel file with Participant Attempts
+#     """
+#     # Create an in-memory output file for the new workbook
+#     output = io.BytesIO()
 
-    # Creating workbook in memory
-    workbook = xlsxwriter.Workbook(output)
+#     # Creating workbook in memory
+#     workbook = xlsxwriter.Workbook(output)
 
-    # Getting data
-    users = User.objects.all()
-    for user in users:
-        workbook = create_attempt_sheet(workbook, user)
+#     # Getting data
+#     users = User.objects.all()
+#     for user in users:
+#         workbook = create_attempt_sheet(workbook, user)
 
-    # Close the workbook before sending the data
-    workbook.close()
+#     # Close the workbook before sending the data
+#     workbook.close()
 
-    # Rewind the buffer
-    output.seek(0)
+#     # Rewind the buffer
+#     output.seek(0)
 
-    # Set up the Http response
-    filename = "attempt.xlsx"
-    response = HttpResponse(
-        output,
-        content_type="application/vnd.openxmlformats-\
-                officedocument.spreadsheetml.sheet",
-    )
-    response["Content-Disposition"] = "attachment; filename=%s" % filename
+#     # Set up the Http response
+#     filename = "attempt.xlsx"
+#     response = HttpResponse(
+#         output,
+#         content_type="application/vnd.openxmlformats-\
+#                 officedocument.spreadsheetml.sheet",
+#     )
+#     response["Content-Disposition"] = "attachment; filename=%s" % filename
 
-    return response
+#     return response
 
 
-def create_attempt_sheet(workbook, user):
-    """
-    Create an excel sheet for Participant attempt
-    """
-    worksheet = workbook.add_worksheet(user.username)
-    bold = workbook.add_format({"bold": True})
+# def create_attempt_sheet(workbook, user):
+#     """
+#     Create an excel sheet for Participant attempt
+#     """
+#     worksheet = workbook.add_worksheet(user.username)
+#     bold = workbook.add_format({"bold": True})
 
-    # Write some data headers
-    worksheet.write("A1", "Test", bold)
+#     # Write some data headers
+#     worksheet.write("A1", "Test", bold)
 
-    return workbook
+#     return workbook
