@@ -1,6 +1,7 @@
 {% extends 'base_course_section.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load humanize %}
 {% load is_instructor %}
 {% load has_participated %}
@@ -17,7 +18,7 @@
 
   <div class="card mb-3">
     <h5 class="card-header bg-light d-flex">
-      <span class="pt-1 mr-auto">Discussion boards</span>
+      <span class="pt-1 mr-auto">{% trans "Discussion boards" %}</span>
       {% if user|is_instructor:course %}
         <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
           <span class="btn-label"><i class="fas fa-plus"></i></span>
@@ -54,18 +55,18 @@
                   <span class="text-muted">{{ item.name }}</span>
                 {% endif %}
                 {% if user|has_participated:item.discussion %}
-                  <span class="badge badge-success badge-pill float-right">Participated</span>
+                  <span class="badge badge-success badge-pill float-right">{% trans "Participated" %}</span>
                 {% else %}
-                  <span class="badge badge-warning badge-pill float-right">To do</span>
+                  <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
                 {% endif %}
 
                 {% comment %}
-                <span class="badge badge-danger badge-pill float-right">Did not submit</span>
+                <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
                 {% endcomment %}
                 <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
                 <p class="mb-0">
                   <small class="text-muted">
-                    <strong>Comments:</strong>
+                    <strong>{% trans "Comments:" %}</strong>
                     {{ item.discussion.get_comment_count }}
                     {% if item.discussion.get_comment_count > 0 %}
                       (Last update: {{ item.discussion.last_updated|naturaltime }})
@@ -73,7 +74,11 @@
                   </small>
                 </p>
                 {% if item.discussion.requirement %}
-                <small class="text-muted">Note: <em>To get access you must participate in <u>{{item.discussion.requirement.name}}</u> first.</em></small>
+                <small class="text-muted">
+                  {% blocktrans %}
+                  Note: <em>To get access you must participate in <u>{{item.discussion.requirement.name}}</u> first.</em>
+                  {% endblocktrans %}
+                </small>
                 {% endif %}
               </div>
             </div>
@@ -82,7 +87,7 @@
         {% endfor %}
       {% else %}
         <li class="list-group-item">
-          No discussion board available.
+          {% trans "No discussion board available." %}
         </li>
       {% endif %}
     </ul>

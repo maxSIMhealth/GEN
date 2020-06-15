@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-14 16:41+0000\n"
-"PO-Revision-Date: 2020-06-14 16:35+0000\n"
+"POT-Creation-Date: 2020-06-15 15:56+0000\n"
+"PO-Revision-Date: 2020-06-15 16:00+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -113,15 +113,31 @@ msgstr ""
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
 
+#: templates/base.html:23
+msgid "Return to GEN home page"
+msgstr "Retour à la page d'accueil de GEN"
+
+#: templates/base.html:24
+msgid "GEN logo"
+msgstr "Logo GEN"
+
+#: templates/base.html:26
+msgid "Toggle navigation"
+msgstr "Basculer la navigation"
+
 #: templates/base.html:32
 msgid "Help"
 msgstr "Aidez-moi"
 
-#: templates/base.html:40
+#: templates/base.html:40 templates/my_account.html:6
+#: templates/my_account.html:10
 msgid "My account"
 msgstr "Mon compte"
 
-#: templates/base.html:41
+#: templates/base.html:41 templates/password.html:5 templates/password.html:9
+#: templates/password_change.html:5 templates/password_change.html:9
+#: templates/password_change.html:14 templates/password_change.html:19
+#: templates/password_change_done.html:8
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
@@ -129,40 +145,58 @@ msgstr "Changer le mot de passe"
 msgid "Log out"
 msgstr "Se déconnecter"
 
+#: templates/base.html:74
+msgid "Ontario Tech University colour logo in a white background"
+msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
+
+#: templates/base.html:75 templates/login.html:38
+msgid "maxSIMhealth logo"
+msgstr "Logo maxSIMhealth"
+
+#: templates/base.html:76 templates/base_accounts.html:32
+#: templates/login.html:39
+msgid "Developed at"
+msgstr "Développé à"
+
 #: templates/base_course_section.html:28
 msgid "Sections"
 msgstr "Sections"
+
+#: templates/base_course_section.html:29
+msgid "Toggle sections list"
+msgstr "Basculer la liste des sections"
 
 #: templates/base_course_section.html:36 templates/course.html:19
 msgid "Info"
 msgstr "Info"
 
 #: templates/comments.html:21 templates/course.html:14
-#: templates/dashboard.html:17
+#: templates/dashboard.html:17 templates/my_account.html:9
+#: templates/new_discussion.html:15 templates/password_change.html:8
+#: templates/quiz.html:14 templates/quiz_result.html:15
+#: templates/upload_video.html:12
 msgid "Home"
 msgstr "Accueil"
 
 #: templates/comments.html:41 templates/comments.html:120
 msgid "Please login to like"
-msgstr ""
+msgstr "Veuillez vous connecter pour aimer"
 
-#: templates/comments.html:64
-msgid "Sorry, your browse does not support embedded videos."
-msgstr ""
+#: templates/comments.html:64 templates/quiz.html:36
+msgid "Sorry, your browser does not support embedded videos."
+msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
 #: templates/comments.html:83
-#, fuzzy
-#| msgid "Comments"
 msgid "New comment"
-msgstr "Commentaires"
+msgstr "Nouveau commentaire"
 
-#: templates/comments.html:91
+#: templates/comments.html:91 templates/new_media.html:13
 msgid "Post"
-msgstr ""
+msgstr "Publier"
 
 #: templates/comments.html:94
 msgid "Please login to comment."
-msgstr ""
+msgstr "Veuillez vous connecter pour commenter."
 
 #: templates/comments.html:100 templates/course.html:67
 #: templates/course.html:80
@@ -171,13 +205,11 @@ msgstr "Commentaires"
 
 #: templates/comments.html:135
 msgid "ADMIN"
-msgstr ""
+msgstr "ADMIN"
 
 #: templates/comments.html:169
-#, fuzzy
-#| msgid "Enables voting in discussions and comments"
 msgid "This discussion has no comments."
-msgstr "Permet de voter dans les discussions et les commentaires"
+msgstr "Cette discussion n'a aucun commentaire."
 
 #: templates/course.html:29
 msgid "Course details"
@@ -205,11 +237,10 @@ msgstr "Tableau d'affichage"
 
 #: templates/course.html:66
 msgid "Discussions"
-msgstr ""
+msgstr "Discussions"
 
 #: templates/course.html:68 templates/course.html:81
-#, fuzzy
-#| msgid "Quiz"
+#: templates/section_quiz.html:20
 msgid "Quizzes"
 msgstr "Quiz"
 
@@ -219,7 +250,7 @@ msgstr "Classement"
 
 #: templates/course.html:79
 msgid "Discussion likes"
-msgstr ""
+msgstr "Discussion aime"
 
 #: templates/course.html:89
 msgid "Course Progress"
@@ -227,11 +258,11 @@ msgstr "Progression du cours"
 
 #: templates/course.html:93
 msgid "Discussions participation"
-msgstr ""
+msgstr "Participation aux discussions"
 
 #: templates/course.html:101
 msgid "This course has no discussions"
-msgstr ""
+msgstr "Ce cours n'a pas de discussions"
 
 #: templates/course.html:107
 msgid "Quizzes answered"
@@ -239,17 +270,514 @@ msgstr "Questionnaires répondus"
 
 #: templates/course.html:116
 msgid "This course has no quizzes"
-msgstr ""
+msgstr "Ce cours n'a pas de quiz"
 
 #: templates/dashboard.html:24
 msgid "Courses"
 msgstr "Cours"
 
-#: templates/dashboard.html:33
+#: templates/dashboard.html:36
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
+"attribue."
+
+#: templates/delete_video_confirmation.html:6
+#: templates/publish_video_confirmation.html:6
+#: templates/unpublish_video_confirmation.html:6
+msgid "Delete video confirmation"
+msgstr "Supprimer la confirmation de la vidéo"
+
+#: templates/delete_video_confirmation.html:10
+#: templates/publish_video_confirmation.html:10
+#: templates/unpublish_video_confirmation.html:10
+msgid "Confirmation"
+msgstr "Confirmation"
+
+#: templates/delete_video_confirmation.html:11
+msgid "Are you sure that you want to delete the following video?"
+msgstr "Voulez-vous vraiment supprimer la vidéo suivante?"
+
+#: templates/delete_video_confirmation.html:13
+#: templates/publish_video_confirmation.html:13
+#: templates/section_upload.html:46 templates/section_upload.html:87
+#: templates/section_videos.html:47
+msgid "Video thumbnail"
+msgstr "Vignette vidéo"
+
+#: templates/delete_video_confirmation.html:21
+msgid "Yes, delete video"
+msgstr "Oui, supprimez la vidéo"
+
+#: templates/delete_video_confirmation.html:22
+#: templates/publish_video_confirmation.html:22
+#: templates/unpublish_video_confirmation.html:22
+msgid "No, cancel"
+msgstr "Non, annuler"
+
+#: templates/login.html:10 templates/login.html:14 templates/signup.html:18
+msgid "Log in"
+msgstr "S'identifier"
+
+#: templates/login.html:18
+msgid "New to GEN?"
+msgstr "Nouveau sur GEN?"
+
+#: templates/login.html:18 templates/signup.html:10
+msgid "Sign up"
+msgstr "S'inscrire"
+
+#: templates/login.html:28
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié?"
+
+#: templates/login.html:37
+msgid "Ontario Tech University colour logo in a dark background"
+msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
+
+#: templates/my_account.html:15
+msgid "Update account info"
+msgstr "Mettre à jour les informations de compte"
+
+#: templates/my_account.html:20
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: templates/my_account.html:24
+msgid "Institution"
+msgstr "Institution"
+
+#: templates/my_account.html:28
+msgid "Email address"
+msgstr "Adresse électronique"
+
+#: templates/my_account.html:34 templates/password.html:20
+#: templates/settings.html:20
+msgid "Save changes"
+msgstr "Sauvegarder les modifications"
+
+#: templates/my_account.html:39
+msgid "This avatar is automatically generated."
+msgstr "Cet avatar est généré automatiquement."
+
+#: templates/new_discussion.html:12
+msgid "Start a New Discussion Board"
+msgstr "Démarrer un nouveau forum de discussion"
+
+#: templates/new_discussion.html:18
+msgid "New discussion board"
+msgstr "Nouveau forum de discussion"
+
+#: templates/new_discussion.html:22 templates/new_discussion.html:27
+msgid "New discussion"
+msgstr "Nouvelle discussion"
+
+#: templates/new_media.html:5
+msgid "Add new Media"
+msgstr "Ajouter de nouveaux médias"
+
+#: templates/password.html:13
+msgid "Change Password"
+msgstr "Changer le mot de passe"
+
+#: templates/password.html:15
+msgid "You have not defined a password yet."
+msgstr "Vous n'avez pas encore défini de mot de passe."
+
+#: templates/password_change_done.html:5
+msgid "Password change successful"
+msgstr "Changement de mot de passe réussi"
+
+#: templates/password_change_done.html:9
+msgid " Success"
+msgstr "Succès"
+
+#: templates/password_change_done.html:14
+msgid "<strong>Success!</strong> Your password has been changed!"
+msgstr "<strong>Succès!</strong> Votre mot de passe a été changé!"
+
+#: templates/password_change_done.html:16
+msgid "Return to home page"
+msgstr "Retour à la page d'accueil"
+
+#: templates/publish_video_confirmation.html:11
+msgid ""
+"Are you sure that you want to publish this video? You <strong>WILL "
+"NOT</strong> be able to delete it after publishing."
+msgstr ""
+"Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
+"pas le supprimer après la publication."
+
+#: templates/publish_video_confirmation.html:21
+msgid "Yes, publish video"
+msgstr "Oui, publier une vidéo"
+
+#: templates/quiz.html:28
+msgid "Video"
+msgstr "Vidéo"
+
+#: templates/quiz.html:47
+msgid "Questions"
+msgstr "Des questions"
+
+#: templates/quiz.html:93 templates/quiz_result.html:122
+msgid "Scale legend"
+msgstr "Légende de l'échelle"
+
+#: templates/quiz.html:109
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/quiz.html:110
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/quiz_result.html:19 templates/quiz_result.html:24
+#: templates/quiz_result.html:31
+msgid "Result"
+msgstr "Résultat"
+
+#: templates/quiz_result.html:33
+#, python-format
+msgid ""
+"\n"
+"        Thank you for your submission for <em>%(quiz.name)s</em>.\n"
+"        "
+msgstr ""
+"\n"
+"Merci pour votre soumission pour <em>%(quiz.name)s</em>."
+
+#: templates/quiz_result.html:39
+#, python-format
+msgid ""
+"\n"
+"          Your score is %(score)s.\n"
+"          "
+msgstr ""
+"\n"
+"Ton score est %(score)s."
+
+#: templates/quiz_result.html:47
+msgid "Your submission"
+msgstr "Votre soumission"
+
+#: templates/quiz_result.html:139
+msgid "Explanation"
+msgstr "Explication"
+
+#: templates/quiz_result.html:146
+#, python-format
+msgid "Return to %(section)s"
+msgstr "Retourner à %(section)s"
+
+#: templates/section_discussion.html:21
+msgid "Discussion boards"
+msgstr "Forums de discussion"
+
+#: templates/section_discussion.html:58
+msgid "Participated"
+msgstr "Participé"
+
+#: templates/section_discussion.html:60 templates/section_quiz.html:41
+#: templates/section_videos.html:77
+msgid "To do"
+msgstr "Faire"
+
+#: templates/section_discussion.html:70
+msgid "Comments:"
+msgstr "Commentaires:"
+
+#: templates/section_discussion.html:79
+#, python-format
+msgid ""
+"\n"
+"                  Note: <em>To get access you must participate in <u>%(item.discussion.requirement.name)s</u> first.</em>\n"
+"                  "
+msgstr ""
+"\n"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(item.discussion.requirement.name)s</u>. </em>"
+
+#: templates/section_discussion.html:91
+msgid "No discussion board available."
+msgstr "Aucun forum de discussion disponible."
+
+#: templates/section_quiz.html:33
+#, python-format
+msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+
+#: templates/section_quiz.html:39 templates/section_videos.html:75
+msgid "Submitted"
+msgstr "Envoyées"
+
+#: templates/section_quiz.html:52
+msgid "Score:"
+msgstr "But:"
+
+#: templates/section_quiz.html:66
+msgid "No quiz available."
+msgstr "Aucun quiz n'est disponible."
+
+#: templates/section_tabs.html:10
+#, python-format
+msgid "Requires <u>%(section.requirement)s</u> to be completed first."
+msgstr "<u>%(section.requirement)s</u> doit être terminé en premier."
+
+#: templates/section_upload.html:20
+msgid "Upload"
+msgstr "Télécharger"
+
+#: templates/section_upload.html:24 templates/section_upload.html:30
+#: templates/section_videos.html:35
+msgid "Submit new video"
+msgstr "Soumettre une nouvelle vidéo"
+
+#: templates/section_upload.html:27
+msgid "You cannot submit another video."
+msgstr "Vous ne pouvez pas soumettre une autre vidéo."
+
+#: templates/section_upload.html:37
+msgid ""
+"Uploads are <strong>private</strong>, only accessible by you and by the "
+"course instructor(s)."
+msgstr ""
+"Les téléversements sont <strong>privés</strong>, uniquement accessibles par "
+"vous et par le ou les formateurs."
+
+#: templates/section_upload.html:53
+msgid ""
+"<strong>WARNING:</strong> after publishing you will not be able to delete "
+"this submission."
+msgstr ""
+"<strong>AVERTISSEMENT:</strong> après la publication, vous ne pourrez pas "
+"supprimer cette soumission."
+
+#: templates/section_upload.html:53
+msgid "Publish submission"
+msgstr "Publier la soumission"
+
+#: templates/section_upload.html:54 templates/section_videos.html:92
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/section_upload.html:57
+msgid "Published - No changes allowed"
+msgstr "Publié - Aucune modification autorisée"
+
+#: templates/section_upload.html:67
+msgid "You have not submitted any content."
+msgstr "Vous n'avez soumis aucun contenu."
+
+#: templates/section_upload.html:75
+msgid "Participants' Uploads"
+msgstr "Téléchargements des participants"
+
+#: templates/section_upload.html:78
+msgid "These are the videos that have been submitted by the participants."
+msgstr "Ce sont les vidéos qui ont été soumises par les participants."
+
+#: templates/section_upload.html:93
+msgid "Submission date:"
+msgstr "Date de soumission:"
+
+#: templates/section_upload.html:102
+msgid "No participant has submitted any content."
+msgstr "Aucun participant n'a soumis de contenu."
+
+#: templates/section_videos.html:31
+#| msgid "Video"
+msgid "Videos"
+msgstr "Vidéos"
+
+#: templates/section_videos.html:49
+#| msgid "Video thumbnail"
+msgid "Video thumbnail missing."
+msgstr "Vignette vidéo manquante."
+
+#: templates/section_videos.html:58
+#| msgid "Quizzes"
+msgid "Quizzes:"
+msgstr "Quiz:"
+
+#: templates/section_videos.html:68
+#, python-format
+#| msgid ""
+#| "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+msgid "Requires <u>%(quiz.requirement.name)s</u> to be completed first."
+msgstr "<u>%(quiz.requirement.name)s</u> doit être terminé en premier."
+
+#: templates/section_videos.html:88
+#| msgid ""
+#| "These are the videos that have been submitted by the participants."
+msgid "Make this video visible by the course participants"
+msgstr "Rendre cette vidéo visible par les participants au cours"
+
+#: templates/section_videos.html:88
+msgid "Publish"
+msgstr "Publier"
+
+#: templates/section_videos.html:90
+msgid "Hide video from the course participants"
+msgstr "Masquer la vidéo des participants au cours"
+
+#: templates/section_videos.html:90
+#| msgid "English"
+msgid "Unpublish"
+msgstr "Annuler la publication"
+
+#: templates/section_videos.html:102
+#| msgid "No quiz available."
+msgid "No video available."
+msgstr "Aucune vidéo disponible."
+
+#: templates/settings.html:8
+msgid "Settings"
+msgstr "Réglages"
+
+#: templates/settings.html:15
+msgid "Your info"
+msgstr "Vos infos"
+
+#: templates/settings.html:25
+#| msgid "My account"
+msgid "Social accounts"
+msgstr "Comptes sociaux"
+
+#: templates/settings.html:29
+msgid "Connected as"
+msgstr "Connecté en tant que"
+
+#: templates/settings.html:33 templates/settings.html:36
+msgid "Disconnect from GitHub"
+msgstr "Se déconnecter de GitHub"
+
+#: templates/settings.html:38
+msgid ""
+"You must set a password for your account before disconnecting from Github."
+msgstr ""
+"Vous devez définir un mot de passe pour votre compte avant de vous "
+"déconnecter de Github."
+
+#: templates/settings.html:38 templates/settings.html:60
+#| msgid "Forgot your password?"
+msgid "Set your password now."
+msgstr "Définissez votre mot de passe maintenant."
+
+#: templates/settings.html:42
+msgid "Connect to GitHub"
+msgstr "Connectez-vous à GitHub"
+
+#: templates/settings.html:48
+#, python-format
+msgid ""
+"\n"
+"                  Connected as %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+"                  "
+msgstr ""
+"\n"
+"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s"
+
+#: templates/settings.html:55 templates/settings.html:58
+msgid "Disconnect from Google"
+msgstr "Se déconnecter de Google"
+
+#: templates/settings.html:60
+msgid ""
+"You must set a password for your account before disconnecting from Google."
+msgstr ""
+"Vous devez définir un mot de passe pour votre compte avant de vous "
+"déconnecter de Google."
+
+#: templates/settings.html:64
+msgid "Connect to Google"
+msgstr "Connectez-vous à Google"
+
+#: templates/signup.html:14
+#| msgid "Update account info"
+msgid "Create an account"
+msgstr "Créer un compte"
+
+#: templates/signup.html:18
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
+
+#: templates/unpublish_video_confirmation.html:11
+#| msgid ""
+#| "Are you sure that you want to publish this video? You <strong>WILL "
+#| "NOT</strong> be able to delete it after publishing."
+msgid ""
+"Are you sure that you want to <strong>unpublish</strong> this video? This "
+"will hide it from the course participants."
+msgstr ""
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux participants au cours."
+
+#: templates/unpublish_video_confirmation.html:21
+#| msgid "Yes, publish video"
+msgid "Yes, unpublish video"
+msgstr "Oui, annuler la publication de la vidéo"
+
+#: templates/upload_video.html:15
+#| msgid "Upload"
+msgid "Upload video"
+msgstr "Télécharger une video"
+
+#: templates/upload_video.html:19
+#| msgid "Submit new video"
+msgid "New video"
+msgstr "Nouveau vidéo"
+
+#: templates/upload_video.html:24
+#| msgid "Delete video confirmation"
+msgid "New Video Information"
+msgstr "Nouvelles informations vidéo"
+
+#: templates/video_player.html:6
+msgid "Video player"
+msgstr "Lecteur vidéo"
+
+#: templates/video_player.html:13
+#| msgid "Sorry, your browser does not support embedded videos."
+msgid "Sorry, your browser doesn't support embedded videos."
+msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
+
+#: videos/views.py:32
+msgid "This section does not support uploads."
+msgstr "Cette section ne prend pas en charge les téléchargements."
+
+#: videos/views.py:56
+msgid "Upload successful."
+msgstr "Téléchargement réussi."
+
+#: videos/views.py:68
+msgid "You don't have permission to upload."
+msgstr "Vous n'êtes pas autorisé à télécharger."
+
+#: videos/views.py:83
+msgid "The video is already published."
+msgstr "La vidéo est déjà publiée."
+
+#: videos/views.py:115 videos/views.py:132 videos/views.py:154
+#: videos/views.py:184 videos/views.py:189
+msgid "You don't have permission to do that."
+msgstr "Vous n'êtes pas autorisé à le faire."
+
+#: videos/views.py:137
+msgid "The requested video is already unpublished."
+msgstr "La vidéo demandée est déjà inédite."
+
+#, fuzzy
+#~ msgid "Sorry, your browse does not support embedded videos."
+#~ msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
+
+#, fuzzy
+#~ msgid "New Discussion"
+#~ msgstr "Discussions"
+
+#, fuzzy
+#~ msgid "%(section)s"
+#~ msgstr "Sections"
 
 #~ msgid "First name:"
 #~ msgstr "Prénom:"

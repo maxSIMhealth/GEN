@@ -1,29 +1,30 @@
 {% extends 'base_accounts.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}Sign up to GEN{% endblock title %}
 
 {% block content %}
   <div class="card-body bg-light text-dark">
-    <h3 class="card-title">Log in</h3>
+    <h3 class="card-title">{% trans "Log in" %}</h3>
     <form method="post" novalidate>
       {% csrf_token %}
       {% include 'includes/form.html' %}
-      <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
     </form>
   </div>
   <div class="card-footer bg-light text-muted text-center">
-    New to GEN? <a href="{% url 'signup' %}">Sign up</a>
+    {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
     {% comment %}
     <br>
     <p><strong>-- OR --</strong></p>
-    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>  
+    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
     {% endcomment %}
   </div>
   <div class="text-center bg-dark text-white py-2">
     <small>
-      <a href="#" class="text-light">Forgot your password?</a>
+      <a href="#" class="text-light">{% trans "Forgot your password?" %}</a>
     </small>
   </div>
 {% endblock content %}
@@ -32,9 +33,9 @@
 <div class="footer mb-2">
   <div class="text-center text-light">
     <div class="text-center">
-      <a href="http://www.ontariotechu.ca"><img src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}" alt="Ontario Tech University colour logo in a dark background" width="200px"></a>
-      <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="maxSIMhealth logo" width="90px"></a>
-      <p class="mb-0">Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
+      <a href="http://www.ontariotechu.ca"><img src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
+      <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
+      <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
       <p>GEN - Gamified Educational Network (2020)</p>
     </div>
   </div>

@@ -1,6 +1,7 @@
 {% extends 'base_course_section.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load humanize %}
 {% load check_attribute %}
 {% load quiz_details_get %}
@@ -16,7 +17,7 @@
   {% endif %}
 
   <div class="card mb-3 section-quiz">
-    <h5 class="card-header">Quizzes</h5>
+    <h5 class="card-header">{% trans "Quizzes" %}</h5>
     <ul class="list-group list-group-flush">
     {% if section_items.all %}
       {% for item in section_items.all %}
@@ -29,25 +30,25 @@
                 <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item.name }}</a>
               {% else %}
                 {% if item.quiz.requirement %}
-                  <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.">{{ item }}</span>
+                  <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% blocktrans %}Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.{% endblocktrans %}">{{ item }}</span>
                 {% else %}
                   <span class="text-muted">{{ item }}</span>
                 {% endif %}
               {% endif %}
               {% if quiz_details.score.exists %}
-                <span class="badge badge-success badge-pill float-right">Submitted</span>
+                <span class="badge badge-success badge-pill float-right">{% trans "Submitted" %}</span>
               {% else %}
-                <span class="badge badge-warning badge-pill float-right">To do</span>
+                <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
               {% endif %}
 
               {% comment %}
-              <span class="badge badge-danger badge-pill float-right">Did not submit</span>
+              <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
               {% endcomment %}
               <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
               {% if item.quiz.show_score %}
               <p class="mb-0">
                 <small class="text-muted">
-                  <strong>Score:</strong>
+                  <strong>{% trans "Score:" %}</strong>
                   {% if quiz_details.score.exists %}
                     {{quiz_details.score.get.score}}
                   {% else %}
@@ -61,7 +62,7 @@
         </li>
       {% endfor %}
     {% else %}
-      <div class="list-group-item">No quiz available.</div>
+      <div class="list-group-item">{% trans "No quiz available." %}</div>
     {% endif %}
     </ul>
   </div>

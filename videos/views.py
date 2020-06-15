@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.utils.translation import ugettext as _
 
 from courses.models import Course, Section, User
 from discussions.models import Discussion
@@ -28,7 +29,7 @@ def upload_video(request, pk, section_pk):
             allow_submission = True
     else:
         messages.error(
-            request, "This section does not support uploads.",
+            request, _("This section does not support uploads."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
         # raise Http404("This section does not support uploads.")
@@ -52,7 +53,7 @@ def upload_video(request, pk, section_pk):
                 )
                 video.save()
                 video.generate_video_thumbnail()
-                messages.success(request, "Upload successful.")
+                messages.success(request, _("Upload successful."))
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
             form = UploadVideoForm()
@@ -64,7 +65,7 @@ def upload_video(request, pk, section_pk):
         )
     else:
         messages.error(
-            request, "You don't have permission to upload.",
+            request, _("You don't have permission to upload."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
         # raise Http404("You don't have permission to upload.")
@@ -79,7 +80,7 @@ def publish_video(request, pk, section_pk, video_pk):
 
     if video.published:
         messages.warning(
-            request, "The video is already published.",
+            request, _("The video is already published."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif video.author == user:
@@ -111,7 +112,7 @@ def publish_video(request, pk, section_pk, video_pk):
             )
     else:
         messages.error(
-            request, "You don't have permission to do that.",
+            request, _("You don't have permission to do that."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
@@ -128,12 +129,12 @@ def unpublish_video(request, pk, section_pk, video_pk):
 
     if not is_instructor:
         messages.error(
-            request, "You don't have permission to do that.",
+            request, _("You don't have permission to do that."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif not video.published:
         messages.warning(
-            request, "The requested video is already unpublished.",
+            request, _("The requested video is already unpublished."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     elif video.author == user:
@@ -150,7 +151,7 @@ def unpublish_video(request, pk, section_pk, video_pk):
             )
     else:
         messages.error(
-            request, "You don't have permission to do that.",
+            request, _("You don't have permission to do that."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
@@ -180,12 +181,12 @@ def delete_video(request, pk, section_pk, video_pk):
                 )
         else:
             messages.error(
-                request, "You don't have permission to do that.",
+                request, _("You don't have permission to do that."),
             )
             return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
         messages.error(
-            request, "You don't have permission to do that.",
+            request, _("You don't have permission to do that."),
         )
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
