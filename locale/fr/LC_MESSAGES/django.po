@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 16:53+0000\n"
-"PO-Revision-Date: 2020-06-15 16:54+0000\n"
+"POT-Creation-Date: 2020-06-15 16:59+0000\n"
+"PO-Revision-Date: 2020-06-15 17:00+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -32,12 +32,10 @@ msgid "user"
 msgstr "l'utilisateur"
 
 #: accounts/models.py:11
-#| msgid "section"
 msgid "location"
 msgstr "emplacement"
 
 #: accounts/models.py:12
-#| msgid "Institution"
 msgid "institution"
 msgstr "institution"
 
@@ -77,7 +75,7 @@ msgstr "la description"
 msgid "Course description (max 800 characters)"
 msgstr "Description du cours (max 800 caractères)"
 
-#: courses/models.py:25 courses/models.py:183
+#: courses/models.py:25 courses/models.py:183 discussions/models.py:64
 msgid "author"
 msgstr "l'auteur"
 
@@ -121,8 +119,8 @@ msgstr "afficher le classement"
 msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
-#: courses/models.py:51 courses/models.py:101 quiz/models.py:157
-#: quiz/models.py:416 quiz/models.py:538
+#: courses/models.py:51 courses/models.py:101 discussions/models.py:21
+#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538
 msgid "course"
 msgstr "le cours"
 
@@ -171,7 +169,7 @@ msgstr "Nom de la section (max 15 caractères)"
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:112 quiz/models.py:172
+#: courses/models.py:112 discussions/models.py:32 quiz/models.py:172
 msgid "requirement"
 msgstr "exigence"
 
@@ -258,6 +256,43 @@ msgstr "élément de section"
 msgid "section items"
 msgstr "éléments de section"
 
+#: discussions/models.py:23
+#| msgid "start date"
+msgid "last updated"
+msgstr "dernière mise à jour"
+
+#: discussions/models.py:40 quiz/models.py:165 quiz/models.py:430
+msgid "video"
+msgstr "vidéo"
+
+#: discussions/models.py:44 discussions/models.py:57
+#| msgid "Discussions"
+msgid "discussion"
+msgstr "discussion"
+
+#: discussions/models.py:45
+#| msgid "Discussions"
+msgid "discussions"
+msgstr "discussions"
+
+#: discussions/models.py:52
+msgid "message"
+msgstr "message"
+
+#: discussions/models.py:59
+msgid "created at"
+msgstr "créé à"
+
+#: discussions/models.py:68
+#| msgid "Comments"
+msgid "comment"
+msgstr "commentaire"
+
+#: discussions/models.py:69
+#| msgid "Comments"
+msgid "comments"
+msgstr "commentaires"
+
 #: quiz/models.py:11
 msgid "Header"
 msgstr "Entête"
@@ -281,10 +316,6 @@ msgstr "montrer le score"
 #: quiz/models.py:152
 msgid "show correct answers"
 msgstr "afficher les bonnes réponses"
-
-#: quiz/models.py:165 quiz/models.py:430
-msgid "video"
-msgstr "vidéo"
 
 #: quiz/models.py:175
 msgid "attempts max number"
