@@ -1267,26 +1267,3 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:137
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
-
-#, fuzzy
-#~ msgid "Sorry, your browse does not support embedded videos."
-#~ msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
-
-#, fuzzy
-#~ msgid "New Discussion"
-#~ msgstr "Discussions"
-
-#~ msgid "Edit"
-#~ msgstr "Éditer"
-
-#~ msgid "Enroll"
-#~ msgstr "Inscrire"
-
-#~ msgid "Not enrolled in any course."
-#~ msgstr "Pas inscrit à aucun cours."
-
-#~ msgid "Forums"
-#~ msgstr "Forums"
-
-#~ msgid "Forum likes"
-#~ msgstr "Forum aime"
