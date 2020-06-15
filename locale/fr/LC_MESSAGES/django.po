@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 15:56+0000\n"
-"PO-Revision-Date: 2020-06-15 16:00+0000\n"
+"POT-Creation-Date: 2020-06-15 16:25+0000\n"
+"PO-Revision-Date: 2020-06-15 16:26+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -27,47 +27,122 @@ msgstr "Anglais"
 msgid "French"
 msgstr "Français"
 
-#: courses/models.py:11
+#: courses/models.py:11 courses/models.py:85 courses/models.py:172
+msgid "name"
+msgstr "nom"
+
+#: courses/models.py:14
 msgid "Course name (max 100 characters)"
 msgstr "Nom du cours (max 100 caractères)"
 
-#: courses/models.py:14
+#: courses/models.py:17
+msgid "course code"
+msgstr "code de cours"
+
+#: courses/models.py:17
 msgid "Course code (max 10 characters)"
 msgstr "Code du cours (max 10 caractères)"
 
-#: courses/models.py:17 courses/models.py:74
+#: courses/models.py:20 courses/models.py:91 courses/models.py:175
+msgid "description"
+msgstr "la description"
+
+#: courses/models.py:22 courses/models.py:95
 msgid "Course description (max 800 characters)"
 msgstr "Description du cours (max 800 caractères)"
 
-#: courses/models.py:27
+#: courses/models.py:25 courses/models.py:183
+msgid "author"
+msgstr "l'auteur"
+
+#: courses/models.py:27 courses/models.py:185
+msgid "start date"
+msgstr "date de début"
+
+#: courses/models.py:28 courses/models.py:186
+msgid "end date"
+msgstr "date de fin"
+
+#: courses/models.py:30
+msgid "students"
+msgstr "élèves"
+
+#: courses/models.py:33
+msgid "instructors"
+msgstr "l'instructeur"
+
+#: courses/models.py:36
+msgid "gamification"
+msgstr "gamification"
+
+#: courses/models.py:38
 msgid "Enables voting in discussions and comments"
 msgstr "Permet de voter dans les discussions et les commentaires"
 
-#: courses/models.py:30 courses/models.py:33
+#: courses/models.py:41
+msgid "show scoreboard"
+msgstr "afficher le tableau de bord"
+
+#: courses/models.py:41 courses/models.py:44
 msgid "Requires gamification"
 msgstr "Nécessite gamification"
 
+#: courses/models.py:44
+msgid "show leaderboard"
+msgstr "afficher le classement"
+
 #: courses/models.py:47
+msgid "show progress tracker"
+msgstr "afficher le suivi des progrès"
+
+#: courses/models.py:51 courses/models.py:101
+msgid "course"
+msgstr "le cours"
+
+#: courses/models.py:52
+msgid "courses"
+msgstr "les cours"
+
+#: courses/models.py:64
+#| msgid ""
+#| "Course end date can not be equal or                                 earlier "
+#| "than the start date."
 msgid ""
-"Course end date can not be equal or                                 earlier "
-"than the start date."
+"Course end date cannot be equal or                         earlier than the "
+"start date."
 msgstr ""
 "La date de fin du cours ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:53
+#: courses/models.py:70
 msgid "Scoreboard requires gamification to be enabled"
 msgstr "Le tableau de bord nécessite l'activation de la gamification"
 
-#: courses/models.py:55
+#: courses/models.py:72
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
-#: courses/models.py:68
+#: courses/models.py:88
 msgid "Section name (max 15 characters)"
 msgstr "Nom de la section (max 15 caractères)"
 
-#: courses/models.py:91
+#: courses/models.py:104
+msgid "section type"
+msgstr "type de section"
+
+#: courses/models.py:112
+msgid "requirement"
+msgstr "exigence"
+
+#: courses/models.py:114 courses/models.py:195
+msgid "published"
+msgstr "publié"
+
+#: courses/models.py:116
+msgid "create discussion"
+msgstr "créer une discussion"
+
+#: courses/models.py:119
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based "
 "on participant's video submissions."
@@ -75,7 +150,7 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: créez automatiquement un forum de "
 "discussion basé sur les soumissions vidéo des participants."
 
-#: courses/models.py:101
+#: courses/models.py:129
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the "
 "discussion boards."
@@ -83,12 +158,24 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: Définissez la section dans laquelle "
 "créer les «forums de discussion»."
 
-#: courses/models.py:106
+#: courses/models.py:131
+msgid "section output"
+msgstr "sortie de section"
+
+#: courses/models.py:134
+msgid "show thumbnails"
+msgstr "affiche des vignettes"
+
+#: courses/models.py:136
 msgid "* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."
 msgstr ""
 "* POUR LA SECTION VIDÉO UNIQUEMENT *: permet d'afficher les vignettes vidéo."
 
-#: courses/models.py:116
+#: courses/models.py:139 courses/models.py:197
+msgid "custom order"
+msgstr "commande personnalisée"
+
+#: courses/models.py:148
 msgid ""
 "To set 'create discussion' or 'section output', the section type must be "
 "Upload."
@@ -96,22 +183,38 @@ msgstr ""
 "Pour définir «créer une discussion» ou «sortie de section», le type de "
 "section doit être «Télécharger»."
 
-#: courses/models.py:121
+#: courses/models.py:153
 msgid "To create a discussion you must select a discussion section output."
 msgstr ""
 "Pour créer une discussion, vous devez sélectionner une sortie de section de "
 "discussion."
 
-#: courses/models.py:126
+#: courses/models.py:158
 msgid ""
 "You can not select a section output if 'create discussions' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:142
+#: courses/models.py:166 courses/models.py:193
+msgid "section"
+msgstr "section"
+
+#: courses/models.py:167
+msgid "sections"
+msgstr "sections"
+
+#: courses/models.py:177
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
+
+#: courses/models.py:203
+msgid "section item"
+msgstr "élément de section"
+
+#: courses/models.py:204
+msgid "section items"
+msgstr "éléments de section"
 
 #: templates/base.html:23
 msgid "Return to GEN home page"
@@ -586,30 +689,23 @@ msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
 
 #: templates/section_videos.html:31
-#| msgid "Video"
 msgid "Videos"
 msgstr "Vidéos"
 
 #: templates/section_videos.html:49
-#| msgid "Video thumbnail"
 msgid "Video thumbnail missing."
 msgstr "Vignette vidéo manquante."
 
 #: templates/section_videos.html:58
-#| msgid "Quizzes"
 msgid "Quizzes:"
 msgstr "Quiz:"
 
 #: templates/section_videos.html:68
 #, python-format
-#| msgid ""
-#| "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
 msgid "Requires <u>%(quiz.requirement.name)s</u> to be completed first."
 msgstr "<u>%(quiz.requirement.name)s</u> doit être terminé en premier."
 
 #: templates/section_videos.html:88
-#| msgid ""
-#| "These are the videos that have been submitted by the participants."
 msgid "Make this video visible by the course participants"
 msgstr "Rendre cette vidéo visible par les participants au cours"
 
@@ -622,12 +718,10 @@ msgid "Hide video from the course participants"
 msgstr "Masquer la vidéo des participants au cours"
 
 #: templates/section_videos.html:90
-#| msgid "English"
 msgid "Unpublish"
 msgstr "Annuler la publication"
 
 #: templates/section_videos.html:102
-#| msgid "No quiz available."
 msgid "No video available."
 msgstr "Aucune vidéo disponible."
 
@@ -640,7 +734,6 @@ msgid "Your info"
 msgstr "Vos infos"
 
 #: templates/settings.html:25
-#| msgid "My account"
 msgid "Social accounts"
 msgstr "Comptes sociaux"
 
@@ -660,7 +753,6 @@ msgstr ""
 "déconnecter de Github."
 
 #: templates/settings.html:38 templates/settings.html:60
-#| msgid "Forgot your password?"
 msgid "Set your password now."
 msgstr "Définissez votre mot de passe maintenant."
 
@@ -694,7 +786,6 @@ msgid "Connect to Google"
 msgstr "Connectez-vous à Google"
 
 #: templates/signup.html:14
-#| msgid "Update account info"
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -703,9 +794,6 @@ msgid "Already have an account?"
 msgstr "Vous avez déjà un compte?"
 
 #: templates/unpublish_video_confirmation.html:11
-#| msgid ""
-#| "Are you sure that you want to publish this video? You <strong>WILL "
-#| "NOT</strong> be able to delete it after publishing."
 msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
@@ -714,22 +802,18 @@ msgstr ""
 " Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
-#| msgid "Yes, publish video"
 msgid "Yes, unpublish video"
 msgstr "Oui, annuler la publication de la vidéo"
 
 #: templates/upload_video.html:15
-#| msgid "Upload"
 msgid "Upload video"
 msgstr "Télécharger une video"
 
 #: templates/upload_video.html:19
-#| msgid "Submit new video"
 msgid "New video"
 msgstr "Nouveau vidéo"
 
 #: templates/upload_video.html:24
-#| msgid "Delete video confirmation"
 msgid "New Video Information"
 msgstr "Nouvelles informations vidéo"
 
@@ -738,7 +822,6 @@ msgid "Video player"
 msgstr "Lecteur vidéo"
 
 #: templates/video_player.html:13
-#| msgid "Sorry, your browser does not support embedded videos."
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
@@ -775,10 +858,6 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "New Discussion"
 #~ msgstr "Discussions"
 
-#, fuzzy
-#~ msgid "%(section)s"
-#~ msgstr "Sections"
-
 #~ msgid "First name:"
 #~ msgstr "Prénom:"
 
@@ -802,6 +881,3 @@ msgstr "La vidéo demandée est déjà inédite."
 
 #~ msgid "Forum likes"
 #~ msgstr "Forum aime"
-
-#~ msgid "No progress to report."
-#~ msgstr "Aucun progrès à signaler."
