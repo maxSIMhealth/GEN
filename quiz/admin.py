@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
 from import_export.admin import ExportActionMixin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 # from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -54,7 +55,7 @@ class CheckerInline(admin.StackedInline):
     form = AlwaysChangedModelForm
 
 
-class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
+class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
     """
     Class for creating a sortable inline tabular layout for questions.
     """
@@ -71,7 +72,7 @@ class QuestionInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 0
 
 
-class QuizAdmin(SortableAdminMixin, admin.ModelAdmin):
+class QuizAdmin(SortableAdminMixin, TranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
     list_display = ("name", "course", "video")
     list_filter = ("course",)
@@ -99,7 +100,7 @@ class QuizScoreAdmin(admin.ModelAdmin):
     # filter_horizontal = ('student',)
 
 
-class MCAnswerInline(SortableInlineAdminMixin, admin.TabularInline):
+class MCAnswerInline(SortableInlineAdminMixin, TranslationTabularInline):
     """
     Class to show multiple choice answers inline (tabular)
     """
@@ -118,7 +119,7 @@ class LikertAnswerInline(CheckerInline):
     model = LikertAnswer
 
 
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(TranslationAdmin):
     """
     Base class for questions admin layout (editing).
     """

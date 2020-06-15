@@ -51,6 +51,22 @@
 - The `.po` files will be at `locale/*language_code*/LC_MESSAGES`. For example, `locale/fr/LC_MESSAGES/django.po`.
 - Access `/rosetta` to translate the `.po` files
 
+### Using django-modeltranslation
+- Create a `translation.py` file in the app directory
+- Register a `TranslationOptions` for every model you want to translate. For example:
+  ```
+  from modeltranslation.translator import TranslationOptions, translator
+  from .models import Course
+
+  class CourseTranslationOptions(TranslationOptions):
+    fields = ("name", "description")
+
+  translator.register(Course, CourseTranslationOptions)
+  ```
+- Sync the database using `python manage.py makemigrations` and `python manage.py migrate`
+- If the model already existed and had data, you will need to initialize the default translation, otherwise the template (and admin) will show the translated value of the field, which will be empty: `python manage.py update_translation_fields`
+- For more information, access [django-modeltranslation documentation](https://django-modeltranslation.readthedocs.io)
+
 ## Production
 For a detailed step-by-step instructions on how deploy Django, check this guide: [How To Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04)
 

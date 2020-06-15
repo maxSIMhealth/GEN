@@ -35,3 +35,4 @@ wheel==0.34.2
 django-import-export==2.2.0
 safety==1.9.0
 django-rosetta==0.9.4
+django-modeltranslation==0.15
