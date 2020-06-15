@@ -32,6 +32,11 @@ class Course(models.Model):
     instructors = models.ManyToManyField(
         User, related_name="instructor", verbose_name=_("instructors")
     )
+    blind_data = models.BooleanField(
+        _("blind data"),
+        default=False,
+        help_text=_("Defines if user data (e.g., name) should be visible or not."),
+    )
     enable_gamification = models.BooleanField(
         _("gamification"),
         default=True,
@@ -133,7 +138,9 @@ class Section(models.Model):
     show_thumbnails = models.BooleanField(
         _("show thumbnails"),
         default=True,
-        help_text=_("* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."),
+        help_text=_(
+            "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
+        ),
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False

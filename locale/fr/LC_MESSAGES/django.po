@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 21:32+0000\n"
-"PO-Revision-Date: 2020-06-15 20:35+0000\n"
+"POT-Creation-Date: 2020-06-15 22:55+0000\n"
+"PO-Revision-Date: 2020-06-15 22:55+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -79,7 +79,7 @@ msgstr "profils"
 msgid "Activate Your GEN Account"
 msgstr "Activez votre compte GEN"
 
-#: courses/models.py:11 courses/models.py:85 courses/models.py:172
+#: courses/models.py:11 courses/models.py:90 courses/models.py:179
 msgid "name"
 msgstr "nom"
 
@@ -95,23 +95,23 @@ msgstr "code de cours"
 msgid "Course code (max 10 characters)"
 msgstr "Code du cours (max 10 caractères)"
 
-#: courses/models.py:20 courses/models.py:91 courses/models.py:175
+#: courses/models.py:20 courses/models.py:96 courses/models.py:182
 msgid "description"
 msgstr "la description"
 
-#: courses/models.py:22 courses/models.py:95
+#: courses/models.py:22 courses/models.py:100
 msgid "Course description (max 800 characters)"
 msgstr "Description du cours (max 800 caractères)"
 
-#: courses/models.py:25 courses/models.py:183 discussions/models.py:64
+#: courses/models.py:25 courses/models.py:190 discussions/models.py:64
 msgid "author"
 msgstr "l'auteur"
 
-#: courses/models.py:27 courses/models.py:185
+#: courses/models.py:27 courses/models.py:192
 msgid "start date"
 msgstr "date de début"
 
-#: courses/models.py:28 courses/models.py:186
+#: courses/models.py:28 courses/models.py:193
 msgid "end date"
 msgstr "date de fin"
 
@@ -124,40 +124,50 @@ msgid "instructors"
 msgstr "l'instructeur"
 
 #: courses/models.py:36
+msgid "blind data"
+msgstr "données aveugles"
+
+#: courses/models.py:38
+msgid "Defines if user data (e.g., name) should be visible or not."
+msgstr ""
+"Définit si les données utilisateur (par exemple, le nom) doivent être "
+"visibles ou non."
+
+#: courses/models.py:41
 msgid "gamification"
 msgstr "gamification"
 
-#: courses/models.py:38
+#: courses/models.py:43
 msgid "Enables voting in discussions and comments"
 msgstr "Permet de voter dans les discussions et les commentaires"
 
-#: courses/models.py:41
+#: courses/models.py:46
 msgid "show scoreboard"
 msgstr "afficher le tableau de bord"
 
-#: courses/models.py:41 courses/models.py:44
+#: courses/models.py:46 courses/models.py:49
 msgid "Requires gamification"
 msgstr "Nécessite gamification"
 
-#: courses/models.py:44
+#: courses/models.py:49
 msgid "show leaderboard"
 msgstr "afficher le classement"
 
-#: courses/models.py:47
+#: courses/models.py:52
 msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
-#: courses/models.py:51 courses/models.py:101 discussions/models.py:21
-#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538 videos/models.py:81
-#: videos/models.py:96
+#: courses/models.py:56 courses/models.py:106 discussions/models.py:22
+#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538
+#: videos/models.py:81 videos/models.py:96
 msgid "course"
 msgstr "le cours"
 
-#: courses/models.py:52
+#: courses/models.py:57
 msgid "courses"
 msgstr "les cours"
 
-#: courses/models.py:64
+#: courses/models.py:69
 msgid ""
 "Course end date cannot be equal or                         earlier than the "
 "start date."
@@ -165,52 +175,52 @@ msgstr ""
 "La date de fin du cours ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:70
+#: courses/models.py:75
 msgid "Scoreboard requires gamification to be enabled"
 msgstr "Le tableau de bord nécessite l'activation de la gamification"
 
-#: courses/models.py:72
+#: courses/models.py:77
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
-#: courses/models.py:77 templates/section_discussion.html:21
+#: courses/models.py:82 templates/section_discussion.html:21
 msgid "Discussion boards"
 msgstr "Forums de discussion"
 
-#: courses/models.py:78 templates/section_videos.html:31
+#: courses/models.py:83 templates/section_videos.html:31
 msgid "Videos"
 msgstr "Vidéos"
 
-#: courses/models.py:79 templates/course.html:68 templates/course.html:81
+#: courses/models.py:84 templates/course.html:68 templates/course.html:81
 #: templates/section_quiz.html:20
 msgid "Quizzes"
 msgstr "Quiz"
 
-#: courses/models.py:80
+#: courses/models.py:85
 msgid "Uploads"
 msgstr "Téléversements"
 
-#: courses/models.py:88
+#: courses/models.py:93
 msgid "Section name (max 15 characters)"
 msgstr "Nom de la section (max 15 caractères)"
 
-#: courses/models.py:104
+#: courses/models.py:109
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:112 discussions/models.py:32 quiz/models.py:172
+#: courses/models.py:117 discussions/models.py:33 quiz/models.py:172
 msgid "requirement"
 msgstr "exigence"
 
-#: courses/models.py:114 courses/models.py:195
+#: courses/models.py:119 courses/models.py:202
 msgid "published"
 msgstr "publié"
 
-#: courses/models.py:116
+#: courses/models.py:121
 msgid "create discussion"
 msgstr "créer une discussion"
 
-#: courses/models.py:119
+#: courses/models.py:124
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based "
 "on participant's video submissions."
@@ -218,7 +228,7 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: créez automatiquement un forum de "
 "discussion basé sur les soumissions vidéo des participants."
 
-#: courses/models.py:129
+#: courses/models.py:134
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the "
 "discussion boards."
@@ -226,25 +236,27 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: Définissez la section dans laquelle "
 "créer les «forums de discussion»."
 
-#: courses/models.py:131
+#: courses/models.py:136
 msgid "section output"
 msgstr "sortie de section"
 
-#: courses/models.py:134
+#: courses/models.py:139
 msgid "show thumbnails"
 msgstr "affiche des vignettes"
 
-#: courses/models.py:136
-msgid "* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."
+#: courses/models.py:142
+msgid ""
+"* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
-"* POUR LA SECTION VIDÉO UNIQUEMENT *: permet d'afficher les vignettes vidéo."
+"* POUR LES SECTIONS VIDÉO ET TÉLÉCHARGER UNIQUEMENT *: permet d'afficher les"
+" miniatures vidéo."
 
-#: courses/models.py:139 courses/models.py:197 quiz/models.py:225
+#: courses/models.py:146 courses/models.py:204 quiz/models.py:225
 #: quiz/models.py:395
 msgid "custom order"
 msgstr "commande personnalisée"
 
-#: courses/models.py:148
+#: courses/models.py:155
 msgid ""
 "To set 'create discussion' or 'section output', the section type must be "
 "Upload."
@@ -252,36 +264,36 @@ msgstr ""
 "Pour définir «créer une discussion» ou «sortie de section», le type de "
 "section doit être «Télécharger»."
 
-#: courses/models.py:153
+#: courses/models.py:160
 msgid "To create a discussion you must select a discussion section output."
 msgstr ""
 "Pour créer une discussion, vous devez sélectionner une sortie de section de "
 "discussion."
 
-#: courses/models.py:158
+#: courses/models.py:165
 msgid ""
 "You can not select a section output if 'create discussions' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:166 courses/models.py:193 quiz/models.py:419
+#: courses/models.py:173 courses/models.py:200 quiz/models.py:419
 msgid "section"
 msgstr "section"
 
-#: courses/models.py:167
+#: courses/models.py:174
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:177
+#: courses/models.py:184
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
 
-#: courses/models.py:203
+#: courses/models.py:210
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:204
+#: courses/models.py:211
 msgid "section items"
 msgstr "éléments de section"
 
@@ -323,29 +335,25 @@ msgstr "Message"
 msgid "The max length for a comment is 400 characters."
 msgstr "La longueur maximale d'un commentaire est de 400 caractères."
 
-#: discussions/models.py:23
+#: discussions/models.py:24
 msgid "last updated"
 msgstr "dernière mise à jour"
 
-#: discussions/models.py:40 quiz/models.py:165 quiz/models.py:430
+#: discussions/models.py:41 quiz/models.py:165 quiz/models.py:430
 msgid "video"
 msgstr "vidéo"
 
-#: discussions/models.py:44 discussions/models.py:57
+#: discussions/models.py:45 discussions/models.py:58
 msgid "discussion"
 msgstr "discussion"
 
-#: discussions/models.py:45
+#: discussions/models.py:46
 msgid "discussions"
 msgstr "discussions"
 
-#: discussions/models.py:52
+#: discussions/models.py:53
 msgid "message"
 msgstr "message"
-
-#: discussions/models.py:59
-msgid "created at"
-msgstr "créé à"
 
 #: discussions/models.py:68
 msgid "comment"
@@ -433,8 +441,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
-"de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:229 quiz/models.py:300 quiz/models.py:377 quiz/models.py:423
 msgid "question"
@@ -675,36 +683,40 @@ msgstr "Info"
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/comments.html:41 templates/comments.html:120
+#: templates/comments.html:41 templates/comments.html:119
 msgid "Please login to like"
 msgstr "Veuillez vous connecter pour aimer"
 
-#: templates/comments.html:64 templates/quiz.html:36
+#: templates/comments.html:63 templates/quiz.html:36
 msgid "Sorry, your browser does not support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
-#: templates/comments.html:83
+#: templates/comments.html:82
 msgid "New comment"
 msgstr "Nouveau commentaire"
 
-#: templates/comments.html:91 templates/new_media.html:13
+#: templates/comments.html:90 templates/new_media.html:13
 msgid "Post"
 msgstr "Publier"
 
-#: templates/comments.html:94
+#: templates/comments.html:93
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:100 templates/course.html:67
+#: templates/comments.html:99 templates/course.html:67
 #: templates/course.html:80
 msgid "Comments"
 msgstr "Commentaires"
 
-#: templates/comments.html:135
+#: templates/comments.html:134
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: templates/comments.html:169
+#: templates/comments.html:136
+msgid "Expert"
+msgstr "L'expert"
+
+#: templates/comments.html:176
 msgid "This discussion has no comments."
 msgstr "Cette discussion n'a aucun commentaire."
 
@@ -768,7 +780,8 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
+"attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -788,7 +801,7 @@ msgstr "Voulez-vous vraiment supprimer la vidéo suivante?"
 
 #: templates/delete_video_confirmation.html:13
 #: templates/publish_video_confirmation.html:13
-#: templates/section_upload.html:46 templates/section_upload.html:87
+#: templates/section_upload.html:48 templates/section_upload.html:94
 #: templates/section_videos.html:47
 msgid "Video thumbnail"
 msgstr "Vignette vidéo"
@@ -886,8 +899,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL NOT</"
-"strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL "
+"NOT</strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -958,23 +971,26 @@ msgstr "Participé"
 msgid "To do"
 msgstr "Faire"
 
-#: templates/section_discussion.html:70
+#: templates/section_discussion.html:69
+#| msgid "By:"
+msgid "By"
+msgstr "Par"
+
+#: templates/section_discussion.html:74
 msgid "Comments:"
 msgstr "Commentaires:"
 
-#: templates/section_discussion.html:79
+#: templates/section_discussion.html:83
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>"
-"%(item.discussion.requirement.name)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>%(item.discussion.requirement.name)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
-"%(item.discussion.requirement.name)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(item.discussion.requirement.name)s</u>. </em>"
 
-#: templates/section_discussion.html:91
+#: templates/section_discussion.html:95
 msgid "No discussion board available."
 msgstr "Aucun forum de discussion disponible."
 
@@ -1021,7 +1037,7 @@ msgstr ""
 "Les téléversements sont <strong>privés</strong>, uniquement accessibles par "
 "vous et par le ou les formateurs."
 
-#: templates/section_upload.html:53
+#: templates/section_upload.html:56
 msgid ""
 "<strong>WARNING:</strong> after publishing you will not be able to delete "
 "this submission."
@@ -1029,35 +1045,47 @@ msgstr ""
 "<strong>AVERTISSEMENT:</strong> après la publication, vous ne pourrez pas "
 "supprimer cette soumission."
 
-#: templates/section_upload.html:53
+#: templates/section_upload.html:56
 msgid "Publish submission"
 msgstr "Publier la soumission"
 
-#: templates/section_upload.html:54 templates/section_videos.html:92
+#: templates/section_upload.html:57 templates/section_videos.html:92
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/section_upload.html:57
+#: templates/section_upload.html:60
 msgid "Published - No changes allowed"
 msgstr "Publié - Aucune modification autorisée"
 
-#: templates/section_upload.html:67
+#: templates/section_upload.html:70
 msgid "You have not submitted any content."
 msgstr "Vous n'avez soumis aucun contenu."
 
-#: templates/section_upload.html:75
+#: templates/section_upload.html:78
 msgid "Participants' Uploads"
 msgstr "Téléchargements des participants"
 
-#: templates/section_upload.html:78
+#: templates/section_upload.html:81
 msgid "These are the videos that have been submitted by the participants."
 msgstr "Ce sont les vidéos qui ont été soumises par les participants."
 
-#: templates/section_upload.html:93
+#: templates/section_upload.html:83
+msgid "This data has been anonymized."
+msgstr "Ces données ont été anonymisées."
+
+#: templates/section_upload.html:101
+msgid "By: user #"
+msgstr "Par: utilisateur #"
+
+#: templates/section_upload.html:103 templates/section_upload.html:110
 msgid "Submission date:"
 msgstr "Date de soumission:"
 
-#: templates/section_upload.html:102
+#: templates/section_upload.html:108
+msgid "By:"
+msgstr "Par:"
+
+#: templates/section_upload.html:120
 msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
 
@@ -1133,13 +1161,11 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_login.uid)s - "
-"%(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+"                  Connected as %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s "
-"%(google_login.user.last_name)s"
+"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1169,8 +1195,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
-"Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1268,3 +1294,6 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:137
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid "created at"
+#~ msgstr "créé à"

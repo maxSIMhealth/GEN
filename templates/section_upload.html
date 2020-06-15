@@ -42,9 +42,12 @@
         {% for item in section_items.all %}
           <li class="list-group-item">
             <div class="d-flex">
-              <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
-              </div>
+              DEBUG: section.show_thumbnails {{section.show_thumbnails}}
+              {% if section.show_thumbnails %}
+                <div class="flex-shrink-1 pr-3">
+                  <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
+                </div>
+              {% endif %}
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <p>{{ item.videofile.description }}</p>
@@ -76,6 +79,9 @@
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-warning mb-0" role="alert">
         {% trans "These are the videos that have been submitted by the participants." %}
+        {% if course.blind_data %}
+          {% trans "This data has been anonymized." %}
+        {% endif %}
       </div>
     </div>
     <ul class="list-group list-group-flush">
@@ -83,16 +89,28 @@
         {% for item in section.section_items.all %}
           <li class="list-group-item">
             <div class="d-flex">
-              <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
-              </div>
-              <div class="w-100">
-                <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
-                <div class="video-user-info">
-                  <em>By:</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}}) <br />
-                  <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
+              {% if section.show_thumbnails %}
+                <div class="flex-shrink-1 pr-3">
+                  <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
                 </div>
-                <p>{{ item.videofile.description }}</p>
+              {% endif %}
+              <div class="w-100">
+                {% if course.blind_data %}
+                  <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">Video id {{ item.videofile.id }}</a></h5>
+                  <div class="video-user-info">
+                    <em>{% trans "By: user #" %} {{item.videofile.author.id}} </em>
+                    <br />
+                    <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
+                  </div>
+                {% else %}
+                  <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+                  <div class="video-user-info">
+                    <em>{% trans "By:" %}</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}})
+                    <br />
+                    <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
+                  </div>
+                  <p>{{ item.videofile.description }}</p>
+                {% endif %}
               </div>
             </div>
           </li>

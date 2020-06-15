@@ -47,9 +47,9 @@
           <div class="col col-12 col-sm-12 col-md-12 col-lg-11 p-1 pl-2">
         {% endif %}
           <div>{{ discussion.name }}</div>
-          {% comment %}
-          <small class="text-muted">By: {{ discussion.author }}</small>
-          {% endcomment %}
+          {% if not course.blind_data %}
+            <small class="text-muted">By: {{ discussion.author }}</small>
+          {% endif %}
         </div>
       </div>
     </h5>
@@ -123,7 +123,7 @@
 
               </div>
             {% endif %}
-            <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
+            <div class="col col-2 col-sm-2 col-md-1 col-lg-1 p-0">
               <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
               {% if comment.author.is_staff %}
               <div class="text-center"><strong>{% trans "ADMIN" %}</strong></div>
@@ -137,7 +137,7 @@
               <div class="col col-10 col-sm-10 col-md-10 col-lg-10">
             {% endif %}
               <div class="row mb-0">
-                <div class="col-6">
+                <div>
                   {% comment %}
                   {% if debug %}
                   DEBUG: <br />
@@ -145,10 +145,16 @@
                   is a course instructor? {{comment.author|is_instructor:course}}<br />
                   {% endif %}
                   {% endcomment %}
-                  <small class="text-muted">{{ comment.created|naturaltime }}</small>
+
+                  <small class="text-dark">
+                  {% if not course.blind_data %}
+                    {{comment.author}}
+                  {% endif %}
+                  {{ comment.created|naturaltime }}
+                  </small>
                 </div>
               </div>
-              {{ comment.message }}
+              <div class="row">{{ comment.message }}</div>
               {% comment %} TODO: add edit feature and user authentication {% endcomment %}
               {% comment %} <div class="mt-3">
                 {% if comment.author == user %}
