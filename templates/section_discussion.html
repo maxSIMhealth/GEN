@@ -22,7 +22,7 @@
       {% if user|is_instructor:course %}
         <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
           <span class="btn-label"><i class="fas fa-plus"></i></span>
-          Create new
+          {% trans "Create new" %}
         </a>
       {% endif %}
     </h5>

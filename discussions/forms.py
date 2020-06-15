@@ -1,23 +1,25 @@
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Fieldset, Layout, Submit
+from crispy_forms.layout import Button, Fieldset, Layout, Submit
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
-from .models import Comment, Discussion
 from videos.models import VideoFile
+from .models import Comment, Discussion
 
 
 class NewDiscussionForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.TextInput(),
         max_length=100,
-        label="Discussion board name",
-        help_text="The max length for the discussion board name is 100.",
+        label=_("Discussion board name"),
+        help_text=_("The max length for the discussion board name is 100."),
     )
     description = forms.CharField(
         widget=forms.Textarea(attrs={"rows": 4}),
         max_length=400,
-        help_text="The max length for the discussion board description is 400.",
+        label=_("Description"),
+        help_text=_("The max length for the discussion board description is 400."),
     )
 
     class Meta:
@@ -41,13 +43,19 @@ class NewDiscussionForm(forms.ModelForm):
                 "video",
             ),
             FormActions(
-                Submit("submit", "Submit", css_class="btn btn-primary"),
-                Submit(
-                    "submit",
-                    "Cancel",
-                    css_class="btn btn-danger",
-                    formnovalidate="formnovalidate",
+                Submit("submit", _("Submit"), css_class="btn btn-primary"),
+                Button(
+                    "cancel",
+                    _("Cancel"),
+                    css_class="btn btn-secondary",
+                    onclick="window.location.href = window.history.go(-1); return false;",
                 ),
+                # Submit(
+                #     "submit",
+                #     "Cancel",
+                #     css_class="btn btn-danger",
+                #     formnovalidate="formnovalidate",
+                # ),
             ),
         )
         self.helper.form_method = "POST"
@@ -75,7 +83,8 @@ class NewCommentForm(forms.ModelForm):
     message = forms.CharField(
         widget=forms.Textarea(attrs={"rows": 4}),
         max_length=400,
-        help_text="The max length for a comment is 400 characters.",
+        label=_("Message"),
+        help_text=_("The max length for a comment is 400 characters."),
     )
 
     class Meta:

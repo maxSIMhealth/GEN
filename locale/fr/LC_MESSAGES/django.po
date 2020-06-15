@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 17:05+0000\n"
-"PO-Revision-Date: 2020-06-15 17:06+0000\n"
+"POT-Creation-Date: 2020-06-15 17:53+0000\n"
+"PO-Revision-Date: 2020-06-15 17:53+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -26,6 +26,30 @@ msgstr "Anglais"
 #: GEN/settings.py:85
 msgid "French"
 msgstr "Français"
+
+#: accounts/forms.py:8
+msgid "First name"
+msgstr "Prénom"
+
+#: accounts/forms.py:9
+msgid "Last name"
+msgstr "Nom de famille"
+
+#: accounts/forms.py:11
+msgid "E-mail"
+msgstr "E-mail"
+
+#: accounts/forms.py:13 templates/my_account.html:24
+msgid "Institution"
+msgstr "Institution"
+
+#: accounts/forms.py:25
+msgid "E-mail address must be from one of the allowed domains: "
+msgstr "L'adresse e-mail doit provenir de l'un des domaines autorisés: "
+
+#: accounts/forms.py:30
+msgid "E-mail address is already being used."
+msgstr "L'adresse e-mail est déjà utilisée."
 
 #: accounts/models.py:9
 msgid "user"
@@ -257,6 +281,45 @@ msgstr "élément de section"
 msgid "section items"
 msgstr "éléments de section"
 
+#: courses/views.py:59
+#| msgid "You do not fulfill the requirements to access this page."
+msgid ""
+"You have not fulfilled the requirements to access the requested section."
+msgstr "Vous n'avez pas rempli les conditions d'accès à la section demandée."
+
+#: discussions/forms.py:15
+msgid "Discussion board name"
+msgstr "Nom du forum de discussion"
+
+#: discussions/forms.py:16
+msgid "The max length for the discussion board name is 100."
+msgstr "La longueur maximale du nom du forum de discussion est 100."
+
+#: discussions/forms.py:21 templates/course.html:52 videos/forms.py:14
+msgid "Description"
+msgstr "La description"
+
+#: discussions/forms.py:22
+msgid "The max length for the discussion board description is 400."
+msgstr ""
+"La longueur maximale pour la description du forum de discussion est de 400."
+
+#: discussions/forms.py:46 templates/quiz.html:109 videos/forms.py:43
+msgid "Submit"
+msgstr "Soumettre"
+
+#: discussions/forms.py:49 templates/quiz.html:110 videos/forms.py:47
+msgid "Cancel"
+msgstr "Annuler"
+
+#: discussions/forms.py:86
+msgid "Message"
+msgstr "Message"
+
+#: discussions/forms.py:87
+msgid "The max length for a comment is 400 characters."
+msgstr "La longueur maximale d'un commentaire est de 400 caractères."
+
 #: discussions/models.py:23
 msgid "last updated"
 msgstr "dernière mise à jour"
@@ -288,6 +351,19 @@ msgstr "commentaire"
 #: discussions/models.py:69
 msgid "comments"
 msgstr "commentaires"
+
+#: discussions/views.py:89
+msgid "You do not fulfill the requirements to access this page."
+msgstr ""
+"Vous ne remplissez pas les conditions requises pour accéder à cette page."
+
+#: discussions/views.py:93
+msgid "Discussion board does not exist."
+msgstr "Le forum de discussion n'existe pas."
+
+#: discussions/views.py:119
+msgid "Discussion board created."
+msgstr "Un forum de discussion a été créé."
 
 #: quiz/models.py:11
 msgid "Header"
@@ -497,6 +573,14 @@ msgstr "en-tête du groupe de questions"
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
+#: quiz/views.py:225
+msgid "You have already reached the maximum number of attempts."
+msgstr "Vous avez déjà atteint le nombre maximum de tentatives."
+
+#: quiz/views.py:239
+msgid "Access denied."
+msgstr "Accès refusé."
+
 #: templates/base.html:23
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
@@ -611,10 +695,6 @@ msgstr "Début"
 msgid "End"
 msgstr "Fin"
 
-#: templates/course.html:52
-msgid "Description"
-msgstr "La description"
-
 #: templates/course.html:63
 msgid "Scoreboard"
 msgstr "Tableau de bord"
@@ -723,10 +803,6 @@ msgstr "Mettre à jour les informations de compte"
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: templates/my_account.html:24
-msgid "Institution"
-msgstr "Institution"
-
 #: templates/my_account.html:28
 msgid "Email address"
 msgstr "Adresse électronique"
@@ -804,14 +880,6 @@ msgstr "Des questions"
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
-#: templates/quiz.html:109
-msgid "Submit"
-msgstr "Soumettre"
-
-#: templates/quiz.html:110
-msgid "Cancel"
-msgstr "Annuler"
-
 #: templates/quiz_result.html:19 templates/quiz_result.html:24
 #: templates/quiz_result.html:31
 msgid "Result"
@@ -849,6 +917,10 @@ msgstr "Explication"
 #, python-format
 msgid "Return to %(section)s"
 msgstr "Retourner à %(section)s"
+
+#: templates/section_discussion.html:25
+msgid "Create new"
+msgstr "Créer un nouveau"
 
 #: templates/section_discussion.html:58
 msgid "Participated"
@@ -1093,6 +1165,18 @@ msgstr "Lecteur vidéo"
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
+#: videos/forms.py:17
+msgid "The max length for a description is 400 characters."
+msgstr "La longueur maximale d'une description est de 400 caractères."
+
+#: videos/forms.py:20
+msgid "File"
+msgstr "Fichier"
+
+#: videos/forms.py:22
+msgid "Please upload a video file (mp4 or mov)"
+msgstr "Veuillez télécharger un fichier vidéo (mp4 ou mov)"
+
 #: videos/models.py:85
 msgid "playlist"
 msgstr "playlist"
@@ -1122,12 +1206,10 @@ msgid "thumbnail"
 msgstr "la vignette"
 
 #: videos/models.py:115
-#| msgid "video"
 msgid "video file"
 msgstr "fichier vidéo"
 
 #: videos/models.py:116
-#| msgid "profiles"
 msgid "video files"
 msgstr "fichiers vidéo"
 
@@ -1163,15 +1245,6 @@ msgstr "La vidéo demandée est déjà inédite."
 #, fuzzy
 #~ msgid "New Discussion"
 #~ msgstr "Discussions"
-
-#~ msgid "First name:"
-#~ msgstr "Prénom:"
-
-#~ msgid "Last name:"
-#~ msgstr "Nom de famille:"
-
-#~ msgid "E-mail:"
-#~ msgstr "E-mail:"
 
 #~ msgid "Edit"
 #~ msgstr "Éditer"

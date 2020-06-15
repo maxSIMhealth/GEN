@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Max
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
+from django.utils.translation import gettext_lazy as _
 import xlsxwriter
 
 from courses.models import Course, Section
@@ -221,7 +222,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                     # maximum number of attempts
                     messages.error(
                         request,
-                        "You have already reached the maximum number of attempts.",
+                        _("You have already reached the maximum number of attempts."),
                     )
                     return HttpResponseRedirect(
                         reverse("section", args=[pk, section.pk])
@@ -235,7 +236,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                     )
         else:
             messages.error(
-                request, "Access denied.",
+                request, _("Access denied."),
             )
             return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
