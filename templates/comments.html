@@ -127,6 +127,8 @@
               <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
               {% if comment.author.is_staff %}
               <div class="text-center"><strong>{% trans "ADMIN" %}</strong></div>
+              {% elif comment.author|is_instructor:course %}
+              <div class="text-center"><strong>{% trans "Expert" %}</strong></div>
               {% endif %}
             </div>
             {% if gamification %}
