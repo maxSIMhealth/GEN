@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 from social_django.models import UserSocialAuth
 
@@ -37,7 +38,7 @@ def signup(request):
 
             # send account activation email
             current_site = get_current_site(request)
-            subject = "Activate Your GEN Account"
+            subject = _("Activate Your GEN Account")
             message = render_to_string(
                 "account_activation_email.html",
                 {

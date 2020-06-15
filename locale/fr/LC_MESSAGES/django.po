@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 17:53+0000\n"
-"PO-Revision-Date: 2020-06-15 17:53+0000\n"
+"POT-Creation-Date: 2020-06-15 18:04+0000\n"
+"PO-Revision-Date: 2020-06-15 18:04+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -74,6 +74,10 @@ msgstr "profil"
 #: accounts/models.py:18
 msgid "profiles"
 msgstr "profils"
+
+#: accounts/views.py:41
+msgid "Activate Your GEN Account"
+msgstr "Activez votre compte GEN"
 
 #: courses/models.py:11 courses/models.py:85 courses/models.py:172
 msgid "name"
@@ -282,7 +286,6 @@ msgid "section items"
 msgstr "éléments de section"
 
 #: courses/views.py:59
-#| msgid "You do not fulfill the requirements to access this page."
 msgid ""
 "You have not fulfilled the requirements to access the requested section."
 msgstr "Vous n'avez pas rempli les conditions d'accès à la section demandée."
@@ -580,6 +583,33 @@ msgstr "Vous avez déjà atteint le nombre maximum de tentatives."
 #: quiz/views.py:239
 msgid "Access denied."
 msgstr "Accès refusé."
+
+#: templates/account_activation_invalid.html:6
+#: templates/account_activation_invalid.html:10
+#| msgid "Activation email sent"
+msgid "Activation invalid"
+msgstr "Activation invalide"
+
+#: templates/account_activation_invalid.html:11
+msgid ""
+"The confirmation link used is invalid, possibly because it has already been "
+"used or it has expired."
+msgstr ""
+"Le lien de confirmation utilisé n'est pas valide, peut-être parce qu'il a "
+"déjà été utilisé ou qu'il a expiré."
+
+#: templates/account_activation_sent.html:6
+#: templates/account_activation_sent.html:10
+msgid "Activation email sent"
+msgstr "E-mail d'activation envoyé"
+
+#: templates/account_activation_sent.html:11
+msgid ""
+"An activation email was sent with a confirmation link. Please confirm your "
+"email address to complete the registration."
+msgstr ""
+"Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
+"confirmer votre adresse e-mail pour terminer l'inscription."
 
 #: templates/base.html:23
 msgid "Return to GEN home page"
