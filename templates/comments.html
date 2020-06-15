@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load humanize %}
+{% load i18n %}
 {% load gravatar %}
 {% load checkvotes %}
 {% comment %}{% load has_group %}{% endcomment %}
@@ -16,7 +17,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
   <li class="breadcrumb-item active">{{ discussion.name|truncatechars:50 }}</li>
@@ -36,7 +37,7 @@
                 <a href="{% url 'discussion_upvote' course.pk section.pk discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
               {% endif %}
             {% else %}
-              <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+              <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title='{% trans "Please login to like" %}'>
                 <a href="#"  class="btn btn-outline-secondary disabled"><i class="far fa-thumbs-up"></i></a>
               </span>
             {% endif %}
@@ -58,7 +59,7 @@
       <div class="embed-responsive embed-responsive-16by9">
         <video controls>
           <source src="{{ video.file.url }}" type="video/mp4">
-          Sorry, your browse does not support embedded videos.
+            {% trans "Sorry, your browser does not support embedded videos." %}
         </video>
       </div>
       {% endif %}
@@ -68,7 +69,7 @@
             {% video discussion.media.url '800x600' %}
           </div>
         {% else %}
-          <object data="{{ discussion.media.url }}" class="user-thumbnail"></object> <!-- TODO: remove inline CSS-->
+          <object data="{{ discussion.media.url }}" class="user-thumbnail"></object>
         {% endif %}
       {% endcomment %}
 
@@ -76,7 +77,7 @@
   </div>
 
   <div class="card bg-light mb-2">
-    <h5 class="card-header pl-3">New comment</h5>
+    <h5 class="card-header pl-3">{% trans "New comment" %}</h5>
     <div class="card-body p-3">
       {% if user.is_authenticated %}
         <form method="post" novalidate>
@@ -84,16 +85,16 @@
 
           {% include 'includes/form.html' %}
 
-          <button type="submit" class="btn btn-success">Post</button>
+          <button type="submit" class="btn btn-success">{% trans "Post" %}</button>
         </form>
       {% else %}
-        Please login to comment.
+        {% trans "Please login to comment." %}
       {% endif %}
     </div>
   </div>
 
   <div class="card bg-light mb-2">
-    <h5 class="card-header">Comments</h5>
+    <h5 class="card-header">{% trans "Comments" %}</h5>
     <ul class="list-group list-group-flush">
       {% for comment in discussion.comments.all %}
         {% comment %} Using custom template tag to check if the user voted {% endcomment %}
@@ -111,7 +112,7 @@
                     <a href="{% url 'comment_upvote' course.pk section.pk discussion.pk comment.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
                   {% endif %}
                 {% else %}
-                  <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Please login to like">
+                  <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title='{% trans "Please login to like" %}'>
                     <a href="#"  class="btn btn-secondary disabled"><i class="far fa-thumbs-up"></i></a>
                   </span>
                 {% endif %}
@@ -125,7 +126,7 @@
             <div class="col col-1 col-sm-1 col-md-1 col-lg-1 p-0">
               <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author" class="w-100">
               {% if comment.author.is_staff %}
-              <div class="text-center"><strong>ADMIN</strong></div>
+              <div class="text-center"><strong>{% trans "ADMIN" %}</strong></div>
               {% endif %}
             </div>
             {% if gamification %}
@@ -149,14 +150,14 @@
               {% comment %} TODO: add edit feature and user authentication {% endcomment %}
               {% comment %} <div class="mt-3">
                 {% if comment.author == user %}
-                <a href="#" class="btn btn-warning btn-sm" role="button">Edit</a>
+                <a href="#" class="btn btn-warning btn-sm" role="button">{% trans "Edit" %}</a>
                 {% endif %}
               </div> {% endcomment %}
             </div>
           </div>
         </li>
       {% empty %}
-        <div class="card-body">This discussion has no comments.</div>
+        <div class="card-body">{% trans "This discussion has no comments." %}</div>
       {% endfor %}
     </ul>
   </div>

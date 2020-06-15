@@ -2,15 +2,20 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
     # bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
-    institution = models.CharField(max_length=50, blank=True)
+    location = models.CharField(_("location"), max_length=30, blank=True)
+    institution = models.CharField(_("institution"), max_length=50, blank=True)
     # birth_date = models.DateField(null=True, blank=True)
-    email_confirmed = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(_("email confirmed"), default=False)
+
+    class Meta:
+        verbose_name = _("profile")
+        verbose_name_plural = _("profiles")
 
     def __str__(self):
         return self.user.username

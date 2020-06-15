@@ -1,27 +1,30 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
 {% load humanize %}
 {% load gravatar %}
 {% load countscore %}
 
 {% comment %}
 {% block breadcrumb %}
-  <li class="breadcrumb-item active">Home</li>
+  <li class="breadcrumb-item active">{% trans "Home" %}</li>
 {% endblock breadcrumb %}
 {% endcomment %}
 
 {% block content %}
   <div class="card bg-dark mb-3">
     <div class="card-header">
-      <h5 class="card-text text-white p-0">Home</h5>
+      <h5 class="card-text text-white p-0">{% trans "Home" %}</h5>
     </div>
   </div>
 
   <div class="card">
     <h5 class="card-header bg-light">
       <div class="row">
-        <div class="col-10 pt-0"><i class="fas fa-laptop-code pr-1"></i> Courses</div>
-        <!-- <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">Enroll</a></div> -->
+        <div class="col-10 pt-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</div>
+        {% comment %}
+        <div class="col-2 text-right"><a href="#" class="btn btn-primary disabled">{% trans "Enroll" %}</a></div>
+        {% endcomment %}
       </div>
     </h5>
     <div class="card-body p-0">
@@ -29,7 +32,7 @@
         {% for course in user.member.all %}
           <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
         {% empty %}
-          <li class="list-group-item">Not enrolled in any course. Please wait for the administrator to assign you.</li>
+          <li class="list-group-item">{% trans 'Not enrolled in any course. Please wait for the administrator to assign you.' %}</li>
         {% endfor %}
       </ul>
     </div>

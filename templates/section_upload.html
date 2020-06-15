@@ -1,6 +1,7 @@
 {% extends 'base_course_section.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load humanize %}
 {% load is_instructor %}
 {% load quiz_details_get %}
@@ -16,24 +17,24 @@
 
   <div class="card mb-3 section-upload">
     <h5 class="card-header bg-light d-flex">
-      <span class="pt-1 mr-auto">Upload</span>
+      <span class="pt-1 mr-auto">{% trans "Upload" %}</span>
         {% if allow_submission %}
         <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-primary">
           <span class="btn-label"><i class="fas fa-file-upload"></i></span>
-          Submit new video
+          {% trans "Submit new video" %}
         </a>
         {% else %}
-        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="auto" data-html="true" title="You already published your submission.">
+        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'You cannot submit another video.' %}">
           <a href="#" class="btn btn-sm btn-labeled btn-secondary disabled" >
             <span class="btn-label"><i class="fas fa-file-upload"></i></span>
-            Submit new video
+            {% trans "Submit new video" %}
           </a>
         </span>
         {% endif %}
     </h5>
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-info mb-0" role="alert">
-        Uploads are <strong>private</strong>, only accessible by you and by the course instructor(s).
+        {% trans "Uploads are <strong>private</strong>, only accessible by you and by the course instructor(s)." %}
       </div>
     </div>
     <ul class="list-group list-group-flush">
@@ -42,18 +43,18 @@
           <li class="list-group-item">
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
               </div>
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <p>{{ item.videofile.description }}</p>
                 <div>
                   {% if not item.published %}
-                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="<strong>WARNING:</strong> after publishing you will not be able to delete this submission.">Publish submission</a>
-                    <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans '<strong>WARNING:</strong> after publishing you will not be able to delete this submission.' %}">{% trans "Publish submission" %}</a>
+                    <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">{% trans "Delete" %}</a>
                   {% else %}
                     <div class="alert alert-success" role="alert">
-                      Published - No changes allowed
+                      {% trans "Published - No changes allowed" %}
                     </div>
                   {% endif %}
                 </div>
@@ -63,7 +64,7 @@
         {% endfor %}
       {% else %}
         <li class="list-group-item">
-          <span>You have not submitted any content.</span>
+          <span>{% trans "You have not submitted any content." %}</span>
         </li>
       {% endif %}
     </ul>
@@ -71,10 +72,10 @@
 
   {% if user|is_instructor:course %}
   <div class="card border-warning mb-3 section-upload">
-    <h5 class="card-header bg-light">Participants' Uploads</h5>
+    <h5 class="card-header bg-light">{% trans "Participants' Uploads" %}</h5>
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-warning mb-0" role="alert">
-        These are the videos that have been submitted by the participants.
+        {% trans "These are the videos that have been submitted by the participants." %}
       </div>
     </div>
     <ul class="list-group list-group-flush">
@@ -83,13 +84,13 @@
           <li class="list-group-item">
             <div class="d-flex">
               <div class="flex-shrink-1 pr-3">
-                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="Video thumbnail"></a>
+                <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
               </div>
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
                 <div class="video-user-info">
                   <em>By:</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}}) <br />
-                  <em>Submission date:</em> {{item.videofile.uploaded_at}}
+                  <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
                 </div>
                 <p>{{ item.videofile.description }}</p>
               </div>
@@ -98,7 +99,7 @@
         {% endfor %}
       {% else %}
         <li class="list-group-item">
-          <span>No participant has submitted any content.</span>
+          <span>{% trans "No participant has submitted any content." %}</span>
         </li>
       {% endif %}
     </ul>

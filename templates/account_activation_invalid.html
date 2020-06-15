@@ -1,12 +1,13 @@
 {% extends 'base_accounts.html' %}
 
 {% load static %}
+{% load i18n %}
 
-{% block title %}GEN - Activation invalid{% endblock title %}
+{% block title %}GEN - {% trans "Activation invalid" %}{% endblock title %}
 
 {% block content %}
   <div class="card-body bg-light text-dark">
-    <h3 class="card-title">Activation invalid</h3>
-    <p class="card-text">The confirmation link used is invalid, possibly because it has already been used or it has expired.</p>
+    <h3 class="card-title">{% trans "Activation invalid" %}</h3>
+    <p class="card-text">{% trans "The confirmation link used is invalid, possibly because it has already been used or it has expired." %}</p>
   </div>
 {% endblock content %}

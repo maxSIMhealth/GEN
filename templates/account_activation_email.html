@@ -1,4 +1,5 @@
 {% autoescape off %}
+
 Hi {{ user.first_name }} {{ user.last_name }} ({{ user.username }}),
 
 Please click on the link below to confirm your registration to GEN:
@@ -6,4 +7,15 @@ Please click on the link below to confirm your registration to GEN:
 http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 
 Thank you.
+
+--
+
+Bonjour {{ user.first_name }} {{ user.last_name }} ({{ user.username }}),
+
+Veuillez cliquer sur le lien ci-dessous pour confirmer votre inscription à GEN:
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Je vous remercie.
+
 {% endautoescape %}

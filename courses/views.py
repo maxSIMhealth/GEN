@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext_lazy as _
 
 from courses.support_methods import requirement_fulfilled
 from .models import Course, Section
@@ -54,7 +55,9 @@ def section_page(request, pk, section_pk):
         if not fulfilled:
             messages.error(
                 request,
-                "You have not fulfilled the requirements to access the requested section.",
+                _(
+                    "You have not fulfilled the requirements to access the requested section."
+                ),
             )
             return redirect("course", pk=course_object.pk)
 

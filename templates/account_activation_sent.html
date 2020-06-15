@@ -1,12 +1,13 @@
 {% extends 'base_accounts.html' %}
 
 {% load static %}
+{% load i18n %}
 
-{% block title %}GEN - Activation email sent{% endblock title %}
+{% block title %}GEN - {% trans "Activation email sent" %}{% endblock title %}
 
 {% block content %}
   <div class="card-body bg-light text-dark">
-    <h3 class="card-title">Activation email sent</h3>
-    <p class="card-text">An activation email was sent with a confirmation link. Please confirm your email address to complete the registration.</p>
+    <h3 class="card-title">{% trans "Activation email sent" %}</h3>
+    <p class="card-text">{% trans "An activation email was sent with a confirmation link. Please confirm your email address to complete the registration." %}</p>
   </div>
 {% endblock content %}

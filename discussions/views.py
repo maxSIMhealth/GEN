@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 # from django.core.files import File
 # from django.core.files.storage import FileSystemStorage
@@ -85,11 +86,11 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
             )
         else:
             messages.error(
-                request, "You do not fulfill the requirements to access this page."
+                request, _("You do not fulfill the requirements to access this page.")
             )
             return redirect("section", pk=course.pk, section_pk=section.pk)
     else:
-        messages.error(request, "Discussion board does not exist.")
+        messages.error(request, _("Discussion board does not exist."))
         return redirect("section", pk=course.pk, section_pk=section.pk)
 
 
@@ -101,8 +102,8 @@ def new_discussion(request, pk, section_pk):
 
     if request.method == "POST":
         form = NewDiscussionForm(course, request.POST)
-        if "Cancel" in request.POST["submit"]:
-            pass
+        # if "Cancel" in request.POST["submit"]:
+        #     pass
         if "submit" in request.POST and form.is_valid():
             discussion = Discussion.objects.create(
                 course=course,
@@ -115,7 +116,7 @@ def new_discussion(request, pk, section_pk):
             )
             discussion.save()
 
-        messages.success(request, "Discussion board created.")
+        messages.success(request, _("Discussion board created."))
         return redirect("section", pk=course.pk, section_pk=section.pk)
         # media_form = NewMediaForm(request.POST)
         # if form.is_valid() and media_form.is_valid():

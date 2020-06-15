@@ -8,31 +8,48 @@ from model_utils.models import TimeStampedModel
 
 class Course(models.Model):
     name = models.CharField(
-        max_length=100, unique=True, help_text=_("Course name (max 100 characters)")
+        _("name"),
+        max_length=100,
+        unique=True,
+        help_text=_("Course name (max 100 characters)"),
     )
     code = models.CharField(
-        "course code", max_length=10, help_text=_("Course code (max 10 characters)")
+        _("course code"), max_length=10, help_text=_("Course code (max 10 characters)")
     )
     description = models.TextField(
-        max_length=800, help_text=_("Course description (max 800 characters)")
+        _("description"),
+        max_length=800,
+        help_text=_("Course description (max 800 characters)"),
     )
-    author = models.ForeignKey(User, on_delete=models.PROTECT, related_name="course")
-    start_date = models.DateTimeField("start date", blank=True, null=True)
-    end_date = models.DateTimeField("end date", blank=True, null=True)
-    students = models.ManyToManyField(User, related_name="member")
-    instructors = models.ManyToManyField(User, related_name="instructor")
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="course", verbose_name=_("author")
+    )
+    start_date = models.DateTimeField(_("start date"), blank=True, null=True)
+    end_date = models.DateTimeField(_("end date"), blank=True, null=True)
+    students = models.ManyToManyField(
+        User, related_name="member", verbose_name=_("students")
+    )
+    instructors = models.ManyToManyField(
+        User, related_name="instructor", verbose_name=_("instructors")
+    )
     enable_gamification = models.BooleanField(
-        "gamification",
+        _("gamification"),
         default=True,
         help_text=_("Enables voting in discussions and comments"),
     )
     show_scoreboard = models.BooleanField(
-        default=True, help_text=_("Requires gamification")
+        _("show scoreboard"), default=True, help_text=_("Requires gamification")
     )
     show_leaderboard = models.BooleanField(
-        default=True, help_text=_("Requires gamification")
+        _("show leaderboard"), default=True, help_text=_("Requires gamification")
     )
-    show_progress_tracker = models.BooleanField(default=True)
+    show_progress_tracker = models.BooleanField(
+        _("show progress tracker"), default=True
+    )
+
+    class Meta:
+        verbose_name = _("course")
+        verbose_name_plural = _("courses")
 
     def __str__(self):
         output = "ID {0} - {1}".format(self.pk, self.name)
@@ -44,8 +61,8 @@ class Course(models.Model):
             if self.end_date <= self.start_date:
                 raise ValidationError(
                     _(
-                        "Course end date can not be equal or \
-                                earlier than the start date."
+                        "Course end date cannot be equal or \
+                        earlier than the start date."
                     )
                 )
         # check gamification components
@@ -57,35 +74,46 @@ class Course(models.Model):
 
 class Section(models.Model):
     SECTION_TYPES = [
-        ("D", "Discussion boards"),
-        ("V", "Videos"),
-        ("Q", "Quizzes"),
-        ("U", "Uploads"),
+        ("D", _("Discussion boards")),
+        ("V", _("Videos")),
+        ("Q", _("Quizzes")),
+        ("U", _("Uploads")),
     ]
 
     related_name = "sections"
     name = models.CharField(
-        max_length=15, unique=False, help_text=_("Section name (max 15 characters)")
+        _("name"),
+        max_length=15,
+        unique=False,
+        help_text=_("Section name (max 15 characters)"),
     )
     description = models.TextField(
+        _("description"),
         max_length=800,
         blank=True,
         null=True,
         help_text=_("Course description (max 800 characters)"),
     )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name=related_name
+        Course,
+        on_delete=models.CASCADE,
+        related_name=related_name,
+        verbose_name=_("course"),
     )
-    section_type = models.CharField(max_length=1, choices=SECTION_TYPES)
+    section_type = models.CharField(
+        _("section type"), max_length=1, choices=SECTION_TYPES
+    )
     requirement = models.ForeignKey(
         "self",
         on_delete=models.PROTECT,
         blank=True,
         null=True,
         related_name=related_name,
+        verbose_name=_("requirement"),
     )
-    published = models.BooleanField(default=False)
+    published = models.BooleanField(_("published"), default=False)
     create_discussions = models.BooleanField(
+        _("create discussion"),
         default=False,
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based on participant's video submissions."
@@ -100,12 +128,16 @@ class Section(models.Model):
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the discussion boards."
         ),
+        verbose_name=_("section output"),
     )
     show_thumbnails = models.BooleanField(
+        _("show thumbnails"),
         default=True,
         help_text=_("* FOR VIDEO SECTION ONLY *: enables displaying video thumbnails."),
     )
-    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
 
     def clean(self):
         if (
@@ -131,34 +163,45 @@ class Section(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "sections"
+        verbose_name = _("section")
+        verbose_name_plural = _("sections")
         ordering = ["custom_order"]
 
 
 class SectionItem(TimeStampedModel):
-    name = models.CharField(max_length=80, unique=False)
+    name = models.CharField(_("name"), max_length=80, unique=False)
     related_name = "section_items"
     description = models.TextField(
-        max_length=400, help_text=_("Brief description (max 400 characters)")
+        _("description"),
+        max_length=400,
+        help_text=_("Brief description (max 400 characters)"),
     )
     author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name=related_name
+        User,
+        on_delete=models.PROTECT,
+        related_name=related_name,
+        verbose_name=_("author"),
     )
-    start_date = models.DateTimeField("start date", blank=True, null=True)
-    end_date = models.DateTimeField("end date", blank=True, null=True)
+    start_date = models.DateTimeField(_("start date"), blank=True, null=True)
+    end_date = models.DateTimeField(_("end date"), blank=True, null=True)
     section = models.ForeignKey(
         Section,
         on_delete=models.PROTECT,
         blank=True,
         null=True,
         related_name=related_name,
+        verbose_name=_("section"),
     )
-    published = models.BooleanField(default=False)
-    custom_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    published = models.BooleanField(_("published"), default=False)
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
 
     objects = InheritanceManager()
 
     class Meta:
+        verbose_name = _("section item")
+        verbose_name_plural = _("section items")
         ordering = ["custom_order"]
 
     def __str__(self):

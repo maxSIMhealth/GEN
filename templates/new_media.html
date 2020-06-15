@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Add new Media{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Add new Media" %}{% endblock %}
 
 {% block content %}
   <form method="post" novalidate>
@@ -8,6 +10,6 @@
 
     {% include 'includes/form.html' %}
 
-    <button type="submit" class="btn btn-success">Post</button>
+    <button type="submit" class="btn btn-success">{% trans "Post" %}</button>
   </form>
 {% endblock content %}

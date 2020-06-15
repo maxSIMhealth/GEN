@@ -1,40 +1,42 @@
 {% extends 'base.html' %}
-{% load gravatar %}
 
-{% block title %}My account{% endblock %}
+{% load gravatar %}
+{% load i18n %}
+
+{% block title %}{% trans "My account" %}{% endblock %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-  <li class="breadcrumb-item active">My account</li>
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+  <li class="breadcrumb-item active">{% trans "My account" %}</li>
 {% endblock %}
 
 {% block content %}
   <div class="card mb-3">
-    <h5 class="card-header bg-dark text-white">Update account info</h5>
+    <h5 class="card-header bg-dark text-white">{% trans "Update account info" %}</h5>
     <div class="card-body">
       <div class="row justify-content-md-center">
         <div class="col-sm-10">
           <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">{% trans "Username" %}:</label>
             <input type="text" class="form-control" name="username" id="username" value="{{user.username}}" disabled></input>
           </div>
           <div class="form-group">
-            <label for="username">Institution:</label>
+            <label for="username">{% trans "Institution" %}:</label>
             <input type="text" class="form-control" name="username" id="username" value="{{user.profile.institution}}" disabled></input>
           </div>
           <div class="form-group">
-            <label for="username">Email address:</label>
+            <label for="username">{% trans "Email address" %}:</label>
             <input type="text" class="form-control" name="username" id="username" value="{{user.email}}" disabled></input>
           </div>
           <form method="post" novalidate>
             {% csrf_token %}
             {% include 'includes/form.html' %}
-            <button type="submit" class="btn btn-success">Save changes</button>
+            <button type="submit" class="btn btn-success">{% trans "Save changes" %}</button>
           </form>
         </div>
         <div class="col-sm-2 pl-0">
           <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
-          <span class="small"><i>This avatar is automatically generated</i></span>
+          <span class="small"><i>{% trans "This avatar is automatically generated." %}</i></span>
         </div>
       </div>
     </div>

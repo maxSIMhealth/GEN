@@ -1,5 +1,6 @@
 {% load static %}
 {% load gravatar %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html>
@@ -19,16 +20,16 @@
     {% block body %}
       <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
         <div class="container">
-          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="Returns to GEN home page">
-            <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top" alt="GEN logo">
+          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="{% trans 'Return to GEN home page' %}">
+            <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top" alt="{% trans 'GEN logo' %}">
           </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mainMenu">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Help</a>
+                <a class="nav-link" href="#">{% trans "Help" %}</a>
               </li>
               <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,28 +37,28 @@
                   {{ user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                  <a class="dropdown-item" href="{% url 'my_account' %}">My account</a>
-                  <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+                  <a class="dropdown-item" href="{% url 'my_account' %}">{% trans "My account" %}</a>
+                  <a class="dropdown-item" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      
+
       <div class="bg-white">
         <div class="container pt-3 pb-3">
         {% block container %}
-        
+
           {% comment %}
           <ol class="breadcrumb my-3">
             {% block breadcrumb %}
             {% endblock breadcrumb %}
           </ol>
           {% endcomment %}
-          
+
           {% block content %}
           {% endblock content %}
         {% endblock container %}
@@ -69,9 +70,9 @@
     {% block footer %}
     <div class="footer bg-light pt-1 pb-2">
       <div class="text-center text-muted">
-        <a href="http://www.ontariotechu.ca"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="Ontario Tech University colour logo in a white background" width="200px"></a>
-        <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="maxSIMhealth logo" width="90px"></a>
-        <p class="mb-0">Developed at <a href="http://www.ontariotechu.ca"><u>Ontario Tech University</u></a> - <a href="http://www.maxsimhealth.com"><u>maxSIMhealth</u></a></p>
+        <a href="http://www.ontariotechu.ca"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a white background' %}" width="200px"></a>
+        <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
+        <p class="mb-0">{% trans 'Developed at' %} <a href="http://www.ontariotechu.ca"><u>Ontario Tech University</u></a> - <a href="http://www.maxsimhealth.com"><u>maxSIMhealth</u></a></p>
         <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
       </div>
     </div>

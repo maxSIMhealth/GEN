@@ -1,6 +1,7 @@
 {% extends 'base_course_section.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load humanize %}
 {% load check_attribute %}
 {% load likert_range %}
@@ -10,7 +11,7 @@
 {% endblock stylesheet %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
   <li class="breadcrumb-item active">{{quiz.name}}</li>
@@ -24,7 +25,7 @@
   <div class="card-deck">
     {% if quiz.video %}
     <div class="card bg-secondary text-white video">
-      <div class="card-header bg-dark">Video</div>
+      <div class="card-header bg-dark">{% trans "Video" %}</div>
       <div class="card-body">
         <table class="table table-hover">
           <tbody>
@@ -32,7 +33,7 @@
               <div class="embed-responsive embed-responsive-16by9">
                 <video controls>
                   <source src="{{ quiz.video.file.url }}" type="video/mp4">
-                  Sorry, your browse does not support embedded videos.
+                  {% trans "Sorry, your browser does not support embedded videos." %}
                 </video>
               </div>
             </tr>
@@ -43,7 +44,7 @@
     {% endif %}
 
     <div class="card quiz">
-      <div class="card-header bg-light">Questions</div>
+      <div class="card-header bg-light">{% trans "Questions" %}</div>
       <div class="card-body">
 
 	    <p>{{ quiz.description }}</p>
@@ -89,7 +90,7 @@
 
                 {% if answer.legend %}
                 <div class="likert-legend card-footer text-muted">
-                  <em>Scale legend:</em>
+                  <em>{% trans "Scale legend" %}:</em>
                   {{answer.legend|linebreaks}}
                 </div>
                 {% endif %}
@@ -105,8 +106,8 @@
             {% endif %}
 
           {% endfor %}
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">Cancel</a>
+          <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+          <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">{% trans "Cancel" %}</a>
         </form>
       </div>
     </div>

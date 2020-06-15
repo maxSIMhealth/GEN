@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
@@ -13,7 +14,7 @@
         <div class="card bg-dark text-white">
           <h1 class="card-header bg-white">
             <div class="text-center">
-              <img src="{% static 'img/GEN-logo.png' %}" alt="GEN logo" width="60%">
+              <img src="{% static 'img/GEN-logo.png' %}" alt='{% trans "GEN logo"}' width="60%">
             </div>
           </h1>
           {% block content %}
@@ -28,7 +29,7 @@
 <div class="footer mb-2">
   <div class="text-center text-light">
     <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
-    <p>Developed at <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
+    <p>{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
   </div>
 </div>
 {% endblock footer %}

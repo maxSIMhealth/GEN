@@ -1,15 +1,16 @@
 {% extends 'base_accounts.html' %}
 
 {% load static %}
+{% load i18n %}
 
-{% block title %}GEN - Video player{% endblock title %}
+{% block title %}GEN - {% trans "Video player" %}{% endblock title %}
 
 {% block body %}
   <div class="card-body">
     <p class="card-text embed-responsive embed-responsive-16by9">
         <video controls poster="{{ video.thumbnail.url }}">
             <source src="{{ video.file.url }}" type="video/mp4">
-            Sorry, your browser doesn't support embedded videos.
+            {% trans "Sorry, your browser doesn't support embedded videos." %}
         </video>
     </p>
   </div>
