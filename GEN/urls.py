@@ -15,17 +15,18 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 
+
 from accounts import views as account_views
-from courses import views as course_views
 from core import views as core_views
+from courses import views as course_views
 from dashboard import views as dashboard_views
 from discussions import views as discussion_views
 from quiz import views as quiz_views
@@ -145,7 +146,7 @@ urlpatterns = [
         name="comment_clearvote",
     ),
     # admin
-    path("admin/", admin.site.urls),
+    # path("admin/", admin.site.urls),
     # tests
     # path('oauth/', include('social_django.urls', namespace='social')),
     # FIXME: finish implementing social login
@@ -158,9 +159,10 @@ urlpatterns = [
     # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
 ]
 
-urlpatterns += i18n_patterns(
-    path('admin/', admin.site.urls),
-)
+urlpatterns += i18n_patterns(path("admin/", admin.site.urls),)
+
+if "rosetta" in settings.INSTALLED_APPS:
+    urlpatterns += [url(r"^rosetta/", include("rosetta.urls"))]
 
 if settings.DEBUG:
     # access to media files during development
@@ -173,4 +175,3 @@ if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
-

@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load show_sections %}
+{% load i18n %}
 
 {% block title %}GEN - {{ course.code }} - {{course.name}} {% endblock title %}
 
@@ -23,7 +24,7 @@
     <div class="col-lg-2 order-lg-1">
       <div class="card mb-3">
         <nav class="card-header navbar navbar-expand-lg navbar-light">
-          <h5 href="#" class="mb-0">Sections</h5>
+          <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
           <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle sections list">
             <span class="navbar-toggler-icon"></span>
           </a>
@@ -31,7 +32,7 @@
         <div class="collapse d-lg-block navbar-collapse" id="sidebar">
           <ul class="list-group-flush navbar-nav">
             {% block content_tabs %}
-              <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">Info</a>
+              <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
               {% show_sections course.sections %}
             {% endblock content_tabs %}
           </ul>

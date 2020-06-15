@@ -43,11 +43,12 @@
 - Run the project: `python manage.py runserver`
 
 ## Locale (i18n) messages
+- Install GNU gettext: `sudo apt install gettext`
 - This project is currenctly configured to support *en* and *fr*
 - To regenerate locale messages for French (fr) run: `python manage.py makemessages -l 'fr' --ignore venv --ignore static`
-  - The *-i* flag is necessary to make it ignore the venv (virtualenv) directory
-- And to compile it, go to the locales directory and run: `python ../manage.py compilemessages`
-  - You **SHOULD NOT** run `compilemessages` from the project main directory, because it will try to compile the translation messages for all of the packages at *venv* directory.
+  - The *--ignore* flag is necessary to make it ignore the venv (virtualenv) directory
+- Now compile the messages: `python manage.py compilemessages`
+- The `.po` files will be at `locale/*language_code*/LC_MESSAGES`. For example, `locale/fr/LC_MESSAGES/django.po`.
 
 ## Production
 For a detailed step-by-step instructions on how deploy Django, check this guide: [How To Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04)

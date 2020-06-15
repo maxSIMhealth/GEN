@@ -1,6 +1,7 @@
 {% extends 'base_course_section.html' %}
 
 {% load static %}
+{% load i18n %}
 {% load humanize %}
 {% load countscore %}
 {% load show_sections %}
@@ -10,12 +11,12 @@
 {% endblock stylesheet %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
   <li class="breadcrumb-item active">{{ course.code }}</li>
 {% endblock breadcrumb %}
 
 {% block content_tabs %}
-  <a class="list-group-item list-group-item-action active" href="#">Info</a>
+  <a class="list-group-item list-group-item-action active" href="#">{% trans "Info" %}</a>
   {% show_sections sections %}
 {% endblock content_tabs %}
 
@@ -25,71 +26,71 @@
 
 {% block content %}
       <div class="card mb-3">
-        <h5 class="card-header bg-light">Course details</h5>
+        <h5 class="card-header bg-light">{% trans "Course details" %}</h5>
           <table class="table course-info mb-0">
             <tbody>
               <tr>
-                <th scope="row" class="th-small pl-4">Code</th>
+                <th scope="row" class="th-small pl-4">{% trans "Code" %}</th>
                 <td class="pr-4">{{course.code}}</td>
               </tr>
-              
+
               {% if course.start_date %}
               <tr>
-                <th scope="row" class="th-small pl-4">Start</th>
+                <th scope="row" class="th-small pl-4">{% trans "Start" %}</th>
                 <td class="pr-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
               </tr>
               {% endif %}
-              
+
               {% if course.end_date %}
               <tr>
-                <th scope="row" class="th-small pl-4">End</th>
+                <th scope="row" class="th-small pl-4">{% trans "End" %}</th>
                 <td class="pr-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
               </tr>
               {% endif %}
-              
+
               <tr>
-                <th scope="row" class="th-small pl-4">Description</th>
-                <td class="pr-4">{{course.description }}</td>
+                <th scope="row" class="th-small pl-4">{% trans "Description" %}</th>
+                <td class="pr-4">{{course.description}}</td>
               </tr>
             </tbody>
           </table>
-        
+
       </div>
-    
+
       {% if course.show_scoreboard %}
         <div class="card-deck">
           <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> Scoreboard</h5>
+            <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Discussions: {% countscore_course user.id course.pk "discussion" %}</li>
-                <li class="list-group-item">Comments: {% countscore_course user.id course.pk "comment" %}</li>
-                <li class="list-group-item">Quizzes: {% countscore_course user.id course.pk "quiz" %}</li>
+                <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
+                <li class="list-group-item">{% trans "Comments" %}: {% countscore_course user.id course.pk "comment" %}</li>
+                <li class="list-group-item">{% trans "Quizzes" %}: {% countscore_course user.id course.pk "quiz" %}</li>
               </ul>
             </div>
           </div>
         {% endif %}
-    
+
         {% if course.show_leaderboard %}
           <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> Leaderboard</h5>
+            <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Discussion likes: #{% rank_get user.id course.pk "discussion" %}</li>
-                <li class="list-group-item">Comments: #{% rank_get user.id course.pk "comment" %}</li>
-                <li class="list-group-item">Quizzes: #{% rank_get user.id course.pk "quiz" %}</li>
+                <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
+                <li class="list-group-item">{% trans "Comments" %}: #{% rank_get user.id course.pk "comment" %}</li>
+                <li class="list-group-item">{% trans "Quizzes" %}: #{% rank_get user.id course.pk "quiz" %}</li>
               </ul>
             </div>
           </div>
         {% endif %}
-    
+
         {% if course.show_progress_tracker %}
           <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  Course Progress</h5>
+            <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
             <div class="card-body p-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                  Discussions participation:
+                  {% trans "Discussions participation" %}:
                   {{discussions_progress.current}} / {{discussions_progress.max}}
                   {% if discussions_progress.max > 0 %}
                     {% widthratio discussions_progress.current discussions_progress.max 100 as discussions_progress_percent %}
@@ -97,33 +98,33 @@
                       <div class="progress-bar {% if discussions_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{discussions_progress_percent}}%" aria-valuenow="{{discussions_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% else %}
-                    <div class="progress" data-toggle="tooltip" data-placement="top" title="This course has no discussions">
+                    <div class="progress" data-toggle="tooltip" data-placement="top" title='{% trans "This course has no discussions" %}'>
                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% endif %}
                 </li>
                 <li class="list-group-item">
-                  Quizzes answered:
+                  {% trans "Quizzes answered" %}:
                   {{quizzes_progress.current}} / {{quizzes_progress.max}}
-    
+
                   {% if quizzes_progress.max > 0 %}
                     {% widthratio quizzes_progress.current quizzes_progress.max 100 as quizzes_progress_percent %}
                     <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{quizzes_progress_percent}}%">
                       <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% else %}
-                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="This course has no quizzes">
+                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title='{% trans "This course has no quizzes" %}'>
                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   {% endif %}
                 </li>
               </ul>
             </div>
-            
+
           </div>
         </div>
       {% endif %}
 
-    
-  
+
+
 {% endblock content %}
