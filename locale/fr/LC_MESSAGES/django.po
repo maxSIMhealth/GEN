@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 18:04+0000\n"
+"POT-Creation-Date: 2020-06-15 20:15+0000\n"
 "PO-Revision-Date: 2020-06-15 18:04+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.4\n"
 
-#: GEN/settings.py:84
+#: GEN/settings.py:85
 msgid "English"
 msgstr "Anglais"
 
-#: GEN/settings.py:85
+#: GEN/settings.py:86
 msgid "French"
 msgstr "Français"
 
@@ -148,8 +148,8 @@ msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:51 courses/models.py:101 discussions/models.py:21
-#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538
-#: videos/models.py:81 videos/models.py:96
+#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538 videos/models.py:81
+#: videos/models.py:96
 msgid "course"
 msgstr "le cours"
 
@@ -433,8 +433,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
-" de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
+"de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:229 quiz/models.py:300 quiz/models.py:377 quiz/models.py:423
 msgid "question"
@@ -586,7 +586,6 @@ msgstr "Accès refusé."
 
 #: templates/account_activation_invalid.html:6
 #: templates/account_activation_invalid.html:10
-#| msgid "Activation email sent"
 msgid "Activation invalid"
 msgstr "Activation invalide"
 
@@ -769,8 +768,7 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
-"attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -888,8 +886,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL "
-"NOT</strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL NOT</"
+"strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -969,11 +967,13 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>%(item.discussion.requirement.name)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>"
+"%(item.discussion.requirement.name)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(item.discussion.requirement.name)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
+"%(item.discussion.requirement.name)s</u>. </em>"
 
 #: templates/section_discussion.html:91
 msgid "No discussion board available."
@@ -1134,11 +1134,13 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+"                  Connected as %(google_login.uid)s - "
+"%(google_login.user.first_name)s %(google_login.user.last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s"
+"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s "
+"%(google_login.user.last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1168,8 +1170,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
-" Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
+"Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
