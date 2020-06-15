@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from model_utils.models import TimeStampedModel
 from vote.models import VoteModel
 
 from courses.models import Course, SectionItem
@@ -48,7 +49,7 @@ class Discussion(VoteModel, SectionItem):
         return Discussion.objects.filter(comments__discussion=self).count()
 
 
-class Comment(VoteModel, models.Model):
+class Comment(VoteModel, TimeStampedModel):
     message = models.TextField(_("message"), max_length=400)
     discussion = models.ForeignKey(
         Discussion,
@@ -56,7 +57,6 @@ class Comment(VoteModel, models.Model):
         related_name="comments",
         verbose_name=_("discussion"),
     )
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -67,6 +67,7 @@ class Comment(VoteModel, models.Model):
     class Meta:
         verbose_name = _("comment")
         verbose_name_plural = _("comments")
+        ordering = ["created"]
 
     def __str__(self):
         return self.message
