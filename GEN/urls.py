@@ -161,10 +161,11 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(path("admin/", admin.site.urls),)
 
-if "rosetta" in settings.INSTALLED_APPS:
-    urlpatterns += [url(r"^rosetta/", include("rosetta.urls"))]
-
 if settings.DEBUG:
+    # enable rosetta
+    if "rosetta" in settings.INSTALLED_APPS:
+        urlpatterns += [url(r"^rosetta/", include("rosetta.urls"))]
+
     # access to media files during development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
