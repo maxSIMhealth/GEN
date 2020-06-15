@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 16:51+0000\n"
-"PO-Revision-Date: 2020-06-15 16:51+0000\n"
+"POT-Creation-Date: 2020-06-15 16:53+0000\n"
+"PO-Revision-Date: 2020-06-15 16:54+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -26,6 +26,32 @@ msgstr "Anglais"
 #: GEN/settings.py:85
 msgid "French"
 msgstr "Français"
+
+#: accounts/models.py:9
+msgid "user"
+msgstr "l'utilisateur"
+
+#: accounts/models.py:11
+#| msgid "section"
+msgid "location"
+msgstr "emplacement"
+
+#: accounts/models.py:12
+#| msgid "Institution"
+msgid "institution"
+msgstr "institution"
+
+#: accounts/models.py:14
+msgid "email confirmed"
+msgstr "email confirmé"
+
+#: accounts/models.py:17
+msgid "profile"
+msgstr "profil"
+
+#: accounts/models.py:18
+msgid "profiles"
+msgstr "profils"
 
 #: courses/models.py:11 courses/models.py:85 courses/models.py:172
 msgid "name"
@@ -241,12 +267,10 @@ msgid "Likert"
 msgstr "Likert"
 
 #: quiz/models.py:13
-#| msgid "open ended attempt"
 msgid "Open ended"
 msgstr "Ouvert"
 
 #: quiz/models.py:14
-#| msgid "multiple choice answer"
 msgid "Multiple choice"
 msgstr "Choix multiple"
 
