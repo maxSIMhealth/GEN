@@ -6,6 +6,7 @@ import uuid
 
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 import ffmpeg
 from PIL import Image
 
@@ -74,28 +75,45 @@ class VideoFileQuerySet(models.QuerySet):
 
 class Playlist(SectionItem):
     course = models.ForeignKey(
-        Course, on_delete=models.PROTECT, related_name="videolists"
+        Course,
+        on_delete=models.PROTECT,
+        related_name="videolists",
+        verbose_name=_("course"),
     )
+
+    class Meta:
+        verbose_name = _("playlist")
+        verbose_name_plural = _("playlists")
 
 
 class VideoFile(SectionItem):
     objects = VideoFileQuerySet.as_manager()
     related_name = "videos"
     course = models.ForeignKey(
-        Course, on_delete=models.PROTECT, related_name=related_name
+        Course,
+        on_delete=models.PROTECT,
+        related_name=related_name,
+        verbose_name=_("course"),
     )
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    file = models.FileField(upload_to=user_directory_path)
+    uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
+    file = models.FileField(_("file"), upload_to=user_directory_path)
     internal_name = models.CharField(
-        "video internal name (not visible to users)",
+        _("internal name"),
         max_length=255,
         null=True,
         blank=True,
+        help_text=_("video internal name (not visible to users)"),
     )
-    thumbnail = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    thumbnail = models.ImageField(
+        _("thumbnail"), upload_to=user_directory_path, blank=True, null=True
+    )
     # discussion = models.ForeignKey(
     #     Discussion, on_delete=models.CASCADE, related_name='video')
     validators = [FileExtensionValidator(allowed_extensions=("mp4"))]
+
+    class Meta:
+        verbose_name = _("video file")
+        verbose_name_plural = _("video files")
 
     def generate_video_thumbnail(self):
         """Generates video thumbnail (square proportion)"""

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-15 16:59+0000\n"
-"PO-Revision-Date: 2020-06-15 17:00+0000\n"
+"POT-Creation-Date: 2020-06-15 17:05+0000\n"
+"PO-Revision-Date: 2020-06-15 17:06+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -121,6 +121,7 @@ msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:51 courses/models.py:101 discussions/models.py:21
 #: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538
+#: videos/models.py:81 videos/models.py:96
 msgid "course"
 msgstr "le cours"
 
@@ -257,7 +258,6 @@ msgid "section items"
 msgstr "éléments de section"
 
 #: discussions/models.py:23
-#| msgid "start date"
 msgid "last updated"
 msgstr "dernière mise à jour"
 
@@ -266,12 +266,10 @@ msgid "video"
 msgstr "vidéo"
 
 #: discussions/models.py:44 discussions/models.py:57
-#| msgid "Discussions"
 msgid "discussion"
 msgstr "discussion"
 
 #: discussions/models.py:45
-#| msgid "Discussions"
 msgid "discussions"
 msgstr "discussions"
 
@@ -284,12 +282,10 @@ msgid "created at"
 msgstr "créé à"
 
 #: discussions/models.py:68
-#| msgid "Comments"
 msgid "comment"
 msgstr "commentaire"
 
 #: discussions/models.py:69
-#| msgid "Comments"
 msgid "comments"
 msgstr "commentaires"
 
@@ -1096,6 +1092,44 @@ msgstr "Lecteur vidéo"
 #: templates/video_player.html:13
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
+
+#: videos/models.py:85
+msgid "playlist"
+msgstr "playlist"
+
+#: videos/models.py:86
+msgid "playlists"
+msgstr "playlists"
+
+#: videos/models.py:98
+msgid "uploaded at"
+msgstr "téléchargé sur"
+
+#: videos/models.py:99
+msgid "file"
+msgstr "fichier"
+
+#: videos/models.py:101
+msgid "internal name"
+msgstr "nom interne"
+
+#: videos/models.py:105
+msgid "video internal name (not visible to users)"
+msgstr "nom interne de la vidéo (non visible pour les utilisateurs)"
+
+#: videos/models.py:108
+msgid "thumbnail"
+msgstr "la vignette"
+
+#: videos/models.py:115
+#| msgid "video"
+msgid "video file"
+msgstr "fichier vidéo"
+
+#: videos/models.py:116
+#| msgid "profiles"
+msgid "video files"
+msgstr "fichiers vidéo"
 
 #: videos/views.py:32
 msgid "This section does not support uploads."
