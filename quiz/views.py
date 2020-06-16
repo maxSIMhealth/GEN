@@ -1,14 +1,15 @@
-import io
 import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.db.models import Max
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
-import xlsxwriter
+from GEN.decorators import course_enrollment_check
+from GEN.support_methods import enrollment_test
+
+# import xlsxwriter
 
 from courses.models import Course, Section
 from .models import (
@@ -27,6 +28,7 @@ logger = logging.getLogger(__name__)
 
 # FIXME: split quiz_page into multiple methods
 @login_required
+@course_enrollment_check(enrollment_test)
 def quiz_page(request, pk, section_pk, quiz_pk):
     """
     Renders quiz page and handles submission requests
@@ -51,7 +53,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 pass
 
         # check if quiz has a requirement and if it should be enabled
-        (quiz_enabled, _) = quiz_enable_check(request.user, quiz)
+        (quiz_enabled, temp) = quiz_enable_check(request.user, quiz)
 
         if quiz_enabled:
 
@@ -76,7 +78,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 submitted_data = dict()
                 for item in items:
                     try:
-                        _, question_id = item.split("_")
+                        temp, question_id = item.split("_")
                         submitted_data[question_id] = request.POST.getlist(item)
 
                     except IndexError:
@@ -244,6 +246,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def quiz_result(request, pk, section_pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)

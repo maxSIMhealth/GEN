@@ -2,21 +2,30 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
+from GEN.decorators import course_enrollment_check
+from GEN.support_methods import enrollment_test
 
 from courses.support_methods import requirement_fulfilled
 from .models import Course, Section
 from .progress import progress
 
 
+not_enrolled_error = _("You are not enrolled in the requested course.")
+
+
 @login_required
+@course_enrollment_check(enrollment_test)
 def course(request, pk):
     course_object = get_object_or_404(Course, pk=pk)
     sections = course_object.sections.filter(published=True)
     discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
+    # user = request.user
     # TODO: improve this: I've hard-corded this section name because
     # info isn't a dynamic section item
     section_name = "Info"
+
+    # check_user_enrollment(request, user, course_object)
 
     # progress status
     discussions_progress = progress(request, discussions)
@@ -36,6 +45,7 @@ def course(request, pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def section_page(request, pk, section_pk):
     course_object = get_object_or_404(Course, pk=pk)
     section_object = get_object_or_404(Section, pk=section_pk)
@@ -44,6 +54,8 @@ def section_page(request, pk, section_pk):
     user = request.user
     requirement = section_object.requirement
     allow_submission = False
+
+    # check_user_enrollment(request, user, course_object)
 
     # check if user is a course instructor
     is_instructor = bool(course_object in request.user.instructor.all())

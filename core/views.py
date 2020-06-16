@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
+
 # FIXME: this is a DEBUG ONLY function
 @login_required
 def reset(request):

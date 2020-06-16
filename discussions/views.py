@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from GEN.decorators import course_enrollment_check
+from GEN.support_methods import enrollment_test
 
 # from django.core.files import File
 # from django.core.files.storage import FileSystemStorage
@@ -40,6 +42,7 @@ from .support_methods import discussion_enable_check
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def discussion_comments(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -95,6 +98,7 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def new_discussion(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -148,6 +152,7 @@ def new_discussion(request, pk, section_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def upvote_discussion(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -166,6 +171,7 @@ def upvote_discussion(request, pk, section_pk, discussion_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def clearvote_discussion(request, pk, section_pk, discussion_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -184,6 +190,7 @@ def clearvote_discussion(request, pk, section_pk, discussion_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def upvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.up(request.user.id)
@@ -194,6 +201,7 @@ def upvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def clearvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.delete(request.user.id)

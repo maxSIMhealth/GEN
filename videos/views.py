@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils.translation import ugettext as _
+from GEN.decorators import course_enrollment_check
+from GEN.support_methods import enrollment_test
 
 from courses.models import Course, Section, User
 from discussions.models import Discussion
@@ -11,6 +13,7 @@ from .models import VideoFile
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def upload_video(request, pk, section_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -72,6 +75,7 @@ def upload_video(request, pk, section_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def publish_video(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -118,6 +122,7 @@ def publish_video(request, pk, section_pk, video_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def unpublish_video(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -157,6 +162,7 @@ def unpublish_video(request, pk, section_pk, video_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def delete_video(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
@@ -192,11 +198,14 @@ def delete_video(request, pk, section_pk, video_pk):
 
 
 @login_required
+@course_enrollment_check(enrollment_test)
 def video_player(request, pk, section_pk, video_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=video_pk)
 
+    # FIXME: if video is on the upload section, only allow the author and
+    # the editors to have access to it
     if video.published:
         return render(
             request,
