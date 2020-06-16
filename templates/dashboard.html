@@ -18,6 +18,10 @@
     </div>
   </div>
 
+  {% if messages %}
+    {% include 'partials/messages.html' %}
+  {% endif %}
+
   <div class="card">
     <h5 class="card-header bg-light">
       <div class="row">

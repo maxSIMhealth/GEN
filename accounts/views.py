@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login  # , update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -12,7 +13,6 @@ from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 from social_django.models import UserSocialAuth
 
-# from django.contrib import messages
 # from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 
 from .forms import SignUpForm
@@ -52,6 +52,11 @@ def signup(request):
             user.email_user(subject, message, from_email=from_email)
 
             return redirect("account_activation_sent")
+    elif request.user.is_authenticated:
+        messages.warning(
+            request, _("You already have an account."),
+        )
+        return redirect("home")
     else:
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
