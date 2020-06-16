@@ -3,7 +3,11 @@ from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
 from import_export.admin import ExportActionMixin
-from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
+from modeltranslation.admin import (
+    TranslationAdmin,
+    TranslationStackedInline,
+    TranslationTabularInline,
+)
 
 # from django.contrib.admin.widgets import FilteredSelectMultiple
 
@@ -46,7 +50,7 @@ class AlwaysChangedModelForm(ModelForm):
         return True
 
 
-class CheckerInline(admin.StackedInline):
+class CheckerInline(TranslationStackedInline):
     """
     Base class for checker inlines
     """
