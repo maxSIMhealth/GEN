@@ -42,7 +42,6 @@
         {% for item in section_items.all %}
           <li class="list-group-item">
             <div class="d-flex">
-              DEBUG: section.show_thumbnails {{section.show_thumbnails}}
               {% if section.show_thumbnails %}
                 <div class="flex-shrink-1 pr-3">
                   <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}"></a>
