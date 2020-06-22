@@ -29,7 +29,7 @@ class DiscussionAdmin(TranslationAdmin):
 class CommentsAdmin(admin.ModelAdmin):
     # fields = ('author', 'message')
     # filter_horizontal = ('author', )
-    list_display = ("author", "message", "discussion")
+    list_display = ("message", "author", "discussion")
     list_display_links = ("message",)
     list_filter = ("author", "discussion")
 

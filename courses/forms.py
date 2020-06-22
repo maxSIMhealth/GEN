@@ -8,6 +8,7 @@ class SectionInlineForm(forms.ModelForm):
         super(SectionInlineForm, self).__init__(*args, **kwargs)
         # check if the instance exists (if its a new object or not)
         if self.instance.pk is not None:
+            # lists only sections that are related to the course
             self.fields["requirement"].queryset = Section.objects.filter(
                 course=self.instance.course
             )

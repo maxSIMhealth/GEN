@@ -1,5 +1,6 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import Playlist, VideoFile
 
@@ -12,10 +13,18 @@ def update_thumbnails(modeladmin, request, queryset):
 update_thumbnails.short_description = "Update thumbnail of selected videos"
 
 
-class VideoFileAdmin(admin.ModelAdmin):
-    list_display = ("name", "internal_name", "description", "author", "course", "file", "thumbnail")
+class VideoFileAdmin(TranslationAdmin):
+    list_display = (
+        "name",
+        "internal_name",
+        "description",
+        "author",
+        "course",
+        "file",
+        "thumbnail",
+    )
     actions = [update_thumbnails]
-    list_filter = ("course", )
+    list_filter = ("course",)
     save_as = True
 
 
