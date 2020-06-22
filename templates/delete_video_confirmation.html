@@ -13,7 +13,7 @@
       <img src="{{ video.thumbnail.url }}" class="mr-3" alt="{% trans 'Video thumbnail' %}">
       <div class="media-body">
         <h5 class="mt-2">{{video}}</h5>
-        {{video.description}}
+        {{video.description|linebreaksbr}}
       </div>
     </div>
     <form method="post" novalidate>

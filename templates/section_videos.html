@@ -22,7 +22,7 @@
   {% endcomment %}
 
   {% if section.description %}
-  <p>{{section.description}}</p>
+  <p>{{section.description|linebreaksbr}}</p>
   {% endif %}
 
   <div class="card mb-3 section-video">
@@ -54,7 +54,7 @@
 
                 {% comment %}
                 <!-- FIXME: disabled temporarily -->
-                <p>{{ item.videofile.description }}</p>
+                <p>{{ item.videofile.description|linebreaksbr }}</p>
                 {% endcomment %}
 
                 {% if item.videofile.quizzes.all %}

@@ -13,7 +13,7 @@
 
 {% block content %}
   {% if section.description %}
-  <p>{{section.description}}</p>
+  <p>{{section.description|linebreaksbr}}</p>
   {% endif %}
 
   <div class="card mb-3">
@@ -67,7 +67,7 @@
                 {% if not course.blind_data %}
                   <p class="mb-0"><small class="text-muted">{% trans "By" %} {{ item.author }}</small></p>
                 {% endif %}
-                <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
+                <p class="mb-0"><small class="text-muted">{{ item.description|linebreaksbr }}</small></p>
                 <p class="mb-0">
                   <small class="text-muted">
                     <strong>{% trans "Comments:" %}</strong>

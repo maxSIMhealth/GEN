@@ -13,7 +13,7 @@
 {% block content %}
 
   {% if section.description %}
-  <p>{{section.description}}</p>
+  <p>{{section.description|linebreaksbr}}</p>
   {% endif %}
 
   <div class="card mb-3 section-quiz">
@@ -44,7 +44,7 @@
               {% comment %}
               <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
               {% endcomment %}
-              <p class="mb-0"><small class="text-muted">{{ item.description }}</small></p>
+              <p class="mb-0"><small class="text-muted">{{ item.description|linebreaksbr }}</small></p>
               {% if item.quiz.show_score %}
               <p class="mb-0">
                 <small class="text-muted">

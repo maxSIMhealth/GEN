@@ -12,7 +12,7 @@
 
 {% block content %}
   {% if section.description %}
-  <p>{{section.description}}</p>
+  <p>{{section.description|linebreaksbr}}</p>
   {% endif %}
 
   <div class="card mb-3 section-upload">
@@ -49,7 +49,7 @@
               {% endif %}
               <div class="w-100">
                 <h5 class="mb-0 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
-                <p>{{ item.videofile.description }}</p>
+                <p>{{ item.videofile.description|linebreaksbr }}</p>
                 <div>
                   {% if not item.published %}
                     <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans '<strong>WARNING:</strong> after publishing you will not be able to delete this submission.' %}">{% trans "Publish submission" %}</a>
@@ -108,7 +108,7 @@
                     <br />
                     <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
                   </div>
-                  <p>{{ item.videofile.description }}</p>
+                  <p>{{ item.videofile.description|linebreaksbr }}</p>
                 {% endif %}
               </div>
             </div>
