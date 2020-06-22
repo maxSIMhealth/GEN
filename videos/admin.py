@@ -20,6 +20,7 @@ class VideoFileAdmin(TranslationAdmin):
         "description",
         "author",
         "course",
+        "section",
         "file",
         "thumbnail",
     )
