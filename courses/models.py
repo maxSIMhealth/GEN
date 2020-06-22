@@ -167,7 +167,8 @@ class Section(models.Model):
             )
 
     def __str__(self):
-        return self.name
+        output = "ID {0} - {1}".format(self.pk, self.name)
+        return output
 
     class Meta:
         verbose_name = _("section")

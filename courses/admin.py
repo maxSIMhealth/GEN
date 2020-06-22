@@ -3,7 +3,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 # from quiz.models import Quiz
-from .forms import SectionInlineForm
+from .forms import SectionAdminForm
 from .models import Course, Section, SectionItem
 
 
@@ -36,7 +36,7 @@ class SectionAdmin(SortableAdminMixin, TranslationAdmin):
     )
     inlines = (SectionItemInline,)
     list_filter = ("course",)
-    form = SectionInlineForm
+    form = SectionAdminForm
 
 
 admin.site.register(Course, CourseAdmin)
