@@ -13,12 +13,12 @@
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'course' course.pk %}">{{ course.code }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'section' course.pk section.pk %}">{{ section.name }}</a></li>
   <li class="breadcrumb-item active">{{quiz.name}}</li>
 {% endblock breadcrumb %}
 
 {% block content_title %}
-  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section }}</a> / {{ quiz.name }}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {{ quiz.name }}
 {% endblock content_title %}
 
 {% block content %}
