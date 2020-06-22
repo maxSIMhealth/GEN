@@ -103,7 +103,7 @@
             <div class="card ml-0 mr-0 mb-4">
               {% with answer=question.likertanswer %}
                 <div class="card-body likert">
-                  {% for value in answer.scale_min|likert_range:answer.scale_max %}
+                  {% for value in answer.scale_range|likert_range %}
                     <div class="item">
                       <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
                       {% for attempt in attempt_likert %}

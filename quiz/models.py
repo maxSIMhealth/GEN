@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import IntegerRangeField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -283,6 +284,10 @@ class Likert(Question):
     def get_answers(self):
         return LikertAnswer.objects.filter(question=self)
 
+    def check_if_correct(self, likert, guess):
+        correct_range = range(likert.answer_range.lower, likert.answer_range.upper)
+        return bool(guess in correct_range)
+
     def __str__(self):
         return ("%s") % (self.content)
 
@@ -299,25 +304,48 @@ class LikertAnswer(TimeStampedModel):
     question = models.OneToOneField(
         Likert, on_delete=models.CASCADE, verbose_name=_("question")
     )
-    scale_min = models.PositiveIntegerField(_("scale min"), default=1)
-    scale_max = models.PositiveIntegerField(_("scale max"), default=5)
+    scale_range = IntegerRangeField(
+        _("scale range values"),
+        blank=False,
+        default=([1, 5]),
+        help_text=_("Set the likert scale values."),
+    )
+    check_answer = models.BooleanField(
+        _("check answer"),
+        blank=False,
+        default=False,
+        help_text=_("Check the answer value?"),
+    )
+    answer_range = IntegerRangeField(
+        _("answer range values"),
+        blank=True,
+        default=([2, 3]),
+        help_text=_("Set the minimum and maximum acceptable values."),
+    )
     legend = models.TextField(
         _("legend"), blank=True, help_text=_("Legend for the likert scale values.")
     )
+    # answer_range = IntegerRangeField()
 
     def __str__(self):
         return ("%s : scale %s to %s") % (
             self.question.content,
-            self.scale_min,
-            self.scale_max,
+            self.scale_range.lower,
+            self.scale_range.upper,
         )
 
     def clean(self):
-        # Don't allow max scale to be equal of lower than min scale
-        if self.scale_max <= self.scale_min:
-            raise ValidationError(
-                "Maximum scale value cannot be equal or lower than minimum scale value."
-            )
+        # Don't allow answer scale to be out of the scale range bounds
+        if self.answer_range.lower:
+            if self.answer_range.lower < self.scale_range.lower:
+                raise ValidationError(
+                    _("The answer range must not exceed the scale range.")
+                )
+        elif self.answer_range.upper:
+            if self.answer_range.upper > self.scale_range.upper:
+                raise ValidationError(
+                    _("The answer range must not exceed the scale range.")
+                )
         return super().clean()
 
     class Meta:

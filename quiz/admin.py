@@ -181,11 +181,6 @@ class LikertAdmin(QuestionAdmin):
         return form
 
 
-class LikertAnswerAdmin(admin.ModelAdmin):
-    list_display = ("question", "scale_min", "scale_max")
-    list_filter = ("question",)
-
-
 class OpenEndedAdmin(QuestionAdmin):
     fields = ("question_type", "content", "quiz")
 
@@ -273,7 +268,6 @@ admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
 admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
-# admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)

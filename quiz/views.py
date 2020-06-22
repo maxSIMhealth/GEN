@@ -13,6 +13,7 @@ from GEN.support_methods import enrollment_test
 
 from courses.models import Course, Section
 from .models import (
+    Likert,
     LikertAnswer,
     MCAnswer,
     MCQuestion,
@@ -107,9 +108,9 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                         if question.question_type == "L":
                             # try to get answer (scale) object
                             try:
-                                scale = LikertAnswer.objects.get(question=question)
+                                likert = LikertAnswer.objects.get(question=question)
                             except LikertAnswer.DoesNotExist:
-                                scale = None
+                                likert = None
 
                             # get the likert scale value chosen by the participant
                             student_answer = submitted_data[str(question.id)][0]
@@ -117,13 +118,24 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                             # check if the student answer is within defined scale
                             # INFO: decided to not change student answer and treat it on the
                             # generated report afterwards
-                            if (
-                                not scale.scale_min
-                                <= int(student_answer)
-                                <= scale.scale_max
-                            ):
-                                # student_answer = None
-                                pass
+                            # if (
+                            #     not likert.scale_min
+                            #     <= int(student_answer)
+                            #     <= likert.scale_max
+                            # ):
+                            #     # student_answer = None
+                            #     pass
+
+                            # check if the student answer is within expected range
+                            if likert.check_answer:
+                                flag = Likert.check_if_correct(
+                                    question, likert, int(student_answer)
+                                )
+                                if flag is True:
+                                    score += 1
+                                # set field based on if the answer was correct or not
+                                attempt.correct = flag
+
                         elif question.question_type == "M":
                             # try to get multiple choice answers objects
                             try:

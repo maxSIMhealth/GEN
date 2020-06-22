@@ -5,14 +5,9 @@ from django import template
 register = template.Library()
 
 
-@register.filter(name='likert_range')
-def _likert_range(_min, args=None):
-    _max, _step = None, None
-    if args:
-        if not isinstance(args, int):
-            _max, _step = map(int, args.split(','))
-        else:
-            _max = args
+@register.filter(name="likert_range")
+def _likert_range(_range, args=None):
+    _min = _range.lower
     # incrementing max value by 1 to fit likert scale representation
-    args = filter(None, (_min, _max + 1, _step))
-    return range(*args)
+    _max = _range.upper + 1
+    return range(_min, _max)
