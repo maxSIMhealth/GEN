@@ -4,4 +4,4 @@ ignore = E203,E231,E501,W503
 max-complexity = 10
 max-line-length = 100
 import-order-style = google
-application-import-names = accounts,courses,dashboard,discussions,quiz,videos
+application-import-names = accounts,core,courses,dashboard,discussions,quiz,videos

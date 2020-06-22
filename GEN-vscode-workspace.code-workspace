@@ -17,6 +17,13 @@
 		],
 		"python.pythonPath": "venv\\Scripts\\python.exe",
 		"python.formatting.provider": "black",
-		"terminal.integrated.inheritEnv": false
+		"terminal.integrated.inheritEnv": false,
+		"python.linting.flake8Args": [
+			"--ignore=E203,E231,E501,W503",
+			"--select=B,B9,BLK,C,E,F,I,S,W",
+			"--max-complexity=10",
+			"--import-order-style=google",
+			"--application-import-names=accounts,core,courses,dashboard,discussions,quiz,videos"
+		]
 	}
 }
