@@ -30,7 +30,7 @@
                 <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item.name }}</a>
               {% else %}
                 {% if item.quiz.requirement %}
-                  <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% blocktrans %}Requires <u>{{item.quiz.requirement.name}}</u> to be completed first.{% endblocktrans %}">{{ item }}</span>
+                  <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Requirement must be met first:' %} <u>{% trans item.quiz.requirement.name %}</u>">{{ item }}</span>
                 {% else %}
                   <span class="text-muted">{{ item }}</span>
                 {% endif %}

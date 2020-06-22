@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-16 01:37+0000\n"
-"PO-Revision-Date: 2020-06-16 01:37+0000\n"
+"POT-Creation-Date: 2020-06-22 20:31+0000\n"
+"PO-Revision-Date: 2020-06-22 20:29+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -80,11 +80,10 @@ msgid "Activate Your GEN Account"
 msgstr "Activez votre compte GEN"
 
 #: accounts/views.py:57
-#| msgid "Already have an account?"
 msgid "You already have an account."
 msgstr "Avez vous déjà un compte."
 
-#: courses/models.py:11 courses/models.py:90 courses/models.py:179
+#: courses/models.py:11 courses/models.py:90 courses/models.py:180
 msgid "name"
 msgstr "nom"
 
@@ -100,7 +99,7 @@ msgstr "code de cours"
 msgid "Course code (max 10 characters)"
 msgstr "Code du cours (max 10 caractères)"
 
-#: courses/models.py:20 courses/models.py:96 courses/models.py:182
+#: courses/models.py:20 courses/models.py:96 courses/models.py:183
 msgid "description"
 msgstr "la description"
 
@@ -108,15 +107,15 @@ msgstr "la description"
 msgid "Course description (max 800 characters)"
 msgstr "Description du cours (max 800 caractères)"
 
-#: courses/models.py:25 courses/models.py:190 discussions/models.py:64
+#: courses/models.py:25 courses/models.py:191 discussions/models.py:64
 msgid "author"
 msgstr "l'auteur"
 
-#: courses/models.py:27 courses/models.py:192
+#: courses/models.py:27 courses/models.py:193
 msgid "start date"
 msgstr "date de début"
 
-#: courses/models.py:28 courses/models.py:193
+#: courses/models.py:28 courses/models.py:194
 msgid "end date"
 msgstr "date de fin"
 
@@ -163,8 +162,8 @@ msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:56 courses/models.py:106 discussions/models.py:22
-#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538
-#: videos/models.py:81 videos/models.py:96
+#: quiz/models.py:157 quiz/models.py:416 quiz/models.py:538 videos/models.py:81
+#: videos/models.py:96
 msgid "course"
 msgstr "le cours"
 
@@ -192,7 +191,7 @@ msgstr "Le classement nécessite l'activation de la gamification"
 msgid "Discussion boards"
 msgstr "Forums de discussion"
 
-#: courses/models.py:83 templates/section_videos.html:31
+#: courses/models.py:83 templates/section_videos.html:37
 msgid "Videos"
 msgstr "Vidéos"
 
@@ -217,7 +216,7 @@ msgstr "type de section"
 msgid "requirement"
 msgstr "exigence"
 
-#: courses/models.py:119 courses/models.py:202
+#: courses/models.py:119 courses/models.py:203
 msgid "published"
 msgstr "publié"
 
@@ -253,10 +252,10 @@ msgstr "affiche des vignettes"
 msgid ""
 "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
-"* POUR LES SECTIONS VIDÉO ET TÉLÉCHARGER UNIQUEMENT *: permet d'afficher les"
-" miniatures vidéo."
+"* POUR LES SECTIONS VIDÉO ET TÉLÉCHARGER UNIQUEMENT *: permet d'afficher les "
+"miniatures vidéo."
 
-#: courses/models.py:146 courses/models.py:204 quiz/models.py:225
+#: courses/models.py:146 courses/models.py:205 quiz/models.py:225
 #: quiz/models.py:395
 msgid "custom order"
 msgstr "commande personnalisée"
@@ -282,29 +281,27 @@ msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:173 courses/models.py:200 quiz/models.py:419
+#: courses/models.py:174 courses/models.py:201 quiz/models.py:419
 msgid "section"
 msgstr "section"
 
-#: courses/models.py:174
+#: courses/models.py:175
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:184
+#: courses/models.py:185
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
 
-#: courses/models.py:210
+#: courses/models.py:211
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:211
+#: courses/models.py:212
 msgid "section items"
 msgstr "éléments de section"
 
 #: courses/views.py:13
-#| msgid ""
-#| "You have not fulfilled the requirements to access the requested section."
 msgid "You are not enrolled in the requested course."
 msgstr "Vous n'êtes pas inscrit au cours demandé."
 
@@ -452,8 +449,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
-" de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
+"de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:229 quiz/models.py:300 quiz/models.py:377 quiz/models.py:423
 msgid "question"
@@ -714,8 +711,7 @@ msgstr "Publier"
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:99 templates/course.html:67
-#: templates/course.html:80
+#: templates/comments.html:99 templates/course.html:67 templates/course.html:80
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -791,8 +787,7 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
-"attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -813,7 +808,7 @@ msgstr "Voulez-vous vraiment supprimer la vidéo suivante?"
 #: templates/delete_video_confirmation.html:13
 #: templates/publish_video_confirmation.html:13
 #: templates/section_upload.html:47 templates/section_upload.html:93
-#: templates/section_videos.html:47
+#: templates/section_videos.html:53
 msgid "Video thumbnail"
 msgstr "Vignette vidéo"
 
@@ -910,8 +905,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL "
-"NOT</strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL NOT</"
+"strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -966,8 +961,8 @@ msgstr "Explication"
 
 #: templates/quiz_result.html:146
 #, python-format
-msgid "Return to %(section)s"
-msgstr "Retourner à %(section)s"
+msgid "Return to %(section.name)s"
+msgstr "Retourner à %(section.name)s"
 
 #: templates/section_discussion.html:25
 msgid "Create new"
@@ -978,7 +973,7 @@ msgid "Participated"
 msgstr "Participé"
 
 #: templates/section_discussion.html:60 templates/section_quiz.html:41
-#: templates/section_videos.html:77
+#: templates/section_videos.html:88
 msgid "To do"
 msgstr "Faire"
 
@@ -994,22 +989,24 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>%(item.discussion.requirement.name)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>"
+"%(item.discussion.requirement.name)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(item.discussion.requirement.name)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
+"%(item.discussion.requirement.name)s</u>. </em>"
 
 #: templates/section_discussion.html:95
 msgid "No discussion board available."
 msgstr "Aucun forum de discussion disponible."
 
-#: templates/section_quiz.html:33
-#, python-format
-msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#: templates/section_quiz.html:33 templates/section_tabs.html:10
+#: templates/section_videos.html:79
+msgid "Requirement must be met first:"
+msgstr "L'exigence doit être satisfaite en premier:"
 
-#: templates/section_quiz.html:39 templates/section_videos.html:75
+#: templates/section_quiz.html:39 templates/section_videos.html:86
 msgid "Submitted"
 msgstr "Envoyées"
 
@@ -1021,17 +1018,12 @@ msgstr "Score:"
 msgid "No quiz available."
 msgstr "Aucun quiz n'est disponible."
 
-#: templates/section_tabs.html:10
-#, python-format
-msgid "Requires <u>%(section.requirement)s</u> to be completed first."
-msgstr "<u>%(section.requirement)s</u> doit être terminé en premier."
-
 #: templates/section_upload.html:20
 msgid "Upload"
 msgstr "Télécharger"
 
 #: templates/section_upload.html:24 templates/section_upload.html:30
-#: templates/section_videos.html:35
+#: templates/section_videos.html:41
 msgid "Submit new video"
 msgstr "Soumettre une nouvelle vidéo"
 
@@ -1059,7 +1051,7 @@ msgstr ""
 msgid "Publish submission"
 msgstr "Publier la soumission"
 
-#: templates/section_upload.html:56 templates/section_videos.html:92
+#: templates/section_upload.html:56 templates/section_videos.html:103
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1099,36 +1091,31 @@ msgstr "Par:"
 msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
 
-#: templates/section_videos.html:49
+#: templates/section_videos.html:55
 msgid "Video thumbnail missing."
 msgstr "Vignette vidéo manquante."
 
-#: templates/section_videos.html:58
+#: templates/section_videos.html:69
 msgid "Quizzes:"
 msgstr "Quiz:"
 
-#: templates/section_videos.html:68
-#, python-format
-msgid "Requires <u>%(quiz.requirement.name)s</u> to be completed first."
-msgstr "<u>%(quiz.requirement.name)s</u> doit être terminé en premier."
-
-#: templates/section_videos.html:88
+#: templates/section_videos.html:99
 msgid "Make this video visible by the course participants"
 msgstr "Rendre cette vidéo visible par les participants au cours"
 
-#: templates/section_videos.html:88
+#: templates/section_videos.html:99
 msgid "Publish"
 msgstr "Publier"
 
-#: templates/section_videos.html:90
+#: templates/section_videos.html:101
 msgid "Hide video from the course participants"
 msgstr "Masquer la vidéo des participants au cours"
 
-#: templates/section_videos.html:90
+#: templates/section_videos.html:101
 msgid "Unpublish"
 msgstr "Annuler la publication"
 
-#: templates/section_videos.html:102
+#: templates/section_videos.html:113
 msgid "No video available."
 msgstr "Aucune vidéo disponible."
 
@@ -1171,11 +1158,13 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+"                  Connected as %(google_login.uid)s - "
+"%(google_login.user.first_name)s %(google_login.user.last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s"
+"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s "
+"%(google_login.user.last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1205,8 +1194,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
-" Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
+"Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1304,6 +1293,17 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:142
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid ""
+#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr ""
+#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+
+#~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
+#~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."
+
+#~ msgid "Requires <u>%(quiz.requirement.name)s</u> to be completed first."
+#~ msgstr "<u>%(quiz.requirement.name)s</u> doit être terminé en premier."
 
 #~ msgid "created at"
 #~ msgstr "créé à"

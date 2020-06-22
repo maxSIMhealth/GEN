@@ -7,7 +7,7 @@
     {% if section.requirement.fulfilled %}
       <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section.name}}</a>
     {% else %}
-      <a href="#" class="list-group-item list-group-item-action text-underline-dashed bg-light disabled" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% blocktrans %}Requires <u>{{section.requirement}}</u> to be completed first.{% endblocktrans %}">{{section.name}}</a>
+      <a href="#" class="list-group-item list-group-item-action text-underline-dashed bg-light disabled" tabindex="-1" aria-disabled="true" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Requirement must be met first:' %} <u>{% trans section.requirement.name %}</u>">{{section.name}}</a>
     {% endif %}
   {% else %}
       <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section.name}}</a>
