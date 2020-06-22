@@ -11,6 +11,7 @@ from modeltranslation.admin import (
 
 # from django.contrib.admin.widgets import FilteredSelectMultiple
 
+from .forms import QuizAdminForm
 from .models import (
     Likert,
     LikertAnswer,
@@ -83,6 +84,7 @@ class QuizAdmin(SortableAdminMixin, TranslationAdmin):
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
     actions = [duplicate_quiz]
+    form = QuizAdminForm
     save_as = True
 
     # filter_horizontal = ('questions', )
