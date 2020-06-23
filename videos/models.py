@@ -8,6 +8,7 @@ from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import ffmpeg
+from GEN.support_methods import duplicate_item, duplicate_name
 from PIL import Image
 
 from courses.models import Course, SectionItem
@@ -154,6 +155,9 @@ class VideoFile(SectionItem):
         self.file.delete()  # Delete the actual video file
         self.thumbnail.delete()  # Delete the thumbnail file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
+
+    def duplicate(self):
+        return duplicate_item(self, callback=duplicate_name)
 
 
 # class MediaFile(models.Model):

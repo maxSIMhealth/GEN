@@ -14,9 +14,18 @@ def update_thumbnails(modeladmin, request, queryset):
 update_thumbnails.short_description = "Update thumbnail of selected videos"
 
 
+def duplicate(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate()
+
+
+duplicate.short_description = "Duplicate selected items"
+
+
 class VideoFileAdmin(TranslationAdmin):
     list_display = (
         "name",
+        "pk",
         "internal_name",
         "description",
         "author",
@@ -25,7 +34,7 @@ class VideoFileAdmin(TranslationAdmin):
         "file",
         "thumbnail",
     )
-    actions = [update_thumbnails]
+    actions = [update_thumbnails, duplicate]
     list_filter = ("course",)
     save_as = True
     form = VideoFileAdminForm

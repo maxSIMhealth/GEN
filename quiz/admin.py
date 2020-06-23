@@ -30,12 +30,12 @@ from .models import (
 )
 
 
-def duplicate_quiz(modeladmin, request, queryset):
+def duplicate(modeladmin, request, queryset):
     for item in queryset:
-        item.duplicate_quiz()
+        item.duplicate()
 
 
-duplicate_quiz.short_description = "Duplicate selected quizzes"
+duplicate.short_description = "Duplicate selected items"
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
 # https://stackoverflow.com/questions/34355406/django-admin-not-saving-\
@@ -84,7 +84,7 @@ class QuizAdmin(SortableAdminMixin, TranslationAdmin):
     list_filter = ("course",)
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
-    actions = [duplicate_quiz]
+    actions = [duplicate]
     form = QuizAdminForm
     save_as = True
 
