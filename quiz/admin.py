@@ -194,6 +194,14 @@ class LikertAdmin(QuestionAdmin):
         return form
 
 
+class LikertAnswerAdmin(admin.ModelAdmin):
+    list_display = ("question", "scale_range", "check_answer", "answer_range")
+    list_filter = ("question__quiz__course", "question__quiz", "question__quiz__video")
+
+    class Media:
+        css = {"all": ("css/admin.css",)}
+
+
 class OpenEndedAdmin(QuestionAdmin):
     fields = ("question_type", "content", "quiz")
 
@@ -298,6 +306,7 @@ admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
 admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
+admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
