@@ -2,6 +2,7 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
+from import_export.fields import Field
 from import_export.admin import ExportActionMixin
 from modeltranslation.admin import (
     TranslationAdmin,
@@ -192,20 +193,34 @@ class OpenEndedAdmin(QuestionAdmin):
 
 
 class QuestionAttemptResource(resources.ModelResource):
+    quiz_name = Field(attribute="quiz__name", column_name="quiz_name")
+    course_name = Field(attribute="course__name", column_name="course_name")
+    section_name = Field(attribute="section__name", column_name="section_name")
+    question_type = Field(
+        attribute="question__question_type", column_name="question_type"
+    )
+    question_content = Field(
+        attribute="question__content", column_name="question_content"
+    )
+    video_name = Field(attribute="video__name", column_name="video_name")
+    video_internal_name = Field(
+        attribute="video__internal_name", column_name="video_internal_name"
+    )
+
     class Meta:
         model = QuestionAttempt
         fields = (
             "id",
             "created",
             "student",
-            "quiz__name",
-            "course__name",
-            "section__name",
+            "quiz_name",
+            "course_name",
+            "section_name",
             # "attempt_number",
-            "question__question_type",
-            "question__content",
-            "video__name",
-            "video__internal_name",
+            "question_type",
+            "question_content",
+            "video_name",
+            "video_internal_name",
             "answer_content",
             "correct",
         )
@@ -213,14 +228,14 @@ class QuestionAttemptResource(resources.ModelResource):
             "id",
             "created",
             "student",
-            "course__name",
-            "section__name",
-            "quiz__name",
+            "course_name",
+            "section_name",
+            "quiz_name",
             # "attempt_number",
-            "video__name",
-            "video__internal_name",
-            "question__question_type",
-            "question__content",
+            "video_name",
+            "video_internal_name",
+            "question_type",
+            "question_content",
             "answer_content",
             "correct",
         )
