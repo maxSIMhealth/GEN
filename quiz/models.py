@@ -160,7 +160,10 @@ class Likert(Question):
     def check_if_correct(self, likert, guess):
         is_correct = False
         if likert.answer_range.upper:
-            correct_range = range(likert.answer_range.lower, likert.answer_range.upper)
+            # incrementing max value by 1 because the upper bound is always excluded from the range
+            correct_range = range(
+                likert.answer_range.lower, likert.answer_range.upper + 1
+            )
             is_correct = bool(guess in correct_range)
         else:
             correct_value = likert.answer_range.lower

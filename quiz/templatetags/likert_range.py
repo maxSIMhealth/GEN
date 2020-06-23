@@ -9,7 +9,7 @@ register = template.Library()
 def _likert_range(_range, args=None):
     _min = _range.lower
     if _range.upper:
-        # incrementing max value by 1 to fit likert scale representation
+        # incrementing max value by 1 because the upper bound is always excluded from the range
         _max = _range.upper + 1
         response = range(_min, _max)
     else:
