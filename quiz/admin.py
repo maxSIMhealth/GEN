@@ -136,6 +136,9 @@ class QuestionAdmin(TranslationAdmin):
     search_fields = ("content", "explanation")
     # filter_horizontal = ('quiz',)
 
+    class Media:
+        css = {"all": ("css/admin.css",)}
+
 
 class MCQuestionAdmin(QuestionAdmin):
     """
@@ -154,6 +157,9 @@ class MCQuestionAdmin(QuestionAdmin):
     )
     inlines = [MCAnswerInline]
 
+    class Media:
+        css = {"all": ("css/admin.css",)}
+
     # setting question_type value to Multiple Choice
     def get_form(self, request, obj=None, **kwargs):
         form = super(MCQuestionAdmin, self).get_form(request, obj, **kwargs)
@@ -165,6 +171,9 @@ class MCAnswerAdmin(admin.ModelAdmin):
     list_display = ("question", "content", "correct")
     list_filter = ("question",)
 
+    class Media:
+        css = {"all": ("css/admin.css",)}
+
 
 class LikertAdmin(QuestionAdmin):
     """
@@ -175,6 +184,9 @@ class LikertAdmin(QuestionAdmin):
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
+    class Media:
+        css = {"all": ("css/admin.css",)}
+
     # setting question_type value to Likert
     def get_form(self, request, obj=None, **kwargs):
         form = super(LikertAdmin, self).get_form(request, obj, **kwargs)
@@ -184,6 +196,9 @@ class LikertAdmin(QuestionAdmin):
 
 class OpenEndedAdmin(QuestionAdmin):
     fields = ("question_type", "content", "quiz")
+
+    class Media:
+        css = {"all": ("css/admin.css",)}
 
     # setting question_type value to Open Ended
     def get_form(self, request, obj=None, **kwargs):

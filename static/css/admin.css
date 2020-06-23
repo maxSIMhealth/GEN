@@ -1,0 +1,17 @@
+/* Quiz > Likert, MCAnswer, MCQuestion, OpenEnded, Question */
+/* Adjusting content column to hide overflowing content */
+
+table#result_list {
+  table-layout: fixed;
+}
+
+#changelist table#result_list thead th.action-checkbox-column {
+  width: 2.5em;
+}
+
+table#result_list th.column-question, table#result_list th.field-question{
+  /* max-width: 300px; */
+  overflow: hidden;
+  margin-left:10px;
+  /* word-wrap:break-word; */
+}
