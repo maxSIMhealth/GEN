@@ -8,7 +8,7 @@
 {% block body %}
   <div class="card-body">
     <p class="card-text embed-responsive embed-responsive-16by9">
-        <video controls poster="{{ video.thumbnail.url }}">
+        <video controls>
             <source src="{{ video.file.url }}" type="video/mp4">
             {% trans "Sorry, your browser doesn't support embedded videos." %}
         </video>
