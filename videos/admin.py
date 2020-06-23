@@ -2,6 +2,7 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
+from .forms import VideoFileAdminForm
 from .models import Playlist, VideoFile
 
 
@@ -27,6 +28,7 @@ class VideoFileAdmin(TranslationAdmin):
     actions = [update_thumbnails]
     list_filter = ("course",)
     save_as = True
+    form = VideoFileAdminForm
 
 
 class PlaylistInline(SortableInlineAdminMixin, admin.TabularInline):

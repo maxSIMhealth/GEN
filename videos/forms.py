@@ -6,6 +6,7 @@ from crispy_forms.layout import Button, Fieldset, Layout, Submit
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from courses.models import Section
 from .models import VideoFile
 
 
@@ -51,3 +52,14 @@ class UploadVideoForm(forms.ModelForm):
             ),
         )
         self.helper.form_method = "POST"
+
+
+class VideoFileAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(VideoFileAdminForm, self).__init__(*args, **kwargs)
+        # check if the instance exists (if its a new object or not)
+        if self.instance.pk is not None:
+            # lists only sections that are related to the course
+            self.fields["section"].queryset = Section.objects.filter(
+                course=self.instance.course
+            )

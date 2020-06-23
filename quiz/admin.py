@@ -2,8 +2,8 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
-from import_export.fields import Field
 from import_export.admin import ExportActionMixin
+from import_export.fields import Field
 from modeltranslation.admin import (
     TranslationAdmin,
     TranslationStackedInline,
