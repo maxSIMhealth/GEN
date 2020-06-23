@@ -194,7 +194,7 @@ class LikertAdmin(QuestionAdmin):
         return form
 
 
-class LikertAnswerAdmin(admin.ModelAdmin):
+class LikertAnswerAdmin(TranslationAdmin):
     list_display = ("question", "scale_range", "check_answer", "answer_range")
     list_filter = ("question__quiz__course", "question__quiz", "question__quiz__video")
 
