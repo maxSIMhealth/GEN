@@ -285,8 +285,14 @@ class Likert(Question):
         return LikertAnswer.objects.filter(question=self)
 
     def check_if_correct(self, likert, guess):
-        correct_range = range(likert.answer_range.lower, likert.answer_range.upper)
-        return bool(guess in correct_range)
+        is_correct = False
+        if likert.answer_range.upper:
+            correct_range = range(likert.answer_range.lower, likert.answer_range.upper)
+            is_correct = bool(guess in correct_range)
+        else:
+            correct_value = likert.answer_range.lower
+            is_correct = guess == correct_value
+        return is_correct
 
     def __str__(self):
         return ("%s") % (self.content)

@@ -104,7 +104,6 @@
               {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
                 <div class="card-body likert">
                   {% for value in answer.scale_range|likert_range %}
-
                     {% if quiz.show_correct_answers %}
                       {% if value in correct_range %}
                         <div class="item bg-success">
