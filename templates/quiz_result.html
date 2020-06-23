@@ -101,10 +101,19 @@
 
           {% elif question.question_type == 'L' %}
             <div class="card ml-0 mr-0 mb-4">
-              {% with answer=question.likertanswer %}
+              {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
                 <div class="card-body likert">
                   {% for value in answer.scale_range|likert_range %}
+
+                    {% if quiz.show_correct_answers %}
+                      {% if value in correct_range %}
+                        <div class="item bg-success">
+                      {% else %}
+                        <div class="item">
+                      {% endif %}
+                    {% else %}
                     <div class="item">
+                    {% endif %}
                       <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}" disabled
                       {% for attempt in attempt_likert %}
                         {% if attempt.question_id == question.id and attempt.answer_content == value|stringformat:'i' %}
