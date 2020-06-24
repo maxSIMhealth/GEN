@@ -94,8 +94,25 @@ def question_multiplechoice_check(attempt, question, submitted_data):
             attempt.save()
 
     else:
-        # FIXME: reimplement single choice check
-        pass
+        # creating array of user submitted answers
+        try:
+            user_answers = submitted_data[str(question.id)]
+        except KeyError:
+            # since the user did not check any item,
+            # creating an empty array
+            user_answers = []
+
+        for answer in user_answers:
+            flag = MCQuestion.check_if_correct(question, answer)
+
+            attempt.multiplechoice_answer = MCAnswer.objects.get(pk=answer)
+
+            if flag is True:
+                score += 1
+
+        attempt.answer_content = attempt.multiplechoice_answer.content
+        attempt.correct = flag
+        attempt.save()
 
     return score
 
@@ -249,8 +266,6 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
                 # if the max number of attempts has been reached, redirect back to quiz list
                 if attempts_limit_reached:
-                    # FIXME: show a message stating that the user has reached the
-                    # maximum number of attempts
                     messages.error(
                         request,
                         _("You have already reached the maximum number of attempts."),
