@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-23 00:44+0000\n"
-"PO-Revision-Date: 2020-06-22 23:30+0000\n"
+"POT-Creation-Date: 2020-06-24 15:15+0000\n"
+"PO-Revision-Date: 2020-06-24 15:15+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -162,8 +162,8 @@ msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:56 courses/models.py:106 discussions/models.py:22
-#: quiz/models.py:158 quiz/models.py:450 quiz/models.py:572 videos/models.py:81
-#: videos/models.py:96
+#: quiz/models.py:31 quiz/models.py:326 quiz/models.py:448 videos/models.py:82
+#: videos/models.py:97
 msgid "course"
 msgstr "le cours"
 
@@ -212,7 +212,7 @@ msgstr "Nom de la section (max 15 caractères)"
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:117 discussions/models.py:33 quiz/models.py:173
+#: courses/models.py:117 discussions/models.py:33 quiz/models.py:46
 msgid "requirement"
 msgstr "exigence"
 
@@ -252,11 +252,11 @@ msgstr "affiche des vignettes"
 msgid ""
 "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
-"* POUR LES SECTIONS VIDÉO ET TÉLÉCHARGER UNIQUEMENT *: permet d'afficher les "
-"miniatures vidéo."
+"* POUR LES SECTIONS VIDÉO ET TÉLÉCHARGER UNIQUEMENT *: permet d'afficher les"
+" miniatures vidéo."
 
-#: courses/models.py:146 courses/models.py:205 quiz/models.py:226
-#: quiz/models.py:429
+#: courses/models.py:146 courses/models.py:205 quiz/models.py:99
+#: quiz/models.py:305
 msgid "custom order"
 msgstr "commande personnalisée"
 
@@ -281,7 +281,7 @@ msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:174 courses/models.py:201 quiz/models.py:453
+#: courses/models.py:174 courses/models.py:201 quiz/models.py:329
 msgid "section"
 msgstr "section"
 
@@ -318,7 +318,7 @@ msgstr "Nom du forum de discussion"
 msgid "The max length for the discussion board name is 100."
 msgstr "La longueur maximale du nom du forum de discussion est 100."
 
-#: discussions/forms.py:21 templates/course.html:52 videos/forms.py:14
+#: discussions/forms.py:21 templates/course.html:52 videos/forms.py:15
 msgid "Description"
 msgstr "La description"
 
@@ -327,11 +327,11 @@ msgid "The max length for the discussion board description is 400."
 msgstr ""
 "La longueur maximale pour la description du forum de discussion est de 400."
 
-#: discussions/forms.py:46 templates/quiz.html:109 videos/forms.py:43
+#: discussions/forms.py:46 templates/quiz.html:109 videos/forms.py:44
 msgid "Submit"
 msgstr "Soumettre"
 
-#: discussions/forms.py:49 templates/quiz.html:110 videos/forms.py:47
+#: discussions/forms.py:49 templates/quiz.html:110 videos/forms.py:48
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -347,7 +347,7 @@ msgstr "La longueur maximale d'un commentaire est de 400 caractères."
 msgid "last updated"
 msgstr "dernière mise à jour"
 
-#: discussions/models.py:41 quiz/models.py:166 quiz/models.py:464
+#: discussions/models.py:41 quiz/models.py:39 quiz/models.py:340
 msgid "video"
 msgstr "vidéo"
 
@@ -384,231 +384,231 @@ msgstr "Le forum de discussion n'existe pas."
 msgid "Discussion board created."
 msgstr "Un forum de discussion a été créé."
 
-#: quiz/models.py:12
+#: quiz/models.py:13
 msgid "Header"
 msgstr "Entête"
 
-#: quiz/models.py:13
+#: quiz/models.py:14
 msgid "Likert"
 msgstr "Likert"
 
-#: quiz/models.py:14
+#: quiz/models.py:15
 msgid "Open ended"
 msgstr "Ouvert"
 
-#: quiz/models.py:15
+#: quiz/models.py:16
 msgid "Multiple choice"
 msgstr "Choix multiple"
 
-#: quiz/models.py:152
+#: quiz/models.py:25
 msgid "show score"
 msgstr "montrer le score"
 
-#: quiz/models.py:153
+#: quiz/models.py:26
 msgid "show correct answers"
 msgstr "afficher les bonnes réponses"
 
-#: quiz/models.py:176
+#: quiz/models.py:49
 msgid "attempts max number"
 msgstr "nombre maximal de tentatives"
 
-#: quiz/models.py:180 quiz/models.py:201 quiz/models.py:448 quiz/models.py:570
+#: quiz/models.py:53 quiz/models.py:74 quiz/models.py:324 quiz/models.py:446
 msgid "quiz"
 msgstr "quiz"
 
-#: quiz/models.py:181
+#: quiz/models.py:54
 msgid "quizzes"
 msgstr "quiz"
 
-#: quiz/models.py:197 quiz/models.py:443
+#: quiz/models.py:70 quiz/models.py:319
 msgid "question type"
 msgstr "type de question"
 
-#: quiz/models.py:207 quiz/models.py:415
+#: quiz/models.py:80 quiz/models.py:291
 msgid "content"
 msgstr "contenu"
 
-#: quiz/models.py:210
+#: quiz/models.py:83
 msgid "Enter the content that you want displayed."
 msgstr "Entrez le contenu que vous souhaitez afficher."
 
-#: quiz/models.py:213
+#: quiz/models.py:86
 msgid "explanation"
 msgstr "explication"
 
-#: quiz/models.py:215
+#: quiz/models.py:88
 msgid "Explanation to be shown after the question has been answered."
 msgstr "Explication à afficher après réponse à la question."
 
-#: quiz/models.py:218
+#: quiz/models.py:91
 msgid "multiple correct answers"
 msgstr "plusieurs réponses correctes"
 
-#: quiz/models.py:222
+#: quiz/models.py:95
 msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
-"de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
 
-#: quiz/models.py:230 quiz/models.py:311 quiz/models.py:411 quiz/models.py:457
+#: quiz/models.py:103 quiz/models.py:187 quiz/models.py:287 quiz/models.py:333
 msgid "question"
 msgstr "question"
 
-#: quiz/models.py:231
+#: quiz/models.py:104
 msgid "questions"
 msgstr "des questions"
 
-#: quiz/models.py:281
+#: quiz/models.py:154
 msgid "likert question"
 msgstr "likert question"
 
-#: quiz/models.py:282
+#: quiz/models.py:155
 msgid "likert questions"
 msgstr "likert questions"
 
-#: quiz/models.py:314
+#: quiz/models.py:190
 msgid "scale range values"
 msgstr "valeurs de plage d'échelle"
 
-#: quiz/models.py:317
+#: quiz/models.py:193
 msgid "Set the likert scale values."
 msgstr "Définissez les valeurs d'échelle de likert."
 
-#: quiz/models.py:320
+#: quiz/models.py:196
 msgid "check answer"
 msgstr "vérifier la réponse"
 
-#: quiz/models.py:323
+#: quiz/models.py:199
 msgid "Check the answer value?"
 msgstr "Vérifiez la valeur de la réponse?"
 
-#: quiz/models.py:326
+#: quiz/models.py:202
 msgid "answer range values"
 msgstr "valeurs de plage de réponse"
 
-#: quiz/models.py:329
+#: quiz/models.py:205
 msgid "Set the minimum and maximum acceptable values."
 msgstr "Définissez les valeurs minimales et maximales acceptables."
 
-#: quiz/models.py:332
+#: quiz/models.py:208
 msgid "legend"
 msgstr "légende"
 
-#: quiz/models.py:332
+#: quiz/models.py:208
 msgid "Legend for the likert scale values."
 msgstr "Légende des valeurs d'échelle likert."
 
-#: quiz/models.py:348 quiz/models.py:353
+#: quiz/models.py:224 quiz/models.py:229
 msgid "The answer range must not exceed the scale range."
 msgstr "La plage de réponses ne doit pas dépasser la plage d'échelle."
 
-#: quiz/models.py:358
+#: quiz/models.py:234
 msgid "likert answer (scale definition)"
 msgstr "réponse likert (définition de l'échelle)"
 
-#: quiz/models.py:359
+#: quiz/models.py:235
 msgid "likert answers (scale definition)"
 msgstr "réponses likert (définition de l'échelle)"
 
-#: quiz/models.py:374
+#: quiz/models.py:250
 msgid "open ended question"
 msgstr "question ouverte"
 
-#: quiz/models.py:375
+#: quiz/models.py:251
 msgid "open ended questions"
 msgstr "questions ouvertes"
 
-#: quiz/models.py:384
+#: quiz/models.py:260
 msgid "multiple choice question"
 msgstr "question à choix multiples"
 
-#: quiz/models.py:385
+#: quiz/models.py:261
 msgid "multiple choice questions"
 msgstr "questions à choix multiple"
 
-#: quiz/models.py:418
+#: quiz/models.py:294
 msgid "Enter the answer text that you want displayed"
 msgstr "Entrez le texte de réponse que vous souhaitez afficher"
 
-#: quiz/models.py:422 quiz/models.py:467
+#: quiz/models.py:298 quiz/models.py:343
 msgid "correct"
 msgstr "correct"
 
-#: quiz/models.py:425
+#: quiz/models.py:301
 msgid "Is this the correct answer?"
 msgstr "Est-ce la bonne réponse?"
 
-#: quiz/models.py:436
+#: quiz/models.py:312
 msgid "multiple choice answer"
 msgstr "réponse à choix multiples"
 
-#: quiz/models.py:437 quiz/models.py:470
+#: quiz/models.py:313 quiz/models.py:346
 msgid "multiple choice answers"
 msgstr "réponses à choix multiples"
 
-#: quiz/models.py:446 quiz/models.py:568
+#: quiz/models.py:322 quiz/models.py:444
 msgid "student"
 msgstr "l'étudiant"
 
-#: quiz/models.py:455
+#: quiz/models.py:331
 msgid "attempt number"
 msgstr "numéro de tentative"
 
-#: quiz/models.py:466
+#: quiz/models.py:342
 msgid "student answer"
 msgstr "réponse de l'élève"
 
-#: quiz/models.py:474
+#: quiz/models.py:350
 msgid "question attempt"
 msgstr "tentative de question"
 
-#: quiz/models.py:475
+#: quiz/models.py:351
 msgid "question attempts"
 msgstr "tentatives de questions"
 
-#: quiz/models.py:536
+#: quiz/models.py:412
 msgid "likert attempt"
 msgstr "tentative de likert"
 
-#: quiz/models.py:537
+#: quiz/models.py:413
 msgid "likert attempts"
 msgstr "tentatives de likert"
 
-#: quiz/models.py:549
+#: quiz/models.py:425
 msgid "open ended attempt"
 msgstr "tentative ouverte"
 
-#: quiz/models.py:550
+#: quiz/models.py:426
 msgid "open ended attempts"
 msgstr "tentatives ouverte"
 
-#: quiz/models.py:562
+#: quiz/models.py:438
 msgid "multiple choice questions attempt"
 msgstr "tentative de questions à choix multiples"
 
-#: quiz/models.py:563
+#: quiz/models.py:439
 msgid "multiple choice questions attempts"
 msgstr "tentatives de questions à choix multiples"
 
-#: quiz/models.py:574
+#: quiz/models.py:450
 msgid "score"
 msgstr "score"
 
-#: quiz/models.py:577
+#: quiz/models.py:453
 msgid "quiz score"
 msgstr "score du quiz"
 
-#: quiz/models.py:578
+#: quiz/models.py:454
 msgid "quiz scores"
 msgstr "scores du quiz"
 
-#: quiz/models.py:593
+#: quiz/models.py:469
 msgid "question group header"
 msgstr "en-tête du groupe de questions"
 
-#: quiz/models.py:594
+#: quiz/models.py:470
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
@@ -731,7 +731,8 @@ msgstr "Publier"
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:99 templates/course.html:67 templates/course.html:80
+#: templates/comments.html:99 templates/course.html:67
+#: templates/course.html:80
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -807,7 +808,8 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
+"attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -925,8 +927,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL NOT</"
-"strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL "
+"NOT</strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -963,13 +965,17 @@ msgstr ""
 
 #: templates/quiz_result.html:39
 #, python-format
+#| msgid ""
+#| "\n"
+#| "          Your score is %(score)s.\n"
+#| "          "
 msgid ""
 "\n"
-"          Your score is %(score)s.\n"
+"          Your score is %(quiz_score)s.\n"
 "          "
 msgstr ""
 "\n"
-"Ton score est %(score)s."
+"Ton score est %(quiz_score)s."
 
 #: templates/quiz_result.html:47
 msgid "Your submission"
@@ -981,8 +987,8 @@ msgstr "Explication"
 
 #: templates/quiz_result.html:154
 #, python-format
-msgid "Return to %(section.name)s"
-msgstr "Retourner à %(section.name)s"
+msgid "Return to %(section_name)s"
+msgstr "Retourner à %(section_name)s"
 
 #: templates/section_discussion.html:25
 msgid "Create new"
@@ -1007,15 +1013,17 @@ msgstr "Commentaires:"
 
 #: templates/section_discussion.html:83
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                  Note: <em>To get access you must participate in <u>%(item.discussion.requirement.name)s</u> first.</em>\n"
+#| "                  "
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>"
-"%(item.discussion.requirement.name)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
-"%(item.discussion.requirement.name)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
 
 #: templates/section_discussion.html:95
 msgid "No discussion board available."
@@ -1176,15 +1184,17 @@ msgstr "Connectez-vous à GitHub"
 
 #: templates/settings.html:48
 #, python-format
+#| msgid ""
+#| "\n"
+#| "                  Connected as %(google_login.uid)s - %(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+#| "                  "
 msgid ""
 "\n"
-"                  Connected as %(google_login.uid)s - "
-"%(google_login.user.first_name)s %(google_login.user.last_name)s\n"
+"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_login.uid)s - %(google_login.user.first_name)s "
-"%(google_login.user.last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1214,8 +1224,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
-"Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1241,51 +1251,51 @@ msgstr "Lecteur vidéo"
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
-#: videos/forms.py:17
+#: videos/forms.py:18
 msgid "The max length for a description is 400 characters."
 msgstr "La longueur maximale d'une description est de 400 caractères."
 
-#: videos/forms.py:20
+#: videos/forms.py:21
 msgid "File"
 msgstr "Fichier"
 
-#: videos/forms.py:22
+#: videos/forms.py:23
 msgid "Please upload a video file (mp4 or mov)"
 msgstr "Veuillez télécharger un fichier vidéo (mp4 ou mov)"
 
-#: videos/models.py:85
+#: videos/models.py:86
 msgid "playlist"
 msgstr "playlist"
 
-#: videos/models.py:86
+#: videos/models.py:87
 msgid "playlists"
 msgstr "playlists"
 
-#: videos/models.py:98
+#: videos/models.py:99
 msgid "uploaded at"
 msgstr "téléchargé sur"
 
-#: videos/models.py:99
+#: videos/models.py:100
 msgid "file"
 msgstr "fichier"
 
-#: videos/models.py:101
+#: videos/models.py:102
 msgid "internal name"
 msgstr "nom interne"
 
-#: videos/models.py:105
+#: videos/models.py:106
 msgid "video internal name (not visible to users)"
 msgstr "nom interne de la vidéo (non visible pour les utilisateurs)"
 
-#: videos/models.py:108
+#: videos/models.py:109
 msgid "thumbnail"
 msgstr "la vignette"
 
-#: videos/models.py:115
+#: videos/models.py:116
 msgid "video file"
 msgstr "fichier vidéo"
 
-#: videos/models.py:116
+#: videos/models.py:117
 msgid "video files"
 msgstr "fichiers vidéo"
 
@@ -1320,10 +1330,8 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "scale max"
 #~ msgstr "échelle max"
 
-#~ msgid ""
-#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr ""
-#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
 
 #~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
 #~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."

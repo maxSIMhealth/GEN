@@ -79,8 +79,8 @@
                 </p>
                 {% if item.discussion.requirement %}
                 <small class="text-muted">
-                  {% blocktrans %}
-                  Note: <em>To get access you must participate in <u>{{item.discussion.requirement.name}}</u> first.</em>
+                  {% blocktrans with requirement=item.discussion.requirement.name %}
+                  Note: <em>To get access you must participate in <u>{{requirement}}</u> first.</em>
                   {% endblocktrans %}
                 </small>
                 {% endif %}

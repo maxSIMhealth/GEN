@@ -45,8 +45,8 @@
             <h3>Google</h3>
             {% if google_login %}
                 <p>
-                  {% blocktrans %}
-                  Connected as {{ google_login.uid }} - {{ google_login.user.first_name}} {{ google_login.user.last_name}}
+                  {% blocktrans with google_uid=google_login.uid google_first_name=google_login.user.first_name google_last_name=google_login.user.last_name %}
+                  Connected as {{ google_uid }} - {{ google_first_name }} {{ google_last_name }}
                   {% endblocktrans %}
                 </p>
                 {% if can_disconnect %}

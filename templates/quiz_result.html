@@ -36,8 +36,8 @@
         <br />
 
         {% if quiz.show_score %}
-          {% blocktrans %}
-          Your score is {{score}}.
+          {% blocktrans quiz_score=score %}
+          Your score is {{ quiz_score }}.
           {% endblocktrans %}
         {% endif %}
       </div>
@@ -151,7 +151,7 @@
           {% endif %}
 
         {% endfor %}
-        <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">{% blocktrans %}Return to {{ section.name }}{% endblocktrans %}</a>
+        <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">{% blocktrans with section_name=section.name %}Return to {{ section_name }}{% endblocktrans %}</a>
       </div>
     </div>
   </div>
