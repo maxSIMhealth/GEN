@@ -36,7 +36,7 @@
         <br />
 
         {% if quiz.show_score %}
-          {% blocktrans quiz_score=score %}
+          {% blocktrans with quiz_score=score %}
           Your score is {{ quiz_score }}.
           {% endblocktrans %}
         {% endif %}

@@ -80,7 +80,7 @@
                 {% if item.discussion.requirement %}
                 <small class="text-muted">
                   {% blocktrans with requirement=item.discussion.requirement.name %}
-                  Note: <em>To get access you must participate in <u>{{requirement}}</u> first.</em>
+                  Note: <em>To get access you must participate in <u>{{ requirement }}</u> first.</em>
                   {% endblocktrans %}
                 </small>
                 {% endif %}
