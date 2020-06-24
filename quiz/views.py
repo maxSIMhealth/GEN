@@ -64,14 +64,15 @@ def question_likert_check(attempt, question, submitted_data):
 def question_multiplechoice_check(attempt, question, submitted_data):
     score = 0
 
+    # creating array of user submitted answers
+    try:
+        user_answers = submitted_data[str(question.id)]
+    except KeyError:
+        # since the user did not check any item,
+        # creating an empty array
+        user_answers = []
+
     if question.multiple_correct_answers:
-        # creating array of user submitted answers
-        try:
-            user_answers = submitted_data[str(question.id)]
-        except KeyError:
-            # since the user did not check any item,
-            # creating an empty array
-            user_answers = []
 
         # checking each question answer item
         for answer in question.answers.all():
@@ -94,14 +95,7 @@ def question_multiplechoice_check(attempt, question, submitted_data):
             attempt.save()
 
     else:
-        # creating array of user submitted answers
-        try:
-            user_answers = submitted_data[str(question.id)]
-        except KeyError:
-            # since the user did not check any item,
-            # creating an empty array
-            user_answers = []
-
+        # checking user submitted answer
         for answer in user_answers:
             flag = MCQuestion.check_if_correct(question, answer)
 

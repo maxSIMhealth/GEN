@@ -65,10 +65,18 @@
             <ul class="list-group mb-3">
               {% for choice in question.answers.all %}
                 {% if quiz.show_correct_answers %}
-                  {% if mcquestion_user_answers|dict_key:choice.id %}
-                    <li class="list-group-item list-group-item-success">
+                  {% if question.multiple_correct_answers %}
+                    {% if mcquestion_user_answers|dict_key:choice.id %}
+                      <li class="list-group-item list-group-item-success">
+                    {% else %}
+                      <li class="list-group-item list-group-item-danger">
+                    {% endif %}
                   {% else %}
-                    <li class="list-group-item list-group-item-danger">
+                    {% if choice.check %}
+                      <li class="list-group-item list-group-item-success">
+                    {% else %}
+                      <li class="list-group-item">
+                    {% endif %}
                   {% endif %}
                 {% else %}
                   <li class="list-group-item">
@@ -76,9 +84,11 @@
                   <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
                     <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
                     {% for user_answer in attempt_mcquestion %}
-                        {% if choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
+                      {% if question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True"%}
                         checked
-                        {% endif %}
+                      {% elif not question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id %}
+                        checked
+                      {% endif %}
                     {% endfor %}
                     >
                     {{choice.content}}
@@ -92,7 +102,7 @@
               {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
                 <div class="card-body likert">
                   {% for value in answer.scale_range|likert_range %}
-                    {% if quiz.show_correct_answers %}
+                    {% if quiz.show_correct_answers and answer.check_answer %}
                       {% if value in correct_range %}
                         <div class="item bg-success">
                       {% else %}
