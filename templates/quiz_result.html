@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load check_attribute %}
+{% load dict_key %}
 {% load quiz_mcquestion_check %}
 {% load likert_range %}
 
@@ -62,32 +63,20 @@
           {% if question.question_type == 'M' %}
             {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
             <ul class="list-group mb-3">
-              {% if quiz.show_correct_answers %}
-                {% for choice in question.answers.all %}
-                  {% if choice.correct %}
+              {% for choice in question.answers.all %}
+                {% if quiz.show_correct_answers %}
+                  {% if mcquestion_user_answers|dict_key:choice.id %}
                     <li class="list-group-item list-group-item-success">
                   {% else %}
-                    <li class="list-group-item">
+                    <li class="list-group-item list-group-item-danger">
                   {% endif %}
-                    <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                      <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
-                      {% for user_answer in mcquestion_user_answers %}
-                          {% if choice.id == user_answer %}
-                          checked
-                          {% endif %}
-                      {% endfor %}
-                      >
-                      {{choice.content}}
-                      </label>
-                    </li>
-                {% endfor %}
-              {% else %}
-                {% for choice in question.answers.all %}
+                {% else %}
                   <li class="list-group-item">
+                {% endif %}
                   <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
                     <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" value="{{choice.pk}}" disabled
-                    {% for user_answer in mcquestion_user_answers %}
-                        {% if choice.id == user_answer %}
+                    {% for user_answer in attempt_mcquestion %}
+                        {% if choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
                         checked
                         {% endif %}
                     {% endfor %}
@@ -95,8 +84,7 @@
                     {{choice.content}}
                     </label>
                   </li>
-                {% endfor %}
-              {% endif %}
+              {% endfor %}
             </ul>
 
           {% elif question.question_type == 'L' %}

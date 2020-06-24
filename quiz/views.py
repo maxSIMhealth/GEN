@@ -27,7 +27,170 @@ from .support_methods import quiz_enable_check
 logger = logging.getLogger(__name__)
 
 
-# FIXME: split quiz_page into multiple methods
+def question_likert_check(attempt, question, submitted_data):
+    score = 0
+
+    # try to get answer (scale) object
+    try:
+        likert = LikertAnswer.objects.get(question=question)
+    except LikertAnswer.DoesNotExist:
+        likert = None
+
+    # get the likert scale value chosen by the participant
+    try:
+        student_answer = submitted_data[str(question.id)][0]
+    except KeyError:
+        student_answer = None
+
+    if likert.check_answer:
+        # check if the student answer is within expected range
+        if student_answer:
+            flag = Likert.check_if_correct(question, likert, int(student_answer))
+            if flag is True:
+                score += 1
+        else:
+            flag = False
+    else:
+        flag = None
+
+    # save participant answer attempt
+    attempt.correct = flag
+    attempt.answer_content = student_answer
+    attempt.save()
+
+    return score
+
+
+def question_multiplechoice_check(attempt, question, submitted_data):
+    score = 0
+
+    if question.multiple_correct_answers:
+        # creating array of user submitted answers
+        try:
+            user_answers = submitted_data[str(question.id)]
+        except KeyError:
+            # since the user did not check any item,
+            # creating an empty array
+            user_answers = []
+
+        # checking each question answer item
+        for answer in question.answers.all():
+            # reset attempt object
+            attempt.pk = None
+
+            attempt.multiplechoice_answer = answer
+
+            # verify if the answer was checked by the student
+            answer_checked = str(answer.pk) in user_answers
+
+            # check if the answer was marked correctly
+            flag = answer.check == answer_checked
+
+            if flag is True:
+                score += 1
+
+            attempt.answer_content = answer_checked
+            attempt.correct = flag
+            attempt.save()
+
+    else:
+        # FIXME: reimplement single choice check
+        pass
+
+    return score
+
+
+def question_check(attempt, question, submitted_data):
+
+    if question.question_type == "L":
+        score = question_likert_check(attempt, question, submitted_data)
+
+    elif question.question_type == "M":
+        score = question_multiplechoice_check(attempt, question, submitted_data)
+
+    elif question.question_type == "O":
+        # get the open ended answer
+        student_answer = submitted_data[str(question.id)][0]
+        # save participant answer attempt
+        attempt.answer_content = student_answer
+        attempt.save()
+        score = 0
+    else:
+        score = 0
+
+    return score
+
+
+def quiz_submission(request, quiz, course, section):
+    items = list(request.POST)
+    attempt_number = QuestionAttempt.objects.filter(
+        quiz=quiz, student=request.user
+    ).aggregate(Max("attempt_number"))
+    # removing csrf token from items list
+    items.pop(0)
+    score = 0
+
+    # increase attempt number
+    if attempt_number["attempt_number__max"]:
+        current_attempt_number = attempt_number["attempt_number__max"] + 1
+    else:
+        current_attempt_number = 1
+
+    # get submitted questions and generate an dictionary list
+    # format: {"question_id": "question_values"}
+    submitted_data = dict()
+    for item in items:
+        try:
+            temp, question_id = item.split("_")
+            submitted_data[question_id] = request.POST.getlist(item)
+
+        except IndexError:
+            question_id = None
+
+    # check if each question was answered by the participant
+    for question in quiz.questions.all():
+        # create new attempt object
+        attempt = QuestionAttempt(
+            student=request.user,
+            quiz=quiz,
+            course=course,
+            section=section,
+            question=question,
+            question_type=question.question_type,
+            attempt_number=current_attempt_number,
+        )
+
+        # add video name, if the quiz has a related video
+        if quiz.video:
+            attempt.video = quiz.video
+
+        # check user submitted answers
+        question_score = question_check(attempt, question, submitted_data)
+        score += question_score
+
+    # change session variable to indicate that the
+    # user completed the quiz
+    request.session["quiz_complete"] = True
+
+    # check if user has quiz score
+    if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
+        # get student quiz score
+        quiz_score = QuizScore.objects.get(
+            student=request.user, course=course, quiz=quiz
+        )
+        # update score
+        quiz_score.score = score
+
+    else:
+        # create student quiz score
+        quiz_score = QuizScore.objects.create(
+            student=request.user, quiz=quiz, course=course, score=score
+        )
+
+    # save score data
+    quiz_score.save()
+
+
 @login_required
 @course_enrollment_check(enrollment_test)
 def quiz_page(request, pk, section_pk, quiz_pk):
@@ -59,153 +222,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
         if quiz_enabled:
 
             if request.method == "POST":
-                flag = False
-                items = list(request.POST)
-                attempt_number = QuestionAttempt.objects.filter(
-                    quiz=quiz, student=request.user
-                ).aggregate(Max("attempt_number"))
-                # removing csrf token from items list
-                items.pop(0)
-                score = 0
-
-                # increase attempt number
-                if attempt_number["attempt_number__max"]:
-                    current_attempt_number = attempt_number["attempt_number__max"] + 1
-                else:
-                    current_attempt_number = 1
-
-                # get submitted questions and generate an dictionary list
-                # format: {"question_id": "question_values"}
-                submitted_data = dict()
-                for item in items:
-                    try:
-                        temp, question_id = item.split("_")
-                        submitted_data[question_id] = request.POST.getlist(item)
-
-                    except IndexError:
-                        question_id = None
-
-                # check if each question was answered by the participant
-                for question in quiz.questions.all():
-                    # create new attempt object
-                    attempt = QuestionAttempt.objects.create(
-                        student=request.user,
-                        quiz=quiz,
-                        course=course,
-                        section=section,
-                        question=question,
-                        question_type=question.question_type,
-                        attempt_number=current_attempt_number,
-                    )
-
-                    # add video name, if the quiz has a related video
-                    if quiz.video:
-                        attempt.video = quiz.video
-
-                    # check if the participant answered the question
-                    if submitted_data.get(str(question.id)):
-                        logger.info("Question answer found")
-                        if question.question_type == "L":
-                            # try to get answer (scale) object
-                            try:
-                                likert = LikertAnswer.objects.get(question=question)
-                            except LikertAnswer.DoesNotExist:
-                                likert = None
-
-                            # get the likert scale value chosen by the participant
-                            student_answer = submitted_data[str(question.id)][0]
-
-                            # check if the student answer is within defined scale
-                            # INFO: decided to not change student answer and treat it on the
-                            # generated report afterwards
-                            # if (
-                            #     not likert.scale_min
-                            #     <= int(student_answer)
-                            #     <= likert.scale_max
-                            # ):
-                            #     # student_answer = None
-                            #     pass
-
-                            # check if the student answer is within expected range
-                            if likert.check_answer:
-                                flag = Likert.check_if_correct(
-                                    question, likert, int(student_answer)
-                                )
-                                if flag is True:
-                                    score += 1
-                                # set field based on if the answer was correct or not
-                                attempt.correct = flag
-
-                        elif question.question_type == "M":
-                            # try to get multiple choice answers objects
-                            try:
-                                user_answers = MCAnswer.objects.filter(
-                                    id__in=submitted_data[str(question.id)]
-                                )
-                            except IndexError:
-                                user_answers = None
-
-                            # save user_answers to attempt object
-                            attempt.multiplechoice_answers.set(user_answers)
-
-                            # check if the answer is correct
-                            flag_mcquestion = []
-                            student_answer = []
-
-                            for answer in user_answers:
-                                if MCQuestion.check_if_correct(question, answer.pk):
-                                    flag_mcquestion.append(True)
-                                    score += 1
-                                else:
-                                    flag_mcquestion.append(False)
-
-                                student_answer.append(answer.content)
-
-                            # FIXME: consider changing flag to consider partially
-                            # correct answers (for questions with multiple answers)
-                            if flag_mcquestion.__contains__(False):
-                                flag = False
-                            else:
-                                flag = True
-
-                            # set field based on if the answer was correct or not
-                            attempt.correct = flag
-
-                        elif question.question_type == "O":
-                            # get the open ended answer
-                            student_answer = submitted_data[str(question.id)][0]
-
-                        # save participant answer attempt
-                        attempt.answer_content = student_answer
-                        attempt.save()
-                    else:
-                        # save attempt with empty 'answer_content',
-                        # since the participant didn't answer it
-                        logger.info("Question answer **NOT** found")
-                        attempt.correct = False
-                        attempt.save()
-
-                # change session variable to indicate that the
-                # user completed the quiz
-                request.session["quiz_complete"] = True
-
-                # check if user has quiz score
-                if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
-                    # get student quiz score
-                    quiz_score = QuizScore.objects.get(
-                        student=request.user, course=course, quiz=quiz
-                    )
-                    # update score
-                    quiz_score.score = score
-
-                else:
-                    # create student quiz score
-                    quiz_score = QuizScore.objects.create(
-                        student=request.user, quiz=quiz, course=course, score=score
-                    )
-
-                # save score data
-                quiz_score.save()
+                quiz_submission(request, quiz, course, section)
 
                 # if flag:
                 return HttpResponseRedirect(

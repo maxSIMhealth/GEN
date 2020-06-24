@@ -263,7 +263,7 @@ class MCQuestion(Question):
     def check_if_correct(self, guess):
         answer = MCAnswer.objects.get(id=guess)
 
-        return bool(answer.correct)
+        return bool(answer.check)
 
     def get_answers(self):
         return MCAnswer.objects.filter(question=self)
@@ -294,11 +294,11 @@ class MCAnswer(TimeStampedModel):
         help_text=_("Enter the answer text that you want displayed"),
     )
 
-    correct = models.BooleanField(
-        _("correct"),
+    check = models.BooleanField(
+        _("check"),
         blank=False,
         default=False,
-        help_text=_("Is this the correct answer?"),
+        help_text=_("Should this answer be checked/marked?"),
     )
 
     custom_order = models.PositiveIntegerField(
@@ -332,6 +332,13 @@ class QuestionAttempt(TimeStampedModel):
     question = models.ForeignKey(
         Question, on_delete=models.PROTECT, verbose_name=_("question")
     )
+    multiplechoice_answer = models.ForeignKey(
+        MCAnswer,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        verbose_name=_("multiple choice answer item"),
+    )
     video = models.ForeignKey(
         VideoFile,
         blank=True,
@@ -342,9 +349,6 @@ class QuestionAttempt(TimeStampedModel):
     answer_content = models.TextField(_("student answer"), null=True, blank=True)
     correct = models.NullBooleanField(_("correct"), blank=True, null=True)
     # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
-    multiplechoice_answers = models.ManyToManyField(
-        MCAnswer, blank=True, verbose_name=_("multiple choice answers")
-    )
 
     class Meta:
         verbose_name = _("question attempt")

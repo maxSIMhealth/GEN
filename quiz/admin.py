@@ -168,7 +168,7 @@ class MCQuestionAdmin(QuestionAdmin):
 
 
 class MCAnswerAdmin(admin.ModelAdmin):
-    list_display = ("question", "content", "correct")
+    list_display = ("question", "content", "check")
     list_filter = ("question",)
 
     class Media:
@@ -242,6 +242,7 @@ class QuestionAttemptResource(resources.ModelResource):
             # "attempt_number",
             "question_type",
             "question_content",
+            "multiplechoice_answer__content",
             "video_name",
             "video_internal_name",
             "answer_content",
@@ -259,6 +260,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "video_internal_name",
             "question_type",
             "question_content",
+            "multiplechoice_answer__content",
             "answer_content",
             "correct",
         )
@@ -271,6 +273,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
     """
 
     list_display = (
+        "question",
         "student",
         "course",
         "quiz",
