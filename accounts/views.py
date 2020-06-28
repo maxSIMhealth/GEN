@@ -1,3 +1,5 @@
+import random
+
 from django.contrib import messages
 from django.contrib.auth import login  # , update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -15,8 +17,24 @@ from social_django.models import UserSocialAuth
 
 # from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 
+from courses.models import Course
 from .forms import SignUpForm
 from .tokens import account_activation_token
+
+
+def random_course_assign(user):
+    # get courses objects
+    courses = Course.objects.filter(name__contains="UMontreal")
+
+    # check if any of the courses is full
+    for course in courses:
+        if course.participant.count() >= course.participants_max_number:
+            courses = courses.exclude(pk=course.pk)
+
+    # select a random course from the list and assign participant
+    course_selected = random.choice(courses)
+    course_selected.students.add(user)
+    course_selected.participant.add(user)
 
 
 def signup(request):
@@ -36,6 +54,13 @@ def signup(request):
             # save update user info to db
             user.save()
 
+            # assign user to random course
+            # FIXME: this is temporary, just for the montreal test
+            user_email_domain = user.email.split("@")[-1].split(".")[0]
+            permitted_domains = ["ontariotechu", "umontreal"]
+            if user_email_domain in permitted_domains:
+                random_course_assign(user)
+
             # send account activation email
             current_site = get_current_site(request)
             subject = _("Activate Your GEN Account")
@@ -48,7 +73,7 @@ def signup(request):
                     "token": account_activation_token.make_token(user),
                 },
             )
-            from_email = "gen@" + current_site.domain
+            from_email = "gen-donotreply@" + current_site.domain
             user.email_user(subject, message, from_email=from_email)
 
             return redirect("account_activation_sent")
