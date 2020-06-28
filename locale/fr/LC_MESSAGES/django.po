@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-27 14:25+0000\n"
-"PO-Revision-Date: 2020-06-27 14:26+0000\n"
+"POT-Creation-Date: 2020-06-28 15:11+0000\n"
+"PO-Revision-Date: 2020-06-28 15:12+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -83,7 +83,7 @@ msgstr "Activez votre compte GEN"
 msgid "You already have an account."
 msgstr "Avez vous déjà un compte."
 
-#: courses/models.py:11 courses/models.py:90 courses/models.py:180
+#: courses/models.py:11 courses/models.py:93 courses/models.py:183
 msgid "name"
 msgstr "nom"
 
@@ -99,23 +99,23 @@ msgstr "code de cours"
 msgid "Course code (max 10 characters)"
 msgstr "Code du cours (max 10 caractères)"
 
-#: courses/models.py:20 courses/models.py:96 courses/models.py:183
+#: courses/models.py:20 courses/models.py:99 courses/models.py:186
 msgid "description"
 msgstr "la description"
 
-#: courses/models.py:22 courses/models.py:100
+#: courses/models.py:22 courses/models.py:103
 msgid "Course description (max 800 characters)"
 msgstr "Description du cours (max 800 caractères)"
 
-#: courses/models.py:25 courses/models.py:191 discussions/models.py:64
+#: courses/models.py:25 courses/models.py:194 discussions/models.py:64
 msgid "author"
 msgstr "l'auteur"
 
-#: courses/models.py:27 courses/models.py:193
+#: courses/models.py:27 courses/models.py:196
 msgid "start date"
 msgstr "date de début"
 
-#: courses/models.py:28 courses/models.py:194
+#: courses/models.py:28 courses/models.py:197
 msgid "end date"
 msgstr "date de fin"
 
@@ -124,54 +124,59 @@ msgid "students"
 msgstr "élèves"
 
 #: courses/models.py:33
+#| msgid "Participated"
+msgid "participants"
+msgstr "les participants"
+
+#: courses/models.py:36
 msgid "instructors"
 msgstr "l'instructeur"
 
-#: courses/models.py:36
+#: courses/models.py:39
 msgid "blind data"
 msgstr "données aveugles"
 
-#: courses/models.py:38
+#: courses/models.py:41
 msgid "Defines if user data (e.g., name) should be visible or not."
 msgstr ""
 "Définit si les données utilisateur (par exemple, le nom) doivent être "
 "visibles ou non."
 
-#: courses/models.py:41
+#: courses/models.py:44
 msgid "gamification"
 msgstr "gamification"
 
-#: courses/models.py:43
+#: courses/models.py:46
 msgid "Enables voting in discussions and comments"
 msgstr "Permet de voter dans les discussions et les commentaires"
 
-#: courses/models.py:46
+#: courses/models.py:49
 msgid "show scoreboard"
 msgstr "afficher le tableau de bord"
 
-#: courses/models.py:46 courses/models.py:49
+#: courses/models.py:49 courses/models.py:52
 msgid "Requires gamification"
 msgstr "Nécessite gamification"
 
-#: courses/models.py:49
+#: courses/models.py:52
 msgid "show leaderboard"
 msgstr "afficher le classement"
 
-#: courses/models.py:52
+#: courses/models.py:55
 msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
-#: courses/models.py:56 courses/models.py:106 discussions/models.py:22
+#: courses/models.py:59 courses/models.py:109 discussions/models.py:22
 #: quiz/models.py:31 quiz/models.py:326 quiz/models.py:452 videos/models.py:82
 #: videos/models.py:97
 msgid "course"
 msgstr "le cours"
 
-#: courses/models.py:57
+#: courses/models.py:60
 msgid "courses"
 msgstr "les cours"
 
-#: courses/models.py:69
+#: courses/models.py:72
 msgid ""
 "Course end date cannot be equal or                         earlier than the "
 "start date."
@@ -179,52 +184,52 @@ msgstr ""
 "La date de fin du cours ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:75
+#: courses/models.py:78
 msgid "Scoreboard requires gamification to be enabled"
 msgstr "Le tableau de bord nécessite l'activation de la gamification"
 
-#: courses/models.py:77
+#: courses/models.py:80
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
-#: courses/models.py:82 templates/section_discussion.html:21
+#: courses/models.py:85 templates/section_discussion.html:21
 msgid "Discussion boards"
 msgstr "Forums de discussion"
 
-#: courses/models.py:83 templates/section_videos.html:31
+#: courses/models.py:86 templates/section_videos.html:31
 msgid "Videos"
 msgstr "Vidéos"
 
-#: courses/models.py:84 templates/course.html:68 templates/course.html:81
+#: courses/models.py:87 templates/course.html:68 templates/course.html:81
 #: templates/section_quiz.html:20
 msgid "Quizzes"
 msgstr "Quiz"
 
-#: courses/models.py:85
+#: courses/models.py:88
 msgid "Uploads"
 msgstr "Téléversements"
 
-#: courses/models.py:93
+#: courses/models.py:96
 msgid "Section name (max 15 characters)"
 msgstr "Nom de la section (max 15 caractères)"
 
-#: courses/models.py:109
+#: courses/models.py:112
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:117 discussions/models.py:33 quiz/models.py:46
+#: courses/models.py:120 discussions/models.py:33 quiz/models.py:46
 msgid "requirement"
 msgstr "exigence"
 
-#: courses/models.py:119 courses/models.py:203
+#: courses/models.py:122 courses/models.py:206
 msgid "published"
 msgstr "publié"
 
-#: courses/models.py:121
+#: courses/models.py:124
 msgid "create discussion"
 msgstr "créer une discussion"
 
-#: courses/models.py:124
+#: courses/models.py:127
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based "
 "on participant's video submissions."
@@ -232,7 +237,7 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: créez automatiquement un forum de "
 "discussion basé sur les soumissions vidéo des participants."
 
-#: courses/models.py:134
+#: courses/models.py:137
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the "
 "discussion boards."
@@ -240,27 +245,27 @@ msgstr ""
 "* POUR LA SECTION UPLOAD UNIQUEMENT *: Définissez la section dans laquelle "
 "créer les «forums de discussion»."
 
-#: courses/models.py:136
+#: courses/models.py:139
 msgid "section output"
 msgstr "sortie de section"
 
-#: courses/models.py:139
+#: courses/models.py:142
 msgid "show thumbnails"
 msgstr "affiche des vignettes"
 
-#: courses/models.py:142
+#: courses/models.py:145
 msgid ""
 "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
 "* POUR LES SECTIONS VIDÉO ET TÉLÉVERSER UNIQUEMENT *: permet d'afficher les "
 "miniatures vidéo."
 
-#: courses/models.py:146 courses/models.py:205 quiz/models.py:99
+#: courses/models.py:149 courses/models.py:208 quiz/models.py:99
 #: quiz/models.py:305
 msgid "custom order"
 msgstr "commande personnalisée"
 
-#: courses/models.py:155
+#: courses/models.py:158
 msgid ""
 "To set 'create discussion' or 'section output', the section type must be "
 "Upload."
@@ -268,36 +273,36 @@ msgstr ""
 "Pour définir «créer une discussion» ou «sortie de section», le type de "
 "section doit être «Téléverser»."
 
-#: courses/models.py:160
+#: courses/models.py:163
 msgid "To create a discussion you must select a discussion section output."
 msgstr ""
 "Pour créer une discussion, vous devez sélectionner une sortie de section de "
 "discussion."
 
-#: courses/models.py:165
+#: courses/models.py:168
 msgid ""
 "You can not select a section output if 'create discussions' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:174 courses/models.py:201 quiz/models.py:329
+#: courses/models.py:177 courses/models.py:204 quiz/models.py:329
 msgid "section"
 msgstr "section"
 
-#: courses/models.py:175
+#: courses/models.py:178
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:185
+#: courses/models.py:188
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
 
-#: courses/models.py:211
+#: courses/models.py:214
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:212
+#: courses/models.py:215
 msgid "section items"
 msgstr "éléments de section"
 
@@ -557,7 +562,6 @@ msgid "attempt number"
 msgstr "numéro de tentative"
 
 #: quiz/models.py:340
-#| msgid "multiple choice answer"
 msgid "multiple choice answer item"
 msgstr "élément de réponse à choix multiple"
 
@@ -648,12 +652,18 @@ msgid "Activation email sent"
 msgstr "E-mail d'activation envoyé"
 
 #: templates/account_activation_sent.html:11
+#| msgid ""
+#| "An activation email was sent with a confirmation link. Please confirm your "
+#| "email address to complete the registration."
 msgid ""
-"An activation email was sent with a confirmation link. Please confirm your "
-"email address to complete the registration."
+"An activation email was sent with a confirmation link. Please check your "
+"email account Inbox and Spam folders, and click on the link contained in the"
+" email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
-"confirmer votre adresse e-mail pour terminer l'inscription."
+"vérifier les dossiers Boîte de réception et Spam de votre compte de "
+"messagerie, puis cliquez sur le lien contenu dans l'e-mail pour terminer "
+"l'enregistrement."
 
 #: templates/base.html:23
 msgid "Return to GEN home page"
