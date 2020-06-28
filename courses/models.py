@@ -29,8 +29,8 @@ class Course(models.Model):
     students = models.ManyToManyField(
         User, related_name="member", verbose_name=_("students")
     )
-    participant = models.ManyToManyField(
-        User, related_name="participant", verbose_name=_("participants"), blank=True,
+    participants = models.ManyToManyField(
+        User, related_name="participants", verbose_name=_("participants"), blank=True,
     )
     participants_max_number = models.IntegerField(
         _("partipants max number"),

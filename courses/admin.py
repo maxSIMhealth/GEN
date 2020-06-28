@@ -17,7 +17,7 @@ class CourseAdmin(TranslationAdmin):
     # fields = ('name', 'students')
     list_display = ("name", "code", "author", "enable_gamification")
     list_filter = ("author",)
-    filter_horizontal = ("students", "instructors")
+    filter_horizontal = ("students", "instructors", "participants")
     save_as = True
 
     inlines = (SectionInline,)
