@@ -117,6 +117,8 @@ class Section(models.Model):
     section_type = models.CharField(
         _("section type"), max_length=1, choices=SECTION_TYPES
     )
+    start_date = models.DateTimeField(_("start date"), blank=True, null=True)
+    end_date = models.DateTimeField(_("end date"), blank=True, null=True)
     requirement = models.ForeignKey(
         "self",
         on_delete=models.PROTECT,
@@ -156,6 +158,16 @@ class Section(models.Model):
     )
 
     def clean(self):
+        # check course dates
+        if self.start_date and self.end_date:
+            if self.end_date <= self.start_date:
+                raise ValidationError(
+                    _(
+                        "Course end date cannot be equal or \
+                        earlier than the start date."
+                    )
+                )
+        # check parameters related to Upload Section
         if (
             self.create_discussions or self.section_output
         ) and not self.section_type == "U":

@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load i18n %}
+{% load tz %}
 {% load humanize %}
 {% load is_instructor %}
 {% load quiz_details_get %}
@@ -12,6 +13,17 @@
 
 {% block content %}
   {% with course_instructor=user|is_instructor:course %}
+
+  {% if section.start_date or section.end_data %}
+  <ul class="list-group mb-3">
+    {% if section.start_date %}
+    <li class="list-group-item"><b>{% trans "Start" %}: </b>{{section.start_date|naturaltime}} <small>({{ section.start_date}} UTC)</small></li>
+    {% endif %}
+    {% if section.end_date %}
+    <li class="list-group-item"><b>{% trans "End" %}: </b>{{section.end_date|naturaltime}} <small>({{ section.end_date}} UTC)</small></li>
+    {% endif %}
+  </ul>
+  {% endif %}
 
   {% comment %}
   {% if course_instructor %}
@@ -50,6 +62,7 @@
                 </div>
               {% endif %}
               <div class="w-100">
+
                 <h5 class="mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
 
                 {% comment %}

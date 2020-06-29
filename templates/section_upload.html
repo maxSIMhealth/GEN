@@ -11,6 +11,17 @@
 {% endblock stylesheet %}
 
 {% block content %}
+  {% if section.start_date or section.end_data %}
+  <ul class="list-group mb-3">
+    {% if section.start_date %}
+    <li class="list-group-item"><b>{% trans "Start" %}: </b>{{section.start_date|naturaltime}} <small>({{ section.start_date}} UTC)</small></li>
+    {% endif %}
+    {% if section.end_date %}
+    <li class="list-group-item"><b>{% trans "End" %}: </b>{{section.end_date|naturaltime}} <small>({{ section.end_date}} UTC)</small></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
   {% if section.description %}
   <p>{{section.description|linebreaksbr}}</p>
   {% endif %}
