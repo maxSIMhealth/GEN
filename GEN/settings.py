@@ -35,6 +35,12 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 INTERNAL_IPS = config("INTERNAL_IPS")
 
+# Email settings for sending error notifications to admins
+SERVER_EMAIL = config("SERVER_EMAIL")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
 # Application definition
 
 INSTALLED_APPS = [
