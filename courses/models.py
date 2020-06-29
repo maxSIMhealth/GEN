@@ -33,7 +33,7 @@ class Course(models.Model):
         User, related_name="participants", verbose_name=_("participants"), blank=True,
     )
     participants_max_number = models.IntegerField(
-        _("partipants max number"),
+        _("participants max number"),
         blank=True,
         null=True,
         help_text=_("maximum number of participants"),
