@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 18:40+0000\n"
-"PO-Revision-Date: 2020-06-30 18:41+0000\n"
+"POT-Creation-Date: 2020-06-30 18:59+0000\n"
+"PO-Revision-Date: 2020-06-30 19:00+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -82,6 +82,15 @@ msgstr "Activez votre compte GEN"
 #: accounts/views.py:82
 msgid "You already have an account."
 msgstr "Avez vous déjà un compte."
+
+#: accounts/views.py:113
+msgid ""
+"Try logging in now. The confirmation link has been used or expired. Get in "
+"touch if you are having issues: support@maxsimgen.com"
+msgstr ""
+"Essayez de vous connecter maintenant. Le lien de confirmation a été utilisé "
+"ou a expiré. Contactez-nous si vous rencontrez des problèmes: "
+"support@maxsimgen.com"
 
 #: courses/models.py:11 courses/models.py:99 courses/models.py:201
 msgid "name"
@@ -737,12 +746,12 @@ msgstr "Se déconnecter"
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
-#: templates/base.html:77 templates/login.html:38
+#: templates/base.html:77 templates/login.html:41
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
 #: templates/base.html:78 templates/base_accounts.html:32
-#: templates/login.html:39
+#: templates/login.html:42
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -903,23 +912,23 @@ msgstr "Oui, supprimez la vidéo"
 msgid "No, cancel"
 msgstr "Non, annuler"
 
-#: templates/login.html:10 templates/login.html:14 templates/signup.html:18
+#: templates/login.html:13 templates/login.html:17 templates/signup.html:18
 msgid "Log in"
 msgstr "S'identifier"
 
-#: templates/login.html:18
+#: templates/login.html:21
 msgid "New to GEN?"
 msgstr "Nouveau sur GEN?"
 
-#: templates/login.html:18 templates/signup.html:10
+#: templates/login.html:21 templates/signup.html:10
 msgid "Sign up"
 msgstr "S'inscrire"
 
-#: templates/login.html:28
+#: templates/login.html:31
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié?"
 
-#: templates/login.html:37
+#: templates/login.html:40
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
@@ -1111,9 +1120,6 @@ msgid "You cannot submit another video."
 msgstr "Vous ne pouvez pas soumettre une autre vidéo."
 
 #: templates/section_upload.html:48
-#| msgid ""
-#| "Uploads are <strong>private</strong>, only accessible by you and by the "
-#| "course instructor(s)."
 msgid ""
 "Uploads are <strong>private</strong>, only accessible by you and, once you "
 "publish it, by the course instructor(s). Please do not forget to "
