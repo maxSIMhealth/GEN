@@ -107,7 +107,13 @@ def activate(request, uidb64, token):
         # FIXME: finish implementing 'activation confirmed' page
         # return render(request, 'account_activation_valid.html')
     else:
-        return render(request, "account_activation_invalid.html")
+        messages.warning(
+            request,
+            _(
+                "Try logging in now. The confirmation link has been used or expired. Get in touch if you are having issues: support@maxsimgen.com"
+            ),
+        )
+        return redirect("login")
 
 
 @login_required

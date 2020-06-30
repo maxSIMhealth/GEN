@@ -7,6 +7,9 @@
 
 {% block content %}
   <div class="card-body bg-light text-dark">
+    {% if messages %}
+      {% include 'partials/messages.html' %}
+    {% endif %}
     <h3 class="card-title">{% trans "Log in" %}</h3>
     <form method="post" novalidate>
       {% csrf_token %}
