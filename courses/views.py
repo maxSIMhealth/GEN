@@ -137,8 +137,15 @@ def section_page(request, pk, section_pk):
         # getting all section items (even not published) and filtering by user
         section_items = section_object.section_items.filter(author=request.user)
         # if there is no section item, allow submission
-        if not section_items and not end_date_passed and start_date_reached:
-            allow_submission = True
+        if section_object.start_date:
+            if not section_items and start_date_reached:
+                allow_submission = True
+        elif section_object.end_date:
+            if not section_items and end_date_passed:
+                allow_submission = True
+        else:
+            if not section_items:
+                allow_submission = True
 
     return render(
         request,
