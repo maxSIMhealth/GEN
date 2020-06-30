@@ -6,13 +6,18 @@
 {% block title %}GEN - {% trans "Video player" %}{% endblock title %}
 
 {% block body %}
-  <div class="card-body">
-    <p class="card-text embed-responsive embed-responsive-16by9">
-        <video controls>
-            <source src="{{ video.file.url }}" type="video/mp4">
-            {% trans "Sorry, your browser doesn't support embedded videos." %}
-        </video>
-    </p>
+  <div class="card m-4">
+    <div class="card-body">
+      <p class="card-text text-center">
+          <video controls>
+              <source src="{{ video.file.url }}" type="video/mp4">
+              {% trans "Sorry, your browser doesn't support embedded videos." %}
+          </video>
+      </p>
+    </div>
+    <div class="card-footer">
+      <button onClick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
   </div>
 {% endblock body %}
 

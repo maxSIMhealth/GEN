@@ -205,8 +205,6 @@ def video_player(request, pk, section_pk, video_pk):
     video = get_object_or_404(VideoFile, pk=video_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
-    # FIXME: if video is on the upload section, only allow the author and
-    # the editors to have access to it
     if video.published or user == video.author:
         return render(
             request,
