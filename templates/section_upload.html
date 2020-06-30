@@ -45,7 +45,7 @@
     </h5>
     <div class="card-body pb-2 pt-2">
       <div class="alert alert-info mb-0" role="alert">
-        {% trans "Uploads are <strong>private</strong>, only accessible by you and by the course instructor(s)." %}
+        {% trans "Uploads are <strong>private</strong>, only accessible by you and, once you publish it, by the course instructor(s). Please do not forget to <strong>publish</strong> your uploads." %}
       </div>
     </div>
     <ul class="list-group list-group-flush">
@@ -83,7 +83,7 @@
     </ul>
   </div>
 
-  {% if user|is_instructor:course %}
+  {% if user|is_instructor:course or user.is_staff %}
   <div class="card border-warning mb-3 section-upload">
     <h5 class="card-header bg-light">{% trans "Participants' Uploads" %}</h5>
     <div class="card-body pb-2 pt-2">
@@ -95,8 +95,8 @@
       </div>
     </div>
     <ul class="list-group list-group-flush">
-      {% if section.section_items.all %}
-        {% for item in section.section_items.all %}
+      {% for item in section.section_items.all %}
+        {% if item.published or user.is_staff %}
           <li class="list-group-item">
             <div class="d-flex">
               {% if section.show_thumbnails %}
@@ -124,12 +124,32 @@
               </div>
             </div>
           </li>
-        {% endfor %}
-      {% else %}
+        {% else %}
+          <li class="list-group-item">
+            <div class="d-flex">
+              <div class="w-100">
+                <h5 class="mb-0 mt-1"><span>Video id {{ item.videofile.id }} (awaiting to be published by user) </span></h5>
+                <div class="video-user-info">
+                {% if course.blind_data %}
+                  <em>{% trans "By: user #" %} {{item.videofile.author.id}}</em>
+                {% else %}
+                  <em>{% trans "By:" %}</em> {{item.videofile.author.first_name}} {{item.videofile.author.last_name}} ({{item.videofile.author}})
+                {% endif %}
+                  <br />
+                  <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
+                </div>
+                {% if not course.blind_data %}
+                  <p>{{ item.videofile.description|linebreaksbr }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endif %}
+      {% empty %}
         <li class="list-group-item">
           <span>{% trans "No participant has submitted any content." %}</span>
         </li>
-      {% endif %}
+      {% endfor %}
     </ul>
   </div>
   {% endif %}
