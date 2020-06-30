@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# GEN - GAMIFIED EDUCATIONAL NETWORK
+# Copyright (C) 2020
+# This file is distributed under the same license as the GEN package.
+# Andrei Torres <andrei.torres@ontariotechu.net>, 2020.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-30 20:14+0000\n"
 "PO-Revision-Date: 2020-06-30 20:15+0000\n"
-"Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
+"Last-Translator: b'Andrei Torres <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"

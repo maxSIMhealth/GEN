@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# GEN - GAMIFIED EDUCATIONAL NETWORK
+# Copyright (C) 2020
+# This file is distributed under the same license as the GEN package.
+# Andrei Torres <andrei.torres@ontariotechu.net>, 2020.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:54+0000\n"
-"PO-Revision-Date: 2020-06-30 19:00+0000\n"
-"Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
+"POT-Creation-Date: 2020-06-30 21:14+0000\n"
+"PO-Revision-Date: 2020-06-30 21:16+0000\n"
+"Last-Translator: b'Andrei Torres <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -328,11 +328,11 @@ msgstr "Vous n'êtes pas inscrit au cours demandé."
 
 #: courses/views.py:75
 msgid ""
-"This section's contents are not yet available because the start date has not "
-"been reached."
+"This section's contents are not yet available because the start date has not"
+" been reached."
 msgstr ""
-"Le contenu de cette section n'est pas encore disponible car la date de début "
-"n'a pas été atteinte."
+"Le contenu de cette section n'est pas encore disponible car la date de début"
+" n'a pas été atteinte."
 
 #: courses/views.py:84
 msgid ""
@@ -344,8 +344,8 @@ msgstr ""
 
 #: courses/views.py:100
 msgid ""
-"This section is closed and its contents have been hidden or disabled because "
-"the end date has passed."
+"This section is closed and its contents have been hidden or disabled because"
+" the end date has passed."
 msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
@@ -502,8 +502,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
-"de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:103 quiz/models.py:187 quiz/models.py:287 quiz/models.py:333
 msgid "question"
@@ -702,8 +702,8 @@ msgstr "E-mail d'activation envoyé"
 #: templates/account_activation_sent.html:11
 msgid ""
 "An activation email was sent with a confirmation link. Please check your "
-"email account Inbox and Spam folders, and click on the link contained in the "
-"email to complete the registration."
+"email account Inbox and Spam folders, and click on the link contained in the"
+" email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
 "vérifier les dossiers Boîte de réception et Spam de votre compte de "
@@ -735,6 +735,8 @@ msgstr "Mon compte"
 #: templates/password_change.html:5 templates/password_change.html:9
 #: templates/password_change.html:14 templates/password_change.html:19
 #: templates/password_change_done.html:8
+#: templates/registration/password_reset_confirm.html:11
+#: templates/registration/password_reset_confirm.html:15
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
@@ -795,7 +797,8 @@ msgstr "Publier"
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:99 templates/course.html:67 templates/course.html:80
+#: templates/comments.html:99 templates/course.html:67
+#: templates/course.html:80
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -875,7 +878,8 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
+"attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -910,7 +914,9 @@ msgstr "Oui, supprimez la vidéo"
 msgid "No, cancel"
 msgstr "Non, annuler"
 
-#: templates/login.html:13 templates/login.html:17 templates/signup.html:18
+#: templates/login.html:13 templates/login.html:17
+#: templates/registration/password_reset_complete.html:12
+#: templates/signup.html:18
 msgid "Log in"
 msgstr "S'identifier"
 
@@ -993,8 +999,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL NOT</"
-"strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL "
+"NOT</strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -1052,6 +1058,65 @@ msgstr "Explication"
 msgid "Return to %(section_name)s"
 msgstr "Retourner à %(section_name)s"
 
+#: templates/registration/password_reset_complete.html:10
+msgid "Password reset complete"
+msgstr "Réinitialisation du mot de passe terminée"
+
+#: templates/registration/password_reset_complete.html:11
+msgid "Your password has been set. You may go ahead and log in now."
+msgstr ""
+"Votre mot de passe a été défini. Vous pouvez continuer et vous connecter "
+"maintenant."
+
+#: templates/registration/password_reset_confirm.html:18
+#| msgid ""
+#| "The confirmation link used is invalid, possibly because it has already been "
+#| "used or it has expired."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+"Le lien de réinitialisation du mot de passe n'était pas valide, peut-être "
+"parce qu'il a déjà été utilisé. Veuillez demander une nouvelle "
+"réinitialisation du mot de passe."
+
+#: templates/registration/password_reset_done.html:10
+#: templates/registration/password_reset_form.html:10
+#| msgid "Password change successful"
+msgid "Password reset"
+msgstr "Réinitialisation du mot de passe"
+
+#: templates/registration/password_reset_done.html:11
+msgid ""
+"\n"
+"    <p>We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly.</p>\n"
+"    <p>If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder.</p>\n"
+"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a></p>\n"
+"    "
+msgstr ""
+"\n"
+"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot de passe, si un compte existe avec l'e-mail que vous avez entré. Vous devriez les recevoir sous peu.</p>\n"
+"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
+"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
+
+#: templates/registration/password_reset_done.html:16
+#| msgid "Return to home page"
+msgid "Return to login page"
+msgstr "Retour à la page de connexion"
+
+#: templates/registration/password_reset_form.html:11
+msgid ""
+"Forgotten your password? Enter your email address below, and we’ll email "
+"instructions for setting a new one."
+msgstr ""
+"Mot de passe oublié? Saisissez votre adresse e-mail ci-dessous et nous vous "
+"enverrons par e-mail des instructions pour en définir une nouvelle."
+
+#: templates/registration/password_reset_form.html:15
+#| msgid "Set your password now."
+msgid "Reset my password"
+msgstr "Réinitialiser mon mot de passe"
+
 #: templates/section_discussion.html:36
 msgid "Create new"
 msgstr "Créer un nouveau"
@@ -1077,13 +1142,11 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>"
-"%(requirement)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
-"%(requirement)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
 
 #: templates/section_discussion.html:109
 msgid "No discussion board available."
@@ -1249,13 +1312,11 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s "
-"%(google_last_name)s\n"
+"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s "
-"%(google_last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1285,8 +1346,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
-"Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1394,10 +1455,8 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "scale max"
 #~ msgstr "échelle max"
 
-#~ msgid ""
-#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr ""
-#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
 
 #~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
 #~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."
