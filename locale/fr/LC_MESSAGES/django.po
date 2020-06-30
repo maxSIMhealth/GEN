@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-29 19:59+0000\n"
-"PO-Revision-Date: 2020-06-29 20:00+0000\n"
+"POT-Creation-Date: 2020-06-30 18:40+0000\n"
+"PO-Revision-Date: 2020-06-30 18:41+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -128,7 +128,6 @@ msgid "participants"
 msgstr "les participants"
 
 #: courses/models.py:36
-#| msgid "attempts max number"
 msgid "participants max number"
 msgstr "nombre maximum de participants"
 
@@ -702,60 +701,60 @@ msgstr ""
 "messagerie, puis cliquez sur le lien contenu dans l'e-mail pour terminer "
 "l'enregistrement."
 
-#: templates/base.html:23
+#: templates/base.html:25
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: templates/base.html:24
+#: templates/base.html:26
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: templates/base.html:26
+#: templates/base.html:28
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: templates/base.html:32
+#: templates/base.html:34
 msgid "Help"
 msgstr "Aidez-moi"
 
-#: templates/base.html:40 templates/my_account.html:6
+#: templates/base.html:42 templates/my_account.html:6
 #: templates/my_account.html:10
 msgid "My account"
 msgstr "Mon compte"
 
-#: templates/base.html:41 templates/password.html:5 templates/password.html:9
+#: templates/base.html:43 templates/password.html:5 templates/password.html:9
 #: templates/password_change.html:5 templates/password_change.html:9
 #: templates/password_change.html:14 templates/password_change.html:19
 #: templates/password_change_done.html:8
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/base.html:43
+#: templates/base.html:45
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/base.html:74
+#: templates/base.html:76
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
-#: templates/base.html:75 templates/login.html:38
+#: templates/base.html:77 templates/login.html:38
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/base.html:76 templates/base_accounts.html:32
+#: templates/base.html:78 templates/base_accounts.html:32
 #: templates/login.html:39
 msgid "Developed at"
 msgstr "Développé à"
 
-#: templates/base_course_section.html:30
+#: templates/base_course_section.html:28
 msgid "Sections"
 msgstr "Sections"
 
-#: templates/base_course_section.html:31
+#: templates/base_course_section.html:29
 msgid "Toggle sections list"
 msgstr "Basculer la liste des sections"
 
-#: templates/base_course_section.html:38 templates/course.html:19
+#: templates/base_course_section.html:36 templates/course.html:19
 msgid "Info"
 msgstr "Info"
 
@@ -1112,12 +1111,17 @@ msgid "You cannot submit another video."
 msgstr "Vous ne pouvez pas soumettre une autre vidéo."
 
 #: templates/section_upload.html:48
+#| msgid ""
+#| "Uploads are <strong>private</strong>, only accessible by you and by the "
+#| "course instructor(s)."
 msgid ""
-"Uploads are <strong>private</strong>, only accessible by you and by the "
-"course instructor(s)."
+"Uploads are <strong>private</strong>, only accessible by you and, once you "
+"publish it, by the course instructor(s). Please do not forget to "
+"<strong>publish</strong> your uploads."
 msgstr ""
-"Les téléversements sont <strong>privés</strong>, uniquement accessibles par "
-"vous et par le ou les formateurs."
+"Les téléversements sont <strong>privés</strong>, accessibles uniquement par "
+"vous et, une fois que vous les avez publiés, par le ou les formateurs. "
+"N'oubliez pas de <strong>publier</strong> vos téléchargements."
 
 #: templates/section_upload.html:66
 msgid ""
@@ -1155,19 +1159,20 @@ msgstr "Ce sont les vidéos qui ont été soumises par les participants."
 msgid "This data has been anonymized."
 msgstr "Ces données ont été anonymisées."
 
-#: templates/section_upload.html:111
+#: templates/section_upload.html:111 templates/section_upload.html:134
 msgid "By: user #"
 msgstr "Par: utilisateur #"
 
 #: templates/section_upload.html:113 templates/section_upload.html:120
+#: templates/section_upload.html:139
 msgid "Submission date:"
 msgstr "Date de soumission:"
 
-#: templates/section_upload.html:118
+#: templates/section_upload.html:118 templates/section_upload.html:136
 msgid "By:"
 msgstr "Par:"
 
-#: templates/section_upload.html:130
+#: templates/section_upload.html:150
 msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
 
@@ -1295,7 +1300,7 @@ msgstr "Nouvelles informations vidéo"
 msgid "Video player"
 msgstr "Lecteur vidéo"
 
-#: templates/video_player.html:13
+#: templates/video_player.html:14
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
