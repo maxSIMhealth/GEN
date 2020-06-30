@@ -14,7 +14,7 @@
   </ol>
   {% endcomment %}
 
-  <div class="card bg-dark mb-3">
+  <div class="card bg-dark mb-3" id="course-name">
     <div class="card-header">
       <h5 class="card-text text-white p-0">{{ course.name }}</h5>
     </div>
@@ -22,7 +22,7 @@
 
   <div class="row">
     <div class="col-lg-2 order-lg-1">
-      <div class="card mb-3">
+      <div class="card mb-3" id="sections-navbar">
         <nav class="card-header navbar navbar-expand-lg navbar-light">
           <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
           <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
@@ -39,8 +39,8 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-10 order-lg-2">
-      <h2 class="mb-3">
+    <div class="col-lg-10 order-lg-2" id="section-content">
+      <h2 class="mb-3" id="section-name">
       {% block content_title %}
         {{ section.name }}
       {% endblock content_title %}
@@ -56,3 +56,171 @@
     </div>
   </div>
 {% endblock container %}
+
+{% block javascript_bottom %}
+<script>
+const tour = new Shepherd.Tour({
+  defaultStepOptions: {
+    cancelIcon: {
+      enabled: true
+    },
+    classes: 'shadow-md',
+    scrollTo: { behavior: 'smooth', block: 'center' }
+  },
+  useModalOverlay: true,
+});
+
+const steps = [
+  {
+    title: 'GEN Guide',
+    text: 'Welcome to GEN\'s help. This quick guide will briefly explain each area of GEN\'s interface.',
+    buttons: [
+      {
+        action: function() {
+          return this.next();
+        },
+        text: 'Next'
+      }
+    ],
+    id: 'start'
+  },
+  {
+    title: 'Top navigation bar',
+    text: 'In this area are located two elements: <b>Help</b> (which activated this guide) and <b>your username and avatar</b>, which gives access to your account info, change password, and logging out from GEN.',
+    attachTo: {
+      element: '#main-navbar',
+      on: 'bottom'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: 'Back'
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: 'Next'
+      }
+    ],
+    id: 'navbar-main'
+  },
+  {
+    title: 'Course Name',
+    text: 'This area display the current course name.',
+    attachTo: {
+      element: '#course-name',
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: 'Back'
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: 'Next'
+      }
+    ],
+    id: 'course-name'
+  },
+  {
+    title: 'Sections',
+    text: 'This interactable element allows you to navigate through the sections available in the current course. You should follow these sections in the order they are presented. If one of the sections has any requirements, it will also be shown here.',
+    attachTo: {
+      element: '#sections-navbar',
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: 'Back'
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: 'Next'
+      }
+    ],
+    id: 'navbar-sections'
+  },
+  {
+    title: 'Section content',
+    text: 'This is the main content area, where the selected section data is displayed and most GEN interactions takes place.',
+    attachTo: {
+      element: '#section-content',
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: 'Back'
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: 'Next'
+      }
+    ],
+    id: 'section-content'
+  },
+  {
+    title: 'Support',
+    text: 'If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide, bye.',
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: 'Back'
+      },
+      {
+        action: function() {
+          return this.complete();
+        },
+        text: 'Close'
+      }
+    ],
+    id: 'section-content'
+  },
+]
+
+// tour.addStep({
+//   id: 'example-step',
+//   text: 'This step is attached to the bottom of the <code>.example-css-selector</code> element.',
+//   attachTo: {
+//     element: '.example-css-selector',
+//     on: 'bottom'
+//   },
+//   classes: 'example-step-extra-class',
+//   buttons: [
+//     {
+//       text: 'Next',
+//       action: tour.next
+//     }
+//   ]
+// });
+
+tour.addSteps(steps);
+
+tour.start();
+
+</script>
+{% endblock javascript_bottom %}
