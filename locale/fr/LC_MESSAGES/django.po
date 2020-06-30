@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 18:59+0000\n"
+"POT-Creation-Date: 2020-06-30 19:54+0000\n"
 "PO-Revision-Date: 2020-06-30 19:00+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,11 +328,11 @@ msgstr "Vous n'êtes pas inscrit au cours demandé."
 
 #: courses/views.py:75
 msgid ""
-"This section's contents are not yet available because the start date has not"
-" been reached."
+"This section's contents are not yet available because the start date has not "
+"been reached."
 msgstr ""
-"Le contenu de cette section n'est pas encore disponible car la date de début"
-" n'a pas été atteinte."
+"Le contenu de cette section n'est pas encore disponible car la date de début "
+"n'a pas été atteinte."
 
 #: courses/views.py:84
 msgid ""
@@ -344,8 +344,8 @@ msgstr ""
 
 #: courses/views.py:100
 msgid ""
-"This section is closed and its contents have been hidden or disabled because"
-" the end date has passed."
+"This section is closed and its contents have been hidden or disabled because "
+"the end date has passed."
 msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
@@ -502,8 +502,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
-" de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
+"de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:103 quiz/models.py:187 quiz/models.py:287 quiz/models.py:333
 msgid "question"
@@ -702,55 +702,55 @@ msgstr "E-mail d'activation envoyé"
 #: templates/account_activation_sent.html:11
 msgid ""
 "An activation email was sent with a confirmation link. Please check your "
-"email account Inbox and Spam folders, and click on the link contained in the"
-" email to complete the registration."
+"email account Inbox and Spam folders, and click on the link contained in the "
+"email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
 "vérifier les dossiers Boîte de réception et Spam de votre compte de "
 "messagerie, puis cliquez sur le lien contenu dans l'e-mail pour terminer "
 "l'enregistrement."
 
-#: templates/base.html:25
+#: templates/base.html:24
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: templates/base.html:26
+#: templates/base.html:25
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: templates/base.html:28
+#: templates/base.html:27
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: templates/base.html:34
+#: templates/base.html:33
 msgid "Help"
 msgstr "Aidez-moi"
 
-#: templates/base.html:42 templates/my_account.html:6
+#: templates/base.html:41 templates/my_account.html:6
 #: templates/my_account.html:10
 msgid "My account"
 msgstr "Mon compte"
 
-#: templates/base.html:43 templates/password.html:5 templates/password.html:9
+#: templates/base.html:42 templates/password.html:5 templates/password.html:9
 #: templates/password_change.html:5 templates/password_change.html:9
 #: templates/password_change.html:14 templates/password_change.html:19
 #: templates/password_change_done.html:8
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/base.html:45
+#: templates/base.html:44
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/base.html:76
+#: templates/base.html:75
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
-#: templates/base.html:77 templates/login.html:41
+#: templates/base.html:76 templates/login.html:41
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/base.html:78 templates/base_accounts.html:32
+#: templates/base.html:77 templates/base_accounts.html:32
 #: templates/login.html:42
 msgid "Developed at"
 msgstr "Développé à"
@@ -795,8 +795,7 @@ msgstr "Publier"
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:99 templates/course.html:67
-#: templates/course.html:80
+#: templates/comments.html:99 templates/course.html:67 templates/course.html:80
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -876,8 +875,7 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
-"attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -995,8 +993,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL "
-"NOT</strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL NOT</"
+"strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -1079,11 +1077,13 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>"
+"%(requirement)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
+"%(requirement)s</u>. </em>"
 
 #: templates/section_discussion.html:109
 msgid "No discussion board available."
@@ -1249,11 +1249,13 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
+"                  Connected as %(google_uid)s - %(google_first_name)s "
+"%(google_last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s "
+"%(google_last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1283,8 +1285,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
-" Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
+"Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1392,8 +1394,10 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "scale max"
 #~ msgstr "échelle max"
 
-#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#~ msgid ""
+#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr ""
+#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
 
 #~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
 #~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."

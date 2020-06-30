@@ -12,7 +12,7 @@
 {% endcomment %}
 
 {% block content %}
-  <div class="card bg-dark mb-3">
+  <div class="card bg-dark mb-3" id="page-name">
     <div class="card-header">
       <h5 class="card-text text-white p-0">{% trans "Home" %}</h5>
     </div>
@@ -22,7 +22,7 @@
     {% include 'partials/messages.html' %}
   {% endif %}
 
-  <div class="card">
+  <div class="card" id="courses">
     <h5 class="card-header bg-light">
       <div class="row">
         <div class="col-10 pt-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</div>

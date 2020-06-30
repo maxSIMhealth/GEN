@@ -45,8 +45,13 @@
 ## Locale (i18n) messages
 - Install GNU gettext: `sudo apt install gettext`
 - This project is currenctly configured to support *en* and *fr*
-- To regenerate locale messages for French (fr) run: `python manage.py makemessages -l 'fr' --ignore venv --ignore static`
-  - The *--ignore* flag is necessary to make it ignore the venv (virtualenv) directory
+- To regenerate locale messages for French (fr) run:
+  ```
+  python manage.py makemessages -l 'fr' --ignore venv --ignore static
+  python manage.py makemessages -l 'fr' -d djangojs --ignore bootstrap.min.js
+  ```
+    - The first command generates strings based on python and html files. The *--ignore* flag is necessary to make it ignore the venv (virtualenv) directory.
+    - The second command generates strings based on javascript files. The *--ignore* flag is necessary because bootstrap causes an error that interrupts the command.
 - Now compile the messages: `python manage.py compilemessages`
 - The `.po` files will be at `locale/*language_code*/LC_MESSAGES`. For example, `locale/fr/LC_MESSAGES/django.po`.
 - Access `/rosetta` to translate the `.po` files

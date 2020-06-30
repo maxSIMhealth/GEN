@@ -1,0 +1,129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-30 20:14+0000\n"
+"PO-Revision-Date: 2020-06-30 20:15+0000\n"
+"Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.9.4\n"
+
+#: static/js/help-guide-course.js:1 static/js/help-guide-home.js:1
+msgid "Next"
+msgstr "Procéder"
+
+#: static/js/help-guide-course.js:2 static/js/help-guide-home.js:2
+msgid "Back"
+msgstr "Arrière"
+
+#: static/js/help-guide-course.js:3 static/js/help-guide-home.js:3
+msgid "Close"
+msgstr "Fermer"
+
+#: static/js/help-guide-course.js:18 static/js/help-guide-home.js:18
+msgid "GEN Guide"
+msgstr "Guide GEN"
+
+#: static/js/help-guide-course.js:19 static/js/help-guide-home.js:19
+msgid ""
+"Welcome to GEN's help. This quick guide will briefly explain each area of "
+"GEN's interface."
+msgstr ""
+"Bienvenue dans l'aide de GEN. Ce guide rapide expliquera brièvement chaque "
+"domaine de l'interface de GEN."
+
+#: static/js/help-guide-course.js:31 static/js/help-guide-home.js:31
+msgid "Top navigation bar"
+msgstr "Barre de navigation supérieure"
+
+#: static/js/help-guide-course.js:32 static/js/help-guide-home.js:32
+msgid ""
+"In this area are located two elements: <b>Help</b> (which activated this "
+"guide) and <b>your username and avatar</b>, which gives access to your "
+"account info, change password, and logging out from GEN."
+msgstr ""
+"Dans cette zone se trouvent deux éléments: <b>Aide</b> (qui a activé ce "
+"guide) et <b>votre nom d'utilisateur et votre avatar</b>, qui donne accès à "
+"vos informations de compte, changer de mot de passe et vous déconnecter de "
+"GEN."
+
+#: static/js/help-guide-course.js:55
+#| msgid "Courses"
+msgid "Course Name"
+msgstr "Nom du cours"
+
+#: static/js/help-guide-course.js:56
+#| msgid "This area display the current page name."
+msgid "This area display the current course name."
+msgstr "Cette zone affiche le nom du cours actuel."
+
+#: static/js/help-guide-course.js:79
+msgid "Sections"
+msgstr "Sections"
+
+#: static/js/help-guide-course.js:80
+msgid ""
+"This interactable element allows you to navigate through the sections "
+"available in the current course. You should follow these sections in the "
+"order they are presented. If one of the sections has any requirements, it "
+"will also be shown here."
+msgstr ""
+"Cet élément interactif vous permet de parcourir les sections disponibles "
+"dans le cours en cours. Vous devez suivre ces sections dans l'ordre où elles"
+" sont présentées. Si l'une des sections a des exigences, elle sera également"
+" affichée ici."
+
+#: static/js/help-guide-course.js:103
+msgid "Section content"
+msgstr "Contenu de la section"
+
+#: static/js/help-guide-course.js:104
+msgid ""
+"This is the main content area, where the selected section data is displayed "
+"and most GEN interactions takes place."
+msgstr ""
+"Il s'agit de la zone de contenu principale, où les données de section "
+"sélectionnées sont affichées et la plupart des interactions GEN ont lieu."
+
+#: static/js/help-guide-course.js:127 static/js/help-guide-home.js:103
+msgid "Getting support"
+msgstr "Obtenir de l'aide"
+
+#: static/js/help-guide-course.js:128 static/js/help-guide-home.js:104
+msgid ""
+"If you need to get in touch in case of any questions or issues, please send "
+"an email to <a "
+"href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Thank"
+" you for using this guide, bye."
+msgstr ""
+"Si vous avez besoin de nous contacter en cas de questions ou de problèmes, "
+"veuillez envoyer un e-mail à <a href=\"mailto:support@maxsimgen.com\"> "
+"support@maxsimgen.com </a>. <br> <br> Merci d'avoir utilisé ce guide, au "
+"revoir."
+
+#: static/js/help-guide-home.js:55
+msgid "Page Name"
+msgstr "Nom de la page"
+
+#: static/js/help-guide-home.js:56
+msgid "This area display the current page name."
+msgstr "Cette zone affiche le nom de la page actuelle."
+
+#: static/js/help-guide-home.js:79
+msgid "Courses"
+msgstr "Cours"
+
+#: static/js/help-guide-home.js:80
+msgid "Here are listed the courses in which you are currently enrolled."
+msgstr "Voici la liste des cours auxquels vous êtes actuellement inscrit."

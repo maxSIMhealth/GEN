@@ -22,6 +22,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+from django.views.i18n import JavaScriptCatalog
 
 
 from accounts import views as account_views
@@ -160,6 +161,10 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(path("admin/", admin.site.urls),)
+
+urlpatterns += i18n_patterns(
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+)
 
 if settings.DEBUG:
     # enable rosetta

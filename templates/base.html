@@ -83,13 +83,14 @@
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/shepherd.min.js' %}"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <script>
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
     </script>
     {% block javascript_bottom %}
-
+    <script src="{% static 'js/help-guide-home.js' %}"></script>
     {% endblock javascript_bottom %}
   </body>
 </html>
