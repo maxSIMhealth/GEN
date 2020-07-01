@@ -6,9 +6,7 @@ ADMINS = [('Name1', 'name1@domain.com'), ('Name2', 'name2@domain.com')]
 
 # Email settings
 SERVER_EMAIL = "system-email@domain.com"
-EMAIL_HOST = "smtp.domain.com"
-EMAIL_HOST_USER = "username@domain.com"
-EMAIL_HOST_PASSWORD = "smpt_password"
+DEFAULT_FROM_EMAIL = "system-donotreply@domain.com"
 
 # Database
 # Remember to set the DATABASE_URL values
