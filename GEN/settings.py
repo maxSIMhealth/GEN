@@ -213,6 +213,9 @@ if not DEBUG:
 # E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+SENDGRID_TRACK_EMAIL_OPENS = True
+SENDGRID_TRACK_CLICKS_HTML = False
+SENDGRID_TRACK_CLICKS_PLAIN = False
 # Toggle sandbox mode (when running in DEBUG mode)
 SENDGRID_SANDBOX_MODE_IN_DEBUG = DEBUG
 # echo to stdout or any other file-like object that is passed
