@@ -19,8 +19,8 @@ class UploadVideoForm(forms.ModelForm):
     )
     file = forms.FileField(
         label=_("File"),
-        widget=forms.FileInput(attrs={"accept": "video/mp4"}),
-        help_text=_("Please upload a video file (mp4 or mov)"),
+        widget=forms.FileInput(attrs={"accept": "video/mp4,video/quicktime"}),
+        help_text=_("Select a video to upload. Accepted video formats are: mp4, mov."),
     )
 
     class Meta:

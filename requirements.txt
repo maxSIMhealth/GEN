@@ -36,3 +36,4 @@ django-import-export==2.2.0
 safety==1.9.0
 django-rosetta==0.9.4
 django-modeltranslation==0.15
+django-upload-validator==1.1.5

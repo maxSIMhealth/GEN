@@ -4,12 +4,13 @@ import os
 import tempfile
 import uuid
 
-from django.core.validators import FileExtensionValidator
+# from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import ffmpeg
 from GEN.support_methods import duplicate_item, duplicate_name
 from PIL import Image
+from upload_validator import FileTypeValidator
 
 from courses.models import Course, SectionItem
 
@@ -97,7 +98,12 @@ class VideoFile(SectionItem):
         verbose_name=_("course"),
     )
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
-    file = models.FileField(_("file"), upload_to=user_directory_path)
+    file = models.FileField(
+        _("file"),
+        upload_to=user_directory_path,
+        # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
+        validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
+    )
     internal_name = models.CharField(
         _("internal name"),
         max_length=255,
@@ -110,7 +116,7 @@ class VideoFile(SectionItem):
     )
     # discussion = models.ForeignKey(
     #     Discussion, on_delete=models.CASCADE, related_name='video')
-    validators = [FileExtensionValidator(allowed_extensions=("mp4"))]
+    # validators = [FileExtensionValidator(allowed_extensions=("mp4"))]
 
     class Meta:
         verbose_name = _("video file")
