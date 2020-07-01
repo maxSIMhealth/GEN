@@ -36,7 +36,7 @@ from videos import views as video_views
 urlpatterns = [
     path(
         "favicon.ico",
-        RedirectView.as_view(url=staticfiles_storage.url("im/favicon.ico")),
+        RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico")),
     ),
     path("", dashboard_views.dashboard, name="home"),
     path("dashboard/", dashboard_views.dashboard, name="dashboard"),
@@ -56,8 +56,8 @@ urlpatterns = [
         auth_views.PasswordResetDoneView.as_view(),
         name="password_reset_done",
     ),
-    url(
-        r"^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
+    path(
+        "reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),

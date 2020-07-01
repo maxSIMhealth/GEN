@@ -15,6 +15,7 @@ import os
 from decouple import config, Csv
 import dj_database_url
 from django.contrib.messages import constants as messages
+from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -37,6 +38,7 @@ INTERNAL_IPS = config("INTERNAL_IPS")
 
 # Email settings for sending error notifications to admins
 if not DEBUG:
+    LOGGING['handlers']['mail_admins']['include_html'] = True
     SERVER_EMAIL = config("SERVER_EMAIL")
     EMAIL_HOST = config("EMAIL_HOST")
     EMAIL_HOST_USER = config("EMAIL_HOST_USER")
@@ -198,12 +200,15 @@ if not DEBUG:
     # Security / HTTPS / TLS
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_DOMAIN = 'maxsimgen.com'
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_SECONDS = 60
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_REFERRER_POLICY = "same-origin"
+    os.environ['wsgi.url_scheme'] = 'https'
 
 # E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
