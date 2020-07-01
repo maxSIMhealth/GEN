@@ -9,5 +9,6 @@
   <div class="card-body bg-light text-dark">
     <h3 class="card-title">{% trans "Activation email sent" %}</h3>
     <p class="card-text">{% trans "An activation email was sent with a confirmation link. Please check your email account Inbox and Spam folders, and click on the link contained in the email to complete the registration." %}</p>
+    <a href="{% url 'home' %}" class="btn btn-primary btn-block">{% trans "Return to login page" %}</a>
   </div>
 {% endblock content %}
