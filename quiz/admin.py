@@ -282,7 +282,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
         "created",
     )
     # list_filter = ("course", "quiz", "question", "attempt_number")
-    list_filter = ("course", "quiz", "attempt_number")
+    list_filter = ("course", "student", "quiz", "attempt_number")
     resource_class = QuestionAttemptResource
 
     # search_fields = ('quiz', 'course', 'question', 'student')
