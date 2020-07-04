@@ -53,7 +53,7 @@ const steps = [
   },
   {
     title: gettext('Course Name'),
-    text: gettext('This area display the current course name.'),
+    text: gettext('This area displays the current course name.'),
     attachTo: {
       element: '#course-name',
       on: 'auto'

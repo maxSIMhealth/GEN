@@ -53,7 +53,7 @@ const steps = [
   },
   {
     title: gettext('Page Name'),
-    text: gettext('This area display the current page name.'),
+    text: gettext('This area displays the current page name.'),
     attachTo: {
       element: '#page-name',
       on: 'auto'

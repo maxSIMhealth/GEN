@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-30 21:14+0000\n"
-"PO-Revision-Date: 2020-06-30 21:16+0000\n"
-"Last-Translator: b'Andrei Torres <andrei.torres@ontariotechu.ca>'\n"
+"PO-Revision-Date: 2020-07-04 00:11+0000\n"
+"Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -724,7 +724,7 @@ msgstr "Basculer la navigation"
 
 #: templates/base.html:33
 msgid "Help"
-msgstr "Aidez-moi"
+msgstr "Aide"
 
 #: templates/base.html:41 templates/my_account.html:6
 #: templates/my_account.html:10
@@ -1056,7 +1056,7 @@ msgstr "Explication"
 #: templates/quiz_result.html:152
 #, python-format
 msgid "Return to %(section_name)s"
-msgstr "Retourner à %(section_name)s"
+msgstr "Retourner au %(section_name)s"
 
 #: templates/registration/password_reset_complete.html:10
 msgid "Password reset complete"
