@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     "django_extensions",
     "import_export",
+    "sri",
     "rosetta",
     "core",
     "accounts",
@@ -205,7 +206,7 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_SECONDS = 31536000 
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_REFERRER_POLICY = "same-origin"
     os.environ['wsgi.url_scheme'] = 'https'

@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load show_sections %}
+{% load sri %}
 
 {% block title %}GEN - {{ course.code }} - {{course.name}} {% endblock title %}
 
@@ -58,5 +59,5 @@
 {% endblock container %}
 
 {% block javascript_bottom %}
-<script src="{% static 'js/help-guide-course.js' %}"></script>
+{% sri_static "js/help-guide-course.js" %}
 {% endblock javascript_bottom %}

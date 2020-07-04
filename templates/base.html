@@ -1,6 +1,7 @@
 {% load static %}
 {% load gravatar %}
 {% load i18n %}
+{% load sri %}
 
 <!DOCTYPE html>
 <html>
@@ -8,11 +9,11 @@
     <meta charset="utf-8">
     <title>{% block title %}GEN{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'css/shepherd.css' %}">
+    {% sri_static "css/bootstrap.min.css" %}
+    {% sri_static "css/custom.css" %}
+    {% sri_static "css/shepherd.css" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="https://kit.fontawesome.com/e4320a90e5.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e4320a90e5.js" crossorigin="anonymous" integrity="sha384-eoEIP4kL867FWM1D0Gem6jxjxMlsD5jiBy1lo9hB45B9e6PLQZ96UxgVowiBgMxx"></script>
 
     {% block stylesheet %}
     {% endblock stylesheet %}
@@ -79,18 +80,22 @@
     </div>
     {% endblock footer %}
 
-    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/shepherd.min.js' %}"></script>
+    {% sri_static "js/jquery-3.3.1.slim.min.js" %}
+    {% sri_static "js/popper.min.js" %}
+    {% sri_static "js/bootstrap.min.js" %}
+    {% sri_static "js/shepherd.min.js" %}
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    {% comment %}
+    {% url 'javascript-catalog' as javascript_catalog_url %}
+    {% sri_static javascript_catalog_url %}
+    {% endcomment %}
     <script>
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
     </script>
     {% block javascript_bottom %}
-    <script src="{% static 'js/help-guide-home.js' %}"></script>
+    {% sri_static "js/help-guide-home.js" %}
     {% endblock javascript_bottom %}
   </body>
 </html>
