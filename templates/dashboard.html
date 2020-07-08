@@ -4,6 +4,7 @@
 {% load humanize %}
 {% load gravatar %}
 {% load countscore %}
+{% load is_instructor %}
 
 {% comment %}
 {% block breadcrumb %}
@@ -34,7 +35,14 @@
     <div class="card-body p-0">
       <ul class="list-group list-group-flush">
         {% for course in user.member.all %}
-          <li class="list-group-item"><a href="{% url 'course' course.pk %}">{{ course.code }} - {{ course.name }}</a></li>
+          <li class="list-group-item">
+            <a href="{% url 'course' course.pk %}">
+              {% if user|is_instructor:course %}
+                {{ course.code }} -
+              {% endif %}
+              {{ course.name }}
+            </a>
+          </li>
         {% empty %}
           <li class="list-group-item">{% trans 'Not enrolled in any course. Please wait for the administrator to assign you.' %}</li>
         {% endfor %}

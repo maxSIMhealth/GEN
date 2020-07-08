@@ -4,16 +4,12 @@
 {% load i18n %}
 {% load humanize %}
 {% load countscore %}
+{% load is_instructor %}
 {% load show_sections %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
-
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-  <li class="breadcrumb-item active">{{ course.code }}</li>
-{% endblock breadcrumb %}
 
 {% block content_tabs %}
   <a class="list-group-item list-group-item-action active" href="#">{% trans "Info" %}</a>
@@ -29,10 +25,12 @@
         <h5 class="card-header bg-light">{% trans "Course details" %}</h5>
           <table class="table course-info mb-0">
             <tbody>
+              {% if user|is_instructor:course %}
               <tr>
                 <th scope="row" class="th-small pl-4">{% trans "Code" %}</th>
                 <td class="pr-4">{{course.code}}</td>
               </tr>
+              {% endif %}
 
               {% if course.start_date %}
               <tr>
