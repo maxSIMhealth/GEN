@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load humanize %}
+{% load sri %}
 {% load check_attribute %}
 {% load likert_range %}
 
@@ -67,6 +68,14 @@
                 </label>
               </li>
               {% endfor %}
+
+              {% if question.multiple_correct_answers %}
+              <li class="list-group-item">
+                <a href="javascript:void(0);" class="btn btn-secondary" onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
+                <a href="javascript:void(0);" class="btn btn-secondary"  onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
+              </li>
+              {% endif %}
+
             </ul>
 
             {% elif question.question_type == 'L' %}
@@ -106,3 +115,8 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block javascript_bottom %}
+{% sri_static "js/help-guide-course.js" %}
+{% sri_static "js/quiz.js" %}
+{% endblock javascript_bottom %}

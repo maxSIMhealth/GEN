@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-12 01:45+0000\n"
-"PO-Revision-Date: 2020-07-12 01:45+0000\n"
+"POT-Creation-Date: 2020-07-12 17:46+0000\n"
+"PO-Revision-Date: 2020-07-12 17:46+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -380,11 +380,13 @@ msgid "The max length for the discussion board description is 400."
 msgstr ""
 "La longueur maximale pour la description du forum de discussion est de 400."
 
-#: discussions/forms.py:46 templates/quiz.html:102 videos/forms.py:44
+#: discussions/forms.py:46 templates/quiz.html:111 videos/forms.py:46
+#: videos/forms.py:68
 msgid "Submit"
 msgstr "Soumettre"
 
-#: discussions/forms.py:49 templates/quiz.html:103 videos/forms.py:48
+#: discussions/forms.py:49 templates/quiz.html:112 videos/forms.py:50
+#: videos/forms.py:72
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -778,7 +780,7 @@ msgstr "Info"
 msgid "Please login to like"
 msgstr "Veuillez vous connecter pour aimer"
 
-#: templates/comments.html:56 templates/quiz.html:29
+#: templates/comments.html:56 templates/quiz.html:30
 msgid "Sorry, your browser does not support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
@@ -901,7 +903,7 @@ msgstr "Voulez-vous vraiment supprimer la vidéo suivante?"
 
 #: templates/delete_video_confirmation.html:13
 #: templates/publish_video_confirmation.html:13
-#: templates/section_upload.html:58 templates/section_upload.html:104
+#: templates/section_upload.html:58 templates/section_upload.html:110
 #: templates/section_videos.html:59
 msgid "Video thumbnail"
 msgstr "Vignette vidéo"
@@ -1016,15 +1018,23 @@ msgstr ""
 msgid "Yes, publish video"
 msgstr "Oui, publier une vidéo"
 
-#: templates/quiz.html:21
+#: templates/quiz.html:22
 msgid "Video"
 msgstr "Vidéo"
 
-#: templates/quiz.html:40
+#: templates/quiz.html:41
 msgid "Questions"
 msgstr "Des questions"
 
-#: templates/quiz.html:86 templates/quiz_result.html:120
+#: templates/quiz.html:74
+msgid "Select all"
+msgstr "Tout sélectionner"
+
+#: templates/quiz.html:75
+msgid "Deselect all"
+msgstr "Tout déselectionner"
+
+#: templates/quiz.html:95 templates/quiz_result.html:120
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
@@ -1188,7 +1198,7 @@ msgstr ""
 "vous et, une fois que vous les avez publiés, par le ou les formateurs. "
 "N'oubliez pas de <strong>publier</strong> vos téléchargements."
 
-#: templates/section_upload.html:66
+#: templates/section_upload.html:72
 msgid ""
 "<strong>WARNING:</strong> after publishing you will not be able to delete "
 "this submission."
@@ -1196,48 +1206,48 @@ msgstr ""
 "<strong>AVERTISSEMENT:</strong> après la publication, vous ne pourrez pas "
 "supprimer cette soumission."
 
-#: templates/section_upload.html:66
+#: templates/section_upload.html:72
 msgid "Publish submission"
 msgstr "Publier la soumission"
 
-#: templates/section_upload.html:67 templates/section_videos.html:110
+#: templates/section_upload.html:73 templates/section_videos.html:110
 msgid "Delete"
 msgstr "Supprimer"
 
-#: templates/section_upload.html:70
+#: templates/section_upload.html:76
 msgid "Published - No changes allowed"
 msgstr "Publié - Aucune modification autorisée"
 
-#: templates/section_upload.html:80
+#: templates/section_upload.html:86
 msgid "You have not submitted any content."
 msgstr "Vous n'avez soumis aucun contenu."
 
-#: templates/section_upload.html:88
+#: templates/section_upload.html:94
 msgid "Participants' Uploads"
 msgstr "Téléchargements des participants"
 
-#: templates/section_upload.html:91
+#: templates/section_upload.html:97
 msgid "These are the videos that have been submitted by the participants."
 msgstr "Ce sont les vidéos qui ont été soumises par les participants."
 
-#: templates/section_upload.html:93
+#: templates/section_upload.html:99
 msgid "This data has been anonymized."
 msgstr "Ces données ont été anonymisées."
 
-#: templates/section_upload.html:111 templates/section_upload.html:134
+#: templates/section_upload.html:117 templates/section_upload.html:140
 msgid "By: user #"
 msgstr "Par: utilisateur #"
 
-#: templates/section_upload.html:113 templates/section_upload.html:120
-#: templates/section_upload.html:139
+#: templates/section_upload.html:119 templates/section_upload.html:126
+#: templates/section_upload.html:145
 msgid "Submission date:"
 msgstr "Date de soumission:"
 
-#: templates/section_upload.html:118 templates/section_upload.html:136
+#: templates/section_upload.html:124 templates/section_upload.html:142
 msgid "By:"
 msgstr "Par:"
 
-#: templates/section_upload.html:150
+#: templates/section_upload.html:156
 msgid "No participant has submitted any content."
 msgstr "Aucun participant n'a soumis de contenu."
 
@@ -1423,20 +1433,20 @@ msgstr "Cette section ne prend pas en charge les téléchargements."
 msgid "Upload successful."
 msgstr "Téléchargement réussi."
 
-#: videos/views.py:71
+#: videos/views.py:79
 msgid "You don't have permission to upload."
 msgstr "Vous n'êtes pas autorisé à téléverser."
 
-#: videos/views.py:87
+#: videos/views.py:95
 msgid "The video is already published."
 msgstr "La vidéo est déjà publiée."
 
-#: videos/views.py:119 videos/views.py:137 videos/views.py:159
-#: videos/views.py:190 videos/views.py:195
+#: videos/views.py:127 videos/views.py:145 videos/views.py:167
+#: videos/views.py:198 videos/views.py:203
 msgid "You don't have permission to do that."
 msgstr "Vous n'êtes pas autorisé à le faire."
 
-#: videos/views.py:142
+#: videos/views.py:150
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
 
