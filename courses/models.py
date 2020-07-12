@@ -10,11 +10,14 @@ class Course(models.Model):
     name = models.CharField(
         _("name"),
         max_length=100,
-        unique=True,
+        unique=False,
         help_text=_("Course name (max 100 characters)"),
     )
     code = models.CharField(
-        _("course code"), max_length=10, help_text=_("Course code (max 10 characters)")
+        _("course code"),
+        unique=True,
+        max_length=10,
+        help_text=_("Unique course code (max 10 characters)"),
     )
     description = models.TextField(
         _("description"),
