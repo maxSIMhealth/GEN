@@ -48,7 +48,7 @@
 
               <tr>
                 <th scope="row" class="th-small pl-4">{% trans "Description" %}</th>
-                <td class="pr-4">{{ course.description|linebreaksbr }}</td>
+                <td class="pr-4">{{ course.description|safe|linebreaksbr }}</td>
               </tr>
             </tbody>
           </table>

@@ -34,7 +34,7 @@
   {% endcomment %}
 
   {% if section.description %}
-  <p>{{section.description|linebreaksbr}}</p>
+  <p>{{section.description|safe|linebreaksbr}}</p>
   {% endif %}
 
   <div class="card mb-3 section-video">

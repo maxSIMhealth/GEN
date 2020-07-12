@@ -40,7 +40,7 @@
       <div class="card-header bg-light">{% trans "Questions" %}</div>
       <div class="card-body">
 
-	    <p>{{ quiz.description|linebreaksbr }}</p>
+	    <p>{{ quiz.description|safe|linebreaksbr }}</p>
 
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
