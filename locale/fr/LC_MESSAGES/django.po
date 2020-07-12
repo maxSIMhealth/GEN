@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-12 01:15+0000\n"
-"PO-Revision-Date: 2020-07-12 01:17+0000\n"
+"POT-Creation-Date: 2020-07-12 01:45+0000\n"
+"PO-Revision-Date: 2020-07-12 01:45+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -105,7 +105,6 @@ msgid "course code"
 msgstr "code de cours"
 
 #: courses/models.py:20
-#| msgid "Course code (max 10 characters)"
 msgid "Unique course code (max 10 characters)"
 msgstr "Code de cours unique (max 10 caractères)"
 
@@ -754,12 +753,12 @@ msgstr "Se déconnecter"
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
-#: templates/base.html:77 templates/login.html:41
+#: templates/base.html:77 templates/login.html:46
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
 #: templates/base.html:78 templates/base_accounts.html:32
-#: templates/login.html:42
+#: templates/login.html:47
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -923,19 +922,28 @@ msgstr "Non, annuler"
 msgid "Log in"
 msgstr "S'identifier"
 
-#: templates/login.html:21
+#: templates/login.html:20
+msgid ""
+"\n"
+"      If you have problems logging into GEN, please contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
+"      "
+msgstr ""
+"\n"
+"Si vous rencontrez des problèmes à vous identifier et à entrer sur GEN, veuillez nous contacter à cette adresse courriel: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
+
+#: templates/login.html:26
 msgid "New to GEN?"
 msgstr "Nouveau sur GEN?"
 
-#: templates/login.html:21 templates/signup.html:10
+#: templates/login.html:26 templates/signup.html:10
 msgid "Sign up"
 msgstr "S'inscrire"
 
-#: templates/login.html:31
+#: templates/login.html:36
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié?"
 
-#: templates/login.html:40
+#: templates/login.html:45
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 

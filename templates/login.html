@@ -16,6 +16,11 @@
       {% include 'includes/form.html' %}
       <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
     </form>
+    <div class="alert alert-info mt-3 mb-0">
+      {% blocktrans %}
+      If you have problems logging into GEN, please contact us through the following email: <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>
+      {% endblocktrans %}
+    </div>
   </div>
   <div class="card-footer bg-light text-muted text-center">
     {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
