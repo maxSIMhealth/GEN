@@ -95,6 +95,7 @@ class Section(models.Model):
         ("V", _("Videos")),
         ("Q", _("Quizzes")),
         ("U", _("Uploads")),
+        ("C", _("Content")),
     ]
 
     related_name = "sections"

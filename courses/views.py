@@ -146,6 +146,8 @@ def section_page(request, pk, section_pk):
         else:
             if not section_items:
                 allow_submission = True
+    elif section_object.section_type == "C":
+        section_template = "section_content.html"
 
     return render(
         request,
