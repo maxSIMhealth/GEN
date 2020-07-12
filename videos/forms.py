@@ -2,7 +2,7 @@
 
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Button, Fieldset, Layout, Submit
+from crispy_forms.layout import Button, Field, Fieldset, Layout, Submit
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -28,29 +28,53 @@ class UploadVideoForm(forms.ModelForm):
         fields = ["name", "description", "file"]
 
     def __init__(self, *args, **kwargs):
+        blind_data = kwargs.pop("blind_data", None)
         super(UploadVideoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.layout = Layout(
-            # FIXME: find a new to get first fieldset value (the legend) to be
-            # wrapped in a div
-            Fieldset(
-                # "Upload a new video",
-                "",
-                "name",
-                "description",
-                "file",
-            ),
-            FormActions(
-                Submit("submit", _("Submit"), css_class="btn btn-primary"),
-                # Button("cancel", _("Cancel"), css_class="btn btn-secondary"),
-                Button(
-                    "cancel",
-                    _("Cancel"),
-                    css_class="btn btn-secondary",
-                    onclick="window.location.href = window.history.go(-1); return false;",
+        if blind_data:
+            self.helper.layout = Layout(
+                # FIXME: find a new to get first fieldset value (the legend) to be
+                # wrapped in a div
+                Fieldset(
+                    # "Upload a new video",
+                    "",
+                    Field("name", type="hidden"),
+                    Field("description", type="hidden"),
+                    "file",
                 ),
-            ),
-        )
+                FormActions(
+                    Submit("submit", _("Submit"), css_class="btn btn-primary"),
+                    # Button("cancel", _("Cancel"), css_class="btn btn-secondary"),
+                    Button(
+                        "cancel",
+                        _("Cancel"),
+                        css_class="btn btn-secondary",
+                        onclick="window.location.href = window.history.go(-1); return false;",
+                    ),
+                ),
+            )
+        else:
+            self.helper.layout = Layout(
+                # FIXME: find a new to get first fieldset value (the legend) to be
+                # wrapped in a div
+                Fieldset(
+                    # "Upload a new video",
+                    "",
+                    "name",
+                    "description",
+                    "file",
+                ),
+                FormActions(
+                    Submit("submit", _("Submit"), css_class="btn btn-primary"),
+                    # Button("cancel", _("Cancel"), css_class="btn btn-secondary"),
+                    Button(
+                        "cancel",
+                        _("Cancel"),
+                        css_class="btn btn-secondary",
+                        onclick="window.location.href = window.history.go(-1); return false;",
+                    ),
+                ),
+            )
         self.helper.form_method = "POST"
 
 

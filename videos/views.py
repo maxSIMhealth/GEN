@@ -59,7 +59,15 @@ def upload_video(request, pk, section_pk):
                 messages.success(request, _("Upload successful."))
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
-            form = UploadVideoForm()
+            if course.blind_data:
+                video_name = "User video (blind data)"
+                video_description = "No description"
+                form = UploadVideoForm(
+                    initial={"name": video_name, "description": video_description},
+                    blind_data=course.blind_data,
+                )
+            else:
+                form = UploadVideoForm(blind_data=course.blind_data,)
 
         return render(
             request,
