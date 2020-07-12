@@ -69,7 +69,7 @@ class Course(models.Model):
         verbose_name_plural = _("courses")
 
     def __str__(self):
-        output = "ID {0} - {1}".format(self.pk, self.name)
+        output = "ID {0} - {1} - {2}".format(self.pk, self.code, self.name)
         return output
 
     def clean(self):
