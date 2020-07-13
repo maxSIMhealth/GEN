@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 15:35+0000\n"
-"PO-Revision-Date: 2020-07-13 15:06+0000\n"
+"POT-Creation-Date: 2020-07-13 16:26+0000\n"
+"PO-Revision-Date: 2020-07-13 16:26+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -330,15 +330,15 @@ msgstr "éléments de section"
 msgid "You are not enrolled in the requested course."
 msgstr "Vous n'êtes pas inscrit au cours demandé."
 
-#: courses/views.py:75
+#: courses/views.py:76
 msgid ""
-"This section's contents are not yet available because the start date has not "
-"been reached."
+"This section's contents are not yet available because the start date has not"
+" been reached."
 msgstr ""
-"Le contenu de cette section n'est pas encore disponible car la date de début "
-"n'a pas été atteinte."
+"Le contenu de cette section n'est pas encore disponible car la date de début"
+" n'a pas été atteinte."
 
-#: courses/views.py:84
+#: courses/views.py:85
 msgid ""
 "This section and its contents are not yet available to participants because "
 "of the start date."
@@ -346,15 +346,15 @@ msgstr ""
 "Cette section et son contenu ne sont pas encore disponibles pour les "
 "participants en raison de la date de début."
 
-#: courses/views.py:100
+#: courses/views.py:101
 msgid ""
-"This section is closed and its contents have been hidden or disabled because "
-"the end date has passed."
+"This section is closed and its contents have been hidden or disabled because"
+" the end date has passed."
 msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
 
-#: courses/views.py:109
+#: courses/views.py:110
 msgid ""
 "This section is closed and its contents have been hidden or disabled to "
 "participants because the end date has passed."
@@ -362,7 +362,7 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé pour les "
 "participants car la date de fin est passée."
 
-#: courses/views.py:121
+#: courses/views.py:122
 msgid ""
 "You have not fulfilled the requirements to access the requested section."
 msgstr "Vous n'avez pas rempli les conditions d'accès à la section demandée."
@@ -508,8 +508,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
-"de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:103 quiz/models.py:187 quiz/models.py:287 quiz/models.py:333
 msgid "question"
@@ -708,8 +708,8 @@ msgstr "E-mail d'activation envoyé"
 #: templates/account_activation_sent.html:11
 msgid ""
 "An activation email was sent with a confirmation link. Please check your "
-"email account Inbox and Spam folders, and click on the link contained in the "
-"email to complete the registration."
+"email account Inbox and Spam folders, and click on the link contained in the"
+" email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
 "vérifier les dossiers Boîte de réception et Spam de votre compte de "
@@ -800,7 +800,8 @@ msgstr "Publier"
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/comments.html:92 templates/course.html:65 templates/course.html:78
+#: templates/comments.html:92 templates/course.html:65
+#: templates/course.html:78
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -885,7 +886,8 @@ msgstr "Cours"
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
+"attribue."
 
 #: templates/delete_video_confirmation.html:6
 #: templates/publish_video_confirmation.html:6
@@ -929,15 +931,11 @@ msgstr "S'identifier"
 #: templates/login.html:20
 msgid ""
 "\n"
-"      If you have problems logging into GEN, please contact us through the "
-"following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen."
-"com</a>\n"
+"      If you have problems logging into GEN, please contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
 "      "
 msgstr ""
 "\n"
-"Si vous rencontrez des problèmes à vous identifier et à entrer sur GEN, "
-"veuillez nous contacter à cette adresse courriel: <a href=\"mailto:"
-"support@maxsimgen.com\">support@maxsimgen.com</a>"
+"Si vous rencontrez des problèmes à vous identifier et à entrer sur GEN, veuillez nous contacter à cette adresse courriel: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
 
 #: templates/login.html:26
 msgid "New to GEN?"
@@ -1014,8 +1012,8 @@ msgstr "Retour à la page d'accueil"
 
 #: templates/publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL NOT</"
-"strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL "
+"NOT</strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -1124,23 +1122,15 @@ msgstr "Réinitialisation du mot de passe"
 #: templates/registration/password_reset_done.html:11
 msgid ""
 "\n"
-"    <p>We've emailed you instructions for setting your password, if an "
-"account exists with the email you entered. You should receive them shortly.</"
-"p>\n"
-"    <p>If you don't receive an email, please make sure you've entered the "
-"address you registered with, and check your spam folder.</p>\n"
-"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen."
-"com\">support@maxsimgen.com</a></p>\n"
+"    <p>We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly.</p>\n"
+"    <p>If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder.</p>\n"
+"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a></p>\n"
 "    "
 msgstr ""
 "\n"
-"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot "
-"de passe, si un compte existe avec l'e-mail que vous avez entré. Vous "
-"devriez les recevoir sous peu.</p>\n"
-"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse "
-"avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
-"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:"
-"support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
+"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot de passe, si un compte existe avec l'e-mail que vous avez entré. Vous devriez les recevoir sous peu.</p>\n"
+"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
+"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
 
 #: templates/registration/password_reset_form.html:11
 msgid ""
@@ -1179,13 +1169,11 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>"
-"%(requirement)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
-"%(requirement)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
 
 #: templates/section_discussion.html:109
 msgid "No discussion board available."
@@ -1218,8 +1206,9 @@ msgid "Submit new video"
 msgstr "Soumettre une nouvelle vidéo"
 
 #: templates/section_upload.html:38
-msgid "You cannot submit another video."
-msgstr "Vous ne pouvez pas soumettre une autre vidéo."
+#| msgid "New discussion board"
+msgid "New submission not allowed."
+msgstr "Nouvelle soumission non autorisée."
 
 #: templates/section_upload.html:48
 msgid ""
@@ -1351,13 +1340,11 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s "
-"%(google_last_name)s\n"
+"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s "
-"%(google_last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
 
 #: templates/settings.html:55 templates/settings.html:58
 msgid "Disconnect from Google"
@@ -1387,8 +1374,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
-"Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux participants au cours."
 
 #: templates/unpublish_video_confirmation.html:21
 msgid "Yes, unpublish video"
@@ -1485,8 +1472,8 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
 
-#~ msgid "New discussion board"
-#~ msgstr "Nouveau forum de discussion"
+#~ msgid "You cannot submit another video."
+#~ msgstr "Vous ne pouvez pas soumettre une autre vidéo."
 
 #~ msgid "Upload video"
 #~ msgstr "Téléverser une video"
@@ -1503,10 +1490,8 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "scale max"
 #~ msgstr "échelle max"
 
-#~ msgid ""
-#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr ""
-#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
 
 #~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
 #~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."

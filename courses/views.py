@@ -54,6 +54,7 @@ def section_page(request, pk, section_pk):
     gamification = course_object.enable_gamification
     user = request.user
     requirement = section_object.requirement
+    allow_submission_list = []
     allow_submission = False
     start_date_reached = False
     end_date_passed = False
@@ -136,16 +137,28 @@ def section_page(request, pk, section_pk):
         section_template = "section_upload.html"
         # getting all section items (even not published) and filtering by user
         section_items = section_object.section_items.filter(author=request.user)
-        # if there is no section item, allow submission
+
+        # checking section start and end dates to decide if submission should be enabled
         if section_object.start_date:
-            if not section_items and start_date_reached:
-                allow_submission = True
-        elif section_object.end_date:
-            if not section_items and end_date_passed:
-                allow_submission = True
+            if start_date_reached:
+                allow_submission_list.append(True)
+            else:
+                allow_submission_list.append(False)
+
+        if section_object.end_date:
+            if end_date_passed:
+                allow_submission_list.append(False)
+            elif not end_date_passed:
+                allow_submission_list.append(True)
+
+        # if there is no section item, allow submission
+        if not section_items:
+            allow_submission_list.append(True)
         else:
-            if not section_items:
-                allow_submission = True
+            allow_submission_list.append(False)
+
+        allow_submission = all(element for element in allow_submission_list)
+
     elif section_object.section_type == "C":
         section_template = "section_content.html"
 
