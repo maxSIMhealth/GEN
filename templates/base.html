@@ -8,12 +8,13 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}GEN{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
     {% sri_static "css/bootstrap.min.css" %}
     {% sri_static "css/custom.css" %}
     {% sri_static "css/shepherd.css" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="https://kit.fontawesome.com/e4320a90e5.js" crossorigin="anonymous" integrity="sha384-eoEIP4kL867FWM1D0Gem6jxjxMlsD5jiBy1lo9hB45B9e6PLQZ96UxgVowiBgMxx"></script>
+    <script src="https://kit.fontawesome.com/e4320a90e5.js" crossorigin="anonymous" data-auto-add-css="false" integrity="sha384-6KKSwix9T7ZOCxzhqX0YTgV5zEbuU0lJDVRCY2oftZ+N8oG6bpXs4AEtZF3vmnxn"></script>
+    <link href="https://use.fontawesome.com/releases/v5.13.1/css/svg-with-js.css" rel="stylesheet" />
 
     {% block stylesheet %}
     {% endblock stylesheet %}
