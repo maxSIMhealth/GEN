@@ -125,20 +125,20 @@
         {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">
-          <span class="dot" onclick="currentSlide(1)"></span>
-          <span class="dot" onclick="currentSlide(2)"></span>
-          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="goToPaginationItem(1)"></span>
+          <span class="dot" onclick="goToPaginationItem(2)"></span>
+          <span class="dot" onclick="goToPaginationItem(3)"></span>
         </div>
         {% endcomment %}
 
         <nav aria-label="quiz navigation">
           <ul class="pagination justify-content-center mb-0">
             <li id="quiz-navigation-previous" class="page-item disabled">
-              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="previousSlide()">Previous</a>
+              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="previousPaginationItem()">Previous</a>
             </li>
             <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true">1 of 13</a></li>
             <li id="quiz-navigation-next" class="page-item">
-              <a class="page-link" href="javascript:void(0);" onclick="nextSlide()">Next</a>
+              <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
             </li>
           </ul>
         </nav>
