@@ -47,7 +47,7 @@
           <div class="quiz-items-container">
             <div class="quiz-item">
               <p>{{ quiz.description|safe|linebreaksbr }}</p>
-              <p><i>Please press next on the navigation buttons below.</i></p>
+              <p><i>{% trans "Please use the navigation buttons below." %}</i></p>
             </div>
             {% for question in quiz.questions.all %}
               <div class="quiz-item">
@@ -112,7 +112,8 @@
               </div>
             {% endfor %}
             <div class="quiz-item">
-              <p>You have reached the end of the quiz.</p>
+              <p>{% trans "This is the end of the quiz." %}</p>
+              <p>{% blocktrans with section.name as section_name%} You can now submit your answers or cancel and return to the {{ section_name }} page. {% endblocktrans %}</p>
               <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
               <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">{% trans "Cancel" %}</a>
             </div>
@@ -120,22 +121,24 @@
         </form>
       </div>
       <div class="card-footer">
+
+        {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">
           <span class="dot" onclick="currentSlide(1)"></span>
           <span class="dot" onclick="currentSlide(2)"></span>
           <span class="dot" onclick="currentSlide(3)"></span>
         </div>
+        {% endcomment %}
+
         <nav aria-label="quiz navigation">
           <ul class="pagination justify-content-center mb-0">
-            <li class="page-item disabled">
-              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="plusSlides(-1)">Previous</a>
+            <li id="quiz-navigation-previous" class="page-item disabled">
+              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="previousSlide()">Previous</a>
             </li>
-            <li class="page-item active"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(1)">1</a></li>
-            <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(2)">2</a></li>
-            <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(3)">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);" onclick="plusSlides(1)">Next</a>
+            <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true">1 of 13</a></li>
+            <li id="quiz-navigation-next" class="page-item">
+              <a class="page-link" href="javascript:void(0);" onclick="nextSlide()">Next</a>
             </li>
           </ul>
         </nav>
@@ -147,33 +150,4 @@
 {% block javascript_bottom %}
 {% sri_static "js/help-guide-course.js" %}
 {% sri_static "js/quiz.js" %}
-<script src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js" crossorigin="anonymous"></script>
-<script>
-var slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("quiz-item");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-}
-</script>
 {% endblock javascript_bottom %}
