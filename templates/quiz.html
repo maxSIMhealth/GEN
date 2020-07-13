@@ -7,12 +7,6 @@
 {% load check_attribute %}
 {% load likert_range %}
 
-{% block stylesheet %}
-
-  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.core.css">
-  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.theme.css">
-{% endblock stylesheet %}
-
 {% block content_title %}
   <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {{ quiz.name }}
 {% endblock content_title %}
