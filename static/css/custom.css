@@ -50,9 +50,9 @@ body {
 }
 
 /* quiz with video */
-.video+.quiz .card-body {
+.video+.quiz > .card-body {
     max-height: none;
-    min-height: 300px;
+    min-height: 200px;
     overflow-y: auto;
 }
 
