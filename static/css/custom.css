@@ -145,14 +145,14 @@ body {
 
 /* quiz items navigation */
 /* The dot/bullet/indicator container */
-.dot-container {
+/* .dot-container {
   text-align: center;
   padding: 20px;
   background: #ddd;
-}
+} */
 
 /* The dots/bullets/indicators */
-.dot {
+/* .dot {
   cursor: pointer;
   height: 15px;
   width: 15px;
@@ -161,9 +161,9 @@ body {
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
-}
+} */
 
 /* Add a background color to the active dot/circle */
-.active, .dot:hover {
+/* .dot.active, .dot:hover {
   background-color: #717171;
-}
+} */
