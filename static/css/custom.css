@@ -15,8 +15,8 @@ body {
 
 /* section: video */
 .section-video .video-thumbnail {
-    width: 128px;
-    height: 128px;
+  width: 128px;
+  height: 128px;
 }
 
 .section-video .related-quizzes {
@@ -51,12 +51,13 @@ body {
 
 /* quiz with video */
 .video+.quiz .card-body {
-    max-height: 350px;
+    max-height: none;
+    min-height: 300px;
     overflow-y: auto;
 }
 
 .video+.quiz .card-body form {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 /* quiz: likert scale */
@@ -140,4 +141,29 @@ body {
   -webkit-box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 0.7);
   -moz-box-shadow:    0px 0px 7px 0px rgba(50, 50, 50, 0.7);
   box-shadow:         0px 0px 7px 0px rgba(50, 50, 50, 0.7);
+}
+
+/* quiz items navigation */
+/* The dot/bullet/indicator container */
+.dot-container {
+  text-align: center;
+  padding: 20px;
+  background: #ddd;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+  background-color: #717171;
 }

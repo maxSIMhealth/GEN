@@ -8,7 +8,9 @@
 {% load likert_range %}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.core.css">
+  <link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.theme.css">
 {% endblock stylesheet %}
 
 {% block content_title %}
@@ -40,77 +42,103 @@
     <div class="card quiz">
       <div class="card-header bg-light">{% trans "Questions" %}</div>
       <div class="card-body">
-
-	    <p>{{ quiz.description|safe|linebreaksbr }}</p>
-
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
-
-          {% for question in quiz.questions.all %}
-
-            {% if question.question_type == 'H' %}
-            <h5>
-              <strong>{{question.content}}</strong>
-              <hr />
-            </h5>
-            {% else %}
-            <h6 class="card-title">
-              <strong>{{question.content}}</strong>
-            </h6>
-            {% endif %}
-
-            {% if question.question_type == 'M' %}
-            <ul class="list-group mb-3">
-              {% for choice in question.answers.all %}
-              <li class="list-group-item">
-                <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                  <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
-                </label>
-              </li>
-              {% endfor %}
-
-              {% if question.multiple_correct_answers %}
-              <li class="list-group-item">
-                <a href="javascript:void(0);" class="btn btn-secondary" onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
-                <a href="javascript:void(0);" class="btn btn-secondary"  onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
-              </li>
-              {% endif %}
-
-            </ul>
-
-            {% elif question.question_type == 'L' %}
-            <div class="card ml-0 mr-0 mb-4">
-              {% with answer=question.likertanswer %}
-                <div class="card-body likert">
-                  {% for value in answer.scale_range|likert_range %}
-                  <div class="item">
-                    <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
-                    <label for="likert_{{question.id}}">{{value}}</label>
-                  </div>
-                  {% endfor %}
-                </div>
-
-                {% if answer.legend %}
-                <div class="likert-legend card-footer text-muted">
-                  <em>{% trans "Scale legend" %}:</em>
-                  {{answer.legend|linebreaks}}
-                </div>
+          <div class="quiz-items-container">
+            <div class="quiz-item">
+              <p>{{ quiz.description|safe|linebreaksbr }}</p>
+              <p><i>Please press next on the navigation buttons below.</i></p>
+            </div>
+            {% for question in quiz.questions.all %}
+              <div class="quiz-item">
+                {% if question.question_type == 'H' %}
+                <h5>
+                  <strong>{{question.content}}</strong>
+                  <hr />
+                </h5>
+                {% else %}
+                <h6 class="card-title">
+                  <strong>{{question.content}}</strong>
+                </h6>
                 {% endif %}
-              {% endwith %}
+
+                {% if question.question_type == 'M' %}
+                <ul class="list-group mb-2">
+                  {% for choice in question.answers.all %}
+                  <li class="list-group-item">
+                    <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
+                      <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
+                    </label>
+                  </li>
+                  {% endfor %}
+
+                  {% if question.multiple_correct_answers %}
+                  <li class="list-group-item">
+                    <a href="javascript:void(0);" class="btn btn-secondary" onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
+                    <a href="javascript:void(0);" class="btn btn-secondary"  onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
+                  </li>
+                  {% endif %}
+
+                </ul>
+
+                {% elif question.question_type == 'L' %}
+                <div class="card ml-0 mr-0">
+                  {% with answer=question.likertanswer %}
+                    <div class="card-body likert">
+                      {% for value in answer.scale_range|likert_range %}
+                      <div class="item">
+                        <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
+                        <label for="likert_{{question.id}}">{{value}}</label>
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                    {% if answer.legend %}
+                    <div class="likert-legend card-footer text-muted">
+                      <em>{% trans "Scale legend" %}:</em>
+                      {{answer.legend|linebreaks}}
+                    </div>
+                    {% endif %}
+                  {% endwith %}
+                </div>
+
+                {% elif question.question_type == 'O' %}
+
+                <div class="mb-3">
+                  <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>
+                </div>
+
+                {% endif %}
+              </div>
+            {% endfor %}
+            <div class="quiz-item">
+              <p>You have reached the end of the quiz.</p>
+              <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+              <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">{% trans "Cancel" %}</a>
             </div>
-
-            {% elif question.question_type == 'O' %}
-
-            <div class="mb-3">
-              <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>
-            </div>
-
-            {% endif %}
-
-          {% endfor %}
-          <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-          <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">{% trans "Cancel" %}</a>
+          </div>
         </form>
+      </div>
+      <div class="card-footer">
+        <!-- Dots/bullets/indicators -->
+        <div class="dot-container">
+          <span class="dot" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+        <nav aria-label="quiz navigation">
+          <ul class="pagination justify-content-center mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="plusSlides(-1)">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(1)">1</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(2)">2</a></li>
+            <li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="currentSlide(3)">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0);" onclick="plusSlides(1)">Next</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
@@ -119,4 +147,33 @@
 {% block javascript_bottom %}
 {% sri_static "js/help-guide-course.js" %}
 {% sri_static "js/quiz.js" %}
+<script src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js" crossorigin="anonymous"></script>
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("quiz-item");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+</script>
 {% endblock javascript_bottom %}
