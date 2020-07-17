@@ -5,3 +5,9 @@ FROM gitpod/workspace-postgres
 # RUN brew install bastet
 #
 # More information: https://www.gitpod.io/docs/config-docker/
+
+# Installing packages
+RUN sudo apt-get update \
+ && sudo apt-get install -y \
+    ffmpeg \
+ && sudo rm -rf /var/lib/apt/lists/*
