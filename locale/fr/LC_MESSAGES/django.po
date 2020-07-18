@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:26+0000\n"
-"PO-Revision-Date: 2020-07-13 16:26+0000\n"
+"POT-Creation-Date: 2020-07-18 17:48+0000\n"
+"PO-Revision-Date: 2020-07-18 17:49+0000\n"
 "Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -112,9 +112,10 @@ msgstr "Code de cours unique (max 10 caractères)"
 msgid "description"
 msgstr "la description"
 
-#: courses/models.py:25 courses/models.py:113
-msgid "Course description (max 800 characters)"
-msgstr "Description du cours (max 800 caractères)"
+#: courses/models.py:25
+#| msgid "Course description (max 800 characters)"
+msgid "Course description (max 1000 characters)"
+msgstr "Description du cours (max 1000 caractères)"
 
 #: courses/models.py:28 courses/models.py:216 discussions/models.py:64
 msgid "author"
@@ -232,6 +233,10 @@ msgstr "Contenu"
 #: courses/models.py:106
 msgid "Section name (max 15 characters)"
 msgstr "Nom de la section (max 15 caractères)"
+
+#: courses/models.py:113
+msgid "Course description (max 800 characters)"
+msgstr "Description du cours (max 800 caractères)"
 
 #: courses/models.py:122
 msgid "section type"
@@ -384,12 +389,12 @@ msgid "The max length for the discussion board description is 400."
 msgstr ""
 "La longueur maximale pour la description du forum de discussion est de 400."
 
-#: discussions/forms.py:46 templates/quiz.html:117 videos/forms.py:46
+#: discussions/forms.py:46 templates/quiz.html:111 videos/forms.py:46
 #: videos/forms.py:68
 msgid "Submit"
 msgstr "Soumettre"
 
-#: discussions/forms.py:49 templates/quiz.html:118 videos/forms.py:50
+#: discussions/forms.py:49 templates/quiz.html:112 videos/forms.py:50
 #: videos/forms.py:72
 msgid "Cancel"
 msgstr "Annuler"
@@ -721,28 +726,28 @@ msgstr ""
 msgid "Return to login page"
 msgstr "Retour à la page de connexion"
 
-#: templates/base.html:25
+#: templates/base.html:26
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: templates/base.html:28
+#: templates/base.html:29
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: templates/base.html:34
+#: templates/base.html:35
 msgid "Help"
 msgstr "Aide"
 
-#: templates/base.html:42 templates/my_account.html:6
+#: templates/base.html:43 templates/my_account.html:6
 #: templates/my_account.html:10
 msgid "My account"
 msgstr "Mon compte"
 
-#: templates/base.html:43 templates/password.html:5 templates/password.html:9
+#: templates/base.html:44 templates/password.html:5 templates/password.html:9
 #: templates/password_change.html:5 templates/password_change.html:9
 #: templates/password_change.html:14 templates/password_change.html:19
 #: templates/password_change_done.html:8
@@ -751,19 +756,19 @@ msgstr "Mon compte"
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/base.html:45
+#: templates/base.html:46
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/base.html:76
+#: templates/base.html:77
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
-#: templates/base.html:77 templates/login.html:46
+#: templates/base.html:78 templates/login.html:46
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/base.html:78 templates/base_accounts.html:32
+#: templates/base.html:79 templates/base_accounts.html:32
 #: templates/login.html:47
 msgid "Developed at"
 msgstr "Développé à"
@@ -784,7 +789,7 @@ msgstr "Info"
 msgid "Please login to like"
 msgstr "Veuillez vous connecter pour aimer"
 
-#: templates/comments.html:56 templates/quiz.html:32
+#: templates/comments.html:56 templates/quiz.html:26
 msgid "Sorry, your browser does not support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
@@ -1022,35 +1027,35 @@ msgstr ""
 msgid "Yes, publish video"
 msgstr "Oui, publier une vidéo"
 
-#: templates/quiz.html:24
+#: templates/quiz.html:18
 msgid "Video"
 msgstr "Vidéo"
 
-#: templates/quiz.html:43
+#: templates/quiz.html:37
 msgid "Questions"
 msgstr "Des questions"
 
-#: templates/quiz.html:50
+#: templates/quiz.html:44
 msgid "Please use the navigation buttons below."
 msgstr "Veuillez utiliser les boutons de navigation ci-dessous."
 
-#: templates/quiz.html:77
+#: templates/quiz.html:71
 msgid "Select all"
 msgstr "Tout sélectionner"
 
-#: templates/quiz.html:78
+#: templates/quiz.html:72
 msgid "Deselect all"
 msgstr "Tout déselectionner"
 
-#: templates/quiz.html:98 templates/quiz_result.html:120
+#: templates/quiz.html:92 templates/quiz_result.html:120
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
-#: templates/quiz.html:115
+#: templates/quiz.html:109
 msgid "This is the end of the quiz."
 msgstr "C'est la fin du quiz."
 
-#: templates/quiz.html:116
+#: templates/quiz.html:110
 #, python-format
 msgid ""
 " You can now submit your answers or cancel and return to the "
@@ -1206,7 +1211,6 @@ msgid "Submit new video"
 msgstr "Soumettre une nouvelle vidéo"
 
 #: templates/section_upload.html:38
-#| msgid "New discussion board"
 msgid "New submission not allowed."
 msgstr "Nouvelle soumission non autorisée."
 
