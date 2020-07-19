@@ -24,6 +24,9 @@ class Quiz(SectionItem):
 
     show_score = models.BooleanField(_("show score"), default=False)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
+    require_answers = models.BooleanField(
+        _("require participant to answer all questions"), default=False
+    )
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,

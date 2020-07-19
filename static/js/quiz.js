@@ -1,12 +1,40 @@
 var paginationInitialValue = 1;
 var paginationIndex = paginationInitialValue;
 var pagination = document.getElementsByClassName("quiz-item");
+const quizRequireAnswers = JSON.parse(document.getElementById('quiz_require_answers').textContent); // FIXME: checking required answers this way should be temporary and done using django forms validation
 // var dots = document.getElementsByClassName("dot");
 
 showPagination(paginationIndex);
 
 function updateNavigationText() {
   document.getElementById("quiz-navigation-position").innerHTML = paginationIndex + " of " + pagination.length;
+}
+
+ // FIXME: checking required answers this way should be temporary and done using django forms validation
+function checkRequiredAnswer() {
+  var questionNumber = paginationIndex - 1;
+  var question = pagination[questionNumber];
+
+  console.log("question number: " + questionNumber);
+  var items = question.querySelectorAll("input, textarea, select");
+  // console.log(question);
+  answers = [];
+  if (items.length > 0) {
+    items.forEach(function(item) {
+      // console.log(item);
+      // console.log("is checked? " + item.checked)
+      answers.push(item.checked);
+    })
+    console.log(answers);
+    if (!answers.includes(true)) {
+      console.log("WARNING: user did not answer a question " + questionNumber);
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return true;
+  }
 }
 
 function previousPaginationItem() {
@@ -19,12 +47,24 @@ function previousPaginationItem() {
 }
 
 function nextPaginationItem() {
-  if (paginationIndex < pagination.length) {
-    paginationIndex++;
-    showPagination(paginationIndex);
+  // FIXME: checking required answers this way should be temporary and done using django forms validation
+  if (quizRequireAnswers) {
+    var answerRequiredFullfilled = checkRequiredAnswer();
   } else {
-    console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
+    var answerRequiredFullfilled = true;
   }
+
+  if (answerRequiredFullfilled) {
+    if (paginationIndex < pagination.length) {
+      paginationIndex++;
+      showPagination(paginationIndex);
+    } else {
+      console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
+    }
+  } else {
+    alert(gettext("Please answer the question."));
+  }
+
 }
 
 function paginationNavLinkEnable(object) {

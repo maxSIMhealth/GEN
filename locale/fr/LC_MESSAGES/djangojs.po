@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 01:34+0000\n"
-"PO-Revision-Date: 2020-07-04 01:36+0000\n"
-"Last-Translator: b'System Admin <andrei.torres@ontariotechu.ca>'\n"
+"POT-Creation-Date: 2020-07-19 20:06+0000\n"
+"PO-Revision-Date: 2020-07-19 20:06+0000\n"
+"Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,6 @@ msgid "Course Name"
 msgstr "Nom du cours"
 
 #: static/js/help-guide-course.js:56
-#| msgid "This area display the current course name."
 msgid "This area displays the current course name."
 msgstr "Cette zone affiche le nom du cours actuel."
 
@@ -116,7 +115,6 @@ msgid "Page Name"
 msgstr "Nom de la page"
 
 #: static/js/help-guide-home.js:56
-#| msgid "This area display the current page name."
 msgid "This area displays the current page name."
 msgstr "Cette zone affiche le nom de la page actuelle."
 
@@ -127,3 +125,7 @@ msgstr "Cours"
 #: static/js/help-guide-home.js:80
 msgid "Here are listed the courses in which you are currently enrolled."
 msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
+
+#: static/js/quiz.js:65
+msgid "Please answer the question."
+msgstr "Veuillez répondre à la question."

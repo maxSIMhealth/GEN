@@ -38,6 +38,7 @@
       <div class="card-body">
         <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
           {% csrf_token %}
+          {{ quiz.require_answers|json_script:"quiz_require_answers" }}
           <div class="quiz-items-container">
             <div class="quiz-item">
               <p>{{ quiz.description|safe|linebreaksbr }}</p>
