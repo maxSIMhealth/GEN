@@ -99,9 +99,46 @@ class QuizAdmin(SortableAdminMixin, TranslationAdmin):
     #     return format_html('<a class="button" href="#">Make a copy</a>',)
 
 
-class QuizScoreAdmin(admin.ModelAdmin):
+class QuizScoreResource(resources.ModelResource):
+    quiz = Field(attribute="quiz__name", column_name="quiz_name")
+    course = Field(attribute="course__name", column_name="course")
+    course_code = Field(attribute="course__code", column_name="course_code")
+    video = Field(attribute="quiz__video__name", column_name="video_name")
+    video_internal_name = Field(
+        attribute="quiz__video__internal_name", column_name="video_internal_name"
+    )
+
+    class Meta:
+        model = QuizScore
+        fields = (
+            "id",
+            "created",
+            "student",
+            "quiz",
+            "video",
+            "video_internal_name",
+            "course",
+            "course_code",
+            "score",
+        )
+        export_order = (
+            "id",
+            "created",
+            "student",
+            "course",
+            "course_code",
+            "quiz",
+            "video",
+            "video_internal_name",
+            "score",
+        )
+
+
+class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("student", "quiz", "course", "score")
     list_filter = ("quiz", "course", "student")
+
+    resource_class = QuizScoreResource
 
     # search_fields = ('student', 'quiz', 'course')
     # filter_horizontal = ('student',)
@@ -218,6 +255,7 @@ class OpenEndedAdmin(QuestionAdmin):
 class QuestionAttemptResource(resources.ModelResource):
     quiz_name = Field(attribute="quiz__name", column_name="quiz_name")
     course_name = Field(attribute="course__name", column_name="course_name")
+    course_code = Field(attribute="course__code", column_name="course_code")
     section_name = Field(attribute="section__name", column_name="section_name")
     question_type = Field(
         attribute="question__question_type", column_name="question_type"
@@ -238,6 +276,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "student",
             "quiz_name",
             "course_name",
+            "course_code",
             "section_name",
             # "attempt_number",
             "question_type",
@@ -253,6 +292,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "created",
             "student",
             "course_name",
+            "course_code",
             "section_name",
             "quiz_name",
             # "attempt_number",

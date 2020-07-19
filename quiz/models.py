@@ -443,7 +443,7 @@ class MCQuestionAttempt(QuestionAttempt):
         verbose_name_plural = _("multiple choice questions attempts")
 
 
-class QuizScore(models.Model):
+class QuizScore(TimeStampedModel):
     student = models.ForeignKey(
         User, on_delete=models.PROTECT, verbose_name=_("student")
     )
