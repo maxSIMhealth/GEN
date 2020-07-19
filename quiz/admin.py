@@ -101,8 +101,9 @@ class QuizAdmin(SortableAdminMixin, TranslationAdmin):
 
 class QuizScoreResource(resources.ModelResource):
     quiz = Field(attribute="quiz__name", column_name="quiz_name")
-    course = Field(attribute="course__name", column_name="course")
+    course = Field(attribute="course__name", column_name="course_name")
     course_code = Field(attribute="course__code", column_name="course_code")
+    section = Field(attribute="quiz__video__section__name", column_name="section_name")
     video = Field(attribute="quiz__video__name", column_name="video_name")
     video_internal_name = Field(
         attribute="quiz__video__internal_name", column_name="video_internal_name"
@@ -119,6 +120,7 @@ class QuizScoreResource(resources.ModelResource):
             "video_internal_name",
             "course",
             "course_code",
+            "section",
             "score",
         )
         export_order = (
@@ -127,6 +129,7 @@ class QuizScoreResource(resources.ModelResource):
             "student",
             "course",
             "course_code",
+            "section",
             "quiz",
             "video",
             "video_internal_name",
