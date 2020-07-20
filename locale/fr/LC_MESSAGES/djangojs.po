@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-19 20:06+0000\n"
-"PO-Revision-Date: 2020-07-19 20:06+0000\n"
+"POT-Creation-Date: 2020-07-20 20:35+0000\n"
+"PO-Revision-Date: 2020-07-20 20:37+0000\n"
 "Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -129,3 +129,7 @@ msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
 #: static/js/quiz.js:65
 msgid "Please answer the question."
 msgstr "Veuillez répondre à la question."
+
+#: static/js/upload-video.js:42
+msgid "Uploading. Please wait."
+msgstr "Téléchargement. S'il vous plaît, attendez."

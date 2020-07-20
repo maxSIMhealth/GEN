@@ -27,10 +27,14 @@ class UploadVideoForm(forms.ModelForm):
         model = VideoFile
         fields = ["name", "description", "file"]
 
+    # class Media:
+    #     js = ("js/upload-video.js",)
+
     def __init__(self, *args, **kwargs):
         blind_data = kwargs.pop("blind_data", None)
         super(UploadVideoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.helper.form_id = "form-upload-video"
         if blind_data:
             self.helper.layout = Layout(
                 # FIXME: find a new to get first fieldset value (the legend) to be

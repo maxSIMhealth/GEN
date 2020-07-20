@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load sri %}
 
 {% block stylesheet %}
   <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -16,9 +17,12 @@
   <div class="card">
     <h5 class="card-header">{% trans "New Video Information" %}</h5>
     <div class="card-body">
-      <form enctype="multipart/form-data" method="post">
-        {% crispy form %}
-      </form>
+      {% crispy form %}
     </div>
   </div>
 {% endblock %}
+
+{% block javascript_bottom %}
+{% sri_static "js/help-guide-course.js" %}
+{% sri_static "js/upload-video.js" %}
+{% endblock javascript_bottom %}
