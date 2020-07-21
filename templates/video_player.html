@@ -6,11 +6,11 @@
 {% block title %}GEN - {% trans "Video player" %}{% endblock title %}
 
 {% block body %}
-  <div class="card m-4">
+  <div class="card m-4" id="card-video-player">
     <div class="card-body">
-      <p class="card-text text-center">
-          <video controls>
-              <source src="{{ video.file.url }}" type="video/mp4">
+      <p class="card-text text-center" id="video-player">
+          <video poster="{{ video.thumbnail.url }}" controls>
+		  <source src="{{ video.file.url }}" type="video/mp4">
               {% trans "Sorry, your browser doesn't support embedded videos." %}
           </video>
       </p>
