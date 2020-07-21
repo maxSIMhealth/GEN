@@ -21,7 +21,7 @@
           <tbody>
             <tr>
               <div class="embed-responsive embed-responsive-16by9">
-                <video controls>
+	        <video playsinline="true" poster="{{ quiz.video.thumbnail.url }}" controls>
                   <source src="{{ quiz.video.file.url }}" type="video/mp4">
                   {% trans "Sorry, your browser does not support embedded videos." %}
                 </video>

@@ -50,7 +50,7 @@
       <p class="card-text">{{ discussion.description|safe|linebreaksbr }}</p>
       {% if discussion.video %}
       <div class="embed-responsive embed-responsive-16by9">
-        <video controls>
+        <video playsinline="true" poster="{{ video.thumbnail.url }}" controls>
           <source src="{{ video.file.url }}" type="video/mp4">
             {% trans "Sorry, your browser does not support embedded videos." %}
         </video>
