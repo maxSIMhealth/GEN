@@ -1,5 +1,6 @@
 import random
 
+from django.conf import settings as django_settings
 from django.contrib import messages
 from django.contrib.auth import login  # , update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -73,7 +74,8 @@ def signup(request):
                     "token": account_activation_token.make_token(user),
                 },
             )
-            from_email = "gen-donotreply@" + current_site.domain
+            #from_email = "gen-donotreply@" + current_site.domain
+            from_email = django_settings.DEFAULT_FROM_EMAIL
             user.email_user(subject, message, from_email=from_email)
 
             return redirect("account_activation_sent")
