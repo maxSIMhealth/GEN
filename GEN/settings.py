@@ -202,6 +202,7 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     CSRF_COOKIE_DOMAIN = 'maxsimgen.com'
+    CSRF_TRUSTED_ORIGINS = ['maxsimgen.com', 'www.maxsimgen.com']
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
