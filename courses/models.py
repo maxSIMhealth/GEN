@@ -22,7 +22,7 @@ class Course(models.Model):
     description = models.TextField(
         _("description"),
         max_length=1000,
-        help_text=_("Course description (max 1000 characters)"),
+        help_text=_("Description (max 1000 characters)"),
     )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="course", verbose_name=_("author")
@@ -107,10 +107,10 @@ class Section(models.Model):
     )
     description = models.TextField(
         _("description"),
-        max_length=800,
+        max_length=1000,
         blank=True,
         null=True,
-        help_text=_("Course description (max 800 characters)"),
+        help_text=_("Description (max 1000 characters)"),
     )
     course = models.ForeignKey(
         Course,
