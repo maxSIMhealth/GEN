@@ -8,7 +8,8 @@ User=gen
 Group=gen
 WorkingDirectory=/home/gen/GEN
 ExecStart=/home/gen/GEN/venv/bin/gunicorn \
-        --access-logfile -\
+        --access-logfile /home/gen/logs/access.log\
+	--access-logformat '%({X-Real-IP}i)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'\
         --workers 3\
         --log-level DEBUG\
         --bind unix:/run/gunicorn.sock \
