@@ -38,16 +38,20 @@ INTERNAL_IPS = config("INTERNAL_IPS")
 
 # Email settings for sending error notifications to admins and emails
 # to users (e.g., password resets)
-ADMINS = [("Admin", "admin@maxsimgen.com"), ]
+ADMINS = [
+    ("Admin", "admin@maxsimgen.com"),
+]
 if not DEBUG:
-    LOGGING['handlers']['mail_admins']['include_html'] = True
+    LOGGING["handlers"]["mail_admins"]["include_html"] = True
     SERVER_EMAIL = config("SERVER_EMAIL")
     DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
     "modeltranslation",
+    "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -135,6 +139,7 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = "GEN.wsgi.application"
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -148,9 +153,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -201,17 +212,17 @@ if not DEBUG:
     # Security / HTTPS / TLS
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    CSRF_COOKIE_DOMAIN = 'maxsimgen.com'
-    CSRF_TRUSTED_ORIGINS = ['maxsimgen.com', 'www.maxsimgen.com']
+    CSRF_COOKIE_DOMAIN = "maxsimgen.com"
+    CSRF_TRUSTED_ORIGINS = ["maxsimgen.com", "www.maxsimgen.com"]
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_SECONDS = 31536000 
+    SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_REFERRER_POLICY = "same-origin"
-    os.environ['wsgi.url_scheme'] = 'https'
+    os.environ["wsgi.url_scheme"] = "https"
 
 # E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
