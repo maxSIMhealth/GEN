@@ -42,6 +42,9 @@ urlpatterns = [
         "favicon.ico",
         RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico")),
     ),
+]
+
+urlpatterns += i18n_patterns(
     path("", dashboard_views.dashboard, name="home"),
     path("dashboard/", dashboard_views.dashboard, name="dashboard"),
     path("signup/", account_views.signup, name="signup"),
@@ -169,6 +172,8 @@ urlpatterns = [
         discussion_views.clearvote_comment,
         name="comment_clearvote",
     ),
+    path("i18n/", include("django.conf.urls.i18n")),
+    prefix_default_language=False
     # admin
     # path("admin/", admin.site.urls),
     # tests
@@ -182,9 +187,9 @@ urlpatterns = [
     #      views.video_comments, name='video_comments'),
     # FIXME: list_pdfs has to be reimplemented
     # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
-]
+)
 
-urlpatterns += i18n_patterns(path("admin/", admin.site.urls),)
+urlpatterns += i18n_patterns(path("admin/", admin.site.urls))
 
 urlpatterns += i18n_patterns(
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
@@ -204,4 +209,6 @@ if settings.DEBUG:
     # django toolbar
     import debug_toolbar
 
-    urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

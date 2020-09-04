@@ -71,7 +71,24 @@
     {% endblock body %}
 
     {% block footer %}
-    <div class="footer bg-light pt-1 pb-2">
+
+    <div class="footer bg-light pb-2">
+      <div class="text-center pt-2 pb-2 language-selector">
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+          <select name="language" class="custom-select custom-select-sm" style="width:200px">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                      {{ language.name_local|capfirst }} ({{ language.code }})
+                  </option>
+              {% endfor %}
+          </select>
+          <input type="submit" value="Go" class="btn btn-primary btn-sm">
+        </form>
+      </div>
       <div class="text-center text-dark">
         <a href="http://www.ontariotechu.ca" class="primary-link"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a white background' %}" width="200px"></a>
         <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
