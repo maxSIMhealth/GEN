@@ -46,7 +46,7 @@ if not DEBUG:
     SERVER_EMAIL = config("SERVER_EMAIL")
     DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-# Application definition
+### Application definition
 
 INSTALLED_APPS = [
     "admin_interface",
@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "import_export",
     "sri",
     "rosetta",
+    "maintenance_mode",
     "core",
     "accounts",
     "courses",
@@ -92,6 +93,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
 ]
 
 # Provide a lists of languages which your site supports.
@@ -115,6 +117,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
+                "maintenance_mode.context_processors.maintenance_mode",
             ],
         },
     },
@@ -141,12 +144,12 @@ WSGI_APPLICATION = "GEN.wsgi.application"
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-# Database
+### Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"))}
 
-# Password validation
+### Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -165,7 +168,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+### Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 #
 # ISO Language Code Table
@@ -184,7 +187,7 @@ USE_TZ = True
 # Contains the path list where Django should look into for django.po files for all supported languages
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
-# Static files (CSS, JavaScript, Images)
+### Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 if not DEBUG:
@@ -201,7 +204,7 @@ if not DEBUG:
 else:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# Login settings
+### Login settings
 
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
@@ -224,7 +227,7 @@ if not DEBUG:
     SECURE_REFERRER_POLICY = "same-origin"
     os.environ["wsgi.url_scheme"] = "https"
 
-# E-mail backend
+### E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
 SENDGRID_TRACK_EMAIL_OPENS = True
@@ -236,7 +239,28 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = DEBUG
 # to the backend via the stream kwarg.
 SENDGRID_ECHO_TO_STDOUT = DEBUG
 
-# Social authentication settings
+
+### Maintenance mode settings
+# complete list available at
+# https://github.com/fabiocaccamo/django-maintenance-mode#configuration-optional
+
+# if True the maintenance-mode will be activated
+MAINTENANCE_MODE = None
+
+# if True admin site will not be affected by the maintenance-mode page
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+
+# if True the staff will not see the maintenance-mode page
+MAINTENANCE_MODE_IGNORE_STAFF = False
+
+# if True the superuser will not see the maintenance-mode page
+MAINTENANCE_MODE_IGNORE_SUPERUSER = False
+
+# if True the maintenance mode will not return 503 response while running tests
+# useful for running tests while maintenance mode is on, before opening the site to public use
+MAINTENANCE_MODE_IGNORE_TESTS = False
+
+### Social authentication settings
 # Documentation:
 # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
 # https://python-social-auth.readthedocs.io/en/latest/pipeline.html

@@ -1,0 +1,34 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}GEN is currently under maintenance{% endblock title %}
+
+{% block content %}
+  <div class="card-body bg-light text-dark">
+    {% if messages %}
+      {% include 'partials/messages.html' %}
+    {% endif %}
+    <h3 class="card-title">{% trans "Under Maintenance" %}</h3>
+    <p>{% trans "GEN is currently under maintenance. Please try again later." %}</p>
+    <div class="alert alert-info mt-3 mb-0">
+      {% blocktrans %}
+      You can contact us through the following email: <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>
+      {% endblocktrans %}
+    </div>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+<div class="footer mb-2">
+  <div class="text-center text-light">
+    <div class="text-center">
+      <a href="http://www.ontariotechu.ca"><img src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
+      <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
+      <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
+      <p>GEN - Gamified Educational Network (2020)</p>
+    </div>
+  </div>
+</div>
+{% endblock footer %}

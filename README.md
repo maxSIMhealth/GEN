@@ -202,3 +202,8 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 ### Start/stop the server
 - Start: `sudo systemctl start gunicorn`
 - Stop: `sudo systemctl stop gunicorn.socket gunicorn.service`
+
+### Maintenance mode
+- Use the following command to enable/disable maintenance mode while the server is up: `python manage.py maintenance_mode on|off`
+- When activated, the server will return a 503 status and render a warning page (`templates/503.html`).
+- The admin site will not be affected by the maintenance-mode status, but that can changed on the `setting.py` file.
