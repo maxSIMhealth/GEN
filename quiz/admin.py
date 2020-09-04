@@ -88,6 +88,50 @@ class QuizAdmin(SortableAdminMixin, TranslationAdmin):
     form = QuizAdminForm
     save_as = True
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "author",
+                    "start_date",
+                    "end_date",
+                    "course",
+                    "section",
+                    "published",
+                    "video",
+                    "requirement",
+                )
+            },
+        ),
+        (
+            "Answer submission options",
+            {
+                "fields": (
+                    "require_answers",
+                    "allow_multiple_attempts",
+                    "attempts_max_number",
+                )
+            },
+        ),
+        (
+            "Scoring options",
+            {"fields": ("check_score", "show_score", "show_correct_answers")},
+        ),
+        (
+            "Assessment options",
+            {
+                "fields": (
+                    "assessment_method",
+                    "assessment_min_percentage",
+                    "assessment_max_mistakes",
+                )
+            },
+        ),
+    )
+
     # filter_horizontal = ('questions', )
 
     # def get_urls(self):

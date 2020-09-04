@@ -16,14 +16,46 @@ QUESTION_TYPES = [
     ("M", _("Multiple choice")),
 ]
 
+NONE = "NO"
+MIN_PERCENTAGE = "MP"
+MAX_NUM_MISTAKES = "MN"
+
+ASSESSMENT_METHODS = [
+    (NONE, _("None")),
+    (MIN_PERCENTAGE, _("Minimum Percentage")),
+    (MAX_NUM_MISTAKES, _("Maximum Number of Mistakes")),
+]
+
 
 class Quiz(SectionItem):
     """
     Quiz model
     """
 
+    check_score = models.BooleanField(_("check score"), default=True)
     show_score = models.BooleanField(_("show score"), default=False)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
+    assessment_method = models.CharField(
+        _("assessment method"),
+        max_length=2,
+        default=NONE,
+        choices=ASSESSMENT_METHODS,
+        help_text=_("method for assessing if the quiz has been"),
+    )
+    assessment_min_percentage = models.PositiveIntegerField(
+        _("minimum percentage acceptable"),
+        default=80,
+        help_text=_(
+            "If the participant score percentage is below this value, the quiz is marked as failed"
+        ),
+    )
+    assessment_max_mistakes = models.PositiveIntegerField(
+        _("maximum number of mistakes"),
+        default=0,
+        help_text=_(
+            "If the participant exceeds this value, the quiz is marked as failed"
+        ),
+    )
     require_answers = models.BooleanField(
         _("require participant to answer all questions"), default=False
     )
@@ -48,8 +80,11 @@ class Quiz(SectionItem):
         null=True,
         verbose_name=_("requirement"),
     )
+    allow_multiple_attempts = models.BooleanField(
+        _("Allow multiple attempts"), default=False
+    )
     attempts_max_number = models.PositiveIntegerField(
-        _("attempts max number"), default=1, blank=False, null=False
+        _("attempts max number"), default=1
     )
 
     class Meta:
