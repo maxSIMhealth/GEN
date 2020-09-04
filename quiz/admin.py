@@ -5,7 +5,7 @@ from import_export import resources
 from import_export.admin import ExportActionMixin
 from import_export.fields import Field
 from modeltranslation.admin import (
-    TranslationAdmin,
+    TabbedTranslationAdmin,
     TranslationStackedInline,
     TranslationTabularInline,
 )
@@ -78,7 +78,7 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class QuizAdmin(SortableAdminMixin, TranslationAdmin):
+class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
     list_display = ("name", "course", "section", "video")
     list_filter = ("course", "section")
@@ -210,7 +210,7 @@ class LikertAnswerInline(CheckerInline):
     model = LikertAnswer
 
 
-class QuestionAdmin(TranslationAdmin):
+class QuestionAdmin(TabbedTranslationAdmin):
     """
     Base class for questions admin layout (editing).
     """
@@ -278,7 +278,7 @@ class LikertAdmin(QuestionAdmin):
         return form
 
 
-class LikertAnswerAdmin(TranslationAdmin):
+class LikertAnswerAdmin(TabbedTranslationAdmin):
     list_display = ("question", "scale_range", "check_answer", "answer_range")
     list_filter = ("question__quiz__course", "question__quiz", "question__quiz__video")
 

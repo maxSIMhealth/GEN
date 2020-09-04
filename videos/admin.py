@@ -1,6 +1,6 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from .forms import VideoFileAdminForm
 from .models import Playlist, VideoFile
@@ -22,7 +22,7 @@ def duplicate(modeladmin, request, queryset):
 duplicate.short_description = "Duplicate selected items"
 
 
-class VideoFileAdmin(TranslationAdmin):
+class VideoFileAdmin(TabbedTranslationAdmin):
     list_display = (
         "name",
         "pk",

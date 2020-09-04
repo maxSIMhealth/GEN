@@ -1,5 +1,5 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from .models import Comment, Discussion
 
@@ -11,7 +11,7 @@ class CommentsInline(admin.TabularInline):
     extra = 0
 
 
-class DiscussionAdmin(TranslationAdmin):
+class DiscussionAdmin(TabbedTranslationAdmin):
     list_filter = ("course", "published")
     list_display = (
         "name",

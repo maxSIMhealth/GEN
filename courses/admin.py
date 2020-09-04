@@ -1,6 +1,6 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
+from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
 # from quiz.models import Quiz
 from .forms import SectionAdminForm
@@ -13,7 +13,7 @@ class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class CourseAdmin(TranslationAdmin):
+class CourseAdmin(TabbedTranslationAdmin):
     # fields = ('name', 'students')
     list_display = ("name", "code", "author", "enable_gamification")
     list_filter = ("author",)
@@ -29,7 +29,7 @@ class SectionItemInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class SectionAdmin(SortableAdminMixin, TranslationAdmin):
+class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_display = (
         "name",
         "course",
