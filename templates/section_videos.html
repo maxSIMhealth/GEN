@@ -65,10 +65,7 @@
 
                 <h5 class="mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
 
-                {% comment %}
-                <!-- FIXME: disabled temporarily -->
                 <p>{{ item.videofile.description|linebreaksbr }}</p>
-                {% endcomment %}
 
                 {% if item.videofile.quizzes.all %}
                 <h6><em>{% trans "Quizzes:" %}</em></h6>
