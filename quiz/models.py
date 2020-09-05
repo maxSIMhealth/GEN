@@ -490,6 +490,13 @@ class QuizScore(TimeStampedModel):
         Course, on_delete=models.PROTECT, verbose_name=_("course")
     )
     score = models.PositiveIntegerField(_("score"), default=0)
+    completed = models.BooleanField(
+        _("completed successfully"),
+        default=False,
+        help_text=_(
+            "If quiz assessment is enabled, this field represents if the participant achieved a passing score or not."
+        ),
+    )
 
     class Meta:
         verbose_name = _("quiz score")

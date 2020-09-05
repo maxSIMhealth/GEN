@@ -78,7 +78,7 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
+class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
     list_display = ("name", "course", "section", "video")
     list_filter = ("course", "section")

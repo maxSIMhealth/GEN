@@ -29,12 +29,19 @@ def quiz_enable_check(user, quiz):
     attempts_limit_reached = False
     requirement_fulfilled = False
     quiz_enable = False
+    attempts_max_number = 0
 
     # get current attempt number
     current_attempt_number = quiz_attempts_get(user, quiz)
 
+    # checks if the quiz allows multiple attempts
+    if quiz.allow_multiple_attempts:
+        attempts_max_number = quiz.attempts_max_number
+    else:
+        attempts_max_number = 1
+
     # check if user has reached the limit of attempts
-    if current_attempt_number < quiz.attempts_max_number:
+    if current_attempt_number < attempts_max_number:
         attempts_limit_reached = False
     else:
         attempts_limit_reached = True
