@@ -207,3 +207,6 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - Use the following command to enable/disable maintenance mode while the server is up: `python manage.py maintenance_mode on|off`
 - When activated, the server will return a 503 status and render a warning page (`templates/503.html`).
 - The admin site will not be affected by the maintenance-mode status, but that can changed on the `setting.py` file.
+
+# Contributors
+The previous iteration of GEN was called [OPEN](https://github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](github.com/andreibosco/).  
