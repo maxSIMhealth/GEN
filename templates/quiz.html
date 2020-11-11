@@ -8,116 +8,128 @@
 {% load likert_range %}
 
 {% block content_title %}
-  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {{ quiz.name }}
+    <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> /
+    {{ quiz.name }}
 {% endblock content_title %}
 
 {% block content %}
-  <div class="card-deck">
-    {% if quiz.video %}
-    <div class="card bg-secondary text-white video">
-      <div class="card-header bg-dark">{% trans "Video" %}</div>
-      <div class="card-body">
-        <table class="table table-hover">
-          <tbody>
-            <tr>
-              <div class="embed-responsive embed-responsive-16by9">
-	        <video playsinline="true" poster="{{ quiz.video.thumbnail.url }}" controls>
-                  <source src="{{ quiz.video.file.url }}" type="video/mp4">
-                  {% trans "Sorry, your browser does not support embedded videos." %}
-                </video>
-              </div>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    {% endif %}
-
-    <div class="card quiz">
-      <div class="card-header bg-light">{% trans "Questions" %}</div>
-      <div class="card-body">
-        <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
-          {% csrf_token %}
-          {{ quiz.require_answers|json_script:"quiz_require_answers" }}
-          <div class="quiz-items-container">
-            <div class="quiz-item">
-              <p>{{ quiz.description|safe|linebreaksbr }}</p>
-              <p><i>{% trans "Please use the navigation buttons below." %}</i></p>
-            </div>
-            {% for question in quiz.questions.all %}
-              <div class="quiz-item">
-                {% if question.question_type == 'H' %}
-                <h5>
-                  <strong>{{question.content}}</strong>
-                  <hr />
-                </h5>
-                {% else %}
-                <h6 class="card-title">
-                  <strong>{{question.content}}</strong>
-                </h6>
-                {% endif %}
-
-                {% if question.question_type == 'M' %}
-                <ul class="list-group mb-2">
-                  {% for choice in question.answers.all %}
-                  <li class="list-group-item">
-                    <label class="{{question.multiple_correct_answers|yesno:'checkbox,radio'}} mb-0">
-                      <input type="{{question.multiple_correct_answers|yesno:'checkbox,radio'}}" name="mcquestion_{{question.pk}}" id="{{choice.pk}}" value="{{choice.pk}}"> {{choice.content}}
-                    </label>
-                  </li>
-                  {% endfor %}
-
-                  {% if question.multiple_correct_answers %}
-                  <li class="list-group-item">
-                    <a href="javascript:void(0);" class="btn btn-secondary" onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
-                    <a href="javascript:void(0);" class="btn btn-secondary"  onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
-                  </li>
-                  {% endif %}
-
-                </ul>
-
-                {% elif question.question_type == 'L' %}
-                <div class="card ml-0 mr-0">
-                  {% with answer=question.likertanswer %}
-                    <div class="card-body likert">
-                      {% for value in answer.scale_range|likert_range %}
-                      <div class="item">
-                        <input type="radio" name="likert_{{question.id}}" id="likert_{{question.id}}" value="{{value}}">
-                        <label for="likert_{{question.id}}">{{value}}</label>
-                      </div>
-                      {% endfor %}
-                    </div>
-
-                    {% if answer.legend %}
-                    <div class="likert-legend card-footer text-muted">
-                      <em>{% trans "Scale legend" %}:</em>
-                      {{answer.legend|linebreaks}}
-                    </div>
-                    {% endif %}
-                  {% endwith %}
+    <div class="card-deck">
+        {% if quiz.video %}
+            <div class="card bg-secondary text-white video">
+                <div class="card-header bg-dark">{% trans "Video" %}</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <video playsinline poster="{{ quiz.video.thumbnail.url }}" controls>
+                                    <source src="{{ quiz.video.file.url }}" type="video/mp4">
+                                    {% trans "Sorry, your browser does not support embedded videos." %}
+                                </video>
+                            </div>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                {% elif question.question_type == 'O' %}
-
-                <div class="mb-3">
-                  <textarea name="openended_{{ question.id }}" rows="5" class="form-control"></textarea>
-                </div>
-
-                {% endif %}
-              </div>
-            {% endfor %}
-            <div class="quiz-item">
-              <p>{% trans "This is the end of the quiz." %}</p>
-              <p>{% blocktrans with section.name as section_name%} You can now submit your answers or cancel and return to the {{ section_name }} page. {% endblocktrans %}</p>
-              <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-              <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}" role="button">{% trans "Cancel" %}</a>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="card-footer">
+        {% endif %}
 
-        {% comment %}
+        <div class="card quiz">
+            <div class="card-header bg-light">{% trans "Questions" %}</div>
+            <div class="card-body">
+                <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}"
+                      class="form-horizontal" name="QuizForm">
+                    {% csrf_token %}
+                    {{ quiz.require_answers|json_script:"quiz_require_answers" }}
+                    <div class="quiz-items-container">
+                        <div class="quiz-item">
+                            <p>{{ quiz.description|safe|linebreaksbr }}</p>
+                            <p><i>{% trans "Please use the navigation buttons below." %}</i></p>
+                        </div>
+                        {% for question in quiz.questions.all %}
+                            <div class="quiz-item">
+                                {% if question.question_type == 'H' %}
+                                    <h5>
+                                        <strong>{{ question.content }}</strong>
+                                    </h5>
+                                    <hr/>
+                                {% else %}
+                                    <h6 class="card-title">
+                                        <strong>{{ question.content }}</strong>
+                                    </h6>
+                                {% endif %}
+
+                                {% if question.question_type == 'M' %}
+                                    <ul class="list-group mb-2">
+                                        {% for choice in question.answers.all %}
+                                            <li class="list-group-item">
+                                                <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
+                                                    <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                                           name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
+                                                           value="{{ choice.pk }}"> {{ choice.content }}
+                                                </label>
+                                            </li>
+                                        {% endfor %}
+
+                                        {% if question.multiple_correct_answers %}
+                                            <li class="list-group-item">
+                                                <a href="javascript:void(0);" class="btn btn-secondary"
+                                                   onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
+                                                <a href="javascript:void(0);" class="btn btn-secondary"
+                                                   onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
+                                            </li>
+                                        {% endif %}
+
+                                    </ul>
+
+                                {% elif question.question_type == 'L' %}
+                                    <div class="card ml-0 mr-0">
+                                        {% with answer=question.likertanswer %}
+                                            <div class="card-body likert">
+                                                {% for value in answer.scale_range|likert_range %}
+                                                    <div class="item">
+                                                        <input type="radio" name="likert_{{ question.id }}"
+                                                               id="likert_{{ question.id }}" value="{{ value }}">
+                                                        <label for="likert_{{ question.id }}">{{ value }}</label>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+
+                                            {% if answer.legend %}
+                                                <div class="likert-legend card-footer text-muted">
+                                                    <em>{% trans "Scale legend" %}:</em>
+                                                    {{ answer.legend|linebreaks }}
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+
+                                {% elif question.question_type == 'O' %}
+
+                                    <div class="mb-3">
+                                        <label for="openended_{{ question.id }}">{% trans "Your answer:" %}</label>
+                                        <textarea name="openended_{{ question.id }}" id="openended_{{ question.id }}"
+                                                  rows="5"
+                                                  class="form-control"></textarea>
+                                    </div>
+
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="quiz-item">
+                            <p>{% trans "This is the end of the quiz." %}</p>
+                            <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
+                                cancel and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+                            <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}"
+                               role="button">{% trans "Cancel" %}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+
+                {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">
           <span class="dot" onclick="goToPaginationItem(1)"></span>
@@ -126,23 +138,26 @@
         </div>
         {% endcomment %}
 
-        <nav aria-label="quiz navigation">
-          <ul class="pagination justify-content-center mb-0">
-            <li id="quiz-navigation-previous" class="page-item disabled">
-              <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true" onclick="previousPaginationItem()">Previous</a>
-            </li>
-            <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true">1 of 13</a></li>
-            <li id="quiz-navigation-next" class="page-item">
-              <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+                <nav aria-label="quiz navigation">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li id="quiz-navigation-previous" class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
+                               onclick="previousPaginationItem()">Previous</a>
+                        </li>
+                        <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link"
+                                                          href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
+                            of 13</a></li>
+                        <li id="quiz-navigation-next" class="page-item">
+                            <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock content %}
 
 {% block javascript_bottom %}
-{% sri_static "js/help-guide-course.js" %}
-{% sri_static "js/quiz.js" %}
+    {% sri_static "js/help-guide-course.js" %}
+    {% sri_static "js/quiz.js" %}
 {% endblock javascript_bottom %}

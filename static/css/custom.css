@@ -57,7 +57,7 @@ body {
 }
 
 .video+.quiz .card-body form {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 /* quiz: likert scale */
@@ -84,7 +84,7 @@ body {
 }
 
 .likert .item:before {
-    left: 0%;
+    left: 0;
     width: 100%;
     content: "";
     position: relative;
@@ -147,9 +147,9 @@ body {
 
 /* shepherd */
 .shadow-md {
-  -webkit-box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 0.7);
-  -moz-box-shadow:    0px 0px 7px 0px rgba(50, 50, 50, 0.7);
-  box-shadow:         0px 0px 7px 0px rgba(50, 50, 50, 0.7);
+  -webkit-box-shadow: 0 0 7px 0 rgba(50, 50, 50, 0.7);
+  -moz-box-shadow:    0 0 7px 0 rgba(50, 50, 50, 0.7);
+  box-shadow:         0 0 7px 0 rgba(50, 50, 50, 0.7);
 }
 
 /* language selector */

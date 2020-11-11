@@ -3,117 +3,130 @@
 {% load i18n %}
 {% load sri %}
 
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
     <meta charset="utf-8">
     <title>{% block title %}GEN{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
     {% sri_static "css/bootstrap.min.css" %}
     {% sri_static "css/custom.css" %}
     {% sri_static "css/shepherd.css" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-add-css="false" crossorigin="anonymous" integrity="sha384-heKROmDHlJdBb+n64p+i+wLplNYUZPaZmp2HZ4J6KCqzmd33FJ8QClrOV3IdHZm5"></script>
-    <link href="https://use.fontawesome.com/releases/v5.13.1/css/svg-with-js.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-add-css="false"
+            crossorigin="anonymous"
+            integrity="sha384-heKROmDHlJdBb+n64p+i+wLplNYUZPaZmp2HZ4J6KCqzmd33FJ8QClrOV3IdHZm5"></script>
+    <link href="https://use.fontawesome.com/releases/v5.13.1/css/svg-with-js.css" rel="stylesheet"/>
 
     {% block stylesheet %}
     {% endblock stylesheet %}
-  </head>
-  <body>
-    {% block body %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-secondary" id="main-navbar">
+</head>
+<body>
+{% block body %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-secondary" id="main-navbar">
         <div class="container">
-          <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="{% trans 'Return to GEN home page' %}">
-            <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top" alt="{% trans 'GEN logo' %}">
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mainMenu">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#" onClick="tour.start();">{% trans "Help" %}</a>
-              </li>
-              <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="{{ user|gravatar }}" alt="{{ user.username }} avatar image" style="width: 24px; vertical-align: top;">
-                  {{ user.username }}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                  <a class="dropdown-item" href="{% url 'my_account' %}">{% trans "My account" %}</a>
-                  <a class="dropdown-item" href="{% url 'password_change' %}">{% trans "Change password" %}</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
-                </div>
-              </li>
-            </ul>
-          </div>
+            <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="{% trans 'Return to GEN home page' %}">
+                <img src="{% static 'img/GEN-logo-transparent.png' %}" height="45" class="d-inline-block align-top"
+                     alt="{% trans 'GEN logo' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu"
+                    aria-controls="mainMenu" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#" onClick="tour.start();">{% trans "Help" %}</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ user|gravatar }}" alt="{{ user.username }} avatar image"
+                                 style="width: 24px; vertical-align: top;">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                            <a class="dropdown-item" href="{% url 'my_account' %}">{% trans "My account" %}</a>
+                            <a class="dropdown-item"
+                               href="{% url 'password_change' %}">{% trans "Change password" %}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
 
-      <div class="bg-white">
+    <div class="bg-white">
         <div class="container pt-3 pb-3">
-        {% block container %}
+            {% block container %}
 
-          {% comment %}
+                {% comment %}
           <ol class="breadcrumb my-3">
             {% block breadcrumb %}
             {% endblock breadcrumb %}
           </ol>
           {% endcomment %}
 
-          {% block content %}
-          {% endblock content %}
-        {% endblock container %}
+                {% block content %}
+                {% endblock content %}
+            {% endblock container %}
         </div>
-      </div>
+    </div>
 
-    {% endblock body %}
+{% endblock body %}
 
-    {% block footer %}
+{% block footer %}
 
     <div class="footer bg-light pb-2">
-      <div class="text-center pt-2 pb-2 language-selector">
-        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-          <input name="next" type="hidden" value="{{ redirect_to }}">
-          <select name="language" class="custom-select custom-select-sm" style="width:200px">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                      {{ language.name_local|capfirst }} ({{ language.code }})
-                  </option>
-              {% endfor %}
-          </select>
-          <input type="submit" value="Go" class="btn btn-primary btn-sm">
-        </form>
-      </div>
-      <div class="text-center text-dark">
-        <a href="http://www.ontariotechu.ca" class="primary-link"><img src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a white background' %}" width="200px"></a>
-        <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
-        <p class="mb-0">{% trans 'Developed at' %} <a href="http://www.ontariotechu.ca"><u>Ontario Tech University</u></a> - <a href="http://www.maxsimhealth.com"><u>maxSIMhealth</u></a></p>
-        <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
-      </div>
+        <div class="text-center pt-2 pb-2 language-selector">
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <label for="language">{% trans "Language:" %}</label>
+                <select name="language" id="language" class="custom-select custom-select-sm" style="width:200px">
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                            {{ language.name_local|capfirst }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Go" class="btn btn-primary btn-sm">
+            </form>
+        </div>
+        <div class="text-center text-dark">
+            <a href="http://www.ontariotechu.ca" class="primary-link"><img
+                    src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}"
+                    alt="{% trans 'Ontario Tech University colour logo in a white background' %}" width="200px"></a>
+            <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo.png' %}"
+                                                       alt="{% trans 'maxSIMhealth logo' %}" width="90px"></a>
+            <p class="mb-0">{% trans 'Developed at' %} <a href="http://www.ontariotechu.ca"><u>Ontario Tech
+                University</u></a> - <a href="http://www.maxsimhealth.com"><u>maxSIMhealth</u></a></p>
+            <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+        </div>
     </div>
-    {% endblock footer %}
+{% endblock footer %}
 
-    {% sri_static "js/jquery-3.3.1.slim.min.js" %}
-    {% sri_static "js/popper.min.js" %}
-    {% sri_static "js/bootstrap.min.js" %}
-    {% sri_static "js/shepherd.min.js" %}
-    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    {% comment %}
+{% sri_static "js/jquery-3.3.1.slim.min.js" %}
+{% sri_static "js/popper.min.js" %}
+{% sri_static "js/bootstrap.min.js" %}
+{% sri_static "js/shepherd.min.js" %}
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+{% comment %}
     {% url 'javascript-catalog' as javascript_catalog_url %}
     {% sri_static javascript_catalog_url %}
     {% endcomment %}
-    <script>
+<script>
     $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip()
     })
-    </script>
-    {% block javascript_bottom %}
+</script>
+{% block javascript_bottom %}
     {% sri_static "js/help-guide-home.js" %}
-    {% endblock javascript_bottom %}
-  </body>
+{% endblock javascript_bottom %}
+</body>
 </html>
