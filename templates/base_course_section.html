@@ -34,7 +34,7 @@
           <ul class="list-group-flush navbar-nav">
             {% block content_tabs %}
               <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
-              {% show_sections course.sections %}
+              {% show_sections sections %}
             {% endblock content_tabs %}
           </ul>
         </div>

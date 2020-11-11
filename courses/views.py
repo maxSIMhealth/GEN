@@ -17,13 +17,13 @@ not_enrolled_error = _("You are not enrolled in the requested course.")
 @login_required
 @course_enrollment_check(enrollment_test)
 def course(request, pk):
+    user = request.user
     course_object = get_object_or_404(Course, pk=pk)
-    sections = course_object.sections.filter(published=True)
+    _, course_sections = course_sections_list(course_object, request, user)
     discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
     # user = request.user
-    # TODO: improve this: I've hard-corded this section name because
-    # info isn't a dynamic section item
+    # TODO: improve this: I've hard-corded this section name because info isn't a dynamic section item
     section_name = "Info"
 
     # check_user_enrollment(request, user, course_object)
@@ -37,7 +37,7 @@ def course(request, pk):
         "course.html",
         {
             "course": course_object,
-            "sections": sections,
+            "sections": course_sections,
             "section_name": section_name,
             "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
@@ -61,8 +61,7 @@ def section_page(request, pk, section_pk):
 
     # check_user_enrollment(request, user, course_object)
 
-    # check if user is a course instructor
-    is_instructor = bool(course_object in request.user.instructor.all())
+    is_instructor, course_sections = course_sections_list(course_object, request, user)
 
     # check if section has start and end dates
 
@@ -167,9 +166,23 @@ def section_page(request, pk, section_pk):
         section_template,
         {
             "course": course_object,
+            "sections": course_sections,
             "section": section_object,
             "section_items": section_items,
             "gamification": gamification,
             "allow_submission": allow_submission,
         },
     )
+
+
+def course_sections_list(course_object, request, user):
+    # check if user is a course instructor
+    is_instructor = bool(course_object in request.user.instructor.all())
+
+    # show all sections if the user is a course instructor, superuser, or staff
+    if is_instructor or user.is_superuser or user.is_staff:
+        sections = course_object.sections.all()
+    else:
+        sections = course_object.sections.filter(published=True)
+
+    return is_instructor, sections
