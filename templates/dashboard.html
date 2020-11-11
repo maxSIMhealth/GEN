@@ -34,12 +34,23 @@
             <ul class="list-group list-group-flush">
                 {% for course in user.member.all %}
                     <li class="list-group-item">
-                        <a href="{% url 'course' course.pk %}">
-                            {% if user|is_instructor:course %}
-                                {{ course.code }} -
-                            {% endif %}
-                            {{ course.name }}
-                        </a>
+                        <h5>
+                            <a href="{% url 'course' course.pk %}">
+                                {% if user|is_instructor:course %}
+                                    {{ course.code }} -
+                                {% endif %}
+                                {{ course.name }}
+                            </a>
+                        </h5>
+                        {# TODO: implement model and views for tracking course progress #}
+                        <div>
+                            <strong>Status:</strong> in progress
+                        </div>
+                        <div style="margin-top: 2px">
+                            <div class="progress" data-toggle="tooltip" data-placement="top" title="50%">
+                              <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50%" aria-valuemin="0" aria-valuemax="100">50%</div>
+                            </div>
+                        </div>
                     </li>
                 {% empty %}
                     <li class="list-group-item">{% trans 'Not enrolled in any course. Please wait for the administrator to assign you.' %}</li>
