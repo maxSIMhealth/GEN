@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 21:25+0000\n"
+"POT-Creation-Date: 2020-11-11 15:10-0500\n"
 "PO-Revision-Date: 2020-07-20 20:37+0000\n"
 "Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.4\n"
 
-#: static/js/help-guide-course.js:1 static/js/help-guide-home.js:1
+#: .\static\js\help-guide-course.js:1 .\static\js\help-guide-home.js:1
 msgid "Next"
 msgstr "Suivant"
 
-#: static/js/help-guide-course.js:2 static/js/help-guide-home.js:2
+#: .\static\js\help-guide-course.js:2 .\static\js\help-guide-home.js:2
 msgid "Back"
 msgstr "Retour"
 
-#: static/js/help-guide-course.js:3 static/js/help-guide-home.js:3
+#: .\static\js\help-guide-course.js:3 .\static\js\help-guide-home.js:3
 msgid "Close"
 msgstr "Fermer"
 
-#: static/js/help-guide-course.js:18 static/js/help-guide-home.js:18
+#: .\static\js\help-guide-course.js:18 .\static\js\help-guide-home.js:18
 msgid "GEN Guide"
 msgstr "Guide GEN"
 
-#: static/js/help-guide-course.js:19 static/js/help-guide-home.js:19
+#: .\static\js\help-guide-course.js:19 .\static\js\help-guide-home.js:19
 msgid ""
 "Welcome to GEN's help. This quick guide will briefly explain each area of "
 "GEN's interface."
@@ -43,11 +43,11 @@ msgstr ""
 "Bienvenue au centre d’aide GEN. Ceci est un guide expliquant brièvement "
 "chaque interface de GEN."
 
-#: static/js/help-guide-course.js:31 static/js/help-guide-home.js:31
+#: .\static\js\help-guide-course.js:31 .\static\js\help-guide-home.js:31
 msgid "Top navigation bar"
 msgstr "Bar de navigation supérieur"
 
-#: static/js/help-guide-course.js:32 static/js/help-guide-home.js:32
+#: .\static\js\help-guide-course.js:32 .\static\js\help-guide-home.js:32
 msgid ""
 "In this area are located two elements: <b>Help</b> (which activated this "
 "guide) and <b>your username and avatar</b>, which gives access to your "
@@ -58,19 +58,19 @@ msgstr ""
 "l’information de votre compte, l’option de changer de mot de passe et à se "
 "déconnecter."
 
-#: static/js/help-guide-course.js:55
+#: .\static\js\help-guide-course.js:55
 msgid "Course Name"
 msgstr "Nom du cours"
 
-#: static/js/help-guide-course.js:56
+#: .\static\js\help-guide-course.js:56
 msgid "This area displays the current course name."
 msgstr "Cette zone affiche le nom du cours actuel."
 
-#: static/js/help-guide-course.js:79
+#: .\static\js\help-guide-course.js:79
 msgid "Sections"
 msgstr "Sections"
 
-#: static/js/help-guide-course.js:80
+#: .\static\js\help-guide-course.js:80
 msgid ""
 "This interactable element allows you to navigate through the sections "
 "available in the current course. You should follow these sections in the "
@@ -82,11 +82,11 @@ msgstr ""
 "sont présentées. Si l'une des sections a des exigences, elle sera également "
 "affichée ici."
 
-#: static/js/help-guide-course.js:103
+#: .\static\js\help-guide-course.js:103
 msgid "Section content"
 msgstr "Contenu de la section"
 
-#: static/js/help-guide-course.js:104
+#: .\static\js\help-guide-course.js:104
 msgid ""
 "This is the main content area, where the selected section data is displayed "
 "and most GEN interactions takes place."
@@ -94,11 +94,11 @@ msgstr ""
 "Il s'agit de la zone de contenu principale, où les données de section "
 "sélectionnées sont affichées et la plupart des interactions GEN ont lieu."
 
-#: static/js/help-guide-course.js:127 static/js/help-guide-home.js:103
+#: .\static\js\help-guide-course.js:127 .\static\js\help-guide-home.js:103
 msgid "Getting support"
 msgstr "Obtenir du soutient."
 
-#: static/js/help-guide-course.js:128 static/js/help-guide-home.js:104
+#: .\static\js\help-guide-course.js:128 .\static\js\help-guide-home.js:104
 msgid ""
 "If you need to get in touch in case of any questions or issues, please send "
 "an email to <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</"
@@ -108,26 +108,146 @@ msgstr ""
 "courriel à <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</"
 "a>.<br><br>Merci d’avoir utilisé ce guide. Au revoir."
 
-#: static/js/help-guide-home.js:55
+#: .\static\js\help-guide-home.js:55
 msgid "Page Name"
 msgstr "Nom de la page"
 
-#: static/js/help-guide-home.js:56
+#: .\static\js\help-guide-home.js:56
 msgid "This area displays the current page name."
 msgstr "Cette zone affiche le nom de la page actuelle."
 
-#: static/js/help-guide-home.js:79
+#: .\static\js\help-guide-home.js:79
 msgid "Courses"
 msgstr "Cours"
 
-#: static/js/help-guide-home.js:80
+#: .\static\js\help-guide-home.js:80
 msgid "Here are listed the courses in which you are currently enrolled."
 msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
 
-#: static/js/quiz.js:65
+#: .\static\js\quiz.js:65
 msgid "Please answer the question."
 msgstr "Veuillez répondre à la question."
 
-#: static/js/upload-video.js:3
+#: .\static\js\upload-video.js:3
 msgid "Uploading. Please wait."
 msgstr "Téléchargement. S'il vous plaît, attendez."
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:45
+#, javascript-format
+msgid "Available %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:46
+#, javascript-format
+msgid ""
+"This is the list of available %s. You may choose some by selecting them in "
+"the box below and then clicking the \"Choose\" arrow between the two boxes."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:53
+#, javascript-format
+msgid "Type into this box to filter down the list of available %s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:57
+msgid "Filter"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:61
+msgid "Choose all"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:61
+#, javascript-format
+msgid "Click to choose all %s at once."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:67
+msgid "Choose"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:69
+msgid "Remove"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:75
+#, javascript-format
+msgid "Chosen %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:76
+#, javascript-format
+msgid ""
+"This is the list of chosen %s. You may remove some by selecting them in the "
+"box below and then clicking the \"Remove\" arrow between the two boxes."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:80
+msgid "Remove all"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\SelectFilter2.js:80
+#, javascript-format
+msgid "Click to remove all chosen %s at once."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:79
+#, javascript-format
+msgid "Note: You are %s hour ahead of server time."
+msgid_plural "Note: You are %s hours ahead of server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:87
+#, javascript-format
+msgid "Note: You are %s hour behind server time."
+msgid_plural "Note: You are %s hours behind server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:114
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:149
+msgid "Now"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:118
+msgid "Clock"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:146
+msgid "Choose a time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:150
+msgid "Midnight"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:151
+msgid "6 a.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:152
+msgid "Noon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:156
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:276
+msgid "Cancel"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:216
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:269
+msgid "Today"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:220
+msgid "Choose a Date"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:267
+msgid "Yesterday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\flat\static\admin\js\admin\DateTimeShortcuts.js:271
+msgid "Tomorrow"
+msgstr ""

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
-"POT-Creation-Date: 2020-09-04 12:15-0400\n"
-"PO-Revision-Date: 2020-09-04 12:16+0000\n"
+"POT-Creation-Date: 2020-11-11 15:10-0500\n"
+"PO-Revision-Date: 2020-11-11 15:08+0000\n"
+"Last-Translator: Andrei Torres <contact@andreitorres.tech>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Nom de famille"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: .\accounts\forms.py:13 .\templates\my_account.html:24
+#: .\accounts\forms.py:13 .\templates\my_account.html:25
 msgid "Institution"
 msgstr "Institution"
 
@@ -216,8 +216,8 @@ msgstr "Forums de discussion"
 msgid "Videos"
 msgstr "Vidéos"
 
-#: .\courses\models.py:96 .\templates\course.html:66
-#: .\templates\course.html:79 .\templates\section_quiz.html:30
+#: .\courses\models.py:96 .\templates\course.html:66 .\templates\course.html:79
+#: .\templates\section_quiz.html:32
 msgid "Quizzes"
 msgstr "Quiz"
 
@@ -330,15 +330,15 @@ msgstr "éléments de section"
 msgid "You are not enrolled in the requested course."
 msgstr "Vous n'êtes pas inscrit au cours demandé."
 
-#: .\courses\views.py:76
+#: .\courses\views.py:75
 msgid ""
-"This section's contents are not yet available because the start date has not"
-" been reached."
+"This section's contents are not yet available because the start date has not "
+"been reached."
 msgstr ""
-"Le contenu de cette section n'est pas encore disponible car la date de début"
-" n'a pas été atteinte."
+"Le contenu de cette section n'est pas encore disponible car la date de début "
+"n'a pas été atteinte."
 
-#: .\courses\views.py:85
+#: .\courses\views.py:84
 msgid ""
 "This section and its contents are not yet available to participants because "
 "of the start date."
@@ -346,15 +346,15 @@ msgstr ""
 "Cette section et son contenu ne sont pas encore disponibles pour les "
 "participants en raison de la date de début."
 
-#: .\courses\views.py:101
+#: .\courses\views.py:100
 msgid ""
-"This section is closed and its contents have been hidden or disabled because"
-" the end date has passed."
+"This section is closed and its contents have been hidden or disabled because "
+"the end date has passed."
 msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
 
-#: .\courses\views.py:110
+#: .\courses\views.py:109
 msgid ""
 "This section is closed and its contents have been hidden or disabled to "
 "participants because the end date has passed."
@@ -362,7 +362,7 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé pour les "
 "participants car la date de fin est passée."
 
-#: .\courses\views.py:122
+#: .\courses\views.py:121
 msgid ""
 "You have not fulfilled the requirements to access the requested section."
 msgstr "Vous n'avez pas rempli les conditions d'accès à la section demandée."
@@ -384,12 +384,12 @@ msgid "The max length for the discussion board description is 400."
 msgstr ""
 "La longueur maximale pour la description du forum de discussion est de 400."
 
-#: .\discussions\forms.py:46 .\templates\quiz.html:112 .\videos\forms.py:50
+#: .\discussions\forms.py:46 .\templates\quiz.html:123 .\videos\forms.py:50
 #: .\videos\forms.py:72
 msgid "Submit"
 msgstr "Soumettre"
 
-#: .\discussions\forms.py:49 .\templates\quiz.html:113 .\videos\forms.py:54
+#: .\discussions\forms.py:49 .\templates\quiz.html:125 .\videos\forms.py:54
 #: .\videos\forms.py:76
 msgid "Cancel"
 msgstr "Annuler"
@@ -461,23 +461,19 @@ msgstr "Choix multiple"
 
 #: .\quiz\models.py:24
 msgid "None"
-msgstr ""
+msgstr "Nul"
 
 #: .\quiz\models.py:25
 msgid "Minimum Percentage"
-msgstr ""
+msgstr "Pourcentage minimum"
 
 #: .\quiz\models.py:26
-#, fuzzy
-#| msgid "maximum number of participants"
 msgid "Maximum Number of Mistakes"
-msgstr "nombre maximum de participants"
+msgstr "Nombre maximum d'erreurs"
 
 #: .\quiz\models.py:35
-#, fuzzy
-#| msgid "check answer"
 msgid "check score"
-msgstr "vérifier la réponse"
+msgstr "vérifier le score"
 
 #: .\quiz\models.py:36
 msgid "show score"
@@ -489,41 +485,40 @@ msgstr "afficher les bonnes réponses"
 
 #: .\quiz\models.py:39
 msgid "assessment method"
-msgstr ""
+msgstr "procédé d'évaluation"
 
 #: .\quiz\models.py:43
 msgid "method for assessing if the quiz has been"
-msgstr ""
+msgstr "méthode pour évaluer si le quiz a été"
 
 #: .\quiz\models.py:46
 msgid "minimum percentage acceptable"
-msgstr ""
+msgstr "pourcentage minimum acceptable"
 
 #: .\quiz\models.py:49
 msgid ""
 "If the participant score percentage is below this value, the quiz is marked "
 "as failed"
 msgstr ""
+"Si le pourcentage de score du participant est inférieur à cette valeur, le "
+"quiz est marqué comme ayant échoué"
 
 #: .\quiz\models.py:53
-#, fuzzy
-#| msgid "maximum number of participants"
 msgid "maximum number of mistakes"
-msgstr "nombre maximum de participants"
+msgstr "nombre maximum d'erreurs"
 
 #: .\quiz\models.py:56
 msgid "If the participant exceeds this value, the quiz is marked as failed"
 msgstr ""
+"Si le participant dépasse cette valeur, le quiz est marqué comme ayant échoué"
 
 #: .\quiz\models.py:60
 msgid "require participant to answer all questions"
 msgstr "demander au participant de répondre à toutes les questions"
 
 #: .\quiz\models.py:84
-#, fuzzy
-#| msgid "likert attempts"
 msgid "Allow multiple attempts"
-msgstr "tentatives de likert"
+msgstr "Autoriser plusieurs tentatives"
 
 #: .\quiz\models.py:87
 msgid "attempts max number"
@@ -567,8 +562,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
-" de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
+"de sélectionner plusieurs éléments de réponse)?"
 
 #: .\quiz\models.py:141 .\quiz\models.py:225 .\quiz\models.py:325
 #: .\quiz\models.py:371
@@ -723,19 +718,31 @@ msgstr "tentatives de questions à choix multiples"
 msgid "score"
 msgstr "score"
 
-#: .\quiz\models.py:495
+#: .\quiz\models.py:494
+msgid "completed successfully"
+msgstr "complété avec succès"
+
+#: .\quiz\models.py:497
+msgid ""
+"If quiz assessment is enabled, this field represents if the participant "
+"achieved a passing score or not."
+msgstr ""
+"Si l'évaluation du quiz est activée, ce champ indique si le participant a "
+"obtenu une note de passage ou non."
+
+#: .\quiz\models.py:502
 msgid "quiz score"
 msgstr "score du quiz"
 
-#: .\quiz\models.py:496
+#: .\quiz\models.py:503
 msgid "quiz scores"
 msgstr "scores du quiz"
 
-#: .\quiz\models.py:511
+#: .\quiz\models.py:518
 msgid "question group header"
 msgstr "en-tête du groupe de questions"
 
-#: .\quiz\models.py:512
+#: .\quiz\models.py:519
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
@@ -756,28 +763,26 @@ msgid "GEN is currently under maintenance. Please try again later."
 msgstr "GEN est actuellement en maintenance. Veuillez réessayer plus tard."
 
 #: .\templates\503.html:16
-#| msgid ""
-#| "\n"
-#| "      If you have problems logging into GEN, please contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
-#| "      "
 msgid ""
 "\n"
-"      You can contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
+"      You can contact us through the following email: <a href=\"mailto:"
+"support@maxsimgen.com\">support@maxsimgen.com</a>\n"
 "      "
 msgstr ""
 "\n"
-"Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
+"Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:"
+"support@maxsimgen.com\">support@maxsimgen.com</a>"
 
 #: .\templates\503.html:27 .\templates\login.html:45
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
-#: .\templates\503.html:28 .\templates\base.html:78 .\templates\login.html:46
+#: .\templates\503.html:28 .\templates\base.html:107 .\templates\login.html:46
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: .\templates\503.html:29 .\templates\base.html:79
-#: .\templates\base_accounts.html:32 .\templates\login.html:47
+#: .\templates\503.html:29 .\templates\base.html:108
+#: .\templates\base_accounts.html:30 .\templates\login.html:47
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -802,8 +807,8 @@ msgstr "E-mail d'activation envoyé"
 #: .\templates\account_activation_sent.html:11
 msgid ""
 "An activation email was sent with a confirmation link. Please check your "
-"email account Inbox and Spam folders, and click on the link contained in the"
-" email to complete the registration."
+"email account Inbox and Spam folders, and click on the link contained in the "
+"email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
 "vérifier les dossiers Boîte de réception et Spam de votre compte de "
@@ -815,28 +820,28 @@ msgstr ""
 msgid "Return to login page"
 msgstr "Retour à la page de connexion"
 
-#: .\templates\base.html:26
+#: .\templates\base.html:32
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: .\templates\base.html:27
+#: .\templates\base.html:34 .\templates\base_accounts.html:16
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: .\templates\base.html:29
+#: .\templates\base.html:37
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: .\templates\base.html:35
+#: .\templates\base.html:43
 msgid "Help"
 msgstr "Aide"
 
-#: .\templates\base.html:43 .\templates\my_account.html:6
+#: .\templates\base.html:53 .\templates\my_account.html:6
 #: .\templates\my_account.html:10
 msgid "My account"
 msgstr "Mon compte"
 
-#: .\templates\base.html:44 .\templates\password.html:5
+#: .\templates\base.html:55 .\templates\password.html:5
 #: .\templates\password.html:9 .\templates\password_change.html:5
 #: .\templates\password_change.html:9 .\templates\password_change.html:14
 #: .\templates\password_change.html:19 .\templates\password_change_done.html:8
@@ -845,11 +850,15 @@ msgstr "Mon compte"
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: .\templates\base.html:46
+#: .\templates\base.html:57
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: .\templates\base.html:77
+#: .\templates\base.html:91
+msgid "Language:"
+msgstr "Langue:"
+
+#: .\templates\base.html:105
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
 
@@ -865,40 +874,36 @@ msgstr "Basculer la liste des sections"
 msgid "Info"
 msgstr "Info"
 
-#: .\templates\comments.html:34 .\templates\comments.html:112
-msgid "Please login to like"
-msgstr "Veuillez vous connecter pour aimer"
-
-#: .\templates\comments.html:56 .\templates\quiz.html:26
+#: .\templates\comments.html:57 .\templates\quiz.html:27
 msgid "Sorry, your browser does not support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
-#: .\templates\comments.html:75
+#: .\templates\comments.html:76
 msgid "New comment"
 msgstr "Nouveau commentaire"
 
-#: .\templates\comments.html:83 .\templates\new_media.html:13
+#: .\templates\comments.html:84 .\templates\new_media.html:13
 msgid "Post"
 msgstr "Publier"
 
-#: .\templates\comments.html:86
+#: .\templates\comments.html:87
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: .\templates\comments.html:92 .\templates\course.html:65
+#: .\templates\comments.html:93 .\templates\course.html:65
 #: .\templates\course.html:78
 msgid "Comments"
 msgstr "Commentaires"
 
-#: .\templates\comments.html:127
+#: .\templates\comments.html:123
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: .\templates\comments.html:129
+#: .\templates\comments.html:125
 msgid "Expert"
 msgstr "L'expert"
 
-#: .\templates\comments.html:169
+#: .\templates\comments.html:164
 msgid "This discussion has no comments."
 msgstr "Cette discussion n'a aucun commentaire."
 
@@ -917,7 +922,7 @@ msgid "Start"
 msgstr "Début"
 
 #: .\templates\course.html:44 .\templates\section_content.html:18
-#: .\templates\section_discussion.html:21 .\templates\section_quiz.html:20
+#: .\templates\section_discussion.html:21 .\templates\section_quiz.html:21
 #: .\templates\section_upload.html:20 .\templates\section_videos.html:23
 msgid "End"
 msgstr "Fin"
@@ -967,12 +972,11 @@ msgstr "Accueil"
 msgid "Courses"
 msgstr "Cours"
 
-#: .\templates\dashboard.html:48
+#: .\templates\dashboard.html:56
 msgid ""
 "Not enrolled in any course. Please wait for the administrator to assign you."
 msgstr ""
-"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous "
-"attribue."
+"Pas inscrit à un cours. Veuillez attendre que l'administrateur vous attribue."
 
 #: .\templates\delete_video_confirmation.html:6
 #: .\templates\publish_video_confirmation.html:6
@@ -994,6 +998,7 @@ msgstr "Voulez-vous vraiment supprimer la vidéo suivante?"
 #: .\templates\publish_video_confirmation.html:13
 #: .\templates\section_upload.html:58 .\templates\section_upload.html:110
 #: .\templates\section_videos.html:59
+#: .\templates\unpublish_video_confirmation.html:13
 msgid "Video thumbnail"
 msgstr "Vignette vidéo"
 
@@ -1003,7 +1008,7 @@ msgstr "Oui, supprimez la vidéo"
 
 #: .\templates\delete_video_confirmation.html:22
 #: .\templates\publish_video_confirmation.html:22
-#: .\templates\unpublish_video_confirmation.html:22
+#: .\templates\unpublish_video_confirmation.html:23
 msgid "No, cancel"
 msgstr "Non, annuler"
 
@@ -1016,11 +1021,15 @@ msgstr "S'identifier"
 #: .\templates\login.html:20
 msgid ""
 "\n"
-"      If you have problems logging into GEN, please contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
+"      If you have problems logging into GEN, please contact us through the "
+"following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen."
+"com</a>\n"
 "      "
 msgstr ""
 "\n"
-"Si vous rencontrez des problèmes à vous identifier et à entrer sur GEN, veuillez nous contacter à cette adresse courriel: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
+"Si vous rencontrez des problèmes à vous identifier et à entrer sur GEN, "
+"veuillez nous contacter à cette adresse courriel: <a href=\"mailto:"
+"support@maxsimgen.com\">support@maxsimgen.com</a>"
 
 #: .\templates\login.html:26
 msgid "New to GEN?"
@@ -1042,16 +1051,16 @@ msgstr "Mettre à jour les informations de compte"
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: .\templates\my_account.html:28
+#: .\templates\my_account.html:30
 msgid "Email address"
 msgstr "Adresse électronique"
 
-#: .\templates\my_account.html:34 .\templates\password.html:20
+#: .\templates\my_account.html:37 .\templates\password.html:20
 #: .\templates\settings.html:20
 msgid "Save changes"
 msgstr "Sauvegarder les modifications"
 
-#: .\templates\my_account.html:39
+#: .\templates\my_account.html:42
 msgid "This avatar is automatically generated."
 msgstr "Cet avatar est généré automatiquement."
 
@@ -1093,8 +1102,8 @@ msgstr "Retour à la page d'accueil"
 
 #: .\templates\publish_video_confirmation.html:11
 msgid ""
-"Are you sure that you want to publish this video? You <strong>WILL "
-"NOT</strong> be able to delete it after publishing."
+"Are you sure that you want to publish this video? You <strong>WILL NOT</"
+"strong> be able to delete it after publishing."
 msgstr ""
 "Voulez-vous vraiment publier cette vidéo? Vous <strong> NE POUVEZ </strong> "
 "pas le supprimer après la publication."
@@ -1103,75 +1112,80 @@ msgstr ""
 msgid "Yes, publish video"
 msgstr "Oui, publier une vidéo"
 
-#: .\templates\quiz.html:18
+#: .\templates\quiz.html:19
 msgid "Video"
 msgstr "Vidéo"
 
-#: .\templates\quiz.html:37
+#: .\templates\quiz.html:38
 msgid "Questions"
 msgstr "Des questions"
 
-#: .\templates\quiz.html:45
+#: .\templates\quiz.html:47
 msgid "Please use the navigation buttons below."
 msgstr "Veuillez utiliser les boutons de navigation ci-dessous."
 
-#: .\templates\quiz.html:72
+#: .\templates\quiz.html:77
 msgid "Select all"
 msgstr "Tout sélectionner"
 
-#: .\templates\quiz.html:73
+#: .\templates\quiz.html:79
 msgid "Deselect all"
 msgstr "Tout déselectionner"
 
-#: .\templates\quiz.html:93 .\templates\quiz_result.html:120
+#: .\templates\quiz.html:100 .\templates\quiz_result.html:123
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
-#: .\templates\quiz.html:110
+#: .\templates\quiz.html:110 .\templates\quiz_result.html:132
+msgid "Your answer:"
+msgstr "Ta Réponse:"
+
+#: .\templates\quiz.html:120
 msgid "This is the end of the quiz."
 msgstr "C'est la fin du quiz."
 
-#: .\templates\quiz.html:111
+#: .\templates\quiz.html:121
 #, python-format
 msgid ""
-" You can now submit your answers or cancel and return to the "
-"%(section_name)s page. "
+" You can now submit your answers or\n"
+"                                cancel and return to the %(section_name)s "
+"page. "
 msgstr ""
-"Vous pouvez maintenant soumettre vos réponses ou annuler et revenir à la "
-"page %(section_name)s."
+"Vous pouvez maintenant soumettre vos réponses ou\n"
+"annuler et revenir à la page %(section_name)s."
 
-#: .\templates\quiz_result.html:17 .\templates\quiz_result.html:24
+#: .\templates\quiz_result.html:18 .\templates\quiz_result.html:25
 msgid "Result"
 msgstr "Résultat"
 
-#: .\templates\quiz_result.html:26
+#: .\templates\quiz_result.html:27
 msgid ""
 "\n"
-"        Thank you for your submission.\n"
-"        "
+"                Thank you for your submission.\n"
+"            "
 msgstr ""
 "\n"
 "Merci pour votre soumission."
 
-#: .\templates\quiz_result.html:32
+#: .\templates\quiz_result.html:33
 #, python-format
 msgid ""
 "\n"
-"          Your score is %(quiz_score)s.\n"
-"          "
+"                    Your score is %(quiz_score)s.\n"
+"                "
 msgstr ""
 "\n"
 "Ton score est %(quiz_score)s."
 
-#: .\templates\quiz_result.html:40
+#: .\templates\quiz_result.html:41
 msgid "Your submission"
 msgstr "Votre soumission"
 
-#: .\templates\quiz_result.html:137
+#: .\templates\quiz_result.html:144
 msgid "Explanation"
 msgstr "Explication"
 
-#: .\templates\quiz_result.html:144
+#: .\templates\quiz_result.html:153
 #, python-format
 msgid "Return to %(section_name)s"
 msgstr "Retourner au %(section_name)s"
@@ -1203,15 +1217,23 @@ msgstr "Réinitialisation du mot de passe"
 #: .\templates\registration\password_reset_done.html:11
 msgid ""
 "\n"
-"    <p>We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly.</p>\n"
-"    <p>If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder.</p>\n"
-"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a></p>\n"
+"    <p>We've emailed you instructions for setting your password, if an "
+"account exists with the email you entered. You should receive them shortly.</"
+"p>\n"
+"    <p>If you don't receive an email, please make sure you've entered the "
+"address you registered with, and check your spam folder.</p>\n"
+"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen."
+"com\">support@maxsimgen.com</a></p>\n"
 "    "
 msgstr ""
 "\n"
-"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot de passe, si un compte existe avec l'e-mail que vous avez entré. Vous devriez les recevoir sous peu.</p>\n"
-"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
-"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
+"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot "
+"de passe, si un compte existe avec l'e-mail que vous avez entré. Vous "
+"devriez les recevoir sous peu.</p>\n"
+"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse "
+"avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
+"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:"
+"support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
 
 #: .\templates\registration\password_reset_form.html:11
 msgid ""
@@ -1233,8 +1255,8 @@ msgstr "Créer un nouveau"
 msgid "Participated"
 msgstr "Participé"
 
-#: .\templates\section_discussion.html:71 .\templates\section_quiz.html:51
-#: .\templates\section_videos.html:95
+#: .\templates\section_discussion.html:71 .\templates\section_quiz.html:55
+#: .\templates\section_videos.html:91
 msgid "To do"
 msgstr "Faire"
 
@@ -1250,30 +1272,32 @@ msgstr "Commentaires:"
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
+"                  Note: <em>To get access you must participate in <u>"
+"%(requirement)s</u> first.</em>\n"
 "                  "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
+"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>"
+"%(requirement)s</u>. </em>"
 
 #: .\templates\section_discussion.html:109
 msgid "No discussion board available."
 msgstr "Aucun forum de discussion disponible."
 
-#: .\templates\section_quiz.html:43 .\templates\section_tabs.html:10
-#: .\templates\section_videos.html:86
+#: .\templates\section_quiz.html:47 .\templates\section_tabs.html:10
+#: .\templates\section_videos.html:82
 msgid "Requirement must be met first:"
 msgstr "L'exigence doit être satisfaite en premier:"
 
-#: .\templates\section_quiz.html:49 .\templates\section_videos.html:93
+#: .\templates\section_quiz.html:53 .\templates\section_videos.html:89
 msgid "Submitted"
 msgstr "Envoyées"
 
-#: .\templates\section_quiz.html:62
+#: .\templates\section_quiz.html:67
 msgid "Score:"
 msgstr "Score:"
 
-#: .\templates\section_quiz.html:76
+#: .\templates\section_quiz.html:81
 msgid "No quiz available."
 msgstr "Aucun quiz n'est disponible."
 
@@ -1312,7 +1336,7 @@ msgstr ""
 msgid "Publish submission"
 msgstr "Publier la soumission"
 
-#: .\templates\section_upload.html:73 .\templates\section_videos.html:110
+#: .\templates\section_upload.html:73 .\templates\section_videos.html:106
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1357,27 +1381,27 @@ msgstr "Aucun participant n'a soumis de contenu."
 msgid "Video thumbnail missing."
 msgstr "Vignette vidéo manquante."
 
-#: .\templates\section_videos.html:76
+#: .\templates\section_videos.html:72
 msgid "Quizzes:"
 msgstr "Quiz:"
 
-#: .\templates\section_videos.html:106
+#: .\templates\section_videos.html:102
 msgid "Make this video visible by the course participants"
 msgstr "Rendre cette vidéo visible par les participants au cours"
 
-#: .\templates\section_videos.html:106
+#: .\templates\section_videos.html:102
 msgid "Publish"
 msgstr "Publier"
 
-#: .\templates\section_videos.html:108
+#: .\templates\section_videos.html:104
 msgid "Hide video from the course participants"
 msgstr "Masquer la vidéo des participants au cours"
 
-#: .\templates\section_videos.html:108
+#: .\templates\section_videos.html:104
 msgid "Unpublish"
 msgstr "Annuler la publication"
 
-#: .\templates\section_videos.html:120
+#: .\templates\section_videos.html:116
 msgid "No video available."
 msgstr "Aucune vidéo disponible."
 
@@ -1420,11 +1444,13 @@ msgstr "Connectez-vous à GitHub"
 #, python-format
 msgid ""
 "\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
+"                  Connected as %(google_uid)s - %(google_first_name)s "
+"%(google_last_name)s\n"
 "                  "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s "
+"%(google_last_name)s"
 
 #: .\templates\settings.html:55 .\templates\settings.html:58
 msgid "Disconnect from Google"
@@ -1454,10 +1480,10 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course participants."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
-" Cela le cachera aux participants au cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
+"Cela le cachera aux participants au cours."
 
-#: .\templates\unpublish_video_confirmation.html:21
+#: .\templates\unpublish_video_confirmation.html:22
 msgid "Yes, unpublish video"
 msgstr "Oui, annuler la publication de la vidéo"
 
@@ -1552,6 +1578,9 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
 
+#~ msgid "Please login to like"
+#~ msgstr "Veuillez vous connecter pour aimer"
+
 #~ msgid "Course description (max 800 characters)"
 #~ msgstr "Description du cours (max 800 caractères)"
 
@@ -1573,8 +1602,10 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgid "scale max"
 #~ msgstr "échelle max"
 
-#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
+#~ msgid ""
+#~ "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
+#~ msgstr ""
+#~ "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
 
 #~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
 #~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."
