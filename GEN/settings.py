@@ -316,27 +316,26 @@ SOCIAL_AUTH_PIPELINE = (
 
 ### TinyMCE
 TINYMCE_DEFAULT_CONFIG = {
+    # 'selector': 'textarea',
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
-    'theme': 'silver',
+    'theme': 'modern',
     'plugins': '''
             textcolor save link image media preview codesample contextmenu
-            table code lists fullscreen  insertdatetime  nonbreaking
-            contextmenu directionality searchreplace wordcount visualblocks
-            visualchars code fullscreen autolink lists  charmap print  hr
-            anchor pagebreak
+            table code lists fullscreen insertdatetime searchreplace wordcount visualblocks
+            visualchars code autolink lists charmap print anchor
             ''',
     'toolbar1': '''
-            fullscreen preview bold italic underline | fontselect,
-            fontsizeselect  | forecolor backcolor | alignleft alignright |
-            aligncenter alignjustify | indent outdent | bullist numlist table |
-            | link image media | codesample |
+            fullscreen | print | bold italic underline | fontsizeselect |
+            forecolor | alignleft aligncenter alignright alignjustify | indent outdent |
+            bullist numlist table | link image media | codesample |
+            visualblocks visualchars | charmap hr pagebreak nonbreaking anchor | insertdatetime |
+            searchreplace | code
             ''',
-    'toolbar2': '''
-            visualblocks visualchars |
-            charmap hr pagebreak nonbreaking anchor |  code |
-            ''',
-    'contextmenu': 'formats | link image',
-    'menubar': True,
+    'contextmenu': 'formats | link image | code',
+    'menubar': False,
     'statusbar': True,
+    'height': 300,
 }
+TINYMCE_SPELLCHECKER = False
+
