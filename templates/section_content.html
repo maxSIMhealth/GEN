@@ -5,42 +5,45 @@
 {% load humanize %}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
 
 {% block content %}
-  {% if section.start_date or section.end_data %}
-  <ul class="list-group mb-3">
-    {% if section.start_date %}
-    <li class="list-group-item"><b>{% trans "Start" %}: </b>{{section.start_date|naturaltime}} <small>({{ section.start_date}} UTC)</small></li>
+    {% if section.start_date or section.end_data %}
+        <ul class="list-group mb-3">
+            {% if section.start_date %}
+                <li class="list-group-item"><b>{% trans "Start" %}: </b>{{ section.start_date|naturaltime }}
+                    <small>({{ section.start_date }} UTC)</small></li>
+            {% endif %}
+            {% if section.end_date %}
+                <li class="list-group-item"><b>{% trans "End" %}: </b>{{ section.end_date|naturaltime }}
+                    <small>({{ section.end_date }} UTC)</small></li>
+            {% endif %}
+        </ul>
     {% endif %}
-    {% if section.end_date %}
-    <li class="list-group-item"><b>{% trans "End" %}: </b>{{section.end_date|naturaltime}} <small>({{ section.end_date}} UTC)</small></li>
+
+    {% if section.description %}
+        <p class="text-break">{{ section.description|safe|linebreaksbr }}</p>
     {% endif %}
-  </ul>
-  {% endif %}
 
-  {% if section.description %}
-  <p class="text-break">{{section.description|safe|linebreaksbr}}</p>
-  {% endif %}
-
-  {% comment %}
-    <!-- WIP: implement content section items (e.g., links) -->
+    <!-- TODO: implement content section items (e.g., links) -->
     <div class="card mb-3 section-text">
-      <h5 class="card-header bg-light d-flex">
-        <span class="pt-1 mr-auto">{% trans "Content" %}</span>
-      </h5>
-      <ul class="list-group list-group-flush">
-        {% if section_items.all %}
-          {% for item in section_items.all %}
-            <li class="list-group-item">
-              <div class="d-flex">
-                {{ item.content }}
-              </div>
-            </li>
-          {% endfor %}
-        {% endif %}
-      </ul>
+        <h5 class="card-header bg-light d-flex">
+            <span class="pt-1 mr-auto">{% trans "Content" %}</span>
+        </h5>
+        <div class="card-body">
+            {{ section.content|safe }}
+        </div>
+        <ul class="list-group list-group-flush">
+            {% if section_items.all %}
+                {% for item in section_items.all %}
+                    <li class="list-group-item">
+                        <div class="d-flex">
+                            {{ item.content }}
+                        </div>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
     </div>
-  {% endcomment %}
 {% endblock content %}

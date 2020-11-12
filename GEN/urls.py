@@ -44,6 +44,11 @@ urlpatterns = [
     ),
 ]
 
+# tiny mce
+urlpatterns += [
+    path('tinymce/', include('tinymce.urls')),
+]
+
 urlpatterns += i18n_patterns(
     path("", dashboard_views.dashboard, name="home"),
     path("dashboard/", dashboard_views.dashboard, name="dashboard"),

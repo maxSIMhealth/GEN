@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
+from tinymce.models import HTMLField
 
 
 class Course(models.Model):
@@ -111,6 +112,10 @@ class Section(models.Model):
         blank=True,
         null=True,
         help_text=_("Description (max 1000 characters)"),
+    )
+    content = HTMLField(
+        blank=True,
+        null=True
     )
     course = models.ForeignKey(
         Course,
