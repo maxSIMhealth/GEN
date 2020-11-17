@@ -20,3 +20,20 @@ def reset(request):
                 item.delete()
 
     return redirect("home")
+
+def check_is_instructor(course_object, user):
+    is_instructor = bool(course_object in user.instructor.all())
+
+    return is_instructor
+
+def course_sections_list(course_object, user):
+    # check if user is a course instructor
+    is_instructor = check_is_instructor(course_object, user)
+
+    # show all sections if the user is a course instructor, superuser, or staff
+    if is_instructor or user.is_superuser or user.is_staff:
+        sections = course_object.sections.all()
+    else:
+        sections = course_object.sections.filter(published=True)
+
+    return sections

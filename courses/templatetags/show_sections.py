@@ -1,6 +1,7 @@
 from django import template
 
 from courses.support_methods import requirement_fulfilled
+from core.views import course_sections_list
 
 register = template.Library()
 
@@ -8,7 +9,9 @@ register = template.Library()
 @register.inclusion_tag("section_tabs.html", takes_context=True)
 def show_sections(context, sections):
     user = context["user"]
-    sections = sections.all()
+    course = context["course"]
+    sections = course_sections_list(course, user)
+    # sections = sections.all()
     if "section" in context:
         current_section = context["section"]
     else:
