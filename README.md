@@ -37,14 +37,21 @@
 - Create a virtual environment: `python3 -m venv venv`
 - Activate virtual environment: `source venv/bin/activate`
 - Create a `.env` file based on `conf-templates/env` (read the instructions in the file)
-- Instal project dependencies: `pip install -r requirements.txt`
+- Install project dependencies: `pip install -r requirements.txt`
 - Generate database: `python manage.py migrate`
 - Create a super user: `python manage.py createsuperuser --username USERNAME --email USER_EMAIL`
 - Run the project: `python manage.py runserver`
 
+### Possible issues
+- If you get a error message about _libmagic_ (`ImportError: failed to find libmagic.  Check your installation`), try running these commands:
+    ```
+    pip uninstall python-magic
+    pip install python-magic-bin
+    ```
+
 ## Locale (i18n) messages
 - Install GNU gettext: `sudo apt install gettext`
-- This project is currenctly configured to support *en* and *fr*
+- This project is currently configured to support *en* and *fr*
 - To regenerate locale messages for French (fr) run:
   ```
   python manage.py makemessages -l 'fr' --ignore venv --ignore static
@@ -89,7 +96,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - Create a virtual environment: `python3 -m venv venv`
 - Activate virtual environment: `source venv/bin/activate`
 - Create a `.env` file based on `conf-templates/env` (read the instructions in the file)
-- Instal project dependencies: `pip install -r requirements.txt`
+- Install project dependencies: `pip install -r requirements.txt`
 
 ### PostgreSQL
 - Switch to postgres user: `sudo su - postgres`
@@ -157,7 +164,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 
 ### Set up SSL
 - GEN for production is configured to use only https, so you will need to set up SSL
-- We are going to use Certbot to generate a certificate via [Let's Encrpty](https://letsencrypt.org/). For instructions tailored to your specific system, check https://certbot.eff.org/
+- We are going to use Certbot to generate a certificate via [Let's Encrypt](https://letsencrypt.org/). For instructions tailored to your specific system, check https://certbot.eff.org/
 - Make sure your DNS records point to your server's public IPv4 and IPv6 addresses.
 - Enable the universe repository:
   ```
@@ -196,7 +203,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
   > settings.SENDGRID_SANDBOX_MODE_IN_DEBUG=False
   > send_mail('testing', 'my message', 'hello@serverdomain.com', ['personal@example.com'], fail_silently=False)
   ```
-  - If the command was successfull, the output will be `1` and you should get an email.
+  - If the command was successful, the output will be `1` and you should get an email.
 
 
 ### Start/stop the server
@@ -209,4 +216,4 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - The admin site will not be affected by the maintenance-mode status, but that can changed on the `setting.py` file.
 
 # Contributors
-The previous iteration of GEN was called [OPEN](https://github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](github.com/andreibosco/).  
+The previous iteration of GEN was called [OPEN](https://www.github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](https://www.github.com/andreibosco/).  
