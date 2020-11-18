@@ -385,7 +385,7 @@ class QuestionAttempt(TimeStampedModel):
         verbose_name=_("video"),
     )
     answer_content = models.TextField(_("student answer"), null=True, blank=True)
-    correct = models.NullBooleanField(_("correct"), blank=True, null=True)
+    correct = models.BooleanField(_("correct"), blank=True, null=True)
     # likert_answer_content = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:

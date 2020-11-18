@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import re_path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -93,12 +93,12 @@ urlpatterns += i18n_patterns(
     path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
     path("courses/<int:pk>/", course_views.course, name="course"),
     # account activation
-    url(
+    re_path(
         r"^account_activation_sent/$",
         account_views.account_activation_sent,
         name="account_activation_sent",
     ),
-    url(
+    re_path(
         r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         account_views.activate,
         name="activate",
@@ -203,7 +203,7 @@ urlpatterns += i18n_patterns(
 if settings.DEBUG:
     # enable rosetta
     if "rosetta" in settings.INSTALLED_APPS:
-        urlpatterns += [url(r"^rosetta/", include("rosetta.urls"))]
+        urlpatterns += [re_path(r"^rosetta/", include("rosetta.urls"))]
 
     # access to media files during development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
