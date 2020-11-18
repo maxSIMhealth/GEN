@@ -134,6 +134,8 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
   - **Note:** if you are using virtualenv, don't forget to enable it **BEFORE** using pip
 - Copy the files on `GEN/conf-templates/systemd` to `/etc/systemd/system/`
 - Update the paths in the files, if necessary
+- Create directory to store log file: `mkdir /home/gen/logs` (update this path if you changed it on `gunicorn.service`)
+  - Remember to make the file accessible by user _gen_.
 - Start and enable gunicorn socket so that it is created on boot:
   ```
   sudo systemctl start gunicorn.socket
