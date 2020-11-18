@@ -124,7 +124,9 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
 - Create media files directory: `mkdir /home/gen/GEN_media/`
 - If necessary, change ownership of static and media directories to user that will run GEN (e.g., `sudo chown user:usergroup /home/gen/GEN_static`
 - Add server domain and IP to allowed hosts list in `.env`
-- Open `GEN/settings.py` and check if `STATIC_ROOT` and `MEDIA_ROOT` and pointing to the correct locations
+- Open `GEN/settings.py`:
+  - Check if `STATIC_ROOT` and `MEDIA_ROOT` and pointing to the correct locations
+  - Edit the parameters `CSRF_COOKIE_DOMAIN` and `CSRF_TRUSTED_ORIGINS` to point to your domains. If these parameters are not set correctly, you will end up getting CSRF errors.
 - Edit `.env` and set `DEBUG=False`
 - Collect static files: `python manage.py collectstatic`
 
