@@ -16,7 +16,7 @@ from decouple import config, Csv
 import dj_database_url
 from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
