@@ -32,7 +32,7 @@
 
 ## Development
 
-- Install dependencies: `sudo apt install -y postgresql postgresql-contrib python-dev libpq-dev ffmpeg`
+- Install dependencies: `sudo apt install -y postgresql postgresql-contrib python3-dev python3-venv libpq-dev ffmpeg`
 - Clone this repo and access the repo directory: `cd GEN`
 - Create a virtual environment: `python3 -m venv venv`
 - Activate virtual environment: `source venv/bin/activate`
@@ -83,7 +83,7 @@
 For a detailed step-by-step instructions on how deploy Django, check this guide: [How To Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04)
 
 ### Dependencies
-- Install dependencies: `sudo apt install -y build-essential nginx postgresql postgresql-contrib python3-dev libpq-dev ffmpeg`
+- Install dependencies: `sudo apt install -y build-essential nginx postgresql postgresql-contrib python3-dev python3-venv libpq-dev ffmpeg`
   - **Note:** if you are using a different version of python than your distro default, install the correct dev package (e.g.: `python3.8-dev`)
 
 ### Create user
