@@ -9,7 +9,7 @@ from .models import Course, Section, SectionItem
 
 class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
     model = Section
-    exclude = ["description"]
+    exclude = ["description", "content"]
     extra = 0
 
 
