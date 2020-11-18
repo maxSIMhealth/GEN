@@ -140,7 +140,7 @@ For a detailed step-by-step instructions on how deploy Django, check this guide:
   sudo systemctl enable gunicorn.socket
   ```
 - To check gunicorn socket status: `sudo systemctl status gunicorn.socket`
-- To verify the socket file: `file /run/gunicorn.socket`. It should output something like this:
+- To verify the socket file: `file /run/gunicorn.sock`. It should output something like this:
   ```
   /run/gunicorn.sock: socket
   ```
