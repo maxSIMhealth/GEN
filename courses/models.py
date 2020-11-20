@@ -30,20 +30,20 @@ class Course(models.Model):
     )
     start_date = models.DateTimeField(_("start date"), blank=True, null=True)
     end_date = models.DateTimeField(_("end date"), blank=True, null=True)
-    students = models.ManyToManyField(
-        User, related_name="member", verbose_name=_("students")
+    members = models.ManyToManyField(
+        User, related_name="member", verbose_name=_("members"), help_text=_("List of all users that should have access to the course (including instructors).")
     )
-    participants = models.ManyToManyField(
-        User, related_name="participants", verbose_name=_("participants"), blank=True,
+    learners = models.ManyToManyField(
+        User, related_name="learners", verbose_name=_("learners"), help_text=_("List of learners (students)."), blank=True,
     )
-    participants_max_number = models.IntegerField(
-        _("participants max number"),
+    learners_max_number = models.IntegerField(
+        _("learners max number"),
         blank=True,
         null=True,
-        help_text=_("maximum number of participants"),
+        help_text=_("maximum number of learners"),
     )
     instructors = models.ManyToManyField(
-        User, related_name="instructor", verbose_name=_("instructors")
+        User, related_name="instructor", verbose_name=_("instructors"), help_text=_("List of instructors. These users will be able to edit the course's content and structure.")
     )
     blind_data = models.BooleanField(
         _("blind data"),

@@ -80,7 +80,7 @@ def section_page(request, pk, section_pk):
                 messages.info(
                     request,
                     _(
-                        "This section and its contents are not yet available to participants because of the start date."
+                        "This section and its contents are not yet available to learners because of the start date."
                     ),
                 )
         else:
@@ -105,7 +105,7 @@ def section_page(request, pk, section_pk):
                 messages.info(
                     request,
                     _(
-                        "This section is closed and its contents have been hidden or disabled to participants because the end date has passed."
+                        "This section is closed and its contents have been hidden or disabled to learners because the end date has passed."
                     ),
                 )
 

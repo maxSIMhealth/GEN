@@ -98,9 +98,9 @@
                 {% if course_instructor %}
                 <div>
                   {% if not item.published %}
-                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Make this video visible by the course participants' %}">{% trans "Publish" %}</a>
+                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Make this video visible by the course learners' %}">{% trans "Publish" %}</a>
                   {% else %}
-                    <a href="{% url 'unpublish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-warning" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Hide video from the course participants' %}">{% trans "Unpublish" %}</a>
+                    <a href="{% url 'unpublish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-warning" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Hide video from the course learners' %}">{% trans "Unpublish" %}</a>
                   {% endif %}
                   <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">{% trans "Delete" %}</a>
                 </div>

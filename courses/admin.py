@@ -14,10 +14,10 @@ class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 
 class CourseAdmin(TabbedTranslationAdmin):
-    # fields = ('name', 'students')
+    # fields = ('name', 'members')
     list_display = ("name", "code", "author", "enable_gamification")
     list_filter = ("author",)
-    filter_horizontal = ("students", "instructors", "participants")
+    filter_horizontal = ("members", "instructors", "learners")
     save_as = True
 
     inlines = (SectionInline,)

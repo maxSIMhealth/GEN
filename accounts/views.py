@@ -29,13 +29,13 @@ def random_course_assign(user):
 
     # check if any of the courses is full
     for course in courses:
-        if course.participants.count() >= course.participants_max_number:
+        if course.learners.count() >= course.learners_max_number:
             courses = courses.exclude(pk=course.pk)
 
     # select a random course from the list and assign participant
     course_selected = random.choice(courses)
-    course_selected.students.add(user)
-    course_selected.participants.add(user)
+    course_selected.members.add(user)
+    course_selected.learners.add(user)
 
 
 def signup(request):

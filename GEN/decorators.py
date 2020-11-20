@@ -19,7 +19,7 @@ def course_enrollment_check(test_func):
             course_object = get_object_or_404(Course, pk=pk)
             user = request.user
 
-            if user not in course_object.students.all():
+            if user not in course_object.members.all():
                 raise PermissionDenied("Access denied. User not enrolled in course.")
             else:
                 return view_func(request, *args, **kwargs)
@@ -42,10 +42,10 @@ def course_enrollment_check(test_func):
         return _wrapped_view
 
     return decorator
-    # if user not in course.students.all():
+    # if user not in course.members.all():
     #     return PermissionDenied("Access denied!")
     # else return
-    # return user in course.students.all()
+    # return user in course.members.all()
 
 
 # def subject_test(f, subject):
