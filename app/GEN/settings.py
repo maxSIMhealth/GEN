@@ -291,6 +291,12 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 # useful for running tests while maintenance mode is on, before opening the site to public use
 MAINTENANCE_MODE_IGNORE_TESTS = False
 
+
+### Debug toolbar settings
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
+}
+
 ### Social authentication settings
 # Documentation:
 # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
