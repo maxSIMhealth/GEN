@@ -35,7 +35,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
-INTERNAL_IPS = config("INTERNAL_IPS")
+INTERNAL_IPS = config("INTERNAL_IPS", cast=Csv())
 
 # Email settings for sending error notifications to admins and emails
 # to users (e.g., password resets)
@@ -149,26 +149,24 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 ### Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'HOST': os.environ.get('DB_HOST'),
+#        'NAME': os.environ.get('DB_NAME'),
+#        'USER': os.environ.get('DB_USER'),
+#        'PASSWORD': os.environ.get('DB_PASS'),
+#    }
+#}
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.{}'.format(
-            os.getenv('DATABASE_ENGINE', 'sqlite3')
-        ),
-        'NAME': os.getenv('DATABASE_NAME', 'gen_db'),
-        'USER': os.getenv('DATABASE_USERNAME', 'gen'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
-        'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DATABASE_PORT', 5432),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USERNAME'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
         'OPTIONS': json.loads(
             os.getenv('DATABASE_OPTIONS', '{}')
         ),
@@ -225,11 +223,17 @@ STATICFILES_DIRS = [
 # Serving the STATIC FILES
 # as declared in NginX conf, it must match /opt/gen/static/
 #STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
-STATIC_ROOT = os.getenv("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
+if not DEBUG:
+    STATIC_ROOT = os.getenv("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # do the same for media files, it must match /opt/services/djangoapp/media/
 #MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
-MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
+if not DEBUG:
+    MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 ### Login settings
 
@@ -276,7 +280,8 @@ MAINTENANCE_MODE = None
 
 # by default, a file named "maintenance_mode_state.txt" will be created in the settings.py directory
 # you can customize the state file path in case the default one is not writable
-MAINTENANCE_MODE_STATE_FILE_PATH = '/opt/gen/maintenance_mode_state.txt'
+if not DEBUG:
+    MAINTENANCE_MODE_STATE_FILE_PATH = '/opt/gen/maintenance_mode_state.txt'
 
 # if True admin site will not be affected by the maintenance-mode page
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
