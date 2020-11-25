@@ -7,9 +7,9 @@ services:
     restart: "on-failure" 
     env_file: ./config/gen/.env
     volumes:
-      - .:/opt/gen/src:rw
-      - static_volume:/home/gen/static
-      - media_volume:/home/gen/media
+      - ./app:/opt/gen/app:rw
+      - static_volume:/opt/gen/static
+      - media_volume:/opt/gen/media
     networks:
       - nginx_network
     command: /usr/local/bin/gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
@@ -23,8 +23,8 @@ services:
       - 80:80
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - static_volume:/home/gen/static
-      - media_volume:/home/gen/media
+      - static_volume:/opt/gen/static
+      - media_volume:/opt/gen/media
     depends_on:
       - gen
     networks:

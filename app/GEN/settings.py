@@ -274,6 +274,10 @@ SENDGRID_ECHO_TO_STDOUT = DEBUG
 # if True the maintenance-mode will be activated
 MAINTENANCE_MODE = None
 
+# by default, a file named "maintenance_mode_state.txt" will be created in the settings.py directory
+# you can customize the state file path in case the default one is not writable
+MAINTENANCE_MODE_STATE_FILE_PATH = '/opt/gen/maintenance_mode_state.txt'
+
 # if True admin site will not be affected by the maintenance-mode page
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
 
