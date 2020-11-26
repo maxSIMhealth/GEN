@@ -146,7 +146,9 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = "GEN.wsgi.application"
 
-X_FRAME_OPTIONS = "SAMEORIGIN"
+# Unless there is a good reason for the site to serve other parts of
+# itself in a frame, set X_FRAME_OPTIONS to 'DENY'
+X_FRAME_OPTIONS = "DENY"
 
 ### Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -246,7 +248,7 @@ if not DEBUG:
     CSRF_COOKIE_DOMAIN = "maxsimgen.com"
     CSRF_TRUSTED_ORIGINS = ["maxsimgen.com", "www.maxsimgen.com"]
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-    SECURE_SSL_REDIRECT = False  # Set to true if nginx is not already redirecting
+    SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_HSTS_PRELOAD = True
