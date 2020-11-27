@@ -12,10 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-import json
-
 from decouple import config, Csv
-import dj_database_url
 from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import gettext_lazy as _
@@ -23,7 +20,6 @@ from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -153,16 +149,6 @@ X_FRAME_OPTIONS = "DENY"
 ### Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'HOST': os.environ.get('DB_HOST'),
-#        'NAME': os.environ.get('DB_NAME'),
-#        'USER': os.environ.get('DB_USER'),
-#        'PASSWORD': os.environ.get('DB_PASS'),
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -171,9 +157,6 @@ DATABASES = {
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': config('DATABASE_HOST'),
         'PORT': config('DATABASE_PORT'),
-        'OPTIONS': json.loads(
-            os.getenv('DATABASE_OPTIONS', '{}')
-        ),
     }
 }
 
