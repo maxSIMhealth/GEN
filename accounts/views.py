@@ -55,12 +55,12 @@ def signup(request):
             # save update user info to db
             user.save()
 
+            # FIXME: this is temporary, just for the montreal test. It could be ported into an actually feature.
             # assign user to random course
-            # FIXME: this is temporary, just for the montreal test
-            user_email_domain = user.email.split("@")[-1].split(".")[0]
-            permitted_domains = ["ontariotechu", "umontreal"]
-            if user_email_domain in permitted_domains:
-                random_course_assign(user)
+            # user_email_domain = user.email.split("@")[-1].split(".")[0]
+            # permitted_domains = ["ontariotechu", "umontreal"]
+            # if user_email_domain in permitted_domains:
+            #     random_course_assign(user)
 
             # send account activation email
             current_site = get_current_site(request)

@@ -19,7 +19,7 @@ class SignUpForm(UserCreationForm):
         """
         data = self.cleaned_data["email"]
         email_domain = data.split("@")[-1].split(".")[0]
-        permitted_domains = ["ontariotechu", "umontreal"]
+        permitted_domains = ["ontariotechu", "umontreal"] # FIXME: these values could be ported to .env
         if email_domain not in permitted_domains:  # any check you need
             raise forms.ValidationError(
                 _("E-mail address must be from one of the allowed domains: ")
