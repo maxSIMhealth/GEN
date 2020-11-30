@@ -213,6 +213,8 @@ class SectionItem(TimeStampedModel):
         _("description"),
         max_length=400,
         help_text=_("Brief description (max 400 characters)"),
+        blank=True,
+        null=True
     )
     author = models.ForeignKey(
         User,
@@ -231,6 +233,11 @@ class SectionItem(TimeStampedModel):
         verbose_name=_("section"),
     )
     published = models.BooleanField(_("published"), default=False)
+    show_related_content = models.BooleanField(
+        _("show related content"),
+        default=False,
+        help_text=_("Display content related to this item (e.g., quizzes related to a video)")
+    )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
     )

@@ -125,7 +125,9 @@
                     <br />
                     <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
                   </div>
+                  {% if item.videofile.description %}
                   <p>{{ item.videofile.description|linebreaksbr }}</p>
+                  {% endif %}
                 {% endif %}
               </div>
             </div>
@@ -144,7 +146,7 @@
                   <br />
                   <em>{% trans "Submission date:" %}</em> {{item.videofile.uploaded_at}}
                 </div>
-                {% if not course.blind_data %}
+                {% if item.videofile.description and not course.blind_data %}
                   <p>{{ item.videofile.description|linebreaksbr }}</p>
                 {% endif %}
               </div>

@@ -65,9 +65,11 @@
 
                 <h5 class="mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
 
+                {% if item.videofile.description %}
                 <p>{{ item.videofile.description|linebreaksbr }}</p>
+                {% endif %}
 
-                {% if item.videofile.quizzes.all %}
+                {% if item.videofile.quizzes.all and item.videofile.show_related_content %}
                 <h6><em>{% trans "Quizzes:" %}</em></h6>
                 <ul class="related-quizzes pb-2">
                   {% for quiz in item.videofile.quizzes.all  %}
