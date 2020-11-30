@@ -98,10 +98,8 @@ urlpatterns += i18n_patterns(
         account_views.account_activation_sent,
         name="account_activation_sent",
     ),
-    re_path(
-        r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
-        account_views.activate,
-        name="activate",
+    path(
+      "activate/<slug:uidb64>/<slug:token>/", account_views.activate, name="activate",
     ),
     # sections
     path(
