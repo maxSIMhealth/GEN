@@ -58,10 +58,11 @@
                                 {% comment %}
                                 <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
                                 {% endcomment %}
-
+                                {% if item.description %}
                                     <p class="mb-0">
                                         <small class="text-muted">{{ item.description|safe|linebreaksbr }}</small>
                                     </p>
+                                {% endif %}
 
                                 {% if item.quiz.show_score %}
                                     <p class="mb-0">

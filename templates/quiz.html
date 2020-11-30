@@ -43,7 +43,9 @@
                     {{ quiz.require_answers|json_script:"quiz_require_answers" }}
                     <div class="quiz-items-container">
                         <div class="quiz-item">
-                            <p>{{ quiz.description|safe|linebreaksbr }}</p>
+                            {% if quiz.description %}
+                                <p>{{ quiz.description|safe|linebreaksbr }}</p>
+                            {% endif %}
                             <p><i>{% trans "Please use the navigation buttons below." %}</i></p>
                         </div>
                         {% for question in quiz.questions.all %}
