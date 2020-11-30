@@ -6,19 +6,32 @@
 {% block title %}GEN - {% trans "Video player" %}{% endblock title %}
 
 {% block body %}
-  <div class="card m-4" id="card-video-player">
-    <div class="card-body">
-      <p class="card-text text-center" id="video-player">
-          <video poster="{{ video.thumbnail.url }}" controls>
-		  <source src="{{ video.file.url }}" type="video/mp4">
-              {% trans "Sorry, your browser doesn't support embedded videos." %}
-          </video>
-      </p>
+    <div class="card-deck m-3">
+        <div class="card" id="card-video-player">
+            <div class="card-body">
+                <div class="card-text text-center" id="video-player">
+                    <video poster="{{ video.thumbnail.url }}" controls>
+                        <source src="{{ video.file.url }}" type="video/mp4">
+                        {% trans "Sorry, your browser doesn't support embedded videos." %}
+                    </video>
+                </div>
+            </div>
+            <div class="card-footer">
+              <button onClick="window.history.back()" class="btn btn-secondary">Back</button>
+            </div>
+        </div>
+        {% if video.content %}
+            <div class="card" id="card-video-content">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Content" %}</h5>
+                    <div class="card-text">
+                        <p>{{ video.content|safe }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-    <div class="card-footer">
-      <button onClick="window.history.back()" class="btn btn-secondary">Back</button>
-    </div>
-  </div>
+
 {% endblock body %}
 
 {% block footer %}

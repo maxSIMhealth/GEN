@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 import ffmpeg
 from GEN.support_methods import duplicate_item, duplicate_name
 from PIL import Image
+from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
 from courses.models import Course, SectionItem
@@ -39,12 +40,13 @@ def read_frame_as_jpeg(in_filename, time):
             capture_stdout=True
         )
     )
-    return (out, err)
+    return out, err
 
 
 def crop_image(image):
     """Generates a square cropped image based on its center"""
     width, height = image.size
+    left, top, right, bottom = 0, 0, 0, 0
 
     if width != height:
         if width > height:
@@ -98,6 +100,10 @@ class VideoFile(SectionItem):
         verbose_name=_("course"),
     )
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
+    content = HTMLField(
+        blank=True,
+        null=True
+    )
     file = models.FileField(
         _("file"),
         upload_to=user_directory_path,
