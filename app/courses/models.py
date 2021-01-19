@@ -102,9 +102,9 @@ class Section(models.Model):
     related_name = "sections"
     name = models.CharField(
         _("name"),
-        max_length=15,
+        max_length=20,
         unique=False,
-        help_text=_("Section name (max 15 characters)"),
+        help_text=_("Section name (max 20 characters)"),
     )
     description = models.TextField(
         _("description"),
