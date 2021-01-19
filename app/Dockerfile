@@ -5,9 +5,13 @@ FROM python:3.8-alpine
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
+# User and group ids
+ARG USER_ID
+ARG GROUP_ID
+
 # Create user that will run the project
-RUN addgroup -S gen \
-    && adduser -S -G gen -h /opt/gen -D gen
+RUN addgroup -S gen --gid $GROUP_ID \
+    && adduser -S -G gen -h /opt/gen --uid $USER_ID -D gen 
 
 # Set app home directory
 ENV APP_HOME=/opt/gen
@@ -39,6 +43,9 @@ RUN pip install -r requirements.txt --no-cache-dir
 # Remove packages needed only during install phase
 RUN apk del .temp-build-deps
 
+# Change to the directory containing manage.py for running Django commands
+WORKDIR $APP_HOME/app
+
 # Copy project files
 #COPY . $APP_HOME
 
@@ -48,5 +55,3 @@ RUN chown -R gen:gen $APP_HOME
 # Activate user
 USER gen
 
-# Change to the directory containing manage.py for running Django commands
-WORKDIR $APP_HOME/app

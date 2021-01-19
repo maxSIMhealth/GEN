@@ -3,7 +3,11 @@ version: '3'
 services:
   gen:
     container_name: gen
-    build: ./app
+    build:
+      context: ./app
+      args:
+        - USER_ID=1000
+        - GROUP_ID=1000
     restart: "on-failure" 
     env_file: ./config/gen/.env
     volumes:
