@@ -22,8 +22,8 @@ class Course(models.Model):
     )
     description = models.TextField(
         _("description"),
-        max_length=1000,
-        help_text=_("Description (max 1000 characters)"),
+        max_length=1500,
+        help_text=_("Description (max 1500 characters)"),
     )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="course", verbose_name=_("author")
