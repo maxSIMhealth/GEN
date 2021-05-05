@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-from decouple import config, Csv
+import json
 from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import gettext_lazy as _
@@ -26,24 +26,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # before deploying to production
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
-INTERNAL_IPS = config("INTERNAL_IPS", cast=Csv())
+INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '127.0.0.1').split(',')
 
 # Email settings for sending error notifications to admins and emails
 # to users (e.g., password resets)
 ADMINS = [
-    ("Admin", "admin@maxsimgen.com"),
+    ("Admin", os.getenv('DJANGO_ADMIN_EMAIL')),
 ]
 if not DEBUG:
     LOGGING["handlers"]["mail_admins"]["include_html"] = True
-    SERVER_EMAIL = config("SERVER_EMAIL")
-    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+    SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 ### Application definition
 
@@ -151,12 +151,17 @@ X_FRAME_OPTIONS = "DENY"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USERNAME'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATABASE_HOST'),
-        'PORT': config('DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.{}'.format(
+            os.getenv('DATABASE_ENGINE', 'sqlite3')
+        ),
+        'NAME': os.getenv('DATABASE_NAME', 'gen'),
+        'USER': os.getenv('DATABASE_USERNAME', 'gen-db_user'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
+        'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DATABASE_PORT', 5432),
+        'OPTIONS': json.loads(
+            os.getenv('DATABASE_OPTIONS', '{}')
+        ),
     }
 }
 
@@ -201,21 +206,38 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 ### Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# Serving the STATIC FILES
-# it must match the directory set in Nginx conf
-STATIC_URL = "/static/"
+USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+if USE_S3:
+    # Moving static assets to DigitalOcean Spaces as per:
+    # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
+    AWS_ACCESS_KEY_ID = os.getenv('STATIC_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('STATIC_SECRET_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('STATIC_BUCKET_NAME')
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_ENDPOINT_URL = os.getenv('STATIC_ENDPOINT_URL')
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    # S3 static settings
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_LOCATION = 'static'
+    STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, STATIC_LOCATION)
+    STATIC_ROOT = 'static/'
+    # S3 public media settings
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_LOCATION = 'media'
+    MEDIA_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, MEDIA_LOCATION)
+    MEDIA_ROOT = 'media/'
 
-STATIC_ROOT = os.getenv("STATIC_ROOT", os.path.join(BASE_DIR, "static"))
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
-# Serving the MEDIA FILES
-# it must match the directory set in Nginx conf
-MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.getenv("MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 ### Login settings
 
@@ -242,7 +264,7 @@ if not DEBUG:
 
 ### E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 SENDGRID_TRACK_EMAIL_OPENS = True
 SENDGRID_TRACK_CLICKS_HTML = False
 SENDGRID_TRACK_CLICKS_PLAIN = False
@@ -295,10 +317,10 @@ SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ["username", "first_name", "email"]
 
-SOCIAL_AUTH_GITHUB_KEY = config("SOCIAL_AUTH_GITHUB_KEY")
-SOCIAL_AUTH_GITHUB_SECRET = config("SOCIAL_AUTH_GITHUB_SECRET")
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple
@@ -359,4 +381,3 @@ TINYMCE_DEFAULT_CONFIG = {
     'height': 300,
 }
 TINYMCE_SPELLCHECKER = False
-
