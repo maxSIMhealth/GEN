@@ -168,3 +168,5 @@ staticfiles/
 ### Secrets and env stuff ###
 secrets
 env
+env-dev
+env-production
