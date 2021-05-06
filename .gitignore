@@ -81,6 +81,7 @@ local_settings.py
 db.sqlite3
 *.settings.py.swp
 media
+maintenance_mode_state.txt
 
 # Flask stuff:
 instance/
