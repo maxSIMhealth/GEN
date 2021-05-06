@@ -221,15 +221,18 @@ if USE_S3:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
+    AWS_LOCATION = os.getenv('GEN_INSTANCE_NAME')
+
     # S3 static settings
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    STATIC_LOCATION = 'static'
-    STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, STATIC_LOCATION)
+    STATICFILES_STORAGE = 'GEN.storage_backends.StaticStorage'
+    AWS_STATIC_LOCATION = f'{AWS_LOCATION}/static'
+    STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_STATIC_LOCATION}/'
     STATIC_ROOT = 'static/'
+    
     # S3 public media settings
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_LOCATION = 'media'
-    MEDIA_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, MEDIA_LOCATION)
+    DEFAULT_FILE_STORAGE = 'GEN.storage_backends.MediaStorage'
+    AWS_MEDIA_LOCATION = f'{AWS_LOCATION}/media/public'
+    MEDIA_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_MEDIA_LOCATION}/'
     MEDIA_ROOT = 'media/'
 
 else:
