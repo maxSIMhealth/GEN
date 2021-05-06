@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import json
+import logging.config
 from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import gettext_lazy as _
@@ -71,6 +72,7 @@ INSTALLED_APPS = [
     "rosetta",
     "maintenance_mode",
     "tinymce",
+    "storages",
     "core",
     "accounts",
     "courses",
@@ -206,7 +208,7 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 ### Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-USE_S3 = os.getenv('USE_S3') == 'TRUE'
+USE_S3 = os.getenv('USE_S3') == 'True'
 
 if USE_S3:
     # Moving static assets to DigitalOcean Spaces as per:
@@ -231,13 +233,11 @@ if USE_S3:
     MEDIA_ROOT = 'media/'
 
 else:
-    STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
-
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+    STATIC_URL = 'static/'
+    STATIC_ROOT = 'staticfiles/'
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = 'mediafiles/'
+    # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'core/static'),)
 
 ### Login settings
 
@@ -250,8 +250,8 @@ if not DEBUG:
     # Security / HTTPS / TLS
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    CSRF_COOKIE_DOMAIN = "maxsimgen.com"
-    CSRF_TRUSTED_ORIGINS = ["maxsimgen.com", "www.maxsimgen.com"]
+    CSRF_COOKIE_DOMAIN = os.getenv('CSRF_COOKIE_DOMAIN')
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -261,6 +261,17 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_REFERRER_POLICY = "same-origin"
     os.environ["wsgi.url_scheme"] = "https"
+else:
+    CORS_REPLACE_HTTPS_REFERER      = False
+    HOST_SCHEME                     = "http://"
+    SECURE_PROXY_SSL_HEADER         = None
+    SECURE_SSL_REDIRECT             = False
+    SESSION_COOKIE_SECURE           = False
+    CSRF_COOKIE_SECURE              = False
+    SECURE_HSTS_SECONDS             = None
+    SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
+    SECURE_FRAME_DENY               = False
+    os.environ["wsgi.url_scheme"] = "http"
 
 ### E-mail backend
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
@@ -285,7 +296,7 @@ MAINTENANCE_MODE = None
 # by default, a file named "maintenance_mode_state.txt" will be created in the settings.py directory
 # you can customize the state file path in case the default one is not writable
 if not DEBUG:
-    MAINTENANCE_MODE_STATE_FILE_PATH = '/opt/gen/maintenance_mode_state.txt'
+    MAINTENANCE_MODE_STATE_FILE_PATH = 'maintenance_mode_state.txt'
 
 # if True admin site will not be affected by the maintenance-mode page
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
@@ -305,6 +316,36 @@ MAINTENANCE_MODE_IGNORE_TESTS = False
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
 }
+
+### Logging Configuration
+
+# Clear prev config
+LOGGING_CONFIG = None
+
+# Get loglevel from env
+LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': LOGLEVEL,
+            'handlers': ['console',],
+        },
+    },
+})
 
 ### Social authentication settings
 # Documentation:

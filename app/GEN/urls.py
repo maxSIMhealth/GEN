@@ -206,6 +206,9 @@ if settings.DEBUG:
     # access to media files during development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # static files
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
     # delete user data
     urlpatterns += (path("reset/", core_views.reset, name="reset"),)
 

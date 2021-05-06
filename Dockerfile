@@ -9,22 +9,19 @@ ENV PYTHONDONTWRITEBYTECODE 1
 COPY app/requirements.txt /app/requirements.txt
 
 ## Install packages, create virtualenv, and install dependencies
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Install necessary system packages
-RUN apk add --update --no-cache postgresql-client postgresql-contrib ffmpeg libmagic gettext
-
-# Install packages needed only during install phase
-RUN apk add --update --no-cache --virtual .temp-build-deps \
-    gcc make linux-headers libc-dev zlib-dev jpeg-dev \
-    python3-dev postgresql-dev
-
-# Install python packages
-RUN pip install -r /app/requirements.txt --no-cache-dir
-
-# Remove packages needed only during install phase
-RUN apk del .temp-build-deps
+RUN set -ex \
+    && apk add --no-cache ffmpeg libmagic gettext \
+    && apk add --no-cache --virtual .build-deps python3-dev  postgresql-dev gcc make libc-dev zlib-dev jpeg-dev \
+    && python -m venv /env \
+    && /env/bin/pip install --upgrade pip \
+    && /env/bin/pip install --no-cache-dir -r /app/requirements.txt \
+    && runDeps="$(scanelf --needed --nobanner --recursive /env \
+        | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+        | sort -u \
+        | xargs -r apk info --installed \
+        | sort -u)" \
+    && apk add --virtual rundeps $runDeps \
+    && apk del .build-deps
 
 # Copy project
 ADD app /app
@@ -32,6 +29,11 @@ ADD app /app
 # Change to the directory containing manage.py for running Django commands
 WORKDIR /app
 
+# Add virtualenv to path
+ENV VIRTUAL_ENV /env
+ENV PATH /env/bin:$PATH
+
+# Set communication port
 EXPOSE 8000
 
 CMD ["gunicorn", "GEN.asgi:application", "--bind", ":8000", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker"]
