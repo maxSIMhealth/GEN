@@ -30,7 +30,7 @@ Temporary Items
 .apdisk
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -54,7 +54,8 @@ media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
-app/staticfiles/
+staticfiles/
+static/
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files

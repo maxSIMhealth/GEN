@@ -153,9 +153,7 @@ X_FRAME_OPTIONS = "DENY"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.{}'.format(
-            os.getenv('DATABASE_ENGINE', 'sqlite3')
-        ),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.getenv('DATABASE_NAME', 'gen'),
         'USER': os.getenv('DATABASE_USERNAME', 'gen-db_user'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
@@ -236,10 +234,11 @@ if USE_S3:
     MEDIA_ROOT = 'media/'
 
 else:
+    GEN_HOME = os.getenv('GEN_HOME')
     STATIC_URL = 'static/'
-    STATIC_ROOT = 'staticfiles/'
+    STATIC_ROOT = f'{GEN_HOME}/static/'
     MEDIA_URL = 'media/'
-    MEDIA_ROOT = 'mediafiles/'
+    MEDIA_ROOT = f'{GEN_HOME}/media/'
     # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'core/static'),)
 
 ### Login settings
