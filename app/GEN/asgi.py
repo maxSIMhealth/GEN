@@ -13,7 +13,6 @@ import django
 from django.core.asgi import get_asgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GEN.settings')
-os.environ['HTTPS'] = "on"
 
 django.setup()
 

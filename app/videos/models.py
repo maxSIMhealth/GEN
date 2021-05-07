@@ -5,10 +5,12 @@ import tempfile
 import uuid
 
 # from django.core.validators import FileExtensionValidator
+from django.core.files.storage import get_storage_class
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import ffmpeg
 from GEN.support_methods import duplicate_item, duplicate_name
+from GEN import settings as django_settings
 from PIL import Image
 from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
@@ -20,6 +22,8 @@ from courses.models import Course, SectionItem
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+# Media storage object to be able to obtain media full url
+media_storage = get_storage_class()()
 
 def user_directory_path(instance, filename):
     ext = filename.split(".")[-1]
@@ -137,8 +141,16 @@ class VideoFile(SectionItem):
         # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
         size = (128, 128)
 
+
+        if django_settings.USE_S3:
+            # get video full S3 url path
+            video_url = media_storage.url(name=video.file.name)
+        else:
+            # get video full local path
+            video_url = video.file.path
+
         (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(
-            video.file.path, "00:00:01.000"
+            video_url, "00:00:01.000"
         )
 
         if ffmpeg_error is None:

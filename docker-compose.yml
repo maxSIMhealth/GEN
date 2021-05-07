@@ -4,19 +4,19 @@ services:
   gen:
     container_name: gen
     build:
-      context: ./app
+      context: .
       args:
         - USER_ID=1000
         - GROUP_ID=1000
     restart: "on-failure" 
-    env_file: ./config/gen/.env
+    env_file: ./config/.env
     volumes:
-      - ./app:/opt/gen/app:rw
-      - static_volume:/opt/gen/static
-      - media_volume:/opt/gen/media
+      - ./app:/gen/app:rw
+      - ./static:/gen/static
+      - ./media:/gen/media
     networks:
       - nginx_network
-    command: /usr/local/bin/gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
+    command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
     expose:
       - 8000
 
@@ -27,9 +27,9 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - static_volume:/opt/gen/static
-      - media_volume:/opt/gen/media
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./static:/gen/static
+      - ./media:/gen/media
     depends_on:
       - gen
     networks:
@@ -39,7 +39,3 @@ services:
 networks:
   nginx_network:
     driver: bridge
-
-volumes:
-  static_volume: 
-  media_volume: 
