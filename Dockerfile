@@ -1,6 +1,9 @@
 # Official python image
 FROM python:3.8.10-alpine3.13
 
+# Labels
+LABEL maintainer="andrei.torres@ontariotechu.net"
+
 # These two environment variables prevent __pycache__/ files.
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
