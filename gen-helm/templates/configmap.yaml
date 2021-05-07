@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "gen-helm.fullname" . }}-configmap
+  labels:
+    {{- include "gen-helm.labels" . | nindent 4 }}
+data:
+  # In a production environment, DO NOT set DJANGO_ALLOWED_HOSTS to *
+  # It should represent the host/domain names that Django can serve
+  DJANGO_ALLOWED_HOSTS: "gen.andreitorres.tech"
+  DJANGO_INTERNAL_IPS: "127.0.0.1"
+  DJANGO_LOGLEVEL: "info"
+  DJANGO_DEBUG: "True"
+  CSRF_COOKIE_DOMAIN: "andreitorres.tech"
+  CSRF_TRUSTED_ORIGINS: "andreitorres.tech,maxsimgen.com"
+  # Database
+  DATABASE_NAME: "gen_test"
+  DATABASE_HOST: "private-db-postgresql-tor1-98842-do-user-358345-0.b.db.ondigitalocean.com"
+  DATABASE_PORT: "25060"
+  # S3 storage
+  USE_S3: "True"
+  GEN_INSTANCE_NAME: "gen-test"
+  STATIC_ENDPOINT_URL: "https://nyc3.digitaloceanspaces.com"
+  STATIC_BUCKET_NAME: "gen-data"
+  # Email
+  DJANGO_ADMIN_EMAIL: "admin@andreitorres.tech"
+  SERVER_EMAIL: "system@andreitorres.tech"
+  DEFAULT_FROM_EMAIL: "donotreply@andreitorres.tech"
