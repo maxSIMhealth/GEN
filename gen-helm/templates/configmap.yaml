@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "gen-helm.fullname" . }}-configmap
+  name: {{ include "gen.fullname" . }}-configmap
   labels:
-    {{- include "gen-helm.labels" . | nindent 4 }}
+    {{- include "gen.labels" . | nindent 4 }}
 data:
   # In a production environment, DO NOT set DJANGO_ALLOWED_HOSTS to *
   # It should represent the host/domain names that Django can serve

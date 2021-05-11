@@ -1,4 +1,4 @@
-# Default values for gen-helm.
+# Default values for gen.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -48,16 +48,16 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: "gen.andreitorres.tech"
+    - host: "www.maxsimgen.com"
       paths:
       - path: /
         backend:
-          serviceName: "gen.andreitorres.tech"
+          serviceName: "www.maxsimgen.com"
           servicePort: 80
   tls:
    - secretName: gen-tls
      hosts:
-       - "gen.andreitorres.tech"
+       - "www.maxsimgen.com"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

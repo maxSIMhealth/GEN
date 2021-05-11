@@ -1,5 +1,5 @@
 apiVersion: v2
-name: gen-helm
+name: gen
 description: A Helm chart for GEN (gamified educational network)
 
 # A chart can be either an 'application' or a 'library' chart.

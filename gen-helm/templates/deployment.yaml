@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "gen-helm.fullname" . }}
+  name: {{ include "gen.fullname" . }}
   labels:
-    {{- include "gen-helm.labels" . | nindent 4 }}
+    {{- include "gen.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "gen-helm.selectorLabels" . | nindent 6 }}
+      {{- include "gen.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "gen-helm.selectorLabels" . | nindent 8 }}
+        {{- include "gen.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "gen-helm.serviceAccountName" . }}
+      serviceAccountName: {{ include "gen.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
-              name: {{ include "gen-helm.fullname" . }}-configmap
+              name: {{ include "gen.fullname" . }}-configmap
           env:
           - name: DJANGO_SECRET_KEY
             valueFrom:
