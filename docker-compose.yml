@@ -9,7 +9,7 @@ services:
         - USER_ID=1000
         - GROUP_ID=1000
     restart: "on-failure" 
-    env_file: ./config/.env
+    env_file: ./config/env-dev
     volumes:
       - ./app:/gen/app:rw
       - ./static:/gen/static
