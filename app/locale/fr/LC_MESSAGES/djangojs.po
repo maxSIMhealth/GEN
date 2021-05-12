@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-30 14:47-0500\n"
+"POT-Creation-Date: 2021-05-12 21:02+0000\n"
 "PO-Revision-Date: 2020-07-20 20:37+0000\n"
 "Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.4\n"
 
-#: .\static\js\help-guide-course.js:1 .\static\js\help-guide-home.js:1
+#: core/static/js/help-guide-course.js:1 core/static/js/help-guide-home.js:1
 msgid "Next"
 msgstr "Suivant"
 
-#: .\static\js\help-guide-course.js:2 .\static\js\help-guide-home.js:2
+#: core/static/js/help-guide-course.js:2 core/static/js/help-guide-home.js:2
 msgid "Back"
 msgstr "Retour"
 
-#: .\static\js\help-guide-course.js:3 .\static\js\help-guide-home.js:3
+#: core/static/js/help-guide-course.js:3 core/static/js/help-guide-home.js:3
 msgid "Close"
 msgstr "Fermer"
 
-#: .\static\js\help-guide-course.js:18 .\static\js\help-guide-home.js:18
+#: core/static/js/help-guide-course.js:18 core/static/js/help-guide-home.js:18
 msgid "GEN Guide"
 msgstr "Guide GEN"
 
-#: .\static\js\help-guide-course.js:19 .\static\js\help-guide-home.js:19
+#: core/static/js/help-guide-course.js:19 core/static/js/help-guide-home.js:19
 msgid ""
 "Welcome to GEN's help. This quick guide will briefly explain each area of "
 "GEN's interface."
@@ -43,11 +43,11 @@ msgstr ""
 "Bienvenue au centre d’aide GEN. Ceci est un guide expliquant brièvement "
 "chaque interface de GEN."
 
-#: .\static\js\help-guide-course.js:31 .\static\js\help-guide-home.js:31
+#: core/static/js/help-guide-course.js:31 core/static/js/help-guide-home.js:31
 msgid "Top navigation bar"
 msgstr "Bar de navigation supérieur"
 
-#: .\static\js\help-guide-course.js:32 .\static\js\help-guide-home.js:32
+#: core/static/js/help-guide-course.js:32 core/static/js/help-guide-home.js:32
 msgid ""
 "In this area are located two elements: <b>Help</b> (which activated this "
 "guide) and <b>your username and avatar</b>, which gives access to your "
@@ -58,19 +58,19 @@ msgstr ""
 "l’information de votre compte, l’option de changer de mot de passe et à se "
 "déconnecter."
 
-#: .\static\js\help-guide-course.js:55
+#: core/static/js/help-guide-course.js:55
 msgid "Course Name"
 msgstr "Nom du cours"
 
-#: .\static\js\help-guide-course.js:56
+#: core/static/js/help-guide-course.js:56
 msgid "This area displays the current course name."
 msgstr "Cette zone affiche le nom du cours actuel."
 
-#: .\static\js\help-guide-course.js:79
+#: core/static/js/help-guide-course.js:79
 msgid "Sections"
 msgstr "Sections"
 
-#: .\static\js\help-guide-course.js:80
+#: core/static/js/help-guide-course.js:80
 msgid ""
 "This interactable element allows you to navigate through the sections "
 "available in the current course. You should follow these sections in the "
@@ -82,11 +82,11 @@ msgstr ""
 "sont présentées. Si l'une des sections a des exigences, elle sera également "
 "affichée ici."
 
-#: .\static\js\help-guide-course.js:103
+#: core/static/js/help-guide-course.js:103
 msgid "Section content"
 msgstr "Contenu de la section"
 
-#: .\static\js\help-guide-course.js:104
+#: core/static/js/help-guide-course.js:104
 msgid ""
 "This is the main content area, where the selected section data is displayed "
 "and most GEN interactions takes place."
@@ -94,11 +94,13 @@ msgstr ""
 "Il s'agit de la zone de contenu principale, où les données de section "
 "sélectionnées sont affichées et la plupart des interactions GEN ont lieu."
 
-#: .\static\js\help-guide-course.js:127 .\static\js\help-guide-home.js:103
+#: core/static/js/help-guide-course.js:127
+#: core/static/js/help-guide-home.js:103
 msgid "Getting support"
 msgstr "Obtenir du soutient."
 
-#: .\static\js\help-guide-course.js:128 .\static\js\help-guide-home.js:104
+#: core/static/js/help-guide-course.js:128
+#: core/static/js/help-guide-home.js:104
 msgid ""
 "If you need to get in touch in case of any questions or issues, please send "
 "an email to <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</"
@@ -108,26 +110,26 @@ msgstr ""
 "courriel à <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</"
 "a>.<br><br>Merci d’avoir utilisé ce guide. Au revoir."
 
-#: .\static\js\help-guide-home.js:55
+#: core/static/js/help-guide-home.js:55
 msgid "Page Name"
 msgstr "Nom de la page"
 
-#: .\static\js\help-guide-home.js:56
+#: core/static/js/help-guide-home.js:56
 msgid "This area displays the current page name."
 msgstr "Cette zone affiche le nom de la page actuelle."
 
-#: .\static\js\help-guide-home.js:79
+#: core/static/js/help-guide-home.js:79
 msgid "Courses"
 msgstr "Cours"
 
-#: .\static\js\help-guide-home.js:80
+#: core/static/js/help-guide-home.js:80
 msgid "Here are listed the courses in which you are currently enrolled."
 msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
 
-#: .\static\js\quiz.js:65
+#: core/static/js/quiz.js:65
 msgid "Please answer the question."
 msgstr "Veuillez répondre à la question."
 
-#: .\static\js\upload-video.js:3
+#: core/static/js/upload-video.js:3
 msgid "Uploading. Please wait."
 msgstr "Téléchargement. S'il vous plaît, attendez."
