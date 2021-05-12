@@ -47,6 +47,9 @@ ENV PATH /env/bin:$PATH
 # Create volumes
 # VOLUME [ "/gen/static", "/gen/media" ]
 
+# Compile language files
+RUN python manage.py compilemessages
+
 # Set communication port
 EXPOSE 8000
 

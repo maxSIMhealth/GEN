@@ -333,6 +333,8 @@ tags
 
 ### Secrets and env stuff ###
 secrets
+secrets-dev
+secrets-production
 env
 env-dev
 env-production
