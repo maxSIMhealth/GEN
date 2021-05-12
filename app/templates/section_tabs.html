@@ -12,6 +12,6 @@
       </span>
     {% endif %}
   {% else %}
-      <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %}">{{section.name}}</a>
+    <a href="{% url 'section' section.course.pk section.pk %}" class="list-group-item list-group-item-action {% if section == current_section %} active {% endif %} {% if not section.published %}bg-warning {% endif %}" {% if not section.published %} data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Not published' %}"{% endif %} >{{section.name}}</a>
   {% endif %}
 {% endfor %}
