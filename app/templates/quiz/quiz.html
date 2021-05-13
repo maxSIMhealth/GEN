@@ -35,7 +35,23 @@
         {% endif %}
 
         <div class="card quiz">
-            <div class="card-header bg-light">{% trans "Questions" %}</div>
+            <div class="card-header bg-light">
+                <h5 class="text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</h5>
+                <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
+                    <ul class="pagination mb-0">
+                        <li id="quiz-navigation-previous" class="page-item disabled">
+                            <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
+                               onclick="previousPaginationItem()">Previous</a>
+                        </li>
+                        <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link"
+                                                          href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
+                            of 13</a></li>
+                        <li id="quiz-navigation-next" class="page-item">
+                            <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             <div class="card-body">
                 <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}"
                       class="form-horizontal" name="QuizForm">
@@ -46,19 +62,19 @@
                             {% if quiz.description %}
                                 <p>{{ quiz.description|safe|linebreaksbr }}</p>
                             {% endif %}
-                            <p><i>{% trans "Please use the navigation buttons below." %}</i></p>
+                            <span><i>{% trans "Please use the navigation buttons in the header above." %}</i></span>
                         </div>
                         {% for question in quiz.questions.all %}
                             <div class="quiz-item">
+                                <h6>
+                                    <strong>{{ question.content }}</strong>
+                                </h6>
                                 {% if question.question_type == 'H' %}
-                                    <h5>
-                                        <strong>{{ question.content }}</strong>
-                                    </h5>
                                     <hr/>
-                                {% else %}
-                                    <h6 class="card-title">
-                                        <strong>{{ question.content }}</strong>
-                                    </h6>
+
+                                    {% if question.explanation %}
+                                        <span>{{ question.explanation }}</span>
+                                    {% endif %}
                                 {% endif %}
 
                                 {% if question.question_type == 'M' %}
@@ -85,26 +101,24 @@
                                     </ul>
 
                                 {% elif question.question_type == 'L' %}
-                                    <div class="card ml-0 mr-0">
-                                        {% with answer=question.likertanswer %}
-                                            <div class="card-body likert">
-                                                {% for value in answer.scale_range|likert_range %}
-                                                    <div class="item">
-                                                        <input type="radio" name="likert_{{ question.id }}"
-                                                               id="likert_{{ question.id }}" value="{{ value }}">
-                                                        <label for="likert_{{ question.id }}">{{ value }}</label>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-
-                                            {% if answer.legend %}
-                                                <div class="likert-legend card-footer text-muted">
-                                                    <em>{% trans "Scale legend" %}:</em>
-                                                    {{ answer.legend|linebreaks }}
+                                    {% with answer=question.likertanswer %}
+                                        <div class="likert">
+                                            {% for value in answer.scale_range|likert_range %}
+                                                <div class="item">
+                                                    <input type="radio" name="likert_{{ question.id }}"
+                                                           id="likert_{{ question.id }}" value="{{ value }}">
+                                                    <label for="likert_{{ question.id }}">{{ value }}</label>
                                                 </div>
-                                            {% endif %}
-                                        {% endwith %}
-                                    </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        {% if answer.legend %}
+                                            <div class="likert-legend card-footer text-muted">
+                                                <em>{% trans "Scale legend" %}:</em>
+                                                {{ answer.legend|linebreaks }}
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
 
                                 {% elif question.question_type == 'O' %}
 
@@ -129,9 +143,9 @@
                     </div>
                 </form>
             </div>
-            <div class="card-footer">
 
-                {% comment %}
+
+        {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">
           <span class="dot" onclick="goToPaginationItem(1)"></span>
@@ -140,21 +154,8 @@
         </div>
         {% endcomment %}
 
-                <nav aria-label="quiz navigation">
-                    <ul class="pagination justify-content-center mb-0">
-                        <li id="quiz-navigation-previous" class="page-item disabled">
-                            <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                               onclick="previousPaginationItem()">Previous</a>
-                        </li>
-                        <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link"
-                                                          href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
-                            of 13</a></li>
-                        <li id="quiz-navigation-next" class="page-item">
-                            <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+
+
         </div>
     </div>
 {% endblock content %}

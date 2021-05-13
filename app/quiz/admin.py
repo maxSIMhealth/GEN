@@ -147,7 +147,7 @@ class QuizScoreResource(resources.ModelResource):
     quiz = Field(attribute="quiz__name", column_name="quiz_name")
     course = Field(attribute="course__name", column_name="course_name")
     course_code = Field(attribute="course__code", column_name="course_code")
-    section = Field(attribute="quiz__video__section__name", column_name="section_name")
+    section = Field(attribute="quiz__section__name", column_name="section_name")
     video = Field(attribute="quiz__video__name", column_name="video_name")
     video_internal_name = Field(
         attribute="quiz__video__internal_name", column_name="video_internal_name"
@@ -166,6 +166,7 @@ class QuizScoreResource(resources.ModelResource):
             "course_code",
             "section",
             "score",
+            "max_score",
         )
         export_order = (
             "id",
@@ -178,6 +179,7 @@ class QuizScoreResource(resources.ModelResource):
             "video",
             "video_internal_name",
             "score",
+            "max_score",
         )
 
 
@@ -215,7 +217,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
     Base class for questions admin layout (editing).
     """
 
-    list_display = ("content", "quiz", "created")
+    list_display = ("content", "quiz", "value", "created")
     list_filter = ("quiz",)
     search_fields = ("content", "explanation")
     # filter_horizontal = ('quiz',)
@@ -236,6 +238,7 @@ class MCQuestionAdmin(QuestionAdmin):
         "question_type",
         "content",
         "quiz",
+        "value",
         "explanation",
         "multiple_correct_answers",
     )
@@ -264,7 +267,7 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("question_type", "content", "quiz")
+    fields = ("question_type", "content", "explanation", "quiz", "value")
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
@@ -287,7 +290,7 @@ class LikertAnswerAdmin(TabbedTranslationAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("question_type", "content", "quiz")
+    fields = ("question_type", "content", "quiz", "value")
 
     class Media:
         css = {"all": ("css/admin.css",)}
@@ -310,6 +313,9 @@ class QuestionAttemptResource(resources.ModelResource):
     question_content = Field(
         attribute="question__content", column_name="question_content"
     )
+    question_value = Field(
+        attribute="question__value", column_name="question_value"
+    )
     video_name = Field(attribute="video__name", column_name="video_name")
     video_internal_name = Field(
         attribute="video__internal_name", column_name="video_internal_name"
@@ -328,6 +334,7 @@ class QuestionAttemptResource(resources.ModelResource):
             # "attempt_number",
             "question_type",
             "question_content",
+            "question_value",
             "multiplechoice_answer__content",
             "video_name",
             "video_internal_name",
@@ -349,6 +356,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "question_content",
             "multiplechoice_answer__content",
             "answer_content",
+            "question_value",
             "correct",
         )
 
@@ -378,7 +386,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("question_type", "content", "quiz")
+    fields = ("question_type", "content", "explanation", "quiz")
 
     # setting question_type value to Group Header
     def get_form(self, request, obj=None, **kwargs):

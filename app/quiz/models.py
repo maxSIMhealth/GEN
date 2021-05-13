@@ -125,6 +125,11 @@ class Question(TimeStampedModel):
         blank=True,
         help_text=_("Explanation to be shown after the question has been answered."),
     )
+    value = models.PositiveIntegerField(
+        _("value"),
+        default=1,
+        help_text=_("Value to add to the quiz score if the participant answer the question correctly.")
+    )
     multiple_correct_answers = models.BooleanField(
         _("multiple correct answers"),
         blank=False,
@@ -209,7 +214,7 @@ class Likert(Question):
         return is_correct
 
     def __str__(self):
-        return ("%s") % (self.content)
+        return "%s" % self.content
 
     # def get_changeform_initial_data(self, request):
     #     return {"question_type": "L"}
@@ -248,7 +253,7 @@ class LikertAnswer(TimeStampedModel):
     # answer_range = IntegerRangeField()
 
     def __str__(self):
-        return ("%s : scale %s to %s") % (
+        return "%s : scale %s to %s" % (
             self.question.content,
             self.scale_range.lower,
             self.scale_range.upper,
@@ -490,6 +495,7 @@ class QuizScore(TimeStampedModel):
         Course, on_delete=models.PROTECT, verbose_name=_("course")
     )
     score = models.PositiveIntegerField(_("score"), default=0)
+    max_score = models.PositiveIntegerField(_("max score"), default=0)
     completed = models.BooleanField(
         _("completed successfully"),
         default=False,

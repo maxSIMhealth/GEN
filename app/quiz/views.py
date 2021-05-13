@@ -47,11 +47,14 @@ def question_likert_check(attempt, question, submitted_data):
         if student_answer:
             flag = Likert.check_if_correct(question, likert, int(student_answer))
             if flag is True:
-                score += 1
+                score += question.value
         else:
             flag = False
     else:
-        flag = None
+        # since there is no correct answer, we are marking the submission as correct and
+        # adding the question value to the quiz score
+        score += question.value
+        flag = True
 
     # save participant answer attempt
     attempt.correct = flag
@@ -63,6 +66,7 @@ def question_likert_check(attempt, question, submitted_data):
 
 def question_multiplechoice_check(attempt, question, submitted_data):
     score = 0
+    flag = False
 
     # creating array of user submitted answers
     try:
@@ -271,7 +275,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 else:
                     return render(
                         request,
-                        "quiz.html",
+                        "quiz/quiz.html",
                         {"course": course, "section": section, "quiz": quiz},
                     )
         else:
@@ -333,11 +337,12 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     # return render page
     return render(
         request,
-        "quiz_result.html",
+        "quiz/quiz_result.html",
         {
             "course": course,
             "section": section,
             "quiz": quiz,
+            "attempts": questions_attempt,
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,
             "attempt_openended": attempt_openended,
