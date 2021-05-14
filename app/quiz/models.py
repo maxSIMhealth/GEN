@@ -1,3 +1,5 @@
+import math
+
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import IntegerRangeField
 from django.core.exceptions import ValidationError
@@ -514,6 +516,22 @@ class QuizScore(TimeStampedModel):
             self.quiz.name,
             self.course.name,
         )
+
+    def score_percentage(self):
+        percentage = (self.score * 100) / self.max_score
+        return math.ceil(percentage)
+
+    def perform_assessment(self):
+        if self.quiz.assessment_method == MIN_PERCENTAGE:
+            percentage = self.score_percentage()
+            if percentage >= self.quiz.assessment_min_percentage:
+                self.completed = True
+            else:
+                self.completed = False
+        elif self.quiz.assessment_method == MAX_NUM_MISTAKES:
+            self.completed = False
+
+        self.save()
 
 
 class QuestionGroupHeader(Question):

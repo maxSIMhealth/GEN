@@ -69,7 +69,13 @@
                                         <small class="text-muted">
                                             <strong>{% trans "Score:" %}</strong>
                                             {% if quiz_details.score.exists %}
-                                                {{ quiz_details.score.get.score }}
+                                                {{ quiz_details.score.get.score }} of {{ quiz_details.score.get.max_score }} ( {{ quiz_details.score.get.score_percentage }}% )
+                                                --
+                                                {% if quiz_details.score.get.completed %}
+                                                    Approved
+                                                {% else %}
+                                                    Failed
+                                                {% endif %}
                                             {% else %}
                                                 --
                                             {% endif %}

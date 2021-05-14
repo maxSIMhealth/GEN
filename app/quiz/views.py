@@ -1,8 +1,8 @@
-import logging
+import logging, math
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max
+from django.db.models import Max, Sum
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
@@ -20,6 +20,9 @@ from .models import (
     QuestionAttempt,
     Quiz,
     QuizScore,
+    QUESTION_TYPES,
+    MIN_PERCENTAGE,
+    MAX_NUM_MISTAKES
 )
 from .support_methods import quiz_enable_check
 
@@ -144,6 +147,11 @@ def quiz_submission(request, quiz, course, section):
     # removing csrf token from items list
     items.pop(0)
     score = 0
+    # generating maximum score (removing Header and Open Ended items) at the time of submission
+    max_score = quiz.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+        'value__sum']
+    # alternate query
+    # max_score = Quiz.objects.filter(pk=quiz.pk).annotate(Sum('questions__value'))
 
     # increase attempt number
     if attempt_number["attempt_number__max"]:
@@ -195,15 +203,20 @@ def quiz_submission(request, quiz, course, section):
         )
         # update score
         quiz_score.score = score
+        quiz_score.max_score = max_score
+        quiz_score.completed = False
 
     else:
         # create student quiz score
         quiz_score = QuizScore.objects.create(
-            student=request.user, quiz=quiz, course=course, score=score
+            student=request.user, quiz=quiz, course=course, score=score, max_score=max_score
         )
 
     # save score data
     quiz_score.save()
+
+    # perform quiz assessment (if enabled)
+    quiz_score.perform_assessment()
 
 
 @login_required
@@ -294,9 +307,10 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
-    # get quiz score object
-    quiz_score_kwargs = dict(student=request.user, quiz=quiz, course=course)
-    score = get_object_or_404(QuizScore, **quiz_score_kwargs).score
+    student_quiz_score = get_object_or_404(QuizScore, student=request.user, course=course, quiz=quiz)
+    # score = student_quiz_score.score
+    # max_score = student_quiz_score.max_score
+    assessment_successful = None
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
@@ -346,7 +360,7 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,
             "attempt_openended": attempt_openended,
-            "score": score,
+            "user_quiz_score": student_quiz_score,
         },
     )
 

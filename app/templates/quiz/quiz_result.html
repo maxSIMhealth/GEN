@@ -23,15 +23,22 @@
     <div class="card bg-secondary text-white mb-3">
         <div class="card-header bg-dark">{% trans "Result" %}</div>
         <div class="card-body">
-            {% blocktrans %}
-                Thank you for your submission.
-            {% endblocktrans %}
-            <br/>
+            <p>{% trans "Thank you for your submission." %}</p>
 
             {% if quiz.show_score %}
-                {% blocktrans with quiz_score=score %}
-                    Your score is {{ quiz_score }}.
-                {% endblocktrans %}
+                <p>{% trans "Your score is:" %} {{ user_quiz_score.score }} / {{ user_quiz_score.max_score }} ( {{ user_quiz_score.score_percentage }}% ).</p>
+
+                <p class="mb-0">
+                {% trans "Assessment:" %}
+                    <strong>
+                    {% if user_quiz_score.completed %}
+                        <i class="fas fa-check-circle text-success"></i> {% trans "Approved." %}
+                    {% else %}
+                        <i class="fas fa-times-circle text-danger"></i> {% trans "Failed." %}
+                    {% endif %}
+                    </strong>
+                </p>
+
             {% endif %}
         </div>
     </div>
@@ -42,14 +49,14 @@
         {% for question in quiz.questions.all %}
             <div class="card mr-0 mb-3 ml-0">
                 <h6 class="card-header">
-                    {% if question.question_type == 'H' %}
+                    {% if question.question_type == 'H' or question.question_type == 'O' %}
                         {{ question.content }}
                     {% else %}
                         {{ question.content }} (<em>Value: {{ question.value }}</em>)
                     {% endif %}
                 </h6>
                 {% for attempt in attempts %}
-                    {% if attempt.question_id == question.id %}
+                    {% if attempt.question_id == question.id and not question.question_type == 'O'%}
                         <div class="border-bottom" style="padding: .5rem 1.25rem">
                         {% if attempt.correct %}
                             <i class="fas fa-check-circle text-success"></i> Correct
