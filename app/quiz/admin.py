@@ -88,6 +88,8 @@ class QuizAdmin(TabbedTranslationAdmin):
     form = QuizAdminForm
     save_as = True
 
+    readonly_fields = ["max_score",]
+
     fieldsets = (
         (
             None,
@@ -118,7 +120,14 @@ class QuizAdmin(TabbedTranslationAdmin):
         ),
         (
             "Scoring options",
-            {"fields": ("check_score", "show_score", "show_correct_answers")},
+            {
+                "fields": (
+                    "max_score",
+                    "check_score",
+                    "show_score",
+                    "show_correct_answers"
+                )
+            },
         ),
         (
             "Assessment options",

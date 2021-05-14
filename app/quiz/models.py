@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import IntegerRangeField
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from GEN.support_methods import duplicate_item, duplicate_name
 from model_utils.models import TimeStampedModel
@@ -37,6 +38,11 @@ class Quiz(SectionItem):
     check_score = models.BooleanField(_("check score"), default=True)
     show_score = models.BooleanField(_("show score"), default=False)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
+    max_score = models.PositiveIntegerField(
+        _("max score"),
+        default=0,
+        help_text=_("Maximum score automatically based on questions values.")
+    )
     assessment_method = models.CharField(
         _("assessment method"),
         max_length=2,
@@ -93,8 +99,19 @@ class Quiz(SectionItem):
         verbose_name = _("quiz")
         verbose_name_plural = _("quizzes")
 
+    def save(self, *args, **kwargs):
+        # update max score based on questions
+        max_score = self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+            'value__sum']
+        self.max_score = max_score
+        super(Quiz, self).save(*args, **kwargs)
+
     def get_questions(self):
         return self.questions.all().select_subclasses()
+
+    # def max_score(self):
+    #     return self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+    #         'value__sum']
 
     def duplicate(self):
         return duplicate_item(self, callback=duplicate_name)
@@ -496,6 +513,7 @@ class QuizScore(TimeStampedModel):
     course = models.ForeignKey(
         Course, on_delete=models.PROTECT, verbose_name=_("course")
     )
+    attempt_number = models.PositiveIntegerField(_("attempt number"), default=1)
     score = models.PositiveIntegerField(_("score"), default=0)
     max_score = models.PositiveIntegerField(_("max score"), default=0)
     completed = models.BooleanField(
@@ -521,6 +539,10 @@ class QuizScore(TimeStampedModel):
         percentage = (self.score * 100) / self.max_score
         return math.ceil(percentage)
 
+    # def attempt_increase(self):
+    #     self.attempt_number = self.attempt_number + 1
+    #     self.save()
+
     def perform_assessment(self):
         if self.quiz.assessment_method == MIN_PERCENTAGE:
             percentage = self.score_percentage()
@@ -530,6 +552,8 @@ class QuizScore(TimeStampedModel):
                 self.completed = False
         elif self.quiz.assessment_method == MAX_NUM_MISTAKES:
             self.completed = False
+        else:
+            self.completed = True
 
         self.save()
 

@@ -141,23 +141,21 @@ def question_check(attempt, question, submitted_data):
 
 def quiz_submission(request, quiz, course, section):
     items = list(request.POST)
-    attempt_number = QuestionAttempt.objects.filter(
-        quiz=quiz, student=request.user
-    ).aggregate(Max("attempt_number"))
     # removing csrf token from items list
     items.pop(0)
+    attempt_number = 1
+    user_scoreset = get_object_or_404(
+        QuizScore,
+        student=request.user,
+        course=course,
+        quiz=quiz
+    )
     score = 0
-    # generating maximum score (removing Header and Open Ended items) at the time of submission
-    max_score = quiz.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
-        'value__sum']
-    # alternate query
-    # max_score = Quiz.objects.filter(pk=quiz.pk).annotate(Sum('questions__value'))
 
-    # increase attempt number
-    if attempt_number["attempt_number__max"]:
-        current_attempt_number = attempt_number["attempt_number__max"] + 1
-    else:
-        current_attempt_number = 1
+    # increase attempt number if prior attempt exists
+    if user_scoreset:
+        user_scoreset.attempt_number = user_scoreset.attempt_number + 1
+        attempt_number = user_scoreset.attempt_number
 
     # get submitted questions and generate an dictionary list
     # format: {"question_id": "question_values"}
@@ -180,7 +178,7 @@ def quiz_submission(request, quiz, course, section):
             section=section,
             question=question,
             question_type=question.question_type,
-            attempt_number=current_attempt_number,
+            attempt_number=attempt_number,
         )
 
         # add video name, if the quiz has a related video
@@ -195,28 +193,25 @@ def quiz_submission(request, quiz, course, section):
     # user completed the quiz
     request.session["quiz_complete"] = True
 
-    # check if user has quiz score
-    if request.user.quizscore_set.filter(course=course, quiz=quiz).exists():
-        # get student quiz score
-        quiz_score = QuizScore.objects.get(
-            student=request.user, course=course, quiz=quiz
-        )
-        # update score
-        quiz_score.score = score
-        quiz_score.max_score = max_score
-        quiz_score.completed = False
-
+    # update scoreset or create if it doesn't exist
+    if user_scoreset:
+        user_scoreset.score = score
+        # setting max score at the time of submission
+        user_scoreset.max_score = quiz.max_score
     else:
-        # create student quiz score
-        quiz_score = QuizScore.objects.create(
-            student=request.user, quiz=quiz, course=course, score=score, max_score=max_score
+        user_scoreset = QuizScore.objects.create(
+            student = request.user,
+            quiz = quiz,
+            course = course,
+            score = score,
+            max_score = quiz.max_score
         )
 
-    # save score data
-    quiz_score.save()
+    # save user scoreset data
+    user_scoreset.save()
 
-    # perform quiz assessment (if enabled)
-    quiz_score.perform_assessment()
+    # perform quiz assessment
+    user_scoreset.perform_assessment()
 
 
 @login_required
@@ -308,9 +303,6 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
     student_quiz_score = get_object_or_404(QuizScore, student=request.user, course=course, quiz=quiz)
-    # score = student_quiz_score.score
-    # max_score = student_quiz_score.max_score
-    assessment_successful = None
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
