@@ -6,15 +6,16 @@ register = template.Library()
 
 
 class QuizDetails:
-    def __init__(self, enabled, attempts, scoreset):
+    def __init__(self, enabled, current_attempt_number, attempts_left, scoreset):
         self.enabled = enabled
-        self.attempts = attempts
+        self.current_attempt_number = current_attempt_number
+        self.attempts_left = attempts_left
         self.scoreset = scoreset
 
 
 @register.simple_tag
 def quiz_details_get(user, quiz):
-    enabled, attempts = quiz_enable_check(user, quiz)
+    enabled, current_attempt_number, attempts_left = quiz_enable_check(user, quiz)
     scoreset = quiz_score_get(user, quiz)
 
-    return QuizDetails(enabled, attempts, scoreset)
+    return QuizDetails(enabled, current_attempt_number, attempts_left, scoreset)

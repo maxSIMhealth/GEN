@@ -248,7 +248,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 pass
 
         # check if quiz has a requirement and if it should be enabled
-        (quiz_enabled, temp) = quiz_enable_check(request.user, quiz)
+        (quiz_enabled, current_attempt_number, attempts_left) = quiz_enable_check(request.user, quiz)
 
         if quiz_enabled:
 
@@ -261,25 +261,8 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 )
 
             else:
-                # get latest user attempt number (if it exists)
-                try:
-                    latest_attempt_number = (
-                        QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
-                        .latest("attempt_number")
-                        .attempt_number
-                    )
-                except QuestionAttempt.DoesNotExist:
-                    latest_attempt_number = 0
-
-                # check if user reached the maximum number of attempts
-                # check if user has reached the limit of attempts
-                if latest_attempt_number < quiz.attempts_max_number:
-                    attempts_limit_reached = False
-                else:
-                    attempts_limit_reached = True
-
                 # if the max number of attempts has been reached, redirect back to quiz list
-                if attempts_limit_reached:
+                if attempts_left <= 0:
                     messages.error(
                         request,
                         _("You have already reached the maximum number of attempts."),

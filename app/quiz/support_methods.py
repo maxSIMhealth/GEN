@@ -26,10 +26,7 @@ def quiz_enable_check(user, quiz):
     """
     Check if quiz should still be enabled for the user to answer
     """
-    attempts_limit_reached = False
-    requirement_fulfilled = False
     quiz_enable = False
-    attempts_max_number = 0
 
     # get current attempt number
     current_attempt_number = quiz_attempts_get(user, quiz)
@@ -40,8 +37,11 @@ def quiz_enable_check(user, quiz):
     else:
         attempts_max_number = 1
 
+    # check how many attempts are left
+    attempts_left = attempts_max_number - current_attempt_number
+
     # check if user has reached the limit of attempts
-    if current_attempt_number < attempts_max_number:
+    if attempts_left > 0:
         attempts_limit_reached = False
     else:
         attempts_limit_reached = True
@@ -61,4 +61,4 @@ def quiz_enable_check(user, quiz):
     if not attempts_limit_reached and requirement_fulfilled:
         quiz_enable = True
 
-    return (quiz_enable, current_attempt_number)
+    return (quiz_enable, current_attempt_number, attempts_left)

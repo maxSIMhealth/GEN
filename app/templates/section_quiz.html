@@ -73,6 +73,14 @@
                                     </p>
                                 {% endif %}
 
+                                {% if item.quiz.allow_multiple_attempts %}
+                                    <p class="mb-0">
+                                        <small class="text-muted">
+                                            <strong>{% trans "Attempts left:" %}</strong> {{ quiz_details.attempts_left }}
+                                        </small>
+                                    </p>
+                                {% endif %}
+
                                 {% if item.quiz.show_score %}
                                     <p class="mb-0">
                                         <small class="text-muted">
