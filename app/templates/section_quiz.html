@@ -49,10 +49,19 @@
                                         <span class="text-muted">{{ item.name }}</span>
                                     {% endif %}
                                 {% endif %}
-                                {% if quiz_details.score.exists %}
-                                    <span class="badge badge-primary badge-pill float-right">{% trans "Submitted" %}</span>
+                                {% if quiz_details.scoreset.exists %}
+                                    <div class="float-right">
+                                        <span class="badge badge-primary badge-pill">{% trans "Submitted" %}</span>
+                                        {% if quiz_details.scoreset.get.completed %}
+                                            <span class="badge badge-success badge-pill">{% trans "Approved" %}</span>
+                                        {% else %}
+                                            <span class="badge badge-danger badge-pill">{% trans "Failed" %}</span>
+                                        {% endif %}
+                                    </div>
                                 {% else %}
-                                    <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
+                                    <div class="float-right">
+                                        <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
+                                    </div>
                                 {% endif %}
 
                                 {% comment %}
@@ -68,14 +77,8 @@
                                     <p class="mb-0">
                                         <small class="text-muted">
                                             <strong>{% trans "Score:" %}</strong>
-                                            {% if quiz_details.score.exists %}
-                                                {{ quiz_details.score.get.score }} of {{ quiz_details.score.get.max_score }} ( {{ quiz_details.score.get.score_percentage }}% )
-                                                --
-                                                {% if quiz_details.score.get.completed %}
-                                                    Approved
-                                                {% else %}
-                                                    Failed
-                                                {% endif %}
+                                            {% if quiz_details.scoreset.exists %}
+                                                {{ quiz_details.scoreset.get.score }} / {{ quiz_details.scoreset.get.max_score }} ( {{ quiz_details.scoreset.get.score_percentage }}% )
                                             {% else %}
                                                 --
                                             {% endif %}
