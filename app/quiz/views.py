@@ -96,7 +96,7 @@ def question_multiplechoice_check(attempt, question, submitted_data):
                 flag = answer.check == answer_checked
 
                 if flag is True:
-                    score += 1
+                    score += question.value
 
                 attempt.answer_content = answer_checked
                 attempt.correct = flag
@@ -110,7 +110,7 @@ def question_multiplechoice_check(attempt, question, submitted_data):
                 attempt.multiplechoice_answer = MCAnswer.objects.get(pk=answer)
 
                 if flag is True:
-                    score += 1
+                    score += question.value
 
             attempt.answer_content = attempt.multiplechoice_answer.content
     else:
