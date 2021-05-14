@@ -100,10 +100,13 @@ class Quiz(SectionItem):
         verbose_name_plural = _("quizzes")
 
     def save(self, *args, **kwargs):
-        # update max score based on questions
-        max_score = self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
-            'value__sum']
-        self.max_score = max_score
+        if self.questions.exists():
+            # update max score based on questions
+            max_score = self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+                'value__sum']
+            self.max_score = max_score
+        else:
+            self.max_score = 0
         super(Quiz, self).save(*args, **kwargs)
 
     def get_questions(self):
