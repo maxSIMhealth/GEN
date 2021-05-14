@@ -2,6 +2,7 @@ import math
 
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import IntegerRangeField
+from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
@@ -153,6 +154,7 @@ class Question(TimeStampedModel):
     value = models.PositiveIntegerField(
         _("value"),
         default=1,
+        validators=[MinValueValidator(1)],
         help_text=_("Value to add to the quiz score if the participant answer the question correctly.")
     )
     multiple_correct_answers = models.BooleanField(
