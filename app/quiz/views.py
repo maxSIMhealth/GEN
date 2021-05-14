@@ -143,19 +143,26 @@ def quiz_submission(request, quiz, course, section):
     items = list(request.POST)
     # removing csrf token from items list
     items.pop(0)
-    attempt_number = 1
-    user_scoreset = get_object_or_404(
-        QuizScore,
-        student=request.user,
-        course=course,
-        quiz=quiz
-    )
     score = 0
+    num_mistakes = 0
+
+    # try to get user quiz scoreset, create if it does not exist
+    try:
+        user_scoreset = QuizScore.objects.get(
+            student=request.user,
+            course=course,
+            quiz=quiz
+        )
+    except:
+        user_scoreset = QuizScore(
+            student=request.user,
+            quiz=quiz,
+            course=course,
+            max_score=quiz.max_score,
+        )
 
     # increase attempt number if prior attempt exists
-    if user_scoreset:
-        user_scoreset.attempt_number = user_scoreset.attempt_number + 1
-        attempt_number = user_scoreset.attempt_number
+    user_scoreset.attempt_number = user_scoreset.attempt_number + 1
 
     # get submitted questions and generate an dictionary list
     # format: {"question_id": "question_values"}
@@ -178,7 +185,7 @@ def quiz_submission(request, quiz, course, section):
             section=section,
             question=question,
             question_type=question.question_type,
-            attempt_number=attempt_number,
+            attempt_number=user_scoreset.attempt_number,
         )
 
         # add video name, if the quiz has a related video
@@ -189,29 +196,26 @@ def quiz_submission(request, quiz, course, section):
         question_score = question_check(attempt, question, submitted_data)
         score += question_score
 
+        # increase mistake counter if attempt is incorrect
+        if attempt.correct == False and (question.question_type != 'H' or question.question_type != 'O'):
+            num_mistakes = user_scoreset.num_mistakes + 1
+
     # change session variable to indicate that the
     # user completed the quiz
     request.session["quiz_complete"] = True
 
-    # update scoreset or create if it doesn't exist
-    if user_scoreset:
-        user_scoreset.score = score
-        # setting max score at the time of submission
-        user_scoreset.max_score = quiz.max_score
-    else:
-        user_scoreset = QuizScore.objects.create(
-            student = request.user,
-            quiz = quiz,
-            course = course,
-            score = score,
-            max_score = quiz.max_score
-        )
+    # update scoreset
+    user_scoreset.score = score
+    user_scoreset.num_mistakes = num_mistakes
 
-    # save user scoreset data
-    user_scoreset.save()
+    # setting max score at the time of submission (just in case the quiz is modified later)
+    user_scoreset.max_score = quiz.max_score
 
-    # perform quiz assessment
+    # check if the quiz has been completed successfully (this method does not perform a save)
     user_scoreset.perform_assessment()
+
+    # save updated user scoreset
+    user_scoreset.save()
 
 
 @login_required

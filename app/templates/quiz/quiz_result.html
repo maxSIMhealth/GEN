@@ -26,15 +26,21 @@
             <p>{% trans "Thank you for your submission." %}</p>
 
             {% if quiz.show_score %}
-                <p>{% trans "Your score is:" %} {{ user_quiz_score.score }} / {{ user_quiz_score.max_score }} ( {{ user_quiz_score.score_percentage }}% ).</p>
-
+                <p>
+                    {% trans "Your score is:" %} {{ user_quiz_score.score }} / {{ user_quiz_score.max_score }}
+                    {% if quiz.assessment_method == 'MP' %}
+                        ( {{ user_quiz_score.score_percentage }}% ).
+                    {% elif quiz.assessment_method == 'MN' %}
+                        ( {% trans "Maximum number of mistakes allowed:" %} {{ quiz.assessment_max_mistakes }} ).
+                    {% endif %}
+                </p>
                 <p class="mb-0">
                 {% trans "Assessment:" %}
-                    <strong>
+                    <strong style="font-size:1.2em">
                     {% if user_quiz_score.completed %}
-                        <i class="fas fa-check-circle text-success"></i> {% trans "Approved." %}
+                        <span class="badge badge-success badge-pill">{% trans "Approved" %}</span>
                     {% else %}
-                        <i class="fas fa-times-circle text-danger"></i> {% trans "Failed." %}
+                        <span class="badge badge-danger badge-pill">{% trans "Failed" %}</span>
                     {% endif %}
                     </strong>
                 </p>

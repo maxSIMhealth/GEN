@@ -513,9 +513,14 @@ class QuizScore(TimeStampedModel):
     course = models.ForeignKey(
         Course, on_delete=models.PROTECT, verbose_name=_("course")
     )
-    attempt_number = models.PositiveIntegerField(_("attempt number"), default=1)
+    attempt_number = models.PositiveIntegerField(_("attempt number"), default=0)
     score = models.PositiveIntegerField(_("score"), default=0)
     max_score = models.PositiveIntegerField(_("max score"), default=0)
+    num_mistakes = models.PositiveIntegerField(
+        _("number of mistakes"),
+        default=0,
+        help_text=_("Total number of mistakes (incorrect questions).")
+    )
     completed = models.BooleanField(
         _("completed successfully"),
         default=False,
@@ -551,11 +556,14 @@ class QuizScore(TimeStampedModel):
             else:
                 self.completed = False
         elif self.quiz.assessment_method == MAX_NUM_MISTAKES:
-            self.completed = False
+            if self.num_mistakes <= self.quiz.assessment_max_mistakes:
+                self.completed = True
+            else:
+                self.completed = False
         else:
             self.completed = True
 
-        self.save()
+        # self.save()
 
 
 class QuestionGroupHeader(Question):

@@ -78,7 +78,12 @@
                                         <small class="text-muted">
                                             <strong>{% trans "Score:" %}</strong>
                                             {% if quiz_details.scoreset.exists %}
-                                                {{ quiz_details.scoreset.get.score }} / {{ quiz_details.scoreset.get.max_score }} ( {{ quiz_details.scoreset.get.score_percentage }}% )
+                                                {{ quiz_details.scoreset.get.score }} / {{ quiz_details.scoreset.get.max_score }}
+                                                {% if item.quiz.assessment_method == 'MP' %}
+                                                    ( {{ quiz_details.scoreset.get.score_percentage }}% ).
+                                                {% elif item.quiz.assessment_method == 'MN' %}
+                                                    ( {% trans "Maximum number of mistakes allowed:" %} {{ item.quiz.assessment_max_mistakes }} ).
+                                                {% endif %}
                                             {% else %}
                                                 --
                                             {% endif %}
