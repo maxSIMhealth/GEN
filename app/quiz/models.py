@@ -100,6 +100,10 @@ class Quiz(SectionItem):
         verbose_name_plural = _("quizzes")
 
     def save(self, *args, **kwargs):
+        self.update_max_score()
+        super(Quiz, self).save(*args, **kwargs)
+
+    def update_max_score(self):
         if self.questions.exists():
             # update max score based on questions
             max_score = self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
@@ -107,7 +111,6 @@ class Quiz(SectionItem):
             self.max_score = max_score
         else:
             self.max_score = 0
-        super(Quiz, self).save(*args, **kwargs)
 
     def get_questions(self):
         return self.questions.all().select_subclasses()
@@ -171,6 +174,15 @@ class Question(TimeStampedModel):
 
     def __str__(self):
         return self.content
+
+#     def save(self, *args, **kwargs):
+#         self.quiz.update_max_score()
+#         super(Question, self).save(*args, **kwargs)
+#
+#
+# @receiver(post_save, sender=Question)
+# def update_quiz_maxscore(sender, instance, **kwargs):
+#     instance.quiz.update_max_score()
 
 
 class QuestionGroupHeaderManager(models.Manager):
