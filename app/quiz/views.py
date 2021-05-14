@@ -79,41 +79,45 @@ def question_multiplechoice_check(attempt, question, submitted_data):
         # creating an empty array
         user_answers = []
 
-    if question.multiple_correct_answers:
+    if user_answers:
+        if question.multiple_correct_answers:
 
-        # checking each question answer item
-        for answer in question.answers.all():
-            # reset attempt object
-            attempt.pk = None
+            # checking each question answer item
+            for answer in question.answers.all():
+                # reset attempt object
+                attempt.pk = None
 
-            attempt.multiplechoice_answer = answer
+                attempt.multiplechoice_answer = answer
 
-            # verify if the answer was checked by the student
-            answer_checked = str(answer.pk) in user_answers
+                # verify if the answer was checked by the student
+                answer_checked = str(answer.pk) in user_answers
 
-            # check if the answer was marked correctly
-            flag = answer.check == answer_checked
+                # check if the answer was marked correctly
+                flag = answer.check == answer_checked
 
-            if flag is True:
-                score += 1
+                if flag is True:
+                    score += 1
 
-            attempt.answer_content = answer_checked
-            attempt.correct = flag
-            attempt.save()
+                attempt.answer_content = answer_checked
+                attempt.correct = flag
+                attempt.save()
 
+        else:
+            # checking user submitted answer
+            for answer in user_answers:
+                flag = MCQuestion.check_if_correct(question, answer)
+
+                attempt.multiplechoice_answer = MCAnswer.objects.get(pk=answer)
+
+                if flag is True:
+                    score += 1
+
+            attempt.answer_content = attempt.multiplechoice_answer.content
     else:
-        # checking user submitted answer
-        for answer in user_answers:
-            flag = MCQuestion.check_if_correct(question, answer)
+        attempt.answer_content = None
 
-            attempt.multiplechoice_answer = MCAnswer.objects.get(pk=answer)
-
-            if flag is True:
-                score += 1
-
-        attempt.answer_content = attempt.multiplechoice_answer.content
-        attempt.correct = flag
-        attempt.save()
+    attempt.correct = flag
+    attempt.save()
 
     return score
 

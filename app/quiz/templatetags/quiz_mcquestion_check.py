@@ -11,7 +11,7 @@ def quiz_mcquestion_check(question, attempt_list):
     user_answers = dict()
 
     for attempt in attempt_list:
-        if question.id == attempt.question_id:
+        if question.id == attempt.question_id and attempt.multiplechoice_answer:
             user_answers[attempt.multiplechoice_answer.id] = attempt.correct
             # user_answers.append(attempt.multiplechoice_answer.id)
             # for answer in attempt.multiplechoice_answers.all():
