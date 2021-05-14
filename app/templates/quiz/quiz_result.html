@@ -61,17 +61,19 @@
                         {{ question.content }} (<em>Value: {{ question.value }}</em>)
                     {% endif %}
                 </h6>
-                {% for attempt in attempts %}
-                    {% if attempt.question_id == question.id and not question.question_type == 'O'%}
-                        <div class="border-bottom" style="padding: .5rem 1.25rem">
-                        {% if attempt.correct %}
-                            <i class="fas fa-check-circle text-success"></i> Correct
-                        {% else %}
-                            <i class="fas fa-times-circle text-danger"></i> Incorrect
+                {% if quiz.check_score %}
+                    {% for attempt in attempts %}
+                        {% if attempt.question_id == question.id and not question.question_type == 'O'%}
+                            <div class="border-bottom" style="padding: .5rem 1.25rem">
+                            {% if attempt.correct %}
+                                <i class="fas fa-check-circle text-success"></i> Correct
+                            {% else %}
+                                <i class="fas fa-times-circle text-danger"></i> Incorrect
+                            {% endif %}
+                            </div>
                         {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
 
                 <div class="card-body">
                 {% if question.question_type == 'M' %}
