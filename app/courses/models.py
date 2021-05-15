@@ -273,3 +273,4 @@ class Status(TimeStampedModel):
     class Meta:
         verbose_name = _("section status")
         verbose_name_plural = _("sections status")
+        unique_together = ["learner", "course", "section"]

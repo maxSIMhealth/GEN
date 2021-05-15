@@ -8,7 +8,7 @@ from GEN.support_methods import enrollment_test
 
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled
-from .models import Course, Section, SectionItem
+from .models import Course, Section, SectionItem, Status
 from .progress import progress
 
 
@@ -57,6 +57,31 @@ def section_page(request, pk, section_pk):
     allow_submission = False
     start_date_reached = False
     end_date_passed = False
+    section_status, section_status_created = Status.objects.get_or_create(
+        learner=request.user,
+        course=course_object,
+        section=section_object
+    )
+
+    if request.method == "POST":
+        # TODO: check section type and set completed status based on its contents
+
+        if not section_status.completed:
+            section_status.completed = True
+            section_status.save()
+        else:
+            messages.warning(
+                request,
+                _("This section is already marked as completed.")
+            )
+
+        my_kwargs = dict(
+            pk=course_object.pk,
+            section_pk=section_object.pk
+        )
+
+        return redirect("section", **my_kwargs)
+
 
     # check_user_enrollment(request, user, course_object)
 
@@ -167,6 +192,7 @@ def section_page(request, pk, section_pk):
             "course": course_object,
             "section": section_object,
             "section_items": section_items,
+            "section_status": section_status,
             "gamification": gamification,
             "allow_submission": allow_submission,
         },

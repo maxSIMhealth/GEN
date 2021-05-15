@@ -8,56 +8,67 @@
 {% block title %}GEN - {{course.name}} {% endblock title %}
 
 {% block container %}
-  {% comment %}
-  <ol class="breadcrumb my-3">
-    {% block breadcrumb %}
-    {% endblock breadcrumb %}
-  </ol>
-  {% endcomment %}
+    {% comment %}
+        <ol class="breadcrumb my-3">
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+        </ol>
+    {% endcomment %}
 
-  <div class="card bg-dark mb-3" id="course-name">
-    <div class="card-header">
-      <h5 class="card-text text-white p-0">{{ course.name }}</h5>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-2 order-lg-1">
-      <div class="card mb-3" id="sections-navbar">
-        <nav class="card-header navbar navbar-expand-lg navbar-light">
-          <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
-          <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
-            <span class="navbar-toggler-icon"></span>
-          </a>
-        </nav>
-        <div class="collapse d-lg-block navbar-collapse" id="sidebar">
-          <ul class="list-group-flush navbar-nav">
-            {% block content_tabs %}
-              <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
-              {% show_sections %}
-            {% endblock content_tabs %}
-          </ul>
+    <div class="card bg-dark mb-3" id="course-name">
+        <div class="card-header">
+            <h5 class="card-text text-white p-0">{{ course.name }}</h5>
         </div>
-      </div>
     </div>
-    <div class="col-lg-10 order-lg-2" id="section-content">
-      <h2 class="mb-3" id="section-name">
-      {% block content_title %}
-        {{ section.name }}
-      {% endblock content_title %}
-      </h2>
+
+    <div class="row">
+        <div class="col-lg-2 order-lg-1">
+            <div class="card mb-3" id="sections-navbar">
+                <nav class="card-header navbar navbar-expand-lg navbar-light">
+                    <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
+                    <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                </nav>
+                <div class="collapse d-lg-block navbar-collapse" id="sidebar">
+                    <ul class="list-group-flush navbar-nav">
+                        {% block content_tabs %}
+                            <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
+                            {% show_sections %}
+                        {% endblock content_tabs %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10 order-lg-2" id="section-content">
+            <h2 class="mb-3" id="section-name">
+                {% block content_title %}
+                    {{ section.name }}
+                {% endblock content_title %}
+            </h2>
 
 
-      {% if messages %}
-        {% include 'partials/messages.html' %}
-      {% endif %}
+            {% if messages %}
+                {% include 'partials/messages.html' %}
+            {% endif %}
 
-      {% block content %}
-      {% endblock content %}
+            {% block content %}
+            {% endblock content %}
+
+            {% if not section_status.completed %}
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">{% trans "Mark as completed" %}</button>
+                </form>
+            {% else %}
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Section already completed">
+                    <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>{% trans "Mark as completed" %}</button>
+                </span>
+            {% endif %}
+        </div>
     </div>
-  </div>
 {% endblock container %}
 
 {% block javascript_bottom %}
-{% sri_static "js/help-guide-course.js" %}
+    {% sri_static "js/help-guide-course.js" %}
 {% endblock javascript_bottom %}
