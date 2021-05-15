@@ -8,121 +8,98 @@
 {% load show_sections %}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
 
 {% block content_tabs %}
-  <a class="list-group-item list-group-item-action active" href="#">{% trans "Info" %}</a>
-  {% show_sections %}
+    <a class="list-group-item list-group-item-action active" href="#">{% trans "Info" %}</a>
+    {% show_sections %}
 {% endblock content_tabs %}
 
 {% block content_title %}
-  Info
+    Info
 {% endblock content_title %}
 
 {% block content %}
-      <div class="card mb-3">
+    <div class="card mb-3">
         <h5 class="card-header bg-light">{% trans "Course details" %}</h5>
-          <table class="table course-info mb-0">
+        <table class="table course-info mb-0">
             <tbody>
-              {% if user|is_instructor:course %}
-              <tr>
-                <th scope="row" class="th-small pl-4">{% trans "Code" %}</th>
-                <td class="pr-4">{{course.code}}</td>
-              </tr>
-              {% endif %}
+            {% if user|is_instructor:course %}
+                <tr>
+                    <th scope="row" class="th-small pl-4">{% trans "Code" %}</th>
+                    <td class="pr-4">{{course.code}}</td>
+                </tr>
+            {% endif %}
 
-              {% if course.start_date %}
-              <tr>
-                <th scope="row" class="th-small pl-4">{% trans "Start" %}</th>
-                <td class="pr-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
-              </tr>
-              {% endif %}
+            {% if course.start_date %}
+                <tr>
+                    <th scope="row" class="th-small pl-4">{% trans "Start" %}</th>
+                    <td class="pr-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
+                </tr>
+            {% endif %}
 
-              {% if course.end_date %}
-              <tr>
-                <th scope="row" class="th-small pl-4">{% trans "End" %}</th>
-                <td class="pr-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
-              </tr>
-              {% endif %}
+            {% if course.end_date %}
+                <tr>
+                    <th scope="row" class="th-small pl-4">{% trans "End" %}</th>
+                    <td class="pr-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
+                </tr>
+            {% endif %}
 
-              <tr>
+            <tr>
                 <th scope="row" class="th-small pl-4">{% trans "Description" %}</th>
                 <td class="pr-4">{{ course.description|safe|linebreaksbr }}</td>
-              </tr>
+            </tr>
             </tbody>
-          </table>
+        </table>
+    </div>
 
-      </div>
-
-      {% if course.show_scoreboard %}
+    {% if course.show_scoreboard %}
         <div class="card-deck">
-          <div class="card gamification-card">
+        <div class="card gamification-card">
             <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
             <div class="card-body p-0">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
-                <li class="list-group-item">{% trans "Comments" %}: {% countscore_course user.id course.pk "comment" %}</li>
-                <li class="list-group-item">{% trans "Quizzes" %}: {% countscore_course user.id course.pk "quiz" %}</li>
-              </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
+                    <li class="list-group-item">{% trans "Comments" %}: {% countscore_course user.id course.pk "comment" %}</li>
+                    <li class="list-group-item">{% trans "Quizzes" %}: {% countscore_course user.id course.pk "quiz" %}</li>
+                </ul>
             </div>
-          </div>
-        {% endif %}
+        </div>
+    {% endif %}
 
-        {% if course.show_leaderboard %}
-          <div class="card gamification-card">
+    {% if course.show_leaderboard %}
+        <div class="card gamification-card">
             <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
             <div class="card-body p-0">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
-                <li class="list-group-item">{% trans "Comments" %}: #{% rank_get user.id course.pk "comment" %}</li>
-                <li class="list-group-item">{% trans "Quizzes" %}: #{% rank_get user.id course.pk "quiz" %}</li>
-              </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
+                    <li class="list-group-item">{% trans "Comments" %}: #{% rank_get user.id course.pk "comment" %}</li>
+                    <li class="list-group-item">{% trans "Quizzes" %}: #{% rank_get user.id course.pk "quiz" %}</li>
+                </ul>
             </div>
-          </div>
-        {% endif %}
+        </div>
+    {% endif %}
 
-        {% if course.show_progress_tracker %}
-          <div class="card gamification-card">
+    {% if course.show_progress_tracker %}
+        <div class="card gamification-card">
             <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
             <div class="card-body p-0">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  {% trans "Discussions participation" %}:
-                  {{discussions_progress.current}} / {{discussions_progress.max}}
-                  {% if discussions_progress.max > 0 %}
-                    {% widthratio discussions_progress.current discussions_progress.max 100 as discussions_progress_percent %}
-                    <div class="progress" data-toggle="tooltip" data-placement="top" title="{{discussions_progress_percent}}%">
-                      <div class="progress-bar {% if discussions_progress_percent == '100' %}bg-success{% endif %}" role="progressbar" style="width: {{discussions_progress_percent}}%" aria-valuenow="{{discussions_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  {% else %}
-                    <div class="progress" data-toggle="tooltip" data-placement="top" title='{% trans "This course has no discussions" %}'>
-                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  {% endif %}
-                </li>
-                <li class="list-group-item">
-                  {% trans "Quizzes answered" %}:
-                  {{quizzes_progress.current}} / {{quizzes_progress.max}}
+                <ul class="list-group list-group-flush">
+                    {% trans "Sections completed" as tracker_sections %}
+                    {% trans "You have not completed any section yet." as tracker_sections_empty%}
+                    {% include "partials/progress_tracker_item.html" with title=tracker_sections progress=sections_progress zero_progress=tracker_sections_empty only %}
 
-                  {% if quizzes_progress.max > 0 %}
-                    {% widthratio quizzes_progress.current quizzes_progress.max 100 as quizzes_progress_percent %}
-                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title="{{quizzes_progress_percent}}%">
-                      <div class="progress-bar {% if quizzes_progress_percent == '100' %}bg-success{% else %}bg-warning{% endif %}" role="progressbar" style="width: {{quizzes_progress_percent}}%;" aria-valuenow="{{quizzes_progress_percent}}" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  {% else %}
-                    <div class="progress mt-1 mb-3" data-toggle="tooltip" data-placement="top" title='{% trans "This course has no quizzes" %}'>
-                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  {% endif %}
-                </li>
-              </ul>
+                    {% trans "Discussions participation" as tracker_discussions %}
+                    {% trans "This course has no discussions." as tracker_discussions_empty%}
+                    {% include "partials/progress_tracker_item.html" with title=tracker_discussions progress=discussions_progress zero_progress=tracker_discussions_empty alt_bg_color="bg-info" %}
+
+                    {% trans "Quizzes answered" as tracker_quizzes %}
+                    {% trans "This course has no quizzes." as tracker_quizzes_empty%}
+                    {% include "partials/progress_tracker_item.html" with title=tracker_quizzes progress=quizzes_progress zero_progress=tracker_quizzes_empty alt_bg_color="bg-warning"%}
+                </ul>
             </div>
-
-          </div>
         </div>
-      {% endif %}
-
-
+    {% endif %}
 
 {% endblock content %}

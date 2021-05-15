@@ -18,19 +18,17 @@ not_enrolled_error = _("You are not enrolled in the requested course.")
 @login_required
 @course_enrollment_check(enrollment_test)
 def course(request, pk):
-    user = request.user
     course_object = get_object_or_404(Course, pk=pk)
+    sections = course_object.sections.filter(published=True)
     discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
-    # user = request.user
     # TODO: improve this: I've hard-corded this section name because info isn't a dynamic section item
     section_name = "Info"
 
-    # check_user_enrollment(request, user, course_object)
-
     # progress status
-    discussions_progress = progress(request, discussions)
-    quizzes_progress = progress(request, quizzes)
+    discussions_progress = progress(request.user, discussions)
+    quizzes_progress = progress(request.user, quizzes)
+    sections_progress = progress(request.user, sections)
 
     return render(
         request,
@@ -40,6 +38,7 @@ def course(request, pk):
             "section_name": section_name,
             "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
+            "sections_progress": sections_progress
         },
     )
 
@@ -74,9 +73,6 @@ def section_page(request, pk, section_pk):
         )
 
         return redirect("section", **my_kwargs)
-
-
-    # check_user_enrollment(request, user, course_object)
 
     is_instructor = check_is_instructor(course_object, user)
 
