@@ -40,11 +40,12 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
 
 class StatusAdmin(admin.ModelAdmin):
     list_display = (
+        "learner",
         "course",
         "section",
         "completed"
     )
-    # list_filter = ("")
+    list_filter = ("course","section","learner")
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Section, SectionAdmin)

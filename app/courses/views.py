@@ -7,7 +7,7 @@ from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
 
 from core.views import check_is_instructor
-from courses.support_methods import requirement_fulfilled
+from courses.support_methods import requirement_fulfilled, section_mark_completed
 from .models import Course, Section, SectionItem, Status
 from .progress import progress
 
@@ -66,14 +66,7 @@ def section_page(request, pk, section_pk):
     if request.method == "POST":
         # TODO: check section type and set completed status based on its contents
 
-        if not section_status.completed:
-            section_status.completed = True
-            section_status.save()
-        else:
-            messages.warning(
-                request,
-                _("This section is already marked as completed.")
-            )
+        section_mark_completed(request, section_object)
 
         my_kwargs = dict(
             pk=course_object.pk,

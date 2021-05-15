@@ -1,6 +1,9 @@
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from discussions.support_methods import has_participated
 from quiz.support_methods import quiz_score_get
 
+from .models import Status
 
 def requirement_fulfilled(user, section):
     """
@@ -38,3 +41,15 @@ def requirement_fulfilled(user, section):
             fulfilled = all(element for element in items_completed)
 
     return fulfilled
+
+
+def section_mark_completed(request, section):
+    section_status = Status.objects.get(learner=request.user, section=section)
+    if not section_status.completed:
+        section_status.completed = True
+        section_status.save()
+    else:
+        messages.warning(
+            request,
+            _("This section is already marked as completed.")
+        )

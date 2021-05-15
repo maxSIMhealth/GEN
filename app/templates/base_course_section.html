@@ -52,10 +52,14 @@
                 {% include 'partials/messages.html' %}
             {% endif %}
 
+            {% if section_status.completed %}
+                <div class="alert alert-success" role="alert">
+                  Congratulations! You have completed this section.
+                </div>
+            {% endif %}
+
             {% block content %}
             {% endblock content %}
-
-            {% include 'partials/mark_section_completed.html' %}
         </div>
     </div>
 {% endblock container %}
