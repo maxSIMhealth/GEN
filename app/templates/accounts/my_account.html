@@ -33,7 +33,7 @@
                     </div>
                     <form method="post" novalidate>
                         {% csrf_token %}
-                        {% include 'includes/form.html' %}
+                        {% include 'partials/form.html' %}
                         <button type="submit" class="btn btn-success">{% trans "Save changes" %}</button>
                     </form>
                 </div>

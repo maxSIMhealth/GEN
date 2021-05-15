@@ -13,7 +13,7 @@
     <h3 class="card-title">{% trans "Log in" %}</h3>
     <form method="post" novalidate>
       {% csrf_token %}
-      {% include 'includes/form.html' %}
+      {% include 'partials/form.html' %}
       <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
     </form>
     <div class="alert alert-info mt-3 mb-0">
