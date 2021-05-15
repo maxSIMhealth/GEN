@@ -549,6 +549,7 @@ class QuizScore(TimeStampedModel):
     class Meta:
         verbose_name = _("quiz score")
         verbose_name_plural = _("quiz scores")
+        unique_together = ["student", "course", "quiz"]
 
     def __str__(self):
         return "Score for user %s - quiz %s - course %s" % (
