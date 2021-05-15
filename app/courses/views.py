@@ -34,7 +34,7 @@ def course(request, pk):
 
     return render(
         request,
-        "courses/course.html",
+        "sections/section_info.html",
         {
             "course": course_object,
             "section_name": section_name,
