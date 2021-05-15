@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% if not section_status.completed %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">{% trans "Mark as completed" %}</button>
+    </form>
+{% else %}
+    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Section already completed">
+        <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>{% trans "Mark as completed" %}</button>
+    </span>
+{% endif %}
