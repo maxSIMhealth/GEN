@@ -73,7 +73,7 @@ def upload_video(request, pk, section_pk):
 
         return render(
             request,
-            "upload_video.html",
+            "videos/upload_video.html",
             {"form": form, "course": course, "section": section},
         )
     else:
@@ -121,7 +121,7 @@ def publish_video(request, pk, section_pk, video_pk):
         else:
             return render(
                 request,
-                "publish_video_confirmation.html",
+                "videos/publish_video_confirmation.html",
                 {"course": course, "section": section, "video": video},
             )
     else:
@@ -161,7 +161,7 @@ def unpublish_video(request, pk, section_pk, video_pk):
         else:
             return render(
                 request,
-                "unpublish_video_confirmation.html",
+                "videos/unpublish_video_confirmation.html",
                 {"course": course, "section": section, "video": video},
             )
     else:
@@ -192,7 +192,7 @@ def delete_video(request, pk, section_pk, video_pk):
             else:
                 return render(
                     request,
-                    "delete_video_confirmation.html",
+                    "videos/delete_video_confirmation.html",
                     {"course": course, "section": section, "video": video},
                 )
         else:
@@ -218,7 +218,7 @@ def video_player(request, pk, section_pk, video_pk):
     if video.published or user == video.author:
         return render(
             request,
-            "video_player.html",
+            "videos/video_player.html",
             {"course": course, "section": section, "video": video},
         )
     else:

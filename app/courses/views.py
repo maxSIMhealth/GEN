@@ -34,7 +34,7 @@ def course(request, pk):
 
     return render(
         request,
-        "course.html",
+        "courses/course.html",
         {
             "course": course_object,
             "section_name": section_name,
@@ -123,16 +123,16 @@ def section_page(request, pk, section_pk):
             return redirect("course", pk=course_object.pk)
 
     if section_object.section_type == "Q":
-        section_template = "section_quiz.html"
+        section_template = "sections/section_quiz.html"
     elif section_object.section_type == "D":
-        section_template = "section_discussion.html"
+        section_template = "sections/section_discussion.html"
     elif section_object.section_type == "V":
         if is_instructor:
             # getting all section items (even not published)
             section_items = section_object.section_items
-        section_template = "section_videos.html"
+        section_template = "sections/section_videos.html"
     elif section_object.section_type == "U":
-        section_template = "section_upload.html"
+        section_template = "sections/section_upload.html"
         # getting all section items (even not published) and filtering by user
         section_items = section_object.section_items.filter(author=request.user)
 
@@ -158,7 +158,7 @@ def section_page(request, pk, section_pk):
         allow_submission = all(element for element in allow_submission_list)
 
     elif section_object.section_type == "C":
-        section_template = "section_content.html"
+        section_template = "sections/section_content.html"
 
     return render(
         request,

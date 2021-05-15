@@ -77,7 +77,7 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
 
             return render(
                 request,
-                "comments.html",
+                "discussions/comments.html",
                 {
                     "discussion": discussion,
                     "course": course,
@@ -146,7 +146,7 @@ def new_discussion(request, pk, section_pk):
 
     return render(
         request,
-        "new_discussion.html",
+        "discussions/new_discussion.html",
         {"discussion": discussion, "course": course, "section": section, "form": form,},
     )
 

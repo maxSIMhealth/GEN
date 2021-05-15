@@ -66,7 +66,7 @@ def signup(request):
             current_site = get_current_site(request)
             subject = _("Activate Your GEN Account")
             message = render_to_string(
-                "account_activation_email.html",
+                "registration/account_activation_email.html",
                 {
                     "user": user,
                     "domain": current_site.domain,
@@ -86,11 +86,11 @@ def signup(request):
         return redirect("home")
     else:
         form = SignUpForm()
-    return render(request, "signup.html", {"form": form})
+    return render(request, "accounts/signup.html", {"form": form})
 
 
 def account_activation_sent(request):
-    return render(request, "account_activation_sent.html")
+    return render(request, "registration/account_activation_sent.html")
 
 
 def activate(request, uidb64, token):
@@ -165,7 +165,7 @@ class UserUpdateView(UpdateView):
         "first_name",
         "last_name",
     )
-    template_name = "my_account.html"
+    template_name = "accounts/my_account.html"
     success_url = reverse_lazy("home")
 
     def get_object(self):

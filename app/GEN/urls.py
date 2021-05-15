@@ -80,13 +80,13 @@ urlpatterns += i18n_patterns(
     ),
     path(
         "settings/password",
-        auth_views.PasswordChangeView.as_view(template_name="password_change.html"),
+        auth_views.PasswordChangeView.as_view(template_name="accounts/password_change.html"),
         name="password_change",
     ),
     path(
         "settings/password/done/",
         auth_views.PasswordChangeDoneView.as_view(
-            template_name="password_change_done.html"
+            template_name="accounts/password_change_done.html"
         ),
         name="password_change_done",
     ),
