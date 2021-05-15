@@ -4,7 +4,7 @@ from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInl
 
 # from quiz.models import Quiz
 from .forms import SectionAdminForm
-from .models import Course, Section, SectionItem
+from .models import Course, Section, SectionItem, Status
 
 
 class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
@@ -38,6 +38,14 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_filter = ("course",)
     form = SectionAdminForm
 
+class StatusAdmin(admin.ModelAdmin):
+    list_display = (
+        "course",
+        "section",
+        "completed"
+    )
+    # list_filter = ("")
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Section, SectionAdmin)
+admin.site.register(Status, StatusAdmin)

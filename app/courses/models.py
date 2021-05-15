@@ -252,3 +252,24 @@ class SectionItem(TimeStampedModel):
     def __str__(self):
         output = "ID {0} - {1}".format(self.pk, self.name)
         return output
+
+
+class Status(TimeStampedModel):
+    learner = models.ForeignKey(
+        User, on_delete=models.PROTECT, verbose_name=_("learner")
+    )
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, verbose_name=_("course")
+    )
+    section = models.ForeignKey(
+        Section, on_delete=models.PROTECT, verbose_name=_("section")
+    )
+    completed = models.BooleanField(
+        _("section completed successfully"),
+        default=False,
+        help_text=_("Whether the section has been marked as complete or not.")
+    )
+
+    class Meta:
+        verbose_name = _("section status")
+        verbose_name_plural = _("sections status")
