@@ -5,37 +5,32 @@ services:
     container_name: gen
     build:
       context: .
-      args:
-        - USER_ID=1000
-        - GROUP_ID=1000
     restart: "on-failure" 
-    env_file: ./config/env-dev
+    env_file: ./config/env-dev-local
     volumes:
       - ./app:/gen/app:rw
       - ./static:/gen/static
       - ./media:/gen/media
-    networks:
-      - nginx_network
     command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
-    expose:
-      - 8000
-
-  nginx:
-    container_name: gen_nginx
-    image: nginx:1.19-alpine
-    restart: "on-failure"  
     ports:
-      - 80:80
-    volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-      - ./static:/gen/static
-      - ./media:/gen/media
-    depends_on:
-      - gen
-    networks:
-      - nginx_network
+      - 8000:8000
+
+#  nginx:
+#    container_name: gen_nginx
+#    image: nginx:1.19-alpine
+#    restart: "on-failure"
+#    ports:
+#      - 80:80
+#    volumes:
+#      - ./config/nginx:/etc/nginx/conf.d
+#      - ./static:/gen/static
+#      - ./media:/gen/media
+#    depends_on:
+#      - gen
+#    networks:
+#      - nginx_network
 
 
-networks:
-  nginx_network:
-    driver: bridge
+#networks:
+#  nginx_network:
+#    driver: bridge

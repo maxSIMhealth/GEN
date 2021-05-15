@@ -1,5 +1,5 @@
 # Official python image
-FROM python:3.8.10-alpine3.13
+FROM python:3.8.10-alpine3.13 AS builder
 
 # Labels
 LABEL maintainer="andrei.torres@ontariotechu.net"
@@ -22,7 +22,7 @@ COPY app/requirements.txt $GEN_HOME/app/requirements.txt
 ## Install packages, create virtualenv, and install dependencies
 RUN set -ex \
     && apk add --no-cache ffmpeg libmagic gettext \
-    && apk add --no-cache --virtual .build-deps python3-dev  postgresql-dev gcc make libc-dev zlib-dev jpeg-dev \
+    && apk add --no-cache --virtual .build-deps python3-dev postgresql-dev gcc make libc-dev zlib-dev jpeg-dev \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip \
     && /env/bin/pip install --no-cache-dir -r $GEN_HOME/app/requirements.txt \
@@ -37,6 +37,17 @@ RUN set -ex \
 # Copy project
 ADD app $GEN_HOME/app
 
+FROM python:3.8.10-alpine3.13
+
+RUN set -ex \
+    && apk add --no-cache ffmpeg libmagic gettext libpq
+
+ENV GEN_HOME=/gen
+
+COPY --from=builder ${GEN_HOME} ${GEN_HOME}
+
+COPY --from=builder /env /env
+
 # Change to the directory containing manage.py for running Django commands
 WORKDIR $GEN_HOME/app
 
@@ -48,7 +59,7 @@ ENV PATH /env/bin:$PATH
 # VOLUME [ "/gen/static", "/gen/media" ]
 
 # Compile language files
-RUN python manage.py compilemessages
+#RUN python manage.py compilemessages
 
 # Set communication port
 EXPOSE 8000
