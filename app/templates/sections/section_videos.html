@@ -8,116 +8,118 @@
 {% load quiz_details_get %}
 
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
 
 {% block content %}
-  {% with course_instructor=user|is_instructor:course %}
+    {% with course_instructor=user|is_instructor:course %}
 
-  {% if section.start_date or section.end_data %}
-  <ul class="list-group mb-3">
-    {% if section.start_date %}
-    <li class="list-group-item"><b>{% trans "Start" %}: </b>{{section.start_date|naturaltime}} <small>({{ section.start_date}} UTC)</small></li>
-    {% endif %}
-    {% if section.end_date %}
-    <li class="list-group-item"><b>{% trans "End" %}: </b>{{section.end_date|naturaltime}} <small>({{ section.end_date}} UTC)</small></li>
-    {% endif %}
-  </ul>
-  {% endif %}
+        {% if section.start_date or section.end_data %}
+            <ul class="list-group mb-3">
+                {% if section.start_date %}
+                    <li class="list-group-item"><b>{% trans "Start" %}: </b>{{section.start_date|naturaltime}} <small>({{ section.start_date}} UTC)</small></li>
+                {% endif %}
+                {% if section.end_date %}
+                    <li class="list-group-item"><b>{% trans "End" %}: </b>{{section.end_date|naturaltime}} <small>({{ section.end_date}} UTC)</small></li>
+                {% endif %}
+            </ul>
+        {% endif %}
 
-  {% comment %}
-  {% if course_instructor %}
-  <div class="mb-3">
-    <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-warning">{% trans "Submit new video" %}</a>
-  </div>
-  {% endif %}
-  {% endcomment %}
-
-  {% if section.description %}
-  <p class="text-break">{{section.description|safe|linebreaksbr}}</p>
-  {% endif %}
-
-  <div class="card mb-3 section-video">
-    <h5 class="card-header bg-light d-flex">
-      <span class="pt-1 mr-auto">{% trans "Videos" %}</span>
-      {% if course_instructor %}
-        <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
-          <span class="btn-label"><i class="fas fa-file-upload"></i></span>
-          {% trans "Submit new video" %}
-        </a>
-      {% endif %}
-    </h5>
-    <ul class="list-group list-group-flush">
-      {% if section_items.all %}
-        {% for item in section_items.all %}
-          <li class="list-group-item">
-            <div class="d-flex">
-              {% if section.show_thumbnails %}
-                <div class="flex-shrink-1 pr-3">
-                  {% if item.videofile.thumbnail %}
-                  <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}" class="video-thumbnail"></a>
-                  {% else %}
-                  <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{% static 'img/thumbnail_missing.png' %}" class="thumbnail" alt="{% trans 'Video thumbnail missing.' %}" class="video-thumbnail"></a>
-                  {% endif %}
+        {% comment %}
+            {% if course_instructor %}
+                <div class="mb-3">
+                    <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-warning">{% trans "Submit new video" %}</a>
                 </div>
-              {% endif %}
-              <div class="w-100">
+            {% endif %}
+        {% endcomment %}
 
-                <h5 class="mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+        {% if section.description %}
+            <p class="text-break">{{section.description|safe|linebreaksbr}}</p>
+        {% endif %}
 
-                {% if item.videofile.description %}
-                <p>{{ item.videofile.description|linebreaksbr }}</p>
-                {% endif %}
-
-                {% if item.videofile.quizzes.all and item.videofile.show_related_content %}
-                <h6><em>{% trans "Quizzes:" %}</em></h6>
-                <ul class="related-quizzes pb-2">
-                  {% for quiz in item.videofile.quizzes.all  %}
-                    {% if quiz.published %}
-                      {% quiz_details_get user quiz as quiz_details %}
-                      <li>
-                        {% if quiz_details.enabled %}
-                          <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz.name }}</a>
-                        {% else %}
-                          {% if quiz.requirement %}
-                            <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Requirement must be met first:' %} <u>{% trans quiz.requirement.name %}</u>">{{ quiz.name }}</span>
-                          {% else %}
-                            <span class="text-muted">{{ quiz.name }}</span>
-                          {% endif %}
-                        {% endif %}
-
-                        {% if quiz_details.score.exists %}
-                          <span class="badge badge-success badge-pill">{% trans "Submitted" %}</span>
-                        {% else %}
-                          <span class="badge badge-warning badge-pill">{% trans "To do" %}</span>
-                        {% endif %}
-                      </li>
-                    {% endif %}
-                  {% endfor %}
-                </ul>
-                {% endif %}
-
+        <div class="card mb-3 section-video">
+            <h5 class="card-header bg-light d-flex">
+                <span class="pt-1 mr-auto">{% trans "Videos" %}</span>
                 {% if course_instructor %}
-                <div>
-                  {% if not item.published %}
-                    <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Make this video visible by the course learners' %}">{% trans "Publish" %}</a>
-                  {% else %}
-                    <a href="{% url 'unpublish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-warning" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Hide video from the course learners' %}">{% trans "Unpublish" %}</a>
-                  {% endif %}
-                  <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">{% trans "Delete" %}</a>
-                </div>
+                    <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
+                        <span class="btn-label"><i class="fas fa-file-upload"></i></span>
+                        {% trans "Submit new video" %}
+                    </a>
                 {% endif %}
+            </h5>
+            <ul class="list-group list-group-flush">
+                {% if section_items.all %}
+                    {% for item in section_items.all %}
+                        <li class="list-group-item">
+                            <div class="d-flex">
+                                {% if section.show_thumbnails %}
+                                    <div class="flex-shrink-1 pr-3">
+                                        {% if item.videofile.thumbnail %}
+                                            <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}" class="video-thumbnail"></a>
+                                        {% else %}
+                                            <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{% static 'img/thumbnail_missing.png' %}" class="thumbnail" alt="{% trans 'Video thumbnail missing.' %}" class="video-thumbnail"></a>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                <div class="w-100">
 
-              </div>
-            </div>
-          </li>
-        {% endfor %}
-      {% else %}
-        <li class="list-group-item">
-          {% trans "No video available." %}
-        </li>
-      {% endif %}
-    </ul>
-  </div>
-  {% endwith %}
+                                    <h5 class="mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></h5>
+
+                                    {% if item.videofile.description %}
+                                        <p>{{ item.videofile.description|linebreaksbr }}</p>
+                                    {% endif %}
+
+                                    {% if item.videofile.quizzes.all and item.videofile.show_related_content %}
+                                        <h6><em>{% trans "Quizzes:" %}</em></h6>
+                                        <ul class="related-quizzes pb-2">
+                                            {% for quiz in item.videofile.quizzes.all  %}
+                                                {% if quiz.published %}
+                                                    {% quiz_details_get user quiz as quiz_details %}
+                                                    <li>
+                                                        {% if quiz_details.enabled %}
+                                                            <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz.name }}</a>
+                                                        {% else %}
+                                                            {% if quiz.requirement %}
+                                                                <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Requirement must be met first:' %} <u>{% trans quiz.requirement.name %}</u>">{{ quiz.name }}</span>
+                                                            {% else %}
+                                                                <span class="text-muted">{{ quiz.name }}</span>
+                                                            {% endif %}
+                                                        {% endif %}
+
+                                                        {% if quiz_details.score.exists %}
+                                                            <span class="badge badge-success badge-pill">{% trans "Submitted" %}</span>
+                                                        {% else %}
+                                                            <span class="badge badge-warning badge-pill">{% trans "To do" %}</span>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+
+                                    {% if course_instructor %}
+                                        <div>
+                                            {% if not item.published %}
+                                                <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-primary" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Make this video visible by the course learners' %}">{% trans "Publish" %}</a>
+                                            {% else %}
+                                                <a href="{% url 'unpublish_video' course.pk section.pk item.videofile.pk %}" class="btn btn-warning" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Hide video from the course learners' %}">{% trans "Unpublish" %}</a>
+                                            {% endif %}
+                                            <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}" class="btn btn-danger">{% trans "Delete" %}</a>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item">
+                        {% trans "No video available." %}
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endwith %}
+
+    {% include 'partials/mark_section_completed.html' %}
 {% endblock content %}
