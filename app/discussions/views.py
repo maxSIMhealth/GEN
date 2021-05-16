@@ -16,7 +16,7 @@ from GEN.support_methods import enrollment_test
 from courses.models import Course, Section
 from .forms import NewCommentForm, NewDiscussionForm
 from .models import Comment, Discussion
-from .support_methods import discussion_enable_check
+from .support_methods import discussion_enable_check, has_participated
 
 # @login_required
 # def list_pdfs(request, pk):
@@ -71,6 +71,9 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
                     my_kwargs = dict(
                         pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk
                     )
+
+                    update_discussion_section_status(request, section)
+
                     return redirect("discussion_comments", **my_kwargs)
             else:
                 form = NewCommentForm()
@@ -95,6 +98,19 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
     else:
         messages.error(request, _("Discussion board does not exist."))
         return redirect("section", pk=course.pk, section_pk=section.pk)
+
+
+def update_discussion_section_status(request, section):
+    section_status = section.status_set.filter(learner=request.user).get()
+    if not section_status.completed:
+        section_discussions = Discussion.objects.filter(section=section)
+        section_discussions_participated = []
+        for discussion in section_discussions:
+            section_discussions_participated.append(has_participated(request.user, discussion))
+        if all(section_discussions_participated):
+            # section_status = section.status_set.filter(learner=request.user).get()
+            section_status.completed = True
+            section_status.save()
 
 
 @login_required
