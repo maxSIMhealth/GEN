@@ -33,9 +33,10 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_display = (
         "name",
         "course",
+        "published"
     )
     inlines = (SectionItemInline,)
-    list_filter = ("course",)
+    list_filter = ("course","published")
     form = SectionAdminForm
 
 class StatusAdmin(admin.ModelAdmin):
