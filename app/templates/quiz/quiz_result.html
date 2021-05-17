@@ -45,6 +45,14 @@
                     </strong>
                 </p>
 
+                {% if section.pre_assessment %}
+                    {% if user_quiz_score.completed %}
+                        {% trans "Congratulations! You have passed the pre-assessment test and can now skip the other sections. Your certificate of completion is now available in the Info section." %}
+                    {% else %}
+                        {% trans "Unfortunately you did not reach the mininum score. But don't worry, just continue your journey to the next section." %}
+                    {% endif %}
+                {% endif %}
+
             {% endif %}
         </div>
     </div>

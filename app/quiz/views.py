@@ -12,7 +12,7 @@ from GEN.support_methods import enrollment_test
 # import xlsxwriter
 
 from courses.models import Course, Section
-from courses.support_methods import section_mark_completed
+from courses.support_methods import section_mark_completed, course_mark_completed
 from .models import (
     Likert,
     LikertAnswer,
@@ -229,10 +229,9 @@ def quiz_evaluate_completion(request, section):
     # get all section quiz scores
     # check if all are marked as completed
     # if yes, mark section as completed
-
     section_quizzes = section.section_items.all()
+    # completed = passed assessment (if assessment method is enabled)
     section_quizzes_completed = []
-    section_completed = False
 
     for quiz in section_quizzes:
         try:
@@ -245,7 +244,18 @@ def quiz_evaluate_completion(request, section):
             section_quizzes_completed.append(False)
 
     if all(section_quizzes_completed):
-        section_mark_completed(request, section)
+        # if the quiz section is a pre-assessment section, and the learner succeeds in the quizzes, mark the
+        # whole course (all sections) as completed - it basically allows the learner to skip the course content
+        if section.pre_assessment:
+            course_mark_completed(request, section.course)
+        else:
+            section_mark_completed(request, section)
+    else:
+        if section.pre_assessment:
+            # for pre-assessment, the section should be marked completed even if the learner 'fails' the quiz
+            section_mark_completed(request, section)
+
+
 
 @login_required
 @course_enrollment_check(enrollment_test)

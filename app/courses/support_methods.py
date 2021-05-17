@@ -62,3 +62,9 @@ def section_mark_completed(request, section):
             request,
             _("This section is already marked as completed.")
         )
+
+def course_mark_completed(request, course):
+    sections_statuses = Status.objects.filter(learner=request.user, course=course)
+    for status in sections_statuses:
+        status.completed = True
+        status.save()

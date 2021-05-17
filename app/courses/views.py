@@ -25,6 +25,15 @@ def course(request, pk):
     # TODO: improve this: I've hard-corded this section name because info isn't a dynamic section item
     section_name = "Info"
 
+    # create status object for sections, if they don't exist
+    # TODO: this should only be done on first access
+    for section in sections:
+        Status.objects.get_or_create(
+            learner=request.user,
+            course=course_object,
+            section=section
+        )
+
     # progress status
     discussions_progress = progress(request.user, discussions)
     quizzes_progress = progress(request.user, quizzes)
