@@ -83,6 +83,8 @@ def question_multiplechoice_check(attempt, question, submitted_data):
     if user_answers:
         if question.multiple_correct_answers:
 
+            multiplechoice_answers_correct = []
+
             # checking each question answer item
             for answer in question.answers.all():
                 # reset attempt object
@@ -96,12 +98,15 @@ def question_multiplechoice_check(attempt, question, submitted_data):
                 # check if the answer was marked correctly
                 flag = answer.check == answer_checked
 
-                if flag is True:
-                    score += question.value
+                # TODO: implement partial score for each correct item
 
                 attempt.answer_content = answer_checked
                 attempt.correct = flag
                 attempt.save()
+
+                multiplechoice_answers_correct.append(flag)
+
+            if all(multiplechoice_answers_correct): score += question.value
 
         else:
             # checking user submitted answer
@@ -347,6 +352,8 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         questions_attempt = QuestionAttempt.objects.filter(
             quiz=quiz, student=request.user, attempt_number=latest_attempt_number
         )
+        # merging multiple choice attempts of a same question
+        questions_attempt_distinct = questions_attempt.distinct("question")
     except QuestionAttempt.DoesNotExist:
         questions_attempt = []
 
@@ -374,7 +381,7 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "course": course,
             "section": section,
             "quiz": quiz,
-            "attempts": questions_attempt,
+            "attempts": questions_attempt_distinct,
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,
             "attempt_openended": attempt_openended,
