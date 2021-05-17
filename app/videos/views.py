@@ -119,7 +119,7 @@ def publish_video(request, pk, section_pk, video_pk):
                 video.save()
 
                 # set section Status object as completed
-                section_status = section.status_set.filter(learner=user).get()
+                section_status = section.status.filter(learner=user).get()
                 section_status.completed = True
                 section_status.save()
 

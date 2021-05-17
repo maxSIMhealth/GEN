@@ -101,14 +101,14 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
 
 
 def update_discussion_section_status(request, section):
-    section_status = section.status_set.filter(learner=request.user).get()
+    section_status = section.status.filter(learner=request.user).get()
     if not section_status.completed:
         section_discussions = Discussion.objects.filter(section=section)
         section_discussions_participated = []
         for discussion in section_discussions:
             section_discussions_participated.append(has_participated(request.user, discussion))
         if all(section_discussions_participated):
-            # section_status = section.status_set.filter(learner=request.user).get()
+            # section_status = section.status.filter(learner=request.user).get()
             section_status.completed = True
             section_status.save()
 

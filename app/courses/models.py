@@ -31,10 +31,17 @@ class Course(models.Model):
     start_date = models.DateTimeField(_("start date"), blank=True, null=True)
     end_date = models.DateTimeField(_("end date"), blank=True, null=True)
     members = models.ManyToManyField(
-        User, related_name="member", verbose_name=_("members"), help_text=_("List of all users that should have access to the course (including instructors).")
+        User,
+        related_name="member",
+        verbose_name=_("members"),
+        help_text=_("List of all users that should have access to the course (including instructors).")
     )
     learners = models.ManyToManyField(
-        User, related_name="learners", verbose_name=_("learners"), help_text=_("List of learners (students)."), blank=True,
+        User,
+        related_name="learners",
+        verbose_name=_("learners"),
+        help_text=_("List of learners (students)."),
+        blank=True,
     )
     learners_max_number = models.IntegerField(
         _("learners max number"),
@@ -43,7 +50,10 @@ class Course(models.Model):
         help_text=_("maximum number of learners"),
     )
     instructors = models.ManyToManyField(
-        User, related_name="instructor", verbose_name=_("instructors"), help_text=_("List of instructors. These users will be able to edit the course's content and structure.")
+        User,
+        related_name="instructor",
+        verbose_name=_("instructors"),
+        help_text=_("List of instructors. These users will be able to edit the course's content and structure.")
     )
     blind_data = models.BooleanField(
         _("blind data"),
@@ -137,11 +147,19 @@ class Section(models.Model):
         verbose_name=_("requirement"),
     )
     published = models.BooleanField(_("published"), default=False)
+    pre_assessment = models.BooleanField(
+        _("pre-assessment"),
+        default=False,
+        help_text=_(
+            "* FOR QUIZ SECTION ONLY *: Is this section a pre-assessment to evaluate if the learner needs to go "
+            "through the course/module?")
+    )
     create_discussions = models.BooleanField(
         _("create discussion"),
         default=False,
         help_text=_(
-            "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based on participant's video submissions."
+            "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based on participant's video "
+            "submissions. "
         ),
     )
     section_output = models.ForeignKey(
@@ -157,7 +175,7 @@ class Section(models.Model):
     )
     show_thumbnails = models.BooleanField(
         _("show thumbnails"),
-        default=True,
+        default=False,
         help_text=_(
             "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
         ),
@@ -194,6 +212,16 @@ class Section(models.Model):
                 _(
                     "You can not select a section output if 'create discussions' is not enabled."
                 )
+            )
+        # check parameters related to Video and Upload Sections
+        if self.show_thumbnails and not (self.section_type == 'V' or self.section_type == 'U'):
+            raise ValidationError(
+                _("To enable 'show thumbnails', the section type must be Video or Upload")
+            )
+        # check parameters related to Quiz Section
+        if self.pre_assessment and not self.section_type == "Q":
+            raise ValidationError(
+                _("To enable 'pre assessment', the section type must be Quiz.")
             )
 
     def __str__(self):
@@ -256,13 +284,20 @@ class SectionItem(TimeStampedModel):
 
 class Status(TimeStampedModel):
     learner = models.ForeignKey(
-        User, on_delete=models.PROTECT, verbose_name=_("learner")
+        User,
+        on_delete=models.PROTECT,
+        verbose_name=_("learner")
     )
     course = models.ForeignKey(
-        Course, on_delete=models.PROTECT, verbose_name=_("course")
+        Course,
+        on_delete=models.PROTECT,
+        verbose_name=_("course")
     )
     section = models.ForeignKey(
-        Section, on_delete=models.PROTECT, verbose_name=_("section")
+        Section,
+        on_delete=models.PROTECT,
+        related_name="status",
+        verbose_name=_("section")
     )
     completed = models.BooleanField(
         _("section completed successfully"),

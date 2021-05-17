@@ -20,7 +20,7 @@ def requirement_fulfilled(user, section):
     else:
         # check if requirement has a related Status object for the user
         try:
-            requirement_status = requirement.status_set.filter(learner=user).get()
+            requirement_status = requirement.status.filter(learner=user).get()
         except Status.DoesNotExist:
             requirement_status = None
 

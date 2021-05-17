@@ -10,7 +10,7 @@ def progress(user, items):
             if item.quizscore_set.filter(student=user).exists():
                 items_participation += 1
         if item._meta.model_name == "section":
-            if item.status_set.filter(learner=user,completed=True).exists():
+            if item.status.filter(learner=user,completed=True).exists():
                 items_participation += 1
 
     items_progress = {"max": items_total, "current": items_participation}
