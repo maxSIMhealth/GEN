@@ -175,6 +175,12 @@ urlpatterns += i18n_patterns(
         discussion_views.clearvote_comment,
         name="comment_clearvote",
     ),
+    # certificate
+    path(
+        "courses/<int:pk>/certificate",
+        course_views.generate_certificate,
+        name="course_certificate"
+    ),
     path("i18n/", include("django.conf.urls.i18n")),
     prefix_default_language=False
     # admin

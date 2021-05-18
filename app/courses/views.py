@@ -1,10 +1,21 @@
+import io
+import textwrap
+
+# from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm
+
 
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
@@ -39,11 +50,14 @@ def course(request, pk):
     quizzes_progress = progress(request.user, quizzes)
     sections_progress = progress(request.user, sections)
 
+    course_completed = True if sections_progress['current'] == sections_progress['max'] else False
+
     return render(
         request,
         "sections/section_info.html",
         {
             "course": course_object,
+            "course_completed": course_completed,
             "section_name": section_name,
             "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
@@ -195,3 +209,64 @@ def section_page(request, pk, section_pk):
             "allow_submission": allow_submission,
         },
     )
+
+@login_required
+@course_enrollment_check(enrollment_test)
+def generate_certificate(request, pk):
+    course_object = get_object_or_404(Course, pk=pk)
+    user = request.user
+    sections_statuses = Status.objects.filter(learner=user, course=course_object)
+    filename = f'GEN - {course_object.code} - {request.user.first_name} {request.user.last_name}.pdf'
+    date = timezone.localtime().isoformat()
+
+    sections_completed = []
+    for item in sections_statuses:
+        sections_completed.append(item.completed)
+
+    if all(sections_completed):
+        # Create a file-like buffer to receive PDF data.
+        buffer = io.BytesIO()
+
+        # Create the PDF object, using the buffer as its "file."
+        certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
+        certificate.setTitle('Certificate of Conclusion')
+
+        # Header
+        certificate.setFont('Helvetica', 48, leading=None)
+        certificate.drawCentredString(415, 500, 'Certificate of Conclusion')
+        certificate.setFont('Helvetica', 24, leading=None)
+        certificate.drawCentredString(415, 400, 'This certificate is presented to')
+
+        # Learner info
+        certificate.setFont('Helvetica-Bold', 36, leading=None)
+        certificate.drawCentredString(415, 350, f'{user.first_name} {user.last_name}')
+
+        # Course info
+        certificate.setFont('Helvetica', 24, leading=None)
+        certificate.drawCentredString(415, 300, 'for completing the following course/module')
+        certificate.setFont('Helvetica', 20, leading=None)
+
+        course_name = textwrap.wrap(course_object.name, width=70)
+        course_name_position = 250
+        for line in course_name:
+            certificate.drawCentredString(415, course_name_position, line)
+            course_name_position = course_name_position - 30
+
+        # Footer
+        certificate.setFont('Helvetica', 12, leading=None)
+        certificate.drawCentredString(415, 50, f'Generated on: {date}')
+
+        # Close the PDF object cleanly, and we're done.
+        certificate.showPage()
+        certificate.save()
+
+        # FileResponse sets the Content-Disposition header so that browsers
+        # present the option to save the file.
+        buffer.seek(0)
+        return FileResponse(buffer, as_attachment=True, filename=filename)
+    else:
+        messages.warning(
+            request,
+            _("You have not completed this course yet.")
+        )
+        return redirect("course", pk=course_object.pk)
