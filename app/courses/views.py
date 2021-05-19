@@ -8,20 +8,15 @@ from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.pdfgen import canvas
+
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
-from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Paragraph
-from reportlab.lib.pagesizes import letter, landscape
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import cm
-
-
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
 from .models import Course, Section, SectionItem, Status
 from .progress import progress
-
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
 
@@ -33,7 +28,7 @@ def course(request, pk):
     sections = course_object.sections.filter(published=True)
     discussions = course_object.discussions.all()
     quizzes = course_object.quizzes.all()
-    # TODO: improve this: I've hard-corded this section name because info isn't a dynamic section item
+    # TODO: improve this: I've hardcoded this section name because info isn't a dynamic section item
     section_name = "Info"
 
     # create status object for sections, if they don't exist
@@ -210,6 +205,7 @@ def section_page(request, pk, section_pk):
             "allow_submission": allow_submission,
         },
     )
+
 
 @login_required
 @course_enrollment_check(enrollment_test)

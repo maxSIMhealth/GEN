@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 # Media storage object to be able to obtain media full url
 media_storage = get_storage_class()()
 
+
 def user_directory_path(instance, filename):
     ext = filename.split(".")[-1]
     random_filename = str(uuid.uuid4().hex)
@@ -140,7 +141,6 @@ class VideoFile(SectionItem):
         ffmpeg_tempfile = tempfile.NamedTemporaryFile()
         # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
         size = (128, 128)
-
 
         if django_settings.USE_S3:
             # get video full S3 url path

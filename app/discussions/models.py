@@ -14,11 +14,10 @@ def user_directory_path(instance, filename):
 
 
 class Discussion(VoteModel, SectionItem):
-    related_name = "discussions"
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,
-        related_name=related_name,
+        related_name="discussions",
         verbose_name=_("course"),
     )
     last_updated = models.DateTimeField(_("last updated"), auto_now_add=True)
@@ -35,7 +34,7 @@ class Discussion(VoteModel, SectionItem):
     video = models.ForeignKey(
         VideoFile,
         on_delete=models.CASCADE,
-        related_name=related_name,
+        related_name="discussions",
         blank=True,
         null=True,
         verbose_name=_("video"),

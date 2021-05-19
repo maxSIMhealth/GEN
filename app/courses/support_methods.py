@@ -1,9 +1,8 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from discussions.support_methods import has_participated
-from quiz.support_methods import quiz_score_get
 
 from .models import Status
+
 
 def requirement_fulfilled(user, section):
     """
@@ -12,7 +11,7 @@ def requirement_fulfilled(user, section):
     requirement = section.requirement
 
     fulfilled = False
-    items_completed = []
+
     # check if user is a course instructor or system staff
     is_instructor = bool(section.course in user.instructor.all())
     if is_instructor or user.is_staff:

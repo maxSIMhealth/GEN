@@ -21,10 +21,12 @@ def reset(request):
 
     return redirect("home")
 
+
 def check_is_instructor(course_object, user):
     is_instructor = bool(course_object in user.instructor.all())
 
     return is_instructor
+
 
 def course_sections_list(course_object, user):
     # check if user is a course instructor

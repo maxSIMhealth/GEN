@@ -104,8 +104,9 @@ class Quiz(SectionItem):
         super(Quiz, self).save(*args, **kwargs)
 
     def clean(self):
+        errors = []
+
         if self.section and self.section.pre_assessment:
-            errors = []
             if self.allow_multiple_attempts:
                 errors.append(
                     ValidationError(
@@ -118,16 +119,24 @@ class Quiz(SectionItem):
                         _("Having an assessment method defined is required for quizzes in a 'pre assessment' section."))
                 )
 
-            if len(errors) > 0:
-                raise ValidationError(errors)
+        if self.section and self.section.final_assessment:
+            if self.assessment_method is None:
+                errors.append(
+                    ValidationError(
+                        _("Having an assessment method defined is required for quizzes in a 'final assessment' section."))
+                )
 
-        return super().clean()
+        if len(errors) > 0:
+            raise ValidationError(errors)
+        else:
+            return super().clean()
 
     def update_max_score(self):
         if self.questions.exists():
             # update max score based on questions
-            max_score = self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
-                'value__sum']
+            max_score = \
+                self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+                    'value__sum']
             self.max_score = max_score
         else:
             self.max_score = 0
@@ -256,7 +265,6 @@ class Likert(Question):
         return LikertAnswer.objects.filter(question=self)
 
     def check_if_correct(self, likert, guess):
-        is_correct = False
         if likert.answer_range.upper:
             # incrementing max value by 1 because the upper bound is always excluded from the range
             correct_range = range(

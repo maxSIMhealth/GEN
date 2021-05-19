@@ -2,15 +2,12 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max, Sum
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
+
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
-
-# import xlsxwriter
-
 from courses.models import Course, Section
 from courses.support_methods import section_mark_completed, course_mark_completed
 from .models import (
@@ -20,12 +17,11 @@ from .models import (
     MCQuestion,
     QuestionAttempt,
     Quiz,
-    QuizScore,
-    QUESTION_TYPES,
-    MIN_PERCENTAGE,
-    MAX_NUM_MISTAKES
+    QuizScore
 )
 from .support_methods import quiz_enable_check
+
+# import xlsxwriter
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -129,7 +125,6 @@ def question_multiplechoice_check(attempt, question, submitted_data):
 
 
 def question_check(attempt, question, submitted_data):
-
     if question.question_type == "L":
         score = question_likert_check(attempt, question, submitted_data)
 
@@ -240,7 +235,7 @@ def quiz_evaluate_completion(request, section):
 
     for quiz in section_quizzes:
         try:
-            quizscore = QuizScore.objects.get(quiz=quiz,student=request.user)
+            quizscore = QuizScore.objects.get(quiz=quiz, student=request.user)
         except:
             quizscore = None
         if quizscore:
@@ -251,7 +246,8 @@ def quiz_evaluate_completion(request, section):
     if all(section_quizzes_completed):
         # if the quiz section is a pre-assessment section, and the learner succeeds in the quizzes, mark the
         # whole course (all sections) as completed - it basically allows the learner to skip the course content
-        if section.pre_assessment:
+        # while a final assessment (in theory) is the last section of the course
+        if section.pre_assessment or section.final_assessment:
             course_mark_completed(request, section.course)
         else:
             section_mark_completed(request, section)
@@ -259,7 +255,6 @@ def quiz_evaluate_completion(request, section):
         if section.pre_assessment:
             # for pre-assessment, the section should be marked completed even if the learner 'fails' the quiz
             section_mark_completed(request, section)
-
 
 
 @login_required
@@ -343,8 +338,8 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     # get latest attempt number
     latest_attempt_number = (
         QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
-        .latest("attempt_number")
-        .attempt_number
+                       .latest("attempt_number")
+                       .attempt_number
     )
 
     # get questions and answers from the latest attempt
@@ -355,6 +350,7 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         # merging multiple choice attempts of a same question
         questions_attempt_distinct = questions_attempt.distinct("question")
     except QuestionAttempt.DoesNotExist:
+        questions_attempt_distinct = None
         questions_attempt = []
 
     # split attempts into different categories
@@ -388,7 +384,6 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "user_quiz_score": student_quiz_score,
         },
     )
-
 
 # FIXME: code below is WIP
 # @login_required

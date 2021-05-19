@@ -109,7 +109,6 @@ class Section(models.Model):
         ("C", _("Content")),
     ]
 
-    related_name = "sections"
     name = models.CharField(
         _("name"),
         max_length=20,
@@ -130,7 +129,7 @@ class Section(models.Model):
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
-        related_name=related_name,
+        related_name="sections",
         verbose_name=_("course"),
     )
     section_type = models.CharField(
@@ -143,7 +142,7 @@ class Section(models.Model):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
-        related_name=related_name,
+        related_name="sections",
         verbose_name=_("requirement"),
     )
     published = models.BooleanField(_("published"), default=False)
@@ -271,7 +270,6 @@ class Section(models.Model):
 
 class SectionItem(TimeStampedModel):
     name = models.CharField(_("name"), max_length=80, unique=False)
-    related_name = "section_items"
     description = models.TextField(
         _("description"),
         max_length=400,
@@ -282,7 +280,7 @@ class SectionItem(TimeStampedModel):
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        related_name=related_name,
+        related_name="section_items",
         verbose_name=_("author"),
     )
     start_date = models.DateTimeField(_("start date"), blank=True, null=True)
@@ -292,7 +290,7 @@ class SectionItem(TimeStampedModel):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
-        related_name=related_name,
+        related_name="section_items",
         verbose_name=_("section"),
     )
     published = models.BooleanField(_("published"), default=False)
@@ -321,11 +319,13 @@ class Status(TimeStampedModel):
     learner = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
+        related_name="status",
         verbose_name=_("learner")
     )
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,
+        related_name="status",
         verbose_name=_("course")
     )
     section = models.ForeignKey(
