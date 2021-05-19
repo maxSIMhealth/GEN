@@ -313,8 +313,8 @@ class Status(TimeStampedModel):
         unique_together = ["learner", "course", "section"]
 
     def __str__(self):
-        output = f'ID {self.pk} - {self.course}'
+        output = f'ID {self.pk} - Course {self.course}'
         if self.section:
-            output = f'ID {self.pk} - {self.course} - {self.section}'
+            output = output + f' - Section {self.section}'
 
         return output
