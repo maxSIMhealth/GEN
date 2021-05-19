@@ -39,11 +39,12 @@ def course(request, pk):
     # create status object for sections, if they don't exist
     # TODO: this should only be done on first access
     for section in sections:
-        Status.objects.get_or_create(
-            learner=request.user,
-            course=course_object,
-            section=section
-        )
+        if section.published:
+            Status.objects.get_or_create(
+                learner=request.user,
+                course=course_object,
+                section=section
+            )
 
     # progress status
     discussions_progress = progress(request.user, discussions)
