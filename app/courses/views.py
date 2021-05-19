@@ -31,7 +31,7 @@ def course(request, pk):
     # TODO: improve this: I've hardcoded this section name because info isn't a dynamic section item
     section_name = "Info"
 
-    # create status object for sections, if they don't exist
+    # create status object for course and sections, if they don't exist
     # TODO: this should only be done on first access
     for section in sections:
         if section.published:
@@ -40,6 +40,11 @@ def course(request, pk):
                 course=course_object,
                 section=section
             )
+    course_object.status.get_or_create(
+        learner=request.user,
+        course=course_object,
+        section=None
+    )
 
     # progress status
     discussions_progress = progress(request.user, discussions)

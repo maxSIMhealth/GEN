@@ -52,6 +52,17 @@ def requirement_fulfilled(user, section):
 
 
 def section_mark_completed(request, section):
+    """
+    Marks specified section status object as completed.
+
+    Parameters
+    ----------
+    request
+        object that contains metadata about the current user request
+    section: Section
+        section that will be marked as completed
+    """
+
     section_status = Status.objects.get(learner=request.user, section=section)
     if not section_status.completed:
         section_status.completed = True
@@ -62,8 +73,20 @@ def section_mark_completed(request, section):
             _("This section is already marked as completed.")
         )
 
+
 def course_mark_completed(request, course):
-    sections_statuses = Status.objects.filter(learner=request.user, course=course)
-    for status in sections_statuses:
+    """
+    Marks all status objects (course and sections) related to the user as completed.
+
+    Parameters
+    ----------
+    request
+        object that contains metadata about the current user request
+    course: Course
+        course that contains the status objects
+    """
+
+    statuses = Status.objects.filter(learner=request.user, course=course)
+    for status in statuses:
         status.completed = True
         status.save()
