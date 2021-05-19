@@ -104,7 +104,7 @@ class Quiz(SectionItem):
         super(Quiz, self).save(*args, **kwargs)
 
     def clean(self):
-        if self.section.pre_assessment:
+        if self.section and self.section.pre_assessment:
             errors = []
             if self.allow_multiple_attempts:
                 errors.append(
@@ -120,6 +120,8 @@ class Quiz(SectionItem):
 
             if len(errors) > 0:
                 raise ValidationError(errors)
+
+        return super().clean()
 
     def update_max_score(self):
         if self.questions.exists():
