@@ -154,6 +154,13 @@ class Section(models.Model):
             "* FOR QUIZ SECTION ONLY *: Is this section a pre-assessment to evaluate if the learner needs to go "
             "through the course/module?")
     )
+    final_assessment = models.BooleanField(
+        _("final assessment"),
+        default=False,
+        help_text=_(
+            "* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if the learner successfully "
+            "completed the course/module?")
+    )
     create_discussions = models.BooleanField(
         _("create discussion"),
         default=False,
@@ -185,44 +192,72 @@ class Section(models.Model):
     )
 
     def clean(self):
+        errors = []
+
         # check course dates
         if self.start_date and self.end_date:
             if self.end_date <= self.start_date:
-                raise ValidationError(
-                    _(
-                        "Course end date cannot be equal or \
-                        earlier than the start date."
+                errors.append(
+                    ValidationError(
+                        _(
+                            "Course end date cannot be equal or \
+                            earlier than the start date."
+                        )
                     )
                 )
         # check parameters related to Upload Section
-        if (
-            self.create_discussions or self.section_output
-        ) and not self.section_type == "U":
-            raise ValidationError(
-                _(
-                    "To set 'create discussion' or 'section output', the section type must be Upload."
+        if (self.create_discussions or self.section_output) and not self.section_type == "U":
+            errors.append(
+                ValidationError(
+                    _(
+                        "To set 'create discussion' or 'section output', the section type must be Upload."
+                    )
                 )
             )
-        if self.create_discussions and not self.section_output:
-            raise ValidationError(
-                _("To create a discussion you must select a discussion section output.")
+        if self.create_discussions and not self.section_output and self.section_type == 'U':
+            errors.append(
+                ValidationError(
+                    _("To create a discussion you must select a discussion section output.")
+                )
             )
         if self.section_output and not self.create_discussions:
-            raise ValidationError(
-                _(
-                    "You can not select a section output if 'create discussions' is not enabled."
+            errors.append(
+                ValidationError(
+                    _(
+                        "You can not select a section output if 'create discussions' is not enabled."
+                    )
                 )
             )
         # check parameters related to Video and Upload Sections
         if self.show_thumbnails and not (self.section_type == 'V' or self.section_type == 'U'):
-            raise ValidationError(
-                _("To enable 'show thumbnails', the section type must be Video or Upload")
+            errors.append(
+                    ValidationError(
+                    _("To enable 'show thumbnails', the section type must be Video or Upload")
+                )
             )
         # check parameters related to Quiz Section
-        if self.pre_assessment and not self.section_type == "Q":
-            raise ValidationError(
-                _("To enable 'pre assessment', the section type must be Quiz.")
+        if not self.section_type == 'Q':
+            if self.pre_assessment:
+                errors.append(
+                        ValidationError(
+                        _("To enable 'pre assessment', the section type must be Quiz.")
+                    )
+                )
+            if self.final_assessment:
+                errors.append(
+                    ValidationError(
+                        _("To enable 'final assessment', the section type must be Quiz.")
+                    )
+                )
+        if self.section_type == 'Q' and self.pre_assessment and self.final_assessment:
+            errors.append(
+                ValidationError(_("A quiz section can not be 'pre assessment' and 'final assessment' simultaneously."))
             )
+
+        if len(errors) > 0:
+            raise ValidationError(errors)
+        else:
+            return super().clean()
 
     def __str__(self):
         output = "ID {0} - {1}".format(self.pk, self.name)
