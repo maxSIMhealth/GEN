@@ -47,9 +47,17 @@
 
                 {% if section.pre_assessment %}
                     {% if user_quiz_score.completed %}
-                        {% trans "Congratulations! You have passed the pre-assessment test and can now skip the other sections. Your certificate of completion is now available in the Info section." %}
+                        {% trans "Congratulations! You have passed the pre-assessment and can now skip the other sections. Your certificate of completion is now available in the Info section." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the mininum score. But don't worry, just continue your journey to the next section." %}
+                    {% endif %}
+                {% endif %}
+
+                {% if section.final_assessment %}
+                    {% if user_quiz_score.completed %}
+                        {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Info section." %}
+                    {% else %}
+                        {% trans "Unfortunately you did not reach the mininum score. But don't worry, you can review the content and try again at any time." %}
                     {% endif %}
                 {% endif %}
 
