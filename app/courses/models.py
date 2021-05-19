@@ -295,17 +295,26 @@ class Status(TimeStampedModel):
     )
     section = models.ForeignKey(
         Section,
+        blank=True,
+        null=True,
         on_delete=models.PROTECT,
         related_name="status",
         verbose_name=_("section")
     )
     completed = models.BooleanField(
-        _("section completed successfully"),
+        _("item completed successfully"),
         default=False,
-        help_text=_("Whether the section has been marked as complete or not.")
+        help_text=_("Whether the item has been marked as complete or not.")
     )
 
     class Meta:
-        verbose_name = _("section status")
-        verbose_name_plural = _("sections status")
+        verbose_name = _("status")
+        verbose_name_plural = _("statuses")
         unique_together = ["learner", "course", "section"]
+
+    def __str__(self):
+        output = f'ID {self.pk} - {self.course}'
+        if self.section:
+            output = f'ID {self.pk} - {self.course} - {self.section}'
+
+        return output
