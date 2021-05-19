@@ -12,8 +12,9 @@ def reset(request):
         section_items = user.section_items.all()  # for video items
         quiz_scores = user.quizscore_set.all()
         quiz_attempts_answers = user.questionattempt_set.all()
+        statuses = user.status.all()
 
-        user_objects = [section_items, quiz_scores, quiz_attempts_answers]
+        user_objects = [section_items, quiz_scores, quiz_attempts_answers, statuses]
 
         for element in user_objects:
             for item in element:
