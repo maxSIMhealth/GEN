@@ -2,14 +2,14 @@ import math
 
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import IntegerRangeField
-from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
-from GEN.support_methods import duplicate_item, duplicate_name
 from model_utils.models import TimeStampedModel
 
+from GEN.support_methods import duplicate_item, duplicate_name
 from courses.models import Course, Section, SectionItem
 from videos.models import VideoFile
 
@@ -20,12 +20,10 @@ QUESTION_TYPES = [
     ("M", _("Multiple choice")),
 ]
 
-NONE = "NO"
 MIN_PERCENTAGE = "MP"
 MAX_NUM_MISTAKES = "MN"
 
 ASSESSMENT_METHODS = [
-    (NONE, _("None")),
     (MIN_PERCENTAGE, _("Minimum Percentage")),
     (MAX_NUM_MISTAKES, _("Maximum Number of Mistakes")),
 ]
@@ -47,7 +45,8 @@ class Quiz(SectionItem):
     assessment_method = models.CharField(
         _("assessment method"),
         max_length=2,
-        default=NONE,
+        blank=True,
+        null=True,
         choices=ASSESSMENT_METHODS,
         help_text=_("method for assessing if the quiz has been"),
     )
@@ -103,6 +102,24 @@ class Quiz(SectionItem):
     def save(self, *args, **kwargs):
         self.update_max_score()
         super(Quiz, self).save(*args, **kwargs)
+
+    def clean(self):
+        if self.section.pre_assessment:
+            errors = []
+            if self.allow_multiple_attempts:
+                errors.append(
+                    ValidationError(
+                        _("Enabling multiple attempts is not allowed for quizzes in a 'pre assessment' section."))
+                )
+
+            if self.assessment_method is None:
+                errors.append(
+                    ValidationError(
+                        _("Having an assessment method defined is required for quizzes in a 'pre assessment' section."))
+                )
+
+            if len(errors) > 0:
+                raise ValidationError(errors)
 
     def update_max_score(self):
         if self.questions.exists():
