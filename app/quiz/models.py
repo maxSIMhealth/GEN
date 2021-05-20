@@ -151,6 +151,21 @@ class Quiz(SectionItem):
                         _("Having an assessment method defined is required for quizzes in a 'final assessment' section."))
                 )
 
+        if self.subset:
+            if not self.randomize:
+                errors.append(
+                    ValidationError(
+                        _('Enabling subset requires having "randomize" enabled.')
+                    )
+                )
+            if self.subset_number == 0:
+                errors.append(
+                    ValidationError(
+                        _('Since subset is enabled, subset number must be greater than 0.')
+                    )
+                )
+
+
         if len(errors) > 0:
             raise ValidationError(errors)
         else:
