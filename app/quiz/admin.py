@@ -109,6 +109,16 @@ class QuizAdmin(TabbedTranslationAdmin):
             },
         ),
         (
+            "Questions options",
+            {
+                "fields": (
+                    "randomize",
+                    "subset",
+                    "subset_number"
+                )
+            }
+        ),
+        (
             "Answer submission options",
             {
                 "fields": (

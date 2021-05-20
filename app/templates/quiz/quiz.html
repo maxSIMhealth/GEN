@@ -64,7 +64,7 @@
                             {% endif %}
                             <span><i>{% trans "Please use the navigation buttons in the header above." %}</i></span>
                         </div>
-                        {% for question in quiz.questions.all %}
+                        {% for question in questions %}
                             <div class="quiz-item">
                                 <h6>
                                     <strong>{{ question.content }}</strong>

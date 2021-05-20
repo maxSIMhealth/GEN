@@ -46,7 +46,7 @@
                 </p>
 
                 {% if section.pre_assessment %}
-                    {% if user_quiz_score.completed %}
+                    {% if assessment_status == 'Complete' %}
                         {% trans "Congratulations! You have passed the pre-assessment and can now skip the other sections. Your certificate of completion is now available in the Info section." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the mininum score. But don't worry, just continue your journey to the next section." %}
@@ -54,8 +54,10 @@
                 {% endif %}
 
                 {% if section.final_assessment %}
-                    {% if user_quiz_score.completed %}
+                    {% if assessment_status == 'Complete' %}
                         {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Info section." %}
+                    {% elif assessment_status == 'Incomplete' %}
+                        {% trans "You need to complete the rest of the quizzes of this section to finish this section." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the mininum score. But don't worry, you can review the content and try again at any time." %}
                     {% endif %}
@@ -68,7 +70,7 @@
     <div class="card">
         <div class="card-header bg-light">{% trans "Your submission" %}</div>
         <div class="card-body">
-        {% for question in quiz.questions.all %}
+        {% for question in questions %}
             <div class="card mr-0 mb-3 ml-0">
                 <h6 class="card-header">
                     {% if question.question_type == 'H' or question.question_type == 'O' %}

@@ -65,7 +65,32 @@ class Quiz(SectionItem):
         ),
     )
     require_answers = models.BooleanField(
-        _("require participant to answer all questions"), default=False
+        _("require answers"),
+        default=False,
+        help_text=_(
+            "Require participant to answer all questions"
+        )
+    )
+    randomize = models.BooleanField(
+        _("randomize"),
+        default=False,
+        help_text=_(
+            "Randomize questions order"
+        )
+    )
+    subset = models.BooleanField(
+        _("subset"),
+        default=False,
+        help_text=_(
+            "Enable to use only a subset of the questions of this quiz"
+        )
+    )
+    subset_number = models.PositiveIntegerField(
+        _("subset"),
+        default=0,
+        help_text=_(
+            "Number of questions to use on the subset"
+        )
     )
     course = models.ForeignKey(
         Course,

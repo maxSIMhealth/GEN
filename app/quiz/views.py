@@ -1,4 +1,5 @@
 import logging
+import random
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,7 +18,8 @@ from .models import (
     MCQuestion,
     QuestionAttempt,
     Quiz,
-    QuizScore
+    QuizScore,
+    Question
 )
 from .support_methods import quiz_enable_check
 
@@ -102,7 +104,8 @@ def question_multiplechoice_check(attempt, question, submitted_data):
 
                 multiplechoice_answers_correct.append(flag)
 
-            if all(multiplechoice_answers_correct): score += question.value
+            if all(multiplechoice_answers_correct):
+                score += question.value
 
         else:
             # checking user submitted answer
@@ -144,44 +147,30 @@ def question_check(attempt, question, submitted_data):
     return score
 
 
-def quiz_submission(request, quiz, course, section):
+def quiz_submission(request, quiz, questions, course, section):
     items = list(request.POST)
     # removing csrf token from items list
     items.pop(0)
     score = 0
     num_mistakes = 0
+    user_scoreset = QuizScore.objects.get_or_create(
+        student=request.user,
+        course=course,
+        quiz=quiz
+    )
 
-    # try to get user quiz scoreset, create if it does not exist
-    try:
-        user_scoreset = QuizScore.objects.get(
-            student=request.user,
-            course=course,
-            quiz=quiz
-        )
-    except:
-        user_scoreset = QuizScore(
-            student=request.user,
-            quiz=quiz,
-            course=course,
-            max_score=quiz.max_score,
-        )
-
-    # increase attempt number if prior attempt exists
+    # increase attempt number
     user_scoreset.attempt_number = user_scoreset.attempt_number + 1
 
     # get submitted questions and generate an dictionary list
     # format: {"question_id": "question_values"}
     submitted_data = dict()
     for item in items:
-        try:
-            temp, question_id = item.split("_")
-            submitted_data[question_id] = request.POST.getlist(item)
-
-        except IndexError:
-            question_id = None
+        temp, question_id = item.split("_")
+        submitted_data[question_id] = request.POST.getlist(item)
 
     # check if each question was answered by the participant
-    for question in quiz.questions.all():
+    for question in questions:
         # create new attempt object
         attempt = QuestionAttempt(
             student=request.user,
@@ -202,7 +191,7 @@ def quiz_submission(request, quiz, course, section):
         score += question_score
 
         # increase mistake counter if attempt is incorrect
-        if attempt.correct == False and (question.question_type != 'H' or question.question_type != 'O'):
+        if attempt.correct is False and (question.question_type != 'H' or question.question_type != 'O'):
             num_mistakes = user_scoreset.num_mistakes + 1
 
     # change session variable to indicate that the
@@ -236,7 +225,7 @@ def quiz_evaluate_completion(request, section):
     for quiz in section_quizzes:
         try:
             quizscore = QuizScore.objects.get(quiz=quiz, student=request.user)
-        except:
+        except QuizScore.DoesNotExist:
             quizscore = None
         if quizscore:
             section_quizzes_completed.append(quizscore.completed)
@@ -269,26 +258,21 @@ def quiz_page(request, pk, section_pk, quiz_pk):
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=quiz_pk)
 
-    # set session variable to indicate that the user has
-    # not completed the quiz
-    request.session["quiz_complete"] = False
-
     if quiz.published:
-
         # check if the quiz has a related video and if it has been published
-        if quiz.video:
-            if not quiz.video.published:
-                raise Http404("The video this quiz is related to is not published.")
-            else:
-                pass
+        if quiz.video and not quiz.video.published:
+            raise Http404("The video this quiz is related to is not published.")
+        else:
+            pass
 
         # check if quiz has a requirement and if it should be enabled
         (quiz_enabled, current_attempt_number, attempts_left) = quiz_enable_check(request.user, quiz)
 
         if quiz_enabled:
-
             if request.method == "POST":
-                quiz_submission(request, quiz, course, section)
+                questions_ids = request.session["quiz_questions"]
+                questions = quiz.questions.filter(pk__in=questions_ids)
+                quiz_submission(request, quiz, questions, course, section)
 
                 # if flag:
                 return HttpResponseRedirect(
@@ -296,6 +280,25 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                 )
 
             else:
+                # check if randomization is enabled and use subset number
+                if quiz.randomize:
+                    questions = list(quiz.questions.all())
+                    subset_number = quiz.subset_number if quiz.subset else questions.__len__()
+                    questions = random.sample(questions, subset_number)
+                else:
+                    questions = quiz.questions.all()
+
+                # set session variable to indicate that the user has
+                # not completed the quiz
+                request.session["quiz_complete"] = False
+
+                # set session variable with questions ids (necessary to correctly identify which questions are being
+                # used in case of randomization)
+                questions_ids = []
+                for question in questions:
+                    questions_ids.append(question.pk)
+                request.session["quiz_questions"] = questions_ids
+
                 # if the max number of attempts has been reached, redirect back to quiz list
                 if attempts_left <= 0:
                     messages.error(
@@ -310,7 +313,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
                     return render(
                         request,
                         "quiz/quiz.html",
-                        {"course": course, "section": section, "quiz": quiz},
+                        {"course": course, "section": section, "quiz": quiz, "questions": questions},
                     )
         else:
             messages.error(
@@ -338,8 +341,8 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     # get latest attempt number
     latest_attempt_number = (
         QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
-                       .latest("attempt_number")
-                       .attempt_number
+                               .latest("attempt_number")
+                               .attempt_number
     )
 
     # get questions and answers from the latest attempt
@@ -352,6 +355,8 @@ def quiz_result(request, pk, section_pk, quiz_pk):
     except QuestionAttempt.DoesNotExist:
         questions_attempt_distinct = None
         questions_attempt = []
+
+    questions = Question.objects.filter(quiz=quiz, id__in=questions_attempt.values('question'))
 
     # split attempts into different categories
     attempt_likert = []
@@ -366,6 +371,24 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         elif item.question_type == "O":
             attempt_openended.append(item)
 
+    # check pre and final assessments
+    assessment_status = None
+    if section.pre_assessment or section.final_assessment:
+        # query used to obtain list QuizScores that are part of the current section,
+        # and them get their 'completed' values as a list
+        quiz_count = section.section_items.count()
+        quiz_scores = QuizScore.objects.filter(student=request.user,
+                                               quiz__in=section.section_items.values('pk')).values_list('completed',
+                                                                                                        flat=True)
+
+        if len(quiz_scores) == quiz_count:
+            if all(quiz_scores):
+                assessment_status = 'Complete'
+            else:
+                assessment_status = 'Failed'
+        elif len(quiz_scores) < quiz_count:
+            assessment_status = 'Incomplete'
+
     # reset the session variable
     request.session["quiz_complete"] = False
 
@@ -377,11 +400,13 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "course": course,
             "section": section,
             "quiz": quiz,
+            "questions": questions,
             "attempts": questions_attempt_distinct,
             "attempt_likert": attempt_likert,
             "attempt_mcquestion": attempt_mcquestion,
             "attempt_openended": attempt_openended,
             "user_quiz_score": student_quiz_score,
+            "assessment_status": assessment_status
         },
     )
 
