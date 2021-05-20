@@ -153,7 +153,7 @@ def quiz_submission(request, quiz, questions, course, section):
     items.pop(0)
     score = 0
     num_mistakes = 0
-    user_scoreset = QuizScore.objects.get_or_create(
+    user_scoreset, _ = QuizScore.objects.get_or_create(
         student=request.user,
         course=course,
         quiz=quiz
