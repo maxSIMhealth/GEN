@@ -231,32 +231,33 @@ def generate_certificate(request, pk):
 
         # Create the PDF object, using the buffer as its "file."
         certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
-        certificate.setTitle('Certificate of Conclusion')
+        certificate.setTitle('Certificate')
 
         # Header
-        certificate.setFont('Helvetica', 48, leading=None)
+        certificate.setFont('Helvetica', 40, leading=None)
         certificate.drawCentredString(415, 500, 'Certificate of Conclusion')
+        certificate.drawCentredString(415, 450, 'Certificat de Conclusion')
         certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(415, 400, 'This certificate is presented to')
+        certificate.drawCentredString(415, 370, 'This certificate is presented to / Ce certificat est présenté à')
 
         # Learner info
         certificate.setFont('Helvetica-Bold', 36, leading=None)
-        certificate.drawCentredString(415, 350, f'{user.first_name} {user.last_name}')
+        certificate.drawCentredString(415, 320, f'{user.first_name} {user.last_name}')
 
         # Course info
         certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(415, 300, 'for completing the following course/module')
-        certificate.setFont('Helvetica', 20, leading=None)
+        certificate.drawCentredString(415, 270, 'for completing the following / for completing the following')
 
+        certificate.setFont('Helvetica-Oblique', 20, leading=None)
         course_name = textwrap.wrap(course_object.name, width=70)
-        course_name_position = 250
+        course_name_position = 220
         for line in course_name:
             certificate.drawCentredString(415, course_name_position, line)
             course_name_position = course_name_position - 30
 
         # Footer
         certificate.setFont('Helvetica', 12, leading=None)
-        certificate.drawCentredString(415, 50, f'Generated on: {date}')
+        certificate.drawCentredString(415, 50, f'Generated on / Généré le: {date}')
 
         # Close the PDF object cleanly, and we're done.
         certificate.showPage()
