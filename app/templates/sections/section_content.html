@@ -70,8 +70,132 @@
             </div>
         </div>
     {% endif %}
+
+    <div id="app">
+        # the part that can be controlled by Vue.JS
+        <hr />
+        <% message %>
+        <br>
+        <% list_source %> <br>
+        <% list_elements %> <br>
+        <% list_roles %> <br>
+        <div
+                class="btn-group-vertical buttons"
+                role="group"
+                aria-label="Basic example"
+        >
+            <button class="btn btn-secondary" @click="add">Add</button>
+            <button class="btn btn-secondary" @click="replace">Replace</button>
+            <button class="btn btn-secondary" @click="check">Check</button>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h3>Elements</h3>
+                <draggable id="list_source" class="list-group bg-light pl-2 pr-2" :list="list_source" group="people" @change="log" style="min-height: 660px;">
+                    <div
+                            class="list-group-item"
+                            v-for="(element, index) in list_source"
+                            :key="element.name"
+                    >
+                        <% element.id %> - <% element.name %>
+                    </div>
+                </draggable>
+            </div>
+
+            <div class="col-6">
+                <h3>8 elements of an Age-Friendly community</h3>
+                <draggable id="list_elements" class="list-group bg-light pl-2 pr-2" :list="list_elements" group="people" @change="log" style="min-height: 400px;">
+                    <div
+                            class="list-group-item"
+                            v-for="(element, index) in list_elements"
+                            :key="element.name"
+                    >
+                        <% element.id %> - <% element.name %>
+                    </div>
+                </draggable>
+                <h3>5 Roles of WHO in the Network</h3>
+                <draggable id="list_roles" class="list-group bg-light pl-2 pr-2" :list="list_roles" group="people" @change="log" style="min-height: 260px;">
+                    <div
+                            class="list-group-item"
+                            v-for="(element, index) in list_roles"
+                            :key="element.name"
+                    >
+                        <% element.id %> - <% element.name %>
+                    </div>
+                </draggable>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 
 {% block javascript_bottom %}
     {% sri_static "js/pagination.js" %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
+
+    <script>
+        let draggable = vuedraggable
+        let app = new Vue({
+            el: '#app',
+            delimiters: ['<%', '%>'],
+            data() {
+                return {
+                    message: 'hello',
+                    list_source: [
+                        {name: "Outdoor spaces and buildings", id: 1},
+                        {name: "Transportation", id: 2},
+                        {name: "Housing", id: 3},
+                        {name: "Development of implementation guidelines", id: 4},
+                        {name: "Social participation", id: 5},
+                        {name: "Identification and dissemination of best practices", id: 6},
+                        {name: "Respect and social inclusion", id: 7},
+                        {name: "Coordination of the Age-friendly Cities programme", id: 8},
+                        {name: "Civic participation and employment", id: 9},
+                        {name: "Technical support and training", id: 10},
+                        {name: "Communication and information", id: 11},
+                        {name: "Community support and health services", id: 12},
+                        {name: "Reviewing progress and plans", id: 13},
+                    ],
+                    list_elements: [],
+                    list_roles: []
+                }
+            },
+            components: {
+                draggable
+            },
+            methods: {
+                add: function () {
+                    this.list_source.push({name: "Juan"});
+                },
+                replace: function () {
+                    this.list_source = [{name: "Edgard"}];
+                },
+                clone: function (el) {
+                    return {
+                        name: el.name + " cloned"
+                    };
+                },
+                check: function () {
+                    let selected_elements = this.list_elements.map(item => item.id)
+                    let selected_roles = this.list_roles.map(item => item.id)
+                    let correct_elements = [1, 2, 3, 4]
+                    let correct_roles = [5, 6, 7]
+                    selected_elements.sort()
+                    selected_roles.sort()
+                    correct_elements.sort()
+                    correct_roles.sort()
+                    if (selected_elements.toString() === correct_elements.toString() &&
+                        selected_roles.toString() === correct_roles.toString()) {
+                        window.alert("Congrats!")
+                    } else {
+                        window.alert(":(((")
+                    }
+                },
+                log: function (evt) {
+                    window.console.log(evt);
+                }
+            }
+        })
+    </script>
 {% endblock javascript_bottom %}
