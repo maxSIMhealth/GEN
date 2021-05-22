@@ -72,59 +72,52 @@
     {% endif %}
 
     <div id="app">
-        # the part that can be controlled by Vue.JS
-        <hr />
-        <% message %>
-        <br>
-        <% list_source %> <br>
-        <% list_elements %> <br>
-        <% list_roles %> <br>
-        <div
-                class="btn-group-vertical buttons"
-                role="group"
-                aria-label="Basic example"
-        >
-            <button class="btn btn-secondary" @click="add">Add</button>
-            <button class="btn btn-secondary" @click="replace">Replace</button>
-            <button class="btn btn-secondary" @click="check">Check</button>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <h3>Elements</h3>
-                <draggable id="list_source" class="list-group bg-light pl-2 pr-2" :list="list_source" group="people" @change="log" style="min-height: 660px;">
-                    <div
-                            class="list-group-item"
-                            v-for="(element, index) in list_source"
-                            :key="element.name"
-                    >
-                        <% element.id %> - <% element.name %>
-                    </div>
-                </draggable>
+        <% source.data %>
+        <div class="card-group mt-2 mb-2">
+            <div class="card">
+                <h6 class="card-header"><% source.title %></h6>
+                <div class="card-body">
+                    <draggable id="list_source" class="list-group bg-light p-2" group="items" v-model="source.data" style="height: 100%; min-height: 60px">
+                        <div
+                                class="list-group-item"
+                                v-for="(element, index) in source.data"
+                                :key="element.name"
+                        >
+                            <% element.id %> - <% element.name %>
+                        </div>
+                    </draggable>
+                </div>
             </div>
-
-            <div class="col-6">
-                <h3>8 elements of an Age-Friendly community</h3>
-                <draggable id="list_elements" class="list-group bg-light pl-2 pr-2" :list="list_elements" group="people" @change="log" style="min-height: 400px;">
-                    <div
-                            class="list-group-item"
-                            v-for="(element, index) in list_elements"
-                            :key="element.name"
-                    >
-                        <% element.id %> - <% element.name %>
-                    </div>
-                </draggable>
-                <h3>5 Roles of WHO in the Network</h3>
-                <draggable id="list_roles" class="list-group bg-light pl-2 pr-2" :list="list_roles" group="people" @change="log" style="min-height: 260px;">
-                    <div
-                            class="list-group-item"
-                            v-for="(element, index) in list_roles"
-                            :key="element.name"
-                    >
-                        <% element.id %> - <% element.name %>
-                    </div>
-                </draggable>
+            <div class="card">
+                <h6 class="card-header"><% column1.title %></h6>
+                <div class="card-body">
+                    <draggable id="list_column1" class="list-group bg-light p-2" group="items" v-model="column1.data" style="height: 100%; min-height: 60px">
+                        <div
+                                class="list-group-item"
+                                v-for="(element, index) in column1.data"
+                                :key="element.name"
+                        >
+                            <% element.id %> - <% element.name %>
+                        </div>
+                    </draggable>
+                </div>
+            </div>
+            <div class="card">
+                <h6 class="card-header"><% column2.title %></h6>
+                <div class="card-body">
+                    <draggable id="list_column2" class="list-group bg-light p-2" group="items" v-model="column2.data" style="height: 100%; min-height: 60px">
+                        <div
+                                class="list-group-item"
+                                v-for="(element, index) in column2.data"
+                                :key="element.name"
+                        >
+                            <% element.id %> - <% element.name %>
+                        </div>
+                    </draggable>
+                </div>
             </div>
         </div>
+        <button class="btn btn-primary" @click="check">Check answers</button>
     </div>
 {% endblock content %}
 
@@ -141,60 +134,54 @@
             delimiters: ['<%', '%>'],
             data() {
                 return {
-                    message: 'hello',
-                    list_source: [
-                        {name: "Outdoor spaces and buildings", id: 1},
-                        {name: "Transportation", id: 2},
-                        {name: "Housing", id: 3},
-                        {name: "Development of implementation guidelines", id: 4},
-                        {name: "Social participation", id: 5},
-                        {name: "Identification and dissemination of best practices", id: 6},
-                        {name: "Respect and social inclusion", id: 7},
-                        {name: "Coordination of the Age-friendly Cities programme", id: 8},
-                        {name: "Civic participation and employment", id: 9},
-                        {name: "Technical support and training", id: 10},
-                        {name: "Communication and information", id: 11},
-                        {name: "Community support and health services", id: 12},
-                        {name: "Reviewing progress and plans", id: 13},
-                    ],
-                    list_elements: [],
-                    list_roles: []
+                    source: {
+                        title: "Items",
+                        data: [
+                            {name: "Outdoor spaces and buildings", id: 1},
+                            {name: "Transportation", id: 2},
+                            {name: "Housing", id: 3},
+                            {name: "Development of implementation guidelines", id: 4},
+                            {name: "Social participation", id: 5},
+                            {name: "Identification and dissemination of best practices", id: 6},
+                            {name: "Respect and social inclusion", id: 7},
+                            {name: "Coordination of the Age-friendly Cities programme", id: 8},
+                            {name: "Civic participation and employment", id: 9},
+                            {name: "Technical support and training", id: 10},
+                            {name: "Communication and information", id: 11},
+                            {name: "Community support and health services", id: 12},
+                            {name: "Reviewing progress and plans", id: 13},
+                        ]
+                    },
+                    column1: {
+                        title: "8 elements of an Age-Friendly community",
+                        data: []
+                    },
+                    column2: {
+                        title: "5 Roles of WHO in the Network",
+                        data: []
+                    },
                 }
             },
             components: {
                 draggable
             },
             methods: {
-                add: function () {
-                    this.list_source.push({name: "Juan"});
-                },
-                replace: function () {
-                    this.list_source = [{name: "Edgard"}];
-                },
-                clone: function (el) {
-                    return {
-                        name: el.name + " cloned"
-                    };
-                },
                 check: function () {
-                    let selected_elements = this.list_elements.map(item => item.id)
-                    let selected_roles = this.list_roles.map(item => item.id)
-                    let correct_elements = [1, 2, 3, 4]
-                    let correct_roles = [5, 6, 7]
-                    selected_elements.sort()
-                    selected_roles.sort()
-                    correct_elements.sort()
-                    correct_roles.sort()
-                    if (selected_elements.toString() === correct_elements.toString() &&
-                        selected_roles.toString() === correct_roles.toString()) {
-                        window.alert("Congrats!")
+                    let selected_column1 = this.column1.data.map(item => item.id)
+                    let selected_column2 = this.column2.data.map(item => item.id)
+                    let correct_column1 = [1, 2, 3, 4, 5, 6, 7, 8]
+                    let correct_column2 = [9, 10, 11, 12, 13]
+                    selected_column1.sort()
+                    selected_column2.sort()
+                    correct_column1.sort()
+                    correct_column2.sort()
+                    if (selected_column1.toString() === correct_column1.toString() &&
+                        selected_column2.toString() === correct_column2.toString()) {
+                        window.alert("You got it! Congratulations.")
                     } else {
-                        window.alert(":(((")
+                        window.alert("Please try again.")
                     }
                 },
-                log: function (evt) {
-                    window.console.log(evt);
-                }
             }
         })
     </script>
