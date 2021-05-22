@@ -16,6 +16,7 @@ from GEN.support_methods import enrollment_test
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
 from .models import Course, Section, SectionItem, Status
+from content.models import ContentItem
 from .progress import progress
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
@@ -197,6 +198,7 @@ def section_page(request, pk, section_pk):
 
     elif section_object.section_type == "C":
         section_template = "sections/section_content.html"
+        section_items = ContentItem.objects.filter(section=section_object,published=True)
 
     return render(
         request,

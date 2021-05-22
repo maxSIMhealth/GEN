@@ -11,13 +11,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import os
 import json
 import logging.config
+import os
+
 from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import gettext_lazy as _
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +46,9 @@ if not DEBUG:
     SERVER_EMAIL = os.getenv('SERVER_EMAIL')
     DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
-### Application definition
+#
+# Application definition
+#
 
 INSTALLED_APPS = [
     "admin_interface",
@@ -80,6 +82,7 @@ INSTALLED_APPS = [
     "dashboard",
     "quiz",
     "videos",
+    "content"
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -148,7 +151,10 @@ WSGI_APPLICATION = "GEN.wsgi.application"
 # itself in a frame, set X_FRAME_OPTIONS to 'DENY'
 X_FRAME_OPTIONS = "DENY"
 
-### Database
+#
+# Database
+#
+
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
@@ -165,7 +171,10 @@ DATABASES = {
     }
 }
 
-### Password validation
+#
+# Password validation
+#
+
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -183,8 +192,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#
+# Internationalization
+#
 
-### Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 #
 # ISO Language Code Table
@@ -203,7 +214,10 @@ USE_TZ = True
 # Contains the path list where Django should look into for django.po files for all supported languages
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
-### Static files (CSS, JavaScript, Images)
+#
+# Static files (CSS, JavaScript, Images)
+#
+
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 USE_S3 = os.getenv('USE_S3') == 'True'
@@ -241,7 +255,9 @@ else:
     MEDIA_ROOT = f'{GEN_HOME}/media/'
     # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'core/static'),)
 
-### Login settings
+#
+# Login settings
+#
 
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
@@ -264,18 +280,21 @@ if not DEBUG:
     SECURE_REFERRER_POLICY = "same-origin"
     os.environ["wsgi.url_scheme"] = "https"
 else:
-    CORS_REPLACE_HTTPS_REFERER      = False
-    HOST_SCHEME                     = "http://"
-    SECURE_PROXY_SSL_HEADER         = None
-    SECURE_SSL_REDIRECT             = False
-    SESSION_COOKIE_SECURE           = False
-    CSRF_COOKIE_SECURE              = False
-    SECURE_HSTS_SECONDS             = None
-    SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
-    SECURE_FRAME_DENY               = False
+    CORS_REPLACE_HTTPS_REFERER = False
+    HOST_SCHEME = "http://"
+    SECURE_PROXY_SSL_HEADER = None
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    SECURE_HSTS_SECONDS = None
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_FRAME_DENY = False
     os.environ["wsgi.url_scheme"] = "http"
 
-### E-mail backend
+#
+# E-mail backend
+#
+
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 SENDGRID_TRACK_EMAIL_OPENS = True
@@ -287,8 +306,10 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = DEBUG
 # to the backend via the stream kwarg.
 SENDGRID_ECHO_TO_STDOUT = DEBUG
 
+#
+# Maintenance mode settings
+#
 
-### Maintenance mode settings
 # complete list available at
 # https://github.com/fabiocaccamo/django-maintenance-mode#configuration-optional
 
@@ -313,13 +334,17 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 # useful for running tests while maintenance mode is on, before opening the site to public use
 MAINTENANCE_MODE_IGNORE_TESTS = False
 
+#
+# Debug toolbar settings
+#
 
-### Debug toolbar settings
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
 }
 
-### Logging Configuration
+#
+# Logging Configuration
+#
 
 # Clear prev config
 LOGGING_CONFIG = None
@@ -344,12 +369,14 @@ logging.config.dictConfig({
     'loggers': {
         '': {
             'level': LOGLEVEL,
-            'handlers': ['console',],
+            'handlers': ['console', ],
         },
     },
 })
 
-### Social authentication settings
+#
+# Social authentication settings
+#
 # Documentation:
 # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
 # https://python-social-auth.readthedocs.io/en/latest/pipeline.html
@@ -400,7 +427,9 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.user.user_details",
 )
 
-### TinyMCE
+#
+# TinyMCE
+#
 TINYMCE_DEFAULT_CONFIG = {
     # 'selector': 'textarea',
     'cleanup_on_startup': True,

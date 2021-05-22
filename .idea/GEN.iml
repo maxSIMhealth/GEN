@@ -40,6 +40,7 @@
         <option value="$MODULE_DIR$/app/discussions" />
         <option value="$MODULE_DIR$/app/quiz" />
         <option value="$MODULE_DIR$/app/videos" />
+        <option value="$MODULE_DIR$/app/content" />
       </list>
     </option>
   </component>
