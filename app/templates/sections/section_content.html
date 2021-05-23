@@ -36,6 +36,9 @@
                             <div class="quiz-item" style="display: none;">
                                 <h4>{{ sectionitem.name }}</h4>
                                 <p>{{ sectionitem.content|safe }}</p>
+                                {% if sectionitem.game %}
+                                    {% include 'content/match_game.html' with info=sectionitem.game_info_json source_list=sectionitem.game_source_items_json choice1_list=sectionitem.game_choice1_items_json choice2_list=sectionitem.game_choice2_items_json %}
+                                {% endif %}
                                 {% if forloop.last %}
                                     {% include 'partials/mark_section_completed.html' %}
                                 {% endif %}
@@ -71,118 +74,11 @@
         </div>
     {% endif %}
 
-    <div id="app">
-        <% source.data %>
-        <div class="card-group mt-2 mb-2">
-            <div class="card">
-                <h6 class="card-header"><% source.title %></h6>
-                <div class="card-body">
-                    <draggable id="list_source" class="list-group bg-light p-2" group="items" v-model="source.data" style="height: 100%; min-height: 60px">
-                        <div
-                                class="list-group-item"
-                                v-for="(element, index) in source.data"
-                                :key="element.name"
-                        >
-                            <% element.id %> - <% element.name %>
-                        </div>
-                    </draggable>
-                </div>
-            </div>
-            <div class="card">
-                <h6 class="card-header"><% column1.title %></h6>
-                <div class="card-body">
-                    <draggable id="list_column1" class="list-group bg-light p-2" group="items" v-model="column1.data" style="height: 100%; min-height: 60px">
-                        <div
-                                class="list-group-item"
-                                v-for="(element, index) in column1.data"
-                                :key="element.name"
-                        >
-                            <% element.id %> - <% element.name %>
-                        </div>
-                    </draggable>
-                </div>
-            </div>
-            <div class="card">
-                <h6 class="card-header"><% column2.title %></h6>
-                <div class="card-body">
-                    <draggable id="list_column2" class="list-group bg-light p-2" group="items" v-model="column2.data" style="height: 100%; min-height: 60px">
-                        <div
-                                class="list-group-item"
-                                v-for="(element, index) in column2.data"
-                                :key="element.name"
-                        >
-                            <% element.id %> - <% element.name %>
-                        </div>
-                    </draggable>
-                </div>
-            </div>
-        </div>
-        <button class="btn btn-primary" @click="check">Check answers</button>
-    </div>
+    <br>
+
 {% endblock content %}
 
 {% block javascript_bottom %}
     {% sri_static "js/pagination.js" %}
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
 
-    <script>
-        let draggable = vuedraggable
-        let app = new Vue({
-            el: '#app',
-            delimiters: ['<%', '%>'],
-            data() {
-                return {
-                    source: {
-                        title: "Items",
-                        data: [
-                            {name: "Outdoor spaces and buildings", id: 1},
-                            {name: "Transportation", id: 2},
-                            {name: "Housing", id: 3},
-                            {name: "Development of implementation guidelines", id: 4},
-                            {name: "Social participation", id: 5},
-                            {name: "Identification and dissemination of best practices", id: 6},
-                            {name: "Respect and social inclusion", id: 7},
-                            {name: "Coordination of the Age-friendly Cities programme", id: 8},
-                            {name: "Civic participation and employment", id: 9},
-                            {name: "Technical support and training", id: 10},
-                            {name: "Communication and information", id: 11},
-                            {name: "Community support and health services", id: 12},
-                            {name: "Reviewing progress and plans", id: 13},
-                        ]
-                    },
-                    column1: {
-                        title: "8 elements of an Age-Friendly community",
-                        data: []
-                    },
-                    column2: {
-                        title: "5 Roles of WHO in the Network",
-                        data: []
-                    },
-                }
-            },
-            components: {
-                draggable
-            },
-            methods: {
-                check: function () {
-                    let selected_column1 = this.column1.data.map(item => item.id)
-                    let selected_column2 = this.column2.data.map(item => item.id)
-                    let correct_column1 = [1, 2, 3, 4, 5, 6, 7, 8]
-                    let correct_column2 = [9, 10, 11, 12, 13]
-                    selected_column1.sort()
-                    selected_column2.sort()
-                    correct_column1.sort()
-                    correct_column2.sort()
-                    if (selected_column1.toString() === correct_column1.toString() &&
-                        selected_column2.toString() === correct_column2.toString()) {
-                        window.alert("You got it! Congratulations.")
-                    } else {
-                        window.alert("Please try again.")
-                    }
-                },
-            }
-        })
-    </script>
 {% endblock javascript_bottom %}
