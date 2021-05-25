@@ -19,6 +19,7 @@ from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
 from .models import Course, Section, SectionItem, Status
 from content.models import ContentItem, MatchColumnsItem, MatchColumnsGame
+from videos.models import VideoFile
 from .progress import progress
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
@@ -207,25 +208,39 @@ def section_page(request, pk, section_pk):
 
     elif section_object.section_type == "C":
         section_template = "sections/section_content.html"
-        section_items = ContentItem.objects.filter(section=section_object, published=True)
+        section_items = SectionItem.objects.filter(section=section_object, published=True)
 
         for item in section_items:
             try:
-                # section.game = True if section.matchcolumnsgame else False
-                item.__getattribute__("matchcolumnsgame")
-                item.game = True
-                item.game_info_json = serialize('json', [section_items[0].matchcolumnsgame])
-                item.game_source_items_json = serialize('json', section_items[0].matchcolumnsgame.source_column_items.all())
-                item.game_choice1_items_json = serialize('json',
-                                                    section_items[0].matchcolumnsgame.choice1_column_items.all())
-                item.game_choice2_items_json = serialize('json',
-                                                    section_items[0].matchcolumnsgame.choice2_column_items.all())
-            except MatchColumnsGame.DoesNotExist:
-                item.game = False
-                # game_info_json = None
-                # game_source_items_json = None
-                # game_choice1_items_json = None
-                # game_choice2_items_json = None
+                item.__getattribute__("videofile")
+                item.type = 'Video'
+            except VideoFile.DoesNotExist:
+                pass
+
+            try:
+                item.__getattribute__("contentitem")
+                item.type = 'Content'
+            except ContentItem.DoesNotExist:
+                pass
+
+            if item.type == 'Content':
+                try:
+                    # section.game = True if section.matchcolumnsgame else False
+                    item.contentitem.__getattribute__("matchcolumnsgame")
+                    item.game = True
+                    item.game_info_json = serialize('json', [item.contentitem.matchcolumnsgame])
+                    item.game_source_items_json = serialize('json',
+                                                            item.contentitem.matchcolumnsgame.source_column_items.all())
+                    item.game_choice1_items_json = serialize('json',
+                                                             item.contentitem.matchcolumnsgame.choice1_column_items.all())
+                    item.game_choice2_items_json = serialize('json',
+                                                             item.contentitem.matchcolumnsgame.choice2_column_items.all())
+                except:
+                    item.game = False
+                    # game_info_json = None
+                    # game_source_items_json = None
+                    # game_choice1_items_json = None
+                    # game_choice2_items_json = None
 
     return render(
         request,

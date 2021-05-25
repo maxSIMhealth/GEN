@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div class="card-text text-center" id="video-player">
+    <video poster="{{ video.thumbnail.url }}" controls>
+        <source src="{{ video.file.url }}" type="video/mp4">
+        {% trans "Sorry, your browser doesn't support embedded videos." %}
+    </video>
+</div>
+{% if video.content %}
+    {{ video.content|safe }}
+{% endif %}

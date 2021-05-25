@@ -35,9 +35,12 @@
                         {% for sectionitem in section_items %}
                             <div class="quiz-item" style="display: none;">
                                 <h4>{{ sectionitem.name }}</h4>
-                                <p>{{ sectionitem.content|safe }}</p>
-                                {% if sectionitem.game %}
+                                {% if sectionitem.type == 'Video' %}
+                                    {% include 'content/video.html' with video=sectionitem.videofile %}
+                                {% elif sectionitem.type == 'Content' and sectionitem.game %}
                                     {% include 'content/match_game.html' with info=sectionitem.game_info_json source_list=sectionitem.game_source_items_json choice1_list=sectionitem.game_choice1_items_json choice2_list=sectionitem.game_choice2_items_json %}
+                                {% else %}
+                                    <p>{{ sectionitem.contentitem.content|safe }}</p>
                                 {% endif %}
                                 {% if forloop.last %}
                                     {% include 'partials/mark_section_completed.html' %}
