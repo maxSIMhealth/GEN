@@ -40,7 +40,7 @@ class Quiz(SectionItem):
     max_score = models.PositiveIntegerField(
         _("max score"),
         default=0,
-        help_text=_("Maximum score automatically based on questions values.")
+        help_text=_("** NOT IN USE ** Maximum score automatically based on questions values.")
     )
     assessment_method = models.CharField(
         _("assessment method"),
@@ -125,7 +125,7 @@ class Quiz(SectionItem):
         verbose_name_plural = _("quizzes")
 
     def save(self, *args, **kwargs):
-        self.update_max_score()
+        # self.update_max_score()
         super(Quiz, self).save(*args, **kwargs)
 
     def clean(self):
@@ -171,15 +171,15 @@ class Quiz(SectionItem):
         else:
             return super().clean()
 
-    def update_max_score(self):
-        if self.questions.exists():
-            # update max score based on questions
-            max_score = \
-                self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
-                    'value__sum']
-            self.max_score = max_score
-        else:
-            self.max_score = 0
+    # def update_max_score(self):
+    #     if self.questions.exists():
+    #         # update max score based on questions
+    #         max_score = \
+    #             self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
+    #                 'value__sum']
+    #         self.max_score = max_score
+    #     else:
+    #         self.max_score = 0
 
     def get_questions(self):
         return self.questions.all().select_subclasses()

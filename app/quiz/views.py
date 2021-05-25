@@ -153,6 +153,7 @@ def quiz_submission(request, quiz, questions, course, section):
     items.pop(0)
     score = 0
     num_mistakes = 0
+    max_score = 0
     user_scoreset, _ = QuizScore.objects.get_or_create(
         student=request.user,
         course=course,
@@ -182,6 +183,9 @@ def quiz_submission(request, quiz, questions, course, section):
             attempt_number=user_scoreset.attempt_number,
         )
 
+        # add question value to max score
+        max_score += question.value
+
         # add video name, if the quiz has a related video
         if quiz.video:
             attempt.video = quiz.video
@@ -203,7 +207,7 @@ def quiz_submission(request, quiz, questions, course, section):
     user_scoreset.num_mistakes = num_mistakes
 
     # setting max score at the time of submission (just in case the quiz is modified later)
-    user_scoreset.max_score = quiz.max_score
+    user_scoreset.max_score = max_score
 
     # check if the quiz has been completed successfully (this method does not perform a save)
     user_scoreset.perform_assessment()
