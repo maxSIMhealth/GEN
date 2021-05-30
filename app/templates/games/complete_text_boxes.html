@@ -1,13 +1,6 @@
 {% load i18n %}
 
 <div id="game-{{ id }}">
-{#    <ol>#}
-{#        <li v-for="(element, index) in terms"#}
-{#            :key="element.fields.text"#}
-{#        >#}
-{#            <% element.fields.text %>#}
-{#        </li>#}
-{#    </ol>#}
     <div v-for="(item, index) in items" class="card mb-3 ml-0 mr-0">
         <div class="card-body">
             <p class="card-text">
@@ -16,9 +9,8 @@
         </div>
         <div class="card-footer">
             <select class="custom-select"
-                    @input="checkSelected($event, item.pk, item.fields.correct_term)"
-                    v-model="options[index]">
-                <option selected :value=0>
+                    v-model="answers[index]">
+                <option selected :value="undefined">
                     {% trans "Choose..." %}
                 </option>
                 <option v-for="term in terms"
@@ -32,12 +24,6 @@
     </div>
     <button class="btn btn-primary" @click="check">{% trans "Check answers" %}</button>
     <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
-    <hr>
-    <div>
-        SELECTED: <% selected %>
-    </div>
-    <hr>
-    OPTIONS: <% options %>
 </div>
 
 <script>
@@ -47,50 +33,32 @@
         data: {
             terms: JSON.parse("{{ terms }}".replace(/&quot;/g, '\"')),
             items: JSON.parse("{{ items }}".replace(/&quot;/g, '\"')),
-            selected: {},
-            hack: {}
+            answers: []
         },
         computed: {
-            options: function() {
-                terms_size = Object.keys(this.terms).length
-                options_values = {}
-                for (i = 0; i < terms_size; i++) {
-                    options_values[i] = 0
-                }
-                return options_values
+            correct_answers: function () {
+                return this.items.map(item => item.fields.correct_term)
             }
         },
         methods: {
-            checkSelected: function (event, item_id, correct_term) {
-                selected_id = parseInt(event.target.value)
-                correct = (selected_id === correct_term)
-                this.$set(this.selected, item_id, correct)
-            },
             check: function () {
-                console.log('check')
-
                 // check if all items were answered
-                items_size = Object.keys(this.selected).length
-                terms_size = Object.keys(this.terms).length
-                if (items_size < terms_size) {
+                if (this.answers.includes(undefined) || this.answers.length < this.items.length) {
                    return window.alert(gettext("Please answer all items."))
                 }
 
                 // check if all answers are correct
-                let items_answers = Object.values(this.selected).every(item => item)
+                let correct = this.answers.toString() === this.correct_answers.toString()
 
                 // return feedback
-                if (items_answers) {
+                if (correct) {
                     return window.alert(gettext("You got it! Congratulations."))
                 } else {
                     return window.alert(gettext("Please try again."))
                 }
             },
             restart: function () {
-                Object.keys(this.options).forEach(item => this.$set(this.options, item, 0))
-                this.selected = {}
-                {#this.$set(this.selected, '5', false)#}
-                {#this.$set(this.options, '4', 0)#}
+                this.answers = []
             }
         }
     })
