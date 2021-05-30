@@ -5,6 +5,15 @@
 {% load sri %}
 {% load humanize %}
 
+{% block javascript_top %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
+
+    <script src="https://unpkg.com/vue-select@3.11.2"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vue-select@3.11.2/dist/vue-select.css">
+{% endblock %}
+
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock stylesheet %}
@@ -32,15 +41,19 @@
             <div class="card quiz">
                 <div class="card-body">
                     <div class="quiz-items-container">
-                        {% for sectionitem in section_items %}
+                        {% for item in section_items %}
                             <div class="quiz-item" style="display: none;">
-                                <h4>{{ sectionitem.name }}</h4>
-                                {% if sectionitem.type == 'Video' %}
-                                    {% include 'content/video.html' with video=sectionitem.videofile %}
-                                {% elif sectionitem.type == 'Content' and sectionitem.game %}
-                                    {% include 'content/match_game.html' with info=sectionitem.game_info_json source_list=sectionitem.game_source_items_json choice1_list=sectionitem.game_choice1_items_json choice2_list=sectionitem.game_choice2_items_json %}
-                                {% else %}
-                                    <p>{{ sectionitem.contentitem.content|safe }}</p>
+                                <h4>{{ item.name }}</h4>
+                                {% if item.type == 'Video' %}
+                                    {% include 'content/video.html' with video=item.videofile %}
+                                {% elif item.type == 'Game' and item.game.type == 'MC' %}
+                                    <p>{{ item.description }}</p>
+                                    {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
+                                {% elif item.type == 'Game' and item.game.type == 'TB' %}
+                                    <p>{{ item.description }}</p>
+                                    {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
+                                {% elif item.type == 'Content' %}
+                                    <p>{{ item.contentitem.content|safe }}</p>
                                 {% endif %}
                                 {% if forloop.last %}
                                     {% include 'partials/mark_section_completed.html' %}
@@ -83,5 +96,4 @@
 
 {% block javascript_bottom %}
     {% sri_static "js/pagination.js" %}
-
 {% endblock javascript_bottom %}

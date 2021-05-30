@@ -1,51 +1,51 @@
 {% load i18n %}
 
-<div id="app">
+<div id="game-{{ id }}">
     <div class="card-group mt-2 mb-2">
         <div class="card m-0">
-            <h6 class="card-header"><% info.source_column_name %></h6>
+            <h6 class="card-header"><% info.source_name %></h6>
             <div class="card-body">
                 <draggable id="list_source" class="list-group" group="items" v-model="source_list"
                            style="height: 100%; min-height: 60px">
                     <div
                             class="list-group-item"
                             v-for="(element, index) in source_list"
-                            :key="element.fields.name"
+                            :key="element.fields.text"
                             style="padding:0.5rem"
                     >
-                        <% element.fields.name %>
+                        <% element.fields.text %>
                     </div>
                 </draggable>
             </div>
         </div>
         <div class="card m-0">
-            <h6 class="card-header"><% info.choice1_column_name %></h6>
+            <h6 class="card-header"><% info.choice1_name %></h6>
             <div class="card-body">
                 <draggable id="list_column1" class="list-group" group="items" v-model="choice1_user"
                            style="height: 100%; min-height: 60px">
                     <div
                             class="list-group-item"
                             v-for="(element, index) in choice1_user"
-                            :key="element.fields.name"
+                            :key="element.fields.text"
                             style="padding:0.5rem"
                     >
-                        <% element.fields.name %>
+                        <% element.fields.text %>
                     </div>
                 </draggable>
             </div>
         </div>
         <div class="card m-0">
-            <h6 class="card-header"><% info.choice2_column_name %></h6>
+            <h6 class="card-header"><% info.choice2_name %></h6>
             <div class="card-body">
                 <draggable id="list_column2" class="list-group" group="items" v-model="choice2_user"
                            style="height: 100%; min-height: 60px">
                     <div
                             class="list-group-item"
                             v-for="(element, index) in choice2_user"
-                            :key="element.fields.name"
+                            :key="element.fields.text"
                             style="padding:0.5rem"
                     >
-                        <% element.fields.name %>
+                        <% element.fields.text %>
                     </div>
                 </draggable>
             </div>
@@ -55,38 +55,30 @@
     <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
-
 <script>
     let draggable = vuedraggable
-    let info_json = "{{ info }}".replace(/&quot;/g, '\"');
-    let source_list_json = "{{ source_list }}".replace(/&quot;/g, '\"');
-    let choice1_list_json = "{{ choice1_list }}".replace(/&quot;/g, '\"');
-    let choice2_list_json = "{{ choice2_list }}".replace(/&quot;/g, '\"');
 
     function getInitialData() {
         return {
-                info: JSON.parse(info_json)[0].fields,
-                source_list: JSON.parse(source_list_json),
-                choice1_list: JSON.parse(choice1_list_json),
-                choice2_list: JSON.parse(choice2_list_json),
+                info: JSON.parse("{{ info }}".replace(/&quot;/g, '\"'))[0].fields,
+                source_list: JSON.parse("{{ source_list }}".replace(/&quot;/g, '\"')),
+                choice1_list: JSON.parse("{{ choice1_list }}".replace(/&quot;/g, '\"')),
+                choice2_list: JSON.parse("{{ choice2_list }}".replace(/&quot;/g, '\"')),
                 choice1_user: [],
                 choice2_user: [],
             }
     }
 
-    let app = new Vue({
-        el: '#app',
+    let game{{ id }} = new Vue({
+        el: '#game-{{ id }}',
         delimiters: ['<%', '%>'],
         data: getInitialData(),
         computed: {
             choice1_correct: function () {
-                return this.info.choice1_column_items
+                return this.info.choice1_items
             },
             choice2_correct: function() {
-                return this.info.choice2_column_items
+                return this.info.choice2_items
             }
         },
         components: {

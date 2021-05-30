@@ -1,11 +1,9 @@
 import io
 import textwrap
 
-# from datetime import datetime
-from django.core.serializers import serialize
-from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -17,19 +15,11 @@ from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
+from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status
-from content.models import ContentItem, MatchColumnsItem, MatchColumnsGame
-from videos.models import VideoFile
 from .progress import progress
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
-
-
-class LazyEncoder(DjangoJSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, MatchColumnsItem):
-            return 'BLABLA'
-        return super().default(obj)
 
 
 @login_required
@@ -211,36 +201,24 @@ def section_page(request, pk, section_pk):
         section_items = SectionItem.objects.filter(section=section_object, published=True)
 
         for item in section_items:
-            try:
-                item.__getattribute__("videofile")
+            if hasattr(item, "videofile"):
                 item.type = 'Video'
-            except VideoFile.DoesNotExist:
-                pass
-
-            try:
-                item.__getattribute__("contentitem")
+            elif hasattr(item, "contentitem"):
                 item.type = 'Content'
-            except ContentItem.DoesNotExist:
-                pass
-
-            if item.type == 'Content':
-                try:
-                    # section.game = True if section.matchcolumnsgame else False
-                    item.contentitem.__getattribute__("matchcolumnsgame")
-                    item.game = True
-                    item.game_info_json = serialize('json', [item.contentitem.matchcolumnsgame])
-                    item.game_source_items_json = serialize('json',
-                                                            item.contentitem.matchcolumnsgame.source_column_items.all())
-                    item.game_choice1_items_json = serialize('json',
-                                                             item.contentitem.matchcolumnsgame.choice1_column_items.all())
-                    item.game_choice2_items_json = serialize('json',
-                                                             item.contentitem.matchcolumnsgame.choice2_column_items.all())
-                except:
-                    item.game = False
-                    # game_info_json = None
-                    # game_source_items_json = None
-                    # game_choice1_items_json = None
-                    # game_choice2_items_json = None
+            elif hasattr(item, 'game'):
+                item.type = 'Game'
+                if item.game.type == 'MC':
+                    # get 'move to column' game elements
+                    game_elements = MoveToColumnsGroup.objects.filter(game=item)[0]
+                    item.game.info_json = serialize('json', [game_elements])
+                    item.game.source_items_json = serialize('json', game_elements.source_items.all())
+                    item.game.choice1_items_json = serialize('json', game_elements.choice1_items.all())
+                    item.game.choice2_items_json = serialize('json', game_elements.choice2_items.all())
+                elif item.game.type == 'TB':
+                    item.game.terms = serialize('json', item.game.textboxesterm_set.all())
+                    item.game.items = serialize('json', item.game.textboxesitem_set.all())
+            else:
+                item.type = None
 
     return render(
         request,
@@ -252,10 +230,6 @@ def section_page(request, pk, section_pk):
             "section_status": section_status,
             "gamification": gamification,
             "allow_submission": allow_submission,
-            # "game_info_json": game_info_json,
-            # "game_source_items_json": game_source_items_json,
-            # "game_choice1_items_json": game_choice1_items_json,
-            # "game_choice2_items_json": game_choice2_items_json,
         },
     )
 
