@@ -39,14 +39,20 @@ ADD app $GEN_HOME/app
 
 FROM python:3.8.10-alpine3.13
 
+# Create user that will run the project
+RUN addgroup -S gen --gid 1000 \
+    && adduser -S -G gen -h /gen --uid 1000 -D gen
+
 RUN set -ex \
     && apk add --no-cache ffmpeg libmagic gettext libpq
 
+USER gen
+
 ENV GEN_HOME=/gen
 
-COPY --from=builder ${GEN_HOME} ${GEN_HOME}
+COPY --chown=gen:gen --from=builder ${GEN_HOME} ${GEN_HOME}
 
-COPY --from=builder /env /env
+COPY --chown=gen:gen --from=builder /env /env
 
 # Change to the directory containing manage.py for running Django commands
 WORKDIR $GEN_HOME/app

@@ -3,6 +3,7 @@ version: '3'
 services:
   gen:
     container_name: gen
+    user: $UID:$GID
     build:
       context: .
     restart: "on-failure" 
@@ -15,22 +16,3 @@ services:
     ports:
       - 8000:8000
 
-#  nginx:
-#    container_name: gen_nginx
-#    image: nginx:1.19-alpine
-#    restart: "on-failure"
-#    ports:
-#      - 80:80
-#    volumes:
-#      - ./config/nginx:/etc/nginx/conf.d
-#      - ./static:/gen/static
-#      - ./media:/gen/media
-#    depends_on:
-#      - gen
-#    networks:
-#      - nginx_network
-
-
-#networks:
-#  nginx_network:
-#    driver: bridge
