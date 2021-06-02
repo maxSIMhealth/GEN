@@ -4,7 +4,8 @@ from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInl
 
 from .forms import TextBoxesItemForm
 from .models import Game, TextBoxesGame, TextBoxesTerm, TextBoxesItem, \
-    MoveToColumnsGame, MoveToColumnsGroup, MoveToColumnsItem
+    MoveToColumnsGame, MoveToColumnsGroup, MoveToColumnsItem,\
+    MatchTermsGame
 
 
 class GameAdmin(TabbedTranslationAdmin):
@@ -58,8 +59,20 @@ class MoveToColumnsGameAdmin(GameAdmin):
         return form
 
 
+class MatchTermsGameAdmin(GameAdmin):
+    def get_queryset(self, request):
+        return self.model.match_terms.all()
+
+    # setting type value to MC (Move to Columns)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(MatchTermsGameAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['type'].initial = 'MT'
+        return form
+
+
 admin.site.register(Game, GameAdmin)
 admin.site.register(TextBoxesGame, TextBoxesGameAdmin)
 admin.site.register(MoveToColumnsGame, MoveToColumnsGameAdmin)
 admin.site.register(MoveToColumnsItem, MoveToColumnsItemAdmin)
 admin.site.register(MoveToColumnsGroup, MoveToColumnsGroupAdmin)
+admin.site.register(MatchTermsGame, MatchTermsGameAdmin)

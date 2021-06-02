@@ -192,51 +192,8 @@ class MoveToColumnsGroup(models.Model):
         verbose_name_plural = 'Move to columns games content'
 
 
-# class Column(models.Model):
-#     name = models.CharField(
-#         _('column name'),
-#         max_length=100,
-#         default='Column',
-#         unique=False,
-#         help_text=_('Column name'),
-#     )
-#     game = models.ForeignKey(
-#         Game,
-#         on_delete=models.CASCADE
-#     )
-#     items = models.ManyToManyField(
-#         ColumnItem,
-#         related_name='column_items',
-#         verbose_name='column items',
-#         help_text=_('List of items that are part of this column.')
-#     )
-#     custom_order = models.PositiveIntegerField(
-#         _('custom order'), default=0, blank=False, null=False
-#     )
-#
-#     class Meta:
-#         ordering = ['custom_order']
-#
-#     def __str__(self):
-#         return f'ID {self.pk} - {self.name}'
-#
-#
-# class ColumnSource(Column):
-#     class Meta:
-#         verbose_name = 'Source column for "move to columns" game'
-#         verbose_name_plural = 'Source column for "move to columns" games'
-#         proxy = True
-#
-#
-# class ColumnOutput1(Column):
-#     class Meta:
-#         verbose_name = 'Output 1 column for "move to columns" game'
-#         verbose_name_plural = 'Output 1 column for "move to columns" games'
-#         proxy = True
-#
-#
-# class ColumnOutput2(Column):
-#     class Meta:
-#         verbose_name = 'Output 2 column for "move to columns" game'
-#         verbose_name_plural = 'Output 2 column for "move to columns" games'
-#         proxy = True
+class MatchTermsGame(Game):
+    class Meta:
+        verbose_name = 'Match terms game'
+        verbose_name_plural = 'Match terms games'
+        proxy = True

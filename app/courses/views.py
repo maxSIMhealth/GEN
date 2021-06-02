@@ -217,6 +217,9 @@ def section_page(request, pk, section_pk):
                 elif item.game.type == 'TB':
                     item.game.terms = serialize('json', item.game.textboxesterm_set.all())
                     item.game.items = serialize('json', item.game.textboxesitem_set.all())
+                elif item.game.type == 'MT':
+                    item.game.terms = serialize('json', item.game.textboxesterm_set.all())
+                    item.game.items = serialize('json', item.game.textboxesitem_set.all())
             else:
                 item.type = None
 

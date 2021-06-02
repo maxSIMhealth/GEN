@@ -52,6 +52,9 @@
                                 {% elif item.type == 'Game' and item.game.type == 'TB' %}
                                     <p>{{ item.description }}</p>
                                     {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
+                                {% elif item.type == 'Game' and item.game.type == 'MT' %}
+                                    <p>{{ item.description }}</p>
+                                    {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
                                 {% elif item.type == 'Content' %}
                                     <p>{{ item.contentitem.content|safe }}</p>
                                 {% endif %}

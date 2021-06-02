@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import TextBoxesItem, TextBoxesTerm
+from .models import TextBoxesTerm
 
 
 class TextBoxesItemForm(forms.ModelForm):

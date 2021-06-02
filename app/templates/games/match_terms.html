@@ -1,0 +1,65 @@
+{% load i18n %}
+
+<div id="game-{{ id }}">
+    <div v-for="(item, index) in items" class="card mb-3 ml-0 mr-0">
+        <div class="card-body">
+            <p class="card-text">
+                <% item.fields.text %>
+            </p>
+        </div>
+        <div class="card-footer">
+            <select class="custom-select"
+                    v-model="answers[index]">
+                <option selected :value="undefined">
+                    {% trans "Choose..." %}
+                </option>
+                <option v-for="term in terms"
+                        :value="term.pk"
+                        :key="term.fields.text"
+                >
+                    <% term.fields.text %>
+                </option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-primary" @click="check">{% trans "Check answers" %}</button>
+    <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
+</div>
+
+<script>
+    let game{{ id }} = new Vue({
+        el: '#game-{{ id }}',
+        delimiters: ['<%', '%>'],
+        data: {
+            terms: JSON.parse("{{ terms }}".replace(/&quot;/g, '\"')),
+            items: JSON.parse("{{ items }}".replace(/&quot;/g, '\"')),
+            answers: []
+        },
+        computed: {
+            correct_answers: function () {
+                return this.items.map(item => item.fields.correct_term)
+            }
+        },
+        methods: {
+            check: function () {
+                // check if all items were answered
+                if (this.answers.includes(undefined) || this.answers.length < this.items.length) {
+                   return window.alert(gettext("Please answer all items."))
+                }
+
+                // check if all answers are correct
+                let correct = this.answers.toString() === this.correct_answers.toString()
+
+                // return feedback
+                if (correct) {
+                    return window.alert(gettext("You got it! Congratulations."))
+                } else {
+                    return window.alert(gettext("Please try again."))
+                }
+            },
+            restart: function () {
+                this.answers = []
+            }
+        }
+    })
+</script>
