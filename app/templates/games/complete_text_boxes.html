@@ -1,25 +1,54 @@
 {% load i18n %}
+{% load static %}
 
-<div id="game-{{ id }}">
-    <div v-for="(item, index) in items" class="card mb-3 ml-0 mr-0">
-        <div class="card-body">
-            <p class="card-text">
-                <% item.fields.text %>
-            </p>
-        </div>
-        <div class="card-footer">
-            <select class="custom-select"
-                    v-model="answers[index]">
-                <option selected :value="undefined">
-                    {% trans "Choose..." %}
-                </option>
-                <option v-for="term in terms"
-                        :value="term.pk"
-                        :key="term.fields.text"
+{#<div id="test" style="border: 1px solid red">#}
+{#     <component v-bind:is="processedHtml"></component>#}
+{#</div>#}
+
+<div id="game-alt-{{ id }}">
+    <div class="card-group mt-2 mb-2">
+        <div class="card m-0">
+            <h6 class="card-header">Terms</h6>
+            <div class="card-body">
+                <draggable class="list-group"
+                           group="game-{{ id }}-items"
+                           v-model="terms"
+                           style="height: 100%; min-height: 60px"
                 >
-                    <% term.fields.text %>
-                </option>
-            </select>
+                    <div class="list-group-item"
+                         v-for="(item, index) in terms"
+                         :key="item.fields.text"
+                    >
+                        <i class="fa fa-align-justify handle"></i>
+                        <% item.fields.text %>
+                    </div>
+                </draggable>
+            </div>
+        </div>
+        <div class="card m-0">
+            <h6 class="card-header">Items</h6>
+            <div class="card-body">
+                <div class="card mb-3 ml-0 mr-0"
+                     v-for="(item, index) in items"
+                >
+                    <div class="card-body">
+                        <% item.fields.text %>
+                    </div>
+                    <draggable class="card-footer"
+                               group="game-{{ id }}-items"
+                               v-model="answers_list[index]"
+                               :disabled="!answers_list_status[index]"
+                               @add="itemAdded(index)"
+                               style="height: 100%; min-height: 60px"
+                    >
+                        <div class="list-group-item"
+                             v-for="answer in answers_list[index]"
+                        >
+                            <% answer.fields.text %>
+                        </div>
+                    </draggable>
+                </div>
+            </div>
         </div>
     </div>
     <button class="btn btn-primary" @click="check">{% trans "Check answers" %}</button>
@@ -27,6 +56,114 @@
 </div>
 
 <script>
+    let BuyButton = Vue.component('BuyButton', {
+        template: '<input type="button" :value="label">',
+        props: ['label']
+    })
+
+    let test = new Vue({
+        el: '#test',
+        delimiters: ['<%', '%>'],
+        name: 'ContentView',
+        components: {
+            BuyButton
+        },
+        data: {
+            html: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>[BuyHere]<p>Donec tellus arcu, rhoncus eget leo sit amet, blandit aliquam sapien.</p><p>Aenean leo ligula, ultricies non nisi non, laoreet mattis arcu.</p>',
+            label: 'Buy Here! -10% Off',
+        },
+        computed: {
+            processedHtml() {
+                let html = this.html.replace('[BuyHere]', '<buy-button label="Buy Here!" :label="label"></buy-button>');
+                return {
+                    template: '<div>' + html + '</div>',
+                    props: {
+                        label: {
+                            type: null,
+                            default: () => {
+                                return this.label
+                            }
+                        },
+                    }
+                }
+            }
+        }
+    })
+
+    let gameAlt{{ id }} = new Vue({
+        el: '#game-alt-{{ id }}',
+        delimiters: ['<%', '%>'],
+        components: {
+            vuedraggable
+        },
+        data: {
+            terms: JSON.parse("{{ terms }}".replace(/&quot;/g, '\"')),
+            items: JSON.parse("{{ items }}".replace(/&quot;/g, '\"')),
+            answers: [],
+        },
+        computed: {
+            correct_answers: function () {
+                return this.items.map(item => item.fields.correct_term)
+            },
+            answers_list: function () {
+                let items_size = this.items.length
+                var list = {}
+                for (var i = 0; i < items_size; i++) {
+                    list[i] = []
+                }
+                return list
+            },
+            answers_list_status: function () {
+                let items_size = this.items.length
+                var list = []
+                for (var i = 0; i < items_size; i++) {
+                    list[i] = true
+                }
+                return list
+            },
+        },
+        methods: {
+            itemAdded: function (index) {
+                this.answers_list_status[index] = false
+                console.log("Item added")
+            },
+            check: function () {
+                // copy answers pk values to an array to make it easier to compare
+                var answers_size = Object.keys(this.answers_list).length
+                for (var i = 0; i < answers_size; i++) {
+                    if (this.answers_list[i][0]) {
+                        Vue.set(this.answers, i, this.answers_list[i][0].pk)
+                    } else {
+                        Vue.set(this.answers, i, undefined)
+                    }
+                }
+
+                // check if all items were answered
+                if (this.answers.includes(undefined) || this.answers.length < this.items.length) {
+                   return window.alert(gettext("Please answer all items."))
+                }
+
+                // check if all answers are correct
+                let correct = this.answers.toString() === this.correct_answers.toString()
+
+                // return feedback
+                if (correct) {
+                    return window.alert(gettext("You got it! Congratulations."))
+                } else {
+                    return window.alert(gettext("Please try again."))
+                }
+            },
+            restart: function () {
+                this.answers = []
+                this.terms = JSON.parse("{{ terms }}".replace(/&quot;/g, '\"'))
+                for (var i = 0; i < this.answers_list_status.length; i++) {
+                    Vue.set(this.answers_list_status, i, true)
+                    Vue.set(this.answers_list, i, [])
+                }
+            }
+        }
+    })
+
     let game{{ id }} = new Vue({
         el: '#game-{{ id }}',
         delimiters: ['<%', '%>'],

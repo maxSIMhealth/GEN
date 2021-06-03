@@ -56,8 +56,6 @@
 </div>
 
 <script>
-    let draggable = vuedraggable
-
     function getInitialData() {
         return {
                 info: JSON.parse("{{ info }}".replace(/&quot;/g, '\"'))[0].fields,
@@ -82,7 +80,7 @@
             }
         },
         components: {
-            draggable
+            vuedraggable
         },
         methods: {
             check: function () {
