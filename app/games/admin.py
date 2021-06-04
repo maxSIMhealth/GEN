@@ -63,6 +63,8 @@ class MatchTermsGameAdmin(GameAdmin):
     def get_queryset(self, request):
         return self.model.match_terms.all()
 
+    inlines = (TextBoxesTermInline, TextBoxesItemInline)
+
     # setting type value to MC (Move to Columns)
     def get_form(self, request, obj=None, **kwargs):
         form = super(MatchTermsGameAdmin, self).get_form(request, obj, **kwargs)
