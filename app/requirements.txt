@@ -23,7 +23,7 @@ social-auth-core==3.2.0
 # sqlparse==0.3.1
 # urllib3==1.25.9
 pylint-django==2.3.0
-Pillow==8.1.2
+Pillow==8.2.0
 ffmpeg-python==0.2.0
 django-crispy-forms==1.9.2
 django-admin-sortable2==0.7.7
