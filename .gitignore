@@ -222,6 +222,7 @@ Thumbs.db
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
+.idea/**/dataSources.xml
 .idea/**/dataSources.local.xml
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
@@ -336,5 +337,5 @@ secrets
 secrets-dev
 secrets-production
 env
-env-dev
-env-production
+env-dev*
+env-production*
