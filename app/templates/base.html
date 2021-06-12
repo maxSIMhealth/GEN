@@ -2,6 +2,7 @@
 {% load gravatar %}
 {% load i18n %}
 {% load sri %}
+{% load django_bootstrap5 %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
@@ -13,7 +14,7 @@
     <meta charset="utf-8">
     <title>{% block title %}GEN{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
-    {% sri_static "css/bootstrap.min.css" %}
+    {% bootstrap_css %}
     {% sri_static "css/custom.css" %}
     {% sri_static "css/shepherd.css" %}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -116,13 +117,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-Qg00WFl9r0Xr6rUqNLv1ffTSSKEFFCDCKVyHZ+sVt8KuvG99nWw5RNvbhuKgif9z" crossorigin="anonymous"></script>
 {% sri_static "js/popper.min.js" %}
-{% sri_static "js/bootstrap.min.js" %}
+{% bootstrap_javascript %}
 {% sri_static "js/shepherd.min.js" %}
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% comment %}
     {% url 'javascript-catalog' as javascript_catalog_url %}
     {% sri_static javascript_catalog_url %}
-    {% endcomment %}
+{% endcomment %}
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
