@@ -44,7 +44,9 @@ RUN addgroup -S gen --gid 1000 \
     && adduser -S -G gen -h /gen --uid 1000 -D gen
 
 RUN set -ex \
-    && apk add --no-cache ffmpeg libmagic gettext libpq
+    && apk update \
+    && apk add --no-cache ffmpeg libmagic gettext libpq \
+    && apk upgrade
 
 USER gen
 
