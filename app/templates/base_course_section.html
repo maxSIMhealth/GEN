@@ -26,9 +26,12 @@
             <div class="card mb-3" id="sections-navbar">
                 <nav class="card-header navbar navbar-expand-lg navbar-light">
                     <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
-                    <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#sidebar" aria-controls="sidebar"
+                            aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
                         <span class="navbar-toggler-icon"></span>
-                    </a>
+                        {% trans "Toggle" %}
+                    </button>
                 </nav>
                 <div class="collapse d-lg-block navbar-collapse" id="sidebar">
                     <ul class="list-group-flush navbar-nav">
