@@ -66,13 +66,13 @@
                   <span class="text-muted">{{ item.name }}</span>
                 {% endif %}
                 {% if user|has_participated:item.discussion %}
-                  <span class="badge badge-success badge-pill float-right">{% trans "Participated" %}</span>
+                  <span class="badge rounded-pill bg-success float-right">{% trans "Participated" %}</span>
                 {% else %}
-                  <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
+                  <span class="badge rounded-pill bg-warning text-dark float-right">{% trans "To do" %}</span>
                 {% endif %}
 
                 {% comment %}
-                <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
+                <span class="badge rounded-pill bg-danger float-right">{% trans "Did not submit" %}</span>
                 {% endcomment %}
 
                 {% if not course.blind_data %}

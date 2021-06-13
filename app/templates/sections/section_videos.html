@@ -87,9 +87,9 @@
                                                         {% endif %}
 
                                                         {% if quiz_details.score.exists %}
-                                                            <span class="badge badge-success badge-pill">{% trans "Submitted" %}</span>
+                                                            <span class="badge rounded-pill bg-success">{% trans "Submitted" %}</span>
                                                         {% else %}
-                                                            <span class="badge badge-warning badge-pill">{% trans "To do" %}</span>
+                                                            <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
                                                         {% endif %}
                                                     </li>
                                                 {% endif %}

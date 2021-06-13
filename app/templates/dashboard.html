@@ -48,11 +48,11 @@
                             {% get_course_status user course as course_status %}
                             <span style="font-size: 1.2em">
                                 {% if course_status == 0 %}
-                                    <span class="badge badge-warning badge-pill">{% trans "Not started" %}</span>
+                                    <span class="badge rounded-pill bg-warning text-dark">{% trans "Not started" %}</span>
                                 {% elif course_status == 1 %}
-                                    <span class="badge badge-primary badge-pill">{% trans "Started" %}</span>
+                                    <span class="badge rounded-pill bg-primary">{% trans "Started" %}</span>
                                 {% else %}
-                                    <span class="badge badge-success badge-pill">{% trans "Completed" %}</span>
+                                    <span class="badge rounded-pill bg-success">{% trans "Completed" %}</span>
                                 {% endif %}
                             </span>
                         </div>

@@ -50,22 +50,21 @@
                                     {% endif %}
                                 {% endif %}
                                 {% if quiz_details.scoreset.exists %}
-                                    <div class="float-right">
-                                        <span class="badge badge-primary badge-pill">{% trans "Submitted" %}</span>
+                                    <div class="float-end">
+                                        <span class="badge rounded-pill bg-primary">{% trans "Submitted" %}</span>
                                         {% if quiz_details.scoreset.get.completed %}
-                                            <span class="badge badge-success badge-pill">{% trans "Approved" %}</span>
+                                            <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
                                         {% else %}
-                                            <span class="badge badge-danger badge-pill">{% trans "Failed" %}</span>
+                                            <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
                                         {% endif %}
                                     </div>
                                 {% else %}
-                                    <div class="float-right">
-                                        <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
+                                    <div class="float-end">
+                                        <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
                                     </div>
                                 {% endif %}
-
                                 {% comment %}
-                                <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
+                                <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
                                 {% endcomment %}
                                 {% if item.description %}
                                     <p class="mb-0">
