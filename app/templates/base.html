@@ -124,9 +124,9 @@
 {% endblock footer %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-Qg00WFl9r0Xr6rUqNLv1ffTSSKEFFCDCKVyHZ+sVt8KuvG99nWw5RNvbhuKgif9z" crossorigin="anonymous"></script>
-{% sri_static "js/popper.min.js" %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 {% bootstrap_javascript %}
-{% sri_static "js/shepherd.min.js" %}
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.js" integrity="sha384-3A5gQlOj3qV5ZlOxNleXClvoa3C6pd+qgoiG1+zs5PGx6QkFAIvAxIDFnguYCqKp" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% comment %}
     {% url 'javascript-catalog' as javascript_catalog_url %}
