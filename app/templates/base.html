@@ -100,7 +100,7 @@
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <input name="next" type="hidden" value="{{ redirect_to }}">
                 <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="custom-select custom-select-sm" style="width:200px">
+                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}" style="width:200px;display: inline-block">
                     {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
                             {{ language.name_local|capfirst }} ({{ language.code }})
