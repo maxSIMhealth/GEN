@@ -63,52 +63,53 @@
         </div>
     </div>
 
-    {% if course.show_scoreboard %}
-        <div class="card-deck">
-        <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
-            <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
-                    <li class="list-group-item">{% trans "Comments" %}: {% countscore_course user.id course.pk "comment" %}</li>
-                    <li class="list-group-item">{% trans "Quizzes" %}: {% countscore_course user.id course.pk "quiz" %}</li>
-                </ul>
+    <div class="card-deck">
+        {% if course.show_scoreboard %}
+            <div class="card gamification-card">
+                <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
+                        <li class="list-group-item">{% trans "Comments" %}: {% countscore_course user.id course.pk "comment" %}</li>
+                        <li class="list-group-item">{% trans "Quizzes" %}: {% countscore_course user.id course.pk "quiz" %}</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
-    {% if course.show_leaderboard %}
-        <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
-            <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
-                    <li class="list-group-item">{% trans "Comments" %}: #{% rank_get user.id course.pk "comment" %}</li>
-                    <li class="list-group-item">{% trans "Quizzes" %}: #{% rank_get user.id course.pk "quiz" %}</li>
-                </ul>
+        {% if course.show_leaderboard %}
+            <div class="card gamification-card">
+                <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
+                        <li class="list-group-item">{% trans "Comments" %}: #{% rank_get user.id course.pk "comment" %}</li>
+                        <li class="list-group-item">{% trans "Quizzes" %}: #{% rank_get user.id course.pk "quiz" %}</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
-    {% if course.show_progress_tracker %}
-        <div class="card gamification-card">
-            <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
-            <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                    {% trans "Sections completed" as tracker_sections %}
-                    {% trans "You have not completed any section yet." as tracker_sections_empty%}
-                    {% include "partials/progress_tracker_item.html" with title=tracker_sections progress=sections_progress zero_progress=tracker_sections_empty only %}
+        {% if course.show_progress_tracker %}
+            <div class="card gamification-card">
+                <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% trans "Sections completed" as tracker_sections %}
+                        {% trans "You have not completed any section yet." as tracker_sections_empty%}
+                        {% include "partials/progress_tracker_item.html" with title=tracker_sections progress=sections_progress zero_progress=tracker_sections_empty only %}
 
-                    {% trans "Discussions participation" as tracker_discussions %}
-                    {% trans "This course has no discussions." as tracker_discussions_empty%}
-                    {% include "partials/progress_tracker_item.html" with title=tracker_discussions progress=discussions_progress zero_progress=tracker_discussions_empty alt_bg_color="bg-info" %}
+                        {% trans "Discussions participation" as tracker_discussions %}
+                        {% trans "This course has no discussions." as tracker_discussions_empty%}
+                        {% include "partials/progress_tracker_item.html" with title=tracker_discussions progress=discussions_progress zero_progress=tracker_discussions_empty alt_bg_color="bg-info" %}
 
-                    {% trans "Quizzes answered" as tracker_quizzes %}
-                    {% trans "This course has no quizzes." as tracker_quizzes_empty%}
-                    {% include "partials/progress_tracker_item.html" with title=tracker_quizzes progress=quizzes_progress zero_progress=tracker_quizzes_empty alt_bg_color="bg-warning"%}
-                </ul>
+                        {% trans "Quizzes answered" as tracker_quizzes %}
+                        {% trans "This course has no quizzes." as tracker_quizzes_empty%}
+                        {% include "partials/progress_tracker_item.html" with title=tracker_quizzes progress=quizzes_progress zero_progress=tracker_quizzes_empty alt_bg_color="bg-warning"%}
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 
 {% endblock content %}
