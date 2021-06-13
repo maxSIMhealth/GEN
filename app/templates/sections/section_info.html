@@ -27,28 +27,28 @@
             <tbody>
             {% if user|is_instructor:course %}
                 <tr>
-                    <th scope="row" class="th-small pl-4">{% trans "Code" %}</th>
-                    <td class="pr-4">{{course.code}}</td>
+                    <th scope="row" class="th-small ps-3">{% trans "Code" %}</th>
+                    <td class="pe-4">{{course.code}}</td>
                 </tr>
             {% endif %}
 
             {% if course.start_date %}
                 <tr>
-                    <th scope="row" class="th-small pl-4">{% trans "Start" %}</th>
-                    <td class="pr-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
+                    <th scope="row" class="th-small ps-3">{% trans "Start" %}</th>
+                    <td class="pe-4">{{course.start_date}}<br /><small>{{ course.start_date|naturaltime}}</small></td>
                 </tr>
             {% endif %}
 
             {% if course.end_date %}
                 <tr>
-                    <th scope="row" class="th-small pl-4">{% trans "End" %}</th>
-                    <td class="pr-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
+                    <th scope="row" class="th-small ps-3">{% trans "End" %}</th>
+                    <td class="pe-4">{{course.end_date}}<br /><small>{{ course.end_date|naturaltime}}</small></td>
                 </tr>
             {% endif %}
 
             <tr>
-                <th scope="row" class="th-small pl-4">{% trans "Description" %}</th>
-                <td class="pr-4">{{ course.description|safe|linebreaksbr }}</td>
+                <th scope="row" class="th-small ps-3">{% trans "Description" %}</th>
+                <td class="pe-4">{{ course.description|safe|linebreaksbr }}</td>
             </tr>
             </tbody>
         </table>
