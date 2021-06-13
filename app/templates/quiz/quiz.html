@@ -78,27 +78,27 @@
                                 {% endif %}
 
                                 {% if question.question_type == 'M' %}
-                                    <ul class="list-group mb-2">
+                                    <ul class="list-group list-group-numbered mb-2">
                                         {% for choice in question.answers.all %}
                                             <li class="list-group-item">
                                                 <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                                                     <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                                           class="form-check-input me-1"
                                                            name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
                                                            value="{{ choice.pk }}"> {{ choice.content }}
                                                 </label>
                                             </li>
                                         {% endfor %}
-
-                                        {% if question.multiple_correct_answers %}
-                                            <li class="list-group-item">
+                                        <div class="mt-2">
+                                            {% if question.multiple_correct_answers %}
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
                                                    onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
                                                    onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
-                                            </li>
-                                        {% endif %}
-
+                                            {% endif %}
+                                        </div>
                                     </ul>
+
 
                                 {% elif question.question_type == 'L' %}
                                     {% with answer=question.likertanswer %}

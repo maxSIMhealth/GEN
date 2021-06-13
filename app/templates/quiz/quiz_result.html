@@ -96,7 +96,7 @@
                 <div class="card-body">
                 {% if question.question_type == 'M' %}
                     {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
-                    <ul class="list-group mb-3">
+                    <ul class="list-group list-group-numbered">
                         {% for choice in question.answers.all %}
                             {% if quiz.show_correct_answers %}
                                 {% if question.multiple_correct_answers %}
@@ -117,6 +117,7 @@
                             {% endif %}
                         <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                             <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                   class="form-check-input me-1"
                                    value="{{ choice.pk }}" disabled
                                     {% for user_answer in attempt_mcquestion %}
                                         {% if question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
