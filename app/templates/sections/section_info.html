@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div class="card-deck">
+    <div class="card-group">
         {% if course.show_scoreboard %}
             <div class="card gamification-card">
                 <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
@@ -76,7 +76,6 @@
                 </div>
             </div>
         {% endif %}
-
         {% if course.show_leaderboard %}
             <div class="card gamification-card">
                 <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
@@ -89,7 +88,6 @@
                 </div>
             </div>
         {% endif %}
-
         {% if course.show_progress_tracker %}
             <div class="card gamification-card">
                 <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
