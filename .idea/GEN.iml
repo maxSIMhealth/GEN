@@ -28,6 +28,7 @@
     <orderEntry type="library" name="vue" level="application" />
     <orderEntry type="library" name="sortablejs" level="application" />
     <orderEntry type="library" name="vuedraggable" level="application" />
+    <orderEntry type="library" name="shepherd.js" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
