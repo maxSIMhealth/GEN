@@ -9,11 +9,17 @@
     <div class="card-body bg-light text-dark">
         <h3 class="card-title">{% trans "Confirmation" %}</h3>
         <p class="card-text">{% trans "Are you sure that you want to <strong>unpublish</strong> this video? This will hide it from the course learners." %}</p>
-        <div class="media border mb-2 pb-2 bg-white">
-            <img src="{{ video.thumbnail.url }}" class="mr-3" alt="{% trans 'Video thumbnail' %}">
-            <div class=" media-body">
-                <h5 class="mt-2">{{ video.name }}</h5>
-                {{ video.description|linebreaksbr }}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img src="{{ video.thumbnail.url }}" class="me-3" alt="{% trans 'Video thumbnail' %}">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body ps-0">
+                        <h5 class="card-title">{{ video.name }}</h5>
+                        <p class="card-text">{{ video.description|linebreaksbr }}</p>
+                    </div>
+                </div>
             </div>
         </div>
         <form method="post" novalidate>
