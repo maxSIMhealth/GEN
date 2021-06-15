@@ -21,9 +21,9 @@
 {% endblock content_title %}
 
 {% block content %}
-    <div class="card mb-3">
+    <div class="card mb-3" id="course-details">
         <h5 class="card-header bg-light">{% trans "Course details" %}</h5>
-        <table class="table course-info mb-0">
+        <table class="table mb-0 course-info">
             <tbody>
             {% if user|is_instructor:course %}
                 <tr>

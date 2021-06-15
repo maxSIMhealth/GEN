@@ -7,6 +7,9 @@ body {
 .list-group-flush.navbar-nav :not(:last-child) {
   border-bottom: 1px solid rgba(0,0,0,.125);
 }
+#sidebar .list-group-item.disabled {
+    border: none;
+}
 
 /* section: quiz */
 .section-quiz .list-group-item div span.badge {
@@ -30,10 +33,15 @@ body {
 }
 
 /* course home (info) */
+#course-details .card-footer {
+    border-top: none;
+}
+
 .course-info tr:first-child td,
 .course-info tr:first-child th{
     border-top: none;
 }
+
 .course-info .th-small {
     width: 12%;
 }
