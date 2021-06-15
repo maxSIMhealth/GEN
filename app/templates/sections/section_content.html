@@ -37,13 +37,13 @@
     {% endif %}
 
     {% if section_items %}
-        <div class="card-deck">
+        <div class="card-group">
             <div class="card quiz">
                 <div class="card-body">
                     <div class="quiz-items-container">
                         {% for item in section_items %}
                             <div class="quiz-item" style="display: none;">
-                                <h4>{{ item.name }}</h4>
+                                <div class="fs-4">{{ item.name }}</div>
                                 {% if item.type == 'Video' %}
                                     {% include 'content/video.html' with video=item.videofile %}
                                 {% elif item.type == 'Game' and item.game.type == 'MC' %}
@@ -99,4 +99,5 @@
 
 {% block javascript_bottom %}
     {% sri_static "js/pagination.js" %}
+    {% sri_static "js/help-guide-course.js" %}
 {% endblock javascript_bottom %}

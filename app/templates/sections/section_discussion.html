@@ -28,15 +28,15 @@
   {% endif %}
 
   <div class="card mb-3">
-    <h5 class="card-header bg-light d-flex">
-      <span class="pt-1 mr-auto">{% trans "Discussion boards" %}</span>
+    <div class="card-header bg-light d-flex fs-5">
+      <span class="pt-1 me-auto">{% trans "Discussion boards" %}</span>
       {% if user|is_instructor:course %}
         <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
           <span class="btn-label"><i class="fas fa-plus"></i></span>
           {% trans "Create new" %}
         </a>
       {% endif %}
-    </h5>
+    </div>
     <ul class="list-group list-group-flush">
       {% if section_items.all %}
         {% for item in section_items.all %}
@@ -46,15 +46,15 @@
             <div class="d-flex">
 
               {% if gamification %}
-                <div class="flex-shrink-1 pr-3">
+                <div class="flex-shrink-1 pe-2">
                   {% if discussion_details.enabled %}
                     {% if discussion_details.voted %}
-                    <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}" class="btn btn-primary" aria-label="Add vote"><i class="fas fa-thumbs-up"></i></a>
                     {% else %}
-                    <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}" class="btn btn-outline-primary" aria-label="Remove vote"><i class="far fa-thumbs-up"></i></a>
                     {% endif %}
                   {% else %}
-                    <a href="#" class="btn btn-outline-secondary disabled"><i class="far fa-thumbs-up"></i></a>
+                    <a href="#" class="btn btn-outline-secondary disabled" aria-label="Voting disabled"><i class="far fa-thumbs-up"></i></a>
                   {% endif %}
                 </div>
               {% endif %}
@@ -66,13 +66,13 @@
                   <span class="text-muted">{{ item.name }}</span>
                 {% endif %}
                 {% if user|has_participated:item.discussion %}
-                  <span class="badge badge-success badge-pill float-right">{% trans "Participated" %}</span>
+                  <span class="badge rounded-pill bg-success float-end">{% trans "Participated" %}</span>
                 {% else %}
-                  <span class="badge badge-warning badge-pill float-right">{% trans "To do" %}</span>
+                  <span class="badge rounded-pill bg-warning text-dark float-end">{% trans "To do" %}</span>
                 {% endif %}
 
                 {% comment %}
-                <span class="badge badge-danger badge-pill float-right">{% trans "Did not submit" %}</span>
+                <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
                 {% endcomment %}
 
                 {% if not course.blind_data %}

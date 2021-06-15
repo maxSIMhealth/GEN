@@ -10,9 +10,9 @@
 
 {% block content %}
 
-<div class="card-deck">
+<div class="card-group">
     <div class="card bg-secondary text-white">
-        <h5 class="card-header bg-dark">{% trans "Your info" %}</h5>
+        <div class="card-header bg-dark fs-5">{% trans "Your info" %}</div>
         <div class="card-body">
             <form method="post" novalidate>
                 {% csrf_token %}
@@ -22,9 +22,9 @@
         </div>
     </div>
     <div class="card">
-        <h5 class="card-header bg-light">{% trans "Social accounts" %}</h5>
+        <div class="card-header bg-light fs-5">{% trans "Social accounts" %}</div>
         <div class="card-body">
-            <h3>GitHub</h3>
+            <div class="fs-3">GitHub</div>
             {% if github_login %}
                 <p>{% trans "Connected as" %} <a href="https://github.com/{{ github_login.extra_data.login }}/" target="_blank">{{ github_login.extra_data.login }}</a></p>
                 {% if can_disconnect %}
@@ -42,7 +42,7 @@
                 <a href="{% url 'social:begin' 'github' %}">{% trans "Connect to GitHub" %}</a>
             {% endif %}
 
-            <h3>Google</h3>
+            <div class="fs-3">Google</div>
             {% if google_login %}
                 <p>
                   {% blocktrans with google_uid=google_login.uid google_first_name=google_login.user.first_name google_last_name=google_login.user.last_name %}

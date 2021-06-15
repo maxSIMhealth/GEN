@@ -3,7 +3,7 @@
 <div id="game-{{ id }}">
     <div class="card-group mt-2 mb-2">
         <div class="card m-0">
-            <h6 class="card-header"><% info.source_name %></h6>
+            <div class="card-header fs-6"><% info.source_name %></div>
             <div class="card-body">
                 <draggable id="list_source" class="list-group" group="items" v-model="source_list"
                            style="height: 100%; min-height: 60px">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="card m-0">
-            <h6 class="card-header"><% info.choice1_name %></h6>
+            <div class="card-header fs-6"><% info.choice1_name %></div>
             <div class="card-body">
                 <draggable id="list_column1" class="list-group" group="items" v-model="choice1_user"
                            style="height: 100%; min-height: 60px">
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="card m-0">
-            <h6 class="card-header"><% info.choice2_name %></h6>
+            <div class="card-header fs-6"><% info.choice2_name %></div>
             <div class="card-body">
                 <draggable id="list_column2" class="list-group" group="items" v-model="choice2_user"
                            style="height: 100%; min-height: 60px">

@@ -147,5 +147,5 @@ function toggleCheckboxes(event, action) {
     item.checked = false;
   	});
   }
-  event.preventDefault();
+  // event.preventDefault();
 }

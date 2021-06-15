@@ -9,7 +9,7 @@
 {% endif %}
 
 {% for field in form %}
-  <div class="form-group">
+  <div class="mb-2">
     {{ field.label_tag }}
 
     {% render_field field class=field|input_class %}
@@ -21,9 +21,9 @@
     {% endfor %}
 
     {% if field.help_text %}
-      <small class="form-text text-muted">
+      <div class="form-text text-muted">
         {{ field.help_text|safe }}
-      </small>
+      </div>
     {% endif %}
 
   </div>

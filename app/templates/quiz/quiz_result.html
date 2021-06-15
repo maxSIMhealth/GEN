@@ -38,9 +38,9 @@
                 {% trans "Assessment:" %}
                     <strong style="font-size:1.2em">
                     {% if user_quiz_score.completed %}
-                        <span class="badge badge-success badge-pill">{% trans "Approved" %}</span>
+                        <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
                     {% else %}
-                        <span class="badge badge-danger badge-pill">{% trans "Failed" %}</span>
+                        <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
                     {% endif %}
                     </strong>
                 </p>
@@ -71,14 +71,14 @@
         <div class="card-header bg-light">{% trans "Your submission" %}</div>
         <div class="card-body">
         {% for question in questions %}
-            <div class="card mr-0 mb-3 ml-0">
-                <h6 class="card-header">
+            <div class="card mb-3">
+                <div class="card-header fs-6">
                     {% if question.question_type == 'H' or question.question_type == 'O' %}
                         {{ question.content }}
                     {% else %}
                         {{ question.content }} (<em>Value: {{ question.value }}</em>)
                     {% endif %}
-                </h6>
+                </div>
                 {% if quiz.check_score %}
                     {% for attempt in attempts %}
                         {% if attempt.question_id == question.id and not question.question_type == 'O'%}
@@ -96,7 +96,7 @@
                 <div class="card-body">
                 {% if question.question_type == 'M' %}
                     {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
-                    <ul class="list-group mb-3">
+                    <ul class="list-group list-group-numbered">
                         {% for choice in question.answers.all %}
                             {% if quiz.show_correct_answers %}
                                 {% if question.multiple_correct_answers %}
@@ -117,6 +117,7 @@
                             {% endif %}
                         <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                             <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                   class="form-check-input me-1"
                                    value="{{ choice.pk }}" disabled
                                     {% for user_answer in attempt_mcquestion %}
                                         {% if question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
@@ -168,12 +169,12 @@
                     {% if question.question_type == 'H' %}
                         <span>{{ question.explanation }}</span>
                     {% else %}
-                        <div class="card bg-light mr-0 ml-0 mb-0 mt-3">
+                        <div class="card bg-light mb-0 mt-3">
                             <div class="card-body">
-                                <h6 class="card-subtitle bg-light">
+                                <div class="card-subtitle bg-light fs-6">
                                     <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
                                         <span>{{ question.explanation }}</span></span>
-                                </h6>
+                                </div>
                             </div>
                         </div>
                     {% endif %}

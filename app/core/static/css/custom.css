@@ -3,9 +3,18 @@ body {
     background-color: #f8f9fa;
 }
 
+/* navbar */
+.navbar-dark .navbar-toggler {
+    color: rgba(255, 255, 255, 1.0);
+}
+
 /* section list (sidebar) */
 .list-group-flush.navbar-nav :not(:last-child) {
   border-bottom: 1px solid rgba(0,0,0,.125);
+}
+#sidebar .list-group-item.disabled {
+    border: none;
+    color: #51585e;
 }
 
 /* section: quiz */
@@ -30,10 +39,15 @@ body {
 }
 
 /* course home (info) */
+#course-details .card-footer {
+    border-top: none;
+}
+
 .course-info tr:first-child td,
 .course-info tr:first-child th{
     border-top: none;
 }
+
 .course-info .th-small {
     width: 12%;
 }

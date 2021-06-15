@@ -63,10 +63,12 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "widget_tweaks",
     "embed_video",
+    "django_bootstrap5",
     "vote",
     "debug_toolbar",
     "social_django",
     "crispy_forms",
+    "crispy_bootstrap5",
     "adminsortable2",
     "django_extensions",
     "import_export",
@@ -86,7 +88,9 @@ INSTALLED_APPS = [
     "games"
 ]
 
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

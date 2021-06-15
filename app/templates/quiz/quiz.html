@@ -13,7 +13,7 @@
 {% endblock content_title %}
 
 {% block content %}
-    <div class="card-deck">
+    <div class="card-group">
         {% if quiz.video %}
             <div class="card bg-secondary text-white video">
                 <div class="card-header bg-dark">{% trans "Video" %}</div>
@@ -21,7 +21,7 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <div class="embed-responsive embed-responsive-16by9">
+                            <div class="ratio ratio-16x9">
                                 <video playsinline poster="{{ quiz.video.thumbnail.url }}" controls>
                                     <source src="{{ quiz.video.file.url }}" type="video/mp4">
                                     {% trans "Sorry, your browser does not support embedded videos." %}
@@ -36,7 +36,7 @@
 
         <div class="card quiz">
             <div class="card-header bg-light">
-                <h5 class="text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</h5>
+                <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</div>
                 <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
                     <ul class="pagination mb-0">
                         <li id="quiz-navigation-previous" class="page-item disabled">
@@ -66,9 +66,9 @@
                         </div>
                         {% for question in questions %}
                             <div class="quiz-item">
-                                <h6>
+                                <div class="fs-6">
                                     <strong>{{ question.content }}</strong>
-                                </h6>
+                                </div>
                                 {% if question.question_type == 'H' %}
                                     <hr/>
 
@@ -78,27 +78,27 @@
                                 {% endif %}
 
                                 {% if question.question_type == 'M' %}
-                                    <ul class="list-group mb-2">
+                                    <ul class="list-group list-group-numbered mb-2">
                                         {% for choice in question.answers.all %}
                                             <li class="list-group-item">
                                                 <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                                                     <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                                           class="form-check-input me-1"
                                                            name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
                                                            value="{{ choice.pk }}"> {{ choice.content }}
                                                 </label>
                                             </li>
                                         {% endfor %}
-
-                                        {% if question.multiple_correct_answers %}
-                                            <li class="list-group-item">
+                                        <div class="mt-2">
+                                            {% if question.multiple_correct_answers %}
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
                                                    onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
                                                    onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
-                                            </li>
-                                        {% endif %}
-
+                                            {% endif %}
+                                        </div>
                                     </ul>
+
 
                                 {% elif question.question_type == 'L' %}
                                     {% with answer=question.likertanswer %}

@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load show_sections %}
 {% load sri %}
+{% load django_bootstrap5 %}
 
 {% block title %}GEN - {{course.name}} {% endblock title %}
 
@@ -17,7 +18,7 @@
 
     <div class="card bg-dark mb-3" id="course-name">
         <div class="card-header">
-            <h5 class="card-text text-white p-0">{{ course.name }}</h5>
+            <div class="card-text text-white fs-5 p-0">{{ course.name }}</div>
         </div>
     </div>
 
@@ -25,18 +26,21 @@
         <div class="col-lg-2 order-lg-1">
             <div class="card mb-3" id="sections-navbar">
                 <nav class="card-header navbar navbar-expand-lg navbar-light">
-                    <h5 href="#" class="mb-0">{% trans "Sections" %}</h5>
-                    <a href="#" class="d-lg-none d-xl-none p-0" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
+                    <div href="#" class="fs-5 mb-0">{% trans "Sections" %}</div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#sidebar" aria-controls="sidebar"
+                            aria-expanded="false" aria-label="{% trans 'Toggle sections list' %}">
                         <span class="navbar-toggler-icon"></span>
-                    </a>
+                        {% trans "Toggle" %}
+                    </button>
                 </nav>
                 <div class="collapse d-lg-block navbar-collapse" id="sidebar">
-                    <ul class="list-group-flush navbar-nav">
+                    <div class="list-group-flush navbar-nav">
                         {% block content_tabs %}
                             <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
                             {% show_sections %}
                         {% endblock content_tabs %}
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,15 +51,13 @@
                 {% endblock content_title %}
             </h2>
 
-
             {% if messages %}
                 {% include 'partials/messages.html' %}
             {% endif %}
 
             {% if section_status.completed %}
-                <div class="alert alert-success" role="alert">
-                  Congratulations! You have completed this section.
-                </div>
+                {% trans "Congratulations! You have completed this section." as congratulations %}
+                {% bootstrap_alert congratulations alert_type="success" dismissible=False %}
             {% endif %}
 
             {% block content %}

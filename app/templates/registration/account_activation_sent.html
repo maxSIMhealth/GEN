@@ -7,7 +7,7 @@
 
 {% block content %}
   <div class="card-body bg-light text-dark">
-    <h3 class="card-title">{% trans "Activation email sent" %}</h3>
+    <div class="card-title fs-3">{% trans "Activation email sent" %}</div>
     <p class="card-text">{% trans "An activation email was sent with a confirmation link. Please check your email account Inbox and Spam folders, and click on the link contained in the email to complete the registration." %}</p>
     <a href="{% url 'home' %}" class="btn btn-primary btn-block">{% trans "Return to login page" %}</a>
   </div>

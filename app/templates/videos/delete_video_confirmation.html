@@ -6,20 +6,27 @@
 {% block title %}GEN - {% trans "Delete video confirmation" %}{% endblock title %}
 
 {% block content %}
-  <div class="card-body bg-light text-dark">
-    <h3 class="card-title">{% trans "Confirmation" %}</h3>
-    <p class="card-text">{% trans "Are you sure that you want to delete the following video?" %}</p>
-    <div class="media border mb-2 pb-2">
-      <img src="{{ video.thumbnail.url }}" class="mr-3" alt="{% trans 'Video thumbnail' %}">
-      <div class="media-body">
-        <h5 class="mt-2">{{video}}</h5>
-        {{video.description|linebreaksbr}}
-      </div>
+    <div class="card-body bg-light text-dark">
+        <div class="card-title fs-3">{% trans "Confirmation" %}</div>
+        <p class="card-text">{% trans "Are you sure that you want to delete the following video?" %}</p>
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img src="{{ video.thumbnail.url }}" class="me-3" alt="{% trans 'Video thumbnail' %}">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body ps-0">
+                        <div class="card-title fs-5">{{ video.name }}</div>
+                        <p class="card-text">{{ video.description|linebreaksbr }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <button type="submit" name="confirm" value="confirm"
+                    class="btn btn-danger">{% trans "Yes, delete video" %}</button>
+            <a href="{% url 'section' course.pk section.pk %}" class="btn btn-secondary">{% trans "No, cancel" %}</a>
+        </form>
     </div>
-    <form method="post" novalidate>
-        {% csrf_token %}
-        <button type="submit" name="confirm" value="confirm" class="btn btn-danger">{% trans "Yes, delete video" %}</button>
-        <a href="{% url 'section' course.pk section.pk %}" class="btn btn-secondary">{% trans "No, cancel" %}</a>
-      </form>
-  </div>
 {% endblock content %}

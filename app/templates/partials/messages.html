@@ -1,8 +1,5 @@
+{% load django_bootstrap5 %}
+
 {% for message in messages %}
-  <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+    {% bootstrap_alert message alert_type=message.tags %}
 {% endfor %}

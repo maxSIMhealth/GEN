@@ -1,15 +1,17 @@
 {% load i18n %}
 
 <div id="game-{{ id }}">
-    <div v-for="(item, index) in items" class="card mb-3 ml-0 mr-0">
+    <div v-for="(item, index) in items" class="card mb-2">
         <div class="card-body">
             <p class="card-text">
                 <% item.fields.text %>
             </p>
         </div>
         <div class="card-footer">
-            <select class="custom-select"
-                    v-model="answers[index]">
+            <select class="form-select"
+                    v-model="answers[index]"
+                    aria-label="{% trans "List of dimensions" %}"
+            >
                 <option selected :value="undefined">
                     {% trans "Choose..." %}
                 </option>
