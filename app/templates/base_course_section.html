@@ -35,12 +35,12 @@
                     </button>
                 </nav>
                 <div class="collapse d-lg-block navbar-collapse" id="sidebar">
-                    <ul class="list-group-flush navbar-nav">
+                    <div class="list-group-flush navbar-nav">
                         {% block content_tabs %}
                             <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
                             {% show_sections %}
                         {% endblock content_tabs %}
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,7 +50,6 @@
                     {{ section.name }}
                 {% endblock content_title %}
             </h2>
-
 
             {% if messages %}
                 {% include 'partials/messages.html' %}

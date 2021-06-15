@@ -49,12 +49,12 @@
                 <div class="flex-shrink-1 pe-2">
                   {% if discussion_details.enabled %}
                     {% if discussion_details.voted %}
-                    <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}" class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}" class="btn btn-primary" aria-label="Add vote"><i class="fas fa-thumbs-up"></i></a>
                     {% else %}
-                    <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}"  class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
+                    <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}" class="btn btn-outline-primary" aria-label="Remove vote"><i class="far fa-thumbs-up"></i></a>
                     {% endif %}
                   {% else %}
-                    <a href="#" class="btn btn-outline-secondary disabled"><i class="far fa-thumbs-up"></i></a>
+                    <a href="#" class="btn btn-outline-secondary disabled" aria-label="Voting disabled"><i class="far fa-thumbs-up"></i></a>
                   {% endif %}
                 </div>
               {% endif %}

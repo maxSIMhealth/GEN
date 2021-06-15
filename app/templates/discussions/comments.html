@@ -30,10 +30,10 @@
                         {% checkvotes_discussion user.id discussion.pk as discussion_vote_status %}
                         {% if discussion_vote_status %}
                             <a href="{% url 'discussion_clearvote' course.pk section.pk discussion.pk %}"
-                               class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                               class="btn btn-primary" aria-label="Remove vote"><i class="fas fa-thumbs-up"></i></a>
                         {% else %}
                             <a href="{% url 'discussion_upvote' course.pk section.pk discussion.pk %}"
-                               class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
+                               class="btn btn-outline-primary" aria-label="Add vote"><i class="far fa-thumbs-up"></i></a>
                         {% endif %}
                     </div>
                 {% else %}
@@ -102,10 +102,10 @@
                                 <div class="col-1 text-center">
                                     {% if comment_vote_status %}
                                         <a href="{% url 'comment_clearvote' course.pk section.pk discussion.pk comment.pk %}"
-                                           class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                                           class="btn btn-primary" aria-label="Remove vote"><i class="fas fa-thumbs-up"></i></a>
                                     {% else %}
                                         <a href="{% url 'comment_upvote' course.pk section.pk discussion.pk comment.pk %}"
-                                           class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
+                                           class="btn btn-outline-primary" aria-label="Add vote"><i class="far fa-thumbs-up"></i></a>
                                     {% endif %}
                                     {% comment %}
                                         <div class="mt-1">{{ comment.vote_score }}</div>
