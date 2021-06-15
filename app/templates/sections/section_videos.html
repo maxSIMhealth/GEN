@@ -39,7 +39,7 @@
 
         <div class="card mb-3 section-video">
             <h5 class="card-header bg-light d-flex">
-                <span class="pt-1 mr-auto">{% trans "Videos" %}</span>
+                <span class="pt-1 me-auto">{% trans "Videos" %}</span>
                 {% if course_instructor %}
                     <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
                         <span class="btn-label"><i class="fas fa-file-upload"></i></span>
@@ -53,7 +53,7 @@
                         <li class="list-group-item">
                             <div class="d-flex">
                                 {% if section.show_thumbnails %}
-                                    <div class="flex-shrink-1 pr-3">
+                                    <div class="flex-shrink-1 pe-2">
                                         {% if item.videofile.thumbnail %}
                                             <a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}"><img src="{{ item.videofile.thumbnail.url }}" class="thumbnail" alt="{% trans 'Video thumbnail' %}" class="video-thumbnail"></a>
                                         {% else %}

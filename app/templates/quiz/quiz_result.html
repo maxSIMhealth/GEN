@@ -71,7 +71,7 @@
         <div class="card-header bg-light">{% trans "Your submission" %}</div>
         <div class="card-body">
         {% for question in questions %}
-            <div class="card mr-0 mb-3 ml-0">
+            <div class="card mb-3">
                 <h6 class="card-header">
                     {% if question.question_type == 'H' or question.question_type == 'O' %}
                         {{ question.content }}
@@ -169,7 +169,7 @@
                     {% if question.question_type == 'H' %}
                         <span>{{ question.explanation }}</span>
                     {% else %}
-                        <div class="card bg-light mr-0 ml-0 mb-0 mt-3">
+                        <div class="card bg-light mb-0 mt-3">
                             <div class="card-body">
                                 <h6 class="card-subtitle bg-light">
                                     <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
