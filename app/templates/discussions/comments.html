@@ -94,65 +94,67 @@
                 {% comment %} Using custom template tag to check if the user voted {% endcomment %}
                 {% checkvotes_comment user.id comment.pk as comment_vote_status %}
 
-                {% comment %}<li class="list-group-item {{comment.author|is_instructor:course|yesno:'list-group-item-warning,'}} {{comment.author|has_group:'admin'|yesno:'list-group-item-danger,'}}">{% endcomment %}
-                <li class="list-group-item {{ comment.author|is_instructor:course|yesno:'list-group-item-warning,' }} {{ comment.author.is_staff|yesno:'list-group-item-danger,' }}">
-                    <div class="row">
-                        {% if gamification %}
-                            <div class="col col-2 col-sm-2 col-md-1 col-lg-auto text-center">
-                                {% if comment_vote_status %}
-                                    <a href="{% url 'comment_clearvote' course.pk section.pk discussion.pk comment.pk %}"
-                                       class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
-                                {% else %}
-                                    <a href="{% url 'comment_upvote' course.pk section.pk discussion.pk comment.pk %}"
-                                       class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
-                                {% endif %}
-                                {% comment %}
-                                <div class="mt-1">{{ comment.vote_score }}</div>
-                                {% endcomment %}
-                            </div>
-                        {% endif %}
-                        <div class="col col-2 col-sm-2 col-md-1 col-lg-1 p-0">
-                            <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author"
-                                 class="w-100">
-                            {% if comment.author.is_staff %}
-                                <div class="text-center"><strong>{% trans "ADMIN" %}</strong></div>
-                            {% elif comment.author|is_instructor:course %}
-                                <div class="text-center"><strong>{% trans "Expert" %}</strong></div>
-                            {% endif %}
-                        </div>
-                        {% if gamification %}
-                            <div class="col col-9 col-sm-9 col-md-10 col-lg-10">
-                        {% else %}
-                            <div class="col col-10 col-sm-10 col-md-10 col-lg-10">
-                        {% endif %}
-                        <div class="row mb-0">
-                            <div>
-                                {% comment %}
-                                {% if debug %}
-                                DEBUG: <br />
-                                author: {{comment.author}}<br />
-                                is a course instructor? {{comment.author|is_instructor:course}}<br />
-                                {% endif %}
-                                {% endcomment %}
-                                <small class="text-dark">
-                                    {% if not course.blind_data %}
-                                        {{ comment.author }}
+                <li class="list-group-item {{ comment.author|is_instructor:course|yesno:'list-group-item-warning,' }}
+                        {{ comment.author.is_staff|yesno:'list-group-item-danger,' }}">
+                    <div class="container p-0">
+                        <div class="row">
+                            {% if gamification %}
+                                <div class="col-1 text-center">
+                                    {% if comment_vote_status %}
+                                        <a href="{% url 'comment_clearvote' course.pk section.pk discussion.pk comment.pk %}"
+                                           class="btn btn-primary"><i class="fas fa-thumbs-up"></i></a>
+                                    {% else %}
+                                        <a href="{% url 'comment_upvote' course.pk section.pk discussion.pk comment.pk %}"
+                                           class="btn btn-outline-primary"><i class="far fa-thumbs-up"></i></a>
                                     {% endif %}
-                                    {{ comment.created|naturaltime }}
-                                </small>
+                                    {% comment %}
+                                        <div class="mt-1">{{ comment.vote_score }}</div>
+                                    {% endcomment %}
+                                </div>
+                            {% endif %}
+                            <div class="col-1 p-0">
+                                <img src="{{ comment.author|gravatar }}" alt="Avatar icon that represents the author"
+                                     class="w-100">
+                            </div>
+                            <div class="col">
+                                <div class="row mb-0">
+                                    {% comment %}
+                                        {% if debug %}
+                                            DEBUG: <br/>
+                                            author: {{ comment.author }}<br/>
+                                            is a course instructor? {{ comment.author|is_instructor:course}}<br/>
+                                        {% endif %}
+                                    {% endcomment %}
+                                    <small class="text-dark p-0">
+                                        {% if not course.blind_data %}
+                                            {{ comment.author }}
+                                        {% endif %}
+                                        {{ comment.created|naturaltime }}
+                                    </small>
+                                    {% if comment.author.is_staff %}
+                                        <span class="p-0">
+                                            <strong>{% trans "ADMIN" %}</strong>
+                                        </span>
+                                    {% elif comment.author|is_instructor:course %}
+                                        <span class="p-0">
+                                            <strong>{% trans "Expert" %}</strong>
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                <div class="row">{{ comment.message }}</div>
+                                {% comment %} TODO: add edit feature and user authentication {% endcomment %}
+                                {% comment %}
+                                    <div class="mt-3">
+                                        {% if comment.author == user %}
+                                            <a href="#" class="btn btn-warning btn-sm" role="button">{% trans "Edit" %}</a>
+                                        {% endif %}
+                                    </div>
+                                {% endcomment %}
                             </div>
                         </div>
-                        <div class="row">{{ comment.message }}</div>
-                        {% comment %} TODO: add edit feature and user authentication {% endcomment %}
-                        {% comment %} <div class="mt-3">
-                        {% if comment.author == user %}
-                        <a href="#" class="btn btn-warning btn-sm" role="button">{% trans "Edit" %}</a>
-                        {% endif %}
-                        </div> {% endcomment %}
-                        </div>
-                        </div>
+                    </div>
                 </li>
-            {% empty %}
+                {% empty %}
                 <div class="card-body">{% trans "This discussion has no comments." %}</div>
             {% endfor %}
         </ul>
