@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="card-body bg-light text-dark">
-        <h3 class="card-title">{% trans "Confirmation" %}</h3>
+        <div class="card-title fs-3">{% trans "Confirmation" %}</div>
         <p class="card-text">{% trans "Are you sure that you want to <strong>unpublish</strong> this video? This will hide it from the course learners." %}</p>
         <div class="card mb-3">
             <div class="row g-0">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-9">
                     <div class="card-body ps-0">
-                        <h5 class="card-title">{{ video.name }}</h5>
+                        <div class="card-title fs-5">{{ video.name }}</div>
                         <p class="card-text">{{ video.description|linebreaksbr }}</p>
                     </div>
                 </div>

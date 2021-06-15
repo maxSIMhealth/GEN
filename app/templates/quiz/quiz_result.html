@@ -72,13 +72,13 @@
         <div class="card-body">
         {% for question in questions %}
             <div class="card mb-3">
-                <h6 class="card-header">
+                <div class="card-header fs-6">
                     {% if question.question_type == 'H' or question.question_type == 'O' %}
                         {{ question.content }}
                     {% else %}
                         {{ question.content }} (<em>Value: {{ question.value }}</em>)
                     {% endif %}
-                </h6>
+                </div>
                 {% if quiz.check_score %}
                     {% for attempt in attempts %}
                         {% if attempt.question_id == question.id and not question.question_type == 'O'%}
@@ -171,10 +171,10 @@
                     {% else %}
                         <div class="card bg-light mb-0 mt-3">
                             <div class="card-body">
-                                <h6 class="card-subtitle bg-light">
+                                <div class="card-subtitle bg-light fs-6">
                                     <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
                                         <span>{{ question.explanation }}</span></span>
-                                </h6>
+                                </div>
                             </div>
                         </div>
                     {% endif %}

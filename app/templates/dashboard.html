@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card bg-dark mb-3" id="page-name">
         <div class="card-header">
-            <h5 class="card-text text-white p-0">{% trans "Home" %}</h5>
+            <div class="card-text text-white fs-5 p-0">{% trans "Home" %}</div>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
     <div class="card" id="courses">
         <div class="card-header bg-light">
             <div class="row">
-                <div class="col-10 pt-0"><h5 class="m-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</h5></div>
+                <div class="col-10 pt-0"><div class="fs-5 m-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</div></div>
                 {#                <div class="col-2 text-right"><a href="#" class="btn btn-primary btn-sm disabled">{% trans "Enroll" %}</a></div>#}
             </div>
         </div>
@@ -35,14 +35,14 @@
             <ul class="list-group list-group-flush">
                 {% for course in courses %}
                     <li class="list-group-item">
-                        <h5>
+                        <div class="fs-5">
                             <a href="{% url 'course' course.pk %}">
                                 {% if user|is_instructor:course %}
                                     {{ course.code }} -
                                 {% endif %}
                                 {{ course.name }}
                             </a>
-                        </h5>
+                        </div>
                         <div>
                             <strong>Status:</strong>
                             {% get_course_status user course as course_status %}

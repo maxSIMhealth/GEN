@@ -22,7 +22,7 @@
 
 {% block content %}
     <div class="card mb-3" id="course-details">
-        <h5 class="card-header bg-light">{% trans "Course details" %}</h5>
+        <div class="card-header bg-light fs-5">{% trans "Course details" %}</div>
         <table class="table mb-0 course-info">
             <tbody>
             {% if user|is_instructor:course %}
@@ -57,7 +57,7 @@
                 <a class="btn btn-primary" href="{% url 'course_certificate' course.pk %}" role="button">{% trans "Download certificate" %}</a>
             {% else %}
                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans "Course not concluded" %}">
-                    <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>{% trans "Download certificate" %}</button>
+                    <button class="btn btn-outline-dark" style="pointer-events: none;" type="button">{% trans "Download certificate" %}</button>
                 </span>
             {% endif %}
         </div>
@@ -66,7 +66,7 @@
     <div class="card-group">
         {% if course.show_scoreboard %}
             <div class="card gamification-card">
-                <h5 class="card-header bg-light"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</h5>
+                <div class="card-header bg-light fs-5"><i class="fas fa-heart pr-1"></i> {% trans "Scoreboard" %}</div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{% trans "Discussions" %}: {% countscore_course user.id course.pk "discussion" %}</li>
@@ -78,7 +78,7 @@
         {% endif %}
         {% if course.show_leaderboard %}
             <div class="card gamification-card">
-                <h5 class="card-header bg-light"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</h5>
+                <div class="card-header bg-light fs-5"><i class="fas fa-award pr-1"></i> {% trans "Leaderboard" %}</div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{% trans "Discussion likes" %}: #{% rank_get user.id course.pk "discussion" %}</li>
@@ -90,7 +90,7 @@
         {% endif %}
         {% if course.show_progress_tracker %}
             <div class="card gamification-card">
-                <h5 class="card-header bg-light"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</h5>
+                <div class="card-header bg-light fs-5"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         {% trans "Sections completed" as tracker_sections %}

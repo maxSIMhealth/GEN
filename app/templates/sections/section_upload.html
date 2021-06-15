@@ -29,7 +29,7 @@
     {% endif %}
 
     <div class="card mb-3 section-upload">
-        <h5 class="card-header bg-light d-flex">
+        <div class="card-header bg-light d-flex fs-5">
             <span class="pt-1 me-auto">{% trans "Upload" %}</span>
             {% if allow_submission %}
                 <a href="{% url 'upload_video' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-primary">
@@ -39,13 +39,13 @@
             {% else %}
                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="auto" data-html="true"
                       title="{% trans 'New submission not allowed.' %}">
-          <a href="#" class="btn btn-sm btn-labeled btn-secondary disabled">
-            <span class="btn-label"><i class="fas fa-file-upload"></i></span>
-            {% trans "Submit new video" %}
-          </a>
-        </span>
+                    <a href="#" class="btn btn-sm btn-labeled btn-outline-dark disabled">
+                        <span class="btn-label"><i class="fas fa-file-upload"></i></span>
+                        {% trans "Submit new video" %}
+                    </a>
+                </span>
             {% endif %}
-        </h5>
+        </div>
         <div class="alert alert-info mb-0 pt-2 pb-2" role="alert">
             {% trans "Uploads are private, only accessible by you and, once you publish it, by the course instructor(s). Please do not forget to publish your uploads." %}
         </div>
@@ -62,9 +62,9 @@
                                 </div>
                             {% endif %}
                             <div class="w-100">
-                                <h5 class="mb-0 mt-1"><a
+                                <div class="mb-0 mt-1 fs-5"><a
                                         href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a>
-                                </h5>
+                                </div>
 
                                 {% if not course.blind_data %}
                                     <p>{{ item.videofile.description|linebreaksbr }}</p>
@@ -99,7 +99,7 @@
 
     {% if user|is_instructor:course or user.is_staff %}
         <div class="card border-warning mb-3 section-upload">
-            <h5 class="card-header bg-light">{% trans "Leaners' Uploads" %}</h5>
+            <div class="card-header bg-light fs-5">{% trans "Leaners' Uploads" %}</div>
             <div class="alert alert-warning mb-0 pt-2 pb-2" role="alert">
                 {% trans "These are the videos that have been submitted by the learners." %}
                 {% if course.blind_data %}
@@ -120,18 +120,18 @@
                                 {% endif %}
                                 <div class="w-100">
                                     {% if course.blind_data %}
-                                        <h5 class="mb-0 mt-1"><a
+                                        <div class="mb-0 mt-1 fs-5"><a
                                                 href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">Video
-                                            id {{ item.videofile.id }}</a></h5>
+                                            id {{ item.videofile.id }}</a></div>
                                         <div class="video-user-info">
                                             <em>{% trans "By: user #" %} {{ item.videofile.author.id }} </em>
                                             <br/>
                                             <em>{% trans "Submission date:" %}</em> {{ item.videofile.uploaded_at }}
                                         </div>
                                     {% else %}
-                                        <h5 class="mb-0 mt-1"><a
+                                        <div class="mb-0 mt-1 fs-5"><a
                                                 href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a>
-                                        </h5>
+                                        </div>
                                         <div class="video-user-info">
                                             <em>{% trans "By:" %}</em> {{ item.videofile.author.first_name }} {{ item.videofile.author.last_name }}
                                             ({{ item.videofile.author }})
@@ -149,8 +149,8 @@
                         <li class="list-group-item">
                             <div class="d-flex">
                                 <div class="w-100">
-                                    <h5 class="mb-0 mt-1"><span>Video id {{ item.videofile.id }} (awaiting to be published by user) </span>
-                                    </h5>
+                                    <div class="mb-0 mt-1 fs-5"><span>Video id {{ item.videofile.id }} ({% trans "awaiting to be published by user" %}) </span>
+                                    </div>
                                     <div class="video-user-info">
                                         {% if course.blind_data %}
                                             <em>{% trans "By: user #" %} {{ item.videofile.author.id }}</em>

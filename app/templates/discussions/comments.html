@@ -40,7 +40,7 @@
                     <div class="pl-2"></div>
                 {% endif %}
                 <div class="col col-10 col-sm-10 col-md-10 col-lg-11 pl-0">
-                    <h5>{{ discussion.name }}</h5>
+                    <div class="fs-5">{{ discussion.name }}</div>
                     {% if not course.blind_data %}
                         <small class="text-muted">By: {{ discussion.author }}</small>
                     {% endif %}
@@ -70,8 +70,8 @@
         </div>
     </div>
 
-    <div class="card bg-light mb-2">
-        <h5 class="card-header pl-3">{% trans "New comment" %}</h5>
+    <div class="card mb-2">
+        <div class="card-header fs-5 pl-3">{% trans "New comment" %}</div>
         <div class="card-body p-3">
             {% if user.is_authenticated %}
                 <form method="post" novalidate>
@@ -88,7 +88,7 @@
     </div>
 
     <div class="card bg-light mb-2">
-        <h5 class="card-header">{% trans "Comments" %}</h5>
+        <div class="card-header fs-5">{% trans "Comments" %}</div>
         <ul class="list-group list-group-flush">
             {% for comment in discussion.comments.all %}
                 {% comment %} Using custom template tag to check if the user voted {% endcomment %}

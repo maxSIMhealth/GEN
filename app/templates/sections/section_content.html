@@ -43,7 +43,7 @@
                     <div class="quiz-items-container">
                         {% for item in section_items %}
                             <div class="quiz-item" style="display: none;">
-                                <h4>{{ item.name }}</h4>
+                                <div class="fs-4">{{ item.name }}</div>
                                 {% if item.type == 'Video' %}
                                     {% include 'content/video.html' with video=item.videofile %}
                                 {% elif item.type == 'Game' and item.game.type == 'MC' %}

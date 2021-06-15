@@ -9,6 +9,7 @@ body {
 }
 #sidebar .list-group-item.disabled {
     border: none;
+    color: #51585e;
 }
 
 /* section: quiz */

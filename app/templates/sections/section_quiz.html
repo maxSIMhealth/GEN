@@ -29,7 +29,7 @@
     {% endif %}
 
     <div class="card mb-3 section-quiz">
-        <h5 class="card-header">{% trans "Quizzes" %}</h5>
+        <div class="card-header fs-5">{% trans "Quizzes" %}</div>
         <ul class="list-group list-group-flush">
             {% if section_items.all %}
                 {% for item in section_items.all %}

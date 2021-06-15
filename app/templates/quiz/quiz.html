@@ -36,7 +36,7 @@
 
         <div class="card quiz">
             <div class="card-header bg-light">
-                <h5 class="text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</h5>
+                <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</div>
                 <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
                     <ul class="pagination mb-0">
                         <li id="quiz-navigation-previous" class="page-item disabled">
@@ -66,9 +66,9 @@
                         </div>
                         {% for question in questions %}
                             <div class="quiz-item">
-                                <h6>
+                                <div class="fs-6">
                                     <strong>{{ question.content }}</strong>
-                                </h6>
+                                </div>
                                 {% if question.question_type == 'H' %}
                                     <hr/>
 

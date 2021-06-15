@@ -28,7 +28,7 @@
   {% endif %}
 
   <div class="card mb-3">
-    <h5 class="card-header bg-light d-flex">
+    <div class="card-header bg-light d-flex fs-5">
       <span class="pt-1 me-auto">{% trans "Discussion boards" %}</span>
       {% if user|is_instructor:course %}
         <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
@@ -36,7 +36,7 @@
           {% trans "Create new" %}
         </a>
       {% endif %}
-    </h5>
+    </div>
     <ul class="list-group list-group-flush">
       {% if section_items.all %}
         {% for item in section_items.all %}
