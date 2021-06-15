@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load show_sections %}
 {% load sri %}
+{% load django_bootstrap5 %}
 
 {% block title %}GEN - {{course.name}} {% endblock title %}
 
@@ -56,9 +57,8 @@
             {% endif %}
 
             {% if section_status.completed %}
-                <div class="alert alert-success" role="alert">
-                  Congratulations! You have completed this section.
-                </div>
+                {% trans "Congratulations! You have completed this section." as congratulations %}
+                {% bootstrap_alert congratulations alert_type="success" dismissible=False %}
             {% endif %}
 
             {% block content %}
