@@ -160,6 +160,22 @@
     </div>
 {% endblock content %}
 
+{% block navbar %}
+    <div class="navbar p-0">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exitQuizModal">
+            {% translate 'Exit quiz' %}
+        </button>
+    </div>
+
+    <!-- Modal -->
+    {% translate "This will cancel the current quiz and return to the section page. Are you sure?" as exitQuizModalBody %}
+    {% translate "No, continue on quiz." as exitQuizModalCancel %}
+    {% translate "Yes, exit quiz." as exitQuizModalConfirm %}
+    {% translate "You have not completed any section yet." as tracker_sections_empty%}
+    {% url 'section' course.pk section.pk as exitQuizModalUrl%}
+    {% include "partials/modal.html" with id='exitQuiz' title='Exit Quiz Confirmation' body=exitQuizModalBody cancel_text=exitQuizModalCancel confirm_text=exitQuizModalConfirm confirm_url=exitQuizModalUrl %}
+{% endblock navbar %}
+
 {% block javascript_bottom %}
     {% sri_static "js/help-guide-course.js" %}
     {% sri_static "js/quiz.js" %}
