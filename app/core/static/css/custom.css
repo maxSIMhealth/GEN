@@ -154,24 +154,11 @@ body {
 #card-video-player {
     height: 80vh;
 }
-#video-player, #video-player video {
-    width: 100%;
-    height: 100%;
-}
-#card-video-content .card-body {
-    overflow-y: auto;
-}
-@media (min-width: 576px) {
-    #card-video-content {
-        height: auto;
-    }
-}
-@media (min-width: 577px) {
-    #card-video-content {
-        height: 80vh;
-    }
-}
 
+#card-video-player .card-body,
+#video-player {
+    height: 95%;
+}
 
 /* shepherd */
 .shadow-md {
