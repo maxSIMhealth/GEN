@@ -2,7 +2,7 @@
 
 {% load static %}
 {% load i18n %}
-{% load show_sections %}
+{% load generate_sections_sidebar %}
 {% load sri %}
 {% load django_bootstrap5 %}
 
@@ -38,7 +38,7 @@
                     <div class="list-group-flush navbar-nav">
                         {% block content_tabs %}
                             <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{% trans "Info" %}</a>
-                            {% show_sections %}
+                            {% generate_sections_sidebar %}
                         {% endblock content_tabs %}
                     </div>
                 </div>

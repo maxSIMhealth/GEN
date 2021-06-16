@@ -6,8 +6,8 @@ from courses.support_methods import requirement_fulfilled
 register = template.Library()
 
 
-@register.inclusion_tag("sections/section_tabs.html", takes_context=True)
-def show_sections(context):
+@register.inclusion_tag("partials/section_tabs.html", takes_context=True)
+def generate_sections_sidebar(context):
     user = context["user"]
     course = context["course"]
     sections = course_sections_list(course, user)
