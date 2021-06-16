@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load generate_sections_sidebar %}
+{% load generate_sections_navbar %}
 {% load sri %}
 {% load django_bootstrap5 %}
 
@@ -62,6 +63,10 @@
 
             {% block content %}
             {% endblock content %}
+
+            {% block navbar %}
+                {% generate_sections_navbar %}
+            {% endblock navbar %}
         </div>
     </div>
 {% endblock container %}

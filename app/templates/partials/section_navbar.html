@@ -1,0 +1,50 @@
+{% load i18n %}
+
+<div class="navbar p-0">
+    {% if previous_section %}
+        {% if current_section_position == 0 %}
+            <a class="btn btn-secondary"
+               href="{% url 'course' previous_section.pk %}"
+               role="button">{% trans 'Previous section' %}</a>
+        {% else %}
+            <a class="btn btn-secondary"
+               href="{% url 'section' previous_section.course.pk previous_section.pk %}"
+               role="button">{% trans 'Previous section' %}</a>
+        {% endif %}
+    {% else %}
+        <span></span>
+    {% endif %}
+    {% if next_section %}
+        {% if next_section.requirement %}
+            {% if next_section.requirement.fulfilled %}
+                <a class="btn btn-secondary float-end"
+                   href="{% url 'section' next_section.course.pk next_section.pk %}"
+                   role="button">{% trans 'Next section' %}</a>
+            {% else %}
+                <span class="d-inline-block float-end" tabindex="0" data-toggle="tooltip" data-placement="auto"
+                      data-html="true"
+                      title="{% trans 'Requirement must be met first:' %} {% trans next_section.requirement.name %}">
+                    <a class="btn btn-outline-secondary disabled float-end"
+                       tabindex="-1"
+                       aria-disabled="true"
+                       href="#"
+                       role="button">{% trans 'Next section' %}</a>
+                </span>
+            {% endif %}
+        {% else %}
+            <a class="btn btn-secondary float-end"
+               href="{% url 'section' next_section.course.pk next_section.pk %}"
+               role="button">{% trans 'Next section' %}</a>
+        {% endif %}
+    {% else %}
+        <span class="d-inline-block float-end" tabindex="0" data-toggle="tooltip" data-placement="auto"
+                      data-html="true"
+                      title="{% trans 'This is the last section.' %} {% trans next_section.requirement.name %}">
+            <a class="btn btn-outline-secondary disabled float-end"
+               tabindex="-1"
+               aria-disabled="true"
+               href="#"
+               role="button">{% trans 'Next section' %}</a>
+        </span>
+    {% endif %}
+</div>
