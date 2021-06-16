@@ -115,6 +115,13 @@ class VideoFile(SectionItem):
         # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
         validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
     )
+    subtitle = models.FileField(
+        _("subtitle"),
+        upload_to=user_directory_path,
+        blank=True,
+        null=True,
+        validators=[FileTypeValidator(allowed_types=["text/plain",])],
+    )
     internal_name = models.CharField(
         _("internal name"),
         max_length=255,
