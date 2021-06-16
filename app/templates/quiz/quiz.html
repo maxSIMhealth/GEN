@@ -16,7 +16,7 @@
     <div class="card-group mb-3">
         {% if quiz.video %}
             <div class="card bg-secondary text-white video">
-                <div class="card-header bg-dark">{% trans "Video" %}</div>
+                <div class="card-header bg-dark">{% translate "Video" %}</div>
                 <div class="card-body">
                     <table class="table table-hover">
                         <tbody>
@@ -24,7 +24,7 @@
                             <div class="ratio ratio-16x9">
                                 <video playsinline poster="{{ quiz.video.thumbnail.url }}" controls>
                                     <source src="{{ quiz.video.file.url }}" type="video/mp4">
-                                    {% trans "Sorry, your browser does not support embedded videos." %}
+                                    {% translate "Sorry, your browser does not support embedded videos." %}
                                 </video>
                             </div>
                         </tr>
@@ -36,7 +36,7 @@
 
         <div class="card quiz">
             <div class="card-header bg-light">
-                <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% trans "Questions" %}</div>
+                <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% translate "Questions" %}</div>
                 <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
                     <ul class="pagination mb-0">
                         <li id="quiz-navigation-previous" class="page-item disabled">
@@ -62,7 +62,7 @@
                             {% if quiz.description %}
                                 <p>{{ quiz.description|safe|linebreaksbr }}</p>
                             {% endif %}
-                            <span><i>{% trans "Please use the navigation buttons in the header above." %}</i></span>
+                            <span><i>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</i></span>
                         </div>
                         {% for question in questions %}
                             <div class="quiz-item">
@@ -92,9 +92,9 @@
                                         <div class="mt-2">
                                             {% if question.multiple_correct_answers %}
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
-                                                   onclick="toggleCheckboxes(this, 'on')">{% trans "Select all" %}</a>
+                                                   onclick="toggleCheckboxes(this, 'on')">{% translate "Select all" %}</a>
                                                 <a href="javascript:void(0);" class="btn btn-secondary"
-                                                   onclick="toggleCheckboxes(this, 'off')">{% trans "Deselect all" %}</a>
+                                                   onclick="toggleCheckboxes(this, 'off')">{% translate "Deselect all" %}</a>
                                             {% endif %}
                                         </div>
                                     </ul>
@@ -114,7 +114,7 @@
 
                                         {% if answer.legend %}
                                             <div class="likert-legend card-footer text-muted">
-                                                <em>{% trans "Scale legend" %}:</em>
+                                                <em>{% translate "Scale legend" %}:</em>
                                                 {{ answer.legend|linebreaks }}
                                             </div>
                                         {% endif %}
@@ -123,7 +123,7 @@
                                 {% elif question.question_type == 'O' %}
 
                                     <div class="mb-3">
-                                        <label for="openended_{{ question.id }}">{% trans "Your answer:" %}</label>
+                                        <label for="openended_{{ question.id }}">{% translate "Your answer:" %}</label>
                                         <textarea name="openended_{{ question.id }}" id="openended_{{ question.id }}"
                                                   rows="5"
                                                   class="form-control"></textarea>
@@ -133,12 +133,10 @@
                             </div>
                         {% endfor %}
                         <div class="quiz-item">
-                            <p>{% trans "This is the end of the quiz." %}</p>
+                            <p>{% translate "This is the end of the quiz." %}</p>
                             <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
-                                cancel and return to the {{ section_name }} page. {% endblocktrans %}</p>
-                            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-                            <a class="btn btn-danger" href="{% url 'section' course.pk section.pk %}"
-                               role="button">{% trans "Cancel" %}</a>
+                                exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                            <button type="submit" class="btn btn-primary">{% translate "Submit" %}</button>
                         </div>
                     </div>
                 </form>
