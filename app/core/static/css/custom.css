@@ -172,6 +172,11 @@ body {
     background-color: rgba(0,0,0,0.03);
 }
 
+/* interactive games */
+.preserve-linebreaks {
+    white-space: pre-line;
+}
+
 /* quiz items navigation */
 /* The dot/bullet/indicator container */
 /* .dot-container {

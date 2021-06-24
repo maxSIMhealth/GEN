@@ -3,9 +3,7 @@
 <div id="game-{{ id }}">
     <div v-for="(item, index) in items" class="card mb-2">
         <div class="card-body">
-            <p class="card-text">
-                <% item.fields.text %>
-            </p>
+            <p class="card-text preserve-linebreaks"><% item.fields.text %></p>
         </div>
         <div class="card-footer">
             <select class="form-select"
@@ -33,8 +31,8 @@
         el: '#game-{{ id }}',
         delimiters: ['<%', '%>'],
         data: {
-            terms: JSON.parse("{{ terms }}".replace(/&quot;/g, '\"')),
-            items: JSON.parse("{{ items }}".replace(/&quot;/g, '\"')),
+            terms: JSON.parse("{{ terms|escapejs }}"),
+            items: JSON.parse("{{ items|escapejs }}"),
             answers: []
         },
         computed: {

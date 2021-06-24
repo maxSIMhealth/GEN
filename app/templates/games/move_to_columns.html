@@ -61,10 +61,10 @@
 <script>
     function getInitialData() {
         return {
-                info: JSON.parse("{{ info }}".replace(/&quot;/g, '\"'))[0].fields,
-                source_list: JSON.parse("{{ source_list }}".replace(/&quot;/g, '\"')),
-                choice1_list: JSON.parse("{{ choice1_list }}".replace(/&quot;/g, '\"')),
-                choice2_list: JSON.parse("{{ choice2_list }}".replace(/&quot;/g, '\"')),
+                info: JSON.parse("{{ info|escapejs }}")[0].fields,
+                source_list: JSON.parse("{{ source_list|escapejs }}"),
+                choice1_list: JSON.parse("{{ choice1_list|escapejs }}"),
+                choice2_list: JSON.parse("{{ choice2_list|escapejs }}"),
                 choice1_user: [],
                 choice2_user: [],
             }

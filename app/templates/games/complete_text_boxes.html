@@ -31,7 +31,7 @@
                        :disabled="!answers_list_status[index]"
                        @add="itemAdded(index)"
             >
-                <% item.fields.text %>
+                <span class="preserve-linebreaks"><% item.fields.text %></span>
                 <div class="list-group-item list-group-item-dark mt-2"
                      v-for="answer in answers_list[index]"
                 >
@@ -53,8 +53,8 @@
             vuedraggable
         },
         data: {
-            terms: JSON.parse("{{ terms }}".replace(/&quot;/g, '\"')),
-            items: JSON.parse("{{ items }}".replace(/&quot;/g, '\"')),
+            terms: JSON.parse("{{ terms|escapejs }}"),
+            items: JSON.parse("{{ items|escapejs }}"),
             answers: [],
         },
         computed: {

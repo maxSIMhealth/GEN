@@ -215,9 +215,11 @@ def section_page(request, pk, section_pk):
                     item.game.choice1_items_json = serialize('json', game_elements.choice1_items.all())
                     item.game.choice2_items_json = serialize('json', game_elements.choice2_items.all())
                 elif item.game.type == 'TB':
+                    # 'text boxes' game
                     item.game.terms = serialize('json', item.game.textboxesterm_set.all())
                     item.game.items = serialize('json', item.game.textboxesitem_set.all())
                 elif item.game.type == 'MT':
+                    # 'match terms' game
                     item.game.terms = serialize('json', item.game.textboxesterm_set.all())
                     item.game.items = serialize('json', item.game.textboxesitem_set.all())
             else:
