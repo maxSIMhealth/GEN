@@ -1,7 +1,14 @@
 {% load i18n %}
 
-<div class="card-text text-center" id="video-player">
-    <video poster="{{ video.thumbnail.url }}" controls>
+<div class="card-text text-center ratio ratio-16x9" id="video-player">
+    <video poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}" controls>
+        {% if video.subtitle %}
+            <track default
+                   kind="captions"
+                   srclang="en"
+                   label="English"
+                   src="{{ video.subtitle.url }}" />
+        {% endif %}
         <source src="{{ video.file.url }}" type="video/mp4">
         {% trans "Sorry, your browser doesn't support embedded videos." %}
     </video>
