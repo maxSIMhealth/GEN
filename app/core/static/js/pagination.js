@@ -1,12 +1,12 @@
 var paginationInitialValue = 1;
 var paginationIndex = paginationInitialValue;
-var pagination = document.getElementsByClassName("quiz-item");
+var pagination = document.getElementsByClassName("pagination-item");
 // var dots = document.getElementsByClassName("dot");
 
 showPagination(paginationIndex);
 
 function updateNavigationText() {
-  document.getElementById("quiz-navigation-position").innerHTML = paginationIndex + " of " + pagination.length;
+  document.getElementById("pagination-navigation-position").innerHTML = paginationIndex + " of " + pagination.length;
 }
 
 function previousPaginationItem() {
@@ -14,7 +14,7 @@ function previousPaginationItem() {
     paginationIndex--;
     showPagination(paginationIndex);
   } else {
-    console.log(paginationIndex + " is the beginning of the pagination: " + paginationInitialValue + " of " + pagination.length);
+    // console.log(paginationIndex + " is the beginning of the pagination: " + paginationInitialValue + " of " + pagination.length);
   }
 }
 
@@ -23,7 +23,7 @@ function nextPaginationItem() {
     paginationIndex++;
     showPagination(paginationIndex);
   } else {
-    console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
+    // console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
   }
 
 }
@@ -48,7 +48,7 @@ function goToPaginationItem(paginationItemNumber) {
     paginationIndex = paginationItemNumber;
     showPagination(paginationItemNumber);
   } else {
-    console.warn("Pagination item number out of range");
+    // console.warn("Pagination item number out of range");
   }
 }
 
@@ -76,18 +76,18 @@ function showPagination(paginationItemNumber) {
     updateNavigationText();
 
     if (paginationItemNumber > paginationInitialValue) {
-      paginationNavLinkEnable("#quiz-navigation-previous");
+      paginationNavLinkEnable("#pagination-navigation-previous");
     } else if (paginationItemNumber === paginationInitialValue) {
-      paginationNavLinkDisable("#quiz-navigation-previous");
+      paginationNavLinkDisable("#pagination-navigation-previous");
     }
 
     if (paginationItemNumber === pagination.length) {
-      paginationNavLinkDisable("#quiz-navigation-next");
+      paginationNavLinkDisable("#pagination-navigation-next");
     } else if (paginationItemNumber < pagination.length) {
-      paginationNavLinkEnable("#quiz-navigation-next");
+      paginationNavLinkEnable("#pagination-navigation-next");
     }
   } else {
-    console.warn("Pagination item number out of range");
+    // console.warn("Pagination item number out of range");
   }
 }
 

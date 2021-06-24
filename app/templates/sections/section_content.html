@@ -40,9 +40,9 @@
         <div class="card-group mb-3">
             <div class="card quiz">
                 <div class="card-body">
-                    <div class="quiz-items-container">
+                    <div class="pagination-items-container">
                         {% for item in section_items %}
-                            <div class="quiz-item" style="display: none;">
+                            <div class="pagination-item" style="display: none;">
                                 <div class="fs-4">{{ item.name }}</div>
                                 {% if item.type == 'Video' %}
                                     {% include 'content/video.html' with video=item.videofile %}
@@ -68,14 +68,14 @@
                 <div class="card-footer">
                     <nav aria-label="quiz navigation">
                         <ul class="pagination justify-content-center mb-0">
-                            <li id="quiz-navigation-previous" class="page-item disabled">
+                            <li id="pagination-navigation-previous" class="page-item disabled">
                                 <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
                                    onclick="previousPaginationItem()">{% trans "Previous" %}</a>
                             </li>
-                            <li class="page-item disabled"><a id="quiz-navigation-position" class="page-link"
+                            <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
                                                               href="javascript:void(0);" tabindex="-1"
                                                               aria-disabled="true">-- of --</a></li>
-                            <li id="quiz-navigation-next" class="page-item">
+                            <li id="pagination-navigation-next" class="page-item">
                                 <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% trans "Next" %}</a>
                             </li>
                         </ul>

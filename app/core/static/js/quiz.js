@@ -1,13 +1,13 @@
 var paginationInitialValue = 1;
 var paginationIndex = paginationInitialValue;
-var pagination = document.getElementsByClassName("quiz-item");
+var pagination = document.getElementsByClassName("pagination-item");
 const quizRequireAnswers = JSON.parse(document.getElementById('quiz_require_answers').textContent); // FIXME: checking required answers this way should be temporary and done using django forms validation
 // var dots = document.getElementsByClassName("dot");
 
 showPagination(paginationIndex);
 
 function updateNavigationText() {
-  document.getElementById("quiz-navigation-position").innerHTML = paginationIndex + " of " + pagination.length;
+  document.getElementById("pagination-navigation-position").innerHTML = paginationIndex + " of " + pagination.length;
 }
 
  // FIXME: checking required answers this way should be temporary and done using django forms validation
@@ -15,7 +15,7 @@ function checkRequiredAnswer() {
   var questionNumber = paginationIndex - 1;
   var question = pagination[questionNumber];
 
-  console.log("question number: " + questionNumber);
+  // console.log("question number: " + questionNumber);
   var items = question.querySelectorAll("input, textarea, select");
   // console.log(question);
   answers = [];
@@ -25,9 +25,9 @@ function checkRequiredAnswer() {
       // console.log("is checked? " + item.checked)
       answers.push(item.checked);
     })
-    console.log(answers);
+    // console.log(answers);
     if (!answers.includes(true)) {
-      console.log("WARNING: user did not answer a question " + questionNumber);
+      // console.log("WARNING: user did not answer a question " + questionNumber);
       return false;
     } else {
       return true;
@@ -42,7 +42,7 @@ function previousPaginationItem() {
     paginationIndex--;
     showPagination(paginationIndex);
   } else {
-    console.log(paginationIndex + " is the beginning of the pagination: " + paginationInitialValue + " of " + pagination.length);
+    // console.log(paginationIndex + " is the beginning of the pagination: " + paginationInitialValue + " of " + pagination.length);
   }
 }
 
@@ -59,7 +59,7 @@ function nextPaginationItem() {
       paginationIndex++;
       showPagination(paginationIndex);
     } else {
-      console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
+      // console.log(paginationIndex + " is the end of the pagination length: " + paginationInitialValue + " of " + pagination.length);
     }
   } else {
     alert(gettext("Please answer the question."));
@@ -87,7 +87,7 @@ function goToPaginationItem(paginationItemNumber) {
     paginationIndex = paginationItemNumber;
     showPagination(paginationItemNumber);
   } else {
-    console.warn("Pagination item number out of range");
+    // console.warn("Pagination item number out of range");
   }
 }
 
@@ -119,18 +119,18 @@ function showPagination(paginationItemNumber) {
     updateNavigationText();
 
     if (paginationItemNumber > paginationInitialValue) {
-      paginationNavLinkEnable("#quiz-navigation-previous");
+      paginationNavLinkEnable("#pagination-navigation-previous");
     } else if (paginationItemNumber == paginationInitialValue) {
-      paginationNavLinkDisable("#quiz-navigation-previous");
+      paginationNavLinkDisable("#pagination-navigation-previous");
     }
 
     if (paginationItemNumber == pagination.length) {
-      paginationNavLinkDisable("#quiz-navigation-next");
+      paginationNavLinkDisable("#pagination-navigation-next");
     } else if (paginationItemNumber < pagination.length) {
-      paginationNavLinkEnable("#quiz-navigation-next");
+      paginationNavLinkEnable("#pagination-navigation-next");
     }
   } else {
-    console.warn("Pagination item number out of range");
+    // console.warn("Pagination item number out of range");
   }
 }
 
