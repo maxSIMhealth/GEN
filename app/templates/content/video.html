@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 
 <div class="card-text text-center ratio ratio-16x9" id="video-player">
     <video poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}" controls>
