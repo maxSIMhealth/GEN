@@ -51,7 +51,7 @@
             <p class="card-text">{{ discussion.description|safe|linebreaksbr }}</p>
             {% if discussion.video %}
                 <div class="ratio ratio-16x9">
-                    <video playsinline poster="{{ video.thumbnail.url }}" controls>
+                    <video crossorigin="anonymous" playsinline poster="{{ video.thumbnail.url }}" controls>
                         <source src="{{ video.file.url }}" type="video/mp4">
                         {% trans "Sorry, your browser does not support embedded videos." %}
                     </video>
