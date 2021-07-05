@@ -258,33 +258,33 @@ def generate_certificate(request, pk):
 
         # Create the PDF object, using the buffer as its "file."
         certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
-        certificate.setTitle('Certificate')
+        certificate.setTitle('Certificate of Conclusion')
 
         # Header
         certificate.setFont('Helvetica', 40, leading=None)
-        certificate.drawCentredString(415, 500, 'Certificate of Conclusion')
-        certificate.drawCentredString(415, 450, 'Certificat de Conclusion')
+        certificate.drawCentredString(395, 420, 'Certificate of Conclusion')
+        certificate.drawCentredString(395, 370, 'Certificat de Conclusion')
         certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(415, 370, 'This certificate is presented to / Ce certificat est présenté à')
+        certificate.drawCentredString(395, 320, 'This certificate is presented to / Ce certificat est présenté à')
 
         # Learner info
         certificate.setFont('Helvetica-Bold', 36, leading=None)
-        certificate.drawCentredString(415, 320, f'{user.first_name} {user.last_name}')
+        certificate.drawCentredString(395, 270, f'{user.first_name} {user.last_name}')
 
         # Course info
         certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(415, 270, 'for completing the following / for completing the following')
+        certificate.drawCentredString(395, 220, 'for completing the following / pour avoir complété ce qui suit')
 
         certificate.setFont('Helvetica-Oblique', 20, leading=None)
         course_name = textwrap.wrap(course_object.name, width=70)
-        course_name_position = 220
+        course_name_position = 170
         for line in course_name:
-            certificate.drawCentredString(415, course_name_position, line)
+            certificate.drawCentredString(395, course_name_position, line)
             course_name_position = course_name_position - 30
 
         # Footer
         certificate.setFont('Helvetica', 12, leading=None)
-        certificate.drawCentredString(415, 50, f'Generated on / Généré le: {date}')
+        certificate.drawCentredString(395, 50, f'Generated on / Généré le: {date}')
 
         # Close the PDF object cleanly, and we're done.
         certificate.showPage()
