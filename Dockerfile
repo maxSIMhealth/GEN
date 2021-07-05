@@ -12,10 +12,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # If you change this value you will also need to update nginx default.conf
 ENV GEN_HOME=/gen
 
-# Create django's static and media directories
-RUN mkdir -p $GEN_HOME/static
-RUN mkdir -p $GEN_HOME/media
-
 # Copy project requirements file
 COPY app/requirements.txt $GEN_HOME/app/requirements.txt
 
@@ -55,6 +51,10 @@ ENV GEN_HOME=/gen
 COPY --chown=gen:gen --from=builder ${GEN_HOME} ${GEN_HOME}
 
 COPY --chown=gen:gen --from=builder /env /env
+
+# Create django's static and media directories
+RUN install -d -o gen -g gen $GEN_HOME/media
+RUN install -d -o gen -g gen $GEN_HOME/static
 
 # Change to the directory containing manage.py for running Django commands
 WORKDIR $GEN_HOME/app
