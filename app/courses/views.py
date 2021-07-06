@@ -13,6 +13,7 @@ from reportlab.pdfgen import canvas
 
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
+from core.models import CertificateLogoFile
 from core.views import check_is_instructor
 from courses.support_methods import requirement_fulfilled, section_mark_completed
 from games.models import MoveToColumnsGroup
@@ -242,10 +243,15 @@ def section_page(request, pk, section_pk):
 @login_required
 @course_enrollment_check(enrollment_test)
 def generate_certificate(request, pk):
+    '''
+    Generates certificate of conclusion as a PDF file.
+    If CertificateLogoFiles exists, they will be used on the header portion.
+    '''
     course_object = get_object_or_404(Course, pk=pk)
     user = request.user
     sections_statuses = Status.objects.filter(learner=user, course=course_object)
     filename = f'GEN - {course_object.code} - {request.user.first_name} {request.user.last_name}.pdf'
+    logos = CertificateLogoFile.objects.all()
     date = timezone.localtime().isoformat()
 
     sections_completed = []
@@ -260,16 +266,42 @@ def generate_certificate(request, pk):
         certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
         certificate.setTitle('Certificate of Conclusion')
 
+        # Logos
+        # The preferred logo size 200 x 80 points.
+        # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
+        logo_spacing = 20
+        logo_width = 200
+        logo_max_height = 80
+        page_width = landscape(letter)[0]
+        logos_count = logos.count()
+        logos_combined_width = (logo_width * logos_count) + (logo_spacing * (logos_count - 1))
+        logo_x = (page_width - logos_combined_width) / 2
+        logos_reserved_space = logo_max_height if logos_count == 0 else 0
+
+        for logo in logos:
+            logo_proportion = logo.file.width / logo.file.height
+            logo_height = logo_width / logo_proportion
+            logo_absolute_url = request.build_absolute_uri(logo.file.url)
+            certificate.drawImage(
+                logo_absolute_url,
+                logo_x,
+                490,
+                width=logo_width,
+                height=logo_height,
+                mask='auto'
+            )
+            logo_x += (logo_width + logo_spacing)
+
         # Header
         certificate.setFont('Helvetica', 40, leading=None)
-        certificate.drawCentredString(395, 420, 'Certificate of Conclusion')
-        certificate.drawCentredString(395, 370, 'Certificat de Conclusion')
+        certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Conclusion')
+        certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Conclusion')
         certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(395, 320, 'This certificate is presented to / Ce certificat est présenté à')
+        certificate.drawCentredString(395, 320 + logos_reserved_space, 'This certificate is presented to / Ce certificat est présenté à')
 
         # Learner info
         certificate.setFont('Helvetica-Bold', 36, leading=None)
-        certificate.drawCentredString(395, 270, f'{user.first_name} {user.last_name}')
+        certificate.drawCentredString(395, 270 + logos_reserved_space/2, f'{user.first_name} {user.last_name}')
 
         # Course info
         certificate.setFont('Helvetica', 24, leading=None)
