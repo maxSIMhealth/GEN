@@ -6,7 +6,6 @@ from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
-
 class Course(models.Model):
     name = models.CharField(
         _("name"),
@@ -165,7 +164,7 @@ class Section(models.Model):
         default=False,
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based on participant's video "
-            "submissions. "
+            "submissions."
         ),
     )
     section_output = models.ForeignKey(
@@ -175,9 +174,28 @@ class Section(models.Model):
         null=True,
         related_name="sections_output",
         help_text=_(
-            "* FOR UPLOAD SECTION ONLY *: Define the section in which to create the discussion boards."
+            "* FOR UPLOAD SECTION ONLY *: define the section in which to create the discussion boards."
         ),
         verbose_name=_("section output"),
+    )
+    clone_quiz = models.BooleanField(
+        _("clone quiz"),
+        default=False,
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: automatically clones an existing quiz and connect it to the participant's"
+            "video after it gets published."
+        ),
+    )
+    clone_quiz_reference = models.ForeignKey(
+        "quiz.Quiz",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="clone_quiz_reference",
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: quiz that will be cloned and connected to the participant's video after"
+            "it gets published."
+        )
     )
     show_thumbnails = models.BooleanField(
         _("show thumbnails"),
@@ -208,9 +226,7 @@ class Section(models.Model):
         if (self.create_discussions or self.section_output) and not self.section_type == "U":
             errors.append(
                 ValidationError(
-                    _(
-                        "To set 'create discussion' or 'section output', the section type must be Upload."
-                    )
+                    _("To set 'create discussion' or 'section output', the section type must be Upload.")
                 )
             )
         if self.create_discussions and not self.section_output and self.section_type == 'U':
@@ -222,15 +238,31 @@ class Section(models.Model):
         if self.section_output and not self.create_discussions:
             errors.append(
                 ValidationError(
-                    _(
-                        "You can not select a section output if 'create discussions' is not enabled."
-                    )
+                    _("You can not select a section output if 'create discussions' is not enabled.")
+                )
+            )
+        if (self.clone_quiz or self.clone_quiz_reference) and not self.section_type == "U":
+            errors.append(
+                ValidationError(
+                    _("To set 'clone quiz' or 'clone quiz reference', the section type must be Upload.")
+                )
+            )
+        if self.clone_quiz and not self.clone_quiz_reference and self.section_type == 'U':
+            errors.append(
+                ValidationError(
+                    _("To clone a quiz you must select a quiz reference.")
+                )
+            )
+        if self.clone_quiz_reference and not self.clone_quiz:
+            errors.append(
+                ValidationError(
+                    _("You can not select a quiz reference if 'clone quiz' is not enabled.")
                 )
             )
         # check parameters related to Video and Upload Sections
         if self.show_thumbnails and not (self.section_type == 'V' or self.section_type == 'U'):
             errors.append(
-                    ValidationError(
+                ValidationError(
                     _("To enable 'show thumbnails', the section type must be Video or Upload")
                 )
             )
@@ -238,7 +270,7 @@ class Section(models.Model):
         if not self.section_type == 'Q':
             if self.pre_assessment:
                 errors.append(
-                        ValidationError(
+                    ValidationError(
                         _("To enable 'pre assessment', the section type must be Quiz.")
                     )
                 )
@@ -250,7 +282,9 @@ class Section(models.Model):
                 )
         if self.section_type == 'Q' and self.pre_assessment and self.final_assessment:
             errors.append(
-                ValidationError(_("A quiz section can not be 'pre assessment' and 'final assessment' simultaneously."))
+                ValidationError(
+                    _("A quiz section can not be 'pre assessment' and 'final assessment' simultaneously.")
+                )
             )
 
         if len(errors) > 0:

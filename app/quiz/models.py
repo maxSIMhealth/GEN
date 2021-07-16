@@ -9,8 +9,8 @@ from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from GEN.support_methods import duplicate_item, duplicate_name
 from courses.models import Course, Section, SectionItem
+from quiz.support_methods import duplicate_quiz
 from videos.models import VideoFile
 
 QUESTION_TYPES = [
@@ -188,8 +188,8 @@ class Quiz(SectionItem):
     #     return self.questions.all().exclude(question_type='H').exclude(question_type='O').aggregate(Sum('value'))[
     #         'value__sum']
 
-    def duplicate(self):
-        return duplicate_item(self, callback=duplicate_name)
+    def duplicate(self, *args, **kwargs):
+        return duplicate_quiz(self, *args, **kwargs)
 
 
 class Question(TimeStampedModel):

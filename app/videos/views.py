@@ -100,6 +100,9 @@ def publish_video(request, pk, section_pk, video_pk):
     elif video.author == user:
         if request.method == "POST":
             if "confirm" in request.POST:
+                video.published = True
+                video.save()
+
                 # if section has parameter 'create_discussion' enabled, create
                 # a discussion using the video's parameters and put it on the
                 # 'section_output'
@@ -115,8 +118,11 @@ def publish_video(request, pk, section_pk, video_pk):
                     )
                     discussion.save()
 
-                video.published = True
-                video.save()
+                # if section has parameter 'clone_quiz' enabled, clone the reference
+                # quiz and set cloned quiz video parameter as the uploaded video
+                if section.clone_quiz:
+                    section.clone_quiz_reference.duplicate(field="video_id",value=video.pk)
+
 
                 # set section Status object as completed
                 section_status = section.status.filter(learner=user).get()
