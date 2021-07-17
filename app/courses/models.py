@@ -303,6 +303,14 @@ class Section(models.Model):
 
 
 class SectionItem(TimeStampedModel):
+    PUBLIC = "P"
+    INSTRUCTORS = "I"
+    ADMINS = "A"
+    PERMISSION_TYPES = [
+        (PUBLIC, _("Public")),
+        (INSTRUCTORS, _("Instructors")),
+        (ADMINS, _("Admins")),
+    ]
     name = models.CharField(_("name"), max_length=80, unique=False)
     description = models.TextField(
         _("description"),
@@ -328,6 +336,13 @@ class SectionItem(TimeStampedModel):
         verbose_name=_("section"),
     )
     published = models.BooleanField(_("published"), default=False)
+    access_restriction = models.CharField(
+        _("access restriction"),
+        max_length=1,
+        choices=PERMISSION_TYPES,
+        default=PUBLIC,
+        help_text=_("Define who should have access to this item.")
+    )
     show_related_content = models.BooleanField(
         _("show related content"),
         default=False,

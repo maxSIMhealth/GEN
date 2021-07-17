@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
 
-from GEN.decorators import course_enrollment_check
+from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
 from courses.models import Course, Section
 from courses.support_methods import section_mark_completed, course_mark_completed
@@ -252,6 +252,7 @@ def quiz_evaluate_completion(request, section):
 
 @login_required
 @course_enrollment_check(enrollment_test)
+@check_permission(enrollment_test, "quiz")
 def quiz_page(request, pk, section_pk, quiz_pk):
     """
     Renders quiz page and handles submission requests

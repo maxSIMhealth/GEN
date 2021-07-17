@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
 from django.forms import ModelForm
 from import_export import resources
@@ -88,7 +88,7 @@ class QuizAdmin(TabbedTranslationAdmin):
     form = QuizAdminForm
     save_as = True
 
-    readonly_fields = ["max_score",]
+    readonly_fields = ["max_score", ]
 
     fieldsets = (
         (
@@ -103,6 +103,7 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "course",
                     "section",
                     "published",
+                    "access_restriction",
                     "video",
                     "requirement",
                 )

@@ -3,7 +3,7 @@ from functools import wraps
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 
-from courses.models import Course
+from courses.models import Course, SectionItem
 
 
 def course_enrollment_check(test_func):
@@ -46,6 +46,46 @@ def course_enrollment_check(test_func):
     #     return PermissionDenied("Access denied!")
     # else return
     # return user in course.members.all()
+
+def check_permission(test_func, type):
+    '''
+    Checks if the user is allowed to access the requested item.
+
+        Parameters:
+            test_func: TBD
+            type (str): SectionItem type (game, contentitem, discussion, quiz, videofile)
+
+    '''
+
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            from courses.models import SectionItem
+
+            pk = kwargs["pk"]
+            sectionitem_pk = kwargs[type+"_pk"]
+            course_obj = get_object_or_404(Course, pk=pk)
+            sectionitem_obj = get_object_or_404(SectionItem, pk=sectionitem_pk)
+            access_restriction = sectionitem_obj.access_restriction
+            user = request.user
+
+            if access_restriction == SectionItem.PUBLIC and user in course_obj.members.all():
+                access_allowed = True
+            elif access_restriction == SectionItem.INSTRUCTORS and user in course_obj.instructors.all():
+                access_allowed = True
+            elif access_restriction == SectionItem.ADMINS and user.is_staff:
+                access_allowed = True
+            else:
+                access_allowed = False
+
+            if access_allowed:
+                return view_func(request, *args, **kwargs)
+            else:
+                raise PermissionDenied("Access denied.")
+
+        return _wrapped_view
+
+    return decorator
 
 
 # def subject_test(f, subject):
