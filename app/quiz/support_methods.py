@@ -98,3 +98,5 @@ def duplicate_quiz(quiz, field=None, value=None):
                 answer._state.adding = True
                 answer.question = question
                 answer.save()
+
+    return quiz

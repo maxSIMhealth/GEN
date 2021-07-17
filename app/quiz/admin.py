@@ -80,7 +80,7 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
-    list_display = ("name", "course", "section", "video")
+    list_display = ("name", "published", "course", "section", "video")
     list_filter = ("course", "section")
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)

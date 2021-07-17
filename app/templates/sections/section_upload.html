@@ -142,6 +142,35 @@
                                             <p>{{ item.videofile.description|linebreaksbr }}</p>
                                         {% endif %}
                                     {% endif %}
+
+                                    {% if item.videofile.quizzes.all %}
+                                        <div class="fs-6"><em>{% trans "Quizzes:" %}</em></div>
+                                        <ul class="related-quizzes pb-2">
+                                            {% for quiz in item.videofile.quizzes.all  %}
+                                                {% if quiz.published %}
+                                                    {% quiz_details_get user quiz as quiz_details %}
+                                                    <li>
+                                                        {% if quiz_details.enabled %}
+                                                            <a href="{% url 'quiz' course.pk section.pk quiz.pk %}">{{ quiz.name }}</a>
+                                                        {% else %}
+                                                            {% if quiz.requirement %}
+                                                                <span class="text-muted text-underline-dashed" data-toggle="tooltip" data-placement="auto" data-html="true" title="{% trans 'Requirement must be met first:' %} {% trans quiz.requirement.name %}">{{ quiz.name }}</span>
+                                                            {% else %}
+                                                                <span class="text-muted">{{ quiz.name }}</span>
+                                                            {% endif %}
+                                                        {% endif %}
+
+                                                        {% if quiz_details.score.exists %}
+                                                            <span class="badge rounded-pill bg-success">{% trans "Submitted" %}</span>
+                                                        {% else %}
+                                                            <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </li>
