@@ -49,9 +49,9 @@ def course(request, pk):
     )
 
     # progress status
-    discussions_progress = progress(request.user, discussions)
-    quizzes_progress = progress(request.user, quizzes)
-    sections_progress = progress(request.user, sections)
+    discussions_progress = progress(request.user, course_object, discussions)
+    quizzes_progress = progress(request.user, course_object, quizzes)
+    sections_progress = progress(request.user, course_object, sections)
 
     course_completed = True if sections_progress['current'] == sections_progress['max'] else False
 

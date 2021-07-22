@@ -61,22 +61,15 @@ def check_permission(test_func, type):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
             from courses.models import SectionItem
+            from core.support_methods import allow_access
 
             pk = kwargs["pk"]
             sectionitem_pk = kwargs[type+"_pk"]
             course_obj = get_object_or_404(Course, pk=pk)
             sectionitem_obj = get_object_or_404(SectionItem, pk=sectionitem_pk)
-            access_restriction = sectionitem_obj.access_restriction
-            user = request.user
 
-            if access_restriction == SectionItem.PUBLIC and user in course_obj.members.all():
-                access_allowed = True
-            elif access_restriction == SectionItem.INSTRUCTORS and user in course_obj.instructors.all():
-                access_allowed = True
-            elif access_restriction == SectionItem.ADMINS and user.is_staff:
-                access_allowed = True
-            else:
-                access_allowed = False
+            user = request.user
+            access_allowed = allow_access(user, course_obj, sectionitem_obj)
 
             if access_allowed:
                 return view_func(request, *args, **kwargs)
