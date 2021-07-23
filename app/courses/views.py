@@ -248,87 +248,90 @@ def generate_certificate(request, pk):
     If CertificateLogoFiles exists, they will be used on the header portion.
     '''
     course_object = get_object_or_404(Course, pk=pk)
-    user = request.user
-    sections_statuses = Status.objects.filter(learner=user, course=course_object)
-    filename = f'GEN - {course_object.code} - {request.user.first_name} {request.user.last_name}.pdf'
-    logos = CertificateLogoFile.objects.all()
-    date = timezone.localtime().isoformat()
 
-    sections_completed = []
-    for item in sections_statuses:
-        sections_completed.append(item.completed)
+    if course_object.provide_certificate:
+        user = request.user
+        sections_statuses = Status.objects.filter(learner=user, course=course_object)
+        filename = f'GEN - {course_object.code} - {request.user.first_name} {request.user.last_name}.pdf'
+        logos = CertificateLogoFile.objects.all()
+        date = timezone.localtime().isoformat()
 
-    if all(sections_completed):
-        # Create a file-like buffer to receive PDF data.
-        buffer = io.BytesIO()
+        sections_completed = []
+        for item in sections_statuses:
+            sections_completed.append(item.completed)
 
-        # Create the PDF object, using the buffer as its "file."
-        certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
-        certificate.setTitle('Certificate of Conclusion')
-
-        # Logos
-        # The preferred logo size 200 x 80 points.
-        # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
-        logo_spacing = 20
-        logo_width = 200
-        logo_max_height = 80
-        page_width = landscape(letter)[0]
-        logos_count = logos.count()
-        logos_combined_width = (logo_width * logos_count) + (logo_spacing * (logos_count - 1))
-        logo_x = (page_width - logos_combined_width) / 2
-        logos_reserved_space = logo_max_height if logos_count == 0 else 0
-
-        for logo in logos:
-            logo_proportion = logo.file.width / logo.file.height
-            logo_height = logo_width / logo_proportion
-            logo_absolute_url = request.build_absolute_uri(logo.file.url)
-            certificate.drawImage(
-                logo_absolute_url,
-                logo_x,
-                490,
-                width=logo_width,
-                height=logo_height,
-                mask='auto'
+        if all(sections_completed):
+            return render_certificate_pdf(course_object, date, filename, logos, request, user)
+        else:
+            messages.warning(
+                request,
+                _("You have not completed this course yet.")
             )
-            logo_x += (logo_width + logo_spacing)
-
-        # Header
-        certificate.setFont('Helvetica', 40, leading=None)
-        certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Conclusion')
-        certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Conclusion')
-        certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(395, 320 + logos_reserved_space, 'This certificate is presented to / Ce certificat est présenté à')
-
-        # Learner info
-        certificate.setFont('Helvetica-Bold', 36, leading=None)
-        certificate.drawCentredString(395, 270 + logos_reserved_space/2, f'{user.first_name} {user.last_name}')
-
-        # Course info
-        certificate.setFont('Helvetica', 24, leading=None)
-        certificate.drawCentredString(395, 220, 'for completing the following / pour avoir complété ce qui suit')
-
-        certificate.setFont('Helvetica-Oblique', 20, leading=None)
-        course_name = textwrap.wrap(course_object.name, width=70)
-        course_name_position = 170
-        for line in course_name:
-            certificate.drawCentredString(395, course_name_position, line)
-            course_name_position = course_name_position - 30
-
-        # Footer
-        certificate.setFont('Helvetica', 12, leading=None)
-        certificate.drawCentredString(395, 50, f'Generated on / Généré le: {date}')
-
-        # Close the PDF object cleanly, and we're done.
-        certificate.showPage()
-        certificate.save()
-
-        # FileResponse sets the Content-Disposition header so that browsers
-        # present the option to save the file.
-        buffer.seek(0)
-        return FileResponse(buffer, as_attachment=True, filename=filename)
+            return redirect("course", pk=course_object.pk)
     else:
         messages.warning(
             request,
-            _("You have not completed this course yet.")
+            _("This course does not provide a certificate of conclusion.")
         )
         return redirect("course", pk=course_object.pk)
+
+
+def render_certificate_pdf(course_object, date, filename, logos, request, user):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+    # Create the PDF object, using the buffer as its "file."
+    certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
+    certificate.setTitle('Certificate of Conclusion')
+    # Logos
+    # The preferred logo size 200 x 80 points.
+    # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
+    logo_spacing = 20
+    logo_width = 200
+    logo_max_height = 80
+    page_width = landscape(letter)[0]
+    logos_count = logos.count()
+    logos_combined_width = (logo_width * logos_count) + (logo_spacing * (logos_count - 1))
+    logo_x = (page_width - logos_combined_width) / 2
+    logos_reserved_space = logo_max_height if logos_count == 0 else 0
+    for logo in logos:
+        logo_proportion = logo.file.width / logo.file.height
+        logo_height = logo_width / logo_proportion
+        logo_absolute_url = request.build_absolute_uri(logo.file.url)
+        certificate.drawImage(
+            logo_absolute_url,
+            logo_x,
+            490,
+            width=logo_width,
+            height=logo_height,
+            mask='auto'
+        )
+        logo_x += (logo_width + logo_spacing)
+    # Header
+    certificate.setFont('Helvetica', 40, leading=None)
+    certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Conclusion')
+    certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Conclusion')
+    certificate.setFont('Helvetica', 24, leading=None)
+    certificate.drawCentredString(395, 320 + logos_reserved_space,
+                                  'This certificate is presented to / Ce certificat est présenté à')
+    # Learner info
+    certificate.setFont('Helvetica-Bold', 36, leading=None)
+    certificate.drawCentredString(395, 270 + logos_reserved_space / 2, f'{user.first_name} {user.last_name}')
+    # Course info
+    certificate.setFont('Helvetica', 24, leading=None)
+    certificate.drawCentredString(395, 220, 'for completing the following / pour avoir complété ce qui suit')
+    certificate.setFont('Helvetica-Oblique', 20, leading=None)
+    course_name = textwrap.wrap(course_object.name, width=70)
+    course_name_position = 170
+    for line in course_name:
+        certificate.drawCentredString(395, course_name_position, line)
+        course_name_position = course_name_position - 30
+    # Footer
+    certificate.setFont('Helvetica', 12, leading=None)
+    certificate.drawCentredString(395, 50, f'Generated on / Généré le: {date}')
+    # Close the PDF object cleanly, and we're done.
+    certificate.showPage()
+    certificate.save()
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=filename)

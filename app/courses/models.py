@@ -59,6 +59,11 @@ class Course(models.Model):
         default=False,
         help_text=_("Defines if user data (e.g., name) should be visible or not."),
     )
+    provide_certificate = models.BooleanField(
+        _("provide certificate"),
+        default=False,
+        help_text=_("Defines if this course provides a certificate of conclusion.")
+    )
     enable_gamification = models.BooleanField(
         _("gamification"),
         default=True,
