@@ -182,7 +182,7 @@ class Section(models.Model):
         _("clone quiz"),
         default=False,
         help_text=_(
-            "* FOR UPLOAD SECTION ONLY *: automatically clones an existing quiz and connect it to the participant's"
+            "* FOR UPLOAD SECTION ONLY *: automatically clones an existing quiz and connect it to the participant's "
             "video after it gets published."
         ),
     )
