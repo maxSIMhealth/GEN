@@ -8,7 +8,7 @@ register = template.Library()
 @register.simple_tag
 def get_course_status(user, course):
     sections = course.sections.filter(published=True)
-    sections_progress = progress(user, sections)
+    sections_progress = progress(user, course, sections)
 
     # course status codes
     # 0 = not started
