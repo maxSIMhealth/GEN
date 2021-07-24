@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import IntegerRangeField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
@@ -34,6 +33,7 @@ class Quiz(SectionItem):
     Quiz model
     """
 
+    paginate = models.BooleanField(_("paginate questions"), default=True)
     check_score = models.BooleanField(_("check score"), default=True)
     show_score = models.BooleanField(_("show score"), default=False)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
@@ -165,7 +165,6 @@ class Quiz(SectionItem):
                     )
                 )
 
-
         if len(errors) > 0:
             raise ValidationError(errors)
         else:
@@ -197,6 +196,19 @@ class Question(TimeStampedModel):
     Parent class for questions (Multiple Choice, Likert Scale and Open Ended)
     and for question headers.
     """
+    OPENENDED_DATE = "OD"
+    OPENENDED_NUMERIC = "ON"
+    OPENENDED_TEXTAREA = "OA"
+    OPENENDED_TEXT = "OT"
+    OPENENDED_HOUR = "OH"
+
+    OPENENDED_TYPES = [
+        (OPENENDED_DATE, _("Open ended - Date")),
+        (OPENENDED_NUMERIC, _("Open ended - Numeric")),
+        (OPENENDED_HOUR, _("Open ended - Time/hour")),
+        (OPENENDED_TEXT, _("Open ended - Text (short)")),
+        (OPENENDED_TEXTAREA, _("Open ended - Text (long)"))
+    ]
 
     question_type = models.CharField(
         _("question type"), max_length=1, choices=QUESTION_TYPES
@@ -232,6 +244,13 @@ class Question(TimeStampedModel):
         help_text=_(
             "Does this question have multiple correct answers (allow user to select multiple answer items)?"
         ),
+    )
+    openended_type = models.CharField(
+        _("Open ended type"),
+        max_length=2,
+        choices=OPENENDED_TYPES,
+        default=OPENENDED_TEXTAREA,
+        help_text=_("Type of open ended question.")
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False

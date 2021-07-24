@@ -44,20 +44,22 @@
         <div class="card quiz">
             <div class="card-header bg-light">
                 <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% translate "Questions" %}</div>
-                <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
-                    <ul class="pagination mb-0">
-                        <li id="pagination-navigation-previous" class="page-item disabled">
-                            <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                               onclick="previousPaginationItem()">Previous</a>
-                        </li>
-                        <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
-                                                          href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
-                            of 13</a></li>
-                        <li id="pagination-navigation-next" class="page-item">
-                            <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                {% if quiz.paginate %}
+                    <nav aria-label="quiz navigation" class="text-right" style="display: inline-block; float: right">
+                        <ul class="pagination mb-0">
+                            <li id="pagination-navigation-previous" class="page-item disabled">
+                                <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
+                                   onclick="previousPaginationItem()">Previous</a>
+                            </li>
+                            <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
+                                                              href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
+                                of 13</a></li>
+                            <li id="pagination-navigation-next" class="page-item">
+                                <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                {% endif %}
             </div>
             <div class="card-body">
                 <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}"
@@ -65,14 +67,16 @@
                     {% csrf_token %}
                     {{ quiz.require_answers|json_script:"quiz_require_answers" }}
                     <div class="pagination-items-container">
-                        <div class="pagination-item">
+                        <div {% if quiz.paginate %}class="pagination-item"{% endif %}>
                             {% if quiz.description %}
                                 <p>{{ quiz.description|safe|linebreaksbr }}</p>
                             {% endif %}
-                            <span><i>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</i></span>
+                            {% if quiz.paginate %}
+                                <span><i>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</i></span>
+                            {% endif %}
                         </div>
                         {% for question in questions %}
-                            <div class="pagination-item">
+                            <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %}>
                                 <div class="fs-6">
                                     <strong>{{ question.content }}</strong>
                                 </div>
@@ -129,22 +133,43 @@
 
                                 {% elif question.question_type == 'O' %}
 
-                                    <div class="mb-3">
-                                        <label for="openended_{{ question.id }}">{% translate "Your answer:" %}</label>
-                                        <textarea name="openended_{{ question.id }}" id="openended_{{ question.id }}"
-                                                  rows="5"
-                                                  class="form-control"></textarea>
+                                    <div class="mb-3 mt-1">
+                                        <label for="openended_{{ question.id }}">{% translate 'Your answer:' %}</label>
+                                        {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time #}
+                                        {% if question.openended_type == "OA" %}
+                                            <textarea name="openended_{{ question.id }}"
+                                                      id="openended_{{ question.id }}"
+                                                      rows="5"
+                                                      class="form-control"
+                                                      {% if quiz.require_answers %} required {% endif %}
+                                            ></textarea>
+                                        {% else %}
+                                            <input {% if question.openended_type == 'OT' %}type="text"
+                                                   {% elif question.openended_type == 'ON' %}type="number"
+                                                   {% elif question.openended_type == 'OD' %}type="date"
+                                                   {% elif question.openended_type == 'OH' %}type="time"
+                                                   {% endif %}
+                                                   class="form-control"
+                                                   id="openended_{{ question.id }}"
+                                                   name="openended_{{ question.id }}"
+                                                   {% if quiz.require_answers %} required {% endif %}
+                                            >
+                                        {% endif %}
                                     </div>
 
                                 {% endif %}
                             </div>
                         {% endfor %}
-                        <div class="pagination-item">
-                            <p>{% translate "This is the end of the quiz." %}</p>
-                            <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
-                                exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                        {% if quiz.paginate %}
+                            <div class="pagination-item">
+                                <p>{% translate "This is the end of the quiz." %}</p>
+                                <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
+                                    exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                                <button type="submit" class="btn btn-primary">{% translate "Submit" %}</button>
+                            </div>
+                        {% else %}
                             <button type="submit" class="btn btn-primary">{% translate "Submit" %}</button>
-                        </div>
+                        {% endif %}
                     </div>
                 </form>
             </div>

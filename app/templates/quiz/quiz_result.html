@@ -160,9 +160,12 @@
                     {% endwith %}
 
                 {% elif question.question_type == 'O' %}
-                    <label for="openended_{{ question.id }}">{% trans "Your answer:" %}</label>
-                    <textarea rows="5" class="form-control" name="openended_{{ question.id }}" id="openended_{{ question.id }}" disabled>{% for attempt in attempt_openended %} {% if attempt.question_id == question.id %}{{ attempt.answer_content }} {% endif %}{% endfor %}</textarea>
-
+                    <label for="openended_{{ question.id }}" class="mb-1">{% trans "Your answer:" %}</label>
+                    {% if question.openended_type == 'OA' %}
+                        <textarea rows="5" class="form-control" name="openended_{{ question.id }}" id="openended_{{ question.id }}" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
+                    {% else %}
+                        <input type="text" class="form-control" name="openended_{{ question.id }}" id="openended_{{ question.id }}" disabled value="{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}">
+                    {% endif %}
                 {% endif %}
 
                 {% if question.explanation %}

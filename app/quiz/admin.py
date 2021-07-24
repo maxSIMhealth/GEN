@@ -113,6 +113,7 @@ class QuizAdmin(TabbedTranslationAdmin):
             "Questions options",
             {
                 "fields": (
+                    "paginate",
                     "randomize",
                     "subset",
                     "subset_number"
@@ -310,7 +311,7 @@ class LikertAnswerAdmin(TabbedTranslationAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("question_type", "content", "quiz", "value")
+    fields = ("question_type", "openended_type", "content", "quiz", "value")
 
     class Media:
         css = {"all": ("css/admin.css",)}
