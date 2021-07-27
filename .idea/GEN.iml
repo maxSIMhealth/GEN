@@ -6,7 +6,7 @@
         <option name="rootFolder" value="$MODULE_DIR$/app" />
         <option name="settingsModule" value="GEN/settings.py" />
         <option name="manageScript" value="manage.py" />
-        <option name="environment" value="&lt;map/&gt;" />
+        <option name="environment" value="&lt;map&gt;&#10;  &lt;entry&gt;&#10;    &lt;string&gt;UID&lt;/string&gt;&#10;    &lt;string&gt;1000&lt;/string&gt;&#10;  &lt;/entry&gt;&#10;  &lt;entry&gt;&#10;    &lt;string&gt;GID&lt;/string&gt;&#10;    &lt;string&gt;1000&lt;/string&gt;&#10;  &lt;/entry&gt;&#10;&lt;/map&gt;" />
         <option name="doNotUseTestRunner" value="false" />
         <option name="trackFilePattern" value="migrations" />
       </configuration>
@@ -22,7 +22,7 @@
       <excludeFolder url="file://$MODULE_DIR$/media" />
       <excludeFolder url="file://$MODULE_DIR$/static" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 3.8.6 Docker Compose (gen at [/home/andrei/Devel/GEN/docker-compose.yml])" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.8.10 Docker Compose (gen at [/home/andrei/Devel/GEN/docker-compose.yml])" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Django Lib" level="project" />
     <orderEntry type="library" name="vue" level="application" />
