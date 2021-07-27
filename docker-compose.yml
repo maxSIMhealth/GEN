@@ -15,4 +15,14 @@ services:
     command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
     ports:
       - 8000:8000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: 'postgres:13'
+    ports:
+      - 5432:5432
+    env_file: ./config/env-dev-local
+    volumes:
+    - ./db-data/:/var/lib/postgresql/data/
 
