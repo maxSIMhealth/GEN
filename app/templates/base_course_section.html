@@ -57,7 +57,11 @@
             {% endif %}
 
             {% if section_status.completed %}
-                {% trans "Congratulations! You have completed this section." as congratulations %}
+                {% if section.final_assessment %}
+                    {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Info section." as congratulations %}
+                {% else %}
+                    {% trans "Congratulations! You have completed this section." as congratulations %}
+                {% endif %}
                 {% bootstrap_alert congratulations alert_type="success" dismissible=False %}
             {% endif %}
 
