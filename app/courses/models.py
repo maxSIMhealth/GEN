@@ -29,6 +29,13 @@ class Course(models.Model):
     )
     start_date = models.DateTimeField(_("start date"), blank=True, null=True)
     end_date = models.DateTimeField(_("end date"), blank=True, null=True)
+    requirement = models.ForeignKey(
+        "self",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        verbose_name=_("requirement"),
+    )
     members = models.ManyToManyField(
         User,
         related_name="member",

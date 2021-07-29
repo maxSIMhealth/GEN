@@ -11,11 +11,11 @@ from django.utils.translation import gettext_lazy as _
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
 
-from GEN.decorators import course_enrollment_check
+from GEN.decorators import course_enrollment_check, check_requirement
 from GEN.support_methods import enrollment_test
 from core.models import CertificateLogoFile
 from core.views import check_is_instructor
-from courses.support_methods import requirement_fulfilled, section_mark_completed
+from courses.support_methods import section_mark_completed
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status
 from .progress import progress
@@ -25,7 +25,9 @@ not_enrolled_error = _("You are not enrolled in the requested course.")
 
 @login_required
 @course_enrollment_check(enrollment_test)
+@check_requirement()
 def course(request, pk):
+    user = request.user
     course_object = get_object_or_404(Course, pk=pk)
     sections = course_object.sections.filter(published=True)
     discussions = course_object.discussions.all()
@@ -38,12 +40,12 @@ def course(request, pk):
     for section in sections:
         if section.published:
             Status.objects.get_or_create(
-                learner=request.user,
+                learner=user,
                 course=course_object,
                 section=section
             )
     course_object.status.get_or_create(
-        learner=request.user,
+        learner=user,
         course=course_object,
         section=None
     )
@@ -71,13 +73,13 @@ def course(request, pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
+@check_requirement()
 def section_page(request, pk, section_pk):
     course_object = get_object_or_404(Course, pk=pk)
     section_object = get_object_or_404(Section, pk=section_pk)
     section_items = section_object.section_items.filter(published=True)
     gamification = course_object.enable_gamification
     user = request.user
-    requirement = section_object.requirement
     allow_submission_list = []
     allow_submission = False
     start_date_reached = False
@@ -148,19 +150,6 @@ def section_page(request, pk, section_pk):
                         "This section is closed and its contents have been hidden or disabled to learners because the end date has passed."
                     ),
                 )
-
-    # only allow participant to access section if requirements have been fulfilled
-    if requirement and not is_instructor:
-        fulfilled = requirement_fulfilled(user, section_object)
-
-        if not fulfilled:
-            messages.error(
-                request,
-                _(
-                    "You have not fulfilled the requirements to access the requested section."
-                ),
-            )
-            return redirect("course", pk=course_object.pk)
 
     if section_object.section_type == "Q":
         section_template = "sections/section_quiz.html"
@@ -243,10 +232,10 @@ def section_page(request, pk, section_pk):
 @login_required
 @course_enrollment_check(enrollment_test)
 def generate_certificate(request, pk):
-    '''
+    """
     Generates certificate of conclusion as a PDF file.
     If CertificateLogoFiles exists, they will be used on the header portion.
-    '''
+    """
     course_object = get_object_or_404(Course, pk=pk)
 
     if course_object.provide_certificate:

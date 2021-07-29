@@ -1,52 +1,34 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from .models import Status
+from .models import Course, Status
 
 
-def requirement_fulfilled(user, section):
+def requirement_fulfilled(user, item):
     """
-    Check if all section requirements have been fulfilled
+    Check if all requirements have been fulfilled
     """
-    requirement = section.requirement
-
+    requirement = item.requirement
+    is_course = isinstance(item, Course)
+    course = item if is_course else item.course
     fulfilled = False
 
     # check if user is a course instructor or system staff
-    is_instructor = bool(section.course in user.instructor.all())
+    is_instructor = bool(course in user.instructor.all())
     if is_instructor or user.is_staff:
         fulfilled = True
     else:
         # check if requirement has a related Status object for the user
         try:
-            requirement_status = requirement.status.filter(learner=user).get()
+            if is_course:
+                requirement_status = requirement.status.filter(learner=user, section=None).get()
+            else:
+                requirement_status = requirement.status.filter(learner=user).get()
         except Status.DoesNotExist:
             requirement_status = None
 
         if requirement_status:
             fulfilled = requirement_status.completed
-
-        # for item in requirement.section_items.all():
-        #     if requirement.section_type == "Q":
-        #         items_completed.append(quiz_score_get(user, item.quiz).exists())
-        #     elif requirement.section_type == "D":
-        #         items_completed.append(has_participated(user, item.discussion))
-        #     elif requirement.section_type == "U":
-        #         item_uploaded = (
-        #             requirement.section_items.all()
-        #             .filter(author=user, published=True)
-        #             .count()
-        #             > 0
-        #         )
-        #         items_completed.append(item_uploaded)
-        #     elif requirement.section_type == "V":
-        #         if item.videofile.quizzes.exists():
-        #             for quiz in item.videofile.quizzes.all():
-        #                 items_completed.append(quiz_score_get(user, quiz).exists())
-        #     else:
-        #         items_completed.append(False)
-        #
-        #     fulfilled = all(element for element in items_completed)
 
     return fulfilled
 

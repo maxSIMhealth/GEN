@@ -3,7 +3,8 @@ from functools import wraps
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 
-from courses.models import Course, SectionItem
+from courses.models import Course, Section
+from courses.support_methods import requirement_fulfilled
 
 
 def course_enrollment_check(test_func):
@@ -23,39 +24,20 @@ def course_enrollment_check(test_func):
                 raise PermissionDenied("Access denied. User not enrolled in course.")
             else:
                 return view_func(request, *args, **kwargs)
-            # if test_func(request.user):
-            #     return view_func(request, *args, **kwargs)
-            # path = request.build_absolute_uri()
-            # resolved_login_url = resolve_url(login_url or settings.LOGIN_URL)
-            # # If the login url is the same scheme and net location then just
-            # # use the path as the "next" url.
-            # login_scheme, login_netloc = urlparse(resolved_login_url)[:2]
-            # current_scheme, current_netloc = urlparse(path)[:2]
-            # if (not login_scheme or login_scheme == current_scheme) and (
-            #     not login_netloc or login_netloc == current_netloc
-            # ):
-            #     path = request.get_full_path()
-            # from django.contrib.auth.views import redirect_to_login
-
-            # return redirect_to_login(path, resolved_login_url, redirect_field_name)
 
         return _wrapped_view
 
     return decorator
-    # if user not in course.members.all():
-    #     return PermissionDenied("Access denied!")
-    # else return
-    # return user in course.members.all()
 
-def check_permission(test_func, type):
-    '''
+def check_permission(test_func, item_type):
+    """
     Checks if the user is allowed to access the requested item.
 
         Parameters:
             test_func: TBD
-            type (str): SectionItem type (game, contentitem, discussion, quiz, videofile)
+            item_type (str): SectionItem type (game, contentitem, discussion, quiz, videofile)
 
-    '''
+    """
 
     def decorator(view_func):
         @wraps(view_func)
@@ -64,7 +46,7 @@ def check_permission(test_func, type):
             from core.support_methods import allow_access
 
             pk = kwargs["pk"]
-            sectionitem_pk = kwargs[type+"_pk"]
+            sectionitem_pk = kwargs[item_type+"_pk"]
             course_obj = get_object_or_404(Course, pk=pk)
             sectionitem_obj = get_object_or_404(SectionItem, pk=sectionitem_pk)
 
@@ -80,6 +62,32 @@ def check_permission(test_func, type):
 
     return decorator
 
+
+def check_requirement():
+    """
+    Checks if the user has fulfilled the request item requirements.
+    """
+
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            user = request.user
+            if "section_pk" in kwargs:
+                section_pk = kwargs["section_pk"]
+                item = get_object_or_404(Section, pk=section_pk)
+            else:
+                course_pk = kwargs["pk"]
+                item = get_object_or_404(Course, pk=course_pk)
+
+            fulfilled = requirement_fulfilled(user, item)
+
+            if fulfilled:
+                return view_func(request, *args, **kwargs)
+            else:
+                raise PermissionDenied("You have not fulfilled the requirement to access the requested item.")
+
+        return _wrapped_view
+    return decorator
 
 # def subject_test(f, subject):
 #     def test_user_for_subject(request, subject, *args, **kwargs):

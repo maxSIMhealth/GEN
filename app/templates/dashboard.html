@@ -27,36 +27,55 @@
     <div class="card" id="courses">
         <div class="card-header bg-light">
             <div class="row">
-                <div class="col-10 pt-0"><div class="fs-5 m-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</div></div>
-                {#                <div class="col-2 text-right"><a href="#" class="btn btn-primary btn-sm disabled">{% trans "Enroll" %}</a></div>#}
+                <div class="col-10 pt-0">
+                    <div class="fs-5 m-0"><i class="fas fa-laptop-code pr-1"></i> {% trans "Courses" %}</div>
+                </div>
+                {#<div class="col-2 text-right"><a href="#" class="btn btn-primary btn-sm disabled">{% trans "Enroll" %}</a></div>#}
             </div>
         </div>
         <div class="card-body p-0">
             <ul class="list-group list-group-flush">
                 {% for course in courses %}
-                    <li class="list-group-item">
-                        <div class="fs-5">
-                            <a href="{% url 'course' course.pk %}">
-                                {% if user|is_instructor:course %}
-                                    {{ course.code }} -
+                        <li class="list-group-item">
+                            <div class="fs-5">
+                                {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
+                                    <a href="{% url 'course' course.pk %}">
+                                        {% if user|is_instructor:course %}
+                                            {{ course.code }} -
+                                        {% endif %}
+                                        {{ course.name }}
+                                    </a>
                                 {% endif %}
-                                {{ course.name }}
-                            </a>
-                        </div>
-                        <div>
-                            <strong>Status:</strong>
-                            {% get_course_status user course as course_status %}
-                            <span style="font-size: 1.2em">
-                                {% if course_status == 0 %}
-                                    <span class="badge rounded-pill bg-warning text-dark">{% trans "Not started" %}</span>
-                                {% elif course_status == 1 %}
-                                    <span class="badge rounded-pill bg-primary">{% trans "Started" %}</span>
-                                {% else %}
-                                    <span class="badge rounded-pill bg-success">{% trans "Completed" %}</span>
+                                {% if course.requirement and not course.requirement.fulfilled %}
+                                    <span>
+                                        {% if user|is_instructor:course %}
+                                            {{ course.code }} -
+                                        {% endif %}
+                                        {{ course.name }}
+                                    </span>
                                 {% endif %}
-                            </span>
-                        </div>
-                    </li>
+                            </div>
+                            <div>
+                                <strong>Status:</strong>
+                                {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
+                                    {% get_course_status user course as course_status %}
+                                    <span style="font-size: 1.2em">
+                                        {% if course_status == 0 %}
+                                            <span class="badge rounded-pill bg-warning text-dark">{% trans "Not started" %}</span>
+                                            {% elif course_status == 1 %}
+                                            <span class="badge rounded-pill bg-primary">{% trans "Started" %}</span>
+                                        {% else %}
+                                            <span class="badge rounded-pill bg-success">{% trans "Completed" %}</span>
+                                        {% endif %}
+                                    </span>
+                                {% endif %}
+                                {% if course.requirement and not course.requirement.fulfilled %}
+                                    <span style="font-size: 1.2em">
+                                        <span class="badge rounded-pill bg-info text-dark">{% trans 'Requirement must be met first:' %} {% trans course.requirement.name %}</span>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </li>
                     {% empty %}
                     <li class="list-group-item">{% trans 'Not enrolled in any course. Please wait for the administrator to assign you.' %}</li>
                 {% endfor %}
