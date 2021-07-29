@@ -89,6 +89,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = _("course")
         verbose_name_plural = _("courses")
+        ordering = ["code"]
 
     def __str__(self):
         output = "ID {0} - {1} - {2}".format(self.pk, self.code, self.name)
