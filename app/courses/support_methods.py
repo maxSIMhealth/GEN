@@ -9,26 +9,31 @@ def requirement_fulfilled(user, item):
     Check if all requirements have been fulfilled
     """
     requirement = item.requirement
-    is_course = isinstance(item, Course)
-    course = item if is_course else item.course
     fulfilled = False
 
-    # check if user is a course instructor or system staff
-    is_instructor = bool(course in user.instructor.all())
-    if is_instructor or user.is_staff:
-        fulfilled = True
-    else:
-        # check if requirement has a related Status object for the user
-        try:
-            if is_course:
-                requirement_status = requirement.status.filter(learner=user, section=None).get()
-            else:
-                requirement_status = requirement.status.filter(learner=user).get()
-        except Status.DoesNotExist:
-            requirement_status = None
+    if requirement:
+        is_course = isinstance(item, Course)
+        course = item if is_course else item.course
 
-        if requirement_status:
-            fulfilled = requirement_status.completed
+
+        # check if user is a course instructor or system staff
+        is_instructor = bool(course in user.instructor.all())
+        if is_instructor or user.is_staff:
+            fulfilled = True
+        else:
+            # check if requirement has a related Status object for the user
+            try:
+                if is_course:
+                    requirement_status = requirement.status.filter(learner=user, section=None).get()
+                else:
+                    requirement_status = requirement.status.filter(learner=user).get()
+            except Status.DoesNotExist:
+                requirement_status = None
+
+            if requirement_status:
+                fulfilled = requirement_status.completed
+    else:
+        fulfilled = True
 
     return fulfilled
 
