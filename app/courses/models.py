@@ -9,9 +9,9 @@ from tinymce.models import HTMLField
 class Course(models.Model):
     name = models.CharField(
         _("name"),
-        max_length=100,
+        max_length=150,
         unique=False,
-        help_text=_("Course name (max 100 characters)"),
+        help_text=_("Course name (max 150 characters)"),
     )
     code = models.CharField(
         _("course code"),
