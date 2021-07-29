@@ -51,7 +51,8 @@ urlpatterns += [
 
 urlpatterns += i18n_patterns(
     path("", dashboard_views.dashboard, name="home"),
-    path("dashboard/", dashboard_views.dashboard, name="dashboard"),
+    path("dashboard/", RedirectView.as_view(url='/'), name="dashboard"),
+    path("courses/", RedirectView.as_view(url='/'), name="courses"),
     path("signup/", account_views.signup, name="signup"),
     path(
         "login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"
