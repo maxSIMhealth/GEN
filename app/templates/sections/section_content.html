@@ -65,22 +65,24 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="card-footer">
-                    <nav aria-label="quiz navigation">
-                        <ul class="pagination justify-content-center mb-0">
-                            <li id="pagination-navigation-previous" class="page-item disabled">
-                                <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                                   onclick="previousPaginationItem()">{% trans "Previous" %}</a>
-                            </li>
-                            <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
-                                                              href="javascript:void(0);" tabindex="-1"
-                                                              aria-disabled="true">-- of --</a></li>
-                            <li id="pagination-navigation-next" class="page-item">
-                                <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% trans "Next" %}</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                {% if section_items|length > 1 %}
+                    <div class="card-footer">
+                        <nav aria-label="quiz navigation">
+                            <ul class="pagination justify-content-center mb-0">
+                                <li id="pagination-navigation-previous" class="page-item disabled">
+                                    <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
+                                       onclick="previousPaginationItem()">{% trans "Previous" %}</a>
+                                </li>
+                                <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
+                                                                  href="javascript:void(0);" tabindex="-1"
+                                                                  aria-disabled="true">-- of --</a></li>
+                                <li id="pagination-navigation-next" class="page-item">
+                                    <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% trans "Next" %}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% else %}
