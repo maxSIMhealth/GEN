@@ -161,7 +161,7 @@
                             </div>
                         {% endfor %}
                         {% if quiz.paginate %}
-                            <div class="pagination-item">
+                            <div class="pagination-item" style="display: none">
                                 <p>{% translate "This is the end of the quiz." %}</p>
                                 <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
                                     exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
