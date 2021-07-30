@@ -30,6 +30,9 @@
     <orderEntry type="library" name="vuedraggable" level="application" />
     <orderEntry type="library" name="shepherd.js" level="application" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="app/requirements.txt" />
+  </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />
     <option name="myDocStringFormat" value="Plain" />
