@@ -458,3 +458,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'height': 300,
 }
 TINYMCE_SPELLCHECKER = False
+
+#
+# GEN Settings
+#
+SUPPORT_EMAILS = os.getenv('SUPPORT_EMAILS').split(',')

@@ -55,7 +55,7 @@ urlpatterns += i18n_patterns(
     path("courses/", RedirectView.as_view(url='/'), name="courses"),
     path("signup/", account_views.signup, name="signup"),
     path(
-        "login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"
+        "login/", account_views.Login.as_view(template_name="login.html"), name="login"
     ),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     # path("settings/", account_views.UserUpdateView.as_view(), name='my_account'),

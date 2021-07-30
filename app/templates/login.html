@@ -6,46 +6,62 @@
 {% block title %}Sign up to GEN{% endblock title %}
 
 {% block content %}
-  <div class="card-body bg-light text-dark">
-    {% if messages %}
-      {% include 'partials/messages.html' %}
-    {% endif %}
-    <div class="card-title fs-3">{% trans "Log in" %}</div>
-    <form method="post" novalidate>
-      {% csrf_token %}
-      {% include 'partials/form.html' %}
-      <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
-    </form>
-    <div class="alert alert-info mt-3 mb-0">
-      {% blocktrans %}
-      If you have problems logging into GEN, please contact us through the following email: <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>
-      {% endblocktrans %}
+    <div class="card-body bg-light text-dark">
+        {% if messages %}
+            {% include 'partials/messages.html' %}
+        {% endif %}
+        <div class="card-title fs-3">{% trans "Log in" %}</div>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% include 'partials/form.html' %}
+            <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
+        </form>
+        <div class="alert alert-info mt-3 mb-0">
+            {% blocktrans %}
+                If you have problems logging into GEN, please contact us at
+            {% endblocktrans %}
+            {% for email in support_emails %}
+                {% if support_emails|length == 1 %}
+                    {{ email|urlize }}
+                {% else %}
+                    {% if not forloop.last %}
+                        {{ email|urlize }} or
+                    {% else %}
+                        {{ email|urlize }}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
-  </div>
-  <div class="card-footer bg-light text-muted text-center">
-    {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
-    {% comment %}
-    <br>
-    <p><strong>-- OR --</strong></p>
-    <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-    {% endcomment %}
-  </div>
-  <div class="text-center bg-dark text-white py-2">
-    <small>
-      <a href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
-    </small>
-  </div>
+    <div class="card-footer bg-light text-muted text-center">
+        {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
+        {% comment %}
+            <br>
+            <p><strong>-- OR --</strong></p>
+            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+        {% endcomment %}
+    </div>
+    <div class="text-center bg-dark text-white py-2">
+        <small>
+            <a href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
+        </small>
+    </div>
 {% endblock content %}
 
 {% block footer %}
-<div class="footer mb-2">
-  <div class="text-center text-light">
-    <div class="text-center">
-      <a href="http://www.ontariotechu.ca"><img src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}" alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
-      <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo_white.png' %}" alt="{% trans 'maxSIMhealth logo' %}" width="200px"></a>
-      <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u></p>
-      <p>GEN - Gamified Educational Network (2020)</p>
+    <div class="footer mb-2">
+        <div class="text-center text-light">
+            <div class="text-center">
+                <a href="http://www.ontariotechu.ca"><img
+                        src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}"
+                        alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
+                <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo_white.png' %}"
+                                                           alt="{% trans 'maxSIMhealth logo' %}" width="200px"></a>
+                <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario
+                    Tech University</u></a> - <u><a href="http://www.maxsimhealth.com"
+                                                    class="text-light">maxSIMhealth</a></u></p>
+                <p>GEN - Gamified Educational Network (2020)</p>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 {% endblock footer %}
