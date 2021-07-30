@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
 
-from GEN.decorators import course_enrollment_check, check_requirement
+from GEN.decorators import course_enrollment_check, check_requirement, check_permission
 from GEN.support_methods import enrollment_test
 from core.models import CertificateLogoFile
 from core.views import check_is_instructor
@@ -73,6 +73,7 @@ def course(request, pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
+@check_permission("section")
 @check_requirement()
 def section_page(request, pk, section_pk):
     course_object = get_object_or_404(Course, pk=pk)

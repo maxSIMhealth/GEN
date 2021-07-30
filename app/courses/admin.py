@@ -17,7 +17,7 @@ class CourseAdmin(TabbedTranslationAdmin):
     # fields = ('name', 'members')
     list_display = ("name", "code", "author", "enable_gamification")
     list_filter = ("author",)
-    filter_horizontal = ("members", "instructors", "learners")
+    filter_horizontal = ("members", "instructors", "editors", "learners")
     save_as = True
 
     inlines = (SectionInline,)
@@ -33,7 +33,8 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_display = (
         "name",
         "course",
-        "published"
+        "published",
+        "access_restriction"
     )
     inlines = (SectionItemInline,)
     list_filter = ("course","published")

@@ -29,12 +29,11 @@ def course_enrollment_check(test_func):
 
     return decorator
 
-def check_permission(test_func, item_type):
+def check_permission(item_type):
     """
     Checks if the user is allowed to access the requested item.
 
         Parameters:
-            test_func: TBD
             item_type (str): SectionItem type (game, contentitem, discussion, quiz, videofile)
 
     """
@@ -42,16 +41,19 @@ def check_permission(test_func, item_type):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            from courses.models import SectionItem
+            from courses.models import Section, SectionItem
             from core.support_methods import allow_access
 
-            pk = kwargs["pk"]
-            sectionitem_pk = kwargs[item_type+"_pk"]
-            course_obj = get_object_or_404(Course, pk=pk)
-            sectionitem_obj = get_object_or_404(SectionItem, pk=sectionitem_pk)
+            course_pk = kwargs["pk"]
+            course_obj = get_object_or_404(Course, pk=course_pk)
+            item_pk = kwargs[item_type+"_pk"]
+            if item_type == 'section':
+                item_obj = get_object_or_404(Section, pk=item_pk)
+            else:
+                item_obj = get_object_or_404(SectionItem, pk=item_pk)
 
             user = request.user
-            access_allowed = allow_access(user, course_obj, sectionitem_obj)
+            access_allowed = allow_access(user, course_obj, item_obj)
 
             if access_allowed:
                 return view_func(request, *args, **kwargs)

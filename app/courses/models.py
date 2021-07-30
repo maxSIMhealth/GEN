@@ -6,6 +6,19 @@ from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
+PUBLIC = "P"
+LEARNERS = "L"
+INSTRUCTORS = "I"
+EDITORS = "E"
+ADMINS = "A"
+PERMISSION_TYPES = [
+    (PUBLIC, _("Public")),
+    (LEARNERS, _("Learners")),
+    (INSTRUCTORS, _("Instructors")),
+    (EDITORS, _("Editors")),
+    (ADMINS, _("Admins")),
+]
+
 class Course(models.Model):
     name = models.CharField(
         _("name"),
@@ -64,7 +77,13 @@ class Course(models.Model):
         User,
         related_name="instructor",
         verbose_name=_("instructors"),
-        help_text=_("List of instructors. These users will be able to edit the course's content and structure.")
+        help_text=_("List of instructors. These users will be able to review learners submissions and interact with them.")
+    )
+    editors = models.ManyToManyField(
+        User,
+        related_name="editor",
+        verbose_name=_("editors"),
+        help_text=_("List of editors. These users will be able to edit the course's content and structure.")
     )
     blind_data = models.BooleanField(
         _("blind data"),
@@ -162,7 +181,18 @@ class Section(models.Model):
         related_name="sections",
         verbose_name=_("requirement"),
     )
-    published = models.BooleanField(_("published"), default=False)
+    published = models.BooleanField(
+        _("published"), default=False,
+        help_text=_("Published items are visible to all users (based on the 'access restriction' parameter). "
+                    "Unpublished items are visible only to editors and admins.")
+    )
+    access_restriction = models.CharField(
+        _("access restriction"),
+        max_length=1,
+        choices=PERMISSION_TYPES,
+        default=PUBLIC,
+        help_text=_("Define who should have access to this item.")
+    )
     pre_assessment = models.BooleanField(
         _("pre-assessment"),
         default=False,
@@ -321,14 +351,6 @@ class Section(models.Model):
 
 
 class SectionItem(TimeStampedModel):
-    PUBLIC = "P"
-    INSTRUCTORS = "I"
-    ADMINS = "A"
-    PERMISSION_TYPES = [
-        (PUBLIC, _("Public")),
-        (INSTRUCTORS, _("Instructors")),
-        (ADMINS, _("Admins")),
-    ]
     name = models.CharField(_("name"), max_length=80, unique=False)
     description = models.TextField(
         _("description"),

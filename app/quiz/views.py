@@ -252,7 +252,7 @@ def quiz_evaluate_completion(request, section):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-@check_permission(enrollment_test, "quiz")
+@check_permission("quiz")
 def quiz_page(request, pk, section_pk, quiz_pk):
     """
     Renders quiz page and handles submission requests
