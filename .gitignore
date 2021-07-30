@@ -332,10 +332,11 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/django,pycharm,visualstudiocode,helm,macos,vim
 
-### Secrets and env stuff ###
+### Secrets, development and env stuff ###
 secrets
 secrets-dev
 secrets-production
 env
 env-dev*
 env-production*
+db-data

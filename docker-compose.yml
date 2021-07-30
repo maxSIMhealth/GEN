@@ -20,6 +20,7 @@ services:
 
   postgres:
     image: 'postgres:13'
+    user: $UID:$GID
     ports:
       - 5432:5432
     env_file: ./config/env-dev-local
