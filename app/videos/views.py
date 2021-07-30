@@ -24,6 +24,11 @@ def upload_video(request, pk, section_pk):
 
     # check if section type is upload
     if section.section_type == "U":
+        if is_instructor:
+            messages.error(
+                request, _("Only learners are allowed to upload in this section."),
+            )
+            return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
         section_items = section.section_items.filter(author=request.user)
         if not section_items:
             allow_submission = True
