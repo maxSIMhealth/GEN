@@ -40,7 +40,7 @@
                             <div class="fs-5">
                                 {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
                                     <a href="{% url 'course' course.pk %}">
-                                        {% if user|is_instructor:course %}
+                                        {% if user|is_instructor:course and course.show_code %}
                                             {{ course.code }} -
                                         {% endif %}
                                         {{ course.name }}

@@ -19,6 +19,11 @@ class Course(models.Model):
         max_length=10,
         help_text=_("Unique course code (max 10 characters)"),
     )
+    show_code = models.BooleanField(
+        _("show course code"),
+        default=False,
+        help_text=_("Show course code to instructors.")
+    )
     description = models.TextField(
         _("description"),
         max_length=1500,
