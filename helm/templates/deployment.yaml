@@ -42,16 +42,16 @@ spec:
               secretKeyRef:
                 name: gen-secrets
                 key: DJANGO_SECRET_KEY
-          - name: DATABASE_USERNAME
+          - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
                 name: gen-secrets
-                key: DATABASE_USERNAME
-          - name: DATABASE_PASSWORD
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: gen-secrets
-                key: DATABASE_PASSWORD
+                key: POSTGRES_PASSWORD
           - name: STATIC_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:

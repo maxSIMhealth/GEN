@@ -14,9 +14,10 @@ data:
   CSRF_COOKIE_DOMAIN: ".maxsimgen.com"
   CSRF_TRUSTED_ORIGINS: ".maxsimgen.com"
   # Database
-  DATABASE_NAME: "gen_www"
-  DATABASE_HOST: "private-db-postgresql-tor1-98842-do-user-358345-0.b.db.ondigitalocean.com"
+  POSTGRES_DB: "gen_www"
+  DATABASE_SERVICE: "private-db-postgresql-tor1-98842-do-user-358345-0.b.db.ondigitalocean.com"
   DATABASE_PORT: "25060"
+  DATABASE_OPTIONS: '{"sslmode": "require"}'
   # S3 storage
   USE_S3: "True"
   GEN_INSTANCE_NAME: "gen-www"
