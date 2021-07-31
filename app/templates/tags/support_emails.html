@@ -1,0 +1,11 @@
+{% for email in support_emails %}
+    {% if support_emails|length == 1 %}
+        {{ email|urlize }}
+    {% else %}
+        {% if not forloop.last %}
+            {{ email|urlize }} or
+        {% else %}
+            {{ email|urlize }}
+        {% endif %}
+    {% endif %}
+{% endfor %}
