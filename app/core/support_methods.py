@@ -20,6 +20,8 @@ def allow_access(user, course, item):
         access_allowed = True
     elif access_restriction == ADMINS and user.is_staff:
         access_allowed = True
+    elif user.is_staff:
+        access_allowed = True
     else:
         access_allowed = False
 
