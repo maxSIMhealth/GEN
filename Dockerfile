@@ -33,7 +33,7 @@ RUN set -ex \
 # Copy project
 ADD app $GEN_HOME/app
 
-FROM python:3.8.10-alpine3.13
+FROM python:3.8-alpine3.14
 
 # Create user that will run the project
 RUN addgroup -S gen --gid 1000 \
