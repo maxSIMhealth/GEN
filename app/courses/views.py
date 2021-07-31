@@ -14,7 +14,7 @@ from reportlab.pdfgen import canvas
 from GEN.decorators import course_enrollment_check, check_requirement, check_permission
 from GEN.support_methods import enrollment_test
 from core.models import CertificateLogoFile
-from core.views import check_is_instructor
+from core.support_methods import filter_by_access_restriction, check_is_instructor
 from courses.support_methods import section_mark_completed
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status
@@ -76,11 +76,12 @@ def course(request, pk):
 @check_permission("section")
 @check_requirement()
 def section_page(request, pk, section_pk):
+    user = request.user
     course_object = get_object_or_404(Course, pk=pk)
     section_object = get_object_or_404(Section, pk=section_pk)
     section_items = section_object.section_items.filter(published=True)
+    section_items = filter_by_access_restriction(course_object, section_items, user)
     gamification = course_object.enable_gamification
-    user = request.user
     allow_submission_list = []
     allow_submission = False
     start_date_reached = False

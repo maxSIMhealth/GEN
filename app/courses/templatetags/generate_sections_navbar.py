@@ -1,6 +1,6 @@
 from django import template
 
-from core.views import course_sections_list
+from core.support_methods import course_sections_list
 from courses.support_methods import requirement_fulfilled
 
 register = template.Library()

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from core.views import check_is_instructor
+from core.support_methods import check_is_instructor
 from courses.support_methods import requirement_fulfilled
 
 
