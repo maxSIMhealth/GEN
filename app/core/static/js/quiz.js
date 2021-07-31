@@ -23,7 +23,15 @@ function checkRequiredAnswer() {
     items.forEach(function(item) {
       // console.log(item);
       // console.log("is checked? " + item.checked)
-      answers.push(item.checked);
+      if (item.type == "textarea" || item.type == "text" || item.type == "number") {
+        if (item.value.length != "") {
+          answers.push(true)
+        } else {
+          answers.push(false)
+        }
+      } else if (item.type == "radio") {
+        answers.push(item.checked);
+      }
     })
     // console.log(answers);
     if (!answers.includes(true)) {
