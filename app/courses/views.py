@@ -30,8 +30,11 @@ def course(request, pk):
     user = request.user
     course_object = get_object_or_404(Course, pk=pk)
     sections = course_object.sections.filter(published=True)
+    sections = filter_by_access_restriction(course_object, sections, user)
     discussions = course_object.discussions.all()
+    discussions = filter_by_access_restriction(course_object, discussions, user)
     quizzes = course_object.quizzes.all()
+    quizzes = filter_by_access_restriction(course_object, quizzes, user)
     # TODO: improve this: I've hardcoded this section name because info isn't a dynamic section item
     section_name = "Info"
 
@@ -233,6 +236,7 @@ def section_page(request, pk, section_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
+
 def generate_certificate(request, pk):
     """
     Generates certificate of conclusion as a PDF file.

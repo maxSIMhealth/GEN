@@ -127,6 +127,8 @@ def publish_video(request, pk, section_pk, video_pk):
                 # quiz and set cloned quiz video parameter as the uploaded video
                 if section.clone_quiz:
                     cloned_quiz = section.clone_quiz_reference.duplicate(field="video_id",value=video.pk)
+                    # setting quiz parameters to the current course (since the reference probably has different values)
+                    cloned_quiz.course = course
                     # making sure that the quiz is set to published
                     cloned_quiz.published = True
                     cloned_quiz.save()
