@@ -4,6 +4,7 @@
 {% load sri %}
 {% load django_bootstrap5 %}
 {% load footer_logos %}
+{% load support_emails %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
@@ -117,6 +118,7 @@
             <p class="mb-0">{% trans 'Developed at' %} <a href="http://www.ontariotechu.ca" class="link-dark"><u>Ontario Tech
                 University</u></a> - <a href="http://www.maxsimhealth.com" class="link-dark"><u>maxSIMhealth</u></a></p>
             <p class="mb-0">GEN - Gamified Educational Network (2020)</p>
+            <p class="mb-0">{% support_emails %}</p>
         </div>
     </div>
 {% endblock footer %}
