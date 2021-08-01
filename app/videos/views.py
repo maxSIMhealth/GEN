@@ -51,7 +51,7 @@ def upload_video(request, pk, section_pk):
             # if "Cancel" in request.POST["submit"]:
             #     return redirect("section", pk=course.pk, section_pk=section.pk)
             if form.is_valid():
-                video = VideoFile.objects.create(
+                video = VideoFile.objects.populate(True).create(
                     name=form.cleaned_data.get("name"),
                     description=form.cleaned_data.get("description"),
                     author=request.user,
