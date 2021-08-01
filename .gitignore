@@ -112,9 +112,6 @@ coverage.xml
 .pytest_cache/
 pytestdebug.log
 
-# Translations
-*.mo
-
 # Flask stuff:
 instance/
 .webassets-cache
