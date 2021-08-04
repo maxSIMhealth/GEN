@@ -29,7 +29,7 @@ function checkRequiredAnswer() {
         } else {
           answers.push(false)
         }
-      } else if (item.type == "radio") {
+      } else if (item.type == "radio"  || item.type == "checkbox") {
         answers.push(item.checked);
       }
     })
