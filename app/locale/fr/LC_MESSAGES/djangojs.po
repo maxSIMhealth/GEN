@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-31 14:54+0000\n"
+"POT-Creation-Date: 2021-08-07 17:41+0000\n"
 "PO-Revision-Date: 2020-07-20 20:37+0000\n"
 "Last-Translator: b'System Admin <admin@maxsimgen.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgstr "Cours"
 msgid "Here are listed the courses in which you are currently enrolled."
 msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
 
-#: core/static/js/quiz.js:65
+#: core/static/js/quiz.js:73
 msgid "Please answer the question."
 msgstr "Veuillez répondre à la question."
 
