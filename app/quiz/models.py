@@ -200,6 +200,7 @@ class Question(TimeStampedModel):
     OPENENDED_NUMERIC = "ON"
     OPENENDED_TEXTAREA = "OA"
     OPENENDED_TEXT = "OT"
+    OPENENDED_EMAIL = "OE"
     OPENENDED_HOUR = "OH"
 
     OPENENDED_TYPES = [
@@ -207,7 +208,8 @@ class Question(TimeStampedModel):
         (OPENENDED_NUMERIC, _("Open ended - Numeric")),
         (OPENENDED_HOUR, _("Open ended - Time/hour")),
         (OPENENDED_TEXT, _("Open ended - Text (short)")),
-        (OPENENDED_TEXTAREA, _("Open ended - Text (long)"))
+        (OPENENDED_TEXTAREA, _("Open ended - Text (long)")),
+        (OPENENDED_EMAIL, _("Open ended - Email"))
     ]
 
     question_type = models.CharField(
