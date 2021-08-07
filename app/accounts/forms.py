@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings as django_settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -19,8 +20,8 @@ class SignUpForm(UserCreationForm):
         """
         data = self.cleaned_data["email"]
         email_domain = data.split("@")[-1].split(".")[0]
-        permitted_domains = ["ontariotechu", "umontreal"] # FIXME: these values could be ported to .env
-        if email_domain not in permitted_domains:  # any check you need
+        permitted_domains = django_settings.VALID_EMAIL_DOMAINS
+        if email_domain not in permitted_domains:
             raise forms.ValidationError(
                 _("E-mail address must be from one of the allowed domains: ")
                 + ", ".join(permitted_domains)

@@ -463,3 +463,4 @@ TINYMCE_SPELLCHECKER = False
 # GEN Settings
 #
 SUPPORT_EMAILS = os.getenv('SUPPORT_EMAILS').split(',')
+VALID_EMAIL_DOMAINS = os.getenv('VALID_EMAIL_DOMAINS').split(',')

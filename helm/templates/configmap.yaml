@@ -25,6 +25,7 @@ data:
   STATIC_BUCKET_NAME: "gen-data"
   # Email
   DJANGO_ADMIN_EMAIL: "admin@maxsimgen.com"
-  SUPPORT_EMAILS: "support@maxsimgen.com"
   SERVER_EMAIL: "system@maxsimgen.com"
   DEFAULT_FROM_EMAIL: "donotreply@maxsimgen.com"
+  SUPPORT_EMAILS: "support@maxsimgen.com"
+  VALID_EMAIL_DOMAINS: "maxsimgen,ontariotechu,umontreal"
