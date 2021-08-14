@@ -154,7 +154,9 @@ WSGI_APPLICATION = "GEN.wsgi.application"
 
 # Unless there is a good reason for the site to serve other parts of
 # itself in a frame, set X_FRAME_OPTIONS to 'DENY'
-X_FRAME_OPTIONS = "DENY"
+# django-admin-interface requires this to be set to SAMEORIGIN
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 #
 # Database
