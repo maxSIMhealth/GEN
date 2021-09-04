@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "maintenance_mode",
     "tinymce",
     "storages",
+    "django_tables2",
     "core",
     "accounts",
     "courses",

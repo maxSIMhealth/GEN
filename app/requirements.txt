@@ -51,3 +51,4 @@ uvicorn==0.14.0
 django-storages==1.11.1
 boto3==1.17.106
 reportlab==3.5.68
+django-tables2==2.4.0
