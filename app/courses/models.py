@@ -39,8 +39,8 @@ class Course(models.Model):
     )
     description = models.TextField(
         _("description"),
-        max_length=1500,
-        help_text=_("Description (max 1500 characters)"),
+        max_length=2000,
+        help_text=_("Description (max 2000 characters)"),
     )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="course", verbose_name=_("author")
@@ -147,9 +147,9 @@ class Section(models.Model):
 
     name = models.CharField(
         _("name"),
-        max_length=20,
+        max_length=25,
         unique=False,
-        help_text=_("Section name (max 20 characters)"),
+        help_text=_("Section name (max 25 characters)"),
     )
     description = models.TextField(
         _("description"),
@@ -243,6 +243,23 @@ class Section(models.Model):
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: quiz that will be cloned and connected to the participant's video after"
             "it gets published."
+        )
+    )
+    clone_quiz_output_section = models.ForeignKey(
+        "self",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="clone_quiz_section",
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: define the section which the cloned quiz will be related to."
+        ),
+    )
+    clone_quiz_update_owner = models.BooleanField(
+        _("update cloned quiz owner"),
+        default=False,
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"
         )
     )
     show_thumbnails = models.BooleanField(
