@@ -3,9 +3,11 @@ import random
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
+from django_tables2 import SingleTableView
 
 from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
@@ -22,8 +24,7 @@ from .models import (
     Question
 )
 from .support_methods import quiz_enable_check
-
-# import xlsxwriter
+from .tables import QuestionAttemptTable
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -414,6 +415,23 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "assessment_status": assessment_status
         },
     )
+
+class QuestionAttemptListView(LoginRequiredMixin, SingleTableView):
+    model = QuestionAttempt
+    table_class = QuestionAttemptTable
+    template_name = 'quiz/quiz_result_list.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add additional objects to context based on url kwargs
+        course_pk = context['view'].kwargs['pk']
+        section_pk = context['view'].kwargs['section_pk']
+        quiz_pk = context['view'].kwargs['quiz_pk']
+        context['course'] = get_object_or_404(Course, pk=course_pk)
+        context['section'] = get_object_or_404(Section, pk=section_pk)
+        context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
+        return context
 
 # FIXME: code below is WIP
 # @login_required

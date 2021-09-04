@@ -31,6 +31,7 @@ from courses import views as course_views
 from dashboard import views as dashboard_views
 from discussions import views as discussion_views
 from quiz import views as quiz_views
+from quiz.views import QuestionAttemptListView
 from videos import views as video_views
 
 urlpatterns = [
@@ -147,6 +148,10 @@ urlpatterns += i18n_patterns(
         "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/result/",
         quiz_views.quiz_result,
         name="quiz_result",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/result_list/",
+        quiz_views.QuestionAttemptListView.as_view()
     ),
     # sections > discussion
     path(
