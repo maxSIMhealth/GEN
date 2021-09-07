@@ -87,10 +87,6 @@
                                     </p>
                                 {% endif %}
 
-                                {% if item.author == user or user.is_superuser or user|is_instructor:course %}
-                                    <a href="{% url 'quiz_result_list' course.pk section.pk item.pk %}" class="btn btn-block btn-primary mt-1">Access results</a>
-                                {% endif %}
-
                                 {% if item.quiz.show_score %}
                                     <p class="mb-0">
                                         <small class="text-muted">
@@ -113,6 +109,15 @@
                                             {% endif %}
                                         </small>
                                     </p>
+                                {% endif %}
+
+                                {% if item.author == user or user.is_superuser or user|is_instructor:course %}
+                                    <p class="mb-0">
+                                        <small class="text-muted">
+                                            <strong>{% translate "Total number of submissions:" %} </strong>{{ item.quiz.quizscore_set.count }}
+                                        </small>
+                                    </p>
+                                    <a href="{% url 'quiz_result_list' course.pk section.pk item.pk %}" class="btn btn-block btn-primary mt-1">{% translate "Access results" %}</a>
                                 {% endif %}
                             </div>
                         </div>
