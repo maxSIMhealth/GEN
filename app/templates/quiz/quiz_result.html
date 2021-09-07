@@ -76,7 +76,7 @@
                     {% if question.question_type == 'H' or question.question_type == 'O' %}
                         {{ question.content }}
                     {% else %}
-                        {{ question.content }} (<em>Value: {{ question.value }}</em>)
+                        {{ question.content }} {% if quiz.assessment_method %}(<em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
                     {% endif %}
                 </div>
                 {% if quiz.check_score %}
@@ -84,9 +84,9 @@
                         {% if attempt.question_id == question.id and not question.question_type == 'O'%}
                             <div class="border-bottom" style="padding: .5rem 1.25rem">
                             {% if attempt.correct %}
-                                <i class="fas fa-check-circle text-success"></i> Correct
+                                <i class="fas fa-check-circle text-success"></i> {% translate "Correct" %}
                             {% else %}
-                                <i class="fas fa-times-circle text-danger"></i> Incorrect
+                                <i class="fas fa-times-circle text-danger"></i> {% translate "Incorrect" %}
                             {% endif %}
                             </div>
                         {% endif %}
