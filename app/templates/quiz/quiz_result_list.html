@@ -10,14 +10,36 @@
 {% endblock stylesheet %}
 
 {% block content_title %}
-
     <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> /
-    {{ quiz.name }} {% trans "Quiz submission data" %}
-
+    {{ quiz.name }} / {% trans "Quiz data" %}
 {% endblock content_title %}
 
 {% block content %}
-    {% render_table table %}
+    <div class="card">
+        <div class="card-header fs-5">
+            <span class="pt-1 me-auto">{% translate "All submissions" %}</span>
+            <div class="btn-group btn-group-sm float-end" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% translate "Download data" %}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <li><a class="dropdown-item" href="{% url 'quiz_result_list' course.pk section.pk quiz.pk %}?_export=csv">CSV</a></li>
+                    <li><a class="dropdown-item" href="{% url 'quiz_result_list' course.pk section.pk quiz.pk %}?_export=json">JSON</a></li>
+                    <li><a class="dropdown-item" href="{% url 'quiz_result_list' course.pk section.pk quiz.pk %}?_export=xlsx">XLSX</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body pb-0">
+            {% render_table table %}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">
+                {% blocktrans with section_name=section.name %}Return to {{ section_name }}{% endblocktrans %}
+            </a>
+        </div>
+    </div>
+
+
 {% endblock content %}
 
 {% block navbar %}

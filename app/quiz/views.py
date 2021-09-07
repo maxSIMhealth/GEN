@@ -8,6 +8,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
 from django_tables2 import SingleTableView
+from django_tables2.export.views import ExportMixin
 
 from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
@@ -416,7 +417,7 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         },
     )
 
-class QuestionAttemptListView(LoginRequiredMixin, SingleTableView):
+class QuestionAttemptListView(LoginRequiredMixin, ExportMixin, SingleTableView):
     model = QuestionAttempt
     table_class = QuestionAttemptTable
     template_name = 'quiz/quiz_result_list.html'

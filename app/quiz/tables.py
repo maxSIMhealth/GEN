@@ -5,4 +5,4 @@ class QuestionAttemptTable(tables.Table):
     class Meta:
         model = QuestionAttempt
         template_name = "django_tables2/bootstrap4.html"
-        fields = ("id", "student__pk", "question", "multiplechoice_answer", "answer_content")
+        fields = ("id", "question", "multiplechoice_answer", "answer_content")

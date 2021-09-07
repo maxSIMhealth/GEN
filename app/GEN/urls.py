@@ -151,7 +151,8 @@ urlpatterns += i18n_patterns(
     ),
     path(
         "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/result_list/",
-        quiz_views.QuestionAttemptListView.as_view()
+        quiz_views.QuestionAttemptListView.as_view(),
+        name="quiz_result_list",
     ),
     # sections > discussion
     path(

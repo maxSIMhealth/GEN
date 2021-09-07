@@ -5,6 +5,7 @@
 {% load humanize %}
 {% load check_attribute %}
 {% load quiz_details_get %}
+{% load is_instructor %}
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
@@ -59,9 +60,15 @@
                                         {% endif %}
                                     </div>
                                 {% else %}
-                                    <div class="float-end">
-                                        <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
-                                    </div>
+                                    {% if item.author == user %}
+                                        <div class="float-end">
+                                            <span class="badge rounded-pill bg-secondary text-light">{% trans "You are the author" %}</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="float-end">
+                                            <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                                 {% comment %}
                                 <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
@@ -78,6 +85,10 @@
                                             <strong>{% trans "Attempts left:" %}</strong> {{ quiz_details.attempts_left }}
                                         </small>
                                     </p>
+                                {% endif %}
+
+                                {% if item.author == user or user.is_superuser or user|is_instructor:course %}
+                                    <a href="{% url 'quiz_result_list' course.pk section.pk item.pk %}" class="btn btn-block btn-primary mt-1">Access results</a>
                                 {% endif %}
 
                                 {% if item.quiz.show_score %}
