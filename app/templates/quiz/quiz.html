@@ -49,13 +49,13 @@
                         <ul class="pagination mb-0">
                             <li id="pagination-navigation-previous" class="page-item disabled">
                                 <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                                   onclick="previousPaginationItem()">Previous</a>
+                                   onclick="previousPaginationItem()">{% translate "Previous" %}</a>
                             </li>
                             <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
                                                               href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
                                 of 13</a></li>
                             <li id="pagination-navigation-next" class="page-item">
-                                <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">Next</a>
+                                <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% translate "Next" %}</a>
                             </li>
                         </ul>
                     </nav>
@@ -164,12 +164,17 @@
                         {% if quiz.paginate %}
                             <div class="pagination-item" style="display: none">
                                 <p>{% translate "This is the end of the quiz." %}</p>
-                                <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
+                                {% if quiz.author == user %}
+                                <p>You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author.</p>
+                                <p>{% blocktranslate with section.name as section_name %}Please use the 'exit quiz' button to return to {{ section_name}} page.{% endblocktranslate %}</p>
+                                {% else %}
+                                    <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
                                     exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
-                                <button type="submit" class="btn btn-primary">{% translate "Submit" %}</button>
+                                {% endif %}
+                                <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit" %}</button>
                             </div>
                         {% else %}
-                            <button type="submit" class="btn btn-primary">{% translate "Submit" %}</button>
+                            <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit" %}</button>
                         {% endif %}
                     </div>
                 </form>

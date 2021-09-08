@@ -4,6 +4,7 @@ import random
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.translation import gettext_lazy as _
@@ -278,6 +279,15 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
         if quiz_enabled:
             if request.method == "POST":
+                # block quiz author from submitting on own quiz
+                if quiz.author == request.user:
+                    messages.error(
+                        request, _("Submission denied. You can not submit a quiz of which you are the author."),
+                    )
+                    return HttpResponseRedirect(
+                        reverse("section", args=[pk, section.pk])
+                    )
+
                 questions_ids = request.session["quiz_questions"]
                 questions = quiz.questions.filter(pk__in=questions_ids)
                 quiz_submission(request, quiz, questions, course, section)

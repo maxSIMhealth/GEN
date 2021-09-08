@@ -40,7 +40,7 @@
                         <div class="d-flex">
                             <div class="w-100">
                                 {% if quiz_details.enabled %}
-                                    <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item.name }}</a>
+                                    <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item.name }} {% if item.author == user %}{% translate "(view only)" %}{% endif %}</a>
                                 {% else %}
                                     {% if item.quiz.requirement %}
                                         <span class="text-muted text-underline-dashed" data-toggle="tooltip"
