@@ -22,7 +22,7 @@ def generate_sections_navbar(context):
     sections_list = list(sections.values_list('id', flat=True))
     # list(sections.values_list('id', flat=True)).index(context['section'].id)
 
-    if current_section == 'Info':
+    if current_section == 'Information':
         previous_section = None
         next_section_id = sections_list[0]
         next_section = sections.filter(pk=next_section_id)[0]

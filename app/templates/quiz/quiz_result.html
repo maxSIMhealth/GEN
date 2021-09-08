@@ -43,7 +43,7 @@
 
                 {% if section.pre_assessment %}
                     {% if assessment_status == 'Complete' %}
-                        {% trans "Congratulations! You have passed the pre-assessment and can now skip the other sections. Your certificate of completion is now available in the Info section." %}
+                        {% trans "Congratulations! You have passed the pre-assessment and can now skip the other sections. Your certificate of completion is now available in the Information section." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the minimum score. But don't worry, just continue your journey to the next section." %}
                     {% endif %}
@@ -51,7 +51,7 @@
 
                 {% if section.final_assessment %}
                     {% if assessment_status == 'Complete' %}
-                        {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Info section." %}
+                        {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Information section." %}
                     {% elif assessment_status == 'Incomplete' %}
                         {% trans "You need to complete the rest of the quizzes to finish this section." %}
                     {% else %}
