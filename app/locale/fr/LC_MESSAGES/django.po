@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-08 20:47+0000\n"
-"PO-Revision-Date: 2021-09-08 20:53+0000\n"
+"POT-Creation-Date: 2021-09-08 23:54+0000\n"
+"PO-Revision-Date: 2021-09-08 23:54+0000\n"
 "Last-Translator: b'Andrei Torres <andrei.torres@ontariotechu.net>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -176,7 +176,6 @@ msgid "Show course code to instructors."
 msgstr "Montrez le code du cours aux instructeurs."
 
 #: courses/models.py:43
-#| msgid "Description (max 1000 characters)"
 msgid "Description (max 2000 characters)"
 msgstr "Description (max 2000 caractères)"
 
@@ -340,7 +339,6 @@ msgid "Content"
 msgstr "Contenu"
 
 #: courses/models.py:152
-#| msgid "Section name (max 20 characters)"
 msgid "Section name (max 25 characters)"
 msgstr "Nom de la section (max 25 caractères)"
 
@@ -443,9 +441,6 @@ msgstr ""
 "connecté à la vidéo du participant après sa publication."
 
 #: courses/models.py:255
-#| msgid ""
-#| "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
-#| "discussion boards."
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define the section which the cloned quiz will "
 "be related to."
@@ -458,9 +453,6 @@ msgid "update cloned quiz owner"
 msgstr "mettre à jour le propriétaire du quiz cloné"
 
 #: courses/models.py:262
-#| msgid ""
-#| "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
-#| "discussion boards."
 msgid "* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"
 msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : met à jour la propriété "
@@ -1390,7 +1382,6 @@ msgstr "Basculer la liste des sections"
 
 #: templates/base_course_section.html:42
 #: templates/sections/section_info.html:11
-#| msgid "Confirmation"
 msgid "Information"
 msgstr "Information"
 
@@ -1609,7 +1600,6 @@ msgstr "C'est la fin du quiz."
 
 #: templates/quiz/quiz.html:169
 #, python-format
-#| msgid "Please use the navigation buttons in the header above."
 msgid "Please use the 'exit quiz' button to return to %(section_name)s page."
 msgstr ""
 "Veuillez utiliser le bouton 'Sortir quiz' pour revenir à la page "
@@ -1678,10 +1668,6 @@ msgid "Failed"
 msgstr "Manquée"
 
 #: templates/quiz/quiz_result.html:46
-#| msgid ""
-#| "Congratulations! You have passed the pre-assessment and can now skip the "
-#| "other sections. Your certificate of completion is now available in the Info "
-#| "section."
 msgid ""
 "Congratulations! You have passed the pre-assessment and can now skip the "
 "other sections. Your certificate of completion is now available in the "
@@ -1700,9 +1686,6 @@ msgstr ""
 "inquiétez pas, continuez simplement votre voyage vers la section suivante."
 
 #: templates/quiz/quiz_result.html:54
-#| msgid ""
-#| "Congratulations! You have passed the final assessment. Your certificate of "
-#| "completion is now available in the Info section."
 msgid ""
 "Congratulations! You have passed the final assessment. Your certificate of "
 "completion is now available in the Information section."
@@ -1728,17 +1711,14 @@ msgid "Your submission"
 msgstr "Votre soumission"
 
 #: templates/quiz/quiz_result.html:75
-#| msgid "value"
 msgid "Value:"
 msgstr "Valeur:"
 
 #: templates/quiz/quiz_result.html:83
-#| msgid "correct"
 msgid "Correct"
 msgstr "Correct"
 
 #: templates/quiz/quiz_result.html:85
-#| msgid "correct"
 msgid "Incorrect"
 msgstr "Incorrect"
 
@@ -1752,17 +1732,14 @@ msgid "Return to %(section_name)s"
 msgstr "Retourner au %(section_name)s"
 
 #: templates/quiz/quiz_result_list.html:10
-#| msgid "blind data"
 msgid "Quiz data"
 msgstr "Données de quiz"
 
 #: templates/quiz/quiz_result_list.html:16
-#| msgid "Your submission"
 msgid "All submissions"
 msgstr "Toutes les soumissions"
 
 #: templates/quiz/quiz_result_list.html:19
-#| msgid "Download certificate"
 msgid "Download data"
 msgstr "Télécharger les données"
 
@@ -1972,7 +1949,6 @@ msgid "Submitted"
 msgstr "Envoyées"
 
 #: templates/sections/section_quiz.html:61
-#| msgid "You already have an account."
 msgid "You are the author"
 msgstr "Vous êtes l'auteur"
 
@@ -1989,12 +1965,10 @@ msgid "Passing score:"
 msgstr "Note de passage:"
 
 #: templates/sections/section_quiz.html:114
-#| msgid "Your submission"
 msgid "Total number of submissions:"
 msgstr "Nombre total de soumissions :"
 
 #: templates/sections/section_quiz.html:117
-#| msgid "access restriction"
 msgid "Access results"
 msgstr "Accéder aux résultats"
 
@@ -2017,23 +1991,32 @@ msgid "New submission not allowed."
 msgstr "Nouvelle soumission non autorisée."
 
 #: templates/sections/section_upload.html:48
+#| msgid ""
+#| "This upload section is only accessible by you and, once you publish it, by "
+#| "the course instructor(s). Please do not forget to publish your upload to "
+#| "complete this section."
 msgid ""
-"This upload section is private and only accessible by you. Please do not "
-"forget to publish your upload to complete this section."
-msgstr ""
-"Cette section de téléchargement est privée et uniquement accessible par "
-"vous. N'oubliez pas de publier votre téléchargement pour compléter cette "
-"section."
-
-#: templates/sections/section_upload.html:50
-msgid ""
-"This upload section is only accessible by you and, once you publish it, by "
-"the course instructor(s). Please do not forget to publish your upload to "
+"The content that you upload here is only accessible by you and, once you "
+"publish it, by your peers. Please do not forget to publish your upload to "
 "complete this section."
 msgstr ""
-"Cette section de téléchargement n'est accessible que par vous et, une fois "
-"publiée, par le(s) instructeur(s) du cours. N'oubliez pas de publier votre "
-"téléchargement pour compléter cette section."
+"Le contenu que vous téléchargez ici n'est accessible que par vous et, une "
+"fois publié, par vos pairs. N'oubliez pas de publier votre téléchargement "
+"pour compléter cette section."
+
+#: templates/sections/section_upload.html:50
+#| msgid ""
+#| "This upload section is only accessible by you and, once you publish it, by "
+#| "the course instructor(s). Please do not forget to publish your upload to "
+#| "complete this section."
+msgid ""
+"The content that you upload here is only accessible by you and, once you "
+"publish it, by the course instructor(s). Please do not forget to publish "
+"your upload to complete this section."
+msgstr ""
+"Le contenu que vous téléchargez ici n'est accessible que par vous et, une "
+"fois que vous l'avez publié, par le(s) instructeur(s) du cours. N'oubliez "
+"pas de publier votre téléchargement pour compléter cette section."
 
 #: templates/sections/section_upload.html:63
 #: templates/sections/section_upload.html:121
@@ -2335,6 +2318,14 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:183
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid ""
+#~ "This upload section is private and only accessible by you. Please do not "
+#~ "forget to publish your upload to complete this section."
+#~ msgstr ""
+#~ "Cette section de téléchargement est privée et uniquement accessible par "
+#~ "vous. N'oubliez pas de publier votre téléchargement pour compléter cette "
+#~ "section."
 
 #~ msgid "Description (max 1500 characters)"
 #~ msgstr "Description (max 1500 caractères)"
