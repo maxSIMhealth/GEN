@@ -150,7 +150,7 @@ urlpatterns += i18n_patterns(
         name="quiz_result",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/quiz/<int:quiz_pk>/result_list/",
+        "courses/<int:pk>/section/<int:section_pk>/quiz/<int:sectionitem_pk>/result_list/",
         quiz_views.QuestionAttemptListView.as_view(),
         name="quiz_result_list",
     ),

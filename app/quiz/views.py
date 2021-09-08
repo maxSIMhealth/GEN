@@ -12,6 +12,7 @@ from django_tables2.export.views import ExportMixin
 
 from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
+from core.mixins import BlockPeersAccessMixin
 from courses.models import Course, Section
 from courses.support_methods import section_mark_completed, course_mark_completed
 from .models import (
@@ -417,7 +418,59 @@ def quiz_result(request, pk, section_pk, quiz_pk):
         },
     )
 
-class QuestionAttemptListView(LoginRequiredMixin, ExportMixin, SingleTableView):
+
+# class RedirectMixin:
+#     """
+#     Redirect to redirect_url if the test_func() method returns False.
+#     """
+#
+#     redirect_url = None
+#
+#     def get_redirect_url(self):
+#         """
+#         Override this method to override the redirect_url attribute.
+#         """
+#         redirect_url = self.redirect_url
+#         if not redirect_url:
+#             raise ImproperlyConfigured(
+#                 '{0} is missing the redirect_url attribute. Define {0}.redirect_url or override '
+#                 '{0}.get_redirect_url().'.format(self.__class__.__name__)
+#             )
+#         return str(redirect_url)
+#
+#     def test_func(self):
+#         raise NotImplementedError(
+#             '{0} is missing the implementation of the test_func() method.'.format(self.__class__.__name__)
+#         )
+#
+#     def get_test_func(self):
+#         """
+#         Override this method to use a different test_func method.
+#         """
+#         return self.test_func
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         test_result = self.get_test_func()()
+#         if not test_result:
+#             return redirect(self.get_redirect_url())
+#         return super().dispatch(request, *args, **kwargs)
+#
+#
+# class AuthorOnlyMixin(RedirectMixin):
+#     def test_func(self):
+#         test_object = Quiz.objects.get(pk=self.kwargs['quiz_pk'])
+#         return test_object.author == self.request.user
+#
+#
+# class AuthorOnlyAltMixin(AccessMixin):
+#     def dispatch(self, request, *args, **kwargs):
+#         test_object = SectionItem.objects.get(pk=self.kwargs['quiz_pk'])
+#         if not test_object.author == self.request.user:
+#             return self.handle_no_permission()
+#         return super().dispatch(request, *args, **kwargs)
+
+
+class QuestionAttemptListView(LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView):
     model = QuestionAttempt
     table_class = QuestionAttemptTable
     template_name = 'quiz/quiz_result_list.html'
@@ -428,13 +481,13 @@ class QuestionAttemptListView(LoginRequiredMixin, ExportMixin, SingleTableView):
         # Add additional objects to context based on url kwargs
         course_pk = context['view'].kwargs['pk']
         section_pk = context['view'].kwargs['section_pk']
-        quiz_pk = context['view'].kwargs['quiz_pk']
+        quiz_pk = context['view'].kwargs['sectionitem_pk']
         context['course'] = get_object_or_404(Course, pk=course_pk)
         context['section'] = get_object_or_404(Section, pk=section_pk)
         context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
         return context
 
     def get_queryset(self):
-        quiz_pk = self.kwargs['quiz_pk']
+        quiz_pk = self.kwargs['sectionitem_pk']
         queryset = QuestionAttempt.objects.filter(quiz=quiz_pk)
         return queryset
