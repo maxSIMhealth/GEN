@@ -135,7 +135,13 @@ def publish_video(request, pk, section_pk, video_pk):
                     # making sure that the quiz is set to published
                     cloned_quiz.published = True
                     cloned_quiz.save()
-
+                    # set cloned_quiz section as not completed to all users
+                    # FIXME: find a better way to set status for sections that have user-submitted content
+                    if cloned_quiz.section:
+                        output_section_status_list = cloned_quiz.section.status.all()
+                        for status in output_section_status_list:
+                            status.completed = False
+                            status.save()
 
                 # set section Status object as completed
                 section_status = section.status.filter(learner=user).get()
