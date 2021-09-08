@@ -434,6 +434,11 @@ class QuestionAttemptListView(LoginRequiredMixin, ExportMixin, SingleTableView):
         context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
         return context
 
+    def get_queryset(self):
+        quiz_pk = self.kwargs['quiz_pk']
+        queryset = QuestionAttempt.objects.filter(quiz=quiz_pk)
+        return queryset
+
 # FIXME: code below is WIP
 # @login_required
 # def user_attempt(request):
