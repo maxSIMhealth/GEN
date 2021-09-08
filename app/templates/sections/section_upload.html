@@ -44,10 +44,10 @@
                 {% endif %}
             </div>
             <div class="alert alert-info mb-0 pt-2 pb-2" role="alert">
-                {% if section.access_restriction == 'L' %}
-                    {% trans "This upload section is private and only accessible by you. Please do not forget to publish your upload to complete this section." %}
+                {% if section.section_output or section.clone_quiz_output_section %}
+                    {% trans "The content that you upload here is only accessible by you and, once you publish it, by your peers. Please do not forget to publish your upload to complete this section." %}
                 {% else %}
-                    {% trans "This upload section is only accessible by you and, once you publish it, by the course instructor(s). Please do not forget to publish your upload to complete this section." %}
+                    {% trans "The content that you upload here is only accessible by you and, once you publish it, by the course instructor(s). Please do not forget to publish your upload to complete this section." %}
                 {% endif %}
 
             </div>
