@@ -43,10 +43,10 @@ from .support_methods import discussion_enable_check, has_participated
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def discussion_comments(request, pk, section_pk, discussion_pk):
+def discussion_comments(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    discussion = get_object_or_404(Discussion, pk=discussion_pk)
+    discussion = get_object_or_404(Discussion, pk=sectionitem_pk)
     video = discussion.video
     gamification = course.enable_gamification
 
@@ -69,7 +69,7 @@ def discussion_comments(request, pk, section_pk, discussion_pk):
                     )
                     comment.save()
                     my_kwargs = dict(
-                        pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk
+                        pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk
                     )
 
                     update_discussion_section_status(request, section)
@@ -169,16 +169,16 @@ def new_discussion(request, pk, section_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def upvote_discussion(request, pk, section_pk, discussion_pk):
+def upvote_discussion(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    discussion = Discussion.objects.get(pk=discussion_pk)
+    discussion = Discussion.objects.get(pk=sectionitem_pk)
     discussion.votes.up(request.user.id)
 
     # checking if the user is voting from the discussions list or from discussion itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "upvote"
 
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
@@ -188,16 +188,16 @@ def upvote_discussion(request, pk, section_pk, discussion_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def clearvote_discussion(request, pk, section_pk, discussion_pk):
+def clearvote_discussion(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    discussion = Discussion.objects.get(pk=discussion_pk)
+    discussion = Discussion.objects.get(pk=sectionitem_pk)
     discussion.votes.delete(request.user.id)
 
     # checking if the user is voting from the discussions list or from discussion itself
     path = urlparse(request.META["HTTP_REFERER"]).path + "clearvote"
 
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, discussion_pk=discussion.pk)
+    my_kwargs = dict(pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk)
 
     if request.path == path:
         return redirect("discussion_comments", **my_kwargs)
@@ -207,21 +207,21 @@ def clearvote_discussion(request, pk, section_pk, discussion_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def upvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
+def upvote_comment(request, pk, section_pk, sectionitem_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.up(request.user.id)
 
-    my_kwargs = dict(pk=pk, section_pk=section_pk, discussion_pk=discussion_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, sectionitem_pk=sectionitem_pk)
 
     return redirect("discussion_comments", **my_kwargs)
 
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def clearvote_comment(request, pk, section_pk, discussion_pk, comment_pk):
+def clearvote_comment(request, pk, section_pk, sectionitem_pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     comment.votes.delete(request.user.id)
 
-    my_kwargs = dict(pk=pk, section_pk=section_pk, discussion_pk=discussion_pk)
+    my_kwargs = dict(pk=pk, section_pk=section_pk, sectionitem_pk=sectionitem_pk)
 
     return redirect("discussion_comments", **my_kwargs)
