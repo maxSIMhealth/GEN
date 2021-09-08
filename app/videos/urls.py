@@ -9,22 +9,22 @@ urlpatterns = [
         name="upload_video",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/publish",
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:sectionitem_pk>/publish",
         video_views.publish_video,
         name="publish_video",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/unpublish",
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:sectionitem_pk>/unpublish",
         video_views.unpublish_video,
         name="unpublish_video",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/delete",
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:sectionitem_pk>/delete",
         video_views.delete_video,
         name="delete_video",
     ),
     path(
-        "courses/<int:pk>/section/<int:section_pk>/videos/<int:video_pk>/",
+        "courses/<int:pk>/section/<int:section_pk>/videos/<int:sectionitem_pk>/",
         video_views.video_player,
         name="video_player",
     ),

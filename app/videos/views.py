@@ -91,10 +91,10 @@ def upload_video(request, pk, section_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def publish_video(request, pk, section_pk, video_pk):
+def publish_video(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    video = get_object_or_404(VideoFile, pk=video_pk)
+    video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
     if video.published:
@@ -164,10 +164,10 @@ def publish_video(request, pk, section_pk, video_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def unpublish_video(request, pk, section_pk, video_pk):
+def unpublish_video(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    video = get_object_or_404(VideoFile, pk=video_pk)
+    video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
     # check if user is a course instructor
@@ -204,10 +204,10 @@ def unpublish_video(request, pk, section_pk, video_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def delete_video(request, pk, section_pk, video_pk):
+def delete_video(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    video = get_object_or_404(VideoFile, pk=video_pk)
+    video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
     # check if user is a course instructor
@@ -240,10 +240,10 @@ def delete_video(request, pk, section_pk, video_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def video_player(request, pk, section_pk, video_pk):
+def video_player(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    video = get_object_or_404(VideoFile, pk=video_pk)
+    video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
     if video.published or user == video.author:
