@@ -1,6 +1,6 @@
 from django import template
 
-from courses.progress import progress
+from courses.support_methods import progress
 
 register = template.Library()
 

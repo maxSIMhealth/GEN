@@ -15,10 +15,9 @@ from GEN.decorators import course_enrollment_check, check_requirement, check_per
 from GEN.support_methods import enrollment_test
 from core.models import CertificateLogoFile
 from core.support_methods import filter_by_access_restriction, check_is_instructor
-from courses.support_methods import section_mark_completed
+from courses.support_methods import section_mark_completed, progress
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status
-from .progress import progress
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
 

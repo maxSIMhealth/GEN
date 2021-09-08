@@ -223,10 +223,10 @@ def quiz_submission(request, quiz, questions, course, section):
 
 
 def quiz_evaluate_completion(request, section):
-    # get all section quiz scores
+    # get all section quiz scores, excluding ones that the user is the author/owner
     # check if all are marked as completed
     # if yes, mark section as completed
-    section_quizzes = section.section_items.all()
+    section_quizzes = section.section_items.exclude(author=request.user)
     # completed = passed assessment (if assessment method is enabled)
     section_quizzes_completed = []
 
