@@ -46,10 +46,11 @@ def check_permission(item_type):
 
             course_pk = kwargs["pk"]
             course_obj = get_object_or_404(Course, pk=course_pk)
-            item_pk = kwargs[item_type+"_pk"]
             if item_type == 'section':
+                item_pk = kwargs["section_pk"]
                 item_obj = get_object_or_404(Section, pk=item_pk)
             else:
+                item_pk = kwargs["sectionitem_pk"]
                 item_obj = get_object_or_404(SectionItem, pk=item_pk)
 
             user = request.user

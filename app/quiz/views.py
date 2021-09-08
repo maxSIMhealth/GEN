@@ -257,7 +257,7 @@ def quiz_evaluate_completion(request, section):
 @login_required
 @course_enrollment_check(enrollment_test)
 @check_permission("quiz")
-def quiz_page(request, pk, section_pk, quiz_pk):
+def quiz_page(request, pk, section_pk, sectionitem_pk):
     """
     Renders quiz page and handles submission requests
     """
@@ -265,7 +265,7 @@ def quiz_page(request, pk, section_pk, quiz_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    quiz = get_object_or_404(Quiz, pk=sectionitem_pk)
 
     if quiz.published:
         # check if the quiz has a related video and if it has been published
@@ -344,11 +344,11 @@ def quiz_page(request, pk, section_pk, quiz_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def quiz_result(request, pk, section_pk, quiz_pk):
+def quiz_result(request, pk, section_pk, sectionitem_pk):
     # get objects
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
-    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    quiz = get_object_or_404(Quiz, pk=sectionitem_pk)
     student_quiz_score = get_object_or_404(QuizScore, student=request.user, course=course, quiz=quiz)
 
     # check if the user is trying to directly access the result page
@@ -427,57 +427,6 @@ def quiz_result(request, pk, section_pk, quiz_pk):
             "assessment_status": assessment_status
         },
     )
-
-
-# class RedirectMixin:
-#     """
-#     Redirect to redirect_url if the test_func() method returns False.
-#     """
-#
-#     redirect_url = None
-#
-#     def get_redirect_url(self):
-#         """
-#         Override this method to override the redirect_url attribute.
-#         """
-#         redirect_url = self.redirect_url
-#         if not redirect_url:
-#             raise ImproperlyConfigured(
-#                 '{0} is missing the redirect_url attribute. Define {0}.redirect_url or override '
-#                 '{0}.get_redirect_url().'.format(self.__class__.__name__)
-#             )
-#         return str(redirect_url)
-#
-#     def test_func(self):
-#         raise NotImplementedError(
-#             '{0} is missing the implementation of the test_func() method.'.format(self.__class__.__name__)
-#         )
-#
-#     def get_test_func(self):
-#         """
-#         Override this method to use a different test_func method.
-#         """
-#         return self.test_func
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         test_result = self.get_test_func()()
-#         if not test_result:
-#             return redirect(self.get_redirect_url())
-#         return super().dispatch(request, *args, **kwargs)
-#
-#
-# class AuthorOnlyMixin(RedirectMixin):
-#     def test_func(self):
-#         test_object = Quiz.objects.get(pk=self.kwargs['quiz_pk'])
-#         return test_object.author == self.request.user
-#
-#
-# class AuthorOnlyAltMixin(AccessMixin):
-#     def dispatch(self, request, *args, **kwargs):
-#         test_object = SectionItem.objects.get(pk=self.kwargs['quiz_pk'])
-#         if not test_object.author == self.request.user:
-#             return self.handle_no_permission()
-#         return super().dispatch(request, *args, **kwargs)
 
 
 class QuestionAttemptListView(LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView):
