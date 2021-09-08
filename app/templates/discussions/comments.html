@@ -8,10 +8,6 @@
 {% comment %}{% load has_group %}{% endcomment %}
 {% load is_instructor %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock %}
-
 {% block title %}
     {{ discussion.name }} - {{ block.super }}
 {% endblock %}

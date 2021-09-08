@@ -5,10 +5,6 @@
 {% load crispy_forms_tags %}
 {% load sri %}
 
-{% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock stylesheet %}
-
 {% block content_title %}
   <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "New video" %}
 {% endblock content_title %}

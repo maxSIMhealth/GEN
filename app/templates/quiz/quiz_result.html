@@ -8,10 +8,6 @@
 {% load quiz_mcquestion_check %}
 {% load likert_range %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock stylesheet %}
-
 {% block content_title %}
 
     <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> /

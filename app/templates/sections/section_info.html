@@ -7,10 +7,6 @@
 {% load is_instructor %}
 {% load generate_sections_sidebar %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock stylesheet %}
-
 {% block content_tabs %}
     <a class="list-group-item list-group-item-action active" href="#">{% trans "Info" %}</a>
     {% generate_sections_sidebar %}

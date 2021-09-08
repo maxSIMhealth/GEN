@@ -7,10 +7,6 @@
 {% load is_instructor %}
 {% load quiz_details_get %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock stylesheet %}
-
 {% block content %}
     {% with course_instructor=user|is_instructor:course %}
 

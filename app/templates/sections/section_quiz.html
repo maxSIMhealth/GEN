@@ -7,10 +7,6 @@
 {% load quiz_details_get %}
 {% load is_instructor %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-{% endblock stylesheet %}
-
 {% block content %}
     {% if section.start_date or section.end_data %}
         <ul class="list-group mb-3">
