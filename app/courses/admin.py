@@ -40,6 +40,56 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_filter = ("course","published")
     form = SectionAdminForm
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "content",
+                    "course",
+                    "section_type",
+                    "start_date",
+                    "end_date",
+                    "access_restriction",
+                    "requirement",
+                    "published",
+                    "show_thumbnails",
+                )
+            },
+        ),
+        (
+            "Assessment",
+            {
+                "fields": (
+                    "pre_assessment",
+                    "final_assessment",
+                )
+            },
+        ),
+        (
+            "Output >> Discussion board",
+            {
+                "fields": (
+                    "create_discussions",
+                    "section_output",
+                )
+            },
+        ),
+        (
+            "Output >> Quiz",
+            {
+                "fields": (
+                    "clone_quiz",
+                    "clone_quiz_reference",
+                    "clone_quiz_output_section",
+                    "clone_quiz_update_owner"
+                )
+            }
+        )
+    )
+
 class StatusAdmin(admin.ModelAdmin):
     list_display = (
         "learner",
