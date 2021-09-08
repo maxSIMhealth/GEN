@@ -236,7 +236,6 @@ def section_page(request, pk, section_pk):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-
 def generate_certificate(request, pk):
     """
     Generates certificate of conclusion as a PDF file.
