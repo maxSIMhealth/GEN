@@ -19,11 +19,13 @@ services:
       - postgres
 
   postgres:
-    image: 'postgres:13'
-    user: $UID:$GID
+    image: "postgres:13"
     ports:
       - 5432:5432
     env_file: ./config/env-dev-local
     volumes:
-    - ./db-data/:/var/lib/postgresql/data/
+    - "postgres:/var/lib/postgresql/data/"
+
+volumes:
+  postgres:
 
