@@ -238,7 +238,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
     Base class for questions admin layout (editing).
     """
 
-    list_display = ("content", "quiz", "value", "created")
+    list_display = ("content", "author", "quiz", "value", "image", "created")
     list_filter = ("quiz",)
     search_fields = ("content", "explanation")
     # filter_horizontal = ('quiz',)
@@ -258,8 +258,10 @@ class MCQuestionAdmin(QuestionAdmin):
     fields = (
         "question_type",
         "content",
+        "author",
         "quiz",
         "value",
+        "image",
         "explanation",
         "multiple_correct_answers",
     )
@@ -288,7 +290,7 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("question_type", "content", "explanation", "quiz", "value")
+    fields = ("question_type", "content", "author", "explanation", "quiz", "value", "image")
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
@@ -311,7 +313,7 @@ class LikertAnswerAdmin(TabbedTranslationAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("question_type", "openended_type", "content", "quiz", "value")
+    fields = ("question_type", "openended_type", "content", "author", "quiz", "value", "image")
 
     class Media:
         css = {"all": ("css/admin.css",)}

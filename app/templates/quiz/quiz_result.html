@@ -31,13 +31,13 @@
                     {% endif %}
                 </p>
                 <p class="mb-0">
-                {% trans "Assessment:" %}
+                    {% trans "Assessment:" %}
                     <strong style="font-size:1.2em">
-                    {% if user_quiz_score.completed %}
-                        <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
-                    {% else %}
-                        <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
-                    {% endif %}
+                        {% if user_quiz_score.completed %}
+                            <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
+                        {% else %}
+                            <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
+                        {% endif %}
                     </strong>
                 </p>
 
@@ -52,7 +52,7 @@
                 {% if section.final_assessment %}
                     {% if assessment_status == 'Complete' %}
                         {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Information section." %}
-                    {% elif assessment_status == 'Incomplete' %}
+                        {% elif assessment_status == 'Incomplete' %}
                         {% trans "You need to complete the rest of the quizzes to finish this section." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the minimum score. But don't worry, you can review the content and try again at any time." %}
@@ -66,124 +66,136 @@
     <div class="card">
         <div class="card-header bg-light">{% trans "Your submission" %}</div>
         <div class="card-body">
-        {% for question in questions %}
-            <div class="card mb-3">
-                <div class="card-header fs-6">
-                    {% if question.question_type == 'H' or question.question_type == 'O' %}
-                        {{ question.content }}
-                    {% else %}
-                        {{ question.content }} {% if quiz.assessment_method %}(<em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
-                    {% endif %}
-                </div>
-                {% if quiz.check_score %}
-                    {% for attempt in attempts %}
-                        {% if attempt.question_id == question.id and not question.question_type == 'O'%}
-                            <div class="border-bottom" style="padding: .5rem 1.25rem">
-                            {% if attempt.correct %}
-                                <i class="fas fa-check-circle text-success"></i> {% translate "Correct" %}
-                            {% else %}
-                                <i class="fas fa-times-circle text-danger"></i> {% translate "Incorrect" %}
-                            {% endif %}
-                            </div>
+            {% for question in questions %}
+                <div class="card mb-3">
+                    <div class="card-header fs-6">
+                        {% if question.question_type == 'H' or question.question_type == 'O' %}
+                            {{ question.content }}
+                        {% else %}
+                            {{ question.content }} {% if quiz.assessment_method %}(
+                            <em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
                         {% endif %}
-                    {% endfor %}
-                {% endif %}
-
-                <div class="card-body">
-                {% if question.question_type == 'M' %}
-                    {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
-                    <ul class="list-group list-group-numbered">
-                        {% for choice in question.answers.all %}
-                            {% if quiz.show_correct_answers %}
-                                {% if question.multiple_correct_answers %}
-                                    {% if mcquestion_user_answers|dict_key:choice.id %}
-                                        <li class="list-group-item list-group-item-success">
-                                            {% else %}
-                                        <li class="list-group-item list-group-item-danger">
+                    </div>
+                    {% if quiz.check_score %}
+                        {% for attempt in attempts %}
+                            {% if attempt.question_id == question.id and not question.question_type == 'O' %}
+                                <div class="border-bottom" style="padding: .5rem 1.25rem">
+                                    {% if attempt.correct %}
+                                        <i class="fas fa-check-circle text-success"></i> {% translate "Correct" %}
+                                    {% else %}
+                                        <i class="fas fa-times-circle text-danger"></i> {% translate "Incorrect" %}
                                     {% endif %}
-                                {% else %}
-                                {% if choice.check %}
-                                    <li class="list-group-item list-group-item-success">
-                                        {% else %}
-                                    <li class="list-group-item">
-                                {% endif %}
-                                {% endif %}
-                            {% else %}
-                                <li class="list-group-item">
+                                </div>
                             {% endif %}
-                        <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
-                            <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
-                                   class="form-check-input me-1"
-                                   value="{{ choice.pk }}" disabled
-                                    {% for user_answer in attempt_mcquestion %}
-                                        {% if question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
-                                   checked
-                                        {% elif not question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id %}
-                                   checked
-                                        {% endif %}
-                                    {% endfor %}
-                            >
-                            {{ choice.content }}
-                        </label>
-                        </li>
                         {% endfor %}
-                    </ul>
-
-                {% elif question.question_type == 'L' %}
-                    {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
-                        <div class="likert">
-                        {% for value in answer.scale_range|likert_range %}
-                            <div class="item {% if quiz.show_correct_answers and answer.check_answer and value in correct_range %}border border-success{% endif %}">
-                                <input type="radio" name="likert_{{ question.id }}" id="likert_{{ question.id }}"
-                                       value="{{ value }}" disabled
-                                        {% for attempt in attempt_likert %}
-                                            {% if attempt.question_id == question.id and attempt.answer_content == value|stringformat:'i' %}
-                                       checked
-                                            {% endif %}
-                                        {% endfor %}
-                                >
-                                <label for="likert_{{ question.id }}">{{ value }}</label>
-                            </div>
-                        {% endfor %}
-                        </div>
-
-                        {% if answer.legend %}
-                            <div class="likert-legend card-footer text-muted">
-                                <em>{% trans "Scale legend" %}:</em>
-                                {{ answer.legend|linebreaks }}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-
-                {% elif question.question_type == 'O' %}
-                    <label for="openended_{{ question.id }}" class="mb-1">{% trans "Your answer:" %}</label>
-                    {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time, OE: email #}
-                    {% if question.openended_type == 'OA' %}
-                        <textarea rows="5" class="form-control" name="openended_{{ question.id }}" id="openended_{{ question.id }}" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
-                    {% else %}
-                        <input type="text" class="form-control" name="openended_{{ question.id }}" id="openended_{{ question.id }}" disabled value="{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}">
                     {% endif %}
-                {% endif %}
 
-                {% if question.explanation %}
-                    {% if question.question_type == 'H' %}
-                        <span>{{ question.explanation }}</span>
-                    {% else %}
-                        <div class="card bg-light mb-0 mt-3">
-                            <div class="card-body">
-                                <div class="card-subtitle bg-light fs-6">
+                    {% if question.image %}
+                        <div class="border-bottom">
+                            <img src="{{ question.image.file.url }}" class="img-fluid rounded mx-auto d-block" alt="{{ question.image.description }}" title="{{ question.image.description }}">
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        {% if question.question_type == 'M' %}
+                            {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
+                            <ul class="list-group list-group-numbered">
+                                {% for choice in question.answers.all %}
+                                    {% if quiz.show_correct_answers %}
+                                        {% if question.multiple_correct_answers %}
+                                            {% if mcquestion_user_answers|dict_key:choice.id %}
+                                                <li class="list-group-item list-group-item-success">
+                                                    {% else %}
+                                                <li class="list-group-item list-group-item-danger">
+                                            {% endif %}
+                                        {% else %}
+                                        {% if choice.check %}
+                                            <li class="list-group-item list-group-item-success">
+                                                {% else %}
+                                            <li class="list-group-item">
+                                        {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        <li class="list-group-item">
+                                    {% endif %}
+                                <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
+                                    <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                           class="form-check-input me-1"
+                                           value="{{ choice.pk }}" disabled
+                                            {% for user_answer in attempt_mcquestion %}
+                                                {% if question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id and user_answer.answer_content == "True" %}
+                                           checked
+                                                {% elif not question.multiple_correct_answers and choice.id == user_answer.multiplechoice_answer.id %}
+                                           checked
+                                                {% endif %}
+                                            {% endfor %}
+                                    >
+                                    {{ choice.content }}
+                                </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                        {% elif question.question_type == 'L' %}
+                            {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
+                                <div class="likert">
+                                    {% for value in answer.scale_range|likert_range %}
+                                        <div class="item {% if quiz.show_correct_answers and answer.check_answer and value in correct_range %}border border-success{% endif %}">
+                                            <input type="radio" name="likert_{{ question.id }}"
+                                                   id="likert_{{ question.id }}"
+                                                   value="{{ value }}" disabled
+                                                    {% for attempt in attempt_likert %}
+                                                        {% if attempt.question_id == question.id and attempt.answer_content == value|stringformat:'i' %}
+                                                   checked
+                                                        {% endif %}
+                                                    {% endfor %}
+                                            >
+                                            <label for="likert_{{ question.id }}">{{ value }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                {% if answer.legend %}
+                                    <div class="likert-legend card-footer text-muted">
+                                        <em>{% trans "Scale legend" %}:</em>
+                                        {{ answer.legend|linebreaks }}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+
+                        {% elif question.question_type == 'O' %}
+                            <label for="openended_{{ question.id }}" class="mb-1">{% trans "Your answer:" %}</label>
+                            {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time, OE: email #}
+                            {% if question.openended_type == 'OA' %}
+                                <textarea rows="5" class="form-control" name="openended_{{ question.id }}"
+                                          id="openended_{{ question.id }}"
+                                          disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
+                            {% else %}
+                                <input type="text" class="form-control" name="openended_{{ question.id }}"
+                                       id="openended_{{ question.id }}" disabled value="
+                                        {% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}">
+                            {% endif %}
+                        {% endif %}
+
+                        {% if question.explanation %}
+                            {% if question.question_type == 'H' %}
+                                <span>{{ question.explanation }}</span>
+                            {% else %}
+                                <div class="card bg-light mb-0 mt-3">
+                                    <div class="card-body">
+                                        <div class="card-subtitle bg-light fs-6">
                                     <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
                                         <span>{{ question.explanation }}</span></span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-        <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">
-            {% blocktrans with section_name=section.name %}Return to {{ section_name }}{% endblocktrans %}</a>
+            {% endfor %}
+            <a href="{% url 'section' course.pk section.pk %}" class="btn btn-block btn-primary">
+                {% blocktrans with section_name=section.name %}Return to {{ section_name }}{% endblocktrans %}</a>
         </div>
     </div>
 {% endblock content %}

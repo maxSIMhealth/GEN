@@ -8,7 +8,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
-from core.support_methods import user_directory_path
+from content.models import ImageFile
 from courses.models import Course, Section, SectionItem
 from quiz.support_methods import duplicate_quiz
 from videos.models import VideoFile
@@ -216,6 +216,11 @@ class Question(TimeStampedModel):
     question_type = models.CharField(
         _("question type"), max_length=1, choices=QUESTION_TYPES
     )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        verbose_name=_("author"),
+    )
     quiz = models.ForeignKey(
         Quiz,
         verbose_name=_("quiz"),
@@ -234,11 +239,12 @@ class Question(TimeStampedModel):
         blank=True,
         help_text=_("Explanation to be shown after the question has been answered."),
     )
-    image = models.ImageField(
-        _("image"),
-        upload_to=user_directory_path,
+    image = models.ForeignKey(
+        ImageFile,
+        verbose_name=_("image"),
         blank=True,
         null=True,
+        on_delete=models.PROTECT,
         help_text=_("Optional image file.")
     )
     value = models.PositiveIntegerField(
