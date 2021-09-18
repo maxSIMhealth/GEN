@@ -2,20 +2,20 @@ import io
 import logging
 import os
 import tempfile
-import uuid
 
 # from django.core.validators import FileExtensionValidator
 from django.core.files.storage import get_storage_class
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import ffmpeg
 from GEN.support_methods import duplicate_item, duplicate_name
 from GEN import settings as django_settings
 from PIL import Image
 from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
+from core.support_methods import user_directory_path
 from courses.models import Course, SectionItem
+from .support_methods import crop_image, read_frame_as_jpeg
 
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
@@ -24,54 +24,6 @@ logger = logging.getLogger(__name__)
 
 # Media storage object to be able to obtain media full url
 media_storage = get_storage_class()()
-
-
-def user_directory_path(instance, filename):
-    ext = filename.split(".")[-1]
-    random_filename = str(uuid.uuid4().hex)
-    filename = "%s.%s" % (random_filename, ext)
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return "user_{0}/{1}".format(instance.author.id, filename)
-
-
-def read_frame_as_jpeg(in_filename, time):
-    """extracts single frame from video based on a specific timestamp"""
-    # based on:
-    # https://github.com/kkroening/ffmpeg-python/blob/master/examples/read_frame_as_jpeg.py
-    out, err = (
-        ffmpeg.input(in_filename, ss=time)
-        # .filter('select', 'gte(n,{})'.format(frame_num))
-        .output("pipe:", vframes=1, format="image2", vcodec="mjpeg").run(
-            capture_stdout=True
-        )
-    )
-    return out, err
-
-
-def crop_image(image):
-    """Generates a square cropped image based on its center"""
-    width, height = image.size
-    left, top, right, bottom = 0, 0, 0, 0
-
-    if width != height:
-        if width > height:
-            crop = (width - height) / 2
-            left = crop
-            top = 0
-            right = height + crop
-            bottom = height
-        elif width < height:
-            crop = (height - width) / 2
-            left = 0
-            top = crop
-            right = width
-            bottom = width + crop
-
-        result = image.crop((left, top, right, bottom))
-    else:
-        result = image
-
-    return result
 
 
 class VideoFileQuerySet(models.QuerySet):

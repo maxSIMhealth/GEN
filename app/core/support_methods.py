@@ -1,3 +1,5 @@
+import uuid
+
 from django.db.models import Q
 
 from courses.models import PUBLIC, LEARNERS, INSTRUCTORS, EDITORS, ADMINS
@@ -64,3 +66,11 @@ def course_sections_list(course_object, user):
     sections = filter_by_access_restriction(course_object, sections, user)
 
     return sections
+
+
+def user_directory_path(instance, filename):
+    ext = filename.split(".")[-1]
+    random_filename = str(uuid.uuid4().hex)
+    filename = "%s.%s" % (random_filename, ext)
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return "user_{0}/{1}".format(instance.author.id, filename)

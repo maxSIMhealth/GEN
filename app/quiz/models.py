@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from core.support_methods import user_directory_path
 from courses.models import Course, Section, SectionItem
 from quiz.support_methods import duplicate_quiz
 from videos.models import VideoFile
@@ -232,6 +233,13 @@ class Question(TimeStampedModel):
         _("explanation"),
         blank=True,
         help_text=_("Explanation to be shown after the question has been answered."),
+    )
+    image = models.ImageField(
+        _("image"),
+        upload_to=user_directory_path,
+        blank=True,
+        null=True,
+        help_text=_("Optional image file.")
     )
     value = models.PositiveIntegerField(
         _("value"),
