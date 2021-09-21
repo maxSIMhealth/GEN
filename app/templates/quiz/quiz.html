@@ -79,6 +79,9 @@
                             <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %}>
                                 <div class="fs-6">
                                     <strong>{{ question.content }}</strong>
+                                    {% if quiz.assessment_method %}
+                                    (<em>{% translate "Value:" %} {{ question.value }}</em>)
+                                    {% endif %}
                                     {% if question.image %}
                                         <img src="{{ question.image.file.url }}" class="img-fluid rounded mx-auto d-block" alt="{{ question.image.description }}" title="{{ question.image.description }}">
                                     {% endif %}

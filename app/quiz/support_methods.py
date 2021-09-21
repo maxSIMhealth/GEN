@@ -1,23 +1,16 @@
-def quiz_attempts_get(user, quiz):
-    """
-    Get user current attempt number for this quiz
-    """
-    from quiz.models import QuestionAttempt
-    try:
-        current_attempt_number = (
-            quiz.questionattempt_set.filter(student=user, quiz=quiz)
-            .latest("attempt_number")
-            .attempt_number
-        )
-    except QuestionAttempt.DoesNotExist:
-        # if there are no questionAttempt objects it means that the user
-        # never answered this quiz
-        current_attempt_number = 0
-    return current_attempt_number
-
-
 def quiz_score_get(user, quiz):
-    return quiz.quizscore_set.filter(student=user, quiz=quiz)
+    """
+    Get user latest QuizScore for this quiz (if it exists).
+    """
+    from quiz.models import QuizScore
+    try:
+        latest_quizscore = (
+            quiz.quizscore_set.filter(student=user, quiz=quiz)
+                .latest("attempt_number")
+        )
+    except QuizScore.DoesNotExist:
+        latest_quizscore = None
+    return latest_quizscore
 
 
 def quiz_enable_check(user, quiz):
@@ -26,8 +19,12 @@ def quiz_enable_check(user, quiz):
     """
     quiz_enable = False
 
-    # get current attempt number
-    current_attempt_number = quiz_attempts_get(user, quiz)
+    # get latest quiz score for user (if it exists)
+    latest_quizscore = quiz_score_get(user, quiz)
+    if latest_quizscore is not None:
+        current_attempt_number = latest_quizscore.attempt_number
+    else:
+        current_attempt_number = 0
 
     # checks if the quiz allows multiple attempts
     if quiz.allow_multiple_attempts:
@@ -50,7 +47,7 @@ def quiz_enable_check(user, quiz):
         requirement_quiz_score = quiz_score_get(user, quiz.requirement)
 
         # check if quiz requirement has been fulfilled
-        requirement_fulfilled = bool(requirement_quiz_score.exists())
+        requirement_fulfilled = bool(requirement_quiz_score.exists() and requirement_quiz_score.completed)
 
     else:
         requirement_fulfilled = True
@@ -59,7 +56,7 @@ def quiz_enable_check(user, quiz):
     if not attempts_limit_reached and requirement_fulfilled:
         quiz_enable = True
 
-    return (quiz_enable, current_attempt_number, attempts_left)
+    return quiz_enable, current_attempt_number, attempts_left, latest_quizscore
 
 
 def duplicate_quiz(quiz, field=None, value=None):

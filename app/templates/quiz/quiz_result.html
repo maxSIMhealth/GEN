@@ -72,8 +72,8 @@
                         {% if question.question_type == 'H' or question.question_type == 'O' %}
                             {{ question.content }}
                         {% else %}
-                            {{ question.content }} {% if quiz.assessment_method %}(
-                            <em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
+                            {{ question.content }} {% if quiz.assessment_method %}
+                            (<em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
                         {% endif %}
                     </div>
                     {% if quiz.check_score %}

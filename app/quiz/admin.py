@@ -1,5 +1,6 @@
 from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
+from django.contrib.admin.options import InlineModelAdmin
 from django.forms import ModelForm
 from import_export import resources
 from import_export.admin import ExportActionMixin
@@ -204,16 +205,6 @@ class QuizScoreResource(resources.ModelResource):
         )
 
 
-class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ("student", "quiz", "course", "score")
-    list_filter = ("quiz", "course", "student")
-
-    resource_class = QuizScoreResource
-
-    # search_fields = ('student', 'quiz', 'course')
-    # filter_horizontal = ('student',)
-
-
 class MCAnswerInline(SortableInlineAdminMixin, TranslationTabularInline):
     """
     Class to show multiple choice answers inline (tabular)
@@ -416,6 +407,21 @@ class QuestionGroupHeaderAdmin(QuestionAdmin):
         form = super(QuestionGroupHeaderAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields["question_type"].initial = "H"
         return form
+
+
+class QuestionAttemptInline(admin.TabularInline):
+    model = QuestionAttempt
+
+
+class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
+    list_display = ("student", "quiz", "course", "score", "attempt_number")
+    list_filter = ("quiz", "course", "student")
+    # inlines = [QuestionAttemptInline, ]
+
+    resource_class = QuizScoreResource
+
+    # search_fields = ('student', 'quiz', 'course')
+    # filter_horizontal = ('student',)
 
 
 # TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the

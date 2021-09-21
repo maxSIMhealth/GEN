@@ -31,7 +31,6 @@
             {% if section_items.all %}
                 {% for item in section_items.all %}
                     {% quiz_details_get user item.quiz as quiz_details %}
-
                     <li class="list-group-item">
                         <div class="d-flex">
                             <div class="w-100">
@@ -46,10 +45,10 @@
                                         <span class="text-muted">{{ item.name }}</span>
                                     {% endif %}
                                 {% endif %}
-                                {% if quiz_details.scoreset.exists %}
+                                {% if quiz_details.latest_quizscore %}
                                     <div class="float-end">
                                         <span class="badge rounded-pill bg-primary">{% trans "Submitted" %}</span>
-                                        {% if quiz_details.scoreset.get.completed %}
+                                        {% if quiz_details.latest_quizscore.completed %}
                                             <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
                                         {% else %}
                                             <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
@@ -87,12 +86,10 @@
                                     <p class="mb-0">
                                         <small class="text-muted">
                                             <strong>{% trans "Score:" %}</strong>
-                                            {% if quiz_details.scoreset.exists %}
-                                                {{ quiz_details.scoreset.get.score }} / {{ quiz_details.scoreset.get.max_score }}
+                                            {% if quiz_details.latest_quizscore %}
+                                                {{ quiz_details.latest_quizscore.score }} / {{ quiz_details.latest_quizscore.max_score }}
                                                 {% if item.quiz.assessment_method == 'MP' %}
-                                                    ( {{ quiz_details.scoreset.get.score_percentage }}% )
-                                                {% elif item.quiz.assessment_method == 'MN' %}
-                                                    ( {% trans "Maximum number of mistakes allowed:" %} {{ item.quiz.assessment_max_mistakes }} )
+                                                    ( {{ quiz_details.latest_quizscore.score_percentage }}% )
                                                 {% endif %}
                                             {% else %}
                                                 --

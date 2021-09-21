@@ -495,6 +495,94 @@ class MCAnswer(TimeStampedModel):
         ordering = ["custom_order"]
 
 
+class QuizScore(TimeStampedModel):
+    student = models.ForeignKey(
+        User, on_delete=models.PROTECT, verbose_name=_("student")
+    )
+    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT, verbose_name=_("quiz"))
+    course = models.ForeignKey(
+        Course, on_delete=models.PROTECT, verbose_name=_("course")
+    )
+    attempt_number = models.PositiveIntegerField(_("attempt number"), default=0)
+    score = models.PositiveIntegerField(_("score"), default=0)
+    max_score = models.PositiveIntegerField(_("max score"), default=0)
+    num_mistakes = models.PositiveIntegerField(
+        _("number of mistakes"),
+        default=0,
+        help_text=_("Total number of mistakes (incorrect questions).")
+    )
+    max_mistakes = models.PositiveIntegerField(
+        _("maximum number of mistakes"),
+        default=0,
+        help_text=_(
+            "If the participant exceeds this value, the quiz is marked as failed"
+        ),
+    )
+    min_percentage = models.PositiveIntegerField(
+        _("minimum percentage acceptable"),
+        default=80,
+        help_text=_(
+            "If the participant score percentage is below this value, the quiz is marked as failed"
+        ),
+    )
+    completed = models.BooleanField(
+        _("completed successfully"),
+        default=False,
+        help_text=_(
+            "If quiz assessment is enabled, this field represents if the participant achieved a passing score or not."
+        ),
+    )
+
+    class Meta:
+        verbose_name = _("quiz score")
+        verbose_name_plural = _("quiz scores")
+        unique_together = ["student", "course", "quiz", "attempt_number"]
+
+    def __str__(self):
+        return "Score for user %s - quiz %s - course %s" % (
+            self.student.username,
+            self.quiz.name,
+            self.course.name,
+        )
+
+    def score_percentage(self):
+        percentage = (self.score * 100) / self.max_score
+        return math.ceil(percentage)
+
+    # def attempt_increase(self):
+    #     self.attempt_number = self.attempt_number + 1
+    #     self.save()
+
+    def perform_assessment(self):
+        if self.quiz.assessment_method == MIN_PERCENTAGE:
+            percentage = self.score_percentage()
+            if percentage >= self.min_percentage:
+                self.completed = True
+            else:
+                self.completed = False
+        elif self.quiz.assessment_method == MAX_NUM_MISTAKES:
+            if self.num_mistakes <= self.max_mistakes:
+                self.completed = True
+            else:
+                self.completed = False
+        else:
+            self.completed = True
+
+        # self.save()
+
+
+class QuestionGroupHeader(Question):
+    objects = QuestionGroupHeaderManager()
+
+    class Meta:
+        proxy = True
+        verbose_name = _("question group header")
+        verbose_name_plural = _("question group headers")
+
+    def __str__(self):
+        return self.content
+
+
 class QuestionAttempt(TimeStampedModel):
     question_type = models.CharField(
         _("question type"), max_length=1, choices=QUESTION_TYPES
@@ -503,6 +591,13 @@ class QuestionAttempt(TimeStampedModel):
         User, on_delete=models.PROTECT, verbose_name=_("student")
     )
     quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT, verbose_name=_("quiz"))
+    quiz_score = models.ForeignKey(
+        QuizScore,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_("quiz submission")
+    )
     course = models.ForeignKey(
         Course, on_delete=models.PROTECT, verbose_name=_("course")
     )
@@ -534,6 +629,7 @@ class QuestionAttempt(TimeStampedModel):
     class Meta:
         verbose_name = _("question attempt")
         verbose_name_plural = _("question attempts")
+        ordering = ["created"]
 
     def __str__(self):
         return "%s - %s - Course %s (attempt %s): %s" % (
@@ -622,77 +718,3 @@ class MCQuestionAttempt(QuestionAttempt):
         proxy = True
         verbose_name = _("multiple choice questions attempt")
         verbose_name_plural = _("multiple choice questions attempts")
-
-
-class QuizScore(TimeStampedModel):
-    student = models.ForeignKey(
-        User, on_delete=models.PROTECT, verbose_name=_("student")
-    )
-    quiz = models.ForeignKey(Quiz, on_delete=models.PROTECT, verbose_name=_("quiz"))
-    course = models.ForeignKey(
-        Course, on_delete=models.PROTECT, verbose_name=_("course")
-    )
-    attempt_number = models.PositiveIntegerField(_("attempt number"), default=0)
-    score = models.PositiveIntegerField(_("score"), default=0)
-    max_score = models.PositiveIntegerField(_("max score"), default=0)
-    num_mistakes = models.PositiveIntegerField(
-        _("number of mistakes"),
-        default=0,
-        help_text=_("Total number of mistakes (incorrect questions).")
-    )
-    completed = models.BooleanField(
-        _("completed successfully"),
-        default=False,
-        help_text=_(
-            "If quiz assessment is enabled, this field represents if the participant achieved a passing score or not."
-        ),
-    )
-
-    class Meta:
-        verbose_name = _("quiz score")
-        verbose_name_plural = _("quiz scores")
-        unique_together = ["student", "course", "quiz"]
-
-    def __str__(self):
-        return "Score for user %s - quiz %s - course %s" % (
-            self.student.username,
-            self.quiz.name,
-            self.course.name,
-        )
-
-    def score_percentage(self):
-        percentage = (self.score * 100) / self.max_score
-        return math.ceil(percentage)
-
-    # def attempt_increase(self):
-    #     self.attempt_number = self.attempt_number + 1
-    #     self.save()
-
-    def perform_assessment(self):
-        if self.quiz.assessment_method == MIN_PERCENTAGE:
-            percentage = self.score_percentage()
-            if percentage >= self.quiz.assessment_min_percentage:
-                self.completed = True
-            else:
-                self.completed = False
-        elif self.quiz.assessment_method == MAX_NUM_MISTAKES:
-            if self.num_mistakes <= self.quiz.assessment_max_mistakes:
-                self.completed = True
-            else:
-                self.completed = False
-        else:
-            self.completed = True
-
-        # self.save()
-
-
-class QuestionGroupHeader(Question):
-    objects = QuestionGroupHeaderManager()
-
-    class Meta:
-        proxy = True
-        verbose_name = _("question group header")
-        verbose_name_plural = _("question group headers")
-
-    def __str__(self):
-        return self.content

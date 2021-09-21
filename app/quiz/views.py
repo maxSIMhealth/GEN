@@ -158,14 +158,27 @@ def quiz_submission(request, quiz, questions, course, section):
     score = 0
     num_mistakes = 0
     max_score = 0
-    user_scoreset, _ = QuizScore.objects.get_or_create(
+    try:
+        latest_attempt_number = QuizScore.objects.filter(
+            student=request.user,
+            course=course,
+            quiz=quiz) \
+            .latest('attempt_number').attempt_number
+    except QuizScore.DoesNotExist:
+        latest_attempt_number = 0
+
+    user_scoreset = QuizScore(
         student=request.user,
         course=course,
-        quiz=quiz
+        quiz=quiz,
+        max_mistakes=quiz.assessment_max_mistakes,
+        min_percentage=quiz.assessment_min_percentage,
+        attempt_number=latest_attempt_number
     )
 
     # increase attempt number
     user_scoreset.attempt_number = user_scoreset.attempt_number + 1
+    user_scoreset.save()
 
     # get submitted questions and generate an dictionary list
     # format: {"question_id": "question_values"}
@@ -180,6 +193,7 @@ def quiz_submission(request, quiz, questions, course, section):
         attempt = QuestionAttempt(
             student=request.user,
             quiz=quiz,
+            quiz_score=user_scoreset,
             course=course,
             section=section,
             question=question,
@@ -200,7 +214,7 @@ def quiz_submission(request, quiz, questions, course, section):
 
         # increase mistake counter if attempt is incorrect
         if attempt.correct is False and (question.question_type != 'H' or question.question_type != 'O'):
-            num_mistakes = user_scoreset.num_mistakes + 1
+            num_mistakes += 1
 
     # change session variable to indicate that the
     # user completed the quiz
@@ -232,7 +246,7 @@ def quiz_evaluate_completion(request, section):
 
     for quiz in section_quizzes:
         try:
-            quizscore = QuizScore.objects.get(quiz=quiz, student=request.user)
+            quizscore = QuizScore.objects.filter(quiz=quiz, student=request.user).latest("attempt_number")
         except QuizScore.DoesNotExist:
             quizscore = None
         if quizscore:
@@ -275,7 +289,7 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
             pass
 
         # check if quiz has a requirement and if it should be enabled
-        (quiz_enabled, current_attempt_number, attempts_left) = quiz_enable_check(request.user, quiz)
+        (quiz_enabled, _, attempts_left, _) = quiz_enable_check(request.user, quiz)
 
         if quiz_enabled:
             if request.method == "POST":
@@ -349,7 +363,8 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=sectionitem_pk)
-    student_quiz_score = get_object_or_404(QuizScore, student=request.user, course=course, quiz=quiz)
+    student_quiz_score = QuizScore.objects.filter(student=request.user, course=course, quiz=quiz) \
+        .latest("attempt_number")
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
@@ -357,19 +372,17 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
         return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
 
     # get latest attempt number
-    latest_attempt_number = (
-        QuestionAttempt.objects.filter(quiz=quiz, student=request.user)
-                               .latest("attempt_number")
-                               .attempt_number
-    )
+    latest_attempt_number = student_quiz_score.attempt_number
 
     # get questions and answers from the latest attempt
     try:
-        questions_attempt = QuestionAttempt.objects.filter(
-            quiz=quiz, student=request.user, attempt_number=latest_attempt_number
+        questions_attempt = student_quiz_score.questionattempt_set.filter(
+            quiz=quiz,
+            attempt_number=latest_attempt_number
         )
         # merging multiple choice attempts of a same question
-        questions_attempt_distinct = questions_attempt.distinct("question")
+        # questions_attempt_distinct = questions_attempt.distinct("question")
+        questions_attempt_distinct = questions_attempt
     except QuestionAttempt.DoesNotExist:
         questions_attempt_distinct = None
         questions_attempt = []
