@@ -1,5 +1,5 @@
 # Official python image
-FROM python:3.8-alpine3.14 AS builder
+FROM python:3.9-alpine3.14 AS builder
 
 # Labels
 LABEL maintainer="andrei.torres@ontariotechu.net"
@@ -33,7 +33,7 @@ RUN set -ex \
 # Copy project
 ADD app $GEN_HOME/app
 
-FROM python:3.8-alpine3.14
+FROM python:3.9-alpine3.14
 
 # Create user that will run the project
 RUN addgroup -S gen --gid 1000 \
