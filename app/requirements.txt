@@ -52,3 +52,4 @@ django-storages==1.11.1
 boto3==1.17.106
 reportlab==3.6.1
 django-tables2==2.4.0
+django-filter==2.4.0

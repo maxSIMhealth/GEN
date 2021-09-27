@@ -3,6 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load humanize %}
+{% load django_bootstrap5 %}
 {% load render_table from django_tables2 %}
 
 {% block content_title %}
@@ -26,6 +27,29 @@
             </div>
         </div>
         <div class="card-body pb-0">
+{#            <li>results_list: {{ results_list }}</li>#}
+{#            <li>#}
+{#                {% for item in results_list %}#}
+{#                    item: {{ item }}, item.value: {{ item.value }}, item.student {{ item.student }}#}
+{#                {% endfor %}#}
+{#            </li>#}
+            <select class="form-select" aria-label="Default select example">
+                {% for item in results_list %}
+                    <option value="{{ item }}">Response {{ forloop.counter }}</option>
+                {% endfor %}
+            </select>
+            {% for item in results_list %}
+                <a href="?student={{ item }}"> Response {{ forloop.counter }}</a>
+            {% endfor %}
+
+
+            {% if filter %}
+                <form action="" method="get" class="form form-inline">
+                    {% bootstrap_form filter.form layout='inline' %}
+                    {% bootstrap_button 'filter' %}
+                </form>
+            {% endif %}
+{#            {% render_table table 'django_tables2/bootstrap.html' %}#}
             {% render_table table %}
         </div>
         <div class="card-footer">
