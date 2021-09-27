@@ -3,13 +3,13 @@ version: '3'
 services:
   gen:
     container_name: gen
-    user: $UID:$GID
+    user: 1000:1000 
     build:
       context: .
     restart: "on-failure" 
     env_file: ./config/env-dev-local
     volumes:
-      - ./app:/gen/app:rw
+      - ./app:/gen/app
       - ./static:/gen/static
       - ./media:/gen/media
     command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
