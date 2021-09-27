@@ -128,7 +128,6 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "social_django.context_processors.backends",
                 "social_django.context_processors.login_redirect",
-                "maintenance_mode.context_processors.maintenance_mode",
             ],
         },
     },
@@ -141,6 +140,9 @@ MESSAGE_TAGS = {
     messages.WARNING: "warning",
     messages.ERROR: "danger",
 }
+
+# Django 3.2 requires defining the default value for auto-created primary keys
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.github.GithubOAuth2",
