@@ -33,11 +33,12 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_display = (
         "name",
         "course",
+        "author",
         "published",
-        "access_restriction"
+
     )
     inlines = (SectionItemInline,)
-    list_filter = ("course","published")
+    list_filter = ("course", "published")
     form = SectionAdminForm
 
     fieldsets = (
@@ -50,14 +51,23 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "content",
                     "course",
                     "section_type",
+                    "author",
                     "start_date",
                     "end_date",
-                    "access_restriction",
                     "requirement",
                     "published",
                     "show_thumbnails",
                 )
             },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+                )
+            }
         ),
         (
             "Assessment",
@@ -74,6 +84,8 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                 "fields": (
                     "create_discussions",
                     "section_output",
+                    "output_access_restriction",
+                    "output_author_access_override"
                 )
             },
         ),
@@ -90,6 +102,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
         )
     )
 
+
 class StatusAdmin(admin.ModelAdmin):
     list_display = (
         "learner",
@@ -98,6 +111,7 @@ class StatusAdmin(admin.ModelAdmin):
         "completed"
     )
     list_filter = ("course","section","learner")
+
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Section, SectionAdmin)

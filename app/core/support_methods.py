@@ -7,25 +7,29 @@ from courses.models import PUBLIC, LEARNERS, INSTRUCTORS, EDITORS, ADMINS
 
 def allow_access(user, course, item):
     """
-    Verifies if the user has permission to access an specific SectionItem.
+    Verifies if the user has permission to access a specific item.
     """
 
     access_restriction = item.access_restriction
+    access_override = item.author_access_override
 
-    if access_restriction == PUBLIC and user in course.members.all():
-        access_allowed = True
-    elif access_restriction == LEARNERS and user in course.learners.all():
-        access_allowed = True
-    elif access_restriction == INSTRUCTORS and user in course.instructors.all():
-        access_allowed = True
-    elif access_restriction == EDITORS and user in course.editors.all():
-        access_allowed = True
-    elif access_restriction == ADMINS and user.is_staff:
-        access_allowed = True
-    elif user.is_staff:
+    if access_override and item.author == user:
         access_allowed = True
     else:
-        access_allowed = False
+        if access_restriction == PUBLIC and user in course.members.all():
+            access_allowed = True
+        elif access_restriction == LEARNERS and user in course.learners.all():
+            access_allowed = True
+        elif access_restriction == INSTRUCTORS and user in course.instructors.all():
+            access_allowed = True
+        elif access_restriction == EDITORS and user in course.editors.all():
+            access_allowed = True
+        elif access_restriction == ADMINS and user.is_staff:
+            access_allowed = True
+        elif user.is_staff:
+            access_allowed = True
+        else:
+            access_allowed = False
 
     return access_allowed
 
@@ -57,6 +61,8 @@ def filter_by_access_restriction(course_object, items, user):
     else:
         items_filtered = items.filter(
             (Q(access_restriction=PUBLIC) | Q(access_restriction=LEARNERS)) & Q(published=True))
+        items_override = items.filter(Q(author_access_override=True) & Q(author=user))
+        items_filtered = items_filtered | items_override
 
     return items_filtered
 

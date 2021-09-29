@@ -29,6 +29,7 @@ def course_enrollment_check(test_func):
 
     return decorator
 
+
 def check_permission(item_type):
     """
     Checks if the user is allowed to access the requested item.
@@ -54,6 +55,7 @@ def check_permission(item_type):
                 item_obj = get_object_or_404(SectionItem, pk=item_pk)
 
             user = request.user
+
             access_allowed = allow_access(user, course_obj, item_obj)
 
             if access_allowed:

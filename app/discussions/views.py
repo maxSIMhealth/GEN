@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from GEN.decorators import course_enrollment_check
+from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
 
 # from django.core.files import File
@@ -43,6 +43,7 @@ from .support_methods import discussion_enable_check, has_participated
 
 @login_required
 @course_enrollment_check(enrollment_test)
+@check_permission("discussion")
 def discussion_comments(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)

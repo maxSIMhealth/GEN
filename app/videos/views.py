@@ -115,6 +115,8 @@ def publish_video(request, pk, section_pk, sectionitem_pk):
                     discussion = Discussion.objects.create(
                         course=course,
                         section=section.section_output,
+                        access_restriction=section.output_access_restriction,
+                        author_access_override=section.output_author_access_override,
                         published=True,
                         name=video.name,
                         description=video.description,
