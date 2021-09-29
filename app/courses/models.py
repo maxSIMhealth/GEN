@@ -19,6 +19,7 @@ PERMISSION_TYPES = [
     (ADMINS, _("Admins")),
 ]
 
+
 class Course(models.Model):
     name = models.CharField(
         _("name"),
@@ -158,6 +159,11 @@ class Section(models.Model):
         null=True,
         help_text=_("Description (max 1000 characters)"),
     )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        verbose_name=_("author")
+    )
     content = HTMLField(
         blank=True,
         null=True
@@ -193,6 +199,13 @@ class Section(models.Model):
         default=PUBLIC,
         help_text=_("Define who should have access to this item.")
     )
+    author_access_override = models.BooleanField(
+        _("access override for author"),
+        default=False,
+        help_text=_(
+            "Define if author should have access to this item, regardless of the access restriction."
+        )
+    )
     pre_assessment = models.BooleanField(
         _("pre-assessment"),
         default=False,
@@ -225,6 +238,20 @@ class Section(models.Model):
             "* FOR UPLOAD SECTION ONLY *: define the section in which to create the discussion boards."
         ),
         verbose_name=_("section output"),
+    )
+    output_access_restriction = models.CharField(
+        _("access restriction"),
+        max_length=1,
+        choices=PERMISSION_TYPES,
+        default=PUBLIC,
+        help_text=_("* FOR UPLOAD SECTION ONLY *: define who should have access to the new discussion board.")
+    )
+    output_author_access_override = models.BooleanField(
+        _("access override for author"),
+        default=False,
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless of the access restriction."
+        )
     )
     clone_quiz = models.BooleanField(
         _("clone quiz"),
@@ -399,6 +426,13 @@ class SectionItem(TimeStampedModel):
         choices=PERMISSION_TYPES,
         default=PUBLIC,
         help_text=_("Define who should have access to this item.")
+    )
+    author_access_override = models.BooleanField(
+        _("access override for author"),
+        default=False,
+        help_text=_(
+            "Define if author should have access to this item, regardless of the access restriction."
+        )
     )
     show_related_content = models.BooleanField(
         _("show related content"),
