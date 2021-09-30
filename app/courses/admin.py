@@ -32,13 +32,13 @@ class SectionItemInline(SortableInlineAdminMixin, TranslationTabularInline):
 class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_display = (
         "name",
-        "course",
-        "author",
         "published",
-
+        "course",
+        "access_restriction",
+        "author",
     )
     inlines = (SectionItemInline,)
-    list_filter = ("course", "published")
+    list_filter = ("course", "published", "access_restriction")
     form = SectionAdminForm
 
     fieldsets = (

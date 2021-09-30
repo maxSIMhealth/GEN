@@ -81,8 +81,8 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
-    list_display = ("name", "published", "course", "section", "video")
-    list_filter = ("course", "section")
+    list_display = ("name", "published", "course", "section", "video", "access_restriction", "author")
+    list_filter = ("course", "section", "published", "access_restriction")
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
     actions = [duplicate]
