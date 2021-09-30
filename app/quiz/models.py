@@ -532,6 +532,13 @@ class QuizScore(TimeStampedModel):
             "If quiz assessment is enabled, this field represents if the participant achieved a passing score or not."
         ),
     )
+    expert_feedback = models.BooleanField(
+        _("expert feedback"),
+        default=False,
+        help_text=_(
+            "Defines if the quiz was submitted by an expert/instructor."
+        ),
+    )
 
     class Meta:
         verbose_name = _("quiz score")

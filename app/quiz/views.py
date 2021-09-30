@@ -1,7 +1,6 @@
 import logging
 import random
 
-import django_filters
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -14,6 +13,7 @@ from django_tables2.export.views import ExportMixin
 from GEN.decorators import course_enrollment_check, check_permission
 from GEN.support_methods import enrollment_test
 from core.mixins import BlockPeersAccessMixin
+from core.support_methods import check_is_instructor
 from courses.models import Course, Section
 from courses.support_methods import section_mark_completed, course_mark_completed
 from .models import (
@@ -175,6 +175,9 @@ def quiz_submission(request, quiz, questions, course, section):
         min_percentage=quiz.assessment_min_percentage,
         attempt_number=latest_attempt_number
     )
+
+    # sets if quiz is submitted by an expert/instructor
+    user_scoreset.expert_feedback = check_is_instructor(course, request.user)
 
     # increase attempt number
     user_scoreset.attempt_number = user_scoreset.attempt_number + 1
@@ -459,22 +462,13 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
     )
 
 
-class QuestionAttemptFilter(django_filters.FilterSet):
-    class Meta:
-        model = QuestionAttempt
-        fields = ["student", ]
-
-
 class QuestionAttemptListView(LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView):
     model = QuestionAttempt
     table_class = QuestionAttemptTable
     template_name = 'quiz/quiz_result_list.html'
 
-    # filterset_class = QuestionAttemptFilter
-
     @cached_property
     def quiz_data(self, **kwargs):
-        # quizzes.values('student').distinct()
         quiz_pk = self.kwargs['sectionitem_pk']
         quiz_data = QuestionAttempt.objects.filter(quiz=quiz_pk)
         quiz_data_users = quiz_data.order_by('student').distinct('student').values_list('student', flat=True)
@@ -490,60 +484,10 @@ class QuestionAttemptListView(LoginRequiredMixin, BlockPeersAccessMixin, ExportM
         context['course'] = get_object_or_404(Course, pk=course_pk)
         context['section'] = get_object_or_404(Section, pk=section_pk)
         context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
-        # context['results_users'] = Course.objects.get(pk=course_pk).members.all()
         _, context['results_list'] = self.quiz_data
         return context
 
     def get_queryset(self, **kwargs):
-        # quiz_pk = self.kwargs['sectionitem_pk']
-        # queryset = QuestionAttempt.objects.filter(quiz=quiz_pk)
-        quiz_data, quiz_data_users = self.quiz_data
-        if 'student' in self.request.GET:
-            item_id = int(self.request.GET['student'])
-        else:
-            item_id = False
-        if item_id:
-            queryset = quiz_data.filter(student=item_id)
-        else:
-            if quiz_data_users:
-                queryset = quiz_data.filter(student=quiz_data_users[0])
-            else:
-                queryset = quiz_data
-        return queryset
-
-
-class QuestionAttemptListViewAlt(LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView):
-    model = QuestionAttempt
-    table_class = QuestionAttemptTable
-    template_name = 'quiz/quiz_result_list.html'
-
-    # filterset_class = QuestionAttemptFilter
-
-    @cached_property
-    def quiz_data(self, **kwargs):
-        # quizzes.values('student').distinct()
-        quiz_pk = self.kwargs['sectionitem_pk']
-        quiz_data = QuestionAttempt.objects.filter(quiz=quiz_pk)
-        quiz_data_users = quiz_data.order_by('student').distinct('student').values_list('student', flat=True)
-        return quiz_data, quiz_data_users
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add additional objects to context based on url kwargs
-        course_pk = context['view'].kwargs['pk']
-        section_pk = context['view'].kwargs['section_pk']
-        quiz_pk = context['view'].kwargs['sectionitem_pk']
-        context['course'] = get_object_or_404(Course, pk=course_pk)
-        context['section'] = get_object_or_404(Section, pk=section_pk)
-        context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
-        # context['results_users'] = Course.objects.get(pk=course_pk).members.all()
-        _, context['results_list'] = self.quiz_data
-        return context
-
-    def get_queryset(self, **kwargs):
-        # quiz_pk = self.kwargs['sectionitem_pk']
-        # queryset = QuestionAttempt.objects.filter(quiz=quiz_pk)
         quiz_data, quiz_data_users = self.quiz_data
         if 'student' in self.request.GET:
             item_id = int(self.request.GET['student'])

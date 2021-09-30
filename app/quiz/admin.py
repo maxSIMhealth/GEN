@@ -104,11 +104,19 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "course",
                     "section",
                     "published",
-                    "access_restriction",
                     "video",
                     "requirement",
                 )
             },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+                )
+            }
         ),
         (
             "Questions options",
