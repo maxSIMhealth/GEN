@@ -33,10 +33,6 @@
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="app/requirements.txt" />
   </component>
-  <component name="PyDocumentationSettings">
-    <option name="format" value="PLAIN" />
-    <option name="myDocStringFormat" value="Plain" />
-  </component>
   <component name="PyNamespacePackagesService">
     <option name="namespacePackageFolders">
       <list>
