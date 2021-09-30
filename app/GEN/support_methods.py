@@ -5,12 +5,12 @@ def enrollment_test():
     return True
 
 
-def duplicate_name(object):
-    object.name += " (Copy)"
-    return object
+def duplicate_name(item):
+    item.name += " (Copy)"
+    return item
 
 
-def duplicate_item(object, callback=None):
+def duplicate_item(item, callback=None):
     """
     Based on: https://stackoverflow.com/a/52761222/2066218
 
@@ -38,7 +38,7 @@ def duplicate_item(object, callback=None):
     relations_to_set = {}
 
     # Iterate through all the fields in the parent object looking for related fields
-    fields = object._meta.get_fields()
+    fields = item._meta.get_fields()
     for field in fields:
         if field.one_to_many:
             # One to many fields are backward relationships where many child
@@ -48,17 +48,17 @@ def duplicate_item(object, callback=None):
 
             # 'field' is a ManyToOneRel which is not iterable, we need to get
             # the object attribute itself.
-            related_object_manager = getattr(object, field.get_accessor_name())
+            related_object_manager = getattr(item, field.get_accessor_name())
             related_objects = list(related_object_manager.all())
             if related_objects:
                 print(f" - {len(related_objects)} related objects to copy")
                 related_objects_to_copy += related_objects
 
         elif field.one_to_one:
-            if hasattr(object, field.name):
+            if hasattr(item, field.name):
                 # In testing, these relationships are not being copied automatically.
                 print(f"Found a one-to-one field: {field.name}")
-                related_object = getattr(object, field.name)
+                related_object = getattr(item, field.name)
                 related_objects_to_copy.append(related_object)
 
         elif field.many_to_one:
@@ -71,7 +71,7 @@ def duplicate_item(object, callback=None):
             # can be related to many child objects. Because of this the child
             # objects don't need to be copied when we copy the parent, we just
             # need to re-create the relationship to them on the copied parent.
-            related_object_manager = getattr(object, field.name)
+            related_object_manager = getattr(item, field.name)
 
             if related_object_manager.through:
                 # Many to many relations with a through table are handled as many to one relationships
@@ -86,30 +86,30 @@ def duplicate_item(object, callback=None):
 
     # Duplicate the parent object
     # https://docs.djangoproject.com/en/3.0/topics/db/queries/#copying-model-instances
-    object.pk = None
-    object.id = None
+    item.pk = None
+    item.id = None
 
     if callback and callable(callback):
-        object = callback(object)
+        item = callback(item)
 
-    object.save()
-    print(f"Copied parent object ({str(object)})")
+    item.save()
+    print(f"Copied parent object ({str(item)})")
 
     # Copy the one-to-many child objects and relate them to the copied parent
     for related_object in related_objects_to_copy:
         # Iterate through the fields in the related object to find the one that
         # relates to the parent model.
         for related_object_field in related_object._meta.fields:
-            if related_object_field.related_model == object.__class__ or (
-                hasattr(related_object_field.related_model, "_meta")
-                and related_object_field.related_model._meta.proxy_for_model
-                == object.__class__
+            if related_object_field.related_model == item.__class__ or (
+                    hasattr(related_object_field.related_model, "_meta")
+                    and related_object_field.related_model._meta.proxy_for_model
+                    == item.__class__
             ):
                 # If the related_model on this field matches the parent
                 # object's class, perform the copy of the child object and set
                 # this field to the parent object, creating the new
                 # child -> parent relationship.
-                setattr(related_object, related_object_field.name, object)
+                setattr(related_object, related_object_field.name, item)
                 new_related_object = duplicate_item(related_object)
                 new_related_object.save()
 
@@ -121,7 +121,7 @@ def duplicate_item(object, callback=None):
     for field_name, relations in relations_to_set.items():
         # Get the field by name and set the relations, creating the new
         # relationships.
-        field = getattr(object, field_name)
+        field = getattr(item, field_name)
         field.set(relations)
         text_relations = []
         for relation in relations:
@@ -130,4 +130,4 @@ def duplicate_item(object, callback=None):
             f"|- Set {len(relations)} many-to-many relations on {field_name} {text_relations}"
         )
 
-    return object
+    return item
