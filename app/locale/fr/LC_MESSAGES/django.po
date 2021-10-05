@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-29 00:23+0000\n"
-"PO-Revision-Date: 2021-09-29 00:25+0000\n"
+"POT-Creation-Date: 2021-10-05 23:05+0000\n"
+"PO-Revision-Date: 2021-10-05 23:05+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -301,7 +301,7 @@ msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:115 courses/models.py:175 courses/models.py:469
 #: discussions/models.py:21 quiz/models.py:100 quiz/models.py:504
-#: quiz/models.py:602 videos/models.py:42 videos/models.py:57
+#: quiz/models.py:609 videos/models.py:42 videos/models.py:57
 msgid "course"
 msgstr "le cours"
 
@@ -325,7 +325,7 @@ msgstr "Le tableau de bord nécessite l'activation de la gamification"
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
-#: courses/models.py:142 templates/sections/section_discussion.html:28
+#: courses/models.py:142 templates/sections/section_discussion.html:30
 msgid "Discussion boards"
 msgstr "Forums de discussion"
 
@@ -385,7 +385,6 @@ msgid "access override for author"
 msgstr "remplacement d'accès pour l'auteur"
 
 #: courses/models.py:206 courses/models.py:434
-#| msgid "Define who should have access to this item."
 msgid ""
 "Define if author should have access to this item, regardless of the access "
 "restriction."
@@ -442,9 +441,6 @@ msgid "section output"
 msgstr "sortie de section"
 
 #: courses/models.py:247
-#| msgid ""
-#| "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
-#| "discussion boards."
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define who should have access to the new "
 "discussion board."
@@ -453,9 +449,6 @@ msgstr ""
 " accès au nouveau forum de discussion."
 
 #: courses/models.py:253
-#| msgid ""
-#| "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
-#| "discussion boards."
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless"
 " of the access restriction."
@@ -584,7 +577,7 @@ msgstr ""
 "'évaluation finale'."
 
 #: courses/models.py:392 courses/models.py:420 courses/models.py:477
-#: quiz/models.py:605
+#: quiz/models.py:612
 msgid "section"
 msgstr "section"
 
@@ -722,7 +715,7 @@ msgstr "La longueur maximale d'un commentaire est de 400 caractères."
 msgid "last updated"
 msgstr "dernière mise à jour"
 
-#: discussions/models.py:40 quiz/models.py:108 quiz/models.py:623
+#: discussions/models.py:40 quiz/models.py:108 quiz/models.py:630
 msgid "video"
 msgstr "vidéo"
 
@@ -928,7 +921,7 @@ msgstr "Autoriser plusieurs tentatives"
 msgid "attempts max number"
 msgstr "nombre maximal de tentatives"
 
-#: quiz/models.py:125 quiz/models.py:226 quiz/models.py:502 quiz/models.py:593
+#: quiz/models.py:125 quiz/models.py:226 quiz/models.py:502 quiz/models.py:600
 msgid "quiz"
 msgstr "quiz"
 
@@ -994,7 +987,7 @@ msgstr "Ouvert - Texte (long)"
 msgid "Open ended - Email"
 msgstr "Ouvert - E-mail"
 
-#: quiz/models.py:217 quiz/models.py:588
+#: quiz/models.py:217 quiz/models.py:595
 msgid "question type"
 msgstr "type de question"
 
@@ -1050,7 +1043,7 @@ msgstr "OuvertType ouvert"
 msgid "Type of open ended question."
 msgstr "Type de question ouverte."
 
-#: quiz/models.py:276 quiz/models.py:368 quiz/models.py:468 quiz/models.py:609
+#: quiz/models.py:276 quiz/models.py:368 quiz/models.py:468 quiz/models.py:616
 msgid "question"
 msgstr "question"
 
@@ -1146,11 +1139,11 @@ msgstr "réponse à choix multiples"
 msgid "multiple choice answers"
 msgstr "réponses à choix multiples"
 
-#: quiz/models.py:500 quiz/models.py:591
+#: quiz/models.py:500 quiz/models.py:598
 msgid "student"
 msgstr "l'étudiant"
 
-#: quiz/models.py:506 quiz/models.py:607
+#: quiz/models.py:506 quiz/models.py:614
 msgid "attempt number"
 msgstr "numéro de tentative"
 
@@ -1178,83 +1171,90 @@ msgstr ""
 "Si l'évaluation du quiz est activée, ce champ indique si le participant a "
 "obtenu une note de passage ou non."
 
-#: quiz/models.py:537
+#: quiz/models.py:536
+msgid "expert feedback"
+msgstr "commentaires d'experts"
+
+#: quiz/models.py:539
+msgid "Defines if the quiz was submitted by an expert/instructor."
+msgstr "Définit si le quiz a été soumis par un expert/instructeur."
+
+#: quiz/models.py:544
 msgid "quiz score"
 msgstr "score du quiz"
 
-#: quiz/models.py:538
+#: quiz/models.py:545
 msgid "quiz scores"
 msgstr "scores du quiz"
 
-#: quiz/models.py:579
+#: quiz/models.py:586
 msgid "question group header"
 msgstr "en-tête du groupe de questions"
 
-#: quiz/models.py:580
+#: quiz/models.py:587
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
-#: quiz/models.py:599
-#| msgid "Your submission"
+#: quiz/models.py:606
 msgid "quiz submission"
 msgstr "soumission de quiz"
 
-#: quiz/models.py:616
-msgid "multiple choice answer item"
-msgstr "élément de réponse à choix multiple"
+#: quiz/models.py:623
+msgid "multiple choice item"
+msgstr "article à choix multiples"
 
-#: quiz/models.py:625
-msgid "student answer"
-msgstr "réponse de l'élève"
+#: quiz/models.py:632
+msgid "Participant answer"
+msgstr "Réponse des participants"
 
-#: quiz/models.py:626
+#: quiz/models.py:633
 msgid "correct"
 msgstr "correct"
 
-#: quiz/models.py:630
+#: quiz/models.py:637
 msgid "question attempt"
 msgstr "tentative de question"
 
-#: quiz/models.py:631
+#: quiz/models.py:638
 msgid "question attempts"
 msgstr "tentatives de questions"
 
-#: quiz/models.py:693
+#: quiz/models.py:700
 msgid "likert attempt"
 msgstr "tentative de likert"
 
-#: quiz/models.py:694
+#: quiz/models.py:701
 msgid "likert attempts"
 msgstr "tentatives de likert"
 
-#: quiz/models.py:706
+#: quiz/models.py:713
 msgid "open ended attempt"
 msgstr "tentative ouverte"
 
-#: quiz/models.py:707
+#: quiz/models.py:714
 msgid "open ended attempts"
 msgstr "tentatives ouverte"
 
-#: quiz/models.py:719
+#: quiz/models.py:726
 msgid "multiple choice questions attempt"
 msgstr "tentative de questions à choix multiples"
 
-#: quiz/models.py:720
+#: quiz/models.py:727
 msgid "multiple choice questions attempts"
 msgstr "tentatives de questions à choix multiples"
 
-#: quiz/views.py:299
+#: quiz/views.py:302
 msgid ""
 "Submission denied. You can not submit a quiz of which you are the author."
 msgstr ""
 "Soumission refusée. Vous ne pouvez pas soumettre un quiz dont vous êtes "
 "l'auteur."
 
-#: quiz/views.py:338
+#: quiz/views.py:341
 msgid "You have already reached the maximum number of attempts."
 msgstr "Vous avez déjà atteint le nombre maximum de tentatives."
 
-#: quiz/views.py:352
+#: quiz/views.py:355
 msgid "Access denied."
 msgstr "Accès refusé."
 
@@ -1778,22 +1778,35 @@ msgstr "Incorrect"
 msgid "Feedback"
 msgstr "Retour"
 
-#: templates/quiz/quiz_result.html:198 templates/quiz/quiz_result_list.html:33
+#: templates/quiz/quiz_result.html:198 templates/quiz/quiz_result_list.html:50
 #, python-format
 msgid "Return to %(section_name)s"
 msgstr "Retourner au %(section_name)s"
 
-#: templates/quiz/quiz_result_list.html:10
-msgid "Quiz data"
-msgstr "Données de quiz"
-
-#: templates/quiz/quiz_result_list.html:16
-msgid "All submissions"
-msgstr "Toutes les soumissions"
+#: templates/quiz/quiz_result_list.html:13
+msgid "Results"
+msgstr "Résultats"
 
 #: templates/quiz/quiz_result_list.html:19
+msgid "Data"
+msgstr "Donnés"
+
+#: templates/quiz/quiz_result_list.html:22
 msgid "Download data"
 msgstr "Télécharger les données"
+
+#: templates/quiz/quiz_result_list.html:34
+msgid "Submission:"
+msgstr "Soumission:"
+
+#: templates/quiz/quiz_result_list.html:38
+msgid "(expert feedback)"
+msgstr "(commentaires d'experts)"
+
+#: templates/quiz/quiz_result_list.html:45
+#| msgid "No video available."
+msgid "No data available."
+msgstr "Pas de données disponibles."
 
 #: templates/registration/account_activation_invalid.html:6
 #: templates/registration/account_activation_invalid.html:10
@@ -1888,7 +1901,7 @@ msgid "Start"
 msgstr "Début"
 
 #: templates/sections/section_content.html:25
-#: templates/sections/section_discussion.html:17
+#: templates/sections/section_discussion.html:18
 #: templates/sections/section_info.html:40
 #: templates/sections/section_quiz.html:18
 #: templates/sections/section_upload.html:17
@@ -1896,40 +1909,46 @@ msgstr "Début"
 msgid "End"
 msgstr "Fin"
 
-#: templates/sections/section_discussion.html:32
+#: templates/sections/section_discussion.html:34
 msgid "Create new"
 msgstr "Créer un nouveau"
 
-#: templates/sections/section_discussion.html:65
+#: templates/sections/section_discussion.html:73
+#: templates/sections/section_quiz.html:60
+msgid "You are the author"
+msgstr "Vous êtes l'auteur"
+
+#: templates/sections/section_discussion.html:76
 msgid "Participated"
 msgstr "Participé"
 
-#: templates/sections/section_discussion.html:67
+#: templates/sections/section_discussion.html:78
 #: templates/sections/section_quiz.html:64
 #: templates/sections/section_upload.html:169
 #: templates/sections/section_videos.html:89
 msgid "To do"
 msgstr "Faire"
 
-#: templates/sections/section_discussion.html:76
+#: templates/sections/section_discussion.html:88
 msgid "By"
 msgstr "Par"
 
-#: templates/sections/section_discussion.html:84
+#: templates/sections/section_discussion.html:98
 msgid "Comments:"
 msgstr "Commentaires:"
 
-#: templates/sections/section_discussion.html:93
+#: templates/sections/section_discussion.html:107
 #, python-format
 msgid ""
 "\n"
-"                  Note: <em>To get access you must participate in <u>%(requirement)s</u> first.</em>\n"
-"                  "
+"                                            Note:<em>To get access you must participate in <u>%(requirement)s</u>\n"
+"                                            first.</em>\n"
+"                                        "
 msgstr ""
 "\n"
-"Remarque: <em> Pour y accéder, vous devez d'abord participer à <u>%(requirement)s</u>. </em>"
+"Remarque:<em>Pour y accéder, vous devez participer à <u>%(requirement)s</u> d'abord.</em>"
 
-#: templates/sections/section_discussion.html:105
+#: templates/sections/section_discussion.html:120
 msgid "No discussion board available."
 msgstr "Aucun forum de discussion disponible."
 
@@ -1999,10 +2018,6 @@ msgstr "(voir uniquement)"
 #: templates/sections/section_videos.html:87
 msgid "Submitted"
 msgstr "Envoyées"
-
-#: templates/sections/section_quiz.html:60
-msgid "You are the author"
-msgstr "Vous êtes l'auteur"
 
 #: templates/sections/section_quiz.html:81
 msgid "Attempts left:"
@@ -2363,6 +2378,15 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
 
+#~ msgid "student answer"
+#~ msgstr "réponse de l'élève"
+
+#~ msgid "Quiz data"
+#~ msgstr "Données de quiz"
+
+#~ msgid "All submissions"
+#~ msgstr "Toutes les soumissions"
+
 #~ msgid ""
 #~ "This upload section is private and only accessible by you. Please do not "
 #~ "forget to publish your upload to complete this section."
@@ -2410,9 +2434,6 @@ msgstr "La vidéo demandée est déjà inédite."
 
 #~ msgid "students"
 #~ msgstr "élèves"
-
-#~ msgid "participants"
-#~ msgstr "les participants"
 
 #~ msgid "participants max number"
 #~ msgstr "nombre maximum de participants"

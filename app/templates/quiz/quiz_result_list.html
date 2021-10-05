@@ -31,18 +31,18 @@
         <div class="card-body pb-0">
             {% if results_list|length > 0 %}
                 <div class="mb-3 row">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Submission:</label>
+                    <label for="inputPassword" class="col-sm-2 col-form-label">{% translate "Submission:" %}</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" id="results_select">
                             {% for item in results_list %}
-                                <option value="{{ item }}"># {{ forloop.counter }} {% if item|is_instructor:course %}(expert feedback){% endif %}</option>
+                                <option value="{{ item }}"># {{ forloop.counter }} {% if item|is_instructor:course %}{% translate "(expert feedback)" %}{% endif %}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
                 {% render_table table 'django_tables2/bootstrap.html' %}
             {% else %}
-                <p>No data available.</p>
+                <p>{% translate "No data available." %}</p>
             {% endif %}
         </div>
         <div class="card-footer">
