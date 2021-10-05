@@ -24,11 +24,14 @@ def generate_sections_navbar(context):
 
     if current_section == 'Information':
         previous_section = None
-        next_section_id = sections_list[0]
-        next_section = sections.filter(pk=next_section_id)[0]
         current_section_position = None
-        if next_section.requirement:
-            next_section.requirement.fulfilled = requirement_fulfilled(user, next_section)
+        if sections_list:
+            next_section_id = sections_list[0]
+            next_section = sections.filter(pk=next_section_id)[0]
+            if next_section.requirement:
+                next_section.requirement.fulfilled = requirement_fulfilled(user, next_section)
+        else:
+            next_section = None
     else:
         # get position of current section
         current_section_position = sections_list.index(current_section.id)
