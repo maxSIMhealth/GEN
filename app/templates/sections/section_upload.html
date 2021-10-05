@@ -163,7 +163,7 @@
                                                             {% endif %}
                                                         {% endif %}
 
-                                                        {% if quiz_details.scoreset.exists %}
+                                                        {% if quiz_details.latest_quizscore.exists %}
                                                             <span class="badge rounded-pill bg-success">{% trans "Submitted" %}</span>
                                                         {% else %}
                                                             <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
