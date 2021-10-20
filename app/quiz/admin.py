@@ -408,7 +408,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("question_type", "content", "explanation", "quiz")
+    fields = ("question_type", "content", "author", "explanation", "quiz")
 
     # setting question_type value to Group Header
     def get_form(self, request, obj=None, **kwargs):
