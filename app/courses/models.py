@@ -240,7 +240,7 @@ class Section(models.Model):
         verbose_name=_("section output"),
     )
     output_access_restriction = models.CharField(
-        _("access restriction"),
+        _("output access restriction"),
         max_length=1,
         choices=PERMISSION_TYPES,
         default=PUBLIC,
@@ -294,6 +294,20 @@ class Section(models.Model):
         default=False,
         help_text=_(
             "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
+        ),
+    )
+    show_related_video_name = models.BooleanField(
+        _("show related video name"),
+        default=False,
+        help_text=_(
+            "* FOR QUIZ ONLY *: enables displaying related video's name."
+        ),
+    )
+    group_by_video = models.BooleanField(
+        _("group by video"),
+        default=False,
+        help_text=_(
+            "* FOR QUIZ ONLY *: group quizzes by videos."
         ),
     )
     custom_order = models.PositiveIntegerField(
@@ -378,6 +392,18 @@ class Section(models.Model):
                     _("A quiz section can not be 'pre assessment' and 'final assessment' simultaneously.")
                 )
             )
+        if self.show_related_video_name and not self.section_type == 'Q':
+            errors.append(
+                ValidationError(
+                    _("To enable 'show related video name', the section type must be Quiz.")
+                )
+            )
+        if self.group_by_video and not self.section_type == 'Q':
+            errors.append(
+                ValidationError(
+                    _("To enable 'group by video', the section type must be Quiz.")
+                )
+            )
 
         if len(errors) > 0:
             raise ValidationError(errors)
@@ -395,7 +421,7 @@ class Section(models.Model):
 
 
 class SectionItem(TimeStampedModel):
-    name = models.CharField(_("name"), max_length=80, unique=False)
+    name = models.CharField(_("name"), max_length=120, unique=False)
     description = models.TextField(
         _("description"),
         max_length=400,

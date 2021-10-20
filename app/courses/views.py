@@ -156,7 +156,11 @@ def section_page(request, pk, section_pk):
                 )
 
     if section_object.section_type == "Q":
-        section_template = "sections/section_quiz.html"
+        if section_object.group_by_video:
+            section_items = section_items
+            section_template = "sections/section_quiz_grouped.html"
+        else:
+            section_template = "sections/section_quiz.html"
     elif section_object.section_type == "D":
         section_template = "sections/section_discussion.html"
     elif section_object.section_type == "V":

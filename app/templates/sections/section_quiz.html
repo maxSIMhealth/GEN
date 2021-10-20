@@ -68,6 +68,9 @@
                                 {% comment %}
                                 <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
                                 {% endcomment %}
+                                {% if item.quiz.video and section.show_related_video_name %}
+                                    <p class="mb-0">{{ item.quiz.video.name }}</p>
+                                {% endif %}
                                 {% if item.description %}
                                     <p class="mb-0">
                                         <small class="text-muted">{{ item.description|safe|linebreaksbr }}</small>

@@ -1,0 +1,135 @@
+{% extends 'base_course_section.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+{% load check_attribute %}
+{% load quiz_details_get %}
+{% load is_instructor %}
+
+{% block content %}
+    {% if section.start_date or section.end_data %}
+        <ul class="list-group mb-3">
+            {% if section.start_date %}
+                <li class="list-group-item"><b>{% trans "Start" %}: </b>{{ section.start_date|naturaltime }}
+                    <small>({{ section.start_date }} UTC)</small></li>
+            {% endif %}
+            {% if section.end_date %}
+                <li class="list-group-item"><b>{% trans "End" %}: </b>{{ section.end_date|naturaltime }}
+                    <small>({{ section.end_date }} UTC)</small></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+    {% if section.description %}
+        <p class="text-break">{{ section.description|safe|linebreaksbr }}</p>
+    {% endif %}
+
+    {% regroup section_items by quiz.video.name as grouped_items %}
+
+    {% for group in grouped_items %}
+        {% translate "quizzes with no video" as quiz_grouper_none %}
+        <div class="card mb-3 section-quiz">
+            <div class="card-header fs-5">{% trans "Quizzes" %}:
+                {{ group.grouper|default_if_none:quiz_grouper_none }}</div>
+            <ul class="list-group list-group-flush">
+                {% if section_items.all %}
+                    {% for item in group.list %}
+                        {% quiz_details_get user item.quiz as quiz_details %}
+                        <li class="list-group-item">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    {% if quiz_details.enabled %}
+                                        <a href="{% url 'quiz' course.pk section.pk item.quiz.pk %}">{{ item.name }}
+                                            {% if item.author == user %}{% translate "(view only)" %}{% endif %}</a>
+                                    {% else %}
+                                        {% if item.quiz.requirement %}
+                                            <span class="text-muted text-underline-dashed" data-toggle="tooltip"
+                                                  data-placement="auto" data-html="true"
+                                                  title="{% trans 'Requirement must be met first:' %} <u>{% trans item.quiz.requirement.name %}</u>">{{ item.name }}</span>
+                                        {% else %}
+                                            <span class="text-muted">{{ item.name }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if quiz_details.latest_quizscore %}
+                                        <div class="float-end">
+                                            <span class="badge rounded-pill bg-primary">{% trans "Submitted" %}</span>
+                                            {% if quiz_details.latest_quizscore.completed %}
+                                                <span class="badge rounded-pill bg-success">{% trans "Approved" %}</span>
+                                            {% else %}
+                                                <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        {% if item.author == user %}
+                                            <div class="float-end">
+                                                <span class="badge rounded-pill bg-secondary text-light">{% trans "You are the author" %}</span>
+                                            </div>
+                                        {% else %}
+                                            <div class="float-end">
+                                                <span class="badge rounded-pill bg-warning text-dark">{% trans "To do" %}</span>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if item.quiz.video and section.show_related_video_name %}
+                                        <p class="mb-0">{{ item.quiz.video.name }}</p>
+                                    {% endif %}
+                                    {% if item.description %}
+                                        <p class="mb-0">
+                                            <small class="text-muted">{{ item.description|safe|linebreaksbr }}</small>
+                                        </p>
+                                    {% endif %}
+
+                                    {% if item.quiz.allow_multiple_attempts %}
+                                        <p class="mb-0">
+                                            <small class="text-muted">
+                                                <strong>{% trans "Attempts left:" %}</strong> {{ quiz_details.attempts_left }}
+                                            </small>
+                                        </p>
+                                    {% endif %}
+
+                                    {% if item.quiz.show_score %}
+                                        <p class="mb-0">
+                                            <small class="text-muted">
+                                                <strong>{% trans "Score:" %}</strong>
+                                                {% if quiz_details.latest_quizscore %}
+                                                    {{ quiz_details.latest_quizscore.score }} /
+                                                    {{ quiz_details.latest_quizscore.max_score }}
+                                                    {% if item.quiz.assessment_method == 'MP' %}
+                                                        ( {{ quiz_details.latest_quizscore.score_percentage }}% )
+                                                    {% endif %}
+                                                {% else %}
+                                                    --
+                                                {% endif %}
+                                                <br/>
+                                                {% if item.quiz.assessment_method == 'MP' %}
+                                                    <strong>{% trans "Passing score:" %}</strong>
+                                                    {{ item.quiz.assessment_min_percentage }}%
+                                                    {% elif item.quiz.assessment_method == 'MN' %}
+                                                    <strong>{% trans "Maximum number of mistakes allowed:" %}</strong>
+                                                    {{ item.quiz.assessment_max_mistakes }}
+                                                {% endif %}
+                                            </small>
+                                        </p>
+                                    {% endif %}
+
+                                    {% if item.author == user or user.is_superuser or user|is_instructor:course %}
+                                        <p class="mb-0">
+                                            <small class="text-muted">
+                                                <strong>{% translate "Total number of submissions:" %} </strong>{{ item.quiz.quizscore_set.count }}
+                                            </small>
+                                        </p>
+                                        <a href="{% url 'quiz_result_list' course.pk section.pk item.pk %}"
+                                           class="btn btn-block btn-primary mt-1">{% translate "Access results" %}</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <div class="list-group-item">{% trans "No quiz available." %}</div>
+                {% endif %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock content %}

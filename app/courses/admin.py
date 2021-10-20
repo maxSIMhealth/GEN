@@ -56,9 +56,18 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "end_date",
                     "requirement",
                     "published",
-                    "show_thumbnails",
                 )
             },
+        ),
+        (
+            "Layout",
+            {
+                "fields": (
+                    "show_thumbnails",
+                    "show_related_video_name",
+                    "group_by_video",
+                )
+            }
         ),
         (
             "Access control",
