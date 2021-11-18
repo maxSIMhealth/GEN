@@ -72,7 +72,7 @@
                                 <p>{{ quiz.description|safe|linebreaksbr }}</p>
                             {% endif %}
                             {% if quiz.paginate %}
-                                <span><i>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</i></span>
+                                <span>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</span>
                             {% endif %}
                         </div>
                         {% for question in questions %}
