@@ -81,8 +81,8 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
-    list_display = ("name", "published", "course", "section", "video", "access_restriction", "author")
-    list_filter = ("course", "section", "published", "access_restriction")
+    list_display = ("name", "published", "course", "section", "video", "access_restriction","author")
+    list_filter = ("published","course", "section","author","video","access_restriction")
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
     actions = [duplicate]
@@ -326,6 +326,7 @@ class OpenEndedAdmin(QuestionAdmin):
 
 class QuestionAttemptResource(resources.ModelResource):
     quiz_name = Field(attribute="quiz__name", column_name="quiz_name")
+    # quiz_author = Field(attribute="quiz__author", column_name="quiz_author")
     course_name = Field(attribute="course__name", column_name="course_name")
     course_code = Field(attribute="course__code", column_name="course_code")
     section_name = Field(attribute="section__name", column_name="section_name")
@@ -342,6 +343,7 @@ class QuestionAttemptResource(resources.ModelResource):
     video_internal_name = Field(
         attribute="video__internal_name", column_name="video_internal_name"
     )
+    video_author_id = Field(attribute="video__author_id", column_name="video_author_id")
 
     class Meta:
         model = QuestionAttempt
@@ -350,6 +352,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "created",
             "student",
             "quiz_name",
+            # "quiz_author",
             "course_name",
             "course_code",
             "section_name",
@@ -360,6 +363,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "multiplechoice_answer__content",
             "video_name",
             "video_internal_name",
+            "video_author_id",
             "answer_content",
             "correct",
         )
@@ -371,9 +375,11 @@ class QuestionAttemptResource(resources.ModelResource):
             "course_code",
             "section_name",
             "quiz_name",
+            # "quiz_author",
             # "attempt_number",
             "video_name",
             "video_internal_name",
+            "video_author_id",
             "question_type",
             "question_content",
             "multiplechoice_answer__content",
@@ -394,12 +400,13 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
         "student",
         "course",
         "quiz",
+        "section",
         # "question",
         "attempt_number",
         "created",
     )
     # list_filter = ("course", "quiz", "question", "attempt_number")
-    list_filter = ("course", "student", "quiz", "attempt_number")
+    list_filter = ("course", "student", "quiz", "section", "attempt_number")
     resource_class = QuestionAttemptResource
 
     # search_fields = ('quiz', 'course', 'question', 'student')
