@@ -18,6 +18,12 @@ PERMISSION_TYPES = [
     (EDITORS, _("Editors")),
     (ADMINS, _("Admins")),
 ]
+COURSE = "C"
+MODULE = "M"
+COURSE_TYPES = [
+    (COURSE, _("Course")),
+    (MODULE, _("Module"))
+]
 
 
 class Course(models.Model):
@@ -32,6 +38,14 @@ class Course(models.Model):
         unique=True,
         max_length=10,
         help_text=_("Unique course code (max 10 characters)"),
+    )
+    type = models.CharField(
+        _("course type"),
+        max_length=1,
+        choices=COURSE_TYPES,
+        default=COURSE,
+        help_text=_(
+            "Sets how the course will be called (for aesthetics purpose only, does not affect functionalities).")
     )
     show_code = models.BooleanField(
         _("show course code"),

@@ -13,12 +13,17 @@
 {% endblock content_tabs %}
 
 {% block content_title %}
-    Information
+    {% trans "Information" %}
 {% endblock content_title %}
 
 {% block content %}
+    {% if course.type == 'C' %}
+        {% trans "Course" as course_type %}
+    {% elif course.type == 'M' %}
+        {% trans "Module" as course_type %}
+    {% endif %}
     <div class="card mb-3" id="course-details">
-        <div class="card-header bg-light fs-5">{% trans "Course details" %}</div>
+        <div class="card-header bg-light fs-5">{% blocktranslate %}{{ course_type }} Details{% endblocktranslate %}</div>
         <table class="table mb-0 course-info">
             <tbody>
             {% if user|is_instructor:course %}
@@ -53,7 +58,7 @@
                 {% if course_completed %}
                     <a class="btn btn-primary" href="{% url 'course_certificate' course.pk %}" role="button">{% trans "Download certificate" %}</a>
                 {% else %}
-                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans "Course not concluded" %}">
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% blocktranslate %}{{ course_type }} not concluded{% endblocktranslate %}">
                         <button class="btn btn-outline-dark" style="pointer-events: none;" type="button">{% trans "Download certificate" %}</button>
                     </span>
                 {% endif %}
@@ -88,7 +93,7 @@
         {% endif %}
         {% if course.show_progress_tracker %}
             <div class="card gamification-card">
-                <div class="card-header bg-light fs-5"><i class="fas fa-check-square pr-1"></i>  {% trans "Course Progress" %}</div>
+                <div class="card-header bg-light fs-5"><i class="fas fa-check-square pr-1"></i>  {% blocktranslate %}{{ course_type }} Progress{% endblocktranslate %}</div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         {% trans "Sections completed" as tracker_sections %}
@@ -96,11 +101,11 @@
                         {% include "partials/progress_tracker_item.html" with title=tracker_sections progress=sections_progress zero_progress=tracker_sections_empty only %}
 
                         {% trans "Discussions participation" as tracker_discussions %}
-                        {% trans "This course has no discussions." as tracker_discussions_empty%}
+                        {% blocktranslate asvar tracker_discussions_empty %}This {{ course_type }} has no discussions.{% endblocktranslate %}
                         {% include "partials/progress_tracker_item.html" with title=tracker_discussions progress=discussions_progress zero_progress=tracker_discussions_empty alt_bg_color="bg-info" %}
 
                         {% trans "Quizzes answered" as tracker_quizzes %}
-                        {% trans "This course has no quizzes." as tracker_quizzes_empty%}
+                        {% blocktranslate asvar tracker_quizzes_empty %}This {{ course_type }} has no quizzes.{% endblocktranslate %}
                         {% include "partials/progress_tracker_item.html" with title=tracker_quizzes progress=quizzes_progress zero_progress=tracker_quizzes_empty alt_bg_color="bg-warning"%}
                     </ul>
                 </div>
