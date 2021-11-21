@@ -78,7 +78,7 @@
                         {% for question in questions %}
                             <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %}>
                                 <div class="fs-6">
-                                    <strong>{{ question.content }}</strong>
+                                    <strong>{{ forloop.counter }} - {{ question.content }}</strong>
                                     {% if quiz.assessment_method %}
                                     (<em>{% translate "Value:" %} {{ question.value }}</em>)
                                     {% endif %}
@@ -95,9 +95,9 @@
                                 {% endif %}
 
                                 {% if question.question_type == 'M' %}
-                                    <ul class="list-group list-group-numbered">
+                                    <ol type="a" class="mb-0">
                                         {% for choice in question.answers.all %}
-                                            <li class="list-group-item">
+                                            <li class="pt-2">
                                                 <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                                                     <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
                                                            class="form-check-input me-1"
@@ -114,7 +114,7 @@
                                                    onclick="toggleCheckboxes(this, 'off')">{% translate "Deselect all" %}</a>
                                             {% endif %}
                                         </div>
-                                    </ul>
+                                    </ol>
 
 
                                 {% elif question.question_type == 'L' %}
