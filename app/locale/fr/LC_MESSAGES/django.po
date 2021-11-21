@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-05 23:05+0000\n"
-"PO-Revision-Date: 2021-10-05 23:05+0000\n"
+"POT-Creation-Date: 2021-11-21 17:50+0000\n"
+"PO-Revision-Date: 2021-11-21 17:53+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -104,8 +104,8 @@ msgstr "Fichier d'image."
 msgid "file"
 msgstr "fichier"
 
-#: core/models.py:13 core/models.py:33 courses/models.py:300
-#: courses/models.py:443 games/models.py:87 games/models.py:111
+#: core/models.py:13 core/models.py:33 courses/models.py:328
+#: courses/models.py:483 games/models.py:87 games/models.py:111
 #: games/models.py:134 quiz/models.py:272 quiz/models.py:486
 msgid "custom order"
 msgstr "commande personnalisée"
@@ -118,8 +118,8 @@ msgstr "fichier de logo de certificat"
 msgid "certificate logos files"
 msgstr "fichiers de logo de certificat"
 
-#: core/models.py:24 courses/models.py:42 courses/models.py:156
-#: courses/models.py:400
+#: core/models.py:24 courses/models.py:56 courses/models.py:170
+#: courses/models.py:440
 msgid "description"
 msgstr "la description"
 
@@ -159,57 +159,79 @@ msgstr "Éditeurs"
 msgid "Admins"
 msgstr "Admins"
 
-#: courses/models.py:25 courses/models.py:150 courses/models.py:398
+#: courses/models.py:24 templates/sections/section_info.html:21
+#| msgid "Courses"
+msgid "Course"
+msgstr "Cours"
+
+#: courses/models.py:25 templates/sections/section_info.html:23
+msgid "Module"
+msgstr "Module"
+
+#: courses/models.py:31 courses/models.py:164 courses/models.py:438
 msgid "name"
 msgstr "nom"
 
-#: courses/models.py:28
+#: courses/models.py:34
 msgid "Course name (max 150 characters)"
 msgstr "Nom du cours (max 150 caractères)"
 
-#: courses/models.py:31
+#: courses/models.py:37
 msgid "course code"
 msgstr "code de cours"
 
-#: courses/models.py:34
+#: courses/models.py:40
 msgid "Unique course code (max 10 characters)"
 msgstr "Code de cours unique (max 10 caractères)"
 
-#: courses/models.py:37
+#: courses/models.py:43
+#| msgid "course code"
+msgid "course type"
+msgstr "type de cours"
+
+#: courses/models.py:48
+msgid ""
+"Sets how the course will be called (for aesthetics purpose only, does not "
+"affect functionalities)."
+msgstr ""
+"Définit comment le cours sera appelé (à des fins esthétiques uniquement, "
+"n'affecte pas les fonctionnalités)."
+
+#: courses/models.py:51
 msgid "show course code"
 msgstr "afficher le code du cours"
 
-#: courses/models.py:39
+#: courses/models.py:53
 msgid "Show course code to instructors."
 msgstr "Montrez le code du cours aux instructeurs."
 
-#: courses/models.py:44
+#: courses/models.py:58
 msgid "Description (max 2000 characters)"
 msgstr "Description (max 2000 caractères)"
 
-#: courses/models.py:47 courses/models.py:165 courses/models.py:410
+#: courses/models.py:61 courses/models.py:179 courses/models.py:450
 #: discussions/models.py:63 quiz/models.py:222
 msgid "author"
 msgstr "l'auteur"
 
-#: courses/models.py:49 courses/models.py:180 courses/models.py:412
+#: courses/models.py:63 courses/models.py:194 courses/models.py:452
 msgid "start date"
 msgstr "date de début"
 
-#: courses/models.py:50 courses/models.py:181 courses/models.py:413
+#: courses/models.py:64 courses/models.py:195 courses/models.py:453
 msgid "end date"
 msgstr "date de fin"
 
-#: courses/models.py:56 courses/models.py:188 discussions/models.py:32
+#: courses/models.py:70 courses/models.py:202 discussions/models.py:32
 #: quiz/models.py:115
 msgid "requirement"
 msgstr "exigence"
 
-#: courses/models.py:61
+#: courses/models.py:75
 msgid "members"
 msgstr "membres"
 
-#: courses/models.py:62
+#: courses/models.py:76
 msgid ""
 "List of all users that should have access to the course (including "
 "instructors)."
@@ -217,27 +239,27 @@ msgstr ""
 "Liste de tous les utilisateurs qui devraient avoir accès au cours (y compris"
 " les instructeurs)."
 
-#: courses/models.py:67
+#: courses/models.py:81
 msgid "learners"
 msgstr "apprenants"
 
-#: courses/models.py:68
+#: courses/models.py:82
 msgid "List of learners (students)."
 msgstr "Liste des apprenants (étudiants)."
 
-#: courses/models.py:72
+#: courses/models.py:86
 msgid "learners max number"
 msgstr "nombre maximum d'apprenants"
 
-#: courses/models.py:75
+#: courses/models.py:89
 msgid "maximum number of learners"
 msgstr "nombre maximum d'apprenants"
 
-#: courses/models.py:80
+#: courses/models.py:94
 msgid "instructors"
 msgstr "l'instructeur"
 
-#: courses/models.py:81
+#: courses/models.py:95
 msgid ""
 "List of instructors. These users will be able to review learners submissions"
 " and interact with them."
@@ -245,11 +267,11 @@ msgstr ""
 "Liste des instructeurs. Ces utilisateurs pourront examiner les soumissions "
 "des apprenants et interagir avec eux."
 
-#: courses/models.py:86
+#: courses/models.py:100
 msgid "editors"
 msgstr "éditeurs"
 
-#: courses/models.py:87
+#: courses/models.py:101
 msgid ""
 "List of editors. These users will be able to edit the course's content and "
 "structure."
@@ -257,59 +279,59 @@ msgstr ""
 "Liste des éditeurs. Ces utilisateurs pourront modifier le contenu et la "
 "structure du cours."
 
-#: courses/models.py:90
+#: courses/models.py:104
 msgid "blind data"
 msgstr "données aveugles"
 
-#: courses/models.py:92
+#: courses/models.py:106
 msgid "Defines if user data (e.g., name) should be visible or not."
 msgstr ""
 "Définit si les données utilisateur (par exemple, le nom) doivent être "
 "visibles ou non."
 
-#: courses/models.py:95
+#: courses/models.py:109
 msgid "provide certificate"
 msgstr "fournir un certificat"
 
-#: courses/models.py:97
+#: courses/models.py:111
 msgid "Defines if this course provides a certificate of conclusion."
 msgstr "Définit si ce cours fournit un certificat de conclusion."
 
-#: courses/models.py:100
+#: courses/models.py:114
 msgid "gamification"
 msgstr "gamification"
 
-#: courses/models.py:102
+#: courses/models.py:116
 msgid "Enables voting in discussions and comments"
 msgstr "Permet de voter dans les discussions et les commentaires"
 
-#: courses/models.py:105
+#: courses/models.py:119
 msgid "show scoreboard"
 msgstr "afficher le tableau de bord"
 
-#: courses/models.py:105 courses/models.py:108
+#: courses/models.py:119 courses/models.py:122
 msgid "Requires gamification"
 msgstr "Nécessite gamification"
 
-#: courses/models.py:108
+#: courses/models.py:122
 msgid "show leaderboard"
 msgstr "afficher le classement"
 
-#: courses/models.py:111
+#: courses/models.py:125
 msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
-#: courses/models.py:115 courses/models.py:175 courses/models.py:469
+#: courses/models.py:129 courses/models.py:189 courses/models.py:509
 #: discussions/models.py:21 quiz/models.py:100 quiz/models.py:504
 #: quiz/models.py:609 videos/models.py:42 videos/models.py:57
 msgid "course"
 msgstr "le cours"
 
-#: courses/models.py:116
+#: courses/models.py:130
 msgid "courses"
 msgstr "les cours"
 
-#: courses/models.py:129
+#: courses/models.py:143
 msgid ""
 "Course end date cannot be equal or                         earlier than the "
 "start date."
@@ -317,53 +339,54 @@ msgstr ""
 "La date de fin du cours ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:135
+#: courses/models.py:149
 msgid "Scoreboard requires gamification to be enabled"
 msgstr "Le tableau de bord nécessite l'activation de la gamification"
 
-#: courses/models.py:137
+#: courses/models.py:151
 msgid "Leaderboard requires gamification to be enabled"
 msgstr "Le classement nécessite l'activation de la gamification"
 
-#: courses/models.py:142 templates/sections/section_discussion.html:30
+#: courses/models.py:156 templates/sections/section_discussion.html:30
 msgid "Discussion boards"
 msgstr "Forums de discussion"
 
-#: courses/models.py:143 templates/sections/section_videos.html:39
+#: courses/models.py:157 templates/sections/section_videos.html:39
 msgid "Videos"
 msgstr "Vidéos"
 
-#: courses/models.py:144 templates/sections/section_info.html:72
-#: templates/sections/section_info.html:84
+#: courses/models.py:158 templates/sections/section_info.html:77
+#: templates/sections/section_info.html:89
 #: templates/sections/section_quiz.html:29
+#: templates/sections/section_quiz_grouped.html:33
 msgid "Quizzes"
 msgstr "Quiz"
 
-#: courses/models.py:145
+#: courses/models.py:159
 msgid "Uploads"
 msgstr "Téléversements"
 
-#: courses/models.py:146 templates/videos/video_player.html:33
+#: courses/models.py:160 templates/videos/video_player.html:33
 msgid "Content"
 msgstr "Contenu"
 
-#: courses/models.py:153
+#: courses/models.py:167
 msgid "Section name (max 25 characters)"
 msgstr "Nom de la section (max 25 caractères)"
 
-#: courses/models.py:160
+#: courses/models.py:174
 msgid "Description (max 1000 characters)"
 msgstr "Description (max 1000 caractères)"
 
-#: courses/models.py:178
+#: courses/models.py:192
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:191 courses/models.py:422
+#: courses/models.py:205 courses/models.py:462
 msgid "published"
 msgstr "publié"
 
-#: courses/models.py:192
+#: courses/models.py:206
 msgid ""
 "Published items are visible to all users (based on the 'access restriction' "
 "parameter). Unpublished items are visible only to editors and admins."
@@ -372,19 +395,19 @@ msgstr ""
 " paramètre 'restriction d'accès'). Les éléments non publiés ne sont visibles"
 " que par les éditeurs et les administrateurs."
 
-#: courses/models.py:196 courses/models.py:243 courses/models.py:424
+#: courses/models.py:210 courses/models.py:464
 msgid "access restriction"
 msgstr "restriction d'accès"
 
-#: courses/models.py:200 courses/models.py:428
+#: courses/models.py:214 courses/models.py:468
 msgid "Define who should have access to this item."
 msgstr "Définissez qui doit avoir accès à cet élément."
 
-#: courses/models.py:203 courses/models.py:250 courses/models.py:431
+#: courses/models.py:217 courses/models.py:264 courses/models.py:471
 msgid "access override for author"
 msgstr "remplacement d'accès pour l'auteur"
 
-#: courses/models.py:206 courses/models.py:434
+#: courses/models.py:220 courses/models.py:474
 msgid ""
 "Define if author should have access to this item, regardless of the access "
 "restriction."
@@ -392,11 +415,11 @@ msgstr ""
 "Définissez si l'auteur doit avoir accès à cet élément, quelle que soit la "
 "restriction d'accès."
 
-#: courses/models.py:210
+#: courses/models.py:224
 msgid "pre-assessment"
 msgstr "pré-évaluation"
 
-#: courses/models.py:213
+#: courses/models.py:227
 msgid ""
 "* FOR QUIZ SECTION ONLY *: Is this section a pre-assessment to evaluate if "
 "the learner needs to go through the course/module?"
@@ -404,11 +427,11 @@ msgstr ""
 "* POUR LA SECTION QUIZ UNIQUEMENT * : Cette section est-elle une pré-"
 "évaluation pour évaluer si l'apprenant doit suivre le cours/module ?"
 
-#: courses/models.py:217
+#: courses/models.py:231
 msgid "final assessment"
 msgstr "évaluation finale"
 
-#: courses/models.py:220
+#: courses/models.py:234
 msgid ""
 "* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if"
 " the learner successfully completed the course/module?"
@@ -416,11 +439,11 @@ msgstr ""
 "* POUR LA SECTION QUIZ UNIQUEMENT * : Cette section est-elle une évaluation "
 "finale pour évaluer si l'apprenant a terminé avec succès le cours/module ?"
 
-#: courses/models.py:224
+#: courses/models.py:238
 msgid "create discussion"
 msgstr "créer une discussion"
 
-#: courses/models.py:227
+#: courses/models.py:241
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based "
 "on participant's video submissions."
@@ -428,7 +451,7 @@ msgstr ""
 "* POUR LA SECTION TÉLÉCHARGEMENT UNIQUEMENT * : créez automatiquement un "
 "forum de discussion basé sur les soumissions vidéo des participants."
 
-#: courses/models.py:238
+#: courses/models.py:252
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
 "discussion boards."
@@ -436,11 +459,16 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définissez la section "
 "dans laquelle créer les forums de discussion."
 
-#: courses/models.py:240
+#: courses/models.py:254
 msgid "section output"
 msgstr "sortie de section"
 
-#: courses/models.py:247
+#: courses/models.py:257
+#| msgid "access restriction"
+msgid "output access restriction"
+msgstr "restriction d'accès à la sortie"
+
+#: courses/models.py:261
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define who should have access to the new "
 "discussion board."
@@ -448,7 +476,7 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir qui devrait avoir"
 " accès au nouveau forum de discussion."
 
-#: courses/models.py:253
+#: courses/models.py:267
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless"
 " of the access restriction."
@@ -456,11 +484,11 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir si l'auteur doit "
 "avoir accès, quelle que soit la restriction d'accès."
 
-#: courses/models.py:257
+#: courses/models.py:271
 msgid "clone quiz"
 msgstr "quiz de clonage"
 
-#: courses/models.py:260
+#: courses/models.py:274
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically clones an existing quiz and "
 "connect it to the participant's video after it gets published."
@@ -469,7 +497,7 @@ msgstr ""
 "quiz existant et connectez-le à la vidéo du participant après sa "
 "publication."
 
-#: courses/models.py:271
+#: courses/models.py:285
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: quiz that will be cloned and connected to the "
 "participant's video afterit gets published."
@@ -477,7 +505,7 @@ msgstr ""
 "* POUR LA SECTION TÉLÉCHARGEMENT UNIQUEMENT * : quiz qui sera cloné et "
 "connecté à la vidéo du participant après sa publication."
 
-#: courses/models.py:282
+#: courses/models.py:296
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define the section which the cloned quiz will "
 "be related to."
@@ -485,28 +513,48 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir la section à "
 "laquelle le quiz cloné sera lié."
 
-#: courses/models.py:286
+#: courses/models.py:300
 msgid "update cloned quiz owner"
 msgstr "mettre à jour le propriétaire du quiz cloné"
 
-#: courses/models.py:289
+#: courses/models.py:303
 msgid "* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"
 msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : met à jour la propriété "
 "du quiz à l'uploader."
 
-#: courses/models.py:293
+#: courses/models.py:307
 msgid "show thumbnails"
 msgstr "affiche des vignettes"
 
-#: courses/models.py:296
+#: courses/models.py:310
 msgid ""
 "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
 "* POUR LES SECTIONS VIDÉO ET TÉLÉVERSER UNIQUEMENT *: permet d'afficher les "
 "miniatures vidéo."
 
-#: courses/models.py:312
+#: courses/models.py:314
+#| msgid "show related content"
+msgid "show related video name"
+msgstr "afficher le nom de la vidéo associée"
+
+#: courses/models.py:317
+#| msgid ""
+#| "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
+msgid "* FOR QUIZ ONLY *: enables displaying related video's name."
+msgstr ""
+"* POUR LE QUIZ UNIQUEMENT * : permet d'afficher le nom de la vidéo associée."
+
+#: courses/models.py:321
+msgid "group by video"
+msgstr "grouper par vidéo"
+
+#: courses/models.py:324
+msgid "* FOR QUIZ ONLY *: group quizzes by videos."
+msgstr "* POUR QUIZ UNIQUEMENT * : groupe de quiz par vidéos."
+
+#: courses/models.py:340
 msgid ""
 "Course end date cannot be equal or                             earlier than "
 "the start date."
@@ -514,7 +562,7 @@ msgstr ""
 "La date de fin du cours ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:321
+#: courses/models.py:349
 msgid ""
 "To set 'create discussion' or 'section output', the section type must be "
 "Upload."
@@ -522,20 +570,20 @@ msgstr ""
 "Pour définir «créer une discussion» ou «sortie de section», le type de "
 "section doit être «Téléverser»."
 
-#: courses/models.py:327
+#: courses/models.py:355
 msgid "To create a discussion you must select a discussion section output."
 msgstr ""
 "Pour créer une discussion, vous devez sélectionner une sortie de section de "
 "discussion."
 
-#: courses/models.py:333
+#: courses/models.py:361
 msgid ""
 "You can not select a section output if 'create discussions' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:339
+#: courses/models.py:367
 msgid ""
 "To set 'clone quiz' or 'clone quiz reference', the section type must be "
 "Upload."
@@ -543,32 +591,32 @@ msgstr ""
 "Pour définir 'clone quiz' ou 'clone quiz référence', le type de section doit"
 " être Upload."
 
-#: courses/models.py:345
+#: courses/models.py:373
 msgid "To clone a quiz you must select a quiz reference."
 msgstr "Pour cloner un quiz, vous devez sélectionner une référence de quiz."
 
-#: courses/models.py:351
+#: courses/models.py:379
 msgid "You can not select a quiz reference if 'clone quiz' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une référence de quiz si 'cloner quiz' n'est"
 " pas activé."
 
-#: courses/models.py:358
+#: courses/models.py:386
 msgid "To enable 'show thumbnails', the section type must be Video or Upload"
 msgstr ""
 "Pour activer 'afficher les miniatures', le type de section doit être Vidéo "
 "ou Téléversement"
 
-#: courses/models.py:366
+#: courses/models.py:394
 msgid "To enable 'pre assessment', the section type must be Quiz."
 msgstr "Pour activer la 'pré-évaluation', le type de section doit être Quiz."
 
-#: courses/models.py:372
+#: courses/models.py:400
 msgid "To enable 'final assessment', the section type must be Quiz."
 msgstr ""
 "Pour activer 'l'évaluation finale', le type de section doit être Quiz."
 
-#: courses/models.py:378
+#: courses/models.py:406
 msgid ""
 "A quiz section can not be 'pre assessment' and 'final assessment' "
 "simultaneously."
@@ -576,55 +624,68 @@ msgstr ""
 "Une section de quiz ne peut pas être simultanément 'pré-évaluation' et "
 "'évaluation finale'."
 
-#: courses/models.py:392 courses/models.py:420 courses/models.py:477
+#: courses/models.py:412
+#| msgid "To enable 'pre assessment', the section type must be Quiz."
+msgid "To enable 'show related video name', the section type must be Quiz."
+msgstr ""
+"Pour activer 'afficher le nom de la vidéo associée', le type de section doit"
+" être Quiz."
+
+#: courses/models.py:418
+#| msgid "To enable 'pre assessment', the section type must be Quiz."
+msgid "To enable 'group by video', the section type must be Quiz."
+msgstr ""
+"Pour activer le 'groupe par vidéo', le type de section doit être Quiz."
+
+#: courses/models.py:432 courses/models.py:460 courses/models.py:517
 #: quiz/models.py:612
 msgid "section"
 msgstr "section"
 
-#: courses/models.py:393
+#: courses/models.py:433
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:402
+#: courses/models.py:442
 msgid "Brief description (max 400 characters)"
 msgstr "Brève description (max 400 caractères)"
 
-#: courses/models.py:438
+#: courses/models.py:478
 msgid "show related content"
 msgstr "afficher le contenu associé"
 
-#: courses/models.py:440
+#: courses/models.py:480
 msgid ""
 "Display content related to this item (e.g., quizzes related to a video)"
 msgstr ""
 "Afficher le contenu lié à cet élément (par exemple, des quiz liés à une "
 "vidéo)"
 
-#: courses/models.py:449
+#: courses/models.py:489
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:450
+#: courses/models.py:490
 msgid "section items"
 msgstr "éléments de section"
 
-#: courses/models.py:463
+#: courses/models.py:503
 msgid "learner"
 msgstr "apprenant"
 
-#: courses/models.py:480
+#: courses/models.py:520
 msgid "item completed successfully"
 msgstr "élément terminé avec succès"
 
-#: courses/models.py:482
+#: courses/models.py:522
 msgid "Whether the item has been marked as complete or not."
 msgstr "Si l'élément a été marqué comme terminé ou non."
 
-#: courses/models.py:486
+#: courses/models.py:526
 msgid "status"
 msgstr "statut"
 
-#: courses/models.py:487
+#: courses/models.py:527
 msgid "statuses"
 msgstr "statuts"
 
@@ -668,11 +729,11 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé pour les "
 "apprenants car la date de fin est passée."
 
-#: courses/views.py:261
+#: courses/views.py:265
 msgid "You have not completed this course yet."
 msgstr "Vous n'avez pas encore terminé ce cours."
 
-#: courses/views.py:267
+#: courses/views.py:271
 msgid "This course does not provide a certificate of conclusion."
 msgstr "Ce cours ne fournit pas de certificat de conclusion."
 
@@ -684,7 +745,7 @@ msgstr "Nom du forum de discussion"
 msgid "The max length for the discussion board name is 100."
 msgstr "La longueur maximale du nom du forum de discussion est 100."
 
-#: discussions/forms.py:21 templates/sections/section_info.html:46
+#: discussions/forms.py:21 templates/sections/section_info.html:51
 #: videos/forms.py:15
 msgid "Description"
 msgstr "La description"
@@ -1435,6 +1496,7 @@ msgstr "Basculer la liste des sections"
 
 #: templates/base_course_section.html:42
 #: templates/sections/section_info.html:11
+#: templates/sections/section_info.html:16
 msgid "Information"
 msgstr "Information"
 
@@ -1473,6 +1535,7 @@ msgstr "Terminé"
 #: templates/dashboard.html:74 templates/partials/section_navbar.html:26
 #: templates/partials/section_tabs.html:10
 #: templates/sections/section_quiz.html:43
+#: templates/sections/section_quiz_grouped.html:49
 #: templates/sections/section_upload.html:160
 #: templates/sections/section_videos.html:80
 msgid "Requirement must be met first:"
@@ -1508,8 +1571,8 @@ msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
 #: templates/discussions/comments.html:96
-#: templates/sections/section_info.html:71
-#: templates/sections/section_info.html:83
+#: templates/sections/section_info.html:76
+#: templates/sections/section_info.html:88
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -1691,7 +1754,7 @@ msgstr "Non, continuez le quiz."
 msgid "Yes, exit quiz."
 msgstr "Oui, quittez le quiz."
 
-#: templates/quiz/quiz.html:217 templates/sections/section_info.html:95
+#: templates/quiz/quiz.html:217 templates/sections/section_info.html:100
 msgid "You have not completed any section yet."
 msgstr "Vous n'avez encore terminé aucune section."
 
@@ -1707,7 +1770,8 @@ msgstr "Merci pour votre soumission."
 msgid "Your score is:"
 msgstr "Ton score est:"
 
-#: templates/quiz/quiz_result.html:30 templates/sections/section_quiz.html:102
+#: templates/quiz/quiz_result.html:30 templates/sections/section_quiz.html:105
+#: templates/sections/section_quiz_grouped.html:109
 msgid "Maximum number of mistakes allowed:"
 msgstr "Nombre maximum d'erreurs autorisées:"
 
@@ -1716,10 +1780,12 @@ msgid "Assessment:"
 msgstr "Évaluation:"
 
 #: templates/quiz/quiz_result.html:37 templates/sections/section_quiz.html:52
+#: templates/sections/section_quiz_grouped.html:58
 msgid "Approved"
 msgstr "Approuvée"
 
 #: templates/quiz/quiz_result.html:39 templates/sections/section_quiz.html:54
+#: templates/sections/section_quiz_grouped.html:60
 msgid "Failed"
 msgstr "Manquée"
 
@@ -1804,7 +1870,6 @@ msgid "(expert feedback)"
 msgstr "(commentaires d'experts)"
 
 #: templates/quiz/quiz_result_list.html:45
-#| msgid "No video available."
 msgid "No data available."
 msgstr "Pas de données disponibles."
 
@@ -1893,8 +1958,9 @@ msgstr "Réinitialiser mon mot de passe"
 
 #: templates/sections/section_content.html:21
 #: templates/sections/section_discussion.html:14
-#: templates/sections/section_info.html:33
+#: templates/sections/section_info.html:38
 #: templates/sections/section_quiz.html:14
+#: templates/sections/section_quiz_grouped.html:14
 #: templates/sections/section_upload.html:13
 #: templates/sections/section_videos.html:16
 msgid "Start"
@@ -1902,8 +1968,9 @@ msgstr "Début"
 
 #: templates/sections/section_content.html:25
 #: templates/sections/section_discussion.html:18
-#: templates/sections/section_info.html:40
+#: templates/sections/section_info.html:45
 #: templates/sections/section_quiz.html:18
+#: templates/sections/section_quiz_grouped.html:18
 #: templates/sections/section_upload.html:17
 #: templates/sections/section_videos.html:19
 msgid "End"
@@ -1915,6 +1982,7 @@ msgstr "Créer un nouveau"
 
 #: templates/sections/section_discussion.html:73
 #: templates/sections/section_quiz.html:60
+#: templates/sections/section_quiz_grouped.html:66
 msgid "You are the author"
 msgstr "Vous êtes l'auteur"
 
@@ -1924,6 +1992,7 @@ msgstr "Participé"
 
 #: templates/sections/section_discussion.html:78
 #: templates/sections/section_quiz.html:64
+#: templates/sections/section_quiz_grouped.html:70
 #: templates/sections/section_upload.html:169
 #: templates/sections/section_videos.html:89
 msgid "To do"
@@ -1952,96 +2021,118 @@ msgstr ""
 msgid "No discussion board available."
 msgstr "Aucun forum de discussion disponible."
 
-#: templates/sections/section_info.html:21
-msgid "Course details"
-msgstr "Détails du cours"
-
 #: templates/sections/section_info.html:26
+#, python-format
+#| msgid "Course details"
+msgid "%(course_type)s Details"
+msgstr "Détails du %(course_type)s"
+
+#: templates/sections/section_info.html:31
 msgid "Code"
 msgstr "Code"
 
-#: templates/sections/section_info.html:54
-#: templates/sections/section_info.html:57
+#: templates/sections/section_info.html:59
+#: templates/sections/section_info.html:62
 msgid "Download certificate"
 msgstr "Télécharger le certificat"
 
-#: templates/sections/section_info.html:56
-msgid "Course not concluded"
-msgstr "Cours non terminé"
+#: templates/sections/section_info.html:61
+#, python-format
+#| msgid "Course not concluded"
+msgid "%(course_type)s not concluded"
+msgstr "%(course_type)s non terminé"
 
-#: templates/sections/section_info.html:67
+#: templates/sections/section_info.html:72
 msgid "Scoreboard"
 msgstr "Tableau de bord"
 
-#: templates/sections/section_info.html:70
+#: templates/sections/section_info.html:75
 msgid "Discussions"
 msgstr "Discussions"
 
-#: templates/sections/section_info.html:79
+#: templates/sections/section_info.html:84
 msgid "Leaderboard"
 msgstr "Classement"
 
-#: templates/sections/section_info.html:82
+#: templates/sections/section_info.html:87
 msgid "Discussion likes"
 msgstr "Discussion aime"
 
-#: templates/sections/section_info.html:91
-msgid "Course Progress"
-msgstr "Progression du cours"
+#: templates/sections/section_info.html:96
+#, python-format
+#| msgid "Course Progress"
+msgid "%(course_type)s Progress"
+msgstr "Progression du %(course_type)s"
 
-#: templates/sections/section_info.html:94
+#: templates/sections/section_info.html:99
 msgid "Sections completed"
 msgstr "Sections terminées"
 
-#: templates/sections/section_info.html:98
+#: templates/sections/section_info.html:103
 msgid "Discussions participation"
 msgstr "Participation aux discussions"
 
-#: templates/sections/section_info.html:99
-msgid "This course has no discussions."
-msgstr "Ce cours n'a pas de discussions."
+#: templates/sections/section_info.html:104
+#, python-format
+#| msgid "This course has no discussions."
+msgid "This %(course_type)s has no discussions."
+msgstr "Ce %(course_type)s n'a pas de discussions."
 
-#: templates/sections/section_info.html:102
+#: templates/sections/section_info.html:107
 msgid "Quizzes answered"
 msgstr "Questionnaires répondus"
 
-#: templates/sections/section_info.html:103
-msgid "This course has no quizzes."
-msgstr "Ce cours n'a pas de quiz."
+#: templates/sections/section_info.html:108
+#, python-format
+#| msgid "This course has no quizzes."
+msgid "This %(course_type)s has no quizzes."
+msgstr "Ce %(course_type)s n'a pas de quiz."
 
 #: templates/sections/section_quiz.html:38
+#: templates/sections/section_quiz_grouped.html:44
 msgid "(view only)"
 msgstr "(voir uniquement)"
 
 #: templates/sections/section_quiz.html:50
+#: templates/sections/section_quiz_grouped.html:56
 #: templates/sections/section_upload.html:167
 #: templates/sections/section_videos.html:87
 msgid "Submitted"
 msgstr "Envoyées"
 
-#: templates/sections/section_quiz.html:81
+#: templates/sections/section_quiz.html:84
+#: templates/sections/section_quiz_grouped.html:86
 msgid "Attempts left:"
 msgstr "Tentatives laissées :"
 
-#: templates/sections/section_quiz.html:89
+#: templates/sections/section_quiz.html:92
+#: templates/sections/section_quiz_grouped.html:94
 msgid "Score:"
 msgstr "Score:"
 
-#: templates/sections/section_quiz.html:100
+#: templates/sections/section_quiz.html:103
+#: templates/sections/section_quiz_grouped.html:106
 msgid "Passing score:"
 msgstr "Note de passage:"
 
-#: templates/sections/section_quiz.html:111
+#: templates/sections/section_quiz.html:114
+#: templates/sections/section_quiz_grouped.html:119
 msgid "Total number of submissions:"
 msgstr "Nombre total de soumissions :"
 
-#: templates/sections/section_quiz.html:114
+#: templates/sections/section_quiz.html:117
+#: templates/sections/section_quiz_grouped.html:123
 msgid "Access results"
 msgstr "Accéder aux résultats"
 
-#: templates/sections/section_quiz.html:121
+#: templates/sections/section_quiz.html:124
+#: templates/sections/section_quiz_grouped.html:130
 msgid "No quiz available."
 msgstr "Aucun quiz n'est disponible."
+
+#: templates/sections/section_quiz_grouped.html:31
+msgid "quizzes with no video"
+msgstr "quiz sans vidéo"
 
 #: templates/sections/section_upload.html:30
 msgid "Upload"
