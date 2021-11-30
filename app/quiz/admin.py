@@ -325,6 +325,7 @@ class OpenEndedAdmin(QuestionAdmin):
 
 
 class QuestionAttemptResource(resources.ModelResource):
+    participant_id = Field(attribute="student_id", column_name="participant_id")
     quiz_name = Field(attribute="quiz__name", column_name="quiz_name")
     # quiz_author = Field(attribute="quiz__author", column_name="quiz_author")
     course_name = Field(attribute="course__name", column_name="course_name")
@@ -344,13 +345,14 @@ class QuestionAttemptResource(resources.ModelResource):
         attribute="video__internal_name", column_name="video_internal_name"
     )
     video_author_id = Field(attribute="video__author_id", column_name="video_author_id")
+    video_section = Field(attribute="video__section", column_name="video_section")
 
     class Meta:
         model = QuestionAttempt
         fields = (
             "id",
             "created",
-            "student",
+            "participant_id",
             "quiz_name",
             # "quiz_author",
             "course_name",
@@ -364,13 +366,14 @@ class QuestionAttemptResource(resources.ModelResource):
             "video_name",
             "video_internal_name",
             "video_author_id",
+            "video_section",
             "answer_content",
             "correct",
         )
         export_order = (
             "id",
             "created",
-            "student",
+            "participant_id",
             "course_name",
             "course_code",
             "section_name",
@@ -380,6 +383,7 @@ class QuestionAttemptResource(resources.ModelResource):
             "video_name",
             "video_internal_name",
             "video_author_id",
+            "video_section",
             "question_type",
             "question_content",
             "multiplechoice_answer__content",
