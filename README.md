@@ -10,18 +10,19 @@ Please check the [wiki](https://github.com/andreibosco/GEN/wiki).
 # Publications
 
 ## Book chapter
-- Torres, Andrei and maxSIMhealth Group (2021). [An interconnected collective of manufacturing, design, and simulation labs to advance medical simulation training](https://doi.org/10.1007/978-3-030-59608-8_8). In A. L. Brooks, S. Branham, B. Kapralos, A. Nakajima, J. Tyerman, and l. Jain (Eds.). Recent Advances in Technologies for Inclusive Well-Being: Virtual Patients, Gamification and Simulation. Springer-Verlag, Intelligent Systems Reference Library, vol. 196, Germany, pp. 141-176. DOI: 10.1007/978-3-030-59608-8_8
+- A. Torres and maxSIMhealth Group (2021). [An interconnected collective of manufacturing, design, and simulation labs to advance medical simulation training](https://doi.org/10.1007/978-3-030-59608-8_8). In A. L. Brooks, S. Branham, B. Kapralos, A. Nakajima, J. Tyerman, and l. Jain (Eds.). Recent Advances in Technologies for Inclusive Well-Being: Virtual Patients, Gamification and Simulation. Springer-Verlag, Intelligent Systems Reference Library, vol. 196, Germany, pp. 141-176. DOI: 10.1007/978-3-030-59608-8_8
 
 ## Conference
-- Torres, A. B., Kapralos, B., Uribe-Quevedo, A., Quero, E. Z., & Dubrowski, A. (2019, October). [A gamified educational network for collaborative learning](https://doi.org/10.1007/978-3-030-49932-7_26). In Interactive Mobile Communication, Technologies and Learning (pp. 266-275). Springer, Cham. DOI: 10.1007/978-3-030-49932-7_26
+- A. Torres, B. Kapralos, A. Uribe-Quevedo, E. Z. Quero, and A. Dubrowski, ["A gamified educational network for collaborative learning"](https://doi.org/10.1007/978-3-030-49932-7_26). In: Auer M.E., Tsiatsos T. (eds) _Internet of Things, Infrastructures and Mobile Applications. IMCL 2019. Advances in Intelligent Systems and Computing_, vol 1192. Springer, Cham., doi: 10.1007/978-3-030-49932-7_26
 
 ## Editorial
-- Dubrowski, A., Kapralos, B., Peisachovich, E., Da Silva, C. and Andrei Torres. (2021) [A Model for an Online Learning Management System for Simulation-Based Acquisition of Psychomotor Skills in Health Professions Education](https://doi.org/10.7759/cureus.14055). Cureus, March 23, 2021. DOI: 10.7759/cureus.14055. 
+- A. Dubrowski, B. Kapralos, E. Peisachovich, C. Da Silva, and A. Torres, ["A Model for an Online Learning Management System for Simulation-Based Acquisition of Psychomotor Skills in Health Professions Education"](https://doi.org/10.7759/cureus.14055). Editorial. Cureus, Mar. 2021, doi: 10.7759/cureus.14055
 
-## Abstract
-- Dubrowski, A., Kapralos, B., Patocskai, E., Torres, A., Arutiunian, A., Wahab, S., Weber, T., Mnaymneh M. (2021). Virtual Health Experiential Learning Platform (HELP) - Utilizing Gamified Educational Networking and Three-Dimensional Printing for Distance Training. The Learner: Twenty-eighth International Conference on Learning, July 9th-11th, Krakow, Poland.
-- Guérard-Poirier, N., Beniey, M., Méloche-Dumas, L., Torres, A., Dhane, M., Misheva, B., Dubrowski, A., Mercier, F., Patocskai, E. (2020). A Gamified Network for Surgical Education during COVID-19: A Randomized Controlled Trial. To be presented at: Canadian Conference for the Advancement of Surgical Education (C-CASE) 2020, October 29th-30th.
-- Torres, A., Kapralos, B., Uribe-Quevedo, A., Zea E., Dubrowski, A. (2019). A gamified educational network for collaborative learning. In: Proceedings of the 2019 SIM-one SIM Expo, Montreal, Canada, October 21st-22nd.
+## Abstracts
+- A. Dubrowski, B. Kapralos, E. Patocskai, A. Torres, A. Arutiunian, S. Wahab, T. Weber, M. Mnaymneh, "Virtual Health Experiential Learning Platform (HELP) - Utilizing Gamified Educational Networking and Three-Dimensional Printing for Distance Training," _The Learner: Twenty-eighth International Conference on Learning_, Krakow, Poland, Jul. 9-11, 2021.
+- M. ElRaheb, F. Lebel-Guay, M. Younan, A. Dubrowski, F. Mercier, E. Patocskai, R. Younan, ["Broadcasting clinical activities of the mandatory surgical rotation to clerks in the light of COVID-19 on the Gamified  Educational  Network  (GEN)  platform, a pilot study."](doi.org/10.1503/cjs.021920), Canadian Conference for the Advancement of Surgical Education (C-CASE), Oct. 29-30, 2020, doi: 10.1503/cjs.021920.
+- N. Guérard-Poirier, M. Beniey, L. Méloche-Dumas, A. Torres, M. Dhane, B. Misheva, A. Dubrowski, F. Mercier, E. Patocskai, [“A Gamified Network for Surgical Education during COVID-19: A Randomized Controlled Trial,”](doi.org/10.1503/cjs.021920) Canadian Conference for the Advancement of Surgical Education (C-CASE), Oct. 29-30, 2020, doi: 10.1503/cjs.021920.
+- A. Torres, B. Kapralos, A. Uribe-Quevedo, E. Zea, A. Dubrowski, "A gamified educational network for collaborative learning". In: _Proceedings of the 2019 SIM-one SIM Expo_, Montreal, Canada, Oct. 21-22, 2019.
 
 # Contributors
 The previous iteration of GEN was called [OPEN](https://www.github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](https://www.github.com/andreibosco/).  
