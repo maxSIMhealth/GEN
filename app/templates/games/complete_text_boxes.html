@@ -10,6 +10,7 @@
                     <draggable class="list-group"
                                v-model="terms"
                                group="game-{{ id }}-items"
+                               @change="check_answers"
                     >
                         <div class="list-group-item"
                              v-for="(item, index) in terms"
@@ -32,8 +33,9 @@
                        @add="itemAdded(index)"
             >
                 <span class="preserve-linebreaks"><% item.fields.text %></span>
-                <div class="list-group-item list-group-item-dark mt-2"
+                <div class="list-group-item mt-2"
                      v-for="answer in answers_list[index]"
+                     :class="correct_answers[index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger'"
                 >
                     <% answer.fields.text %>
                 </div>
@@ -41,7 +43,7 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" @click="check">{% trans "Check answers" %}</button>
+    <button class="btn btn-primary" @click="check_answers(false)">{% trans "Check answers" %}</button>
     <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
 </div>
 
@@ -72,7 +74,7 @@
             itemAdded: function (index) {
                 this.answers_list_status[index] = false
             },
-            check: function () {
+            check_answers: function (auto_check) {
                 // copy answers pk values to an array to make it easier to compare
                 var answers_size = Object.keys(this.answers_list).length
                 for (var i = 0; i < answers_size; i++) {
@@ -84,18 +86,20 @@
                 }
 
                 // check if all items were answered
-                if (this.answers.includes(undefined) || this.answers.length < this.items.length) {
-                   return window.alert(gettext("Please answer all items."))
-                }
+                if (!this.answers.includes(undefined) && this.answers.length === this.items.length) {
+                    // check if all answers are correct
+                    let correct = this.answers.toString() === this.correct_answers.toString()
 
-                // check if all answers are correct
-                let correct = this.answers.toString() === this.correct_answers.toString()
-
-                // return feedback
-                if (correct) {
-                    return window.alert(gettext("You got it! Congratulations."))
+                    // return feedback
+                    if (correct) {
+                        return window.alert(gettext("You got it! Congratulations."))
+                    } else {
+                        return window.alert(gettext("Please try again."))
+                    }
                 } else {
-                    return window.alert(gettext("Please try again."))
+                    if (!auto_check) {
+                        return window.alert(gettext("Please answer all items."))
+                    }
                 }
             },
             restart: function () {
