@@ -206,6 +206,11 @@ class Section(models.Model):
         help_text=_("Published items are visible to all users (based on the 'access restriction' parameter). "
                     "Unpublished items are visible only to editors and admins.")
     )
+    paginate = models.BooleanField(
+        _("paginate items"),
+        default=True,
+        help_text=_("* FOR CONTENT SECTION ONLY *: Define if section items should be paginated.")
+    )
     access_restriction = models.CharField(
         _("access restriction"),
         max_length=1,

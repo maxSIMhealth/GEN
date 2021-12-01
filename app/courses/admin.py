@@ -63,6 +63,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             "Layout",
             {
                 "fields": (
+                    "paginate",
                     "show_thumbnails",
                     "show_related_video_name",
                     "group_by_video",
