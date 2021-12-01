@@ -1,0 +1,60 @@
+{% load i18n %}
+{% load is_instructor %}
+{% load get_course_status %}
+
+<div class="card mb-3" id="courses">
+    <div class="card-header bg-light">
+        <div class="row">
+            <div class="col-10 pt-0">
+                <div class="fs-5 m-0"><i class="fas fa-laptop-code pr-1"></i> {% if type == 'courses' %}{% translate "Courses" %}{% elif type == 'modules' %}{% translate 'Modules' %}{% endif %}</div>
+            </div>
+            {#<div class="col-2 text-right"><a href="#" class="btn btn-primary btn-sm disabled">{% trans "Enroll" %}</a></div>#}
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+            {% for item in items %}
+                <li class="list-group-item">
+                    <div class="fs-5">
+                        {% if item.requirement and item.requirement.fulfilled or not item.requirement %}
+                            <a href="{% url 'course' item.pk %}">
+                                {% if user|is_instructor:item and item.show_code %}
+                                    {{ item.code }} -
+                                {% endif %}
+                                {{ item.name }}
+                            </a>
+                        {% endif %}
+                        {% if item.requirement and not item.requirement.fulfilled %}
+                            <span>
+                                {% if user|is_instructor:item %}
+                                    {{ item.code }} -
+                                {% endif %}
+                                {{ item.name }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <strong>{% translate 'Status:' %}</strong>
+                        {% if item.requirement and item.requirement.fulfilled or not item.requirement %}
+                            {% get_course_status user item as item_status %}
+                            <span style="font-size: 1.2em">
+                                {% if item_status == 0 %}
+                                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Not started" %}</span>
+                                    {% elif item_status == 1 %}
+                                    <span class="badge rounded-pill bg-primary">{% translate "Started" %}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-success">{% translate "Completed" %}</span>
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                        {% if item.requirement and not item.requirement.fulfilled %}
+                            <span style="font-size: 1.2em">
+                                <span class="badge rounded-pill bg-info text-dark">{% translate 'Requirement must be met first:' %} {{ course.requirement.name }}</span>
+                            </span>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

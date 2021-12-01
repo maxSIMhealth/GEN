@@ -1,21 +1,24 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
-from core.support_methods import check_is_instructor
 from courses.support_methods import requirement_fulfilled
+from courses.models import COURSE, MODULE
 
 
 @login_required
 def dashboard(request):
     user = request.user
-    courses = user.member.all()
+    courses_all = user.member.all()
 
-    for course in courses:
+    for course in courses_all:
         # only allow access to course if requirements have been fulfilled
         if course.requirement:
             course.requirement.fulfilled = requirement_fulfilled(user, course)
 
+    courses = courses_all.filter(type=COURSE)
+    modules = courses_all.filter(type=MODULE)
+
     return render(request, "dashboard.html", {
         "courses": courses,
+        "modules": modules
     })
