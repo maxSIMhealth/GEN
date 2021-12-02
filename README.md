@@ -25,4 +25,8 @@ Please check the [wiki](https://github.com/andreibosco/GEN/wiki).
 - A. Torres, B. Kapralos, A. Uribe-Quevedo, E. Zea, A. Dubrowski, "A gamified educational network for collaborative learning". In: _Proceedings of the 2019 SIM-one SIM Expo_, Montreal, Canada, Oct. 21-22, 2019.
 
 # Contributors
-The previous iteration of GEN was called [OPEN](https://www.github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](https://www.github.com/andreibosco/).  
+The previous iteration of GEN was called [OPEN](https://www.github.com/mangobug/OPEN) and was developed by [Zain Kahn](https://github.com/mangobug). GEN is currently being developed by [Andrei B. B. Torres](https://www.github.com/andreibosco/).
+
+# Assets
+- [Icomoon (free version)](https://icomoon.io/#icons-icomoon). License: [GPL](http://www.gnu.org/licenses/gpl.html) / [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+- [Fontawesome (free version)](https://fontawesome.com/). License: [CC BY 4.0, SIL OFL 1.1, MIT](https://fontawesome.com/license/free)
