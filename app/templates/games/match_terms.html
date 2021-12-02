@@ -9,6 +9,7 @@
             <select class="form-select"
                     v-model="answers[index]"
                     aria-label="{% trans "List of dimensions" %}"
+                    :class="check_item(answers[index], index)"
             >
                 <option selected :value="undefined">
                     {% trans "Choose..." %}
@@ -55,6 +56,15 @@
                     return window.alert(gettext("You got it! Congratulations."))
                 } else {
                     return window.alert(gettext("Please try again."))
+                }
+            },
+            check_item: function (item, index) {
+                if (item === this.correct_answers[index]) {
+                    return 'correct-item'
+                } else if (item === undefined) {
+                    return ''
+                } else {
+                    return 'incorrect-item'
                 }
             },
             restart: function () {

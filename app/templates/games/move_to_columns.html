@@ -5,13 +5,11 @@
         <div class="card m-0">
             <div class="card-header fs-6"><% info.source_name %></div>
             <div class="card-body">
-                <draggable id="list_source" class="list-group" group="items" v-model="source_list"
-                           style="height: 100%; min-height: 60px">
+                <draggable id="list_source" class="list-group game-draggable-drop_column" group="items" v-model="source_list">
                     <div
-                            class="list-group-item"
+                            class="list-group-item game-draggable-item"
                             v-for="(element, index) in source_list"
                             :key="element.fields.text"
-                            style="padding:0.5rem"
                     >
                         <i class="fa fa-align-justify handle"></i>
                         <% element.fields.text %>
@@ -22,14 +20,12 @@
         <div class="card m-0">
             <div class="card-header fs-6"><% info.choice1_name %></div>
             <div class="card-body">
-                <draggable id="list_column1" class="list-group" group="items" v-model="choice1_user"
-                           style="height: 100%; min-height: 60px">
+                <draggable id="list_column1" class="list-group game-draggable-drop_column" group="items" v-model="choice1_user">
                     <div
-                            class="list-group-item"
+                            class="list-group-item game-draggable-item"
                             v-for="(element, index) in choice1_user"
                             :key="element.fields.text"
-                            :class="choice1_correct.includes(element.pk) ? 'list-group-item-success' : 'list-group-item-danger'"
-                            style="padding:0.5rem"
+                            :class="[choice1_correct.includes(element.pk) ? 'list-group-item-success' : 'list-group-item-danger', choice1_correct.includes(element.pk) ? 'correct-item' : 'incorrect-item']"
                     >
                         <i class="fa fa-align-justify handle"></i>
                         <% element.fields.text %>
@@ -40,14 +36,12 @@
         <div class="card m-0">
             <div class="card-header fs-6"><% info.choice2_name %></div>
             <div class="card-body">
-                <draggable id="list_column2" class="list-group" group="items" v-model="choice2_user"
-                           style="height: 100%; min-height: 60px">
+                <draggable id="list_column2" class="list-group game-draggable-drop_column" group="items" v-model="choice2_user">
                     <div
-                            class="list-group-item"
+                            class="list-group-item game-draggable-item"
                             v-for="(element, index) in choice2_user"
                             :key="element.fields.text"
-                            :class="choice2_correct.includes(element.pk) ? 'list-group-item-success' : 'list-group-item-danger'"
-                            style="padding:0.5rem"
+                            :class="[choice2_correct.includes(element.pk) ? 'list-group-item-success' : 'list-group-item-danger', choice2_correct.includes(element.pk) ? 'correct-item' : 'incorrect-item']"
                     >
                         <i class="fa fa-align-justify handle"></i>
                         <% element.fields.text %>

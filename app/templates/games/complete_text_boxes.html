@@ -33,9 +33,9 @@
                        @add="itemAdded(index)"
             >
                 <span class="preserve-linebreaks"><% item.fields.text %></span>
-                <div class="list-group-item mt-2"
+                <div class="list-group-item game-draggable-item mt-2"
                      v-for="answer in answers_list[index]"
-                     :class="correct_answers[index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger'"
+                     :class="[correct_answers[index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger', correct_answers[index] === answer.pk ? 'correct-item' : 'incorrect-item']"
                 >
                     <% answer.fields.text %>
                 </div>

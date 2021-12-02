@@ -177,6 +177,33 @@ body {
     white-space: pre-line;
 }
 
+.game-draggable-drop_column {
+    height: 100%;
+    min-height: 60px;
+}
+
+.game-draggable-item {
+    padding: 0.5em 1.4em 0.5em 0.5em;
+}
+
+.correct-item {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    background-image: url('/static/img/checkmark.png');
+    background-position: calc(100% - 5px);
+    background-repeat: no-repeat;
+    background-size: 15px;
+}
+
+.incorrect-item {
+    color: #842029;
+    background-color: #f8d7da;
+    background-image: url('/static/img/cross.png');
+    background-position: calc(100% - 5px);
+    background-repeat: no-repeat;
+    background-size: 15px;
+}
+
 /* quiz items navigation */
 /* The dot/bullet/indicator container */
 /* .dot-container {
