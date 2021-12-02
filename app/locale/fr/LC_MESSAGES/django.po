@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 19:02+0000\n"
-"PO-Revision-Date: 2021-12-01 19:03+0000\n"
+"POT-Creation-Date: 2021-12-02 17:10+0000\n"
+"PO-Revision-Date: 2021-12-02 17:11+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -394,14 +394,10 @@ msgstr ""
 " que par les éditeurs et les administrateurs."
 
 #: courses/models.py:210
-#| msgid "paginate questions"
 msgid "paginate items"
 msgstr "paginer les éléments"
 
 #: courses/models.py:212
-#| msgid ""
-#| "* FOR UPLOAD SECTION ONLY *: define the section which the cloned quiz will "
-#| "be related to."
 msgid ""
 "* FOR CONTENT SECTION ONLY *: Define if section items should be paginated."
 msgstr ""
@@ -700,11 +696,11 @@ msgstr "statuts"
 msgid "This section is already marked as completed."
 msgstr "Cette section est déjà marquée comme terminée."
 
-#: courses/views.py:22
+#: courses/views.py:23
 msgid "You are not enrolled in the requested course."
 msgstr "Vous n'êtes pas inscrit au cours demandé."
 
-#: courses/views.py:120
+#: courses/views.py:121
 msgid ""
 "This section's contents are not yet available because the start date has not"
 " been reached."
@@ -712,7 +708,7 @@ msgstr ""
 "Le contenu de cette section n'est pas encore disponible car la date de début"
 " n'a pas été atteinte."
 
-#: courses/views.py:129
+#: courses/views.py:130
 msgid ""
 "This section and its contents are not yet available to learners because of "
 "the start date."
@@ -720,7 +716,7 @@ msgstr ""
 "Cette section et son contenu ne sont pas encore disponibles pour les "
 "apprenants en raison de la date de début."
 
-#: courses/views.py:145
+#: courses/views.py:146
 msgid ""
 "This section is closed and its contents have been hidden or disabled because"
 " the end date has passed."
@@ -728,7 +724,7 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
 
-#: courses/views.py:154
+#: courses/views.py:155
 msgid ""
 "This section is closed and its contents have been hidden or disabled to "
 "learners because the end date has passed."
@@ -736,11 +732,11 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé pour les "
 "apprenants car la date de fin est passée."
 
-#: courses/views.py:265
+#: courses/views.py:266
 msgid "You have not completed this course yet."
 msgstr "Vous n'avez pas encore terminé ce cours."
 
-#: courses/views.py:271
+#: courses/views.py:272
 msgid "This course does not provide a certificate of conclusion."
 msgstr "Ce cours ne fournit pas de certificat de conclusion."
 
@@ -1348,12 +1344,12 @@ msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
 #: templates/403.html:33 templates/503.html:28 templates/login.html:64
-#: templates/partials/footer_logos.html:18
+#: templates/partials/footer_logos.html:12
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/403.html:34 templates/503.html:29 templates/base.html:118
-#: templates/base_accounts.html:43 templates/login.html:65
+#: templates/403.html:34 templates/503.html:29 templates/base_accounts.html:43
+#: templates/login.html:65
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -1524,8 +1520,6 @@ msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
 #: templates/dashboard.html:36
-#| msgid ""
-#| "Not enrolled in any course. Please wait for the administrator to assign you."
 msgid ""
 " Not enrolled in any course/module. Please wait for the administrator to "
 "assign you."
@@ -1587,12 +1581,12 @@ msgid "Terms"
 msgstr "Termes"
 
 #: templates/games/complete_text_boxes.html:46
-#: templates/games/match_terms.html:25 templates/games/move_to_columns.html:59
+#: templates/games/match_terms.html:26 templates/games/move_to_columns.html:53
 msgid "Check answers"
 msgstr "Vérifier les réponses"
 
 #: templates/games/complete_text_boxes.html:47
-#: templates/games/match_terms.html:26 templates/games/move_to_columns.html:60
+#: templates/games/match_terms.html:27 templates/games/move_to_columns.html:54
 msgid "Restart"
 msgstr "Redémarrage"
 
@@ -1600,7 +1594,7 @@ msgstr "Redémarrage"
 msgid "List of dimensions"
 msgstr "Liste des dimensions"
 
-#: templates/games/match_terms.html:14
+#: templates/games/match_terms.html:15
 msgid "Choose..."
 msgstr "Choisir..."
 
@@ -1630,12 +1624,10 @@ msgid "Courses"
 msgstr "Cours"
 
 #: templates/partials/dashboard_items.html:9
-#| msgid "Module"
 msgid "Modules"
 msgstr "Modules"
 
 #: templates/partials/dashboard_items.html:37
-#| msgid "status"
 msgid "Status:"
 msgstr "Statut:"
 
@@ -1661,9 +1653,18 @@ msgstr "Terminé"
 msgid "Requirement must be met first:"
 msgstr "L'exigence doit être satisfaite en premier:"
 
-#: templates/partials/footer_logos.html:14
+#: templates/partials/footer_logos.html:6
+#| msgid "Developed at"
+msgid "Developed by:"
+msgstr "Développé par:"
+
+#: templates/partials/footer_logos.html:9
 msgid "Ontario Tech University colour logo in a white background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond blanc"
+
+#: templates/partials/footer_logos.html:17
+msgid "Supported by:"
+msgstr "Supporté par:"
 
 #: templates/partials/mark_section_completed.html:6
 #: templates/partials/mark_section_completed.html:10

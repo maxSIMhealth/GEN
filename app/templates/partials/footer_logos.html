@@ -1,19 +1,24 @@
 {% load static %}
 {% load i18n %}
 
-{# Additional logos #}
-{% for logo in footer_logos %}
-    <a href="{{ logo.url }}" class="primary-link"><img
-            src="{{ logo.file.url }}"
-            alt="{{ logo.description }}"
-            width="200px"></a>
-{% endfor %}
 {# System logos #}
-<a href="http://www.ontariotechu.ca" class="primary-link"><img
-        src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}"
-        alt="{% trans 'Ontario Tech University colour logo in a white background' %}"
-        width="200px"></a>
-<a href="http://www.maxsimhealth.com"><img
-        src="{% static 'img/maxSIMhealth_Logo.png' %}"
-        alt="{% trans 'maxSIMhealth logo' %}"
-        width="200px"></a>
+<div class="footer-logos">
+    <span>{% translate 'Developed by:' %}</span>
+    <a href="http://www.ontariotechu.ca" class="primary-link"><img
+            src="{% static 'img/ontariotechuniversity_primary_colour_rgb_150ppi.png' %}"
+            alt="{% trans 'Ontario Tech University colour logo in a white background' %}"></a>
+    <a href="http://www.maxsimhealth.com"><img
+            src="{% static 'img/maxSIMhealth_Logo.png' %}"
+            alt="{% trans 'maxSIMhealth logo' %}"></a>
+</div>
+{# Additional logos #}
+{% if footer_logos %}
+    <div class="footer-logos">
+        <span>{% translate 'Supported by:' %}</span>
+        {% for logo in footer_logos %}
+            <a href="{{ logo.url }}" class="primary-link"><img
+                    src="{{ logo.file.url }}"
+                    alt="{{ logo.description }}"></a>
+        {% endfor %}
+    </div>
+{% endif %}

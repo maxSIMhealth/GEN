@@ -204,6 +204,11 @@ body {
     background-size: 15px;
 }
 
+/* footer logos */
+.footer-logos img {
+    width: 200px;
+}
+
 /* quiz items navigation */
 /* The dot/bullet/indicator container */
 /* .dot-container {
