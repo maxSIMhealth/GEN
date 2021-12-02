@@ -18,6 +18,7 @@ from core.support_methods import filter_by_access_restriction, check_is_instruct
 from courses.support_methods import section_mark_completed, progress
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status
+from werkzeug.utils import secure_filename
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
 
@@ -331,4 +332,4 @@ def render_certificate_pdf(course_object, date, filename, logos, request, user):
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename=filename)
+    return FileResponse(buffer, as_attachment=True, filename=secure_filename(filename))
