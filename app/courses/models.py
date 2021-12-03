@@ -24,6 +24,12 @@ COURSE_TYPES = [
     (COURSE, _("Course")),
     (MODULE, _("Module"))
 ]
+CERTIFICATE_COURSE = "CC"
+CERTIFICATE_CUSTOM = "CX"
+CERTIFICATE_TYPES = [
+    (CERTIFICATE_COURSE, _("Certificate - Course")),
+    (CERTIFICATE_CUSTOM, _("Certificate - Custom"))
+]
 
 
 class Course(models.Model):
@@ -110,6 +116,21 @@ class Course(models.Model):
         default=False,
         help_text=_("Defines if this course provides a certificate of conclusion.")
     )
+    certificate_type = models.CharField(
+        _("certificate type"),
+        max_length=2,
+        choices=CERTIFICATE_TYPES,
+        default=CERTIFICATE_COURSE,
+        help_text=_(
+            "Defines if the certificate provided will be for the current course or use a customized title.")
+    )
+    certificate_custom_term = models.CharField(
+        _("certificate custom term"),
+        max_length=150,
+        unique=False,
+        blank=True,
+        help_text=_("Certificate custom term."),
+    )
     enable_gamification = models.BooleanField(
         _("gamification"),
         default=True,
@@ -149,6 +170,10 @@ class Course(models.Model):
             raise ValidationError(_("Scoreboard requires gamification to be enabled"))
         if self.show_leaderboard and not self.enable_gamification:
             raise ValidationError(_("Leaderboard requires gamification to be enabled"))
+
+        # check certificate components
+        if self.certificate_type == CERTIFICATE_CUSTOM and not self.certificate_custom_term:
+            raise ValidationError({'certificate_custom_term': _("A custom certificate requires defining a custom term.")})
 
 
 class Section(models.Model):

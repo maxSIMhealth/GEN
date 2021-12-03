@@ -17,7 +17,7 @@ from core.models import CertificateLogoFile
 from core.support_methods import filter_by_access_restriction, check_is_instructor
 from courses.support_methods import section_mark_completed, progress
 from games.models import MoveToColumnsGroup
-from .models import Course, Section, SectionItem, Status
+from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE
 from werkzeug.utils import secure_filename
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
@@ -280,6 +280,11 @@ def render_certificate_pdf(course_object, date, filename, logos, request, user):
     # Create the PDF object, using the buffer as its "file."
     certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
     certificate.setTitle('Certificate of Completion')
+    # Define certificate 'term'
+    if course_object.certificate_type is CERTIFICATE_COURSE:
+        certificate_term = course_object.name
+    else:
+        certificate_term = course_object.certificate_custom_term
     # Logos
     # The preferred logo size 200 x 80 points.
     # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
@@ -306,8 +311,8 @@ def render_certificate_pdf(course_object, date, filename, logos, request, user):
         logo_x += (logo_width + logo_spacing)
     # Header
     certificate.setFont('Helvetica', 40, leading=None)
-    certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Conclusion')
-    certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Conclusion')
+    certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Completion')
+    certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Completion')
     certificate.setFont('Helvetica', 24, leading=None)
     certificate.drawCentredString(395, 320 + logos_reserved_space,
                                   'This certificate is presented to / Ce certificat est présenté à')
@@ -317,8 +322,8 @@ def render_certificate_pdf(course_object, date, filename, logos, request, user):
     # Course info
     certificate.setFont('Helvetica', 24, leading=None)
     certificate.drawCentredString(395, 220, 'for completing the following / pour avoir complété ce qui suit')
-    certificate.setFont('Helvetica-Oblique', 20, leading=None)
-    course_name = textwrap.wrap(course_object.name, width=70)
+    certificate.setFont('Helvetica-Oblique', 24, leading=None)
+    course_name = textwrap.wrap(certificate_term, width=70)
     course_name_position = 170
     for line in course_name:
         certificate.drawCentredString(395, course_name_position, line)
