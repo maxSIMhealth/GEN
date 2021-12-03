@@ -16,12 +16,38 @@
 {% block content %}
     <div class="card bg-dark mb-3" id="page-name">
         <div class="card-header">
-            <div class="card-text text-white fs-5 p-0">{% trans "Home" %}: {{ title }}</div>
+            <div class="card-text text-white fs-5 p-0">{% trans "Home" %}</div>
         </div>
     </div>
 
     {% if messages %}
         {% include 'partials/messages.html' %}
+    {% endif %}
+
+    {% if dashboard_info %}
+        <div class="card mb-3">
+            {% if dashboard_info.image %}
+                <img src="{{ dashboard_info.image.url }}" class="card-img-top" alt="Hero image">
+            {% endif %}
+            <div class="card-body {% if dashboard_info.description or dashboard_info.instructions %}pb-0{% else %}pb-2{% endif %}">
+                <h5 class="card-title">{{ dashboard_info.name }}</h5>
+                {% if dashboard_info.description %}
+                    <div class="card-text">
+                        <h6>{% translate "Description" %}</h6>
+                        {{ dashboard_info.description|safe }}
+                    </div>
+                {% endif %}
+                {% if dashboard_info.instructions %}
+                    <div class="card-text">
+                        <h6>{% translate "Instructions" %}</h6>
+                        {{ dashboard_info.instructions|safe }}
+                    </div>
+                {% endif %}
+            </div>
+{#            <div class="card-header">#}
+{#                <div class="card-text fs-5 p-0">{{ dashboard_info.name }}</div>#}
+{#            </div>#}
+        </div>
     {% endif %}
 
     {% if courses %}

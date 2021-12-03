@@ -10,8 +10,12 @@ from courses.models import COURSE, MODULE
 def dashboard(request):
     user = request.user
     courses_all = user.member.all()
-    dashboard_object = Dashboard.objects.filter(active=True)
-    title = dashboard_object[0].name
+
+    # get dashboard information, if any exists and is set as active
+    try:
+        dashboard_info = Dashboard.objects.filter(active=True)[0]
+    except IndexError:
+        dashboard_info = None
 
     for course in courses_all:
         # only allow access to course if requirements have been fulfilled
@@ -22,7 +26,7 @@ def dashboard(request):
     modules = courses_all.filter(type=MODULE)
 
     return render(request, "dashboard.html", {
-        "title": title,
+        "dashboard_info": dashboard_info,
         "courses": courses,
         "modules": modules
     })

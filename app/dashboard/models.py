@@ -4,6 +4,8 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.db.models.constraints import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
+from tinymce import HTMLField
+
 
 class Dashboard(models.Model):
     name = models.CharField(
@@ -18,6 +20,14 @@ class Dashboard(models.Model):
         blank=True,
         null=True,
         help_text=_("'Hero' image that will be displayed on top portion of the dashboard (home page).")
+    )
+    description = HTMLField(
+        blank=True,
+        null=True
+    )
+    instructions = HTMLField(
+        blank=True,
+        null=True
     )
     active = models.BooleanField(
         _("active"),
