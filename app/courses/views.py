@@ -279,7 +279,7 @@ def render_certificate_pdf(course_object, date, filename, logos, request, user):
     buffer = io.BytesIO()
     # Create the PDF object, using the buffer as its "file."
     certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
-    certificate.setTitle('Certificate of Conclusion')
+    certificate.setTitle('Certificate of Completion')
     # Logos
     # The preferred logo size 200 x 80 points.
     # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
