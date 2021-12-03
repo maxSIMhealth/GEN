@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from tinymce import HTMLField
 
 
-class Dashboard(models.Model):
+class DashboardSettings(models.Model):
     name = models.CharField(
         _("name"),
         max_length=150,
@@ -31,14 +31,18 @@ class Dashboard(models.Model):
     )
     active = models.BooleanField(
         _("active"),
+        help_text=_("Set this setting as the active one. **WARNING**: only one setting can be set as active.")
     )
+
+    def __str__(self):
+        output = f'ID {self.pk} - {self.name}'
+        return output
+
     def save(self, *args, **kwargs):
         try:
-            return super(Dashboard, self).save(*args, **kwargs)
+            return super(DashboardSettings, self).save(*args, **kwargs)
         except IntegrityError:
             raise ValidationError('Only one dashboard setting can be set as active.')
-
-
 
     class Meta:
         constraints = [

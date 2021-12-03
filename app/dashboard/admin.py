@@ -1,11 +1,13 @@
 from django.contrib import admin
-from .models import Dashboard
+from modeltranslation.admin import TabbedTranslationAdmin
 
-class DashboardAdmin(admin.ModelAdmin):
+from .models import DashboardSettings
+
+class DashboardAdmin(TabbedTranslationAdmin):
     list_display = (
         "name",
         "active"
     )
 
 
-admin.site.register(Dashboard, DashboardAdmin)
+admin.site.register(DashboardSettings, DashboardAdmin)

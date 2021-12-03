@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from .models import Dashboard
+from .models import DashboardSettings
 
 from courses.support_methods import requirement_fulfilled
 from courses.models import COURSE, MODULE
@@ -13,7 +13,7 @@ def dashboard(request):
 
     # get dashboard information, if any exists and is set as active
     try:
-        dashboard_info = Dashboard.objects.filter(active=True)[0]
+        dashboard_info = DashboardSettings.objects.filter(active=True)[0]
     except IndexError:
         dashboard_info = None
 
