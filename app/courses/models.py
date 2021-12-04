@@ -122,7 +122,7 @@ class Course(models.Model):
         choices=CERTIFICATE_TYPES,
         default=CERTIFICATE_COURSE,
         help_text=_(
-            "Defines if the certificate provided will be for the current course or use a customized title.")
+            "Defines if the certificate provided will be for the current course or use a customized term.")
     )
     certificate_custom_term = models.CharField(
         _("certificate custom term"),
