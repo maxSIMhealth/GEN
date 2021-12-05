@@ -6,6 +6,12 @@ from .models import DashboardSetting
 from courses.support_methods import requirement_fulfilled
 from courses.models import COURSE, MODULE
 
+def check_items_requirement(user, items):
+    for item in items:
+        # only allow access to course if requirements have been fulfilled
+        if item.requirement:
+            item.requirement.fulfilled = requirement_fulfilled(user, item)
+
 @login_required
 def dashboard(request):
     user = request.user
@@ -17,13 +23,13 @@ def dashboard(request):
     except IndexError:
         dashboard_info = None
 
-    for course in courses_all:
-        # only allow access to course if requirements have been fulfilled
-        if course.requirement:
-            course.requirement.fulfilled = requirement_fulfilled(user, course)
-
+    # split into different courses types
     courses = courses_all.filter(type=COURSE)
     modules = courses_all.filter(type=MODULE)
+
+    # check requirements
+    check_items_requirement(user,courses)
+    check_items_requirement(user,modules)
 
     return render(request, "dashboard.html", {
         "dashboard_info": dashboard_info,
