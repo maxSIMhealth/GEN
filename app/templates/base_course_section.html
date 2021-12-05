@@ -56,21 +56,25 @@
                 {% include 'partials/messages.html' %}
             {% endif %}
 
-            {% if section_status.completed %}
-                {% if section.final_assessment %}
-                    {% trans "Congratulations! You have passed the assessment." as congratulations %}
-                    {% if course.provide_certificate %}
-                        {% blocktranslate asvar congratulations %}
-                            {{ congratulations }} Your certificate of completion is now available in the Information section.
-                        {% endblocktranslate %}
-                    {% endif %}
-                {% else %}
-                    {% trans "Congratulations! You have completed this section." as congratulations %}
-                {% endif %}
-                {% bootstrap_alert congratulations alert_type="success" dismissible=False %}
+{#            {% if section_status.completed %}#}
+{#                {% if section.final_assessment %}#}
+{#                    {% trans "Congratulations! You have passed the assessment." as congratulations %}#}
+{#                    {% if course.provide_certificate %}#}
+{#                        {% blocktranslate asvar congratulations %}#}
+{#                            {{ congratulations }} Your certificate of completion is now available in the Information section.#}
+{#                        {% endblocktranslate %}#}
+{#                    {% endif %}#}
+{#                {% else %}#}
+{#                    {% trans "Congratulations! You have completed this section." as congratulations %}#}
+{#                {% endif %}#}
+{#                {% bootstrap_alert congratulations alert_type="success" dismissible=False %}#}
+{#            {% endif %}#}
+
+            {% if message_congratulations %}
+                {% bootstrap_alert message_congratulations alert_type="success" dismissible=False %}
             {% endif %}
 
-            {% if section.completion_message %}
+            {% if section_status.completed and section.completion_message %}
                 {% bootstrap_alert section.completion_message alert_type="info" dismissible=False %}
             {% endif %}
 

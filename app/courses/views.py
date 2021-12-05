@@ -17,7 +17,7 @@ from core.models import CertificateLogoFile
 from core.support_methods import filter_by_access_restriction, check_is_instructor
 from courses.support_methods import section_mark_completed, progress
 from games.models import MoveToColumnsGroup
-from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE
+from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE, COURSE, MODULE
 from werkzeug.utils import secure_filename
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
@@ -60,6 +60,26 @@ def course(request, pk):
 
     course_completed = True if sections_progress['current'] == sections_progress['max'] else False
 
+    course_type_val = course_object.type
+    if course_type_val is COURSE:
+        course_type = "course"
+    elif course_type_val is MODULE:
+        course_type = "module"
+
+    # FIXME: implement proper course grouping
+    last_course_object = user.member.last()
+    if course_object == last_course_object:
+        last_course = True
+    else:
+        last_course = False
+
+    if course_completed:
+        message_congratulations = _(f"Congratulations, you have completed this {course_type}.")
+        if not last_course:
+            message_congratulations += _(f"\nPlease go to the Home page to access the next {course_type}.")
+    else:
+        message_congratulations = None
+
     return render(
         request,
         "sections/section_info.html",
@@ -69,7 +89,8 @@ def course(request, pk):
             "section_name": section_name,
             "discussions_progress": discussions_progress,
             "quizzes_progress": quizzes_progress,
-            "sections_progress": sections_progress
+            "sections_progress": sections_progress,
+            "message_congratulations": message_congratulations,
         },
     )
 
@@ -94,6 +115,26 @@ def section_page(request, pk, section_pk):
         course=course_object,
         section=section_object
     )
+
+    # check if the current section is the last one
+    last_section_object = course_object.sections.last()
+    if section_object == last_section_object:
+        last_section = True
+    else:
+        last_section = False
+
+    # sets congratulations message, if the section is completed
+    if section_status.completed:
+        message_congratulations = _("Congratulations! You have completed this section.")
+        if section_object.final_assessment:
+            message_congratulations = _("Congratulations! You have passed the assessment.")
+        if not last_section:
+            message_congratulations += _("\nPlease navigate to the next section.")
+        else:
+            if course_object.provide_certificate:
+                message_congratulations += _("\nYour certificate of completion is now available in the Information section.")
+    else:
+        message_congratulations = None
 
     if request.method == "POST":
         # TODO: check section type and set completed status based on its contents
@@ -232,8 +273,10 @@ def section_page(request, pk, section_pk):
             "section": section_object,
             "section_items": section_items,
             "section_status": section_status,
+            "last_section": last_section,
             "gamification": gamification,
             "allow_submission": allow_submission,
+            "message_congratulations": message_congratulations,
         },
     )
 
@@ -263,13 +306,13 @@ def generate_certificate(request, pk):
         else:
             messages.warning(
                 request,
-                _("You have not completed this course yet.")
+                _("You have not completed this course/module yet.")
             )
             return redirect("course", pk=course_object.pk)
     else:
         messages.warning(
             request,
-            _("This course does not provide a certificate of conclusion.")
+            _("This course/module does not provide a certificate of conclusion.")
         )
         return redirect("course", pk=course_object.pk)
 
