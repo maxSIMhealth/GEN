@@ -171,7 +171,7 @@
                             <div class="pagination-item" style="display: none">
                                 <p>{% translate "This is the end of the quiz." %}</p>
                                 {% if quiz.author == user %}
-                                <p>You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author.</p>
+                                <p>{% translate "You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author" %}</p>
                                 <p>{% blocktranslate with section.name as section_name %}Please use the 'exit quiz' button to return to {{ section_name}} page.{% endblocktranslate %}</p>
                                 {% else %}
                                     <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
