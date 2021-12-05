@@ -209,6 +209,11 @@ body {
     width: 200px;
 }
 
+/* quiz items */
+.quiz .card-body li label {
+    display: block;
+}
+
 /* quiz items navigation */
 /* The dot/bullet/indicator container */
 /* .dot-container {

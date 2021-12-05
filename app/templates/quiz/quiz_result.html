@@ -30,7 +30,7 @@
                         ( {% trans "Maximum number of mistakes allowed:" %} {{ quiz.assessment_max_mistakes }} ).
                     {% endif %}
                 </p>
-                <p class="mb-0">
+                <p>
                     {% trans "Assessment:" %}
                     <strong style="font-size:1.2em">
                         {% if user_quiz_score.completed %}
@@ -43,7 +43,7 @@
 
                 {% if section.pre_assessment %}
                     {% if assessment_status == 'Complete' %}
-                        {% trans "Congratulations! You have passed the pre-assessment and can now skip the other sections. Your certificate of completion is now available in the Information section." %}
+                        {% trans "Congratulations! You have passed the pre-assessment and can now freely navigate the other sections or skip them. Please go to the Home page to access the next course/module." %}
                     {% else %}
                         {% trans "Unfortunately you did not reach the minimum score. But don't worry, just continue your journey to the next section." %}
                     {% endif %}
@@ -51,7 +51,7 @@
 
                 {% if section.final_assessment %}
                     {% if assessment_status == 'Complete' %}
-                        {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Information section." %}
+                        {% trans "Congratulations! You have passed the final assessment." %}
                         {% elif assessment_status == 'Incomplete' %}
                         {% trans "You need to complete the rest of the quizzes to finish this section." %}
                     {% else %}
@@ -70,9 +70,9 @@
                 <div class="card mb-3">
                     <div class="card-header fs-6">
                         {% if question.question_type == 'H' or question.question_type == 'O' %}
-                            {{ question.content }}
+                            {{ forloop.counter }} - {{ question.content }}
                         {% else %}
-                            {{ question.content }} {% if quiz.assessment_method %}
+                            {{ forloop.counter }} - {{ question.content }} {% if quiz.assessment_method %}
                             (<em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
                         {% endif %}
                     </div>
@@ -99,24 +99,24 @@
                     <div class="card-body">
                         {% if question.question_type == 'M' %}
                             {% quiz_mcquestion_check question attempt_mcquestion as mcquestion_user_answers %}
-                            <ul class="list-group list-group-numbered">
+                            <ol type="a" class="mb-0">
                                 {% for choice in question.answers.all %}
                                     {% if quiz.show_correct_answers %}
                                         {% if question.multiple_correct_answers %}
                                             {% if mcquestion_user_answers|dict_key:choice.id %}
-                                                <li class="list-group-item list-group-item-success">
+                                                <li class="correct-item pt-1 pb-1">
                                                     {% else %}
-                                                <li class="list-group-item list-group-item-danger">
+                                                <li class="incorrect-item pt-1 pb-1">
                                             {% endif %}
                                         {% else %}
                                         {% if choice.check %}
-                                            <li class="list-group-item list-group-item-success">
+                                            <li class="correct-item pt-1 pb-1">
                                                 {% else %}
-                                            <li class="list-group-item">
+                                            <li class="pt-1 pb-1">
                                         {% endif %}
                                         {% endif %}
                                     {% else %}
-                                        <li class="list-group-item">
+                                        <li class="pt-1 pb-1">
                                     {% endif %}
                                 <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
                                     <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
@@ -134,7 +134,7 @@
                                 </label>
                                 </li>
                                 {% endfor %}
-                            </ul>
+                            </ol>
 
                         {% elif question.question_type == 'L' %}
                             {% with answer=question.likertanswer correct_range=question.likertanswer.answer_range|likert_range %}
