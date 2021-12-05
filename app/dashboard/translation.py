@@ -1,8 +1,8 @@
 from modeltranslation.translator import TranslationOptions, translator
 
-from .models import DashboardSettings
+from .models import DashboardSetting
 
 class DashboardTranslationOptions(TranslationOptions):
     fields = ("name", "description", "instructions")
 
-translator.register(DashboardSettings, DashboardTranslationOptions)
+translator.register(DashboardSetting, DashboardTranslationOptions)

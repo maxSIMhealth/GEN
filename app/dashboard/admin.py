@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
 
-from .models import DashboardSettings
+from .models import DashboardSetting
 
 class DashboardAdmin(TabbedTranslationAdmin):
     list_display = (
@@ -10,4 +10,4 @@ class DashboardAdmin(TabbedTranslationAdmin):
     )
 
 
-admin.site.register(DashboardSettings, DashboardAdmin)
+admin.site.register(DashboardSetting, DashboardAdmin)

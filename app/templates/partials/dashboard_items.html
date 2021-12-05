@@ -49,7 +49,7 @@
                         {% endif %}
                         {% if item.requirement and not item.requirement.fulfilled %}
                             <span style="font-size: 1.2em">
-                                <span class="badge rounded-pill bg-info text-dark">{% translate 'Requirement must be met first:' %} {{ course.requirement.name }}</span>
+                                <span class="badge rounded-pill bg-info text-dark">{% translate 'Requirement must be met first:' %} {{ item.requirement.name }}</span>
                             </span>
                         {% endif %}
                     </div>
