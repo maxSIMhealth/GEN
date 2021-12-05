@@ -264,6 +264,13 @@ class Section(models.Model):
             "* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if the learner successfully "
             "completed the course/module?")
     )
+    completion_message = models.CharField(
+        _("completion message"),
+        max_length=200,
+        unique=False,
+        blank=True,
+        help_text=_("A message to be displayed after the participant has successfully completed the section. (max 200 characters)")
+    )
     create_discussions = models.BooleanField(
         _("create discussion"),
         default=False,

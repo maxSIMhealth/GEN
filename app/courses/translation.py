@@ -8,7 +8,7 @@ class CourseTranslationOptions(TranslationOptions):
 
 
 class SectionTranslationOptions(TranslationOptions):
-    fields = ("name", "description")
+    fields = ("name", "description", "completion_message")
 
 
 class SectionItemTranslationOptions(TranslationOptions):

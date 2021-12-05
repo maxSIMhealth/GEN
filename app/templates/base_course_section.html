@@ -58,11 +58,20 @@
 
             {% if section_status.completed %}
                 {% if section.final_assessment %}
-                    {% trans "Congratulations! You have passed the final assessment. Your certificate of completion is now available in the Info section." as congratulations %}
+                    {% trans "Congratulations! You have passed the assessment." as congratulations %}
+                    {% if course.provide_certificate %}
+                        {% blocktranslate asvar congratulations %}
+                            {{ congratulations }} Your certificate of completion is now available in the Information section.
+                        {% endblocktranslate %}
+                    {% endif %}
                 {% else %}
                     {% trans "Congratulations! You have completed this section." as congratulations %}
                 {% endif %}
                 {% bootstrap_alert congratulations alert_type="success" dismissible=False %}
+            {% endif %}
+
+            {% if section.completion_message %}
+                {% bootstrap_alert section.completion_message alert_type="info" dismissible=False %}
             {% endif %}
 
             {% block content %}
