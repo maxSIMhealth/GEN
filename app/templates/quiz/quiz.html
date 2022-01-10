@@ -80,7 +80,7 @@
                             <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %}>
                                 <div class="fs-6">
                                     <strong>{{ forloop.counter }} - {{ question.content }}</strong>
-                                    {% if quiz.assessment_method %}
+                                    {% if quiz.assessment_method and quiz.show_question_value %}
                                     (<em>{% translate "Value:" %} {{ question.value }}</em>)
                                     {% endif %}
                                     {% if question.image %}

@@ -37,6 +37,7 @@ class Quiz(SectionItem):
     paginate = models.BooleanField(_("paginate questions"), default=True)
     check_score = models.BooleanField(_("check score"), default=True)
     show_score = models.BooleanField(_("show score"), default=False)
+    show_question_value = models.BooleanField(_("show question value"), default=True)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
     max_score = models.PositiveIntegerField(
         _("max score"),

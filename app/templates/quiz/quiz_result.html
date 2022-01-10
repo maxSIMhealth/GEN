@@ -72,8 +72,8 @@
                         {% if question.question_type == 'H' or question.question_type == 'O' %}
                             {{ forloop.counter }} - {{ question.content }}
                         {% else %}
-                            {{ forloop.counter }} - {{ question.content }} {% if quiz.assessment_method %}
-                            (<em>{% translate "Value:" %} {{ question.value }}</em>) {% endif %}
+                            {{ forloop.counter }} - {{ question.content }}
+                            {% if quiz.assessment_method and quiz.show_question_value%}(<em>{% translate "Value:" %} {{ question.value }}</em>){% endif %}
                         {% endif %}
                     </div>
                     {% if quiz.check_score %}
