@@ -160,6 +160,20 @@ body {
     height: 95%;
 }
 
+#video-closedcaption-info {
+    font-size: 0.9em;
+    padding: 0.5em;
+    color: white;
+}
+
+#video-closedcaption-info p {
+    margin-bottom: 0.5em;
+}
+
+#video-closedcaption-info ul {
+    margin-bottom: 0;
+}
+
 /* shepherd */
 .shadow-md {
   -webkit-box-shadow: 0 0 7px 0 rgba(50, 50, 50, 0.7);
@@ -189,7 +203,7 @@ body {
 .correct-item {
     color: #0f5132;
     background-color: #d1e7dd;
-    background-image: url('/static/img/checkmark.png');
+    background-image: url('../img/checkmark.png');
     background-position: calc(100% - 5px);
     background-repeat: no-repeat;
     background-size: 15px;
@@ -198,7 +212,7 @@ body {
 .incorrect-item {
     color: #842029;
     background-color: #f8d7da;
-    background-image: url('/static/img/cross.png');
+    background-image: url('../img/cross.png');
     background-position: calc(100% - 5px);
     background-repeat: no-repeat;
     background-size: 15px;
