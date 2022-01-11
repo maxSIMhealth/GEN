@@ -15,7 +15,7 @@ from GEN.decorators import course_enrollment_check, check_requirement, check_per
 from GEN.support_methods import enrollment_test
 from core.models import CertificateLogoFile
 from core.support_methods import filter_by_access_restriction, check_is_instructor
-from courses.support_methods import section_mark_completed, progress
+from courses.support_methods import course_mark_completed, section_mark_completed, progress
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE, COURSE, MODULE
 from werkzeug.utils import secure_filename
@@ -139,7 +139,11 @@ def section_page(request, pk, section_pk):
     if request.method == "POST":
         # TODO: check section type and set completed status based on its contents
 
-        section_mark_completed(request, section_object)
+        # if last section, set course status entry as completed
+        if last_section:
+            course_mark_completed(request, course_object)
+        else:
+            section_mark_completed(request, section_object)
 
         my_kwargs = dict(
             pk=course_object.pk,
