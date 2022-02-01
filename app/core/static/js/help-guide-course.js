@@ -53,7 +53,7 @@ const steps = [
   },
   {
     title: gettext('Course Name'),
-    text: gettext('This area displays the current course name.'),
+    text: gettext('This area displays the current course/module name.'),
     attachTo: {
       element: '#course-name',
       on: 'auto'
@@ -77,7 +77,7 @@ const steps = [
   },
   {
     title: gettext('Sections'),
-    text: gettext('This interactable element allows you to navigate through the sections available in the current course. You should follow these sections in the order they are presented. If one of the sections has any requirements, it will also be shown here.'),
+    text: gettext('This interactable element allows you to navigate through the sections available in the current course/module. You should follow these sections in the order they are presented. If one of the sections has any requirements, it will also be shown here.'),
     attachTo: {
       element: '#sections-navbar',
       on: 'auto'

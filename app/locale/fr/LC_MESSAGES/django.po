@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 20:34+0000\n"
-"PO-Revision-Date: 2022-02-01 20:35+0000\n"
-"Last-Translator: Adm Andrei <admin@maxsimgen.com>\n"
+"POT-Creation-Date: 2022-02-01 20:50+0000\n"
+"PO-Revision-Date: 2022-02-01 20:53+0000\n"
+"Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -1770,7 +1770,6 @@ msgstr "Supporté par:"
 
 #: templates/partials/mark_section_completed.html:6
 #: templates/partials/mark_section_completed.html:10
-#| msgid "Mark as completed"
 msgid "Mark section as completed"
 msgstr "Marquer la section comme terminée"
 
