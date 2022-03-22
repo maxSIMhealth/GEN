@@ -145,10 +145,10 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTHENTICATION_BACKENDS = (
-    "social_core.backends.github.GithubOAuth2",
-    "social_core.backends.twitter.TwitterOAuth",
-    "social_core.backends.facebook.FacebookOAuth2",
-    "social_core.backends.google.GoogleOpenId",
+    # "social_core.backends.github.GithubOAuth2",
+    # "social_core.backends.twitter.TwitterOAuth",
+    # "social_core.backends.facebook.FacebookOAuth2",
+    # "social_core.backends.google.GoogleOpenId",
     "social_core.backends.google.GoogleOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
@@ -391,16 +391,19 @@ logging.config.dictConfig({
 # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
 # https://python-social-auth.readthedocs.io/en/latest/pipeline.html
 
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/settings/"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "home"
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ["username", "first_name", "email"]
 
-SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
-SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
+# SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
+# SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS').split(',')
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple
@@ -408,7 +411,7 @@ SOCIAL_AUTH_PIPELINE = (
     # already part of the auth response from the provider, but sometimes this
     # could hit a provider API.
     "social_core.pipeline.social_auth.social_details",
-    # Get the social uid from whichever service we're authing thru. The uid is
+    # Get the social uid from whichever service we're authing through. The uid is
     # the unique identifier of the given user in the provider.
     "social_core.pipeline.social_auth.social_uid",
     # Verifies that the current auth process is valid within the current

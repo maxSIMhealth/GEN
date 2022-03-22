@@ -1,5 +1,5 @@
 from django.contrib.auth import views as auth_views
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 from accounts import views as account_views
 
@@ -56,6 +56,6 @@ urlpatterns = [
 
     # tests / WIP
     # FIXME: finish implementing social login
-    # path('oauth/', include('social_django.urls', namespace='social')),
-    # path("settings/", account_views.settings, name="settings"),
+    path('oauth/', include('social_django.urls', namespace='social')),
+    path("settings/", account_views.settings, name="settings"),
 ]

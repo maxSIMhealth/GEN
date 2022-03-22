@@ -26,11 +26,10 @@
     </div>
     <div class="card-footer bg-light text-muted text-center">
         {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
-        {% comment %}
             <br>
             <p><strong>-- OR --</strong></p>
-            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-        {% endcomment %}
+{#            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>#}
+            <a href="{% url "social:begin" "google-oauth2" %}">Google+</a>
     </div>
     <div class="text-center bg-dark text-white py-2">
         <small>
