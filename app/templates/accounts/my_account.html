@@ -11,35 +11,90 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card mb-3">
-        <div class="card-header bg-dark text-white fs-5">{% trans "Update account info" %}</div>
-        <div class="card-body">
-            <div class="row justify-content-md-center">
-                <div class="col-sm-10">
-                    <div class="mb-2">
-                        <label for="username">{% trans "Username" %}:</label>
-                        <input type="text" class="form-control" name="username" id="username"
-                               value="{{ user.username }}" disabled>
-                    </div>
-                    <div class="mb-2">
-                        <label for="username">{% trans "Institution" %}:</label>
-                        <input type="text" class="form-control" name="username" id="username"
-                               value="{{ user.profile.institution }}" disabled>
-                    </div>
-                    <div class="mb-2">
-                        <label for="username">{% trans "Email address" %}:</label>
-                        <input type="text" class="form-control" name="username" id="username" value="{{ user.email }}"
-                               disabled>
-                    </div>
-                    <form method="post" novalidate>
-                        {% csrf_token %}
-                        {% include 'partials/form.html' %}
-                        <button type="submit" class="btn btn-success">{% trans "Save changes" %}</button>
-                    </form>
+    <div class="card bg-dark mb-3" id="page-name">
+        <div class="card-header">
+            <div class="card-text text-white fs-5 p-0">{% trans "My account" %}</div>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% include 'partials/messages.html' %}
+    {% endif %}
+
+    <div class="card-group">
+        {% if use_social_auth %}
+            <div class="card">
+                <div class="card-header bg-light fs-5">{% trans "Social accounts" %}</div>
+                <div class="card-body">
+                    <div class="fs-4">Google</div>
+                    {% if google_login %}
+                        <p>
+                            {% blocktrans with google_uid=google_login.uid google_first_name=google_login.user.first_name google_last_name=google_login.user.last_name %}
+                                Connected as {{ google_uid }} - {{ google_first_name }} {{ google_last_name }}
+                            {% endblocktrans %}
+                        </p>
+                        {% if not use_social_auth_only %}
+                            {% if can_disconnect %}
+                                <form method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                                    {% csrf_token %}
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% blocktranslate %}This will break the link between your Google account and your GEN account.{% endblocktranslate %}">
+                                        <button class="btn btn-primary" type="submit">{% trans "Disconnect from Google" %}</button>
+                                    </span>
+                                </form>
+                            {% else %}
+                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% blocktranslate %}This will break the link between your Google account and your GEN account.{% endblocktranslate %}">
+                                    <button class="btn btn-secondary" type="button" disabled>{% trans "Disconnect from Google" %}</button>
+                                </span>
+                                <div class="alert alert-warning mt-2" role="alert">
+                                    {% trans "You must set a password for your GEN account before being able to disconnect from Google." %}
+                                    <a href="{% url 'oauth_password' %}">{% trans "Set your password now." %}</a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'logout' %}" role="button">{% trans "Log out" %}</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'social:begin' 'google-oauth2' %}">{% trans "Connect to Google" %}</a>
+                    {% endif %}
                 </div>
-                <div class="col-sm-2 ps-0">
-                    <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
-                    <p class="text-center small">{% trans "This avatar is generated automatically." %}</p>
+            </div>
+        {% endif %}
+        <div class="card">
+            <div class="card-header bg-light fs-5">{% trans "Profile" %}</div>
+            <div class="card-body">
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-10">
+                        {% if not use_social_auth_only %}
+                            <div class="mb-2">
+                                <label for="username">{% trans "Username" %}:</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       value="{{ user.username }}" disabled>
+                            </div>
+                            {#                    <div class="mb-2">#}
+                            {#                        <label for="username">{% trans "Institution" %}:</label>#}
+                            {#                        <input type="text" class="form-control" name="username" id="username"#}
+                            {#                               value="{{ user.profile.institution }}">#}
+                            {#                    </div>#}
+                            <div class="mb-2">
+                                <label for="username">{% trans "Email address" %}:</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       value="{{ user.email }}"
+                                       disabled>
+                            </div>
+                        {% endif %}
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            {% include 'partials/form.html' %}
+                            <button type="submit" class="btn btn-primary">{% trans "Save changes" %}</button>
+                            {% if not use_social_auth_only %}
+                                <a href="{% url 'oauth_password' %}" class="btn btn-warning">{% trans "Change password" %}</a>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-sm-2 ps-0">
+                        <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
+                        <p class="text-center small">{% trans "This avatar is generated automatically." %}</p>
+                    </div>
                 </div>
             </div>
         </div>

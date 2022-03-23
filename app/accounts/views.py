@@ -2,8 +2,9 @@ import random
 
 from django.conf import settings as django_settings
 from django.contrib import messages
-from django.contrib.auth import login  # , update_session_auth_hash
+from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.sites.shortcuts import get_current_site
@@ -17,14 +18,16 @@ from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 from social_django.models import UserSocialAuth
 
-# from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
-
 from courses.models import Course
 from .forms import SignUpForm
 from .tokens import account_activation_token
 
 
 def random_course_assign(user):
+    """Assigns user to random courses until they have reached the max number limit."""
+
+    # FIXME: need to handle case if all courses are full
+
     # get courses objects
     courses = Course.objects.filter(name__contains="UMontreal")
 
@@ -40,13 +43,30 @@ def random_course_assign(user):
 
 
 class Login(LoginView):
-    template_name = 'login.html'
+    """Display the login form and handle the login action."""
+    template_name = 'accounts/login.html'
+
+    use_social_auth = django_settings.USE_SOCIAL_AUTH
+    use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
+
     extra_context = {
         'support_emails': django_settings.SUPPORT_EMAILS,
+        "use_social_auth": use_social_auth,
+        "use_social_auth_only": use_social_auth_only,
     }
+
+    def get(self, request, *args, **kwargs):
+        """Handle GET request. If user is already logged in, redirect to home/dashboard. """
+        user = self.request.user
+
+        if user.is_authenticated:
+            return redirect("home")
+
+        return self.render_to_response(self.get_context_data())
 
 
 def signup(request):
+    """Display the signup form and handle the signup action."""
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -82,7 +102,7 @@ def signup(request):
                     "token": account_activation_token.make_token(user),
                 },
             )
-            #from_email = "gen-donotreply@" + current_site.domain
+            # from_email = "gen-donotreply@" + current_site.domain
             from_email = django_settings.DEFAULT_FROM_EMAIL
             user.email_user(subject, message, from_email=from_email)
 
@@ -102,6 +122,7 @@ def account_activation_sent(request):
 
 
 def activate(request, uidb64, token):
+    """Handles validating token link sent by email and activating user account."""
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -113,6 +134,7 @@ def activate(request, uidb64, token):
         user.profile.email_confirmed = True
         user.save()
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+        # FIXME: add message confirming that the account has been activated.
         return redirect("home")
         # FIXME: finish implementing 'activation confirmed' page
         # return render(request, 'account_activation_valid.html')
@@ -126,48 +148,10 @@ def activate(request, uidb64, token):
         return redirect("login")
 
 
-@login_required
-def settings(request):
-    user = request.user
-
-    try:
-        github_login = user.social_auth.get(provider="github")
-    except UserSocialAuth.DoesNotExist:
-        github_login = None
-
-    try:
-        google_login = user.social_auth.get(provider="google-oauth2")
-    except UserSocialAuth.DoesNotExist:
-        google_login = None
-
-    # try:
-    #     twitter_login = user.social_auth.get(provider='twitter')
-    # except UserSocialAuth.DoesNotExist:
-    #     twitter_login = None
-
-    # try:
-    #     facebook_login = user.social_auth.get(provider='facebook')
-    # except UserSocialAuth.DoesNotExist:
-    #     facebook_login = None
-
-    can_disconnect = user.social_auth.count() > 1 or user.has_usable_password()
-
-    return render(
-        request,
-        "settings.html",
-        {
-            "github_login": github_login,
-            "google_login": google_login,
-            # 'twitter_login': twitter_login,
-            # 'facebook_login': facebook_login,
-            "can_disconnect": can_disconnect,
-        },
-    )
-
-
 @method_decorator(login_required, name="dispatch")
 class UserUpdateView(UpdateView):
-    # FIXME: improve user account info page to allow updating profile fields
+    """Renders page with user profile data and linked social accounts."""
+    # FIXME: improve user account info page to allow updating other fields
     model = User
     fields = (
         "first_name",
@@ -176,5 +160,46 @@ class UserUpdateView(UpdateView):
     template_name = "accounts/my_account.html"
     success_url = reverse_lazy("home")
 
+    def get_context_data(self, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            google_login = user.social_auth.get(provider="google-oauth2")
+        except UserSocialAuth.DoesNotExist:
+            google_login = None
+
+        can_disconnect = user.social_auth.count() > 1 or user.has_usable_password()
+        use_social_auth = django_settings.USE_SOCIAL_AUTH
+        use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
+        context['google_login'] = google_login
+        context['can_disconnect'] = can_disconnect
+        context['use_social_auth'] = use_social_auth
+        context['use_social_auth_only'] = use_social_auth_only
+
+        return context
+
     def get_object(self):
         return self.request.user
+
+
+@login_required
+def oauth_password(request):
+    """Handles defining and updating password for users created locally and with OAuth authentication."""
+    if request.user.has_usable_password():
+        password_form = PasswordChangeForm
+    else:
+        password_form = AdminPasswordChangeForm
+
+    if request.method == 'POST':
+        form = password_form(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, _('Your password was successfully updated.'))
+            return redirect('my_account')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        form = password_form(request.user)
+
+    return render(request, 'accounts/password_change.html', {'form': form})

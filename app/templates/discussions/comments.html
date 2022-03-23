@@ -38,7 +38,7 @@
                 <div class="col col-10 col-sm-10 col-md-10 col-lg-11 pl-0">
                     <div class="fs-5">{{ discussion.name }}</div>
                     {% if not course.blind_data %}
-                        <small>{% trans "By:" %} {{ discussion.author }}</small>
+                        <small>{% trans "By:" %} {{ discussion.author.first_name }} {{ discussion.author.last_name }}</small>
                     {% endif %}
                 </div>
             </div>
@@ -130,7 +130,7 @@
                                     {% endcomment %}
                                     <small class="text-dark p-0">
                                         {% if not course.blind_data %}
-                                            {{ comment.author }}
+                                            {{ comment.author.first_name }} {{ comment.author.last_name }},
                                         {% endif %}
                                         {{ comment.created|naturaltime }}
                                     </small>

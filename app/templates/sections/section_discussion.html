@@ -84,7 +84,7 @@
                                 {% endcomment %}
 
                                 {% if not course.blind_data %}
-                                    <p class="mb-0"><small class="text-muted">{% trans "By" %} {{ item.author }}</small>
+                                    <p class="mb-0"><small class="text-muted">{% trans "By" %} {{ item.author.first_name }} {{ item.author.last_name }}</small>
                                     </p>
                                 {% endif %}
                                 {% comment %}

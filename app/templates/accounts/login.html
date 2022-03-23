@@ -4,38 +4,50 @@
 {% load i18n %}
 {% load support_emails %}
 
-{% block title %}Sign up to GEN{% endblock title %}
+{% block title %}{% translate "Sign in to GEN" %}{% endblock title %}
 
 {% block content %}
-    <div class="card-body bg-light text-dark">
-        {% if messages %}
-            {% include 'partials/messages.html' %}
-        {% endif %}
-        <div class="card-title fs-3">{% trans "Log in" %}</div>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {% include 'partials/form.html' %}
-            <button type="submit" class="btn btn-primary btn-block">{% trans "Log in" %}</button>
-        </form>
-        <div class="alert alert-info mt-3 mb-0">
+    {% if messages %}
+        {% include 'partials/messages.html' %}
+    {% endif %}
+    <div class="card" id="login-card">
+        <div class="card-header bg-light text-dark fs-3">{% translate "Log in to GEN" %}</div>
+        <div class="card-group">
+            {% if not use_social_auth_only %}
+            <div class="card">
+                <div class="card-body bg-light text-dark">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% include 'partials/form.html' %}
+                        <button type="submit" class="btn btn-primary btn-block">{% translate "Log in" %}</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            {% if use_social_auth %}
+            <div class="card">
+                <div class="card-body bg-light text-dark text-center">
+                    {% if not use_social_auth_only %}<p>{% translate "Or use:" %}</p>{% endif %}
+                    <a href="{% url "social:begin" "google-oauth2" %}">
+                        <img src="{% static 'img/btn_google_signin_dark_normal_web.png' %}" alt="{% translate "Sign in with Google button" %}">
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="alert alert-info mb-0">
             {% blocktrans %}
                 If you have problems logging into GEN, please contact us at
             {% endblocktrans %}
             {% support_emails %}
         </div>
     </div>
-    <div class="card-footer bg-light text-muted text-center">
-        {% trans "New to GEN?" %} <a href="{% url 'signup' %}">{% trans "Sign up" %}</a>
-            <br>
-            <p><strong>-- OR --</strong></p>
-{#            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>#}
-            <a href="{% url "social:begin" "google-oauth2" %}">Google+</a>
-    </div>
+
+    {% if not use_social_auth_only %}
     <div class="text-center bg-dark text-white py-2">
-        <small>
-            <a href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
-        </small>
+        <a href="{% url 'signup' %}" class="text-light">{% translate "New to GEN? Sign up" %}</a> | <a href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
     </div>
+    {% endif %}
 {% endblock content %}
 
 {% block footer %}
@@ -43,7 +55,8 @@
         <div class="text-center pt-2 pb-2 text-light">
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}" style="width:200px;display: inline-block">
+                <select name="language" id="language" class="form-select form-select-sm"
+                        aria-label="{% trans "List of languages" %}">
                     {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
                             {{ language.name_local|capfirst }} ({{ language.code }})
