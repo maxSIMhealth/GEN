@@ -3,7 +3,30 @@ body {
     background-color: #f8f9fa;
 }
 
+/* login */
+#login-card {
+    border-radius: 0;
+    border: none;
+}
+
+#login-card .card-header {
+    border-bottom: none;
+}
+
+#login-card .card-group .card {
+    border-bottom: none;
+}
+
 /* navbar */
+#main-navbar {
+    border-bottom: 1px solid #cecece;
+}
+
+#navbar-avatar  {
+    width: 24px;
+    vertical-align: top;
+}
+
 .navbar-dark .navbar-toggler {
     color: rgba(255, 255, 255, 1.0);
 }
@@ -218,10 +241,16 @@ body {
     background-size: 15px;
 }
 
-/* footer logos */
+/* footer */
+#language {
+    width:200px;
+    display: inline-block;
+}
+
 .footer-logos img {
     width: 200px;
 }
+
 
 /* quiz items */
 .quiz .card-body li label {

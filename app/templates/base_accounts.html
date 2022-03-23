@@ -13,7 +13,7 @@
             <div class="col-lg-8 col-md-10 col-sm-12">
                 <div class="card bg-dark text-white">
                     <h1 class="card-header bg-white text-center">
-                        <img src="{% static 'img/GEN-logo.png' %}" alt="{% trans 'GEN logo' %}" width="60%">
+                        <img src="{% static 'img/GEN-logo-new.png' %}" alt="{% trans 'GEN logo' %}" width="80%">
                     </h1>
                     {% block content %}
                     {% endblock content %}
@@ -28,7 +28,7 @@
         <div class="text-center pt-2 pb-2 text-light">
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}" style="width:200px;display: inline-block">
+                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}">
                     {% for language in languages %}
                         <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
                             {{ language.name_local|capfirst }} ({{ language.code }})
