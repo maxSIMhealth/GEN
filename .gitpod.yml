@@ -1,10 +1,14 @@
 tasks:
-  - init: |
+  - name: GEN
+    init: |
       echo 'Build GEN docker image'
-      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" --build
+      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" build
     command: |
       echo 'Start GEN'
-      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" up --detach 
+      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" up --detach
+      echo 'Running migrations'
+      gp await-port 8000
+      docker-compose exec gen python manage.py migrate
 
 vscode:
   extensions:
