@@ -15,6 +15,15 @@ body {
 
 #login-card .card-group .card {
     border-bottom: none;
+    border-radius: 0;
+}
+
+#login-logo {
+    width: 60%;
+}
+
+#login-btn-google {
+    width: 191px;
 }
 
 /* navbar */
