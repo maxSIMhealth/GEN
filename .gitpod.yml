@@ -1,0 +1,7 @@
+tasks:
+  - init: |
+      echo 'Build GEN docker image'
+      docker-compose build
+    command: |
+      echo 'Start GEN'
+      docker-compose up
