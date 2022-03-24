@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     restart: "on-failure" 
-    env_file: ./config/.env-dev
+    env_file: ./config/dev.env
     volumes:
       - ./app:/gen/app
       - ./static:/gen/static
@@ -23,7 +23,7 @@ services:
     image: "postgres:13"
     ports:
       - 5432:5432
-    env_file: ./config/.env-dev
+    env_file: ./config/dev.env
     volumes:
     - "postgres:/var/lib/postgresql/data/"
 
