@@ -158,7 +158,7 @@ class UserUpdateView(UpdateView):
         "last_name",
     )
     template_name = "accounts/my_account.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("my_account")
 
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
@@ -180,6 +180,11 @@ class UserUpdateView(UpdateView):
 
     def get_object(self):
         return self.request.user
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        messages.success(request, _("Profile updated successfully."))
+        return super().post(request, *args, **kwargs)
 
 
 @login_required
