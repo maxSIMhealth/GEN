@@ -5,3 +5,12 @@ tasks:
     command: |
       echo 'Start GEN'
       docker-compose up
+
+vscode:
+  extensions:
+    - ms-python.python
+    - ms-azuretools.vscode-docker
+    - ecmel.vscode-html-css
+    - batisteo.vscode-django
+    - eamodio.gitlens
+    - mhutchie.git-graph
