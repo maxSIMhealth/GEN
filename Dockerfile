@@ -20,7 +20,7 @@ RUN set -ex \
     && apk add --no-cache ffmpeg libmagic gettext \
     && apk add --no-cache --virtual .build-deps python3-dev postgresql-dev gcc make libc-dev zlib-dev jpeg-dev libffi-dev \
     && python -m venv /env \
-    && /env/bin/pip install --upgrade pip \
+    && /env/bin/pip install --upgrade pip setuptools wheel\
     && /env/bin/pip install --no-cache-dir -r $GEN_HOME/app/requirements.txt \
     && runDeps="$(scanelf --needed --nobanner --recursive /env \
         | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
