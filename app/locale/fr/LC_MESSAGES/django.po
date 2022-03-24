@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 20:50+0000\n"
-"PO-Revision-Date: 2022-02-01 20:53+0000\n"
+"POT-Creation-Date: 2022-03-24 17:43+0000\n"
+"PO-Revision-Date: 2022-03-24 17:46+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -39,7 +39,7 @@ msgstr "Nom de famille"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: accounts/forms.py:14 templates/accounts/my_account.html:25
+#: accounts/forms.py:14
 msgid "Institution"
 msgstr "Institution"
 
@@ -75,15 +75,15 @@ msgstr "profil"
 msgid "profiles"
 msgstr "profils"
 
-#: accounts/views.py:75
+#: accounts/views.py:95
 msgid "Activate Your GEN Account"
 msgstr "Activez votre compte GEN"
 
-#: accounts/views.py:92
+#: accounts/views.py:112
 msgid "You already have an account."
 msgstr "Avez vous déjà un compte."
 
-#: accounts/views.py:123
+#: accounts/views.py:145
 msgid ""
 "Try logging in now. The confirmation link has been used or expired. Get in "
 "touch if you are having issues: support@maxsimgen.com"
@@ -91,6 +91,20 @@ msgstr ""
 "Essayez de vous connecter maintenant. Le lien de confirmation a été utilisé "
 "ou a expiré. Contactez-nous si vous rencontrez des problèmes: "
 "support@maxsimgen.com"
+
+#: accounts/views.py:186
+#| msgid "completed successfully"
+msgid "Profile updated successfully."
+msgstr "Mise à jour du profil réussie."
+
+#: accounts/views.py:203
+#| msgid "Password change successful"
+msgid "Your password was successfully updated."
+msgstr "Votre mot de passe a été mis à jour avec succès."
+
+#: accounts/views.py:206
+msgid "Please correct the error below."
+msgstr "Veuillez corriger l'erreur ci-dessous."
 
 #: content/models.py:19 dashboard/models.py:18 quiz/models.py:245
 msgid "image"
@@ -870,7 +884,8 @@ msgstr ""
 msgid "Submit"
 msgstr "Soumettre"
 
-#: discussions/forms.py:49 videos/forms.py:54 videos/forms.py:76
+#: discussions/forms.py:49 templates/accounts/password_change.html:28
+#: videos/forms.py:54 videos/forms.py:76
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1450,17 +1465,18 @@ msgstr ""
 "\n"
 "Si vous pensez qu'il s'agit d'une erreur, contactez-nous à"
 
-#: templates/403.html:31 templates/503.html:27 templates/login.html:62
+#: templates/403.html:31 templates/503.html:27
+#: templates/accounts/login.html:73
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
-#: templates/403.html:33 templates/503.html:28 templates/login.html:64
-#: templates/partials/footer_logos.html:12
+#: templates/403.html:33 templates/503.html:28
+#: templates/accounts/login.html:75 templates/partials/footer_logos.html:12
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/403.html:34 templates/503.html:29 templates/base_accounts.html:43
-#: templates/login.html:65
+#: templates/403.html:34 templates/503.html:29
+#: templates/accounts/login.html:76 templates/base_accounts.html:43
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -1481,8 +1497,58 @@ msgstr ""
 "\n"
 "Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
 
+#: templates/accounts/login.html:7
+msgid "Sign in to GEN"
+msgstr "Connectez-vous à GEN"
+
+#: templates/accounts/login.html:14
+#| msgid "Log in"
+msgid "Log in to GEN"
+msgstr "Connectez-vous à GEN"
+
+#: templates/accounts/login.html:22 templates/accounts/signup.html:18
+#: templates/registration/password_reset_complete.html:12
+msgid "Log in"
+msgstr "S'identifier"
+
+#: templates/accounts/login.html:30
+msgid "Or use:"
+msgstr "Ou utiliser:"
+
+#: templates/accounts/login.html:32
+msgid "Sign in with Google button"
+msgstr "Button: sign in with Google"
+
+#: templates/accounts/login.html:39
+msgid ""
+"\n"
+"                If you have problems logging into GEN, please contact us at\n"
+"            "
+msgstr ""
+"\n"
+"Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous contacter à"
+
+#: templates/accounts/login.html:48
+#| msgid "New to GEN?"
+msgid "New to GEN? Sign up"
+msgstr "Nouveau sur GEN ? S'inscrire"
+
+#: templates/accounts/login.html:48
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié?"
+
+#: templates/accounts/login.html:57 templates/base.html:101
+#: templates/base_accounts.html:30
+msgid "Language:"
+msgstr "Langue:"
+
+#: templates/accounts/login.html:59 templates/base.html:102
+#: templates/base_accounts.html:31
+msgid "List of languages"
+msgstr "Liste des langues"
+
 #: templates/accounts/my_account.html:6 templates/accounts/my_account.html:10
-#: templates/base.html:65
+#: templates/accounts/my_account.html:16 templates/base.html:64
 msgid "My account"
 msgstr "Mon compte"
 
@@ -1492,45 +1558,91 @@ msgstr "Mon compte"
 msgid "Home"
 msgstr "Accueil"
 
-#: templates/accounts/my_account.html:15
-msgid "Update account info"
-msgstr "Mettre à jour les informations de compte"
+#: templates/accounts/my_account.html:27
+msgid "Social accounts"
+msgstr "Comptes sociaux"
 
-#: templates/accounts/my_account.html:20
+#: templates/accounts/my_account.html:32
+#, python-format
+#| msgid ""
+#| "\n"
+#| "                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
+#| "                  "
+msgid ""
+"\n"
+"                                Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
+"                            "
+msgstr ""
+"\n"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
+
+#: templates/accounts/my_account.html:40 templates/accounts/my_account.html:45
+msgid ""
+"This will break the link between your Google account and your GEN account."
+msgstr "Cela rompra le lien entre votre compte Google et votre compte GEN."
+
+#: templates/accounts/my_account.html:41 templates/accounts/my_account.html:46
+msgid "Disconnect from Google"
+msgstr "Se déconnecter de Google"
+
+#: templates/accounts/my_account.html:49
+#| msgid ""
+#| "You must set a password for your account before disconnecting from Google."
+msgid ""
+"You must set a password for your GEN account before being able to disconnect"
+" from Google."
+msgstr ""
+"Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
+"vous déconnecter de Google."
+
+#: templates/accounts/my_account.html:50
+msgid "Set your password now."
+msgstr "Définissez votre mot de passe maintenant."
+
+#: templates/accounts/my_account.html:54 templates/base.html:68
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: templates/accounts/my_account.html:57
+msgid "Connect to Google"
+msgstr "Connectez-vous à Google"
+
+#: templates/accounts/my_account.html:63
+#| msgid "profile"
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/accounts/my_account.html:69
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: templates/accounts/my_account.html:30
+#: templates/accounts/my_account.html:79
 msgid "Email address"
 msgstr "Adresse électronique"
 
-#: templates/accounts/my_account.html:37 templates/accounts/password.html:20
-#: templates/settings.html:20
+#: templates/accounts/my_account.html:88
 msgid "Save changes"
 msgstr "Sauvegarder les modifications"
 
-#: templates/accounts/my_account.html:42
-msgid "This avatar is generated automatically."
-msgstr "Cet avatar est généré automatiquement."
-
-#: templates/accounts/password.html:5 templates/accounts/password.html:9
+#: templates/accounts/my_account.html:90
 #: templates/accounts/password_change.html:5
 #: templates/accounts/password_change.html:9
 #: templates/accounts/password_change.html:14
-#: templates/accounts/password_change.html:19
-#: templates/accounts/password_change_done.html:8 templates/base.html:67
+#: templates/accounts/password_change.html:27
+#: templates/accounts/password_change_done.html:8
 #: templates/registration/password_reset_confirm.html:11
 #: templates/registration/password_reset_confirm.html:15
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/accounts/password.html:13
-msgid "Change Password"
-msgstr "Changer le mot de passe"
+#: templates/accounts/my_account.html:96
+msgid "This avatar is generated automatically."
+msgstr "Cet avatar est généré automatiquement."
 
-#: templates/accounts/password.html:15
-msgid "You have not defined a password yet."
-msgstr "Vous n'avez pas encore défini de mot de passe."
+#: templates/accounts/password_change.html:18
+msgid "Your account does not have a password yet. Please define it below."
+msgstr ""
+"Votre compte n'a pas encore de mot de passe. Veuillez le définir ci-dessous."
 
 #: templates/accounts/password_change_done.html:5
 msgid "Password change successful"
@@ -1548,7 +1660,7 @@ msgstr "<strong>Succès!</strong> Votre mot de passe a été changé!"
 msgid "Return to home page"
 msgstr "Retour à la page d'accueil"
 
-#: templates/accounts/signup.html:10 templates/login.html:28
+#: templates/accounts/signup.html:10
 msgid "Sign up"
 msgstr "S'inscrire"
 
@@ -1559,12 +1671,6 @@ msgstr "Créer un compte"
 #: templates/accounts/signup.html:18
 msgid "Already have an account?"
 msgstr "Vous avez déjà un compte?"
-
-#: templates/accounts/signup.html:18 templates/login.html:14
-#: templates/login.html:18
-#: templates/registration/password_reset_complete.html:12
-msgid "Log in"
-msgstr "S'identifier"
 
 #: templates/base.html:38
 msgid "Return to GEN home page"
@@ -1585,20 +1691,6 @@ msgstr "Cabillot"
 #: templates/base.html:53
 msgid "Help"
 msgstr "Aide"
-
-#: templates/base.html:71
-msgid "Log out"
-msgstr "Se déconnecter"
-
-#: templates/base.html:104 templates/base_accounts.html:30
-#: templates/login.html:47
-msgid "Language:"
-msgstr "Langue:"
-
-#: templates/base.html:105 templates/base_accounts.html:31
-#: templates/login.html:48
-msgid "List of languages"
-msgstr "Liste des langues"
 
 #: templates/base_course_section.html:31
 msgid "Sections"
@@ -1700,23 +1792,6 @@ msgstr "Liste des dimensions"
 #: templates/games/match_terms.html:15
 msgid "Choose..."
 msgstr "Choisir..."
-
-#: templates/login.html:21
-msgid ""
-"\n"
-"                If you have problems logging into GEN, please contact us at\n"
-"            "
-msgstr ""
-"\n"
-"Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous contacter à"
-
-#: templates/login.html:28
-msgid "New to GEN?"
-msgstr "Nouveau sur GEN?"
-
-#: templates/login.html:38
-msgid "Forgot your password?"
-msgstr "Mot de passe oublié?"
 
 #: templates/new_media.html:5
 msgid "Add new Media"
@@ -2404,66 +2479,6 @@ msgstr "Annuler la publication"
 msgid "No video available."
 msgstr "Aucune vidéo disponible."
 
-#: templates/settings.html:8
-msgid "Settings"
-msgstr "Réglages"
-
-#: templates/settings.html:15
-msgid "Your info"
-msgstr "Vos infos"
-
-#: templates/settings.html:25
-msgid "Social accounts"
-msgstr "Comptes sociaux"
-
-#: templates/settings.html:29
-msgid "Connected as"
-msgstr "Connecté en tant que"
-
-#: templates/settings.html:33 templates/settings.html:36
-msgid "Disconnect from GitHub"
-msgstr "Se déconnecter de GitHub"
-
-#: templates/settings.html:38
-msgid ""
-"You must set a password for your account before disconnecting from Github."
-msgstr ""
-"Vous devez définir un mot de passe pour votre compte avant de vous "
-"déconnecter de Github."
-
-#: templates/settings.html:38 templates/settings.html:60
-msgid "Set your password now."
-msgstr "Définissez votre mot de passe maintenant."
-
-#: templates/settings.html:42
-msgid "Connect to GitHub"
-msgstr "Connectez-vous à GitHub"
-
-#: templates/settings.html:48
-#, python-format
-msgid ""
-"\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
-"                  "
-msgstr ""
-"\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
-
-#: templates/settings.html:55 templates/settings.html:58
-msgid "Disconnect from Google"
-msgstr "Se déconnecter de Google"
-
-#: templates/settings.html:60
-msgid ""
-"You must set a password for your account before disconnecting from Google."
-msgstr ""
-"Vous devez définir un mot de passe pour votre compte avant de vous "
-"déconnecter de Google."
-
-#: templates/settings.html:64
-msgid "Connect to Google"
-msgstr "Connectez-vous à Google"
-
 #: templates/videos/delete_video_confirmation.html:6
 #: templates/videos/unpublish_video_confirmation.html:6
 msgid "Delete video confirmation"
@@ -2611,6 +2626,36 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:185
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid "Update account info"
+#~ msgstr "Mettre à jour les informations de compte"
+
+#~ msgid "Change Password"
+#~ msgstr "Changer le mot de passe"
+
+#~ msgid "You have not defined a password yet."
+#~ msgstr "Vous n'avez pas encore défini de mot de passe."
+
+#~ msgid "Settings"
+#~ msgstr "Réglages"
+
+#~ msgid "Your info"
+#~ msgstr "Vos infos"
+
+#~ msgid "Connected as"
+#~ msgstr "Connecté en tant que"
+
+#~ msgid "Disconnect from GitHub"
+#~ msgstr "Se déconnecter de GitHub"
+
+#~ msgid ""
+#~ "You must set a password for your account before disconnecting from Github."
+#~ msgstr ""
+#~ "Vous devez définir un mot de passe pour votre compte avant de vous "
+#~ "déconnecter de Github."
+
+#~ msgid "Connect to GitHub"
+#~ msgstr "Connectez-vous à GitHub"
 
 #~ msgid ""
 #~ "Congratulations! You have passed the final assessment. Your certificate of "
