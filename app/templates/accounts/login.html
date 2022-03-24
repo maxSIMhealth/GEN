@@ -14,7 +14,7 @@
         <div class="card-header bg-light text-dark fs-3">{% translate "Log in to GEN" %}</div>
         <div class="card-group">
             {% if not use_social_auth_only %}
-            <div class="card">
+            <div class="card mb-0">
                 <div class="card-body bg-light text-dark">
                     <form method="post" novalidate>
                         {% csrf_token %}
@@ -25,17 +25,17 @@
             </div>
             {% endif %}
             {% if use_social_auth %}
-            <div class="card">
+            <div class="card mb-0">
                 <div class="card-body bg-light text-dark text-center">
                     {% if not use_social_auth_only %}<p>{% translate "Or use:" %}</p>{% endif %}
                     <a href="{% url "social:begin" "google-oauth2" %}">
-                        <img src="{% static 'img/btn_google_signin_dark_normal_web.png' %}" alt="{% translate "Sign in with Google button" %}">
+                        <img src="{% static 'img/btn_google_signin_dark_normal_web@2x.png' %}" alt="{% translate "Sign in with Google button" %}" id="login-btn-google">
                     </a>
                 </div>
             </div>
             {% endif %}
         </div>
-        <div class="alert alert-info mb-0">
+        <div class="alert alert-info m-2">
             {% blocktrans %}
                 If you have problems logging into GEN, please contact us at
             {% endblocktrans %}
