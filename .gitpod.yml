@@ -1,10 +1,10 @@
 tasks:
   - init: |
       echo 'Build GEN docker image'
-      docker-compose build
+      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" --build
     command: |
       echo 'Start GEN'
-      docker-compose up
+      docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" up --detach 
 
 vscode:
   extensions:
