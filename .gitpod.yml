@@ -7,6 +7,7 @@ tasks:
       echo 'Start GEN'
       docker-compose -f "/workspace/GEN/docker-compose.yml" -f "/workspace/GEN/docker-compose.debug.yml" up --detach
       echo 'Running migrations'
+      gp await-port 5432
       gp await-port 8000
       docker-compose exec gen python manage.py migrate
 
