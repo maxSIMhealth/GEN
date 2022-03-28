@@ -235,10 +235,10 @@ class Question(TimeStampedModel):
         blank=False,
         help_text=_("Enter the content that you want displayed."),
     )
-    explanation = models.TextField(
-        _("explanation"),
+    feedback = models.TextField(
+        _("feedback"),
         blank=True,
-        help_text=_("Explanation to be shown after the question has been answered."),
+        help_text=_("Feedback to be shown after the question has been answered."),
     )
     image = models.ForeignKey(
         ImageFile,

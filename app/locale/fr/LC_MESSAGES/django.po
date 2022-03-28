@@ -8,9 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-24 17:43+0000\n"
-"PO-Revision-Date: 2022-03-24 17:46+0000\n"
-"Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
+"POT-Creation-Date: 2022-03-28 23:48+0000\n"
+"PO-Revision-Date: 2022-03-28 23:49+0000\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -93,12 +92,10 @@ msgstr ""
 "support@maxsimgen.com"
 
 #: accounts/views.py:186
-#| msgid "completed successfully"
 msgid "Profile updated successfully."
 msgstr "Mise à jour du profil réussie."
 
 #: accounts/views.py:203
-#| msgid "Password change successful"
 msgid "Your password was successfully updated."
 msgstr "Votre mot de passe a été mis à jour avec succès."
 
@@ -106,7 +103,7 @@ msgstr "Votre mot de passe a été mis à jour avec succès."
 msgid "Please correct the error below."
 msgstr "Veuillez corriger l'erreur ci-dessous."
 
-#: content/models.py:19 dashboard/models.py:18 quiz/models.py:245
+#: content/models.py:19 dashboard/models.py:18 quiz/models.py:246
 msgid "image"
 msgstr "image"
 
@@ -120,7 +117,7 @@ msgstr "fichier"
 
 #: core/models.py:13 core/models.py:33 courses/models.py:365
 #: courses/models.py:520 games/models.py:87 games/models.py:111
-#: games/models.py:134 quiz/models.py:273 quiz/models.py:487
+#: games/models.py:134 quiz/models.py:274 quiz/models.py:488
 msgid "custom order"
 msgstr "commande personnalisée"
 
@@ -231,7 +228,7 @@ msgid "Description (max 2000 characters)"
 msgstr "Description (max 2000 caractères)"
 
 #: courses/models.py:67 courses/models.py:204 courses/models.py:487
-#: discussions/models.py:63 quiz/models.py:223
+#: discussions/models.py:63 quiz/models.py:224
 msgid "author"
 msgstr "l'auteur"
 
@@ -244,7 +241,7 @@ msgid "end date"
 msgstr "date de fin"
 
 #: courses/models.py:76 courses/models.py:227 discussions/models.py:32
-#: quiz/models.py:116
+#: quiz/models.py:117
 msgid "requirement"
 msgstr "exigence"
 
@@ -363,8 +360,8 @@ msgid "show progress tracker"
 msgstr "afficher le suivi des progrès"
 
 #: courses/models.py:150 courses/models.py:214 courses/models.py:546
-#: discussions/models.py:21 quiz/models.py:101 quiz/models.py:505
-#: quiz/models.py:610 videos/models.py:42 videos/models.py:57
+#: discussions/models.py:21 quiz/models.py:102 quiz/models.py:506
+#: quiz/models.py:611 videos/models.py:42 videos/models.py:57
 msgid "course"
 msgstr "le cours"
 
@@ -700,7 +697,7 @@ msgstr ""
 "Pour activer le 'groupe par vidéo', le type de section doit être Quiz."
 
 #: courses/models.py:469 courses/models.py:497 courses/models.py:554
-#: quiz/models.py:613
+#: quiz/models.py:614
 msgid "section"
 msgstr "section"
 
@@ -901,7 +898,7 @@ msgstr "La longueur maximale d'un commentaire est de 400 caractères."
 msgid "last updated"
 msgstr "dernière mise à jour"
 
-#: discussions/models.py:40 quiz/models.py:109 quiz/models.py:631
+#: discussions/models.py:40 quiz/models.py:110 quiz/models.py:632
 msgid "video"
 msgstr "vidéo"
 
@@ -990,74 +987,74 @@ msgstr "Choix 1 nom de la colonne"
 msgid "Choice 2 column name"
 msgstr "Choix 2 nom de la colonne"
 
-#: quiz/models.py:17
+#: quiz/models.py:18
 msgid "Header"
 msgstr "Entête"
 
-#: quiz/models.py:18
+#: quiz/models.py:19
 msgid "Likert"
 msgstr "Likert"
 
-#: quiz/models.py:19
+#: quiz/models.py:20
 msgid "Open ended"
 msgstr "Ouvert"
 
-#: quiz/models.py:20
+#: quiz/models.py:21
 msgid "Multiple choice"
 msgstr "Choix multiple"
 
-#: quiz/models.py:27
+#: quiz/models.py:28
 msgid "Minimum Percentage"
 msgstr "Pourcentage minimum"
 
-#: quiz/models.py:28
+#: quiz/models.py:29
 msgid "Maximum Number of Mistakes"
 msgstr "Nombre maximum d'erreurs"
 
-#: quiz/models.py:37
+#: quiz/models.py:38
 msgid "paginate questions"
 msgstr "paginer les questions"
 
-#: quiz/models.py:38
+#: quiz/models.py:39
 msgid "check score"
 msgstr "vérifier le score"
 
-#: quiz/models.py:39
+#: quiz/models.py:40
 msgid "show score"
 msgstr "montrer le score"
 
-#: quiz/models.py:40
+#: quiz/models.py:41
 msgid "show question value"
 msgstr "afficher la valeur de la question"
 
-#: quiz/models.py:41
+#: quiz/models.py:42
 msgid "show correct answers"
 msgstr "afficher les bonnes réponses"
 
-#: quiz/models.py:43 quiz/models.py:509
+#: quiz/models.py:44 quiz/models.py:510
 msgid "max score"
 msgstr "score maximum"
 
-#: quiz/models.py:45
+#: quiz/models.py:46
 msgid ""
 "** NOT IN USE ** Maximum score automatically based on questions values."
 msgstr ""
 "** NON UTILISÉ ** Score maximum automatiquement basé sur les valeurs des "
 "questions."
 
-#: quiz/models.py:48
+#: quiz/models.py:49
 msgid "assessment method"
 msgstr "procédé d'évaluation"
 
-#: quiz/models.py:53
+#: quiz/models.py:54
 msgid "method for assessing if the quiz has been"
 msgstr "méthode pour évaluer si le quiz a été"
 
-#: quiz/models.py:56 quiz/models.py:523
+#: quiz/models.py:57 quiz/models.py:524
 msgid "minimum percentage acceptable"
 msgstr "pourcentage minimum acceptable"
 
-#: quiz/models.py:59 quiz/models.py:526
+#: quiz/models.py:60 quiz/models.py:527
 msgid ""
 "If the participant score percentage is below this value, the quiz is marked "
 "as failed"
@@ -1065,61 +1062,61 @@ msgstr ""
 "Si le pourcentage de score du participant est inférieur à cette valeur, le "
 "quiz est marqué comme ayant échoué"
 
-#: quiz/models.py:63 quiz/models.py:516
+#: quiz/models.py:64 quiz/models.py:517
 msgid "maximum number of mistakes"
 msgstr "nombre maximum d'erreurs"
 
-#: quiz/models.py:66 quiz/models.py:519
+#: quiz/models.py:67 quiz/models.py:520
 msgid "If the participant exceeds this value, the quiz is marked as failed"
 msgstr ""
 "Si le participant dépasse cette valeur, le quiz est marqué comme ayant "
 "échoué"
 
-#: quiz/models.py:70
+#: quiz/models.py:71
 msgid "require answers"
 msgstr "exiger des réponses"
 
-#: quiz/models.py:73
+#: quiz/models.py:74
 msgid "Require participant to answer all questions"
 msgstr "Exiger du participant qu'il réponde à toutes les questions"
 
-#: quiz/models.py:77
+#: quiz/models.py:78
 msgid "randomize"
 msgstr "randomiser"
 
-#: quiz/models.py:80
+#: quiz/models.py:81
 msgid "Randomize questions order"
 msgstr "Randomiser l'ordre des questions"
 
-#: quiz/models.py:84 quiz/models.py:91
+#: quiz/models.py:85 quiz/models.py:92
 msgid "subset"
 msgstr "sous-ensemble"
 
-#: quiz/models.py:87
+#: quiz/models.py:88
 msgid "Enable to use only a subset of the questions of this quiz"
 msgstr "Activer pour n'utiliser qu'un sous-ensemble des questions de ce quiz"
 
-#: quiz/models.py:94
+#: quiz/models.py:95
 msgid "Number of questions to use on the subset"
 msgstr "Nombre de questions à utiliser sur le sous-ensemble"
 
-#: quiz/models.py:119
+#: quiz/models.py:120
 msgid "Allow multiple attempts"
 msgstr "Autoriser plusieurs tentatives"
 
-#: quiz/models.py:122
+#: quiz/models.py:123
 msgid "attempts max number"
 msgstr "nombre maximal de tentatives"
 
-#: quiz/models.py:126 quiz/models.py:227 quiz/models.py:503 quiz/models.py:601
+#: quiz/models.py:127 quiz/models.py:228 quiz/models.py:504 quiz/models.py:602
 msgid "quiz"
 msgstr "quiz"
 
-#: quiz/models.py:127
+#: quiz/models.py:128
 msgid "quizzes"
 msgstr "quiz"
 
-#: quiz/models.py:140
+#: quiz/models.py:141
 msgid ""
 "Enabling multiple attempts is not allowed for quizzes in a 'pre assessment' "
 "section."
@@ -1127,7 +1124,7 @@ msgstr ""
 "L'activation de plusieurs tentatives n'est pas autorisée pour les quiz dans "
 "une section 'pré-évaluation'."
 
-#: quiz/models.py:146
+#: quiz/models.py:147
 msgid ""
 "Having an assessment method defined is required for quizzes in a 'pre "
 "assessment' section."
@@ -1135,7 +1132,7 @@ msgstr ""
 "La définition d'une méthode d'évaluation est requise pour les quiz dans une "
 "section 'préévaluation'."
 
-#: quiz/models.py:153
+#: quiz/models.py:154
 msgid ""
 "Having an assessment method defined is required for quizzes in a 'final "
 "assessment' section."
@@ -1143,69 +1140,71 @@ msgstr ""
 "La définition d'une méthode d'évaluation est requise pour les quiz dans une "
 "section 'évaluation finale'."
 
-#: quiz/models.py:160
+#: quiz/models.py:161
 msgid "Enabling subset requires having \"randomize\" enabled."
 msgstr "L'activation du sous-ensemble nécessite l'activation de 'randomize'."
 
-#: quiz/models.py:166
+#: quiz/models.py:167
 msgid "Since subset is enabled, subset number must be greater than 0."
 msgstr ""
 "Étant donné que le sous-ensemble est activé, le numéro du sous-ensemble doit"
 " être supérieur à 0."
 
-#: quiz/models.py:209
+#: quiz/models.py:210
 msgid "Open ended - Date"
 msgstr "Ouvert - Date"
 
-#: quiz/models.py:210
+#: quiz/models.py:211
 msgid "Open ended - Numeric"
 msgstr "Ouvert - Numérique"
 
-#: quiz/models.py:211
+#: quiz/models.py:212
 msgid "Open ended - Time/hour"
 msgstr "OuvertOuvert - Heure"
 
-#: quiz/models.py:212
+#: quiz/models.py:213
 msgid "Open ended - Text (short)"
 msgstr "Ouvert - Texte (court)"
 
-#: quiz/models.py:213
+#: quiz/models.py:214
 msgid "Open ended - Text (long)"
 msgstr "Ouvert - Texte (long)"
 
-#: quiz/models.py:214
+#: quiz/models.py:215
 msgid "Open ended - Email"
 msgstr "Ouvert - E-mail"
 
-#: quiz/models.py:218 quiz/models.py:596
+#: quiz/models.py:219 quiz/models.py:597
 msgid "question type"
 msgstr "type de question"
 
-#: quiz/models.py:233 quiz/models.py:473
+#: quiz/models.py:234 quiz/models.py:474
 msgid "content"
 msgstr "contenu"
 
-#: quiz/models.py:236
+#: quiz/models.py:237
 msgid "Enter the content that you want displayed."
 msgstr "Entrez le contenu que vous souhaitez afficher."
 
-#: quiz/models.py:239
-msgid "explanation"
-msgstr "explication"
+#: quiz/models.py:240
+#| msgid "Feedback"
+msgid "feedback"
+msgstr "retour d'information"
 
-#: quiz/models.py:241
-msgid "Explanation to be shown after the question has been answered."
-msgstr "Explication à afficher après réponse à la question."
+#: quiz/models.py:242
+#| msgid "Explanation to be shown after the question has been answered."
+msgid "Feedback to be shown after the question has been answered."
+msgstr "Rétroaction à afficher après la réponse à la question."
 
-#: quiz/models.py:249
+#: quiz/models.py:250
 msgid "Optional image file."
 msgstr "Fichier image en option."
 
-#: quiz/models.py:252
+#: quiz/models.py:253
 msgid "value"
 msgstr "valeur"
 
-#: quiz/models.py:255
+#: quiz/models.py:256
 msgid ""
 "Value to add to the quiz score if the participant answer the question "
 "correctly."
@@ -1213,11 +1212,11 @@ msgstr ""
 "Valeur à ajouter au score du quiz si le participant répond correctement à la"
 " question."
 
-#: quiz/models.py:258
+#: quiz/models.py:259
 msgid "multiple correct answers"
 msgstr "plusieurs réponses correctes"
 
-#: quiz/models.py:262
+#: quiz/models.py:263
 msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
@@ -1225,135 +1224,135 @@ msgstr ""
 "Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
 " de sélectionner plusieurs éléments de réponse)?"
 
-#: quiz/models.py:266
+#: quiz/models.py:267
 msgid "Open ended type"
 msgstr "OuvertType ouvert"
 
-#: quiz/models.py:270
+#: quiz/models.py:271
 msgid "Type of open ended question."
 msgstr "Type de question ouverte."
 
-#: quiz/models.py:277 quiz/models.py:369 quiz/models.py:469 quiz/models.py:617
+#: quiz/models.py:278 quiz/models.py:370 quiz/models.py:470 quiz/models.py:618
 msgid "question"
 msgstr "question"
 
-#: quiz/models.py:278
+#: quiz/models.py:279
 msgid "questions"
 msgstr "des questions"
 
-#: quiz/models.py:337
+#: quiz/models.py:338
 msgid "likert question"
 msgstr "likert question"
 
-#: quiz/models.py:338
+#: quiz/models.py:339
 msgid "likert questions"
 msgstr "likert questions"
 
-#: quiz/models.py:372
+#: quiz/models.py:373
 msgid "scale range values"
 msgstr "valeurs de plage d'échelle"
 
-#: quiz/models.py:375
+#: quiz/models.py:376
 msgid "Set the likert scale values."
 msgstr "Définissez les valeurs d'échelle de likert."
 
-#: quiz/models.py:378
+#: quiz/models.py:379
 msgid "check answer"
 msgstr "vérifier la réponse"
 
-#: quiz/models.py:381
+#: quiz/models.py:382
 msgid "Check the answer value?"
 msgstr "Vérifiez la valeur de la réponse?"
 
-#: quiz/models.py:384
+#: quiz/models.py:385
 msgid "answer range values"
 msgstr "valeurs de plage de réponse"
 
-#: quiz/models.py:387
+#: quiz/models.py:388
 msgid "Set the minimum and maximum acceptable values."
 msgstr "Définissez les valeurs minimales et maximales acceptables."
 
-#: quiz/models.py:390
+#: quiz/models.py:391
 msgid "legend"
 msgstr "légende"
 
-#: quiz/models.py:390
+#: quiz/models.py:391
 msgid "Legend for the likert scale values."
 msgstr "Légende des valeurs d'échelle likert."
 
-#: quiz/models.py:406 quiz/models.py:411
+#: quiz/models.py:407 quiz/models.py:412
 msgid "The answer range must not exceed the scale range."
 msgstr "La plage de réponses ne doit pas dépasser la plage d'échelle."
 
-#: quiz/models.py:416
+#: quiz/models.py:417
 msgid "likert answer (scale definition)"
 msgstr "réponse likert (définition de l'échelle)"
 
-#: quiz/models.py:417
+#: quiz/models.py:418
 msgid "likert answers (scale definition)"
 msgstr "réponses likert (définition de l'échelle)"
 
-#: quiz/models.py:432
+#: quiz/models.py:433
 msgid "open ended question"
 msgstr "question ouverte"
 
-#: quiz/models.py:433
+#: quiz/models.py:434
 msgid "open ended questions"
 msgstr "questions ouvertes"
 
-#: quiz/models.py:442
+#: quiz/models.py:443
 msgid "multiple choice question"
 msgstr "question à choix multiples"
 
-#: quiz/models.py:443
+#: quiz/models.py:444
 msgid "multiple choice questions"
 msgstr "questions à choix multiple"
 
-#: quiz/models.py:476
+#: quiz/models.py:477
 msgid "Enter the answer text that you want displayed"
 msgstr "Entrez le texte de réponse que vous souhaitez afficher"
 
-#: quiz/models.py:480
+#: quiz/models.py:481
 msgid "check"
 msgstr "cocher"
 
-#: quiz/models.py:483
+#: quiz/models.py:484
 msgid "Should this answer be checked/marked?"
 msgstr "Cette réponse doit-elle être cochée?"
 
-#: quiz/models.py:494
+#: quiz/models.py:495
 msgid "multiple choice answer"
 msgstr "réponse à choix multiples"
 
-#: quiz/models.py:495
+#: quiz/models.py:496
 msgid "multiple choice answers"
 msgstr "réponses à choix multiples"
 
-#: quiz/models.py:501 quiz/models.py:599
+#: quiz/models.py:502 quiz/models.py:600
 msgid "student"
 msgstr "l'étudiant"
 
-#: quiz/models.py:507 quiz/models.py:615
+#: quiz/models.py:508 quiz/models.py:616
 msgid "attempt number"
 msgstr "numéro de tentative"
 
-#: quiz/models.py:508
+#: quiz/models.py:509
 msgid "score"
 msgstr "score"
 
-#: quiz/models.py:511
+#: quiz/models.py:512
 msgid "number of mistakes"
 msgstr "nombre d'erreurs"
 
-#: quiz/models.py:513
+#: quiz/models.py:514
 msgid "Total number of mistakes (incorrect questions)."
 msgstr "Nombre total d'erreurs (questions incorrectes)."
 
-#: quiz/models.py:530
+#: quiz/models.py:531
 msgid "completed successfully"
 msgstr "complété avec succès"
 
-#: quiz/models.py:533
+#: quiz/models.py:534
 msgid ""
 "If quiz assessment is enabled, this field represents if the participant "
 "achieved a passing score or not."
@@ -1361,75 +1360,75 @@ msgstr ""
 "Si l'évaluation du quiz est activée, ce champ indique si le participant a "
 "obtenu une note de passage ou non."
 
-#: quiz/models.py:537
+#: quiz/models.py:538
 msgid "expert feedback"
 msgstr "commentaires d'experts"
 
-#: quiz/models.py:540
+#: quiz/models.py:541
 msgid "Defines if the quiz was submitted by an expert/instructor."
 msgstr "Définit si le quiz a été soumis par un expert/instructeur."
 
-#: quiz/models.py:545
+#: quiz/models.py:546
 msgid "quiz score"
 msgstr "score du quiz"
 
-#: quiz/models.py:546
+#: quiz/models.py:547
 msgid "quiz scores"
 msgstr "scores du quiz"
 
-#: quiz/models.py:587
+#: quiz/models.py:588
 msgid "question group header"
 msgstr "en-tête du groupe de questions"
 
-#: quiz/models.py:588
+#: quiz/models.py:589
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
-#: quiz/models.py:607
+#: quiz/models.py:608
 msgid "quiz submission"
 msgstr "soumission de quiz"
 
-#: quiz/models.py:624
+#: quiz/models.py:625
 msgid "multiple choice item"
 msgstr "article à choix multiples"
 
-#: quiz/models.py:633
+#: quiz/models.py:634
 msgid "Participant answer"
 msgstr "Réponse des participants"
 
-#: quiz/models.py:634
+#: quiz/models.py:635
 msgid "correct"
 msgstr "correct"
 
-#: quiz/models.py:638
+#: quiz/models.py:639
 msgid "question attempt"
 msgstr "tentative de question"
 
-#: quiz/models.py:639
+#: quiz/models.py:640
 msgid "question attempts"
 msgstr "tentatives de questions"
 
-#: quiz/models.py:701
+#: quiz/models.py:702
 msgid "likert attempt"
 msgstr "tentative de likert"
 
-#: quiz/models.py:702
+#: quiz/models.py:703
 msgid "likert attempts"
 msgstr "tentatives de likert"
 
-#: quiz/models.py:714
+#: quiz/models.py:715
 msgid "open ended attempt"
 msgstr "tentative ouverte"
 
-#: quiz/models.py:715
+#: quiz/models.py:716
 msgid "open ended attempts"
 msgstr "tentatives ouverte"
 
-#: quiz/models.py:727
+#: quiz/models.py:728
 msgid "multiple choice questions attempt"
 msgstr "tentative de questions à choix multiples"
 
-#: quiz/models.py:728
+#: quiz/models.py:729
 msgid "multiple choice questions attempts"
 msgstr "tentatives de questions à choix multiples"
 
@@ -1502,7 +1501,6 @@ msgid "Sign in to GEN"
 msgstr "Connectez-vous à GEN"
 
 #: templates/accounts/login.html:14
-#| msgid "Log in"
 msgid "Log in to GEN"
 msgstr "Connectez-vous à GEN"
 
@@ -1529,7 +1527,6 @@ msgstr ""
 "Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous contacter à"
 
 #: templates/accounts/login.html:48
-#| msgid "New to GEN?"
 msgid "New to GEN? Sign up"
 msgstr "Nouveau sur GEN ? S'inscrire"
 
@@ -1564,10 +1561,6 @@ msgstr "Comptes sociaux"
 
 #: templates/accounts/my_account.html:32
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
-#| "                  "
 msgid ""
 "\n"
 "                                Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
@@ -1586,8 +1579,6 @@ msgid "Disconnect from Google"
 msgstr "Se déconnecter de Google"
 
 #: templates/accounts/my_account.html:49
-#| msgid ""
-#| "You must set a password for your account before disconnecting from Google."
 msgid ""
 "You must set a password for your GEN account before being able to disconnect"
 " from Google."
@@ -1608,7 +1599,6 @@ msgid "Connect to Google"
 msgstr "Connectez-vous à Google"
 
 #: templates/accounts/my_account.html:63
-#| msgid "profile"
 msgid "Profile"
 msgstr "Profil"
 
@@ -2626,6 +2616,9 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:185
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid "explanation"
+#~ msgstr "explication"
 
 #~ msgid "Update account info"
 #~ msgstr "Mettre à jour les informations de compte"
