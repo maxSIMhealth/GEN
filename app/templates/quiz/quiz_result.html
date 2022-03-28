@@ -177,15 +177,15 @@
                             {% endif %}
                         {% endif %}
 
-                        {% if question.explanation %}
+                        {% if question.feedback %}
                             {% if question.question_type == 'H' %}
-                                <span>{{ question.explanation }}</span>
+                                <span>{{ question.feedback }}</span>
                             {% else %}
                                 <div class="card bg-light mb-0 mt-3">
                                     <div class="card-body">
                                         <div class="card-subtitle bg-light fs-6">
                                     <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
-                                        <span>{{ question.explanation }}</span></span>
+                                        <span>{{ question.feedback }}</span></span>
                                         </div>
                                     </div>
                                 </div>

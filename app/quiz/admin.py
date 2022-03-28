@@ -74,15 +74,16 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
     model = Question
     # include = ['quiz', 'content']
     exclude = [
-        "explanation",
+        "feedback",
     ]
     extra = 0
 
 
 class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
-    list_display = ("name", "published", "course", "section", "video", "access_restriction","author")
-    list_filter = ("published","course", "section","author","video","access_restriction")
+    list_display = ("name", "published", "course", "section",
+                    "video", "access_restriction", "author")
+    list_filter = ("published", "course", "section", "author", "video", "access_restriction")
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
     actions = [duplicate]
@@ -240,7 +241,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
 
     list_display = ("content", "author", "quiz", "value", "image", "created")
     list_filter = ("quiz",)
-    search_fields = ("content", "explanation")
+    search_fields = ("content", "feedback")
     # filter_horizontal = ('quiz',)
 
     class Media:
@@ -262,7 +263,7 @@ class MCQuestionAdmin(QuestionAdmin):
         "quiz",
         "value",
         "image",
-        "explanation",
+        "feedback",
         "multiple_correct_answers",
     )
     inlines = [MCAnswerInline]
@@ -290,7 +291,7 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("question_type", "content", "author", "explanation", "quiz", "value", "image")
+    fields = ("question_type", "content", "author", "feedback", "quiz", "value", "image")
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
@@ -420,7 +421,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("question_type", "content", "author", "explanation", "quiz")
+    fields = ("question_type", "content", "author", "feedback", "quiz")
 
     # setting question_type value to Group Header
     def get_form(self, request, obj=None, **kwargs):
