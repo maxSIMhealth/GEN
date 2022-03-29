@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load static %}
+
+{% if item.content %}
+    <p>{{ item.content|safe }}</p>
+{% endif %}
+
+<div class="ratio ratio-16x9 mt-3 mb-3">
+    <iframe class="embed-responsive-item" src="{{ item.file.url }}" allowfullscreen="allowfullscreen"></iframe>
+</div>
+
+<a class="btn btn-primary" href="{{ item.file.url }}">{% translate "Download PDF" %}</a>

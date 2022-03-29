@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-29 00:55+0000\n"
-"PO-Revision-Date: 2022-03-29 01:17+0000\n"
+"POT-Creation-Date: 2022-03-29 20:38+0000\n"
+"PO-Revision-Date: 2022-03-29 20:39+0000\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -103,13 +103,21 @@ msgstr "Votre mot de passe a été mis à jour avec succès."
 msgid "Please correct the error below."
 msgstr "Veuillez corriger l'erreur ci-dessous."
 
-#: content/models.py:19 dashboard/models.py:18 quiz/models.py:253
+#: content/models.py:20 dashboard/models.py:18 quiz/models.py:253
 msgid "image"
 msgstr "image"
 
-#: content/models.py:21
+#: content/models.py:22
 msgid "Image file."
 msgstr "Fichier d'image."
+
+#: content/models.py:31
+msgid "pdf"
+msgstr "pdf"
+
+#: content/models.py:33
+msgid "Format accepted: PDF."
+msgstr "Format accepté : PDF."
 
 #: core/models.py:6 videos/models.py:65
 msgid "file"
@@ -1182,19 +1190,20 @@ msgid "content"
 msgstr "contenu"
 
 #: quiz/models.py:236
-#| msgid "Item text description (max 100 characters)"
 msgid "Main text content of the question (max 1000 characters)."
 msgstr "Contenu du texte principal de la question (max 1000 caractères)."
 
 #: quiz/models.py:239
 msgid "additional content"
-msgstr ""
+msgstr "contenu additionnel"
 
 #: quiz/models.py:244
 msgid ""
 "Optional: additional text that will be shown under the main text content. "
 "(max 1000 characters)."
 msgstr ""
+"Facultatif : texte supplémentaire qui sera affiché sous le contenu du texte "
+"principal. (max 1000 caractères)."
 
 #: quiz/models.py:247
 msgid "feedback"
@@ -1704,6 +1713,11 @@ msgstr "Basculer la liste des sections"
 msgid "Information"
 msgstr "Information"
 
+#: templates/content/pdf.html:12
+#| msgid "Download data"
+msgid "Download PDF"
+msgstr "Télécharger le PDF"
+
 #: templates/content/video.html:14 templates/videos/video_player.html:25
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
@@ -1890,11 +1904,11 @@ msgstr "Vidéo"
 msgid "Questions"
 msgstr "Des questions"
 
-#: templates/quiz/quiz.html:58 templates/sections/section_content.html:71
+#: templates/quiz/quiz.html:58 templates/sections/section_content.html:79
 msgid "Previous"
 msgstr "Précédent"
 
-#: templates/quiz/quiz.html:64 templates/sections/section_content.html:77
+#: templates/quiz/quiz.html:64 templates/sections/section_content.html:85
 msgid "Next"
 msgstr "Suivant"
 
@@ -1919,19 +1933,19 @@ msgstr "Tout sélectionner"
 msgid "Deselect all"
 msgstr "Tout déselectionner"
 
-#: templates/quiz/quiz.html:134 templates/quiz/quiz_result.html:167
+#: templates/quiz/quiz.html:132 templates/quiz/quiz_result.html:167
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
-#: templates/quiz/quiz.html:143 templates/quiz/quiz_result.html:174
+#: templates/quiz/quiz.html:141 templates/quiz/quiz_result.html:174
 msgid "Your answer:"
 msgstr "Ta Réponse:"
 
-#: templates/quiz/quiz.html:172
+#: templates/quiz/quiz.html:170
 msgid "This is the end of the quiz."
 msgstr "C'est la fin du quiz."
 
-#: templates/quiz/quiz.html:174
+#: templates/quiz/quiz.html:172
 msgid ""
 "You have reached the end of the quiz preview. You can <strong>not</strong> "
 "submit your answers since you are the author"
@@ -1939,35 +1953,34 @@ msgstr ""
 "Vous avez atteint la fin de l'aperçu du quiz. Vous ne pouvez "
 "<strong>pas</strong> soumettre vos réponses puisque vous en êtes l'auteur"
 
-#: templates/quiz/quiz.html:175
+#: templates/quiz/quiz.html:173
 #, python-format
 msgid "Please use the 'exit quiz' button to return to %(section_name)s page."
 msgstr ""
 "Veuillez utiliser le bouton 'Sortir quiz' pour revenir à la page "
 "%(section_name)s."
 
-#: templates/quiz/quiz.html:177
+#: templates/quiz/quiz.html:175
 #, python-format
 #| msgid ""
 #| " You can now submit your answers or\n"
-#| "                                    exit and return to the %(section_name)s page. "
+#| "                                exit and return to the %(section_name)s page. "
 msgid ""
 " You can now submit your answers or\n"
-"                                exit and return to the %(section_name)s page. "
+"                            exit and return to the %(section_name)s page. "
 msgstr ""
 "Vous pouvez maintenant soumettre vos réponses ou\n"
 "quittez et revenez à la page %(section_name)s."
 
-#: templates/quiz/quiz.html:180 templates/quiz/quiz.html:188
-#| msgid "require answers"
+#: templates/quiz/quiz.html:178 templates/quiz/quiz.html:186
 msgid "Submit answers"
 msgstr "Soumettre les réponses"
 
-#: templates/quiz/quiz.html:191
+#: templates/quiz/quiz.html:189
 msgid "Exit quiz"
 msgstr "Sortir quiz"
 
-#: templates/quiz/quiz.html:212
+#: templates/quiz/quiz.html:210
 msgid ""
 "This will cancel the current quiz and return to the section page. Are you "
 "sure?"
@@ -1975,15 +1988,15 @@ msgstr ""
 "Cela annulera le quiz en cours et reviendra à la page de la section. Es-tu "
 "sûr?"
 
-#: templates/quiz/quiz.html:213
+#: templates/quiz/quiz.html:211
 msgid "No, continue on quiz."
 msgstr "Non, continuez le quiz."
 
-#: templates/quiz/quiz.html:214
+#: templates/quiz/quiz.html:212
 msgid "Yes, exit quiz."
 msgstr "Oui, quittez le quiz."
 
-#: templates/quiz/quiz.html:215 templates/sections/section_info.html:100
+#: templates/quiz/quiz.html:213 templates/sections/section_info.html:100
 msgid "You have not completed any section yet."
 msgstr "Vous n'avez encore terminé aucune section."
 
@@ -2200,6 +2213,17 @@ msgstr "Début"
 #: templates/sections/section_videos.html:19
 msgid "End"
 msgstr "Fin"
+
+#: templates/sections/section_content.html:66
+#: templates/sections/section_content.html:122
+msgid ""
+"Congratulations, you have reached the end of this section. If you feel that "
+"you are ready to continue, please click the button below to mark this "
+"section as completed."
+msgstr ""
+"Félicitations, vous avez atteint la fin de cette section. Si vous pensez que"
+" vous êtes prêt à continuer, veuillez cliquer sur le bouton ci-dessous pour "
+"marquer cette section comme terminée."
 
 #: templates/sections/section_discussion.html:34
 msgid "Create new"
@@ -2632,153 +2656,3 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:185
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
-
-#~ msgid "Enter the content that you want displayed."
-#~ msgstr "Entrez le contenu que vous souhaitez afficher."
-
-#~ msgid "explanation"
-#~ msgstr "explication"
-
-#~ msgid "Update account info"
-#~ msgstr "Mettre à jour les informations de compte"
-
-#~ msgid "Change Password"
-#~ msgstr "Changer le mot de passe"
-
-#~ msgid "You have not defined a password yet."
-#~ msgstr "Vous n'avez pas encore défini de mot de passe."
-
-#~ msgid "Settings"
-#~ msgstr "Réglages"
-
-#~ msgid "Your info"
-#~ msgstr "Vos infos"
-
-#~ msgid "Connected as"
-#~ msgstr "Connecté en tant que"
-
-#~ msgid "Disconnect from GitHub"
-#~ msgstr "Se déconnecter de GitHub"
-
-#~ msgid ""
-#~ "You must set a password for your account before disconnecting from Github."
-#~ msgstr ""
-#~ "Vous devez définir un mot de passe pour votre compte avant de vous "
-#~ "déconnecter de Github."
-
-#~ msgid "Connect to GitHub"
-#~ msgstr "Connectez-vous à GitHub"
-
-#~ msgid ""
-#~ "Congratulations! You have passed the final assessment. Your certificate of "
-#~ "completion is now available in the Information section."
-#~ msgstr ""
-#~ "Toutes nos félicitations! Vous avez réussi l'évaluation finale. Votre "
-#~ "certificat d'achèvement est maintenant disponible dans la section "
-#~ "Information."
-
-#~ msgid ""
-#~ "Congratulations! You have passed the final assessment. Your certificate of "
-#~ "completion is now available in the Info section."
-#~ msgstr ""
-#~ "Toutes nos félicitations! Vous avez réussi l'évaluation finale. Votre "
-#~ "certificat d'achèvement est maintenant disponible dans la section Info."
-
-#~ msgid "student answer"
-#~ msgstr "réponse de l'élève"
-
-#~ msgid "Quiz data"
-#~ msgstr "Données de quiz"
-
-#~ msgid "All submissions"
-#~ msgstr "Toutes les soumissions"
-
-#~ msgid ""
-#~ "This upload section is private and only accessible by you. Please do not "
-#~ "forget to publish your upload to complete this section."
-#~ msgstr ""
-#~ "Cette section de téléchargement est privée et uniquement accessible par "
-#~ "vous. N'oubliez pas de publier votre téléchargement pour compléter cette "
-#~ "section."
-
-#~ msgid "Description (max 1500 characters)"
-#~ msgstr "Description (max 1500 caractères)"
-
-#~ msgid "Info"
-#~ msgstr "Info"
-
-#~ msgid ""
-#~ "You have not fulfilled the requirements to access the requested section."
-#~ msgstr "Vous n'avez pas rempli les conditions d'accès à la section demandée."
-
-#~ msgid "section completed successfully"
-#~ msgstr "section terminée avec succès"
-
-#~ msgid "sections status"
-#~ msgstr "état des sections"
-
-#~ msgid "None"
-#~ msgstr "Nul"
-
-#~ msgid "Approved."
-#~ msgstr "Approuvée."
-
-#~ msgid "Failed."
-#~ msgstr "Manquée."
-
-#, python-format
-#~ msgid ""
-#~ "\n"
-#~ "                    Your score is %(quiz_score)s.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "Ton score est %(quiz_score)s."
-
-#~ msgid "Explanation"
-#~ msgstr "Explication"
-
-#~ msgid "students"
-#~ msgstr "élèves"
-
-#~ msgid "participants max number"
-#~ msgstr "nombre maximum de participants"
-
-#~ msgid "maximum number of participants"
-#~ msgstr "nombre maximum de participants"
-
-#~ msgid "Please login to like"
-#~ msgstr "Veuillez vous connecter pour aimer"
-
-#~ msgid "Course description (max 800 characters)"
-#~ msgstr "Description du cours (max 800 caractères)"
-
-#~ msgid "You cannot submit another video."
-#~ msgstr "Vous ne pouvez pas soumettre une autre vidéo."
-
-#~ msgid "Upload video"
-#~ msgstr "Téléverser une video"
-
-#~ msgid "Please upload a video file (mp4 or mov)"
-#~ msgstr "Veuillez téléverser un fichier vidéo (mp4 ou mov)"
-
-#~ msgid "Is this the correct answer?"
-#~ msgstr "Est-ce la bonne réponse?"
-
-#~ msgid "scale min"
-#~ msgstr "échelle min"
-
-#~ msgid "scale max"
-#~ msgstr "échelle max"
-
-#~ msgid "Requires <u>%(item.quiz.requirement.name)s</u> to be completed first."
-#~ msgstr "<u>%(item.quiz.requirement.name)s </u> doit être terminé en premier."
-
-#~ msgid "Requires <u>%(section.requirement.name)s</u> to be completed first."
-#~ msgstr "<u>%(section.requirement.name)s</u> doit être terminé en premier."
-
-#~ msgid "Requires <u>%(quiz.requirement.name)s</u> to be completed first."
-#~ msgstr "<u>%(quiz.requirement.name)s</u> doit être terminé en premier."
-
-#~ msgid "created at"
-#~ msgstr "créé à"
