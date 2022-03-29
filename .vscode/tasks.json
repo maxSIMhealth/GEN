@@ -7,7 +7,7 @@
             "dockerCompose": {
                 "up": {
                     "detached": true,
-                    "build": true
+                    "build": false
                 },
                 "files": [
                     "${workspaceFolder}/docker-compose.yml",
