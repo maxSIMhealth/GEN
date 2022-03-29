@@ -239,7 +239,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
     Base class for questions admin layout (editing).
     """
 
-    list_display = ("content", "author", "quiz", "value", "image", "created")
+    list_display = ("content", "additional_content", "author", "quiz", "value", "image", "created")
     list_filter = ("quiz",)
     search_fields = ("content", "feedback")
     # filter_horizontal = ('quiz',)
@@ -259,6 +259,7 @@ class MCQuestionAdmin(QuestionAdmin):
     fields = (
         "question_type",
         "content",
+        "additional_content",
         "author",
         "quiz",
         "value",
@@ -291,7 +292,8 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("question_type", "content", "author", "feedback", "quiz", "value", "image")
+    fields = ("question_type", "content", "additional_content",
+              "author", "feedback", "quiz", "value", "image")
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
@@ -314,7 +316,8 @@ class LikertAnswerAdmin(TabbedTranslationAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("question_type", "openended_type", "content", "author", "quiz", "value", "image")
+    fields = ("question_type", "openended_type", "content",
+              "additional_content", "author", "quiz", "value", "image")
 
     class Media:
         css = {"all": ("css/admin.css",)}
@@ -421,7 +424,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("question_type", "content", "author", "feedback", "quiz")
+    fields = ("question_type", "content", "additional_content", "author", "feedback", "quiz")
 
     # setting question_type value to Group Header
     def get_form(self, request, obj=None, **kwargs):
@@ -448,13 +451,13 @@ class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
 # TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
 # question page and are only useful during testing and development)
 admin.site.register(Quiz, QuizAdmin)
-admin.site.register(Question, QuestionAdmin)
+#admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-admin.site.register(MCAnswer, MCAnswerAdmin)
+#admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
-admin.site.register(LikertAnswer, LikertAnswerAdmin)
+#admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)
