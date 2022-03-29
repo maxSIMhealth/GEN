@@ -14,7 +14,7 @@ from .models import (
 
 @register(Question)
 class QuestionTranslationOptions(TranslationOptions):
-    fields = ("content", "feedback")
+    fields = ("content", "additional_content", "feedback")
 
 
 @register(LikertAnswer)

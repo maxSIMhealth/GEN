@@ -229,11 +229,19 @@ class Question(TimeStampedModel):
         blank=False,
         on_delete=models.CASCADE,
     )
-    content = models.CharField(
+    content = models.TextField(
         _("content"),
         max_length=1000,
         blank=False,
-        help_text=_("Enter the content that you want displayed."),
+        help_text=_("Main text content of the question (max 1000 characters)."),
+    )
+    additional_content = models.TextField(
+        _("additional content"),
+        max_length=1000,
+        blank=True,
+        null=True,
+        help_text=_(
+            "Optional: additional text that will be shown under the main text content. (max 1000 characters).")
     )
     feedback = models.TextField(
         _("feedback"),

@@ -13,6 +13,9 @@
 {% endblock content_title %}
 
 {% block content %}
+<form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
+{% csrf_token %}
+
     <div class="card-group mb-3">
         {% if quiz.video %}
             <div class="card bg-secondary text-white video">
@@ -42,6 +45,8 @@
             </div>
         {% endif %}
 
+        
+
         <div class="card quiz">
             <div class="card-header bg-light">
                 <div class="fs-5 text-left" style="display: inline-block; padding-top: 0.35em; margin-bottom: 0">{% translate "Questions" %}</div>
@@ -50,10 +55,10 @@
                         <ul class="pagination mb-0">
                             <li id="pagination-navigation-previous" class="page-item disabled">
                                 <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                                   onclick="previousPaginationItem()">{% translate "Previous" %}</a>
+                                onclick="previousPaginationItem()">{% translate "Previous" %}</a>
                             </li>
                             <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
-                                                              href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
+                                                            href="javascript:void(0);" tabindex="-1" aria-disabled="true">1
                                 of 13</a></li>
                             <li id="pagination-navigation-next" class="page-item">
                                 <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% translate "Next" %}</a>
@@ -63,153 +68,143 @@
                 {% endif %}
             </div>
             <div class="card-body">
-                <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}"
-                      class="form-horizontal" name="QuizForm">
-                    {% csrf_token %}
-                    {{ quiz.require_answers|json_script:"quiz_require_answers" }}
-                    <div class="pagination-items-container">
-                        <div {% if quiz.paginate %}class="pagination-item"{% endif %}>
-                            {% if quiz.description %}
-                                <p>{{ quiz.description|safe|linebreaksbr }}</p>
-                            {% endif %}
-                            {% if quiz.paginate %}
-                                <span>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</span>
-                            {% endif %}
-                        </div>
-                        {% for question in questions %}
-                            <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %}>
-                                <div class="fs-6">
-                                    <strong>{{ forloop.counter }} - {{ question.content }}</strong>
-                                    {% if quiz.assessment_method and quiz.show_question_value %}
-                                    (<em>{% translate "Value:" %} {{ question.value }}</em>)
-                                    {% endif %}
-                                    {% if question.image %}
-                                        <img src="{{ question.image.file.url }}" class="img-fluid rounded mx-auto d-block" alt="{{ question.image.description }}" title="{{ question.image.description }}">
-                                    {% endif %}
-                                </div>
-                                {% if question.question_type == 'H' %}
-                                    <hr/>
-
-                                    {% if question.feedback %}
-                                        <span>{{ question.feedback }}</span>
-                                    {% endif %}
-                                {% endif %}
-
-                                {% if question.question_type == 'M' %}
-                                    <ol type="a" class="mb-0">
-                                        {% for choice in question.answers.all %}
-                                            <li class="pt-2">
-                                                <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
-                                                    <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
-                                                           class="form-check-input me-1"
-                                                           name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
-                                                           value="{{ choice.pk }}"> {{ choice.content }}
-                                                </label>
-                                            </li>
-                                        {% endfor %}
-                                        <div class="mt-2">
-                                            {% if question.multiple_correct_answers %}
-                                                <a href="javascript:void(0);" class="btn btn-secondary"
-                                                   onclick="toggleCheckboxes(this, 'on')">{% translate "Select all" %}</a>
-                                                <a href="javascript:void(0);" class="btn btn-secondary"
-                                                   onclick="toggleCheckboxes(this, 'off')">{% translate "Deselect all" %}</a>
-                                            {% endif %}
-                                        </div>
-                                    </ol>
-
-
-                                {% elif question.question_type == 'L' %}
-                                    {% with answer=question.likertanswer %}
-                                        <div class="likert">
-                                            {% for value in answer.scale_range|likert_range %}
-                                                <div class="item">
-                                                    <input type="radio" name="likert_{{ question.id }}"
-                                                           id="likert_{{ question.id }}" value="{{ value }}">
-                                                    <label for="likert_{{ question.id }}">{{ value }}</label>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-
-                                        {% if answer.legend %}
-                                            <div class="likert-legend card-footer text-muted">
-                                                <em>{% translate "Scale legend" %}:</em>
-                                                {{ answer.legend|linebreaks }}
-                                            </div>
-                                        {% endif %}
-                                    {% endwith %}
-
-                                {% elif question.question_type == 'O' %}
-
-                                    <div class="mb-3 mt-1">
-                                        <label for="openended_{{ question.id }}">{% translate 'Your answer:' %}</label>
-                                        {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time, OE: email #}
-                                        {% if question.openended_type == "OA" %}
-                                            <textarea name="openended_{{ question.id }}"
-                                                      id="openended_{{ question.id }}"
-                                                      rows="5"
-                                                      class="form-control"
-                                                      {% if quiz.require_answers %} required {% endif %}
-                                            ></textarea>
-                                        {% else %}
-                                            <input {% if question.openended_type == 'OT' %}type="text"
-                                                   {% elif question.openended_type == 'ON' %}type="number"
-                                                   {% elif question.openended_type == 'OD' %}type="date"
-                                                   {% elif question.openended_type == 'OH' %}type="time"
-                                                   {% elif question.openended_type == 'OE' %}type="email"
-                                                   {% endif %}
-                                                   class="form-control"
-                                                   id="openended_{{ question.id }}"
-                                                   name="openended_{{ question.id }}"
-                                                   {% if quiz.require_answers %} required {% endif %}
-                                            >
-                                        {% endif %}
-                                    </div>
-
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+                {{ quiz.require_answers|json_script:"quiz_require_answers" }}
+                <div class="pagination-items-container">
+                    <div {% if quiz.paginate %}class="pagination-item"{% endif %} id="quiz-description">
+                        {% if quiz.description %}
+                            <p>{{ quiz.description|safe|linebreaksbr }}</p>
+                        {% endif %}
                         {% if quiz.paginate %}
-                            <div class="pagination-item" style="display: none">
-                                <p>{% translate "This is the end of the quiz." %}</p>
-                                {% if quiz.author == user %}
-                                <p>{% translate "You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author" %}</p>
-                                <p>{% blocktranslate with section.name as section_name %}Please use the 'exit quiz' button to return to {{ section_name}} page.{% endblocktranslate %}</p>
-                                {% else %}
-                                    <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
-                                    exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
-                                {% endif %}
-                                <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit" %}</button>
-                            </div>
-                        {% else %}
-                            <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit" %}</button>
+                            <span>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</span>
                         {% endif %}
                     </div>
-                </form>
+                    {% for question in questions %}
+                    <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %} class="mb-3">
+                        <div class="fs-6">
+                            <strong>{{ forloop.counter }} - {{ question.content }}</strong>
+                        </div>
+                        <div>
+                        {% if question.additional_content %}
+                            <p {% if question.question_type != 'H'%}class="mb-0"{% endif %}>{{ question.additional_content }}</p>
+                        {% endif %}
+                        {% if quiz.assessment_method and quiz.show_question_value %}
+                        (<em>{% translate "Value:" %} {{ question.value }}</em>)
+                        {% endif %}
+                        {% if question.image %}
+                            <img src="{{ question.image.file.url }}" class="img-fluid rounded mx-auto d-block" alt="{{ question.image.description }}" title="{{ question.image.description }}">
+                        {% endif %}
+                        </div>
+                        {% if question.question_type == 'M' %}
+                        <ol type="a" class="mb-0">
+                            {% for choice in question.answers.all %}
+                                <li class="pt-2">
+                                    <label class="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }} mb-0">
+                                        <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
+                                                class="form-check-input me-1"
+                                                name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
+                                                value="{{ choice.pk }}"> {{ choice.content }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                            <div class="mt-2">
+                                {% if question.multiple_correct_answers %}
+                                    <a href="javascript:void(0);" class="btn btn-secondary"
+                                        onclick="toggleCheckboxes(this, 'on')">{% translate "Select all" %}</a>
+                                    <a href="javascript:void(0);" class="btn btn-secondary"
+                                        onclick="toggleCheckboxes(this, 'off')">{% translate "Deselect all" %}</a>
+                                {% endif %}
+                            </div>
+                        </ol>
+                        {% elif question.question_type == 'L' %}
+                            {% with answer=question.likertanswer %}
+                                <div class="likert">
+                                    {% for value in answer.scale_range|likert_range %}
+                                        <div class="item">
+                                            <input type="radio" name="likert_{{ question.id }}"
+                                                    id="likert_{{ question.id }}" value="{{ value }}">
+                                            <label for="likert_{{ question.id }}">{{ value }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                {% if answer.legend %}
+                                    <div class="likert-legend card-footer text-muted">
+                                        <em>{% translate "Scale legend" %}:</em>
+                                        {{ answer.legend|linebreaks }}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+
+                        {% elif question.question_type == 'O' %}
+
+                            <div class="mb-3 mt-1">
+                                <label for="openended_{{ question.id }}">{% translate 'Your answer:' %}</label>
+                                {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time, OE: email #}
+                                {% if question.openended_type == "OA" %}
+                                    <textarea name="openended_{{ question.id }}"
+                                                id="openended_{{ question.id }}"
+                                                rows="5"
+                                                class="form-control"
+                                                {% if quiz.require_answers %} required {% endif %}
+                                    ></textarea>
+                                {% else %}
+                                    <input {% if question.openended_type == 'OT' %}type="text"
+                                            {% elif question.openended_type == 'ON' %}type="number"
+                                            {% elif question.openended_type == 'OD' %}type="date"
+                                            {% elif question.openended_type == 'OH' %}type="time"
+                                            {% elif question.openended_type == 'OE' %}type="email"
+                                            {% endif %}
+                                            class="form-control"
+                                            id="openended_{{ question.id }}"
+                                            name="openended_{{ question.id }}"
+                                            {% if quiz.require_answers %} required {% endif %}
+                                    >
+                                {% endif %}
+                            </div>
+
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% if quiz.paginate %}
+                    <div class="pagination-item" style="display: none">
+                        <p>{% translate "This is the end of the quiz." %}</p>
+                        {% if quiz.author == user %}
+                        <p>{% translate "You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author" %}</p>
+                        <p>{% blocktranslate with section.name as section_name %}Please use the 'exit quiz' button to return to {{ section_name}} page.{% endblocktranslate %}</p>
+                        {% else %}
+                            <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
+                            exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit answers" %}</button>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-
-
+            
+            <div class="card-footer">
+                {% if quiz.paginate == False %}
+                <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit answers" %}</button>
+                {% endif %}
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exitQuizModal">
+                    {% translate 'Exit quiz' %}
+                </button>
+            </div>
+            
         {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">
-          <span class="dot" onclick="goToPaginationItem(1)"></span>
-          <span class="dot" onclick="goToPaginationItem(2)"></span>
-          <span class="dot" onclick="goToPaginationItem(3)"></span>
+        <span class="dot" onclick="goToPaginationItem(1)"></span>
+        <span class="dot" onclick="goToPaginationItem(2)"></span>
+        <span class="dot" onclick="goToPaginationItem(3)"></span>
         </div>
         {% endcomment %}
 
-
-
         </div>
     </div>
+</form>
 {% endblock content %}
 
 {% block navbar %}
-    <div class="navbar p-0">
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exitQuizModal">
-            {% translate 'Exit quiz' %}
-        </button>
-    </div>
-
     <!-- Modal -->
     {% translate "This will cancel the current quiz and return to the section page. Are you sure?" as exitQuizModalBody %}
     {% translate "No, continue on quiz." as exitQuizModalCancel %}
