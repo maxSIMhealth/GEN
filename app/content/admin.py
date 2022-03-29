@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
 
-from .models import ContentItem, ImageFile
+from .models import ContentItem, ImageFile, PdfFile
 
 
 class ContentItemAdmin(TabbedTranslationAdmin):
@@ -48,5 +48,30 @@ class ImageFileAdmin(TabbedTranslationAdmin):
     )
 
 
+class PdfFileAdmin(TabbedTranslationAdmin):
+    list_filter = ("published", "section__course", "section", )
+    list_display = (
+        "id",
+        "name",
+        "section",
+    )
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "author",
+                    "section",
+                    "published",
+                    "file",
+                    "content"
+                )
+            },
+        ),
+    )
+
+
 admin.site.register(ContentItem, ContentItemAdmin)
 admin.site.register(ImageFile, ImageFileAdmin)
+admin.site.register(PdfFile, PdfFileAdmin)

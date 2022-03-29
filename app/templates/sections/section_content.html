@@ -53,12 +53,20 @@
                                         <p>{{ item.description }}</p>
                                         {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
                                     {% elif item.type == 'Content' %}
-                                        <p>{{ item.contentitem.content|safe }}</p>
-                                    {% endif %}
-                                    {% if forloop.last %}
-                                        {% include 'partials/mark_section_completed.html' %}
+                                        {% if item.contentitem.pdffile %}
+                                            {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+                                        {% endif %}
+                                        {% if item.contenitem.content %}
+                                            <p>{{ item.contentitem.content|safe }}</p>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
+                                {% if forloop.last %}
+                                    <div class="pagination-item" style="display:none">
+                                        <p>{% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}</p>
+                                        {% include 'partials/mark_section_completed.html' %}
+                                    </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
@@ -99,13 +107,25 @@
                             <p>{{ item.description }}</p>
                             {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
                         {% elif item.type == 'Content' %}
-                            <p>{{ item.contentitem.content|safe }}</p>
-                        {% endif %}
-                        {% if forloop.last %}
-                            {% include 'partials/mark_section_completed.html' %}
+                            {% if item.contentitem.pdffile %}
+                                {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+                            {% endif %}
+                            {% if item.contenitem.content %}
+                                <p>{{ item.contentitem.content|safe }}</p>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
+                {% if forloop.last %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            {% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}
+                        </div>
+                        <div class="card-footer">
+                            {% include 'partials/mark_section_completed.html' %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     {% else %}
