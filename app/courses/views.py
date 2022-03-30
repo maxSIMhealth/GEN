@@ -39,8 +39,7 @@ def course(request, pk):
     quizzes = course_object.quizzes.all()
     quizzes = filter_by_access_restriction(course_object, quizzes, user)
     course_type = course_object.type_name()
-    # TODO: improve this: I've hardcoded this section name because info isn't a dynamic section item
-    section_name = "Information"
+    section_name = course_object.initial_section_name
 
     # create status object for course and sections, if they don't exist
     # TODO: this should only be done on first access

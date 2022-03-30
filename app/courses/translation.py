@@ -4,7 +4,7 @@ from .models import Course, Section, SectionItem
 
 
 class CourseTranslationOptions(TranslationOptions):
-    fields = ("name", "description")
+    fields = ("name", "description", "initial_section_name")
 
 
 class SectionTranslationOptions(TranslationOptions):

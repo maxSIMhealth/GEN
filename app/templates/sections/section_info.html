@@ -8,12 +8,12 @@
 {% load generate_sections_sidebar %}
 
 {% block content_tabs %}
-    <a class="list-group-item list-group-item-action active" href="#">{% trans "Information" %}</a>
+    <a class="list-group-item list-group-item-action active" href="#">{{ course.initial_section_name }}</a>
     {% generate_sections_sidebar %}
 {% endblock content_tabs %}
 
 {% block content_title %}
-    {% trans "Information" %}
+    {{ course.initial_section_name }}
 {% endblock content_title %}
 
 {% block content %}

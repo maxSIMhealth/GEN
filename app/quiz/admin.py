@@ -448,8 +448,8 @@ class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
     # filter_horizontal = ('student',)
 
 
-# TODO: comment Question, MCAnswer, LikertAnswer (they can be edited using the
-# question page and are only useful during testing and development)
+# Question, MCAnswer, LikertAnswer can be edited using the
+# question page and are only useful during testing and development
 admin.site.register(Quiz, QuizAdmin)
 #admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)

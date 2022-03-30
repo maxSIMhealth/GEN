@@ -15,7 +15,6 @@ def generate_sections_sidebar(context):
     if "section" in context:
         current_section = context["section"]
     else:
-        # TODO: improve this (this name is hard coded in views/course_info)
         current_section = context["section_name"]
 
     for section in sections:

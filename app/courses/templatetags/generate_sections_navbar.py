@@ -15,14 +15,13 @@ def generate_sections_navbar(context):
     if "section" in context:
         current_section = context["section"]
     else:
-        # TODO: improve this (this name is hard coded in views/course_info)
-        current_section = context["section_name"]
+        current_section = "course_home"
 
     # generate list with section ids
     sections_list = list(sections.values_list('id', flat=True))
     # list(sections.values_list('id', flat=True)).index(context['section'].id)
 
-    if current_section == 'Information':
+    if current_section == 'course_home':
         previous_section = None
         current_section_position = None
         if sections_list:
