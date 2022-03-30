@@ -20,6 +20,66 @@ class CourseAdmin(TabbedTranslationAdmin):
     filter_horizontal = ("members", "instructors", "editors", "learners")
     save_as = True
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "author",
+                    "code",
+                    "show_code",
+                    "type",
+                    "description",
+                    "requirement",
+                    "blind_data",
+                )
+            }
+        ),
+        (
+            "Date settings",
+            {
+                "fields": (
+                    "start_date",
+                    "end_date",
+                )
+            }
+        ),
+        (
+            "Participants",
+            {
+                "fields": (
+                    "members",
+                    "learners",
+                    "learners_max_number",
+                    "instructors",
+                    "editors",
+                )
+            }
+        ),
+        (
+            "Certificate",
+            {
+                "fields": (
+                    "certificate_type",
+                    "certificate_custom_term",
+                    "certificate_template",
+                )
+            }
+        ),
+        (
+            "Gamification",
+            {
+                "fields": (
+                    "enable_gamification",
+                    "show_scoreboard",
+                    "show_leaderboard",
+                    "show_progress_tracker"
+                )
+            }
+        )
+    )
+
     inlines = (SectionInline,)
 
 

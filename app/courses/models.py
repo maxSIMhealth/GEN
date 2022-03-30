@@ -176,9 +176,9 @@ class Course(models.Model):
                 )
         # check gamification components
         if self.show_scoreboard and not self.enable_gamification:
-            raise ValidationError(_("Scoreboard requires gamification to be enabled"))
+            raise ValidationError({'enable_gamification': _("Scoreboard requires gamification to be enabled")})
         if self.show_leaderboard and not self.enable_gamification:
-            raise ValidationError(_("Leaderboard requires gamification to be enabled"))
+            raise ValidationError({'enable_gamification': _("Leaderboard requires gamification to be enabled")})
 
         # check certificate components
         if self.certificate_type == CERTIFICATE_CUSTOM and not self.certificate_custom_term:
