@@ -6,6 +6,8 @@ from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
+from core.models import CertificateTemplate
+
 PUBLIC = "P"
 LEARNERS = "L"
 INSTRUCTORS = "I"
@@ -129,7 +131,14 @@ class Course(models.Model):
         max_length=150,
         unique=False,
         blank=True,
-        help_text=_("Certificate custom term."),
+        help_text=_("Certificate custom term to be used instead of the course/module name."),
+    )
+    certificate_template = models.ForeignKey(
+        CertificateTemplate,
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        help_text=_("Certificate template to be used (logos and frame). If no template is defined, certificate will still be created, but on a basic white canvas.")
     )
     enable_gamification = models.BooleanField(
         _("gamification"),
@@ -174,6 +183,15 @@ class Course(models.Model):
         # check certificate components
         if self.certificate_type == CERTIFICATE_CUSTOM and not self.certificate_custom_term:
             raise ValidationError({'certificate_custom_term': _("A custom certificate requires defining a custom term.")})
+
+    def type_name(self):
+        course_type_val = self.type
+        if course_type_val is COURSE:
+            course_type = "course"
+        elif course_type_val is MODULE:
+            course_type = "module"
+
+        return course_type
 
 
 class Section(models.Model):

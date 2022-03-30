@@ -12,15 +12,37 @@ class LogoFile(models.Model):
         return output
 
 
+class CertificateFrameFile(LogoFile):
+
+    class Meta:
+        verbose_name = _("certificate frame file")
+        verbose_name_plural = _("certificate frame files")
+
+
 class CertificateLogoFile(LogoFile):
-    custom_order = models.PositiveIntegerField(
-        _("custom order"), default=0, blank=False, null=False
-    )
 
     class Meta:
         verbose_name = _("certificate logo file")
         verbose_name_plural = _("certificate logos files")
-        ordering = ["custom_order"]
+
+
+class CertificateTemplate(models.Model):
+    name = models.CharField(max_length=50)
+    frame = models.ForeignKey(
+        CertificateFrameFile,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        help_text=_("Image to be displayed as the certificate frame/border (page size: Letter).")
+    )
+    logos = models.ManyToManyField(
+        CertificateLogoFile,
+        blank=True,
+        help_text=_("Logos to be displayed in the header portion of the certificate. Recommended size is 200x80 points.")
+    )
+
+    def __str__(self):
+        return "%s" % self.name
 
 
 class FooterLogoFile(LogoFile):
