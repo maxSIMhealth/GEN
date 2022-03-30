@@ -30,6 +30,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "code",
                     "show_code",
                     "type",
+                    "initial_section_name",
                     "description",
                     "requirement",
                     "blind_data",

@@ -154,6 +154,13 @@ class Course(models.Model):
     show_progress_tracker = models.BooleanField(
         _("show progress tracker"), default=True
     )
+    initial_section_name = models.CharField(
+        _("initial section name"),
+        max_length=25,
+        default="Information",
+        unique=False,
+        help_text=_("Name for the initial section of the course/module, that shows the description, start/end date, etc.")
+    )
 
     class Meta:
         verbose_name = _("course")
