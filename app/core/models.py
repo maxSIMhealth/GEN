@@ -7,6 +7,10 @@ class LogoFile(models.Model):
         upload_to='uploads/logos/'
     )
 
+    def __str__(self):
+        output = "{0}".format(self.file.name.split('/')[-1])
+        return output
+
 
 class CertificateLogoFile(LogoFile):
     custom_order = models.PositiveIntegerField(
