@@ -13,14 +13,17 @@ from reportlab.pdfgen import canvas
 
 from GEN.decorators import course_enrollment_check, check_requirement, check_permission
 from GEN.support_methods import enrollment_test
-from core.models import CertificateLogoFile
 from core.support_methods import filter_by_access_restriction, check_is_instructor
 from courses.support_methods import course_mark_completed, section_mark_completed, progress
 from games.models import MoveToColumnsGroup
-from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE, COURSE, MODULE
+from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE
 from werkzeug.utils import secure_filename
 
-not_enrolled_error = _("You are not enrolled in the requested course.")
+not_enrolled_error = _('You are not enrolled in the requested course.')
+certificate_title = _('Certificate of Completion')
+certificate_presented_to = _('This certificate is presented to')
+certificate_for_completing = _('for completing the')
+certificate_generated_on = _('Generated on')
 
 
 @login_required
@@ -35,6 +38,7 @@ def course(request, pk):
     discussions = filter_by_access_restriction(course_object, discussions, user)
     quizzes = course_object.quizzes.all()
     quizzes = filter_by_access_restriction(course_object, quizzes, user)
+    course_type = course_object.type_name()
     # TODO: improve this: I've hardcoded this section name because info isn't a dynamic section item
     section_name = "Information"
 
@@ -57,14 +61,7 @@ def course(request, pk):
     discussions_progress = progress(request.user, course_object, discussions)
     quizzes_progress = progress(request.user, course_object, quizzes)
     sections_progress = progress(request.user, course_object, sections)
-
     course_completed = True if sections_progress['current'] == sections_progress['max'] else False
-
-    course_type_val = course_object.type
-    if course_type_val is COURSE:
-        course_type = "course"
-    elif course_type_val is MODULE:
-        course_type = "module"
 
     # FIXME: implement proper course grouping
     last_course_object = user.member.last()
@@ -298,7 +295,7 @@ def generate_certificate(request, pk):
         user = request.user
         sections_statuses = Status.objects.filter(learner=user, course=course_object)
         filename = f'GEN - {course_object.code} - {request.user.first_name} {request.user.last_name}.pdf'
-        logos = CertificateLogoFile.objects.all()
+        certificate_template = course_object.certificate_template
         date = timezone.localtime().isoformat()
 
         sections_completed = []
@@ -306,7 +303,7 @@ def generate_certificate(request, pk):
             sections_completed.append(item.completed)
 
         if all(sections_completed):
-            return render_certificate_pdf(course_object, date, filename, logos, request, user)
+            return render_certificate_pdf(course_object, date, filename, certificate_template, request, user)
         else:
             messages.warning(
                 request,
@@ -321,66 +318,101 @@ def generate_certificate(request, pk):
         return redirect("course", pk=course_object.pk)
 
 
-def render_certificate_pdf(course_object, date, filename, logos, request, user):
+def render_certificate_pdf(course_object, date, filename, template, request, user):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
+
     # Create the PDF object, using the buffer as its "file."
     certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
-    certificate.setTitle('Certificate of Completion')
-    # Define certificate 'term'
-    if course_object.certificate_type is CERTIFICATE_COURSE:
+    certificate.setTitle(str(certificate_title))
+
+    # Define 'term' for the course/module name
+    if course_object.certificate_type == CERTIFICATE_COURSE:
+        # actual course/module name
         certificate_term = course_object.name
     else:
+        # custom name
         certificate_term = course_object.certificate_custom_term
+
+    # Define if the course is referred to as course or as module
+    course_type_name = course_object.type_name()
+
+    # Template to be used
+    if (template is None):
+        logos = None
+        frame = None
+    else:
+        frame = template.frame
+        logos = template.logos.all()
+        if (logos.count() == 0):
+            logos = None
+
+    # Page
+    page_width = landscape(letter)[0]
+    page_height = landscape(letter)[1]
+
+    # Frame
+    if (frame is not None):
+        frame_absolute_url = request.build_absolute_uri(frame.file.url)
+        certificate.drawImage(frame_absolute_url, 0, 0, width=page_width, height=page_height)
+
     # Logos
     # The preferred logo size 200 x 80 points.
     # Width is fixed at 200 and height is automatically calculated while maintaining proportion.
     logo_spacing = 20
     logo_width = 200
     logo_max_height = 80
-    page_width = landscape(letter)[0]
-    logos_count = logos.count()
-    logos_combined_width = (logo_width * logos_count) + (logo_spacing * (logos_count - 1))
-    logo_x = (page_width - logos_combined_width) / 2
-    logos_reserved_space = logo_max_height if logos_count == 0 else 0
-    for logo in logos:
-        logo_proportion = logo.file.width / logo.file.height
-        logo_height = logo_width / logo_proportion
-        logo_absolute_url = request.build_absolute_uri(logo.file.url)
-        certificate.drawImage(
-            logo_absolute_url,
-            logo_x,
-            490,
-            width=logo_width,
-            height=logo_height,
-            mask='auto'
-        )
-        logo_x += (logo_width + logo_spacing)
+    logos_reserved_space = logo_max_height
+
+    if (logos is not None):
+        logos_count = logos.count()
+        logos_combined_width = (logo_width * logos_count) + (logo_spacing * (logos_count - 1))
+        logo_x = (page_width - logos_combined_width) / 2
+        logos_reserved_space = 0
+
+        for logo in logos:
+            logo_proportion = logo.file.width / logo.file.height
+            logo_height = logo_width / logo_proportion
+            logo_absolute_url = request.build_absolute_uri(logo.file.url)
+            certificate.drawImage(
+                logo_absolute_url,
+                logo_x,
+                470,
+                width=logo_width,
+                height=logo_height,
+                mask='auto'
+            )
+            logo_x += (logo_width + logo_spacing)
+
     # Header
-    certificate.setFont('Helvetica', 40, leading=None)
-    certificate.drawCentredString(395, 420 + logos_reserved_space, 'Certificate of Completion')
-    certificate.drawCentredString(395, 370 + logos_reserved_space, 'Certificat de Completion')
-    certificate.setFont('Helvetica', 24, leading=None)
-    certificate.drawCentredString(395, 320 + logos_reserved_space,
-                                  'This certificate is presented to / Ce certificat est présenté à')
+    certificate.setFont('Times-Roman', 30, leading=None)
+    certificate.drawCentredString(395, 390 + logos_reserved_space, str(certificate_title).upper(), charSpace=4.5)
+
+    certificate.setFont('Times-Roman', 18, leading=None)
+    certificate.drawCentredString(395, 330 + logos_reserved_space / 2, str(certificate_presented_to))
+
     # Learner info
-    certificate.setFont('Helvetica-Bold', 36, leading=None)
-    certificate.drawCentredString(395, 270 + logos_reserved_space / 2, f'{user.first_name} {user.last_name}')
+    certificate.setFont('Times-Bold', 42, leading=None)
+    certificate.drawCentredString(395, 264 + logos_reserved_space / 2, f'{user.first_name} {user.last_name}')
+
     # Course info
-    certificate.setFont('Helvetica', 24, leading=None)
-    certificate.drawCentredString(395, 220, 'for completing the following / pour avoir complété ce qui suit')
-    certificate.setFont('Helvetica-Oblique', 24, leading=None)
-    course_name = textwrap.wrap(certificate_term, width=70)
-    course_name_position = 170
+    certificate.setFont('Times-Roman', 18, leading=None)
+    certificate.drawCentredString(395, 210 + logos_reserved_space / 2, f'{certificate_for_completing} {course_type_name}')
+    certificate.setFont('Times-Italic', 26, leading=None)
+    course_name = textwrap.wrap(certificate_term, width=60)
+    course_name_position = 160 + logos_reserved_space / 2
     for line in course_name:
         certificate.drawCentredString(395, course_name_position, line)
         course_name_position = course_name_position - 30
+
     # Footer
     certificate.setFont('Helvetica', 12, leading=None)
-    certificate.drawCentredString(395, 50, f'Generated on / Généré le: {date}')
+    certificate.drawCentredString(395, 60, f'{certificate_generated_on} {date}')
+
     # Close the PDF object cleanly, and we're done.
     certificate.showPage()
     certificate.save()
+
     # FileResponse sets the Content-Disposition header so that browsers
     # present the option to save the file.
     buffer.seek(0)
