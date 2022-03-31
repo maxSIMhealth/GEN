@@ -33,7 +33,6 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "initial_section_name",
                     "description",
                     "requirement",
-                    "blind_data",
                 )
             }
         ),
@@ -50,6 +49,8 @@ class CourseAdmin(TabbedTranslationAdmin):
             "Participants",
             {
                 "fields": (
+                    "auto_enroll",
+                    "blind_data",
                     "members",
                     "learners",
                     "learners_max_number",

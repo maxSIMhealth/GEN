@@ -161,6 +161,11 @@ class Course(models.Model):
         unique=False,
         help_text=_("Name for the initial section of the course/module, that shows the description, start/end date, etc.")
     )
+    auto_enroll = models.BooleanField(
+        _("auto enroll"),
+        default=False,
+        help_text=_("Defines if new users should automatically be enrolled to this course/module.")
+    )
 
     class Meta:
         verbose_name = _("course")
