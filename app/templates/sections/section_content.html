@@ -56,7 +56,9 @@
                                         {% if item.contentitem.pdffile %}
                                             {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
                                         {% endif %}
-                                        {% if item.contenitem.content %}
+                                        item: {{ item }}
+                                        item.contentitem: {{ item.contentitem }}
+                                        {% if item.contentitem.content %}
                                             <p>{{ item.contentitem.content|safe }}</p>
                                         {% endif %}
                                     {% endif %}
@@ -110,7 +112,7 @@
                             {% if item.contentitem.pdffile %}
                                 {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
                             {% endif %}
-                            {% if item.contenitem.content %}
+                            {% if item.contentitem.content %}
                                 <p>{{ item.contentitem.content|safe }}</p>
                             {% endif %}
                         {% endif %}
