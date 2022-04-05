@@ -451,14 +451,14 @@ TINYMCE_DEFAULT_CONFIG = {
     # 'selector': 'textarea',
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
-    'theme': 'modern',
+    # 'theme': 'modern',
     'plugins': '''
             textcolor save link image media preview codesample contextmenu
             table code lists fullscreen insertdatetime searchreplace wordcount visualblocks
             visualchars code autolink lists charmap print anchor
             ''',
     'toolbar1': '''
-            fullscreen | print | bold italic underline | fontsizeselect |
+            fullscreen | bold italic underline | styleselect | fontsizeselect |
             forecolor | alignleft aligncenter alignright alignjustify | indent outdent |
             bullist numlist table | link image media | codesample |
             visualblocks visualchars | charmap hr pagebreak nonbreaking anchor | insertdatetime |
@@ -467,7 +467,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'contextmenu': 'formats | link image | code',
     'menubar': False,
     'statusbar': True,
-    'height': 300,
+    'height': 400,
 }
 TINYMCE_SPELLCHECKER = False
 
