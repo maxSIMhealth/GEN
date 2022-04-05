@@ -4,7 +4,7 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.db.models.constraints import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
-from tinymce import HTMLField
+from tinymce.models import HTMLField
 
 
 class DashboardSetting(models.Model):
