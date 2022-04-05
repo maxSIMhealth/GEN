@@ -250,13 +250,13 @@ if USE_S3:
     # S3 static settings
     STATICFILES_STORAGE = 'GEN.storage_backends.StaticStorage'
     AWS_STATIC_LOCATION = f'{AWS_LOCATION}/static'
-    STATIC_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_STATIC_LOCATION}/'
+    STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_STATIC_LOCATION}/'
     STATIC_ROOT = 'static/'
     
     # S3 public media settings
     DEFAULT_FILE_STORAGE = 'GEN.storage_backends.MediaStorage'
     AWS_MEDIA_LOCATION = f'{AWS_LOCATION}/media/public'
-    MEDIA_URL = f'https://{AWS_S3_ENDPOINT_URL}/{AWS_MEDIA_LOCATION}/'
+    MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_MEDIA_LOCATION}/'
     MEDIA_ROOT = 'media/'
 
 else:
