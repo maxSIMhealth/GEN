@@ -25,7 +25,7 @@
                         {% trans "Sorry, your browser doesn't support embedded videos." %}
                     </video>
                 </div>
-                {% include "partials/video_closedcaption_info.html" with background_color="bg-secondary"%}
+                {% include "partials/video_closedcaption_info.html" with background_color="bg-secondary" subtitle=video.subtitle %}
             </div>
         </div>
         {% if video.content %}
