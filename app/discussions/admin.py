@@ -25,6 +25,46 @@ class DiscussionAdmin(TabbedTranslationAdmin):
     readonly_fields = ("vote_score", "num_vote_up", "num_vote_down")
     inlines = (CommentsInline,)
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "author",
+                    "course",
+                    "section",
+                    "requirement",
+                    "video",
+                    "start_date",
+                    "end_date",
+                    "show_related_content",
+                    "published",
+                )
+            },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+
+                )
+            },
+        ),
+        (
+            "Voting",
+            {
+                "fields": (
+                    "vote_score",
+                    "num_vote_up",
+                    "num_vote_down",
+                )
+            }
+        )
+    )
 
 class CommentsAdmin(admin.ModelAdmin):
     # fields = ('author', 'message')
