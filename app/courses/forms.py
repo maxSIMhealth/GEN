@@ -13,11 +13,14 @@ class SectionAdminForm(forms.ModelForm):
             self.fields["requirement"].queryset = Section.objects.exclude(
                 pk=self.instance.pk
             ).filter(course=self.instance.course)
-            # only upload sections can have an output, which must be a discussion section
+            # only upload sections can have an output, which must be a discussion section or a quiz section
             if self.instance.section_type == "U":
                 self.fields["section_output"].queryset = Section.objects.exclude(
                     pk=self.instance.pk
                 ).filter(course=self.instance.course, section_type="D")
+                self.fields["clone_quiz_output_section"].queryset = Section.objects.exclude(
+                    pk=self.instance.pk
+                ).filter(course=self.instance.course, section_type="Q")
             else:
                 # return an empty queryset
                 self.fields["section_output"].queryset = Section.objects.none()
