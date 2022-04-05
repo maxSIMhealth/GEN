@@ -244,6 +244,8 @@ if USE_S3:
         'CacheControl': 'max-age=86400',
     }
     AWS_LOCATION = os.getenv('GEN_INSTANCE_NAME')
+    # Don't protect s3 urls and handle that in the model
+    AWS_QUERYSTRING_AUTH = False
 
     # S3 static settings
     STATICFILES_STORAGE = 'GEN.storage_backends.StaticStorage'
