@@ -12,6 +12,42 @@ class GameAdmin(TabbedTranslationAdmin):
     list_filter = ('type', 'author', 'section',)
     list_display = ('id', 'name', 'author', 'section', 'type',)
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "author",
+                    "section",
+                    "start_date",
+                    "end_date",
+                    "show_related_content",
+                    "published",
+                )
+            },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+
+                )
+            },
+        ),
+        (
+            "Game settings",
+            {
+                "fields": (
+                    "type",
+                )
+            }
+        )
+    )
+
 
 class TextBoxesTermInline(SortableInlineAdminMixin, TranslationTabularInline):
     model = TextBoxesTerm
@@ -34,6 +70,7 @@ class TextBoxesGameAdmin(GameAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(TextBoxesGameAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['type'].initial = 'TB'
+        form.base_fields['type'].disabled = True
         return form
 
 
@@ -56,6 +93,7 @@ class MoveToColumnsGameAdmin(GameAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(MoveToColumnsGameAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['type'].initial = 'MC'
+        form.base_fields['type'].disabled = True
         return form
 
 
@@ -69,6 +107,7 @@ class MatchTermsGameAdmin(GameAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(MatchTermsGameAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['type'].initial = 'MT'
+        form.base_fields['type'].disabled = True
         return form
 
 

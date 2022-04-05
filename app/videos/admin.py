@@ -39,6 +39,47 @@ class VideoFileAdmin(TabbedTranslationAdmin):
     save_as = True
     form = VideoFileAdminForm
 
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "content",
+                    "author",
+                    "course",
+                    "section",
+                    "start_date",
+                    "end_date",
+                    "show_related_content",
+                    "published",
+                )
+            },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+
+                )
+            },
+        ),
+        (
+            "Video settings",
+            {
+                "fields": (
+                    "file",
+                    "internal_name",
+                    "subtitle",
+                    "thumbnail",
+                )
+            }
+        )
+    )
+
 
 class PlaylistInline(SortableInlineAdminMixin, admin.TabularInline):
     model = VideoFile
