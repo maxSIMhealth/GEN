@@ -1,5 +1,6 @@
 {% load i18n %}
 
+{% if subtitle %}
 <div class="{{ background_color }}" id="video-closedcaption-info">
     <p>{% translate "To toggle off/on the closed caption (CC) option:"%}</p>
     <ul>
@@ -7,3 +8,4 @@
         <li>{% translate "Chrome and Edge: press the three dots on the bottom right of the video player and click on 'Captions'." %}</li>
     </ul>
 </div>
+{% endif %}
