@@ -81,7 +81,7 @@
                     {% for question in questions %}
                     <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %} class="mb-3">
                         <div class="fs-6">
-                            <strong>{{ forloop.counter }} - {{ question.content }}</strong>
+                            <strong>{% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}</strong>
                         </div>
                         <div>
                         {% if question.additional_content %}

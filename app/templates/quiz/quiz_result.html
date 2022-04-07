@@ -69,10 +69,10 @@
             {% for question in questions %}
                 <div class="card mb-3">
                     <div class="card-header fs-6">
-                        {% if question.question_type == 'H' or question.question_type == 'O' %}
-                            {{ forloop.counter }} - {{ question.content }}
+                        {% if question.question_type != 'H' or question.question_type == 'O' %}
+                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}
                         {% else %}
-                            {{ forloop.counter }} - {{ question.content }}
+                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}
                             {% if quiz.assessment_method and quiz.show_question_value%}(<em>{% translate "Value:" %} {{ question.value }}</em>){% endif %}
                         {% endif %}
                     </div>

@@ -121,6 +121,10 @@ class Quiz(SectionItem):
     attempts_max_number = models.PositiveIntegerField(
         _("attempts max number"), default=1
     )
+    show_question_number = models.BooleanField(
+        _("Show question number"),
+        default=True,
+    )
 
     class Meta:
         verbose_name = _("quiz")
