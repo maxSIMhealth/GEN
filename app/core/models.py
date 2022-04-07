@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now
+
+from tinymce.models import HTMLField
 
 class LogoFile(models.Model):
     file = models.ImageField(
@@ -64,3 +67,84 @@ class FooterLogoFile(LogoFile):
         verbose_name_plural = _("footer logos files")
         ordering = ["custom_order"]
 
+
+WARNING = "W"
+URGENT = "U"
+NOTICE = "N"
+
+ALERT_TYPES = [
+    (WARNING, _("Warning (yellow)")),
+    (URGENT, _("Urgent (red)")),
+    (NOTICE, _("Notice (blue)")),
+]
+
+
+class LoginAlertMessage(models.Model):
+    name = models.CharField(
+        max_length=50
+    )
+    type = models.CharField(
+        max_length=1,
+        choices=ALERT_TYPES,
+        default=WARNING,
+        help_text=_("Defines the visual style of the message.")
+    )
+    content = HTMLField(
+        blank=True,
+        null=True,
+        max_length=400,
+        help_text=_("Message that will be shown at the login page (max 400 characters).")
+    )
+    published = models.BooleanField(
+        default=False,
+        help_text=_("Sets if the message visible to all users.")
+    )
+    archived = models.BooleanField(
+        default=False,
+        help_text=_("Sets if the message is archived and should not be automatically evaluated.")
+    )
+    show_dates = models.BooleanField(
+        default=True,
+        help_text=_("Sets if the start and end dates should be visible in the alert message.")
+    )
+    start_date = models.DateTimeField(
+        _("start date"),
+        blank=True,
+        null=True,
+        help_text=_("Date and time of when the message should START being displayed. This will also automatically set 'published' status to True.")
+    )
+    end_date = models.DateTimeField(
+        _("end date"),
+        blank=True,
+        null=True,
+        help_text=_("Date and time of when the message should STOP being displayed.  This will also automatically set the 'published' status to False.")
+    )
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
+
+    class Meta:
+        ordering = ["custom_order"]
+
+    def __str__(self):
+        return f'ID {self.pk} - {self.name}'
+
+    def check_if_active(self):
+        # checking start date
+        if self.start_date:
+            if self.start_date <= now():
+                self.published = True
+            elif self.start_date > now():
+                self.published = False
+
+        self.save()
+
+        # checking end date
+        if self.end_date:
+            if self.end_date > now():
+                self.published = True
+            elif self.end_date <= now():
+                self.published = False
+                self.archived = True
+
+        self.save()

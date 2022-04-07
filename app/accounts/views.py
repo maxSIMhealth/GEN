@@ -18,6 +18,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 from social_django.models import UserSocialAuth
 
+from core.models import LoginAlertMessage
 from courses.models import Course
 from .forms import SignUpForm
 from .tokens import account_activation_token
@@ -63,6 +64,20 @@ class Login(LoginView):
             return redirect("home")
 
         return self.render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super(Login, self).get_context_data(**kwargs)
+        alert_messages = LoginAlertMessage.objects.filter(archived=False)
+
+        for message in alert_messages:
+            message.check_if_active()
+
+        alert_messages = alert_messages.filter(archived=False, published=True)
+
+        context['alert_messages'] = alert_messages
+
+        return context
+
 
 
 def signup(request):
