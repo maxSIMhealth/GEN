@@ -123,6 +123,7 @@ class QuizAdmin(TabbedTranslationAdmin):
             "Questions options",
             {
                 "fields": (
+                    "show_question_number",
                     "show_question_value",
                     "paginate",
                     "randomize",
