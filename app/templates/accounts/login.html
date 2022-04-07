@@ -35,11 +35,27 @@
             </div>
             {% endif %}
         </div>
-        <div class="alert alert-info m-2">
-            {% blocktrans %}
-                If you have problems logging into GEN, please contact us at
-            {% endblocktrans %}
-            {% support_emails %}
+        <div class="login-alerts">
+            {% for alert_message in alert_messages %}
+                {% with type=alert_message.type %}
+                <div class="alert m-2 {% if type == "W" %} alert-warning {% elif type == "U" %} alert-danger {% elif type == "N" %} alert-primary {% endif %}">
+                    {{ alert_message.content|safe }}
+                    {% if alert_message.show_dates %}
+                        {% if alert_message.start_date %}
+                            <p><small>{% translate "Posted on:" %} {{ alert_message.start_date }}</small></p>
+                        {% endif %}
+                        {% if alert_message.end_date %}
+                            <p><small>{% translate "Expires on:" %} {{ alert_message.end_date }}</small></p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {% endwith %}
+            {% endfor %}
+
+            <div class="alert alert-info m-2">
+                {% translate "If you have problems logging into GEN, please contact us at" %}
+                {% support_emails %}
+            </div>
         </div>
     </div>
 

@@ -26,6 +26,10 @@ body {
     width: 191px;
 }
 
+.login-alerts p {
+    margin: 0;
+}
+
 /* navbar */
 #main-navbar {
     border-bottom: 1px solid #cecece;
