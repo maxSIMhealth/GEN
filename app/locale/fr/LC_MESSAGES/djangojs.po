@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-01 20:50+0000\n"
-"PO-Revision-Date: 2022-02-01 20:53+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
+"POT-Creation-Date: 2022-04-10 18:01+0000\n"
+"PO-Revision-Date: 2022-04-10 18:01+0000\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,6 @@ msgid "Course Name"
 msgstr "Nom du cours"
 
 #: core/static/js/help-guide-course.js:56
-#| msgid "This area displays the current course name."
 msgid "This area displays the current course/module name."
 msgstr "Cette zone affiche le nom actuel du cours/module."
 
@@ -72,11 +71,6 @@ msgid "Sections"
 msgstr "Sections"
 
 #: core/static/js/help-guide-course.js:80
-#| msgid ""
-#| "This interactable element allows you to navigate through the sections "
-#| "available in the current course. You should follow these sections in the "
-#| "order they are presented. If one of the sections has any requirements, it "
-#| "will also be shown here."
 msgid ""
 "This interactable element allows you to navigate through the sections "
 "available in the current course/module. You should follow these sections in "
@@ -134,6 +128,14 @@ msgstr "Cours"
 msgid "Here are listed the courses in which you are currently enrolled."
 msgstr "Voici la liste des cours pour lesquelles vous êtes inscrit."
 
+#: core/static/js/pdf-viewer.js:1
+msgid ""
+"This browser does not support inline PDFs. Please download the PDF to view "
+"it."
+msgstr ""
+"Ce navigateur ne prend pas en charge les PDF en ligne. Veuillez télécharger "
+"le PDF pour le visualiser."
+
 #: core/static/js/quiz.js:73
 msgid "Please answer the question."
 msgstr "Veuillez répondre à la question."
@@ -141,3 +143,7 @@ msgstr "Veuillez répondre à la question."
 #: core/static/js/upload-video.js:3
 msgid "Uploading. Please wait."
 msgstr "Téléchargement. S'il vous plaît, attendez."
+
+#, fuzzy
+#~ msgid "Next22"
+#~ msgstr "Suivant"
