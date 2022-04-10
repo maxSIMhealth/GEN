@@ -1,10 +1,6 @@
 {% load i18n %}
 {% load static %}
 
-{% if item.content %}
-    <p>{{ item.content|safe }}</p>
-{% endif %}
-
 <div class="mt-3 mb-3 pdf-viewer">
     <div id="pdf-{{ item.id }}"></div>
     <script>pdfViewer("{{ item.file.url }}", "{{ item.id }}")</script>

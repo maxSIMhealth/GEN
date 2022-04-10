@@ -118,11 +118,11 @@
                             <p>{{ item.description }}</p>
                             {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
                         {% elif item.type == 'Content' %}
-                            {% if item.contentitem.pdffile %}
-                                {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
-                            {% endif %}
                             {% if item.contentitem.content %}
                                 <p>{{ item.contentitem.content|safe }}</p>
+                            {% endif %}
+                            {% if item.contentitem.pdffile %}
+                                {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
                             {% endif %}
                         {% endif %}
                     </div>
