@@ -254,6 +254,11 @@ body {
     background-size: 15px;
 }
 
+/* PDF */
+.pdfobject-container {
+    height: 400px;
+}
+
 /* footer */
 #language {
     width:200px;

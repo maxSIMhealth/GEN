@@ -17,6 +17,12 @@
 
     <script src="https://unpkg.com/vue-select@3.11.2"></script>
     <link rel="stylesheet" href="https://unpkg.com/vue-select@3.11.2/dist/vue-select.css">
+
+    <script src="https://unpkg.com/pdfobject@2.2.7/pdfobject.min.js"></script>
+
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+    {% sri_static "js/pdf-viewer.js" %}
 {% endblock %}
 
 {% block content %}
