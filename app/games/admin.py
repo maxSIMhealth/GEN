@@ -101,6 +101,7 @@ class MoveToColumnsGroupAdmin(TabbedTranslationAdmin):
     list_filter = ('game', 'game__section__course', 'game__section')
     list_display = ('game', 'id',)
     filter_horizontal = ('source_items', 'choice1_items', 'choice2_items')
+    form = MoveToColumnsGroupForm
 
 
 class MoveToColumnsGameAdmin(GameAdmin):
