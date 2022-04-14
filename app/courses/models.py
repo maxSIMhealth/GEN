@@ -6,7 +6,9 @@ from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
+from GEN.support_methods import duplicate_object
 from core.models import CertificateTemplate
+from courses.support_methods import duplicate_course
 
 PUBLIC = "P"
 LEARNERS = "L"
@@ -204,6 +206,10 @@ class Course(models.Model):
             course_type = "module"
 
         return course_type
+
+
+    def duplicate(self, *args, **kwargs):
+        return duplicate_course(self, *args, **kwargs)
 
 
 class Section(models.Model):
@@ -495,6 +501,9 @@ class Section(models.Model):
         output = "ID {0} - {1}".format(self.pk, self.name)
         return output
 
+    def duplicate(self, *args, **kwargs):
+        return duplicate_object(self, *args, **kwargs)
+
     class Meta:
         verbose_name = _("section")
         verbose_name_plural = _("sections")
@@ -502,6 +511,24 @@ class Section(models.Model):
 
 
 class SectionItem(TimeStampedModel):
+    SECTION_ITEM_CONTENT = "CON"
+    SECTION_ITEM_IMAGE = "IMG"
+    SECTION_ITEM_PDF = "PDF"
+    SECTION_ITEM_DISCUSSION = "DIS"
+    SECTION_ITEM_GAME = "GAM"
+    SECTION_ITEM_QUIZ = "QUZ"
+    SECTION_ITEM_VIDEO = "VID"
+
+    SECTION_ITEM_TYPES = [
+        (SECTION_ITEM_CONTENT, _("Content")),
+        (SECTION_ITEM_IMAGE, _("Image")),
+        (SECTION_ITEM_DISCUSSION, _("Discussion")),
+        (SECTION_ITEM_GAME, _("Game")),
+        (SECTION_ITEM_QUIZ, _("Quiz")),
+        (SECTION_ITEM_VIDEO, _("Video")),
+        (SECTION_ITEM_PDF, _("PDF")),
+    ]
+
     name = models.CharField(_("name"), max_length=120, unique=False)
     description = models.TextField(
         _("description"),
@@ -520,7 +547,7 @@ class SectionItem(TimeStampedModel):
     end_date = models.DateTimeField(_("end date"), blank=True, null=True)
     section = models.ForeignKey(
         Section,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
         related_name="section_items",
@@ -548,6 +575,11 @@ class SectionItem(TimeStampedModel):
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
+    )
+    item_type = models.CharField(
+        _("section item type"),
+        max_length=3,
+        choices=SECTION_ITEM_TYPES
     )
 
     objects = InheritanceManager()

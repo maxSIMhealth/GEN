@@ -2,15 +2,32 @@ from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
-from .forms import TextBoxesItemForm
+from .forms import TextBoxesItemForm, MoveToColumnsGroupForm
 from .models import Game, TextBoxesGame, TextBoxesTerm, TextBoxesItem, \
     MoveToColumnsGame, MoveToColumnsGroup, MoveToColumnsItem,\
     MatchTermsGame
 
 
+def refresh(modeladmin, request, queryset):
+    for item in queryset:
+        item.save()
+
+
+refresh.short_description = "Refresh selected items (update content type)"
+
+
+def duplicate(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate(suffix="(copy)", published=False)
+
+
+duplicate.short_description = "Duplicate selected items"
+
+
 class GameAdmin(TabbedTranslationAdmin):
-    list_filter = ('type', 'author', 'section',)
-    list_display = ('id', 'name', 'author', 'section', 'type',)
+    list_filter = ('type', 'section__course', 'section', 'author')
+    list_display = ('name', 'item_type', 'id', 'type', 'section', 'author', 'published')
+    actions = [duplicate, refresh]
 
     fieldsets = (
         (
@@ -18,6 +35,7 @@ class GameAdmin(TabbedTranslationAdmin):
             {
                 "fields": (
                     "name",
+                    "item_type",
                     "description",
                     "author",
                     "section",
@@ -80,8 +98,8 @@ class MoveToColumnsItemAdmin(TabbedTranslationAdmin):
 
 
 class MoveToColumnsGroupAdmin(TabbedTranslationAdmin):
-    list_filter = ('game',)
-    list_display = ('game',)
+    list_filter = ('game', 'game__section__course', 'game__section')
+    list_display = ('game', 'id',)
     filter_horizontal = ('source_items', 'choice1_items', 'choice2_items')
 
 
@@ -111,7 +129,7 @@ class MatchTermsGameAdmin(GameAdmin):
         return form
 
 
-admin.site.register(Game, GameAdmin)
+# admin.site.register(Game, GameAdmin)
 admin.site.register(TextBoxesGame, TextBoxesGameAdmin)
 admin.site.register(MoveToColumnsGame, MoveToColumnsGameAdmin)
 admin.site.register(MoveToColumnsItem, MoveToColumnsItemAdmin)

@@ -1,6 +1,6 @@
 from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin
+# from django.contrib.admin.options import InlineModelAdmin
 from django.forms import ModelForm
 from import_export import resources
 from import_export.admin import ExportActionMixin
@@ -31,12 +31,29 @@ from .models import (
 )
 
 
+def refresh(modeladmin, request, queryset):
+    for item in queryset:
+        item.save()
+
+
+refresh.short_description = "Refresh selected items (update content type)"
+
+
 def duplicate(modeladmin, request, queryset):
     for item in queryset:
-        item.duplicate()
+        item.duplicate(suffix="(copy)", published=False)
 
 
 duplicate.short_description = "Duplicate selected items"
+
+
+def duplicate_question(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate(suffix="(copy)")
+
+
+duplicate.short_description = "Duplicate selected items"
+
 
 # Classes AlwaysChangedModelForm and CheckerInline were based on:
 # https://stackoverflow.com/questions/34355406/django-admin-not-saving-\
@@ -81,12 +98,27 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 class QuizAdmin(TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
-    list_display = ("name", "published", "course", "section",
-                    "video", "access_restriction", "author")
-    list_filter = ("published", "course", "section", "author", "video", "access_restriction")
+    list_display = (
+        "name",
+        "item_type",
+        "published",
+        "course",
+        "section",
+        "video",
+        "access_restriction",
+        "author",
+    )
+    list_filter = (
+        "published",
+        "course",
+        "section",
+        "author",
+        "video",
+        "access_restriction",
+    )
     # search_fields = ('description', 'course', )
     inlines = (QuestionInline,)
-    actions = [duplicate]
+    actions = [duplicate, refresh]
     form = QuizAdminForm
     save_as = True
 
@@ -243,6 +275,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
     list_display = ("content", "additional_content", "author", "quiz", "value", "image", "created")
     list_filter = ("quiz",)
     search_fields = ("content", "feedback")
+    actions = [duplicate_question]
     # filter_horizontal = ('quiz',)
 
     class Media:
@@ -452,13 +485,13 @@ class QuizScoreAdmin(ExportActionMixin, admin.ModelAdmin):
 # Question, MCAnswer, LikertAnswer can be edited using the
 # question page and are only useful during testing and development
 admin.site.register(Quiz, QuizAdmin)
-#admin.site.register(Question, QuestionAdmin)
+# admin.site.register(Question, QuestionAdmin)
 admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(MCQuestionAttempt, QuestionAttemptAdmin)
-#admin.site.register(MCAnswer, MCAnswerAdmin)
+# admin.site.register(MCAnswer, MCAnswerAdmin)
 admin.site.register(QuizScore, QuizScoreAdmin)
 admin.site.register(Likert, LikertAdmin)
-#admin.site.register(LikertAnswer, LikertAnswerAdmin)
+# admin.site.register(LikertAnswer, LikertAnswerAdmin)
 admin.site.register(LikertAttempt, QuestionAttemptAdmin)
 admin.site.register(OpenEnded, OpenEndedAdmin)
 admin.site.register(OpenEndedAttempt, QuestionAttemptAdmin)

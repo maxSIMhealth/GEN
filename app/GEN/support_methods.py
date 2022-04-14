@@ -1,3 +1,7 @@
+import string
+import random
+
+
 def enrollment_test():
     """
     Empty test, just to pass request data into course_enrollment_check decorator.
@@ -5,11 +9,18 @@ def enrollment_test():
     return True
 
 
+def random_code_string(length):
+    # random_code_length = 5
+    random_code = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
+    return random_code
+
+
+# TODO: to review. Not being used anymore.
 def duplicate_name(item):
-    item.name += " (Copy)"
-    return item
+    return item.name + " (Copy)"
 
 
+# TODO: to review. Not being used anymore.
 def duplicate_item(item, callback=None):
     """
     Based on: https://stackoverflow.com/a/52761222/2066218
@@ -129,5 +140,38 @@ def duplicate_item(item, callback=None):
         print(
             f"|- Set {len(relations)} many-to-many relations on {field_name} {text_relations}"
         )
+
+    return item
+
+
+def duplicate_object(item, suffix:str=None, file=None, **kwargs):
+    """
+    Duplicates an object.
+
+    :param item: (object) Object to de duplicated.
+    :param suffix: (string) Optional : suffix to be added to the name (e.g., Copy)
+    :param file: (boolean) Optional: boolean
+    :param kwargs: Optional: additional parameters.
+    :return: (object) Section item object.
+    """
+
+    item.id = None
+    item.pk = None
+    item._state.adding = True
+
+    if suffix:
+        if item._meta.verbose_name.__contains__("question"):
+            item.content += f' {suffix}'
+        else:
+            item.name += f' {suffix}'
+
+    if file:
+        # storage system will modify the filename as necessary to get a unique name.
+        item.file.save(item.file.name, item.file)
+
+    for key, value in kwargs.items():
+        setattr(item, key, value)
+
+    item.save()
 
     return item

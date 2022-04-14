@@ -1,3 +1,6 @@
+from GEN.support_methods import duplicate_object
+
+
 def quiz_score_get(user, quiz):
     """
     Get user latest QuizScore for this quiz (if it exists).
@@ -59,41 +62,68 @@ def quiz_enable_check(user, quiz):
     return quiz_enable, current_attempt_number, attempts_left, latest_quizscore
 
 
-def duplicate_quiz(quiz, field=None, value=None):
+def duplicate_quiz(quiz, course=None, section=None, suffix=None, **kwargs):
+    """
+    Duplicates a quiz and all related questions.
+    Participants submissions WILL NOT be duplicated.
+
+    :param quiz: Quiz object that will be duplicated.
+    :param course: Optional: course object that the quiz will be related to.
+    :param section: Optional: section object that the quiz will be related to.
+    :param suffix: Optional: suffix string to be added to quiz name.
+    :param kwargs: Optional: additional fields and values.
+    :return: Quiz object.
+    """
+
     original_quiz_pk = quiz.pk
 
-    # clone quiz object
-    quiz.id = None
-    quiz.pk = None
-    quiz._state.adding = True
-    if field is not None:
-        setattr(quiz, field, value)
-    quiz.save()
+    # duplicate quiz object
+    if course is not None:
+        quiz.course = course
+    if section is not None:
+        quiz.section = section
+    duplicated_quiz = duplicate_object(quiz, suffix=suffix, **kwargs)
 
-    # clone quiz questions
+    # duplicate questions
     from quiz.models import Question
     questions = Question.objects.filter(quiz=original_quiz_pk)
-
     for question in questions:
-        from quiz.models import LikertAnswer, MCAnswer
-        original_question_pk = question.pk
-        answers = None
-        if question.question_type == 'M':
-            answers = MCAnswer.objects.filter(question=original_question_pk)
-        elif question.question_type == 'L':
-            answers = LikertAnswer.objects.filter(question=original_question_pk)
-        question.id = None
-        question.pk = None
+        question.duplicate(quiz=duplicated_quiz)
+
+    return duplicated_quiz
+
+
+def duplicate_question(question, quiz=None, suffix=None):
+    """
+    Duplicates a quiz question.
+    Participants submissions WILL NOT be duplicated.
+
+    :param question: Question to be duplicated.
+    :param quiz: Optional: quiz that will hold the question.
+    :param suffix: suffix string to be added to quiz name.
+    :return: Question object.
+    """
+
+    from quiz.models import LikertAnswer, MCAnswer
+    original_question_pk = question.pk
+
+    # get answers (if they exist) based on the type of question
+    answers = None
+    if question.question_type == 'M':
+        answers = MCAnswer.objects.filter(question=original_question_pk)
+    elif question.question_type == 'L':
+        answers = LikertAnswer.objects.filter(question=original_question_pk)
+
+    # set quiz that will hold the question
+    if quiz is not None:
         question.quiz = quiz
-        question._state.adding = True
-        question.save()
 
-        if answers != None:
-            for answer in answers:
-                answer.id = None
-                answer.pk = None
-                answer._state.adding = True
-                answer.question = question
-                answer.save()
+    # duplicate question
+    duplicated_question = duplicate_object(question, suffix=suffix)
 
-    return quiz
+    # duplicate answers (if they exist)
+    if answers is not None:
+        for answer in answers:
+            duplicate_object(answer, question=duplicated_question)
+
+    return duplicated_question
