@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 from vote.models import VoteModel
 
+from GEN.support_methods import duplicate_object
 from courses.models import Course, SectionItem
 from videos.models import VideoFile
 
@@ -46,6 +47,13 @@ class Discussion(VoteModel, SectionItem):
 
     def get_comment_count(self):
         return Discussion.objects.filter(comments__discussion=self).count()
+
+    def save(self, *args, **kwargs):
+        self.item_type = SectionItem.SECTION_ITEM_DISCUSSION
+        super().save(*args, **kwargs)
+
+    def duplicate(self, **kwargs):
+        return duplicate_object(self, **kwargs)
 
 
 class Comment(VoteModel, TimeStampedModel):

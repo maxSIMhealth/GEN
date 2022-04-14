@@ -7,7 +7,7 @@ import tempfile
 from django.core.files.storage import get_storage_class
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from GEN.support_methods import duplicate_item, duplicate_name
+from GEN.support_methods import duplicate_object
 from GEN import settings as django_settings
 from PIL import Image
 from tinymce.models import HTMLField
@@ -35,6 +35,7 @@ class VideoFileQuerySet(models.QuerySet):
 
 
 class Playlist(SectionItem):
+    # FIXME: not being used, consider removing
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,
@@ -136,11 +137,19 @@ class VideoFile(SectionItem):
 
     def delete(self, *args, **kwargs):
         self.file.delete()  # Delete the actual video file
-        self.thumbnail.delete()  # Delete the thumbnail file
+        if self.thumbnail:
+            self.thumbnail.delete()  # Delete the thumbnail file
+        if self.subtitle:
+            self.subtitle.delete() # Delete the subtitle file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
-    def duplicate(self):
-        return duplicate_item(self, callback=duplicate_name)
+    def duplicate(self, **kwargs):
+        # return duplicate_item(self, callback=duplicate_name)
+        return duplicate_object(self, file=True, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.item_type = SectionItem.SECTION_ITEM_VIDEO
+        super().save(*args, **kwargs)
 
 
 # class MediaFile(models.Model):

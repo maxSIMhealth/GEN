@@ -6,6 +6,14 @@ from .forms import VideoFileAdminForm
 from .models import Playlist, VideoFile
 
 
+def refresh(modeladmin, request, queryset):
+    for item in queryset:
+        item.save()
+
+
+refresh.short_description = "Refresh selected items (update content type)"
+
+
 def update_thumbnails(modeladmin, request, queryset):
     for item in queryset:
         item.generate_video_thumbnail()
@@ -16,7 +24,7 @@ update_thumbnails.short_description = "Update thumbnail of selected videos"
 
 def duplicate(modeladmin, request, queryset):
     for item in queryset:
-        item.duplicate()
+        item.duplicate(suffix="(copy)", published=False)
 
 
 duplicate.short_description = "Duplicate selected items"
@@ -25,6 +33,7 @@ duplicate.short_description = "Duplicate selected items"
 class VideoFileAdmin(TabbedTranslationAdmin):
     list_display = (
         "name",
+        "item_type",
         "pk",
         "internal_name",
         "description",
@@ -34,7 +43,7 @@ class VideoFileAdmin(TabbedTranslationAdmin):
         "file",
         "thumbnail",
     )
-    actions = [update_thumbnails, duplicate]
+    actions = [update_thumbnails, duplicate, refresh]
     list_filter = ("course",)
     save_as = True
     form = VideoFileAdminForm

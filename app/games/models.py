@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from GEN.support_methods import duplicate_object
 from courses.models import SectionItem
 
 
@@ -49,6 +51,40 @@ class Game(SectionItem):
         _('game type'), max_length=2, choices=GAME_TYPES
     )
 
+    def save(self, *args, **kwargs):
+        self.item_type = SectionItem.SECTION_ITEM_GAME
+        super().save(*args, **kwargs)
+
+    def duplicate(self, **kwargs):
+        # get child items, if they exist
+        child_terms = None
+        child_items = None
+        child_group = None
+        if self.type == 'TB' or self.type == 'MT':
+            child_terms = TextBoxesTerm.objects.filter(game=self)
+            child_items = TextBoxesItem.objects.filter(game=self)
+        if self.type == 'MC':
+            # child_items = MoveToColumnsItem.objects.filter(game=self)
+            child_group = MoveToColumnsGroup.objects.filter(game=self)
+
+        # duplicate game
+        new_game = duplicate_object(self, **kwargs)
+
+        # duplicate child items, if they exist
+        if child_terms:
+            for item in child_terms:
+                item.duplicate(game=new_game)
+
+        if child_items:
+            for item in child_items:
+                item.duplicate(game=new_game)
+
+        if child_group:
+            for item in child_group:
+                item.duplicate(game=new_game)
+
+        return new_game
+
     # override objects variable
     objects = GameObjectsManager()
     move_columns = MoveToColumnsManager()
@@ -73,6 +109,9 @@ class TextItem(models.Model):
 
     def __str__(self):
         return f'ID {self.pk} - {self.text}'
+
+    def duplicate(self, **kwargs):
+        return duplicate_object(self, **kwargs)
 
 
 class TextBoxesGame(Game):
@@ -144,7 +183,7 @@ class MoveToColumnsItem(TextItem):
 class MoveToColumnsGroup(models.Model):
     game = models.OneToOneField(
         MoveToColumnsGame,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='columns'
     )
     source_name = models.CharField(
@@ -187,9 +226,49 @@ class MoveToColumnsGroup(models.Model):
         help_text=_("List of items that are part of this column.")
     )
 
+    def __str__(self):
+        return f'ID {self.id} - Game content for: {self.game}'
+
     class Meta:
         verbose_name = 'Move to columns game content'
         verbose_name_plural = 'Move to columns games content'
+
+    def duplicate(self, **kwargs):
+        # get child items, if they exist
+        source_items = self.source_items
+        choice1_items = self.choice1_items
+        choice2_items = self.choice2_items
+
+        # filtering items from source_items
+        for item in choice1_items.all():
+            source_items = source_items.exclude(pk=item.pk)
+
+        for item in choice2_items.all():
+            source_items = source_items.exclude(pk=item.pk)
+
+        # duplicate object
+        new_object = duplicate_object(self, **kwargs)
+
+        # duplicate child items, if they exist,
+        # and re-add them to the M2M fields
+        if choice1_items:
+            for item in choice1_items.all():
+                item.duplicate(**kwargs)
+                new_object.source_items.add(item)
+                new_object.choice1_items.add(item)
+
+        if choice2_items:
+            for item in choice2_items.all():
+                item.duplicate(**kwargs)
+                new_object.source_items.add(item)
+                new_object.choice2_items.add(item)
+
+        if source_items:
+            for item in source_items.all():
+                item.duplicate(**kwargs)
+                new_object.source_items.add(item)
+
+        return new_object
 
 
 class MatchTermsGame(Game):

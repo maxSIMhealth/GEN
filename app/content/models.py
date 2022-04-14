@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 
+from GEN.support_methods import duplicate_object
 from core.support_methods import user_directory_path
 from courses.models import SectionItem
 from tinymce.models import HTMLField
@@ -14,6 +15,14 @@ class ContentItem(SectionItem):
         null=True
     )
 
+    def save(self, *args, **kwargs):
+        if self.pdffile is None:
+            self.item_type = SectionItem.SECTION_ITEM_CONTENT
+        super().save(*args, **kwargs)
+
+    def duplicate(self, **kwargs):
+        return duplicate_object(self, **kwargs)
+
 
 class ImageFile(SectionItem):
     file = models.ImageField(
@@ -25,6 +34,17 @@ class ImageFile(SectionItem):
     def __str__(self):
         return "%s - %s" % (self.name, self.description)
 
+    def save(self, *args, **kwargs):
+        self.item_type = SectionItem.SECTION_ITEM_IMAGE
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.file.delete()  # Delete the actual image file
+        super().delete(*args, **kwargs)  # Call the "real" delete() method.
+
+    def duplicate(self, **kwargs):
+        return duplicate_object(self, **kwargs)
+
 
 class PdfFile(ContentItem):
     file = models.FileField(
@@ -35,4 +55,40 @@ class PdfFile(ContentItem):
     )
 
     def __str__(self):
-        return "%s" % (self.name)
+        return "%s" % self.name
+
+    def save(self, *args, **kwargs):
+        self.item_type = SectionItem.SECTION_ITEM_PDF
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.file.delete()  # Delete the actual pdf file
+        super().delete(*args, **kwargs)  # Call the "real" delete() method.
+
+    def duplicate(self, published=None, file=None, suffix=None, section=None, **kwargs):
+        # return duplicate_object(self, **kwargs)
+        if suffix:
+            self.name += f' {suffix}'
+
+        new_pdf = PdfFile(
+            name=self.name,
+            author=self.author,
+            content=self.content,
+        )
+
+        if published:
+            new_pdf.published = published
+        else:
+            new_pdf.published = self.published
+
+        if section:
+            new_pdf.section = section
+        else:
+            new_pdf.section = self.section
+
+        if file:
+            new_pdf.file.save(self.file.name, self.file)
+
+        new_pdf.save()
+
+        return new_pdf

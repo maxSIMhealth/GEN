@@ -7,6 +7,14 @@ from .forms import SectionAdminForm
 from .models import Course, Section, SectionItem, Status
 
 
+def duplicate(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate(request=request)
+
+
+duplicate.short_description = "Duplicate selected items"
+
+
 class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
     model = Section
     exclude = ["description", "content"]
@@ -15,9 +23,11 @@ class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 class CourseAdmin(TabbedTranslationAdmin):
     # fields = ('name', 'members')
-    list_display = ("name", "code", "author", "enable_gamification")
+    list_display = ("name", "id", "code", "author", "enable_gamification")
     list_filter = ("author",)
+    # ordering = ("id",)
     filter_horizontal = ("members", "instructors", "editors", "learners")
+    actions = [duplicate]
     save_as = True
 
     fieldsets = (

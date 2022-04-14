@@ -10,7 +10,7 @@ from model_utils.models import TimeStampedModel
 
 from content.models import ImageFile
 from courses.models import Course, Section, SectionItem
-from quiz.support_methods import duplicate_quiz
+from quiz.support_methods import duplicate_quiz, duplicate_question
 from videos.models import VideoFile
 
 QUESTION_TYPES = [
@@ -132,6 +132,7 @@ class Quiz(SectionItem):
 
     def save(self, *args, **kwargs):
         # self.update_max_score()
+        self.item_type = SectionItem.SECTION_ITEM_QUIZ
         super(Quiz, self).save(*args, **kwargs)
 
     def clean(self):
@@ -292,6 +293,9 @@ class Question(TimeStampedModel):
 
     def __str__(self):
         return self.content
+
+    def duplicate(self, **kwargs):
+        return duplicate_question(self, **kwargs)
 
 #     def save(self, *args, **kwargs):
 #         self.quiz.update_max_score()

@@ -3,7 +3,21 @@ from modeltranslation.admin import TabbedTranslationAdmin
 
 from .models import Comment, Discussion
 
-# from .models import MediaFile
+
+def refresh(modeladmin, request, queryset):
+    for item in queryset:
+        item.save()
+
+
+refresh.short_description = "Refresh selected items (update content type)"
+
+
+def duplicate(modeladmin, request, queryset):
+    for item in queryset:
+        item.duplicate(suffix="(copy)", published=False)
+
+
+duplicate.short_description = "Duplicate selected items"
 
 
 class CommentsInline(admin.TabularInline):
@@ -12,10 +26,12 @@ class CommentsInline(admin.TabularInline):
 
 
 class DiscussionAdmin(TabbedTranslationAdmin):
-    list_filter = ("course", "published")
+    list_filter = ("course", "published", "author",)
     list_display = (
         "name",
+        "item_type",
         "id",
+        "author",
         "course",
         "section",
         "requirement",
@@ -24,6 +40,7 @@ class DiscussionAdmin(TabbedTranslationAdmin):
     )
     readonly_fields = ("vote_score", "num_vote_up", "num_vote_down")
     inlines = (CommentsInline,)
+    actions = [duplicate, refresh]
 
     fieldsets = (
         (
@@ -65,6 +82,7 @@ class DiscussionAdmin(TabbedTranslationAdmin):
             }
         )
     )
+
 
 class CommentsAdmin(admin.ModelAdmin):
     # fields = ('author', 'message')
