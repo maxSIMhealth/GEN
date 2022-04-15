@@ -14,7 +14,7 @@ from reportlab.pdfgen import canvas
 from GEN.decorators import course_enrollment_check, check_requirement, check_permission
 from GEN.support_methods import enrollment_test
 from core.support_methods import filter_by_access_restriction, check_is_instructor
-from courses.support_methods import course_mark_completed, section_mark_completed, progress
+from courses.support_methods import review_course_status, mark_section_completed, progress
 from games.models import MoveToColumnsGroup
 from .models import Course, Section, SectionItem, Status, CERTIFICATE_COURSE
 from werkzeug.utils import secure_filename
@@ -62,6 +62,11 @@ def course(request, pk):
     sections_progress = progress(request.user, course_object, sections)
     course_completed = True if sections_progress['current'] == sections_progress['max'] else False
 
+    # messages
+    msg_course_completed = _(f"Congratulations! You have completed this {course_type}.")
+    msg_certificate_available = _(f"\nYour certificate of completion is now available in the 'Course Details' area below.")
+    msg_go_to_next_course = _(f"\nPlease go to the Home page to access the next {course_type}.")
+
     # FIXME: implement proper course grouping
     last_course_object = user.member.last()
     if course_object == last_course_object:
@@ -70,9 +75,11 @@ def course(request, pk):
         last_course = False
 
     if course_completed:
-        message_congratulations = _(f"Congratulations, you have completed this {course_type}.")
+        message_congratulations = msg_course_completed
+        if course_object.provide_certificate:
+            message_congratulations += msg_certificate_available
         if not last_course:
-            message_congratulations += _(f"\nPlease go to the Home page to access the next {course_type}.")
+            message_congratulations += msg_go_to_next_course
     else:
         message_congratulations = None
 
@@ -98,6 +105,7 @@ def course(request, pk):
 def section_page(request, pk, section_pk):
     user = request.user
     course_object = get_object_or_404(Course, pk=pk)
+    course_type = course_object.type_name()
     section_object = get_object_or_404(Section, pk=section_pk)
     section_items = section_object.section_items.filter(published=True)
     section_items = filter_by_access_restriction(course_object, section_items, user)
@@ -119,27 +127,42 @@ def section_page(request, pk, section_pk):
     else:
         last_section = False
 
-    # sets congratulations message, if the section is completed
-    if section_status.completed:
-        message_congratulations = _("Congratulations! You have completed this section.")
+    # check course completion status
+    course_completed = review_course_status(request, course_object)
+
+    # messages
+    msg_course_completed = _(f"Congratulations! You have completed this {course_type}.")
+    msg_certificate_available = _(f"\nYour certificate of completion is now available in the "
+                                  f"{course_object.initial_section_name} section.")
+    msg_section_completed = _("Congratulations! You have completed this section.")
+    msg_final_assessment_completed = _("Congratulations! You have passed the assessment.")
+    msg_go_to_next_section = _("\nPlease navigate to the next section.")
+
+    # sets congratulations message, if the course or section is completed
+    if course_completed:
+        message_congratulations = msg_course_completed
+        if course_object.provide_certificate:
+            message_congratulations += msg_certificate_available
+    elif section_status.completed:
+        message_congratulations = msg_section_completed
         if section_object.final_assessment:
-            message_congratulations = _("Congratulations! You have passed the assessment.")
+            message_congratulations = msg_final_assessment_completed
         if not last_section:
-            message_congratulations += _("\nPlease navigate to the next section.")
+            message_congratulations += msg_go_to_next_section
         else:
             if course_object.provide_certificate:
-                message_congratulations += _("\nYour certificate of completion is now available in the Information section.")
+                message_congratulations += msg_certificate_available
     else:
         message_congratulations = None
 
     if request.method == "POST":
         # TODO: check section type and set completed status based on its contents
 
-        # if last section, set course status entry as completed
-        if last_section:
-            course_mark_completed(request, course_object)
-        else:
-            section_mark_completed(request, section_object)
+        # set section status as completed
+        mark_section_completed(request, section_object)
+
+        # review course sections status, and set course as completed if all of them are completed
+        review_course_status(request, course_object)
 
         my_kwargs = dict(
             pk=course_object.pk,

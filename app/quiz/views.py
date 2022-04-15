@@ -15,7 +15,7 @@ from GEN.support_methods import enrollment_test
 from core.mixins import BlockPeersAccessMixin
 from core.support_methods import check_is_instructor
 from courses.models import Course, Section
-from courses.support_methods import section_mark_completed, course_mark_completed
+from courses.support_methods import mark_section_completed, review_course_status
 from .models import (
     Likert,
     LikertAnswer,
@@ -262,13 +262,13 @@ def quiz_evaluate_completion(request, section):
         # whole course (all sections) as completed - it basically allows the learner to skip the course content
         # while a final assessment (in theory) is the last section of the course
         if section.pre_assessment or section.final_assessment:
-            course_mark_completed(request, section.course)
+            review_course_status(request, section.course, force=True)
         else:
-            section_mark_completed(request, section)
+            mark_section_completed(request, section)
     else:
         if section.pre_assessment:
             # for pre-assessment, the section should be marked completed even if the learner 'fails' the quiz
-            section_mark_completed(request, section)
+            mark_section_completed(request, section)
 
 
 @login_required
