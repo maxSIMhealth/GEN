@@ -98,20 +98,28 @@ def progress(user, course, items):
             access_allowed = True
 
         if access_allowed:
-            # do not include section item (e.g., quiz) that is owned by the user in total count
-            if hasattr(item, 'author'):
-                if not item.author == user:
-                    items_total += 1
-            else:
-                items_total += 1
-
             if item._meta.model_name == "discussion":
+                items_total += 1
                 if item.comments.filter(author=user).exists():
                     items_participation += 1
+
             if item._meta.model_name == "quiz":
+                # do not include section item (e.g., quiz) that is owned by the user in total count
+                if hasattr(item, 'author'):
+                    if not item.author == user:
+                        items_total += 1
+                else:
+                    items_total += 1
                 if item.quizscore_set.filter(student=user).exists():
                     items_participation += 1
+
             if item._meta.model_name == "section":
+                # do not include section item (e.g., quiz) that is owned by the user in total count
+                if hasattr(item, 'author'):
+                    if not item.author == user:
+                        items_total += 1
+                else:
+                    items_total += 1
                 if item.status.filter(learner=user, completed=True).exists():
                     items_participation += 1
 
