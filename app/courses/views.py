@@ -204,6 +204,8 @@ def section_page(request, pk, section_pk):
         else:
             section_template = "sections/section_quiz.html"
     elif section_object.section_type == "D":
+        # sorting discussions by newest first
+        section_items = section_items.order_by("-created")
         section_template = "sections/section_discussion.html"
     elif section_object.section_type == "V":
         if is_instructor:
