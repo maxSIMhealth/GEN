@@ -83,20 +83,24 @@
                                     <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
                                 {% endcomment %}
 
-                                {% if not course.blind_data %}
-                                    <p class="mb-0"><small class="text-muted">{% trans "By" %} {{ item.author.first_name }} {{ item.author.last_name }}</small>
-                                    </p>
-                                {% endif %}
-                                {% comment %}
-                                    <p class="mb-0"><small
-                                            class="text-muted">{{ item.description|safe|linebreaksbr }}</small></p>
-                                {% endcomment %}
+                                <p class="mb-0">
+                                    <small class="text-muted">
+                                        <strong>{% trans "Created on:" %}</strong>
+                                        {{ item.created }}
+                                    </small>
+                                </p>
+                                <p class="mb-0">
+                                    <small class="text-muted">
+                                        <strong>{% trans "By:" %}</strong>
+                                        {{ item.author.first_name }} {{ item.author.last_name }}
+                                    </small>
+                                </p>
                                 <p class="mb-0">
                                     <small class="text-muted">
                                         <strong>{% trans "Comments:" %}</strong>
                                         {{ item.discussion.get_comment_count }}
                                         {% if item.discussion.get_comment_count > 0 %}
-                                            (Last update: {{ item.discussion.last_updated|naturaltime }})
+                                            ({% translate "Last update:" %} {{ item.discussion.last_updated|naturaltime }})
                                         {% endif %}
                                     </small>
                                 </p>
@@ -108,6 +112,11 @@
                                         {% endblocktrans %}
                                     </small>
                                 {% endif %}
+
+                                {% comment %}
+                                    <p class="mb-0"><small
+                                            class="text-muted">{{ item.description|safe|linebreaksbr }}</small></p>
+                                {% endcomment %}
                             </div>
                         </div>
 
