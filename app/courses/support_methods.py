@@ -39,7 +39,7 @@ def requirement_fulfilled(user, item):
     return fulfilled
 
 
-def section_mark_completed(request, section):
+def mark_section_completed(request, section):
     """
     Marks specified section status object as completed.
 
@@ -64,24 +64,49 @@ def section_mark_completed(request, section):
         )
 
 
-def course_mark_completed(request, course):
+def review_course_status(request, course, force:bool=False) -> bool:
     """
-    Marks all status objects (course and sections) related to the user as completed.
+    Check all course sections' status objects and if they are all completed
+    set the course status object as completed.
+    If the `force` field is set as `True`, skips the check and set ALL sections
+    and course statuses as completed.
 
-    Parameters
-    ----------
-    request
-        object that contains metadata about the current user request
-    course: Course
-        course that contains the status objects
+    :param request: Django's HttpRequest object.
+    :param course: Course object.
+    :param force: Optional: Sets if the review should be skipped and forcefully set all status objects as completed.
+    :return: Course completion status.
     """
 
     from courses.models import Status
 
-    statuses = Status.objects.filter(learner=request.user, course=course)
-    for status in statuses:
-        status.completed = True
-        status.save()
+    # course_type = course.type_name()
+    # completion_message = _(f"Congratulations, you have completed this {course_type}.")
+
+    course_completed = False
+
+    # get all course sections status objects
+    status_objects = Status.objects.filter(
+        learner=request.user,
+        course=course
+    )
+
+    if force:
+        # forcefully set all status objects (course and sections) as completed
+        for status in status_objects:
+            status.completed = True
+            status.save()
+            course_completed = True
+            # messages.success(request, completion_message)
+    else:
+        # if no section is set as incomplete, mark course status as completed
+        if not status_objects.filter(completed=False, course=None):
+            course_status = status_objects.get(section=None)
+            course_status.completed = True
+            course_status.save()
+            course_completed = True
+            # messages.success(request, completion_message)
+
+    return course_status
 
 
 def progress(user, course, items):
