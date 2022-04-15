@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from model_utils.models import TimeStampedModel
 
 from GEN.support_methods import duplicate_object
 from courses.models import SectionItem
@@ -92,7 +93,7 @@ class Game(SectionItem):
     text_boxes = TextBoxesManager()
 
 
-class TextItem(models.Model):
+class TextItem(TimeStampedModel):
     text = models.CharField(
         _('text'),
         max_length=100,
@@ -180,7 +181,7 @@ class MoveToColumnsItem(TextItem):
         return f'ID {self.pk} - {self.text}'
 
 
-class MoveToColumnsGroup(models.Model):
+class MoveToColumnsGroup(TimeStampedModel):
     game = models.OneToOneField(
         MoveToColumnsGame,
         on_delete=models.CASCADE,

@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
+from model_utils.models import TimeStampedModel
 
 from tinymce.models import HTMLField
 
-class LogoFile(models.Model):
+
+class LogoFile(TimeStampedModel):
     file = models.ImageField(
         _("file"),
         upload_to='uploads/logos/'
@@ -29,7 +31,7 @@ class CertificateLogoFile(LogoFile):
         verbose_name_plural = _("certificate logos files")
 
 
-class CertificateTemplate(models.Model):
+class CertificateTemplate(TimeStampedModel):
     name = models.CharField(max_length=50)
     frame = models.ForeignKey(
         CertificateFrameFile,
@@ -79,7 +81,7 @@ ALERT_TYPES = [
 ]
 
 
-class LoginAlertMessage(models.Model):
+class LoginAlertMessage(TimeStampedModel):
     name = models.CharField(
         max_length=50
     )

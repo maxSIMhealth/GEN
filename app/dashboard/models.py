@@ -4,10 +4,11 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.db.models.constraints import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
+from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
 
-class DashboardSetting(models.Model):
+class DashboardSetting(TimeStampedModel):
     name = models.CharField(
         _("name"),
         max_length=150,

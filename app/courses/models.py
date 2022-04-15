@@ -36,7 +36,7 @@ CERTIFICATE_TYPES = [
 ]
 
 
-class Course(models.Model):
+class Course(TimeStampedModel):
     name = models.CharField(
         _("name"),
         max_length=150,
@@ -212,7 +212,7 @@ class Course(models.Model):
         return duplicate_course(self, *args, **kwargs)
 
 
-class Section(models.Model):
+class Section(TimeStampedModel):
     SECTION_TYPES = [
         ("D", _("Discussion boards")),
         ("V", _("Videos")),
