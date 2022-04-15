@@ -2,7 +2,9 @@ from urllib.parse import urlparse
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import resolve, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from GEN.decorators import course_enrollment_check, check_permission
@@ -168,61 +170,65 @@ def new_discussion(request, pk, section_pk):
     )
 
 
-@login_required
-@course_enrollment_check(enrollment_test)
-def upvote_discussion(request, pk, section_pk, sectionitem_pk):
-    course = get_object_or_404(Course, pk=pk)
-    section = get_object_or_404(Section, pk=section_pk)
+def update_discussion_vote(request, sectionitem_pk, remove_vote:bool=False, add_vote:bool=False):
     discussion = Discussion.objects.get(pk=sectionitem_pk)
-    discussion.votes.up(request.user.id)
 
     # checking if the user is voting from the discussions list or from discussion itself
-    path = urlparse(request.META["HTTP_REFERER"]).path + "upvote"
+    referer_path = request.META.get('HTTP_REFERER', None)
+    if referer_path is None:
+        # block requests without referer
+        # raise BadRequest(_("Invalid request."))
+        raise PermissionDenied()
 
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk)
+    referer_resolve = resolve(urlparse(referer_path)[2])
 
-    if request.path == path:
-        return redirect("discussion_comments", **my_kwargs)
+    # block vote if the current user is the author
+    if discussion.author == request.user:
+        messages.error(request, _("You cannot vote on your own submissions."))
     else:
-        return redirect("section", pk=course.pk, section_pk=section.pk)
+        if remove_vote:
+            discussion.votes.delete(request.user.id)
+        if add_vote:
+            discussion.votes.up(request.user.id)
+
+    return redirect(reverse(referer_resolve.view_name, kwargs=referer_resolve.kwargs))
 
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def clearvote_discussion(request, pk, section_pk, sectionitem_pk):
-    course = get_object_or_404(Course, pk=pk)
-    section = get_object_or_404(Section, pk=section_pk)
-    discussion = Discussion.objects.get(pk=sectionitem_pk)
-    discussion.votes.delete(request.user.id)
-
-    # checking if the user is voting from the discussions list or from discussion itself
-    path = urlparse(request.META["HTTP_REFERER"]).path + "clearvote"
-
-    my_kwargs = dict(pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk)
-
-    if request.path == path:
-        return redirect("discussion_comments", **my_kwargs)
-    else:
-        return redirect("section", pk=course.pk, section_pk=section.pk)
+def add_discussion_vote(request, pk, section_pk, sectionitem_pk):
+    return update_discussion_vote(request, sectionitem_pk, add_vote=True)
 
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def upvote_comment(request, pk, section_pk, sectionitem_pk, comment_pk):
+def remove_discussion_vote(request, pk, section_pk, sectionitem_pk):
+    return update_discussion_vote(request, sectionitem_pk, remove_vote=True)
+
+
+def update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, remove_vote:bool=False, add_vote:bool=False):
     comment = get_object_or_404(Comment, pk=comment_pk)
-    comment.votes.up(request.user.id)
-
     my_kwargs = dict(pk=pk, section_pk=section_pk, sectionitem_pk=sectionitem_pk)
+
+    # block vote if the current user is the author
+    if comment.author == request.user:
+        messages.error(request, _("You cannot vote on your own submissions."))
+    else:
+        if remove_vote:
+            comment.votes.delete(request.user.id)
+        if add_vote:
+            comment.votes.up(request.user.id)
 
     return redirect("discussion_comments", **my_kwargs)
 
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def clearvote_comment(request, pk, section_pk, sectionitem_pk, comment_pk):
-    comment = get_object_or_404(Comment, pk=comment_pk)
-    comment.votes.delete(request.user.id)
+def add_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk):
+    return update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, add_vote=True)
 
-    my_kwargs = dict(pk=pk, section_pk=section_pk, sectionitem_pk=sectionitem_pk)
 
-    return redirect("discussion_comments", **my_kwargs)
+@login_required
+@course_enrollment_check(enrollment_test)
+def remove_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk):
+    return update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, remove_vote=True)

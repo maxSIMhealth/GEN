@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if author == user %}
+    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% blocktranslate %}You cannot vote on your on submissions.{% endblocktranslate %}">
+        <a href="#"
+           class="btn btn-secondary disabled"
+           aria-label="Add vote"
+           role="button"
+           aria-disabled="true"><i class="fas fa-thumbs-up"></i></a>
+    </span>
+{% else %}
+    {% if voted %}
+        <a href="{{ remove_vote_url }}"
+           class="btn btn-primary"
+           aria-label="Remove vote"><i class="fas fa-thumbs-up"></i>
+        </a>
+    {% else %}
+        <a href="{{ add_vote_url }}"
+           class="btn btn-outline-primary"
+           aria-label="Add vote"><i class="fas fa-thumbs-up"></i>
+        </a>
+    {% endif %}
+{% endif %}
