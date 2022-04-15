@@ -25,10 +25,10 @@
                     <div class="col col-2 col-sm-2 col-md-auto col-lg-1 pl-1 pr-1 text-center">
                         {% checkvotes_discussion user.id discussion.pk as discussion_vote_status %}
                         {% if discussion_vote_status %}
-                            <a href="{% url 'discussion_clearvote' course.pk section.pk discussion.pk %}"
+                            <a href="{% url 'discussion_remove_vote' course.pk section.pk discussion.pk %}"
                                class="btn btn-primary" aria-label="Remove vote"><i class="fas fa-thumbs-up"></i></a>
                         {% else %}
-                            <a href="{% url 'discussion_upvote' course.pk section.pk discussion.pk %}"
+                            <a href="{% url 'discussion_add_vote' course.pk section.pk discussion.pk %}"
                                class="btn btn-outline-primary" aria-label="Add vote"><i class="far fa-thumbs-up"></i></a>
                         {% endif %}
                     </div>
@@ -103,13 +103,10 @@
                         <div class="row">
                             {% if gamification %}
                                 <div class="col-1 text-center">
-                                    {% if comment_vote_status %}
-                                        <a href="{% url 'comment_clearvote' course.pk section.pk discussion.pk comment.pk %}"
-                                           class="btn btn-primary" aria-label="Remove vote"><i class="fas fa-thumbs-up"></i></a>
-                                    {% else %}
-                                        <a href="{% url 'comment_upvote' course.pk section.pk discussion.pk comment.pk %}"
-                                           class="btn btn-outline-primary" aria-label="Add vote"><i class="far fa-thumbs-up"></i></a>
-                                    {% endif %}
+                                    {% url 'comment_add_vote' course.pk section.pk discussion.pk comment.pk as add_vote_url %}
+                                    {% url 'comment_remove_vote' course.pk section.pk discussion.pk comment.pk as remove_vote_url %}
+                                    {% include 'partials/vote_button.html' with author=comment.author user=user add_vote_url=add_vote_url remove_vote_url=remove_vote_url voted=comment_vote_status %}
+
                                     {% comment %}
                                         <div class="mt-1">{{ comment.vote_score }}</div>
                                     {% endcomment %}

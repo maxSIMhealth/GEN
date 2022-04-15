@@ -46,15 +46,9 @@
                             {% if gamification %}
                                 <div class="flex-shrink-1 pe-2">
                                     {% if discussion_details.enabled %}
-                                        {% if discussion_details.voted %}
-                                            <a href="{% url 'discussion_clearvote' course.pk section.pk item.discussion.pk %}"
-                                               class="btn btn-primary" aria-label="Add vote"><i
-                                                    class="fas fa-thumbs-up"></i></a>
-                                        {% else %}
-                                            <a href="{% url 'discussion_upvote' course.pk section.pk item.discussion.pk %}"
-                                               class="btn btn-outline-primary" aria-label="Remove vote"><i
-                                                    class="far fa-thumbs-up"></i></a>
-                                        {% endif %}
+                                        {% url 'discussion_add_vote' course.pk section.pk item.discussion.pk as add_vote_url %}
+                                        {% url 'discussion_remove_vote' course.pk section.pk item.discussion.pk as remove_vote_url %}
+                                        {% include 'partials/vote_button.html' with author=item.author user=user add_vote_url=add_vote_url remove_vote_url=remove_vote_url voted=discussion_details.voted %}
                                     {% else %}
                                         <a href="#" class="btn btn-outline-secondary disabled"
                                            aria-label="Voting disabled"><i class="far fa-thumbs-up"></i></a>
