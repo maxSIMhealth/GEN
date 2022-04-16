@@ -96,54 +96,56 @@ class VideoFile(SectionItem):
     def generate_video_thumbnail(self):
         """Generates video thumbnail (square proportion)"""
 
-        # delete existing thumbnail file
-        if self.thumbnail:
-            self.thumbnail.delete(save=False)
+        # check if video file actually exists
+        if self.file:
+            # delete existing thumbnail file
+            if self.thumbnail:
+                self.thumbnail.delete(save=False)
 
-        # generate new thumbnail
-        video = self
-        video_filename = os.path.splitext(video.file.name)[0]
-        thumbnail_filename = os.path.split(video_filename)[1] + "_thumb.jpg"
-        ffmpeg_tempfile = tempfile.NamedTemporaryFile()
-        # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
-        size = (128, 128)
+            # generate new thumbnail
+            video = self
+            video_filename = os.path.splitext(video.file.name)[0]
+            thumbnail_filename = os.path.split(video_filename)[1] + "_thumb.jpg"
+            ffmpeg_tempfile = tempfile.NamedTemporaryFile()
+            # video_thumbnail_output = '.' + settings.MEDIA_URL + thumbnail_filename
+            size = (128, 128)
 
-        if django_settings.USE_S3:
-            # get video full S3 url path
-            video_url = media_storage.url(name=video.file.name)
-        else:
-            # get video full local path
-            video_url = video.file.path
+            if django_settings.USE_S3:
+                # get video full S3 url path
+                video_url = media_storage.url(name=video.file.name)
+            else:
+                # get video full local path
+                video_url = video.file.path
 
-        (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(
-            video_url, "00:00:01.000"
-        )
+            (ffmpeg_output, ffmpeg_error) = read_frame_as_jpeg(
+                video_url, "00:00:01.000"
+            )
 
-        if ffmpeg_error is None:
-            logger.info("Video thumbnail generated ok")
-            thumbnail = Image.open(io.BytesIO(ffmpeg_output))
-            thumbnail = crop_image(thumbnail)
-            thumbnail.thumbnail(size)
-            thumbnail.save(ffmpeg_tempfile, "JPEG")
-            ffmpeg_tempfile.seek(0)
-            logger.info("Video thumbnail resized ok")
-        else:
-            logger.error("Error generating thumbnail")
-            raise ValueError("Error generating thumbnail:" + ffmpeg_error)
+            if ffmpeg_error is None:
+                logger.info("Video thumbnail generated ok")
+                thumbnail = Image.open(io.BytesIO(ffmpeg_output))
+                thumbnail = crop_image(thumbnail)
+                thumbnail.thumbnail(size)
+                thumbnail.save(ffmpeg_tempfile, "JPEG")
+                ffmpeg_tempfile.seek(0)
+                logger.info("Video thumbnail resized ok")
+            else:
+                logger.error("Error generating thumbnail")
+                raise ValueError("Error generating thumbnail:" + ffmpeg_error)
 
-        # link thumbnail to video object
-        # self.thumbnail = InMemoryUploadedFile(
-        # output, 'ImageField', thumbnail_filename, 'image/jpeg', output.tell(), None)
+            # link thumbnail to video object
+            # self.thumbnail = InMemoryUploadedFile(
+            # output, 'ImageField', thumbnail_filename, 'image/jpeg', output.tell(), None)
 
-        # define thumbnail file in user directory and link it to video object, postponing save command
-        self.thumbnail.save(name=thumbnail_filename, content=ffmpeg_tempfile, save=False)
+            # define thumbnail file in user directory and link it to video object, postponing save command
+            self.thumbnail.save(name=thumbnail_filename, content=ffmpeg_tempfile, save=False)
 
-        # calling save command, specifying that only the thumbnail field will be updated
-        # this will be read by the @post_save signal receiver
-        self.save(update_fields=['thumbnail'])
+            # calling save command, specifying that only the thumbnail field will be updated
+            # this will be read by the @post_save signal receiver
+            self.save(update_fields=['thumbnail'])
 
-        # closes temporary file and allows it to be deleted
-        ffmpeg_tempfile.close()
+            # closes temporary file and allows it to be deleted
+            ffmpeg_tempfile.close()
 
     def delete(self, *args, **kwargs):
         self.file.delete(save=False)  # Delete the actual video file
