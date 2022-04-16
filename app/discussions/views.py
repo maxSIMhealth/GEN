@@ -16,6 +16,7 @@ from GEN.support_methods import enrollment_test
 # from django.views.generic import ListView
 
 from courses.models import Course, Section
+from courses.support_methods import review_course_status
 from .forms import NewCommentForm, NewDiscussionForm
 from .models import Comment, Discussion
 from .support_methods import discussion_enable_check, has_participated
@@ -47,11 +48,11 @@ from .support_methods import discussion_enable_check, has_participated
 @course_enrollment_check(enrollment_test)
 @check_permission("discussion")
 def discussion_comments(request, pk, section_pk, sectionitem_pk):
-    course = get_object_or_404(Course, pk=pk)
-    section = get_object_or_404(Section, pk=section_pk)
+    course_object = get_object_or_404(Course, pk=pk)
+    section_object = get_object_or_404(Section, pk=section_pk)
     discussion = get_object_or_404(Discussion, pk=sectionitem_pk)
     video = discussion.video
-    gamification = course.enable_gamification
+    gamification = course_object.enable_gamification
 
     if discussion.published:
 
@@ -72,10 +73,12 @@ def discussion_comments(request, pk, section_pk, sectionitem_pk):
                     )
                     comment.save()
                     my_kwargs = dict(
-                        pk=course.pk, section_pk=section.pk, sectionitem_pk=discussion.pk
+                        pk=course_object.pk, section_pk=section_object.pk, sectionitem_pk=discussion.pk
                     )
 
-                    update_discussion_section_status(request, section)
+                    update_discussion_section_status(request, section_object)
+
+                    review_course_status(request, course_object)
 
                     return redirect("discussion_comments", **my_kwargs)
             else:
@@ -86,8 +89,8 @@ def discussion_comments(request, pk, section_pk, sectionitem_pk):
                 "discussions/comments.html",
                 {
                     "discussion": discussion,
-                    "course": course,
-                    "section": section,
+                    "course": course_object,
+                    "section": section_object,
                     "video": video,
                     "form": form,
                     "gamification": gamification,
@@ -97,10 +100,10 @@ def discussion_comments(request, pk, section_pk, sectionitem_pk):
             messages.error(
                 request, _("You do not fulfill the requirements to access this page.")
             )
-            return redirect("section", pk=course.pk, section_pk=section.pk)
+            return redirect("section", pk=course_object.pk, section_pk=section_object.pk)
     else:
         messages.error(request, _("Discussion board does not exist."))
-        return redirect("section", pk=course.pk, section_pk=section.pk)
+        return redirect("section", pk=course_object.pk, section_pk=section_object.pk)
 
 
 def update_discussion_section_status(request, section):
