@@ -128,7 +128,7 @@ def section_page(request, pk, section_pk):
         last_section = False
 
     # check course completion status
-    course_completed = review_course_status(request, course_object)
+    course_completed = course_object.status.get(learner=request.user, section=None).completed
 
     # messages
     msg_course_completed = _(f"Congratulations! You have completed this {course_type}.")
