@@ -73,14 +73,14 @@ class VideoFile(SectionItem):
         upload_to=user_directory_path,
         blank=True,
         null=True,
-        validators=[FileTypeValidator(allowed_types=["text/plain",])],
+        validators=[FileTypeValidator(allowed_types=["text/plain", ])],
     )
     internal_name = models.CharField(
         _("internal name"),
         max_length=255,
         null=True,
         blank=True,
-        help_text=_("video internal name (not visible to users)"),
+        help_text=_("Video internal name (not visible to users)."),
     )
     thumbnail = models.ImageField(
         _("thumbnail"), upload_to=user_directory_path, blank=True, null=True
@@ -129,8 +129,12 @@ class VideoFile(SectionItem):
         # self.thumbnail = InMemoryUploadedFile(
         # output, 'ImageField', thumbnail_filename, 'image/jpeg', output.tell(), None)
 
-        # save thumbnail file in user directory and link it to video object
-        self.thumbnail.save(thumbnail_filename, ffmpeg_tempfile)
+        # define thumbnail file in user directory and link it to video object, postponing save command
+        self.thumbnail.save(name=thumbnail_filename, content=ffmpeg_tempfile, save=False)
+
+        # calling save command, specifying that only the thumbnail field will be updated
+        # this will be read by the @post_save signal receiver
+        self.save(update_fields=['thumbnail'])
 
         # closes temporary file and allows it to be deleted
         ffmpeg_tempfile.close()
@@ -140,7 +144,7 @@ class VideoFile(SectionItem):
         if self.thumbnail:
             self.thumbnail.delete()  # Delete the thumbnail file
         if self.subtitle:
-            self.subtitle.delete() # Delete the subtitle file
+            self.subtitle.delete()  # Delete the subtitle file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
     def duplicate(self, **kwargs):
