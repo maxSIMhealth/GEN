@@ -149,11 +149,9 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.profile.email_confirmed = True
         user.save()
-        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-        # FIXME: add message confirming that the account has been activated.
-        return redirect("home")
-        # FIXME: finish implementing 'activation confirmed' page
-        # return render(request, 'account_activation_valid.html')
+        # login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+        messages.success(request, _("Account activated successfully. Please log in into GEN."))
+        return redirect("login")
     else:
         messages.warning(
             request,
