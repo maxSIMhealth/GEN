@@ -62,7 +62,6 @@ def upload_video(request, pk, section_pk):
                     published=False,
                 )
                 video.save()
-                video.generate_video_thumbnail()
                 messages.success(request, _("Upload successful."))
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
