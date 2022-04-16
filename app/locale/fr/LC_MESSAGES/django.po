@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-15 22:02+0000\n"
-"PO-Revision-Date: 2022-04-15 22:01+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
+"POT-Creation-Date: 2022-04-16 18:12+0000\n"
+"PO-Revision-Date: 2022-04-16 18:13+0000\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -43,11 +43,11 @@ msgstr "E-mail"
 msgid "Institution"
 msgstr "Institution"
 
-#: accounts/forms.py:26
+#: accounts/forms.py:30
 msgid "E-mail address must be from one of the allowed domains: "
 msgstr "L'adresse e-mail doit provenir de l'un des domaines autorisés: "
 
-#: accounts/forms.py:31
+#: accounts/forms.py:35
 msgid "E-mail address is already being used."
 msgstr "L'adresse e-mail est déjà utilisée."
 
@@ -83,7 +83,11 @@ msgstr "Activez votre compte GEN"
 msgid "You already have an account."
 msgstr "Avez vous déjà un compte."
 
-#: accounts/views.py:160
+#: accounts/views.py:153
+msgid "Account activated successfully. Please log in into GEN."
+msgstr "Compte activé avec succès. Veuillez vous connecter à GEN."
+
+#: accounts/views.py:159
 msgid ""
 "Try logging in now. The confirmation link has been used or expired. Get in "
 "touch if you are having issues: support@maxsimgen.com"
@@ -92,15 +96,15 @@ msgstr ""
 "ou a expiré. Contactez-nous si vous rencontrez des problèmes: "
 "support@maxsimgen.com"
 
-#: accounts/views.py:201
+#: accounts/views.py:200
 msgid "Profile updated successfully."
 msgstr "Mise à jour du profil réussie."
 
-#: accounts/views.py:218
+#: accounts/views.py:217
 msgid "Your password was successfully updated."
 msgstr "Votre mot de passe a été mis à jour avec succès."
 
-#: accounts/views.py:221
+#: accounts/views.py:220
 msgid "Please correct the error below."
 msgstr "Veuillez corriger l'erreur ci-dessous."
 
@@ -152,8 +156,8 @@ msgid ""
 "Logos to be displayed in the header portion of the certificate. Recommended "
 "size is 200x80 points."
 msgstr ""
-"Logos à afficher dans la partie en-tête du certificat. La taille recommandée "
-"est de 200x80 points."
+"Logos à afficher dans la partie en-tête du certificat. La taille recommandée"
+" est de 200x80 points."
 
 #: core/models.py:55 courses/models.py:66 courses/models.py:231
 #: courses/models.py:534
@@ -211,10 +215,12 @@ msgstr "Définit si le message est visible pour tous les utilisateurs."
 msgid ""
 "Sets if the message is archived and should not be automatically evaluated."
 msgstr ""
-"Définit si le message est archivé et ne doit pas être automatiquement évalué."
+"Définit si le message est archivé et ne doit pas être automatiquement "
+"évalué."
 
 #: core/models.py:110
-msgid "Sets if the start and end dates should be visible in the alert message."
+msgid ""
+"Sets if the start and end dates should be visible in the alert message."
 msgstr ""
 "Définit si les dates de début et de fin doivent être visibles dans le "
 "message d'alerte."
@@ -341,8 +347,8 @@ msgid ""
 "List of all users that should have access to the course (including "
 "instructors)."
 msgstr ""
-"Liste de tous les utilisateurs qui devraient avoir accès au cours (y compris "
-"les instructeurs)."
+"Liste de tous les utilisateurs qui devraient avoir accès au cours (y compris"
+" les instructeurs)."
 
 #: courses/models.py:91
 msgid "learners"
@@ -366,8 +372,8 @@ msgstr "l'instructeur"
 
 #: courses/models.py:105
 msgid ""
-"List of instructors. These users will be able to review learners submissions "
-"and interact with them."
+"List of instructors. These users will be able to review learners submissions"
+" and interact with them."
 msgstr ""
 "Liste des instructeurs. Ces utilisateurs pourront examiner les soumissions "
 "des apprenants et interagir avec eux."
@@ -421,8 +427,8 @@ msgstr "terme personnalisé de certificat"
 #: courses/models.py:136
 msgid "Certificate custom term to be used instead of the course/module name."
 msgstr ""
-"Terme personnalisé du certificat à utiliser à la place du nom du cours/"
-"module."
+"Terme personnalisé du certificat à utiliser à la place du nom du "
+"cours/module."
 
 #: courses/models.py:143
 msgid ""
@@ -430,7 +436,8 @@ msgid ""
 "defined, certificate will still be created, but on a basic white canvas."
 msgstr ""
 "Modèle de certificat à utiliser (logos et cadre). Si aucun modèle n'est "
-"défini, le certificat sera toujours créé, mais sur une toile blanche de base."
+"défini, le certificat sera toujours créé, mais sur une toile blanche de "
+"base."
 
 #: courses/models.py:146
 msgid "gamification"
@@ -476,8 +483,8 @@ msgstr "inscription automatique"
 msgid ""
 "Defines if new users should automatically be enrolled to this course/module."
 msgstr ""
-"Définit si les nouveaux utilisateurs doivent être automatiquement inscrits à "
-"ce cours/module."
+"Définit si les nouveaux utilisateurs doivent être automatiquement inscrits à"
+" ce cours/module."
 
 #: courses/models.py:173 courses/models.py:250 courses/models.py:608
 #: discussions/models.py:22 quiz/models.py:101 quiz/models.py:521
@@ -554,9 +561,9 @@ msgid ""
 "Published items are visible to all users (based on the 'access restriction' "
 "parameter). Unpublished items are visible only to editors and admins."
 msgstr ""
-"Les éléments publiés sont visibles par tous les utilisateurs (sur la base du "
-"paramètre 'restriction d'accès'). Les éléments non publiés ne sont visibles "
-"que par les éditeurs et les administrateurs."
+"Les éléments publiés sont visibles par tous les utilisateurs (sur la base du"
+" paramètre 'restriction d'accès'). Les éléments non publiés ne sont visibles"
+" que par les éditeurs et les administrateurs."
 
 #: courses/models.py:271
 msgid "paginate items"
@@ -566,8 +573,8 @@ msgstr "paginer les éléments"
 msgid ""
 "* FOR CONTENT SECTION ONLY *: Define if section items should be paginated."
 msgstr ""
-"* POUR LA SECTION DE CONTENU UNIQUEMENT * : Définissez si les éléments de la "
-"section doivent être paginés."
+"* POUR LA SECTION DE CONTENU UNIQUEMENT * : Définissez si les éléments de la"
+" section doivent être paginés."
 
 #: courses/models.py:276 courses/models.py:558
 msgid "access restriction"
@@ -607,8 +614,8 @@ msgstr "évaluation finale"
 
 #: courses/models.py:300
 msgid ""
-"* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if "
-"the learner successfully completed the course/module?"
+"* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if"
+" the learner successfully completed the course/module?"
 msgstr ""
 "* POUR LA SECTION QUIZ UNIQUEMENT * : Cette section est-elle une évaluation "
 "finale pour évaluer si l'apprenant a terminé avec succès le cours/module ?"
@@ -658,13 +665,13 @@ msgid ""
 "* FOR UPLOAD SECTION ONLY *: define who should have access to the new "
 "discussion board."
 msgstr ""
-"* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir qui devrait avoir "
-"accès au nouveau forum de discussion."
+"* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir qui devrait avoir"
+" accès au nouveau forum de discussion."
 
 #: courses/models.py:340
 msgid ""
-"* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless "
-"of the access restriction."
+"* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless"
+" of the access restriction."
 msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir si l'auteur doit "
 "avoir accès, quelle que soit la restriction d'accès."
@@ -679,7 +686,8 @@ msgid ""
 "connect it to the participant's video after it gets published."
 msgstr ""
 "* POUR LA SECTION TÉLÉCHARGEMENT UNIQUEMENT * : clonez automatiquement un "
-"quiz existant et connectez-le à la vidéo du participant après sa publication."
+"quiz existant et connectez-le à la vidéo du participant après sa "
+"publication."
 
 #: courses/models.py:358
 msgid ""
@@ -769,8 +777,8 @@ msgid ""
 "To set 'clone quiz' or 'clone quiz reference', the section type must be "
 "Upload."
 msgstr ""
-"Pour définir 'clone quiz' ou 'clone quiz référence', le type de section doit "
-"être Upload."
+"Pour définir 'clone quiz' ou 'clone quiz référence', le type de section doit"
+" être Upload."
 
 #: courses/models.py:446
 msgid "To clone a quiz you must select a quiz reference."
@@ -779,8 +787,8 @@ msgstr "Pour cloner un quiz, vous devez sélectionner une référence de quiz."
 #: courses/models.py:452
 msgid "You can not select a quiz reference if 'clone quiz' is not enabled."
 msgstr ""
-"Vous ne pouvez pas sélectionner une référence de quiz si 'cloner quiz' n'est "
-"pas activé."
+"Vous ne pouvez pas sélectionner une référence de quiz si 'cloner quiz' n'est"
+" pas activé."
 
 #: courses/models.py:459
 msgid "To enable 'show thumbnails', the section type must be Video or Upload"
@@ -794,7 +802,8 @@ msgstr "Pour activer la 'pré-évaluation', le type de section doit être Quiz."
 
 #: courses/models.py:473
 msgid "To enable 'final assessment', the section type must be Quiz."
-msgstr "Pour activer 'l'évaluation finale', le type de section doit être Quiz."
+msgstr ""
+"Pour activer 'l'évaluation finale', le type de section doit être Quiz."
 
 #: courses/models.py:479
 msgid ""
@@ -807,12 +816,13 @@ msgstr ""
 #: courses/models.py:485
 msgid "To enable 'show related video name', the section type must be Quiz."
 msgstr ""
-"Pour activer 'afficher le nom de la vidéo associée', le type de section doit "
-"être Quiz."
+"Pour activer 'afficher le nom de la vidéo associée', le type de section doit"
+" être Quiz."
 
 #: courses/models.py:491
 msgid "To enable 'group by video', the section type must be Quiz."
-msgstr "Pour activer le 'groupe par vidéo', le type de section doit être Quiz."
+msgstr ""
+"Pour activer le 'groupe par vidéo', le type de section doit être Quiz."
 
 #: courses/models.py:508 courses/models.py:554 courses/models.py:616
 #: quiz/models.py:629
@@ -856,7 +866,8 @@ msgid "show related content"
 msgstr "afficher le contenu associé"
 
 #: courses/models.py:574
-msgid "Display content related to this item (e.g., quizzes related to a video)"
+msgid ""
+"Display content related to this item (e.g., quizzes related to a video)"
 msgstr ""
 "Afficher le contenu lié à cet élément (par exemple, des quiz liés à une "
 "vidéo)"
@@ -900,12 +911,12 @@ msgstr "Cette section est déjà marquée comme terminée."
 #: courses/support_methods.py:285
 msgid ""
 "WARNING: all cross-references, requirements and outputs have been reset for "
-"the new duplicate course and         all of its sections and items. You will "
-"need to set them manually.        User content is not duplicated and auto-"
+"the new duplicate course and         all of its sections and items. You will"
+" need to set them manually.        User content is not duplicated and auto-"
 "enrollment was also disabled."
 msgstr ""
-"AVERTISSEMENT : toutes les références croisées, les exigences et les sorties "
-"ont été réinitialisées pour le nouveau cours en double et toutes ses "
+"AVERTISSEMENT : toutes les références croisées, les exigences et les sorties"
+" ont été réinitialisées pour le nouveau cours en double et toutes ses "
 "sections et éléments. Vous devrez les définir manuellement. Le contenu de "
 "l'utilisateur n'est pas dupliqué et l'inscription automatique a également "
 "été désactivée."
@@ -938,12 +949,10 @@ msgstr "Toutes nos félicitations! Vous avez terminé ce {course_type}."
 #: courses/views.py:67
 msgid ""
 "\n"
-"Your certificate of completion is now available in the 'Course Details' area "
-"below."
+"Your certificate of completion is now available in the 'Course Details' area below."
 msgstr ""
 "\n"
-"Votre certificat d'achèvement est maintenant disponible dans la zone "
-"\"Détails du cours\" ci-dessous."
+"Votre certificat d'achèvement est maintenant disponible dans la zone \"Détails du cours\" ci-dessous."
 
 #: courses/views.py:68
 #, python-brace-format
@@ -952,8 +961,7 @@ msgid ""
 "Please go to the Home page to access the next {course_type}."
 msgstr ""
 "\n"
-"Veuillez vous rendre sur la page d'accueil pour accéder au prochain "
-"{course_type}."
+"Veuillez vous rendre sur la page d'accueil pour accéder au prochain {course_type}."
 
 #: courses/views.py:135
 msgid ""
@@ -981,11 +989,11 @@ msgstr ""
 
 #: courses/views.py:185
 msgid ""
-"This section's contents are not yet available because the start date has not "
-"been reached."
+"This section's contents are not yet available because the start date has not"
+" been reached."
 msgstr ""
-"Le contenu de cette section n'est pas encore disponible car la date de début "
-"n'a pas été atteinte."
+"Le contenu de cette section n'est pas encore disponible car la date de début"
+" n'a pas été atteinte."
 
 #: courses/views.py:194
 msgid ""
@@ -997,8 +1005,8 @@ msgstr ""
 
 #: courses/views.py:210
 msgid ""
-"This section is closed and its contents have been hidden or disabled because "
-"the end date has passed."
+"This section is closed and its contents have been hidden or disabled because"
+" the end date has passed."
 msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
@@ -1028,8 +1036,8 @@ msgid ""
 "'Hero' image that will be displayed on top portion of the dashboard (home "
 "page)."
 msgstr ""
-"Image 'Héros' qui sera affichée dans la partie supérieure du tableau de bord "
-"(page d'accueil)."
+"Image 'Héros' qui sera affichée dans la partie supérieure du tableau de bord"
+" (page d'accueil)."
 
 #: dashboard/models.py:34
 msgid "active"
@@ -1037,8 +1045,8 @@ msgstr "active"
 
 #: dashboard/models.py:35
 msgid ""
-"Set this setting as the active one. **WARNING**: only one setting can be set "
-"as active."
+"Set this setting as the active one. **WARNING**: only one setting can be set"
+" as active."
 msgstr ""
 "Définissez ce paramètre comme le paramètre actif. **AVERTISSEMENT** : un "
 "seul paramètre peut être défini comme actif."
@@ -1225,7 +1233,8 @@ msgid "max score"
 msgstr "score maximum"
 
 #: quiz/models.py:45
-msgid "** NOT IN USE ** Maximum score automatically based on questions values."
+msgid ""
+"** NOT IN USE ** Maximum score automatically based on questions values."
 msgstr ""
 "** NON UTILISÉ ** Score maximum automatiquement basé sur les valeurs des "
 "questions."
@@ -1257,7 +1266,8 @@ msgstr "nombre maximum d'erreurs"
 #: quiz/models.py:66 quiz/models.py:535
 msgid "If the participant exceeds this value, the quiz is marked as failed"
 msgstr ""
-"Si le participant dépasse cette valeur, le quiz est marqué comme ayant échoué"
+"Si le participant dépasse cette valeur, le quiz est marqué comme ayant "
+"échoué"
 
 #: quiz/models.py:70
 msgid "require answers"
@@ -1338,8 +1348,8 @@ msgstr "L'activation du sous-ensemble nécessite l'activation de 'randomize'."
 #: quiz/models.py:171
 msgid "Since subset is enabled, subset number must be greater than 0."
 msgstr ""
-"Étant donné que le sous-ensemble est activé, le numéro du sous-ensemble doit "
-"être supérieur à 0."
+"Étant donné que le sous-ensemble est activé, le numéro du sous-ensemble doit"
+" être supérieur à 0."
 
 #: quiz/models.py:214
 msgid "Open ended - Date"
@@ -1410,8 +1420,8 @@ msgid ""
 "Value to add to the quiz score if the participant answer the question "
 "correctly."
 msgstr ""
-"Valeur à ajouter au score du quiz si le participant répond correctement à la "
-"question."
+"Valeur à ajouter au score du quiz si le participant répond correctement à la"
+" question."
 
 #: quiz/models.py:271
 msgid "multiple correct answers"
@@ -1422,8 +1432,8 @@ msgid ""
 "Does this question have multiple correct answers (allow user to select "
 "multiple answer items)?"
 msgstr ""
-"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur "
-"de sélectionner plusieurs éléments de réponse)?"
+"Cette question a-t-elle plusieurs réponses correctes (permet à l'utilisateur"
+" de sélectionner plusieurs éléments de réponse)?"
 
 #: quiz/models.py:279
 msgid "Open ended type"
@@ -1665,17 +1675,18 @@ msgstr ""
 "\n"
 "Si vous pensez qu'il s'agit d'une erreur, contactez-nous à"
 
-#: templates/403.html:31 templates/503.html:27 templates/accounts/login.html:89
+#: templates/403.html:31 templates/503.html:27
+#: templates/accounts/login.html:91
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
-#: templates/403.html:33 templates/503.html:28 templates/accounts/login.html:91
-#: templates/partials/footer_logos.html:12
+#: templates/403.html:33 templates/503.html:28
+#: templates/accounts/login.html:93 templates/partials/footer_logos.html:12
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/403.html:34 templates/503.html:29 templates/accounts/login.html:92
-#: templates/base_accounts.html:43
+#: templates/403.html:34 templates/503.html:29
+#: templates/accounts/login.html:94 templates/base_accounts.html:43
 msgid "Developed at"
 msgstr "Développé à"
 
@@ -1690,69 +1701,67 @@ msgstr "GEN est actuellement en maintenance. Veuillez réessayer plus tard."
 #: templates/503.html:16
 msgid ""
 "\n"
-"      You can contact us through the following email: <a href=\"mailto:"
-"support@maxsimgen.com\">support@maxsimgen.com</a>\n"
+"      You can contact us through the following email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>\n"
 "      "
 msgstr ""
 "\n"
-"Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:"
-"support@maxsimgen.com\">support@maxsimgen.com</a>"
+"Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
 
 #: templates/accounts/login.html:7
 msgid "Sign in to GEN"
 msgstr "Connectez-vous à GEN"
 
-#: templates/accounts/login.html:14
+#: templates/accounts/login.html:15
 msgid "Log in to GEN"
 msgstr "Connectez-vous à GEN"
 
-#: templates/accounts/login.html:22 templates/accounts/signup.html:18
+#: templates/accounts/login.html:24 templates/accounts/signup.html:18
 #: templates/registration/password_reset_complete.html:12
 msgid "Log in"
 msgstr "S'identifier"
 
-#: templates/accounts/login.html:30
+#: templates/accounts/login.html:32
 msgid "Or use:"
 msgstr "Ou utiliser:"
 
-#: templates/accounts/login.html:32
+#: templates/accounts/login.html:34
 msgid "Sign in with Google button"
 msgstr "Button: sign in with Google"
 
-#: templates/accounts/login.html:45
+#: templates/accounts/login.html:47
 msgid "Posted on:"
 msgstr "Posté sur:"
 
-#: templates/accounts/login.html:48
+#: templates/accounts/login.html:50
 msgid "Expires on:"
 msgstr "Expire le:"
 
-#: templates/accounts/login.html:56
+#: templates/accounts/login.html:58
 msgid "If you have problems logging into GEN, please contact us at"
 msgstr ""
 "Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous "
 "contacter à"
 
-#: templates/accounts/login.html:64
+#: templates/accounts/login.html:66
 msgid "New to GEN? Sign up"
 msgstr "Nouveau sur GEN ? S'inscrire"
 
-#: templates/accounts/login.html:64
+#: templates/accounts/login.html:66
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié?"
 
-#: templates/accounts/login.html:73 templates/base.html:101
+#: templates/accounts/login.html:75 templates/base.html:104
 #: templates/base_accounts.html:30
 msgid "Language:"
 msgstr "Langue:"
 
-#: templates/accounts/login.html:75 templates/base.html:102
+#: templates/accounts/login.html:77 templates/base.html:105
 #: templates/base_accounts.html:31
 msgid "List of languages"
 msgstr "Liste des langues"
 
 #: templates/accounts/my_account.html:6 templates/accounts/my_account.html:10
-#: templates/accounts/my_account.html:16 templates/base.html:64
+#: templates/accounts/my_account.html:16 templates/base.html:67
 msgid "My account"
 msgstr "Mon compte"
 
@@ -1770,13 +1779,11 @@ msgstr "Comptes sociaux"
 #, python-format
 msgid ""
 "\n"
-"                                Connected as %(google_uid)s - "
-"%(google_first_name)s %(google_last_name)s\n"
+"                                Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
 "                            "
 msgstr ""
 "\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s "
-"%(google_last_name)s"
+"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
 
 #: templates/accounts/my_account.html:40 templates/accounts/my_account.html:45
 msgid ""
@@ -1789,8 +1796,8 @@ msgstr "Se déconnecter de Google"
 
 #: templates/accounts/my_account.html:49
 msgid ""
-"You must set a password for your GEN account before being able to disconnect "
-"from Google."
+"You must set a password for your GEN account before being able to disconnect"
+" from Google."
 msgstr ""
 "Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
 "vous déconnecter de Google."
@@ -1799,7 +1806,7 @@ msgstr ""
 msgid "Set your password now."
 msgstr "Définissez votre mot de passe maintenant."
 
-#: templates/accounts/my_account.html:54 templates/base.html:68
+#: templates/accounts/my_account.html:54 templates/base.html:71
 msgid "Log out"
 msgstr "Se déconnecter"
 
@@ -1890,6 +1897,12 @@ msgstr "Cabillot"
 #: templates/base.html:53
 msgid "Help"
 msgstr "Aide"
+
+#: templates/base.html:58
+#, fuzzy
+#| msgid "Admins"
+msgid "Admin"
+msgstr "Admins"
 
 #: templates/base_course_section.html:31
 msgid "Sections"
@@ -2132,8 +2145,8 @@ msgid ""
 "You have reached the end of the quiz preview. You can <strong>not</strong> "
 "submit your answers since you are the author"
 msgstr ""
-"Vous avez atteint la fin de l'aperçu du quiz. Vous ne pouvez <strong>pas</"
-"strong> soumettre vos réponses puisque vous en êtes l'auteur"
+"Vous avez atteint la fin de l'aperçu du quiz. Vous ne pouvez "
+"<strong>pas</strong> soumettre vos réponses puisque vous en êtes l'auteur"
 
 #: templates/quiz/quiz.html:173
 #, python-format
@@ -2218,8 +2231,8 @@ msgid ""
 msgstr ""
 "Toutes nos félicitations! Vous avez réussi la pré-évaluation et pouvez "
 "maintenant naviguer librement dans les autres sections ou les ignorer. "
-"Veuillez vous rendre sur la page d'accueil pour accéder au prochain cours/"
-"module."
+"Veuillez vous rendre sur la page d'accueil pour accéder au prochain "
+"cours/module."
 
 #: templates/quiz/quiz_result.html:48
 msgid ""
@@ -2311,15 +2324,23 @@ msgstr "E-mail d'activation envoyé"
 #: templates/registration/account_activation_sent.html:11
 msgid ""
 "An activation email was sent with a confirmation link. Please check your "
-"email account Inbox and Spam folders, and click on the link contained in the "
-"email to complete the registration."
+"email account Inbox and Spam folders, and click on the link contained in the"
+" email to complete the registration."
 msgstr ""
 "Un e-mail d'activation a été envoyé avec un lien de confirmation. Veuillez "
 "vérifier les dossiers Boîte de réception et Spam de votre compte de "
 "messagerie, puis cliquez sur le lien contenu dans l'e-mail pour terminer "
 "l'enregistrement."
 
-#: templates/registration/account_activation_sent.html:12
+#: templates/registration/account_activation_sent.html:14
+msgid ""
+"<b>DEBUG MODE ON:</b> emails are not sent in debug mode, and their content "
+"is shown in the console log output."
+msgstr ""
+"<b>MODE DEBUG ACTIVÉ:</b> les e-mails ne sont pas envoyés en mode débogage "
+"et leur contenu est affiché dans la sortie du journal de la console."
+
+#: templates/registration/account_activation_sent.html:17
 #: templates/registration/password_reset_done.html:16
 msgid "Return to login page"
 msgstr "Retour à la page de connexion"
@@ -2351,23 +2372,15 @@ msgstr "Réinitialisation du mot de passe"
 #: templates/registration/password_reset_done.html:11
 msgid ""
 "\n"
-"    <p>We've emailed you instructions for setting your password, if an "
-"account exists with the email you entered. You should receive them shortly.</"
-"p>\n"
-"    <p>If you don't receive an email, please make sure you've entered the "
-"address you registered with, and check your spam folder.</p>\n"
-"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen."
-"com\">support@maxsimgen.com</a></p>\n"
+"    <p>We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly.</p>\n"
+"    <p>If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder.</p>\n"
+"    <p>To get in touch, send us an email: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a></p>\n"
 "    "
 msgstr ""
 "\n"
-"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot "
-"de passe, si un compte existe avec l'e-mail que vous avez entré. Vous "
-"devriez les recevoir sous peu.</p>\n"
-"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse "
-"avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
-"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:"
-"support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
+"<p>Nous vous avons envoyé par e-mail des instructions pour définir votre mot de passe, si un compte existe avec l'e-mail que vous avez entré. Vous devriez les recevoir sous peu.</p>\n"
+"<p>Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré l'adresse avec laquelle vous vous êtes inscrit et vérifiez votre dossier spam.</p>\n"
+"<p>Pour nous contacter, envoyez-nous un e-mail: <a href=\"mailto:support@maxsimgen.com\"> support@maxsimgen.com</a></p>"
 
 #: templates/registration/password_reset_form.html:11
 msgid ""
@@ -2408,8 +2421,8 @@ msgid ""
 "you are ready to continue, please click the button below to mark this "
 "section as completed."
 msgstr ""
-"Félicitations, vous avez atteint la fin de cette section. Si vous pensez que "
-"vous êtes prêt à continuer, veuillez cliquer sur le bouton ci-dessous pour "
+"Félicitations, vous avez atteint la fin de cette section. Si vous pensez que"
+" vous êtes prêt à continuer, veuillez cliquer sur le bouton ci-dessous pour "
 "marquer cette section comme terminée."
 
 #: templates/sections/section_discussion.html:34
@@ -2450,14 +2463,12 @@ msgstr "Dernière mise à jour:"
 #, python-format
 msgid ""
 "\n"
-"                                            Note:<em>To get access you must "
-"participate in <u>%(requirement)s</u>\n"
+"                                            Note:<em>To get access you must participate in <u>%(requirement)s</u>\n"
 "                                            first.</em>\n"
 "                                        "
 msgstr ""
 "\n"
-"Remarque:<em>Pour y accéder, vous devez participer à <u>%(requirement)s</u> "
-"d'abord.</em>"
+"Remarque:<em>Pour y accéder, vous devez participer à <u>%(requirement)s</u> d'abord.</em>"
 
 #: templates/sections/section_discussion.html:123
 msgid "No discussion board available."
@@ -2748,8 +2759,8 @@ msgid ""
 "Are you sure that you want to <strong>unpublish</strong> this video? This "
 "will hide it from the course learners."
 msgstr ""
-"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo? "
-"Cela le cachera aux apprenants du cours."
+"Voulez-vous vraiment <strong>annuler la publication</strong> de cette vidéo?"
+" Cela le cachera aux apprenants du cours."
 
 #: templates/videos/unpublish_video_confirmation.html:28
 msgid "Yes, unpublish video"
@@ -2806,7 +2817,9 @@ msgid "internal name"
 msgstr "nom interne"
 
 #: videos/models.py:83
-msgid "video internal name (not visible to users)"
+#, fuzzy
+#| msgid "video internal name (not visible to users)"
+msgid "Video internal name (not visible to users)."
 msgstr "nom interne de la vidéo (non visible pour les utilisateurs)"
 
 #: videos/models.py:86
@@ -2829,29 +2842,28 @@ msgstr "Seuls les apprenants sont autorisés à télécharger dans cette section
 msgid "This section does not support uploads."
 msgstr "Cette section ne prend pas en charge les téléchargements."
 
-#: videos/views.py:66
+#: videos/views.py:65
 msgid "Upload successful."
 msgstr "Téléchargement réussi."
 
-#: videos/views.py:86
+#: videos/views.py:85
 msgid "You don't have permission to upload."
 msgstr "Vous n'êtes pas autorisé à téléverser."
 
-#: videos/views.py:102
+#: videos/views.py:101
 msgid "The video is already published."
 msgstr "La vidéo est déjà publiée."
 
-#: videos/views.py:162 videos/views.py:180 videos/views.py:202
-#: videos/views.py:233 videos/views.py:238
+#: videos/views.py:161 videos/views.py:179 videos/views.py:201
+#: videos/views.py:232 videos/views.py:237
 msgid "You don't have permission to do that."
 msgstr "Vous n'êtes pas autorisé à le faire."
 
-#: videos/views.py:185
+#: videos/views.py:184
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
 
 #, fuzzy
-#~| msgid "Thank you for your submission."
 #~ msgid "You cannot vote on your on submissions."
 #~ msgstr "Merci pour votre soumission."
 
@@ -2859,11 +2871,11 @@ msgstr "La vidéo demandée est déjà inédite."
 #~ msgstr "Par"
 
 #~ msgid ""
-#~ "This browser does not support inline PDFs. Please download the PDF to "
-#~ "view it."
+#~ "This browser does not support inline PDFs. Please download the PDF to view "
+#~ "it."
 #~ msgstr ""
-#~ "Ce navigateur ne prend pas en charge les PDF en ligne. Veuillez "
-#~ "télécharger le PDF pour le visualiser."
+#~ "Ce navigateur ne prend pas en charge les PDF en ligne. Veuillez télécharger "
+#~ "le PDF pour le visualiser."
 
 #~ msgid "Certificate custom term."
 #~ msgstr "Terme personnalisé de certificat."
