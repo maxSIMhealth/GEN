@@ -7,11 +7,13 @@
 {% block title %}{% translate "Sign in to GEN" %}{% endblock title %}
 
 {% block content %}
-    {% if messages %}
-        {% include 'partials/messages.html' %}
-    {% endif %}
     <div class="card" id="login-card">
-        <div class="card-header bg-light text-dark fs-3">{% translate "Log in to GEN" %}</div>
+        <div class="card-header bg-light text-dark">
+            {% if messages %}
+                {% include 'partials/messages.html' %}
+            {% endif %}
+            <h3 class="m-0">{% translate "Log in to GEN" %}</h3>
+        </div>
         <div class="card-group">
             {% if not use_social_auth_only %}
             <div class="card mb-0">
