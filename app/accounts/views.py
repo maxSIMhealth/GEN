@@ -133,7 +133,8 @@ def signup(request):
 
 
 def account_activation_sent(request):
-    return render(request, "registration/account_activation_sent.html")
+    debug_mode = django_settings.DEBUG
+    return render(request, "registration/account_activation_sent.html", context={"debug_mode": debug_mode})
 
 
 def activate(request, uidb64, token):
