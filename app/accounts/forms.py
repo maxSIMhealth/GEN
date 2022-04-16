@@ -20,12 +20,16 @@ class SignUpForm(UserCreationForm):
         """
         data = self.cleaned_data["email"]
         email_domain = data.split("@")[-1].split(".")[0]
-        permitted_domains = django_settings.VALID_EMAIL_DOMAINS
-        if email_domain not in permitted_domains:
-            raise forms.ValidationError(
-                _("E-mail address must be from one of the allowed domains: ")
-                + ", ".join(permitted_domains)
-            )
+
+        use_email_domains_whitelist = django_settings.USE_EMAIL_DOMAINS_WHITELIST
+
+        if use_email_domains_whitelist:
+            permitted_domains = django_settings.VALID_EMAIL_DOMAINS
+            if email_domain not in permitted_domains:
+                raise forms.ValidationError(
+                    _("E-mail address must be from one of the allowed domains: ")
+                    + ", ".join(permitted_domains)
+                )
 
         if User.objects.all().filter(email=data).exists():
             raise forms.ValidationError(_("E-mail address is already being used."))

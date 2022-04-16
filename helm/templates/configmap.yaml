@@ -28,4 +28,5 @@ data:
   SERVER_EMAIL: "system@maxsimgen.com"
   DEFAULT_FROM_EMAIL: "donotreply@maxsimgen.com"
   SUPPORT_EMAILS: "support@maxsimgen.com"
+  USE_EMAIL_DOMAINS_WHITELIST: "True"
   VALID_EMAIL_DOMAINS: "maxsimgen,ontariotechu,umontreal"
