@@ -99,14 +99,14 @@ def review_course_status(request, course, force:bool=False) -> bool:
             # messages.success(request, completion_message)
     else:
         # if no section is set as incomplete, mark course status as completed
-        if not status_objects.filter(completed=False, course=None):
+        if not status_objects.filter(completed=False).exclude(section=None):
             course_status = status_objects.get(section=None)
             course_status.completed = True
             course_status.save()
             course_completed = True
             # messages.success(request, completion_message)
 
-    return course_status
+    return course_completed
 
 
 def progress(user, course, items):
