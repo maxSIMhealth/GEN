@@ -15,5 +15,6 @@ def generate_thumbnail(sender, instance, created, **kwargs):
         updated_thumbnail = kwargs["update_fields"].__contains__("thumbnail")
     except AttributeError:
         updated_thumbnail = False
+        
     if created or not updated_thumbnail:
         instance.generate_video_thumbnail()

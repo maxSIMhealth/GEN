@@ -95,6 +95,12 @@ class VideoFile(SectionItem):
 
     def generate_video_thumbnail(self):
         """Generates video thumbnail (square proportion)"""
+
+        # delete existing thumbnail file
+        if self.thumbnail:
+            self.thumbnail.delete(save=False)
+
+        # generate new thumbnail
         video = self
         video_filename = os.path.splitext(video.file.name)[0]
         thumbnail_filename = os.path.split(video_filename)[1] + "_thumb.jpg"
@@ -140,11 +146,11 @@ class VideoFile(SectionItem):
         ffmpeg_tempfile.close()
 
     def delete(self, *args, **kwargs):
-        self.file.delete()  # Delete the actual video file
+        self.file.delete(save=False)  # Delete the actual video file
         if self.thumbnail:
-            self.thumbnail.delete()  # Delete the thumbnail file
+            self.thumbnail.delete(save=False)  # Delete the thumbnail file
         if self.subtitle:
-            self.subtitle.delete()  # Delete the subtitle file
+            self.subtitle.delete(save=False)  # Delete the subtitle file
         super().delete(*args, **kwargs)  # Call the "real" delete() method.
 
     def duplicate(self, **kwargs):
