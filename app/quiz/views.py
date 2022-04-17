@@ -270,6 +270,7 @@ def quiz_evaluate_completion(request, section):
             review_course_status(request, section.course, force=True)
         else:
             mark_section_completed(request, section)
+            review_course_status(request, section.course)
     else:
         if section.pre_assessment:
             # for pre-assessment, the section should be marked completed even if the learner 'fails' the quiz
