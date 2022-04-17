@@ -38,7 +38,7 @@ class DiscussionAdmin(TabbedTranslationAdmin):
         "video",
         "published",
     )
-    readonly_fields = ("vote_score", "num_vote_up", "num_vote_down")
+    readonly_fields = ("vote_score", "num_vote_up", "num_vote_down", "created", "modified")
     inlines = (CommentsInline,)
     actions = [duplicate, refresh]
 
@@ -60,6 +60,15 @@ class DiscussionAdmin(TabbedTranslationAdmin):
                     "published",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
         (
             "Access control",
@@ -87,9 +96,20 @@ class DiscussionAdmin(TabbedTranslationAdmin):
 class CommentsAdmin(admin.ModelAdmin):
     # fields = ('author', 'message')
     # filter_horizontal = ('author', )
+    fields = (
+        "author",
+        "discussion",
+        "message",
+        "vote_score",
+        "num_vote_up",
+        "num_vote_down",
+        "created",
+        "modified"
+    )
     list_display = ("message", "author", "discussion")
     list_display_links = ("message",)
     list_filter = ("author", "discussion")
+    readonly_fields = ("vote_score", "num_vote_up", "num_vote_down", "created", "modified")
 
 
 # admin.site.register(MediaFile)

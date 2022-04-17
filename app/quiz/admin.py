@@ -107,6 +107,7 @@ class QuizAdmin(TabbedTranslationAdmin):
         "video",
         "access_restriction",
         "author",
+        "created",
     )
     list_filter = (
         "published",
@@ -122,7 +123,7 @@ class QuizAdmin(TabbedTranslationAdmin):
     form = QuizAdminForm
     save_as = True
 
-    readonly_fields = ["max_score", ]
+    readonly_fields = ["max_score", "created", "modified"]
 
     fieldsets = (
         (
@@ -141,6 +142,15 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "requirement",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
         (
             "Access control",
@@ -276,6 +286,7 @@ class QuestionAdmin(TabbedTranslationAdmin):
     list_filter = ("quiz",)
     search_fields = ("content", "feedback")
     actions = [duplicate_question]
+    readonly_fields = ["created", "modified"]
     # filter_horizontal = ('quiz',)
 
     class Media:
@@ -300,6 +311,8 @@ class MCQuestionAdmin(QuestionAdmin):
         "image",
         "feedback",
         "multiple_correct_answers",
+        "created",
+        "modified"
     )
     inlines = [MCAnswerInline]
 
@@ -326,8 +339,18 @@ class LikertAdmin(QuestionAdmin):
     Class for likert question editing
     """
 
-    fields = ("question_type", "content", "additional_content",
-              "author", "feedback", "quiz", "value", "image")
+    fields = (
+        "question_type",
+        "content",
+        "additional_content",
+        "author",
+        "feedback",
+        "quiz",
+        "value",
+        "image",
+        "created",
+        "modified"
+    )
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
 
@@ -350,8 +373,18 @@ class LikertAnswerAdmin(TabbedTranslationAdmin):
 
 
 class OpenEndedAdmin(QuestionAdmin):
-    fields = ("question_type", "openended_type", "content",
-              "additional_content", "author", "quiz", "value", "image")
+    fields = (
+        "question_type",
+        "openended_type",
+        "content",
+        "additional_content",
+        "author",
+        "quiz",
+        "value",
+        "image",
+        "created",
+        "modified"
+    )
 
     class Media:
         css = {"all": ("css/admin.css",)}
@@ -448,6 +481,7 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
         "attempt_number",
         "created",
     )
+    readonly_fields = ["created", "modified"]
     # list_filter = ("course", "quiz", "question", "attempt_number")
     list_filter = ("course", "student", "quiz", "section", "attempt_number")
     resource_class = QuestionAttemptResource
@@ -458,7 +492,16 @@ class QuestionAttemptAdmin(ExportActionMixin, admin.ModelAdmin):
 class QuestionGroupHeaderAdmin(QuestionAdmin):
     # list_display = ('content',)
     # filter_horizontal = ('quiz',)
-    fields = ("question_type", "content", "additional_content", "author", "feedback", "quiz")
+    fields = (
+        "question_type",
+        "content",
+        "additional_content",
+        "author",
+        "feedback",
+        "quiz",
+        "created",
+        "modified"
+    )
 
     # setting question_type value to Group Header
     def get_form(self, request, obj=None, **kwargs):

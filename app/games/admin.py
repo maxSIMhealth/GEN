@@ -3,7 +3,7 @@ from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
 from .forms import TextBoxesItemForm, MoveToColumnsGroupForm
-from .models import Game, TextBoxesGame, TextBoxesTerm, TextBoxesItem, \
+from .models import TextBoxesGame, TextBoxesTerm, TextBoxesItem, \
     MoveToColumnsGame, MoveToColumnsGroup, MoveToColumnsItem,\
     MatchTermsGame
 
@@ -27,6 +27,7 @@ duplicate.short_description = "Duplicate selected items"
 class GameAdmin(TabbedTranslationAdmin):
     list_filter = ('type', 'section__course', 'section', 'author')
     list_display = ('name', 'item_type', 'id', 'type', 'section', 'author', 'published')
+    readonly_fields = ["created", "modified"]
     actions = [duplicate, refresh]
 
     fieldsets = (
@@ -45,6 +46,15 @@ class GameAdmin(TabbedTranslationAdmin):
                     "published",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
         (
             "Access control",

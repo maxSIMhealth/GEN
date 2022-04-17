@@ -29,6 +29,8 @@ class CourseAdmin(TabbedTranslationAdmin):
     filter_horizontal = ("members", "instructors", "editors", "learners")
     actions = [duplicate]
     save_as = True
+    inlines = (SectionInline,)
+    readonly_fields = ["created", "modified"]
 
     fieldsets = (
         (
@@ -43,6 +45,15 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "initial_section_name",
                     "description",
                     "requirement",
+                )
+            }
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
                 )
             }
         ),
@@ -89,10 +100,8 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "show_progress_tracker"
                 )
             }
-        )
+        ),
     )
-
-    inlines = (SectionInline,)
 
 
 class SectionItemInline(SortableInlineAdminMixin, TranslationTabularInline):
@@ -112,6 +121,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     inlines = (SectionItemInline,)
     list_filter = ("course", "published", "access_restriction")
     form = SectionAdminForm
+    readonly_fields = ["created", "modified"]
 
     fieldsets = (
         (
@@ -131,6 +141,15 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "completion_message",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
         (
             "Layout",
@@ -191,9 +210,10 @@ class StatusAdmin(admin.ModelAdmin):
         "learner",
         "course",
         "section",
-        "completed"
+        "completed",
     )
-    list_filter = ("course","section","learner")
+    list_filter = ("course", "section", "learner")
+    readonly_fields = ["created", "modified"]
 
 
 admin.site.register(Course, CourseAdmin)
