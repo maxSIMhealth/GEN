@@ -73,6 +73,7 @@ def rank_get(user_id, course_id, kind):
     username = User.objects.get(pk=user_id).username
     rank = 0
     rank_user = 0
+    items = None
 
     if kind == "discussion":
         items = get_discussion_score(discussions)
@@ -84,7 +85,7 @@ def rank_get(user_id, course_id, kind):
         items = get_quiz_score(quizscore)
 
     # check if variable 'items' exists
-    if "items" in locals():
+    if items is not None:
         for item in items:
             rank += 1
             if kind == "quiz":
@@ -106,6 +107,8 @@ def get_quiz_score(quizscore):
             .annotate(Count("score"))
             .order_by("-score__count")
         )
+    else:
+        items = None
     return items
 
 
@@ -124,6 +127,8 @@ def get_comment_score(discussions):
             counter += 1
 
         items = items.order_by("-votes__count")
+    else:
+        items = None
     return items
 
 
@@ -136,4 +141,6 @@ def get_discussion_score(discussions):
             .annotate(Count("votes"))
             .order_by("-votes__count")
         )
+    else:
+        items = None
     return items
