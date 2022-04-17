@@ -12,7 +12,7 @@ class ContentItem(SectionItem):
     content = HTMLField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if self.pdffile is None:
+        if hasattr(self, "pdffile") is False:
             self.item_type = SectionItem.SECTION_ITEM_CONTENT
         super().save(*args, **kwargs)
 

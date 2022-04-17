@@ -306,11 +306,19 @@ def duplicate_section_item_image(new_section, section_items_image):
 
 
 def duplicate_section_item_content(new_section, section_items_content):
+    from content.models import ContentItem
+
     if section_items_content is not None:
         for item in section_items_content:
             # for some reason PdfFile was not duplicating correctly using the generic method
             # it was necessary to create a specific duplicate method for it
-            if hasattr(item, "pdffile"):
+            is_pdf = False
+            try:
+                is_pdf = hasattr(item, "pdffile")
+            except ContentItem.pdffile.RelatedObjectDoesNotExist:
+                pass
+
+            if is_pdf:
                 from content.models import PdfFile
 
                 pdf_item = PdfFile.objects.get(pk=item.pk)
