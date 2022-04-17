@@ -37,6 +37,7 @@ class ContentItemAdmin(TabbedTranslationAdmin):
         "section",
     )
     actions = [duplicate, refresh]
+    readonly_fields = ["created", "modified"]
     fieldsets = (
         (
             None,
@@ -51,6 +52,15 @@ class ContentItemAdmin(TabbedTranslationAdmin):
                     "content",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
     )
 
@@ -70,6 +80,7 @@ class ImageFileAdmin(TabbedTranslationAdmin):
         "file",
         "published"
     )
+    readonly_fields = ["created", "modified"]
     actions = [duplicate_with_file, refresh]
     fieldsets = (
         (
@@ -83,6 +94,15 @@ class ImageFileAdmin(TabbedTranslationAdmin):
                     "description",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
     )
 
@@ -101,6 +121,7 @@ class PdfFileAdmin(TabbedTranslationAdmin):
         "file",
         "published",
     )
+    readonly_fields = ["created", "modified"]
     actions = [duplicate_with_file, refresh]
     fieldsets = (
         (
@@ -115,6 +136,15 @@ class PdfFileAdmin(TabbedTranslationAdmin):
                     "content"
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
     )
 

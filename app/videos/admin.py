@@ -43,6 +43,7 @@ class VideoFileAdmin(TabbedTranslationAdmin):
         "file",
         "thumbnail",
     )
+    readonly_fields = ["created", "modified"]
     actions = [update_thumbnails, duplicate, refresh]
     list_filter = ("course",)
     save_as = True
@@ -65,6 +66,15 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                     "published",
                 )
             },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            }
         ),
         (
             "Access control",
