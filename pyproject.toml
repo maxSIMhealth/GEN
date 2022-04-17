@@ -1,0 +1,3 @@
+[tool.black]
+target-version = ['py38']
+#force-exclude = 'tests/test_runner_apps/tagged/tests_syntax_error.py'
