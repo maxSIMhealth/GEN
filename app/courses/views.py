@@ -59,9 +59,15 @@ def course(request, pk):
     discussions_progress = progress(request.user, course_object, discussions)
     quizzes_progress = progress(request.user, course_object, quizzes)
     sections_progress = progress(request.user, course_object, sections)
+
+    # TODO: this should be unnecessary, review and remove
     course_completed = (
         True if sections_progress["current"] == sections_progress["max"] else False
     )
+    course_status = course_object.status.get(learner=user, section=None)
+    if course_completed and course_status.completed is False:
+        course_status.completed = True
+        course_status.save()
 
     # messages
     msg_course_completed = _(f"Congratulations! You have completed this {course_type}.")
