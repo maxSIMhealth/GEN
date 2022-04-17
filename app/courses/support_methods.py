@@ -219,6 +219,10 @@ def duplicate_course(course, request, **kwargs):
 
 
 def duplicate_section(new_course, original_course_learners, section):
+    from courses.models import Section
+
+    original_section_pk = section.pk
+
     # duplicate section
     new_section = section.duplicate(
         course=new_course,
@@ -235,7 +239,10 @@ def duplicate_section(new_course, original_course_learners, section):
     )
 
     # duplicate items
-    duplicate_section_items(new_course, new_section, original_course_learners, section)
+    original_section = Section.objects.get(pk=original_section_pk)
+    duplicate_section_items(
+        new_course, new_section, original_course_learners, original_section
+    )
 
 
 def duplicate_section_items(new_course, new_section, original_course_learners, section):
