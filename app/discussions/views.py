@@ -1,5 +1,8 @@
 from urllib.parse import urlparse
 
+from courses.models import Course, Section
+from courses.support_methods import review_course_status
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -7,19 +10,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import resolve, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from GEN.decorators import course_enrollment_check, check_permission
+from GEN.decorators import check_permission, course_enrollment_check
 from GEN.support_methods import enrollment_test
+
+from .forms import NewCommentForm, NewDiscussionForm
+from .models import Comment, Discussion
+from .support_methods import discussion_enable_check, has_participated
 
 # from django.core.files import File
 # from django.core.files.storage import FileSystemStorage
 # from django.core.files.images import ImageFile
 # from django.views.generic import ListView
 
-from courses.models import Course, Section
-from courses.support_methods import review_course_status
-from .forms import NewCommentForm, NewDiscussionForm
-from .models import Comment, Discussion
-from .support_methods import discussion_enable_check, has_participated
 
 # @login_required
 # def list_pdfs(request, pk):
@@ -73,7 +75,9 @@ def discussion_comments(request, pk, section_pk, sectionitem_pk):
                     )
                     comment.save()
                     my_kwargs = dict(
-                        pk=course_object.pk, section_pk=section_object.pk, sectionitem_pk=discussion.pk
+                        pk=course_object.pk,
+                        section_pk=section_object.pk,
+                        sectionitem_pk=discussion.pk,
                     )
 
                     update_discussion_section_status(request, section_object)
@@ -100,7 +104,9 @@ def discussion_comments(request, pk, section_pk, sectionitem_pk):
             messages.error(
                 request, _("You do not fulfill the requirements to access this page.")
             )
-            return redirect("section", pk=course_object.pk, section_pk=section_object.pk)
+            return redirect(
+                "section", pk=course_object.pk, section_pk=section_object.pk
+            )
     else:
         messages.error(request, _("Discussion board does not exist."))
         return redirect("section", pk=course_object.pk, section_pk=section_object.pk)
@@ -112,7 +118,9 @@ def update_discussion_section_status(request, section):
         section_discussions = Discussion.objects.filter(section=section)
         section_discussions_participated = []
         for discussion in section_discussions:
-            section_discussions_participated.append(has_participated(request.user, discussion))
+            section_discussions_participated.append(
+                has_participated(request.user, discussion)
+            )
         if all(section_discussions_participated):
             # section_status = section.status.filter(learner=request.user).get()
             section_status.completed = True
@@ -169,15 +177,22 @@ def new_discussion(request, pk, section_pk):
     return render(
         request,
         "discussions/new_discussion.html",
-        {"discussion": discussion, "course": course, "section": section, "form": form,},
+        {
+            "discussion": discussion,
+            "course": course,
+            "section": section,
+            "form": form,
+        },
     )
 
 
-def update_discussion_vote(request, sectionitem_pk, remove_vote:bool=False, add_vote:bool=False):
+def update_discussion_vote(
+    request, sectionitem_pk, remove_vote: bool = False, add_vote: bool = False
+):
     discussion = Discussion.objects.get(pk=sectionitem_pk)
 
     # checking if the user is voting from the discussions list or from discussion itself
-    referer_path = request.META.get('HTTP_REFERER', None)
+    referer_path = request.META.get("HTTP_REFERER", None)
     if referer_path is None:
         # block requests without referer
         # raise BadRequest(_("Invalid request."))
@@ -209,7 +224,15 @@ def remove_discussion_vote(request, pk, section_pk, sectionitem_pk):
     return update_discussion_vote(request, sectionitem_pk, remove_vote=True)
 
 
-def update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, remove_vote:bool=False, add_vote:bool=False):
+def update_comment_vote(
+    request,
+    pk,
+    section_pk,
+    sectionitem_pk,
+    comment_pk,
+    remove_vote: bool = False,
+    add_vote: bool = False,
+):
     comment = get_object_or_404(Comment, pk=comment_pk)
     my_kwargs = dict(pk=pk, section_pk=section_pk, sectionitem_pk=sectionitem_pk)
 
@@ -228,10 +251,14 @@ def update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, rem
 @login_required
 @course_enrollment_check(enrollment_test)
 def add_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk):
-    return update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, add_vote=True)
+    return update_comment_vote(
+        request, pk, section_pk, sectionitem_pk, comment_pk, add_vote=True
+    )
 
 
 @login_required
 @course_enrollment_check(enrollment_test)
 def remove_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk):
-    return update_comment_vote(request, pk, section_pk, sectionitem_pk, comment_pk, remove_vote=True)
+    return update_comment_vote(
+        request, pk, section_pk, sectionitem_pk, comment_pk, remove_vote=True
+    )

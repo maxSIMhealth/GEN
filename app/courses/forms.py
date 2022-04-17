@@ -18,9 +18,11 @@ class SectionAdminForm(forms.ModelForm):
                 self.fields["section_output"].queryset = Section.objects.exclude(
                     pk=self.instance.pk
                 ).filter(course=self.instance.course, section_type="D")
-                self.fields["clone_quiz_output_section"].queryset = Section.objects.exclude(
-                    pk=self.instance.pk
-                ).filter(course=self.instance.course, section_type="Q")
+                self.fields[
+                    "clone_quiz_output_section"
+                ].queryset = Section.objects.exclude(pk=self.instance.pk).filter(
+                    course=self.instance.course, section_type="Q"
+                )
             else:
                 # return an empty queryset
                 self.fields["section_output"].queryset = Section.objects.none()

@@ -13,7 +13,10 @@ class Command(BaseCommand):
 
         # Optional argument
         parser.add_argument(
-            "-p", "--prefix", type=str, help="Define a username prefix",
+            "-p",
+            "--prefix",
+            type=str,
+            help="Define a username prefix",
         )
 
     def handle(self, *args, **kwargs):

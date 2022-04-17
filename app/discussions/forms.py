@@ -1,10 +1,11 @@
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Fieldset, Layout, Submit
+from videos.models import VideoFile
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from videos.models import VideoFile
 from .models import Comment, Discussion
 
 

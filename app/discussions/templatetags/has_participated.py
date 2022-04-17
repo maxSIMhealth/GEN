@@ -1,6 +1,6 @@
-from django import template
-
 from discussions.support_methods import has_participated
+
+from django import template
 
 register = template.Library()
 

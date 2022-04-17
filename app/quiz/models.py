@@ -1,17 +1,17 @@
 import math
 
+from content.models import ImageFile
+from courses.models import Course, Section, SectionItem
+from model_utils.models import TimeStampedModel
+from quiz.support_methods import duplicate_question, duplicate_quiz
+from videos.models import VideoFile
+
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import IntegerRangeField
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from model_utils.models import TimeStampedModel
-
-from content.models import ImageFile
-from courses.models import Course, Section, SectionItem
-from quiz.support_methods import duplicate_quiz, duplicate_question
-from videos.models import VideoFile
 
 QUESTION_TYPES = [
     ("H", _("Header")),
@@ -42,7 +42,9 @@ class Quiz(SectionItem):
     max_score = models.PositiveIntegerField(
         _("max score"),
         default=0,
-        help_text=_("** NOT IN USE ** Maximum score automatically based on questions values.")
+        help_text=_(
+            "** NOT IN USE ** Maximum score automatically based on questions values."
+        ),
     )
     assessment_method = models.CharField(
         _("assessment method"),
@@ -69,30 +71,18 @@ class Quiz(SectionItem):
     require_answers = models.BooleanField(
         _("require answers"),
         default=False,
-        help_text=_(
-            "Require participant to answer all questions"
-        )
+        help_text=_("Require participant to answer all questions"),
     )
     randomize = models.BooleanField(
-        _("randomize"),
-        default=False,
-        help_text=_(
-            "Randomize questions order"
-        )
+        _("randomize"), default=False, help_text=_("Randomize questions order")
     )
     subset = models.BooleanField(
         _("subset"),
         default=False,
-        help_text=_(
-            "Enable to use only a subset of the questions of this quiz"
-        )
+        help_text=_("Enable to use only a subset of the questions of this quiz"),
     )
     subset_number = models.PositiveIntegerField(
-        _("subset"),
-        default=0,
-        help_text=_(
-            "Number of questions to use on the subset"
-        )
+        _("subset"), default=0, help_text=_("Number of questions to use on the subset")
     )
     course = models.ForeignKey(
         Course,
@@ -142,20 +132,29 @@ class Quiz(SectionItem):
             if self.allow_multiple_attempts:
                 errors.append(
                     ValidationError(
-                        _("Enabling multiple attempts is not allowed for quizzes in a 'pre assessment' section."))
+                        _(
+                            "Enabling multiple attempts is not allowed for quizzes in a 'pre assessment' section."
+                        )
+                    )
                 )
 
             if self.assessment_method is None:
                 errors.append(
                     ValidationError(
-                        _("Having an assessment method defined is required for quizzes in a 'pre assessment' section."))
+                        _(
+                            "Having an assessment method defined is required for quizzes in a 'pre assessment' section."
+                        )
+                    )
                 )
 
         if self.section and self.section.final_assessment:
             if self.assessment_method is None:
                 errors.append(
                     ValidationError(
-                        _("Having an assessment method defined is required for quizzes in a 'final assessment' section."))
+                        _(
+                            "Having an assessment method defined is required for quizzes in a 'final assessment' section."
+                        )
+                    )
                 )
 
         if self.subset:
@@ -168,7 +167,9 @@ class Quiz(SectionItem):
             if self.subset_number == 0:
                 errors.append(
                     ValidationError(
-                        _('Since subset is enabled, subset number must be greater than 0.')
+                        _(
+                            "Since subset is enabled, subset number must be greater than 0."
+                        )
                     )
                 )
 
@@ -203,6 +204,7 @@ class Question(TimeStampedModel):
     Parent class for questions (Multiple Choice, Likert Scale and Open Ended)
     and for question headers.
     """
+
     OPENENDED_DATE = "OD"
     OPENENDED_NUMERIC = "ON"
     OPENENDED_TEXTAREA = "OA"
@@ -216,7 +218,7 @@ class Question(TimeStampedModel):
         (OPENENDED_HOUR, _("Open ended - Time/hour")),
         (OPENENDED_TEXT, _("Open ended - Text (short)")),
         (OPENENDED_TEXTAREA, _("Open ended - Text (long)")),
-        (OPENENDED_EMAIL, _("Open ended - Email"))
+        (OPENENDED_EMAIL, _("Open ended - Email")),
     ]
 
     question_type = models.CharField(
@@ -246,7 +248,8 @@ class Question(TimeStampedModel):
         blank=True,
         null=True,
         help_text=_(
-            "Optional: additional text that will be shown under the main text content. (max 1000 characters).")
+            "Optional: additional text that will be shown under the main text content. (max 1000 characters)."
+        ),
     )
     feedback = models.TextField(
         _("feedback"),
@@ -259,13 +262,15 @@ class Question(TimeStampedModel):
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        help_text=_("Optional image file.")
+        help_text=_("Optional image file."),
     )
     value = models.PositiveIntegerField(
         _("value"),
         default=1,
         validators=[MinValueValidator(1)],
-        help_text=_("Value to add to the quiz score if the participant answer the question correctly.")
+        help_text=_(
+            "Value to add to the quiz score if the participant answer the question correctly."
+        ),
     )
     multiple_correct_answers = models.BooleanField(
         _("multiple correct answers"),
@@ -280,7 +285,7 @@ class Question(TimeStampedModel):
         max_length=2,
         choices=OPENENDED_TYPES,
         default=OPENENDED_TEXTAREA,
-        help_text=_("Type of open ended question.")
+        help_text=_("Type of open ended question."),
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
@@ -296,6 +301,7 @@ class Question(TimeStampedModel):
 
     def duplicate(self, **kwargs):
         return duplicate_question(self, **kwargs)
+
 
 #     def save(self, *args, **kwargs):
 #         self.quiz.update_max_score()
@@ -526,7 +532,7 @@ class QuizScore(TimeStampedModel):
     num_mistakes = models.PositiveIntegerField(
         _("number of mistakes"),
         default=0,
-        help_text=_("Total number of mistakes (incorrect questions).")
+        help_text=_("Total number of mistakes (incorrect questions)."),
     )
     max_mistakes = models.PositiveIntegerField(
         _("maximum number of mistakes"),
@@ -552,9 +558,7 @@ class QuizScore(TimeStampedModel):
     expert_feedback = models.BooleanField(
         _("expert feedback"),
         default=False,
-        help_text=_(
-            "Defines if the quiz was submitted by an expert/instructor."
-        ),
+        help_text=_("Defines if the quiz was submitted by an expert/instructor."),
     )
 
     class Meta:
@@ -620,7 +624,7 @@ class QuestionAttempt(TimeStampedModel):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name=_("quiz submission")
+        verbose_name=_("quiz submission"),
     )
     course = models.ForeignKey(
         Course, on_delete=models.PROTECT, verbose_name=_("course")

@@ -1,6 +1,6 @@
-from django.urls import path
-
 from discussions import views as discussion_views
+
+from django.urls import path
 
 urlpatterns = [
     path(

@@ -1,30 +1,31 @@
 import logging
 import random
 
+from core.mixins import BlockPeersAccessMixin
+from core.support_methods import check_is_instructor
+from courses.models import Course, Section
+from courses.support_methods import mark_section_completed, review_course_status
+from django_tables2 import SingleTableView
+from django_tables2.export.views import ExportMixin
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.functional import cached_property
-from django_tables2 import SingleTableView
-from django_tables2.export.views import ExportMixin
-
-from GEN.decorators import course_enrollment_check, check_permission
+from GEN.decorators import check_permission, course_enrollment_check
 from GEN.support_methods import enrollment_test
-from core.mixins import BlockPeersAccessMixin
-from core.support_methods import check_is_instructor
-from courses.models import Course, Section
-from courses.support_methods import mark_section_completed, review_course_status
+
 from .models import (
     Likert,
     LikertAnswer,
     MCAnswer,
     MCQuestion,
+    Question,
     QuestionAttempt,
     Quiz,
     QuizScore,
-    Question
 )
 from .support_methods import quiz_enable_check
 from .tables import QuestionAttemptTable
@@ -159,11 +160,11 @@ def quiz_submission(request, quiz, questions, course, section):
     num_mistakes = 0
     max_score = 0
     try:
-        latest_attempt_number = QuizScore.objects.filter(
-            student=request.user,
-            course=course,
-            quiz=quiz) \
-            .latest('attempt_number').attempt_number
+        latest_attempt_number = (
+            QuizScore.objects.filter(student=request.user, course=course, quiz=quiz)
+            .latest("attempt_number")
+            .attempt_number
+        )
     except QuizScore.DoesNotExist:
         latest_attempt_number = 0
 
@@ -173,7 +174,7 @@ def quiz_submission(request, quiz, questions, course, section):
         quiz=quiz,
         max_mistakes=quiz.assessment_max_mistakes,
         min_percentage=quiz.assessment_min_percentage,
-        attempt_number=latest_attempt_number
+        attempt_number=latest_attempt_number,
     )
 
     # sets if quiz is submitted by an expert/instructor
@@ -216,7 +217,9 @@ def quiz_submission(request, quiz, questions, course, section):
         score += question_score
 
         # increase mistake counter if attempt is incorrect
-        if attempt.correct is False and (question.question_type != 'H' or question.question_type != 'O'):
+        if attempt.correct is False and (
+            question.question_type != "H" or question.question_type != "O"
+        ):
             num_mistakes += 1
 
     # change session variable to indicate that the
@@ -249,7 +252,9 @@ def quiz_evaluate_completion(request, section):
 
     for quiz in section_quizzes:
         try:
-            quizscore = QuizScore.objects.filter(quiz=quiz, student=request.user).latest("attempt_number")
+            quizscore = QuizScore.objects.filter(
+                quiz=quiz, student=request.user
+            ).latest("attempt_number")
         except QuizScore.DoesNotExist:
             quizscore = None
         if quizscore:
@@ -299,7 +304,10 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                 # block quiz author from submitting on own quiz
                 if quiz.author == request.user:
                     messages.error(
-                        request, _("Submission denied. You can not submit a quiz of which you are the author."),
+                        request,
+                        _(
+                            "Submission denied. You can not submit a quiz of which you are the author."
+                        ),
                     )
                     return HttpResponseRedirect(
                         reverse("section", args=[pk, section.pk])
@@ -318,7 +326,9 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                 # check if randomization is enabled and use subset number
                 if quiz.randomize:
                     questions = list(quiz.questions.all())
-                    subset_number = quiz.subset_number if quiz.subset else questions.__len__()
+                    subset_number = (
+                        quiz.subset_number if quiz.subset else questions.__len__()
+                    )
                     questions = random.sample(questions, subset_number)
                 else:
                     questions = quiz.questions.all()
@@ -348,11 +358,17 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                     return render(
                         request,
                         "quiz/quiz.html",
-                        {"course": course, "section": section, "quiz": quiz, "questions": questions},
+                        {
+                            "course": course,
+                            "section": section,
+                            "quiz": quiz,
+                            "questions": questions,
+                        },
                     )
         else:
             messages.error(
-                request, _("Access denied."),
+                request,
+                _("Access denied."),
             )
             return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
@@ -366,8 +382,9 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=sectionitem_pk)
-    student_quiz_score = QuizScore.objects.filter(student=request.user, course=course, quiz=quiz) \
-        .latest("attempt_number")
+    student_quiz_score = QuizScore.objects.filter(
+        student=request.user, course=course, quiz=quiz
+    ).latest("attempt_number")
 
     # check if the user is trying to directly access the result page
     # and redirects into que quiz list
@@ -379,35 +396,20 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
 
     # get questions and answers from the latest attempt
     try:
-        questions_attempt = student_quiz_score.questionattempt_set.filter(
-            quiz=quiz,
-            attempt_number=latest_attempt_number
+        (
+            questions_attempt,
+            questions_attempt_distinct,
+        ) = get_latest_attempt_questions_and_answers(
+            latest_attempt_number, quiz, student_quiz_score
         )
-        # merging multiple choice attempts of a same question
-        # questions_attempt_distinct = questions_attempt.distinct("question")
-
-        # working but not showing correct answer status (it might show 'correct' for an 'incorrect' answer)
-        # questions_attempt_distinct = questions_attempt.distinct('created', 'question')
-
-        # getting multiple choice attempts of the same question, removing dupes from initial queryset and
-        # re-adding distinct question attempt to queryset
-        # FIXME: this is UGLY, there has to be a better way
-        from django.db.models import Count
-        dupes_list = questions_attempt.values('question').annotate(Count('id')).order_by().filter(id__count__gt=1)
-        dupes = questions_attempt.filter(question__in=[item['question'] for item in dupes_list])
-        dupes_incorrect = dupes.filter(correct=False).distinct('created', 'question')
-        dupes_correct = dupes.filter(correct=True).distinct('created', 'question')
-        questions_attempt_distinct = questions_attempt.difference(dupes)
-        if dupes_incorrect:
-            questions_attempt_distinct = questions_attempt_distinct.union(dupes_incorrect)
-        else:
-            questions_attempt_distinct = questions_attempt_distinct.union(dupes_correct)
 
     except QuestionAttempt.DoesNotExist:
         questions_attempt_distinct = None
         questions_attempt = []
 
-    questions = Question.objects.filter(quiz=quiz, id__in=questions_attempt.values('question'))
+    questions = Question.objects.filter(
+        quiz=quiz, id__in=questions_attempt.values("question")
+    )
 
     # split attempts into different categories
     attempt_likert = []
@@ -423,22 +425,7 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
             attempt_openended.append(item)
 
     # check pre and final assessments
-    assessment_status = None
-    if section.pre_assessment or section.final_assessment:
-        # query used to obtain list QuizScores that are part of the current section,
-        # and them get their 'completed' values as a list
-        quiz_count = section.section_items.count()
-        quiz_scores = QuizScore.objects.filter(student=request.user,
-                                               quiz__in=section.section_items.values('pk')).values_list('completed',
-                                                                                                        flat=True)
-
-        if len(quiz_scores) == quiz_count:
-            if all(quiz_scores):
-                assessment_status = 'Complete'
-            else:
-                assessment_status = 'Failed'
-        elif len(quiz_scores) < quiz_count:
-            assessment_status = 'Incomplete'
+    assessment_status = check_pre_and_final_assessments(request, section)
 
     # reset the session variable
     request.session["quiz_complete"] = False
@@ -457,40 +444,100 @@ def quiz_result(request, pk, section_pk, sectionitem_pk):
             "attempt_mcquestion": attempt_mcquestion,
             "attempt_openended": attempt_openended,
             "user_quiz_score": student_quiz_score,
-            "assessment_status": assessment_status
+            "assessment_status": assessment_status,
         },
     )
 
 
-class QuestionAttemptListView(LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView):
+def check_pre_and_final_assessments(request, section):
+    assessment_status = None
+    if section.pre_assessment or section.final_assessment:
+        # query used to obtain list QuizScores that are part of the current section,
+        # and them get their 'completed' values as a list
+        quiz_count = section.section_items.count()
+        quiz_scores = QuizScore.objects.filter(
+            student=request.user, quiz__in=section.section_items.values("pk")
+        ).values_list("completed", flat=True)
+
+        if len(quiz_scores) == quiz_count:
+            if all(quiz_scores):
+                assessment_status = "Complete"
+            else:
+                assessment_status = "Failed"
+        elif len(quiz_scores) < quiz_count:
+            assessment_status = "Incomplete"
+    return assessment_status
+
+
+def get_latest_attempt_questions_and_answers(
+    latest_attempt_number, quiz, student_quiz_score
+):
+    questions_attempt = student_quiz_score.questionattempt_set.filter(
+        quiz=quiz, attempt_number=latest_attempt_number
+    )
+    # merging multiple choice attempts of a same question
+    # questions_attempt_distinct = questions_attempt.distinct("question")
+    # working but not showing correct answer status (it might show 'correct' for an 'incorrect' answer)
+    # questions_attempt_distinct = questions_attempt.distinct('created', 'question')
+    # getting multiple choice attempts of the same question, removing dupes from initial queryset and
+    # re-adding distinct question attempt to queryset
+    # FIXME: this is UGLY, there has to be a better way
+    from django.db.models import Count
+
+    dupes_list = (
+        questions_attempt.values("question")
+        .annotate(Count("id"))
+        .order_by()
+        .filter(id__count__gt=1)
+    )
+    dupes = questions_attempt.filter(
+        question__in=[item["question"] for item in dupes_list]
+    )
+    dupes_incorrect = dupes.filter(correct=False).distinct("created", "question")
+    dupes_correct = dupes.filter(correct=True).distinct("created", "question")
+    questions_attempt_distinct = questions_attempt.difference(dupes)
+    if dupes_incorrect:
+        questions_attempt_distinct = questions_attempt_distinct.union(dupes_incorrect)
+    else:
+        questions_attempt_distinct = questions_attempt_distinct.union(dupes_correct)
+    return questions_attempt, questions_attempt_distinct
+
+
+class QuestionAttemptListView(
+    LoginRequiredMixin, BlockPeersAccessMixin, ExportMixin, SingleTableView
+):
     model = QuestionAttempt
     table_class = QuestionAttemptTable
-    template_name = 'quiz/quiz_result_list.html'
+    template_name = "quiz/quiz_result_list.html"
 
     @cached_property
     def quiz_data(self, **kwargs):
-        quiz_pk = self.kwargs['sectionitem_pk']
+        quiz_pk = self.kwargs["sectionitem_pk"]
         quiz_data = QuestionAttempt.objects.filter(quiz=quiz_pk)
-        quiz_data_users = quiz_data.order_by('student').distinct('student').values_list('student', flat=True)
+        quiz_data_users = (
+            quiz_data.order_by("student")
+            .distinct("student")
+            .values_list("student", flat=True)
+        )
         return quiz_data, quiz_data_users
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add additional objects to context based on url kwargs
-        course_pk = context['view'].kwargs['pk']
-        section_pk = context['view'].kwargs['section_pk']
-        quiz_pk = context['view'].kwargs['sectionitem_pk']
-        context['course'] = get_object_or_404(Course, pk=course_pk)
-        context['section'] = get_object_or_404(Section, pk=section_pk)
-        context['quiz'] = get_object_or_404(Quiz, pk=quiz_pk)
-        _, context['results_list'] = self.quiz_data
+        course_pk = context["view"].kwargs["pk"]
+        section_pk = context["view"].kwargs["section_pk"]
+        quiz_pk = context["view"].kwargs["sectionitem_pk"]
+        context["course"] = get_object_or_404(Course, pk=course_pk)
+        context["section"] = get_object_or_404(Section, pk=section_pk)
+        context["quiz"] = get_object_or_404(Quiz, pk=quiz_pk)
+        _, context["results_list"] = self.quiz_data
         return context
 
     def get_queryset(self, **kwargs):
         quiz_data, quiz_data_users = self.quiz_data
-        if 'student' in self.request.GET:
-            item_id = int(self.request.GET['student'])
+        if "student" in self.request.GET:
+            item_id = int(self.request.GET["student"])
         else:
             item_id = False
         if item_id:

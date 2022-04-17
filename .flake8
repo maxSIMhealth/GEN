@@ -1,4 +1,6 @@
 [flake8]
+exclude = build,.git,.tox,./tests/.env
+extend-ignore = E203
 select = B,B9,BLK,C,E,F,I,S,W
 ignore = E203,E231,E501,W503
 max-complexity = 10

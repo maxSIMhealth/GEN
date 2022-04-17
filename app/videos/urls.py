@@ -1,6 +1,6 @@
-from django.urls import path
-
 from videos import views as video_views
+
+from django.urls import path
 
 urlpatterns = [
     path(

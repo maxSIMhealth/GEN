@@ -1,6 +1,7 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
-from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
+
+from django.contrib import admin
 
 # from quiz.models import Quiz
 from .forms import SectionAdminForm
@@ -46,7 +47,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "description",
                     "requirement",
                 )
-            }
+            },
         ),
         (
             "Additional information",
@@ -55,7 +56,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
         (
             "Date settings",
@@ -64,7 +65,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "start_date",
                     "end_date",
                 )
-            }
+            },
         ),
         (
             "Participants",
@@ -78,7 +79,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "instructors",
                     "editors",
                 )
-            }
+            },
         ),
         (
             "Certificate",
@@ -88,7 +89,7 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "certificate_custom_term",
                     "certificate_template",
                 )
-            }
+            },
         ),
         (
             "Gamification",
@@ -97,9 +98,9 @@ class CourseAdmin(TabbedTranslationAdmin):
                     "enable_gamification",
                     "show_scoreboard",
                     "show_leaderboard",
-                    "show_progress_tracker"
+                    "show_progress_tracker",
                 )
-            }
+            },
         ),
     )
 
@@ -149,7 +150,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
         (
             "Layout",
@@ -160,7 +161,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "show_related_video_name",
                     "group_by_video",
                 )
-            }
+            },
         ),
         (
             "Access control",
@@ -169,7 +170,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "access_restriction",
                     "author_access_override",
                 )
-            }
+            },
         ),
         (
             "Assessment",
@@ -187,7 +188,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "create_discussions",
                     "section_output",
                     "output_access_restriction",
-                    "output_author_access_override"
+                    "output_author_access_override",
                 )
             },
         ),
@@ -198,10 +199,10 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "clone_quiz",
                     "clone_quiz_reference",
                     "clone_quiz_output_section",
-                    "clone_quiz_update_owner"
+                    "clone_quiz_update_owner",
                 )
-            }
-        )
+            },
+        ),
     )
 
 

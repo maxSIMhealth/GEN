@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import TextBoxesTerm, MoveToColumnsItem
+from .models import MoveToColumnsItem, TextBoxesTerm
 
 
 class TextBoxesItemForm(forms.ModelForm):
@@ -9,7 +9,10 @@ class TextBoxesItemForm(forms.ModelForm):
         # check if the instance exists (if it's a new object or not)
         if self.instance.pk is not None:
             # list only terms that are related to the same game as the item
-            self.fields['correct_term'].queryset = TextBoxesTerm.objects.filter(game=self.instance.game)
+            self.fields["correct_term"].queryset = TextBoxesTerm.objects.filter(
+                game=self.instance.game
+            )
+
 
 class MoveToColumnsGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -17,8 +20,14 @@ class MoveToColumnsGroupForm(forms.ModelForm):
         # check if the instance exists (if it's a new object or not)
         if self.instance.pk is not None:
             # list only terms that are related to the same game as the item
-            self.fields['source_items'].queryset = MoveToColumnsItem.objects.filter(game=self.instance.game)
+            self.fields["source_items"].queryset = MoveToColumnsItem.objects.filter(
+                game=self.instance.game
+            )
 
-            self.fields['choice1_items'].queryset = MoveToColumnsItem.objects.filter(game=self.instance.game)
+            self.fields["choice1_items"].queryset = MoveToColumnsItem.objects.filter(
+                game=self.instance.game
+            )
 
-            self.fields['choice2_items'].queryset = MoveToColumnsItem.objects.filter(game=self.instance.game)
+            self.fields["choice2_items"].queryset = MoveToColumnsItem.objects.filter(
+                game=self.instance.game
+            )

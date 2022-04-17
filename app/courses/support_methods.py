@@ -1,7 +1,6 @@
-from GEN.support_methods import random_code_string, duplicate_object
-
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from GEN.support_methods import duplicate_object, random_code_string
 
 
 def requirement_fulfilled(user, item):
@@ -25,7 +24,9 @@ def requirement_fulfilled(user, item):
             # check if requirement has a related Status object for the user
             try:
                 if is_course:
-                    requirement_status = requirement.status.filter(learner=user, section=None).get()
+                    requirement_status = requirement.status.filter(
+                        learner=user, section=None
+                    ).get()
                 else:
                     requirement_status = requirement.status.filter(learner=user).get()
             except Status.DoesNotExist:
@@ -58,13 +59,10 @@ def mark_section_completed(request, section):
         section_status.completed = True
         section_status.save()
     else:
-        messages.warning(
-            request,
-            _("This section is already marked as completed.")
-        )
+        messages.warning(request, _("This section is already marked as completed."))
 
 
-def review_course_status(request, course, force:bool=False) -> bool:
+def review_course_status(request, course, force: bool = False) -> bool:
     """
     Check all course sections' status objects and if they are all completed
     set the course status object as completed.
@@ -85,10 +83,7 @@ def review_course_status(request, course, force:bool=False) -> bool:
     course_completed = False
 
     # get all course sections status objects
-    status_objects = Status.objects.filter(
-        learner=request.user,
-        course=course
-    )
+    status_objects = Status.objects.filter(learner=request.user, course=course)
 
     if force:
         # forcefully set all status objects (course and sections) as completed
@@ -109,6 +104,40 @@ def review_course_status(request, course, force:bool=False) -> bool:
     return course_completed
 
 
+def section_progress(item, items_participation, items_total, user):
+    if item._meta.model_name == "section":
+        # do not include section item (e.g., quiz) that is owned by the user in total count
+        if hasattr(item, "author"):
+            if not item.author == user:
+                items_total += 1
+        else:
+            items_total += 1
+        if item.status.filter(learner=user, completed=True).exists():
+            items_participation += 1
+    return items_participation, items_total
+
+
+def quiz_section_progress(item, items_participation, items_total, user):
+    if item._meta.model_name == "quiz":
+        # do not include section item (e.g., quiz) that is owned by the user in total count
+        if hasattr(item, "author"):
+            if not item.author == user:
+                items_total += 1
+        else:
+            items_total += 1
+        if item.quizscore_set.filter(student=user).exists():
+            items_participation += 1
+    return items_participation, items_total
+
+
+def discussion_section_progress(item, items_participation, items_total, user):
+    if item._meta.model_name == "discussion":
+        items_total += 1
+        if item.comments.filter(author=user).exists():
+            items_participation += 1
+    return items_participation, items_total
+
+
 def progress(user, course, items):
     from core.support_methods import allow_access
 
@@ -123,30 +152,17 @@ def progress(user, course, items):
             access_allowed = True
 
         if access_allowed:
-            if item._meta.model_name == "discussion":
-                items_total += 1
-                if item.comments.filter(author=user).exists():
-                    items_participation += 1
+            items_participation, items_total = discussion_section_progress(
+                item, items_participation, items_total, user
+            )
 
-            if item._meta.model_name == "quiz":
-                # do not include section item (e.g., quiz) that is owned by the user in total count
-                if hasattr(item, 'author'):
-                    if not item.author == user:
-                        items_total += 1
-                else:
-                    items_total += 1
-                if item.quizscore_set.filter(student=user).exists():
-                    items_participation += 1
+            items_participation, items_total = quiz_section_progress(
+                item, items_participation, items_total, user
+            )
 
-            if item._meta.model_name == "section":
-                # do not include section item (e.g., quiz) that is owned by the user in total count
-                if hasattr(item, 'author'):
-                    if not item.author == user:
-                        items_total += 1
-                else:
-                    items_total += 1
-                if item.status.filter(learner=user, completed=True).exists():
-                    items_participation += 1
+            items_participation, items_total = section_progress(
+                item, items_participation, items_total, user
+            )
 
     items_progress = {"max": items_total, "current": items_participation}
 
@@ -169,15 +185,12 @@ def duplicate_course(course, request, **kwargs):
     original_course_pk = course.pk
     original_course_learners = course.learners.all()
     random_code = random_code_string(5)
-    new_code = f'Copy_{random_code}'
+    new_code = f"Copy_{random_code}"
 
     # clone course object
     new_course = duplicate_object(
-        course,
-        code=new_code,
-        auto_enroll=False,
-        requirement=None,
-        **kwargs)
+        course, code=new_code, auto_enroll=False, requirement=None, **kwargs
+    )
 
     # set current user as course member, instructor and editor
     new_course.members.add(request.user)
@@ -186,104 +199,121 @@ def duplicate_course(course, request, **kwargs):
 
     # clone sections objects and section items objects
     from courses.models import Section
+
     sections = Section.objects.filter(course=original_course_pk)
 
     for section in sections:
-        # content items
-        from content.models import ContentItem
-        section_items_content = ContentItem.objects.filter(section=section)
-
-        # image items
-        from content.models import ImageFile
-        section_items_image = ImageFile.objects.filter(section=section)
-
-        # game items
-        from games.models import Game
-        section_items_game = Game.objects.filter(section=section)
-
-        # video items
-        from videos.models import VideoFile
-        section_items_video = VideoFile.objects.filter(section=section)
-        # removing learners' content from queryset
-        section_items_video = section_items_video.exclude(author__in=original_course_learners)
-
-        # discussion items
-        from discussions.models import Discussion
-        section_items_discussion = Discussion.objects.filter(section=section)
-        # removing learners' content from queryset
-        section_items_discussion = section_items_discussion.exclude(author__in=original_course_learners)
-
-        # quiz items
-        from quiz.models import Quiz
-        section_items_quiz = Quiz.objects.filter(section=section)
-        # removing learners' content from queryset
-        section_items_quiz = section_items_quiz.exclude(author__in=original_course_learners)
-
-        # duplicate section
-        new_section = section.duplicate(
-            course=new_course,
-            requirement=None,
-            # output -> discussion board
-            create_discussions=False,
-            section_output=None,
-            output_author_access_override=False,
-            # output -> quiz
-            clone_quiz=False,
-            clone_quiz_reference=None,
-            clone_quiz_output_section=None,
-            clone_quiz_update_owner=False,
-        )
-
-        # duplicate items
-        if section_items_content is not None:
-            for item in section_items_content:
-                # for some reason PdfFile was not duplicating correctly using the generic method
-                # it was necessary to create a specific duplicate method for it
-                if hasattr(item, 'pdffile'):
-                    from content.models import PdfFile
-                    pdf_item = PdfFile.objects.get(pk=item.pk)
-                    pdf_item.duplicate(
-                        section=new_section,
-                        file=True
-                    )
-                else:
-                    item.duplicate(section=new_section)
-
-        if section_items_image is not None:
-            for item in section_items_image:
-                item.duplicate(section=new_section, file=True)
-
-        if section_items_video is not None:
-            for item in section_items_video:
-                item.duplicate(course=new_course, section=new_section)
-
-        if section_items_discussion is not None:
-            for item in section_items_discussion:
-                item.duplicate(
-                    course=new_course,
-                    section=new_section,
-                    video=None,
-                    requirement=None,
-                )
-
-        if section_items_quiz is not None:
-            for item in section_items_quiz:
-                item.duplicate(
-                    course=new_course,
-                    section=new_section,
-                    video=None,
-                    requirement=None
-                )
-
-        if section_items_game is not None:
-            for item in section_items_game:
-                item.duplicate(section=new_section)
+        duplicate_section(new_course, original_course_learners, section)
 
     messages.add_message(
         request,
         messages.WARNING,
-        _("WARNING: all cross-references, requirements and outputs have been reset for the new duplicate course and \
+        _(
+            "WARNING: all cross-references, requirements and outputs have been reset for the new duplicate course and \
         all of its sections and items. You will need to set them manually.\
-        User content is not duplicated and auto-enrollment was also disabled."))
+        User content is not duplicated and auto-enrollment was also disabled."
+        ),
+    )
 
     return new_course
+
+
+def duplicate_section(new_course, original_course_learners, section):
+    # duplicate section
+    new_section = section.duplicate(
+        course=new_course,
+        requirement=None,
+        # output -> discussion board
+        create_discussions=False,
+        section_output=None,
+        output_author_access_override=False,
+        # output -> quiz
+        clone_quiz=False,
+        clone_quiz_reference=None,
+        clone_quiz_output_section=None,
+        clone_quiz_update_owner=False,
+    )
+
+    # duplicate items
+    duplicate_section_items(new_course, new_section, original_course_learners, section)
+
+
+def duplicate_section_items(new_course, new_section, original_course_learners, section):
+    from content.models import ContentItem, ImageFile
+    from discussions.models import Discussion
+    from games.models import Game
+    from quiz.models import Quiz
+    from videos.models import VideoFile
+
+    section_items_content = ContentItem.objects.filter(section=section)
+    section_items_image = ImageFile.objects.filter(section=section)
+    section_items_game = Game.objects.filter(section=section)
+    section_items_video = VideoFile.objects.filter(section=section).exclude(
+        author__in=original_course_learners
+    )  # removing learners' content from queryset
+    section_items_discussion = Discussion.objects.filter(section=section).exclude(
+        author__in=original_course_learners
+    )  # removing learners' content from queryset
+    section_items_quiz = Quiz.objects.filter(section=section).exclude(
+        author__in=original_course_learners
+    )  # removing learners' content from queryset
+
+    duplicate_section_item_content(new_section, section_items_content)
+    duplicate_section_item_image(new_section, section_items_image)
+    duplicate_section_item_video(new_course, new_section, section_items_video)
+    duplicate_section_item_discussion(new_course, new_section, section_items_discussion)
+    duplicate_section_item_quiz(new_course, new_section, section_items_quiz)
+    duplicate_section_item_game(new_section, section_items_game)
+
+
+def duplicate_section_item_game(new_section, section_items_game):
+    if section_items_game is not None:
+        for item in section_items_game:
+            item.duplicate(section=new_section)
+
+
+def duplicate_section_item_quiz(new_course, new_section, section_items_quiz):
+    if section_items_quiz is not None:
+        for item in section_items_quiz:
+            item.duplicate(
+                course=new_course, section=new_section, video=None, requirement=None
+            )
+
+
+def duplicate_section_item_discussion(
+    new_course, new_section, section_items_discussion
+):
+    if section_items_discussion is not None:
+        for item in section_items_discussion:
+            item.duplicate(
+                course=new_course,
+                section=new_section,
+                video=None,
+                requirement=None,
+            )
+
+
+def duplicate_section_item_video(new_course, new_section, section_items_video):
+    if section_items_video is not None:
+        for item in section_items_video:
+            item.duplicate(course=new_course, section=new_section)
+
+
+def duplicate_section_item_image(new_section, section_items_image):
+    if section_items_image is not None:
+        for item in section_items_image:
+            item.duplicate(section=new_section, file=True)
+
+
+def duplicate_section_item_content(new_section, section_items_content):
+    if section_items_content is not None:
+        for item in section_items_content:
+            # for some reason PdfFile was not duplicating correctly using the generic method
+            # it was necessary to create a specific duplicate method for it
+            if hasattr(item, "pdffile"):
+                from content.models import PdfFile
+
+                pdf_item = PdfFile.objects.get(pk=item.pk)
+                pdf_item.duplicate(section=new_section, file=True)
+            else:
+                item.duplicate(section=new_section)

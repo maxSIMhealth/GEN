@@ -1,14 +1,14 @@
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+from core.models import CertificateTemplate
+from courses.support_methods import duplicate_course
 from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
 from tinymce.models import HTMLField
 
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from GEN.support_methods import duplicate_object
-from core.models import CertificateTemplate
-from courses.support_methods import duplicate_course
 
 PUBLIC = "P"
 LEARNERS = "L"
@@ -24,15 +24,12 @@ PERMISSION_TYPES = [
 ]
 COURSE = "C"
 MODULE = "M"
-COURSE_TYPES = [
-    (COURSE, _("Course")),
-    (MODULE, _("Module"))
-]
+COURSE_TYPES = [(COURSE, _("Course")), (MODULE, _("Module"))]
 CERTIFICATE_COURSE = "CC"
 CERTIFICATE_CUSTOM = "CX"
 CERTIFICATE_TYPES = [
     (CERTIFICATE_COURSE, _("Certificate - Course")),
-    (CERTIFICATE_CUSTOM, _("Certificate - Custom"))
+    (CERTIFICATE_CUSTOM, _("Certificate - Custom")),
 ]
 
 
@@ -55,12 +52,13 @@ class Course(TimeStampedModel):
         choices=COURSE_TYPES,
         default=COURSE,
         help_text=_(
-            "Sets how the course will be called (for aesthetics purpose only, does not affect functionalities).")
+            "Sets how the course will be called (for aesthetics purpose only, does not affect functionalities)."
+        ),
     )
     show_code = models.BooleanField(
         _("show course code"),
         default=False,
-        help_text=_("Show course code to instructors.")
+        help_text=_("Show course code to instructors."),
     )
     description = models.TextField(
         _("description"),
@@ -83,7 +81,9 @@ class Course(TimeStampedModel):
         User,
         related_name="member",
         verbose_name=_("members"),
-        help_text=_("List of all users that should have access to the course (including instructors).")
+        help_text=_(
+            "List of all users that should have access to the course (including instructors)."
+        ),
     )
     learners = models.ManyToManyField(
         User,
@@ -102,13 +102,17 @@ class Course(TimeStampedModel):
         User,
         related_name="instructor",
         verbose_name=_("instructors"),
-        help_text=_("List of instructors. These users will be able to review learners submissions and interact with them.")
+        help_text=_(
+            "List of instructors. These users will be able to review learners submissions and interact with them."
+        ),
     )
     editors = models.ManyToManyField(
         User,
         related_name="editor",
         verbose_name=_("editors"),
-        help_text=_("List of editors. These users will be able to edit the course's content and structure.")
+        help_text=_(
+            "List of editors. These users will be able to edit the course's content and structure."
+        ),
     )
     blind_data = models.BooleanField(
         _("blind data"),
@@ -118,7 +122,7 @@ class Course(TimeStampedModel):
     provide_certificate = models.BooleanField(
         _("provide certificate"),
         default=False,
-        help_text=_("Defines if this course provides a certificate of conclusion.")
+        help_text=_("Defines if this course provides a certificate of conclusion."),
     )
     certificate_type = models.CharField(
         _("certificate type"),
@@ -126,21 +130,26 @@ class Course(TimeStampedModel):
         choices=CERTIFICATE_TYPES,
         default=CERTIFICATE_COURSE,
         help_text=_(
-            "Defines if the certificate provided will be for the current course or use a customized term.")
+            "Defines if the certificate provided will be for the current course or use a customized term."
+        ),
     )
     certificate_custom_term = models.CharField(
         _("certificate custom term"),
         max_length=150,
         unique=False,
         blank=True,
-        help_text=_("Certificate custom term to be used instead of the course/module name."),
+        help_text=_(
+            "Certificate custom term to be used instead of the course/module name."
+        ),
     )
     certificate_template = models.ForeignKey(
         CertificateTemplate,
         on_delete=models.DO_NOTHING,
         blank=True,
         null=True,
-        help_text=_("Certificate template to be used (logos and frame). If no template is defined, certificate will still be created, but on a basic white canvas.")
+        help_text=_(
+            "Certificate template to be used (logos and frame). If no template is defined, certificate will still be created, but on a basic white canvas."
+        ),
     )
     enable_gamification = models.BooleanField(
         _("gamification"),
@@ -161,12 +170,16 @@ class Course(TimeStampedModel):
         max_length=25,
         default="Information",
         unique=False,
-        help_text=_("Name for the initial section of the course/module, that shows the description, start/end date, etc.")
+        help_text=_(
+            "Name for the initial section of the course/module, that shows the description, start/end date, etc."
+        ),
     )
     auto_enroll = models.BooleanField(
         _("auto enroll"),
         default=False,
-        help_text=_("Defines if new users should automatically be enrolled to this course/module.")
+        help_text=_(
+            "Defines if new users should automatically be enrolled to this course/module."
+        ),
     )
 
     class Meta:
@@ -190,13 +203,34 @@ class Course(TimeStampedModel):
                 )
         # check gamification components
         if self.show_scoreboard and not self.enable_gamification:
-            raise ValidationError({'enable_gamification': _("Scoreboard requires gamification to be enabled")})
+            raise ValidationError(
+                {
+                    "enable_gamification": _(
+                        "Scoreboard requires gamification to be enabled"
+                    )
+                }
+            )
         if self.show_leaderboard and not self.enable_gamification:
-            raise ValidationError({'enable_gamification': _("Leaderboard requires gamification to be enabled")})
+            raise ValidationError(
+                {
+                    "enable_gamification": _(
+                        "Leaderboard requires gamification to be enabled"
+                    )
+                }
+            )
 
         # check certificate components
-        if self.certificate_type == CERTIFICATE_CUSTOM and not self.certificate_custom_term:
-            raise ValidationError({'certificate_custom_term': _("A custom certificate requires defining a custom term.")})
+        if (
+            self.certificate_type == CERTIFICATE_CUSTOM
+            and not self.certificate_custom_term
+        ):
+            raise ValidationError(
+                {
+                    "certificate_custom_term": _(
+                        "A custom certificate requires defining a custom term."
+                    )
+                }
+            )
 
     def type_name(self):
         course_type_val = self.type
@@ -206,7 +240,6 @@ class Course(TimeStampedModel):
             course_type = "module"
 
         return course_type
-
 
     def duplicate(self, *args, **kwargs):
         return duplicate_course(self, *args, **kwargs)
@@ -234,15 +267,8 @@ class Section(TimeStampedModel):
         null=True,
         help_text=_("Description (max 1000 characters)"),
     )
-    author = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        verbose_name=_("author")
-    )
-    content = HTMLField(
-        blank=True,
-        null=True
-    )
+    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_("author"))
+    content = HTMLField(blank=True, null=True)
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
@@ -263,49 +289,58 @@ class Section(TimeStampedModel):
         verbose_name=_("requirement"),
     )
     published = models.BooleanField(
-        _("published"), default=False,
-        help_text=_("Published items are visible to all users (based on the 'access restriction' parameter). "
-                    "Unpublished items are visible only to editors and admins.")
+        _("published"),
+        default=False,
+        help_text=_(
+            "Published items are visible to all users (based on the 'access restriction' parameter). "
+            "Unpublished items are visible only to editors and admins."
+        ),
     )
     paginate = models.BooleanField(
         _("paginate items"),
         default=True,
-        help_text=_("* FOR CONTENT SECTION ONLY *: Define if section items should be paginated.")
+        help_text=_(
+            "* FOR CONTENT SECTION ONLY *: Define if section items should be paginated."
+        ),
     )
     access_restriction = models.CharField(
         _("access restriction"),
         max_length=1,
         choices=PERMISSION_TYPES,
         default=PUBLIC,
-        help_text=_("Define who should have access to this item.")
+        help_text=_("Define who should have access to this item."),
     )
     author_access_override = models.BooleanField(
         _("access override for author"),
         default=False,
         help_text=_(
             "Define if author should have access to this item, regardless of the access restriction."
-        )
+        ),
     )
     pre_assessment = models.BooleanField(
         _("pre-assessment"),
         default=False,
         help_text=_(
             "* FOR QUIZ SECTION ONLY *: Is this section a pre-assessment to evaluate if the learner needs to go "
-            "through the course/module?")
+            "through the course/module?"
+        ),
     )
     final_assessment = models.BooleanField(
         _("final assessment"),
         default=False,
         help_text=_(
             "* FOR QUIZ SECTION ONLY *: Is this section a final assessment to evaluate if the learner successfully "
-            "completed the course/module?")
+            "completed the course/module?"
+        ),
     )
     completion_message = models.CharField(
         _("completion message"),
         max_length=200,
         unique=False,
         blank=True,
-        help_text=_("A message to be displayed after the participant has successfully completed the section. (max 200 characters)")
+        help_text=_(
+            "A message to be displayed after the participant has successfully completed the section. (max 200 characters)"
+        ),
     )
     create_discussions = models.BooleanField(
         _("create discussion"),
@@ -331,14 +366,16 @@ class Section(TimeStampedModel):
         max_length=1,
         choices=PERMISSION_TYPES,
         default=PUBLIC,
-        help_text=_("* FOR UPLOAD SECTION ONLY *: define who should have access to the new discussion board.")
+        help_text=_(
+            "* FOR UPLOAD SECTION ONLY *: define who should have access to the new discussion board."
+        ),
     )
     output_author_access_override = models.BooleanField(
         _("access override for author"),
         default=False,
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless of the access restriction."
-        )
+        ),
     )
     clone_quiz = models.BooleanField(
         _("clone quiz"),
@@ -357,7 +394,7 @@ class Section(TimeStampedModel):
         help_text=_(
             "* FOR UPLOAD SECTION ONLY *: quiz that will be cloned and connected to the participant's video after"
             "it gets published."
-        )
+        ),
     )
     clone_quiz_output_section = models.ForeignKey(
         "self",
@@ -372,9 +409,7 @@ class Section(TimeStampedModel):
     clone_quiz_update_owner = models.BooleanField(
         _("update cloned quiz owner"),
         default=False,
-        help_text=_(
-            "* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"
-        )
+        help_text=_("* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"),
     )
     show_thumbnails = models.BooleanField(
         _("show thumbnails"),
@@ -386,81 +421,19 @@ class Section(TimeStampedModel):
     show_related_video_name = models.BooleanField(
         _("show related video name"),
         default=False,
-        help_text=_(
-            "* FOR QUIZ ONLY *: enables displaying related video's name."
-        ),
+        help_text=_("* FOR QUIZ ONLY *: enables displaying related video's name."),
     )
     group_by_video = models.BooleanField(
         _("group by video"),
         default=False,
-        help_text=_(
-            "* FOR QUIZ ONLY *: group quizzes by videos."
-        ),
+        help_text=_("* FOR QUIZ ONLY *: group quizzes by videos."),
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
     )
 
-    def clean(self):
-        errors = []
-
-        # check course dates
-        if self.start_date and self.end_date:
-            if self.end_date <= self.start_date:
-                errors.append(
-                    ValidationError(
-                        _(
-                            "Course end date cannot be equal or \
-                            earlier than the start date."
-                        )
-                    )
-                )
-        # check parameters related to Upload Section
-        if (self.create_discussions or self.section_output) and not self.section_type == "U":
-            errors.append(
-                ValidationError(
-                    _("To set 'create discussion' or 'section output', the section type must be Upload.")
-                )
-            )
-        if self.create_discussions and not self.section_output and self.section_type == 'U':
-            errors.append(
-                ValidationError(
-                    _("To create a discussion you must select a discussion section output.")
-                )
-            )
-        if self.section_output and not self.create_discussions:
-            errors.append(
-                ValidationError(
-                    _("You can not select a section output if 'create discussions' is not enabled.")
-                )
-            )
-        if (self.clone_quiz or self.clone_quiz_reference) and not self.section_type == "U":
-            errors.append(
-                ValidationError(
-                    _("To set 'clone quiz' or 'clone quiz reference', the section type must be Upload.")
-                )
-            )
-        if self.clone_quiz and not self.clone_quiz_reference and self.section_type == 'U':
-            errors.append(
-                ValidationError(
-                    _("To clone a quiz you must select a quiz reference.")
-                )
-            )
-        if self.clone_quiz_reference and not self.clone_quiz:
-            errors.append(
-                ValidationError(
-                    _("You can not select a quiz reference if 'clone quiz' is not enabled.")
-                )
-            )
-        # check parameters related to Video and Upload Sections
-        if self.show_thumbnails and not (self.section_type == 'V' or self.section_type == 'U'):
-            errors.append(
-                ValidationError(
-                    _("To enable 'show thumbnails', the section type must be Video or Upload")
-                )
-            )
-        # check parameters related to Quiz Section
-        if not self.section_type == 'Q':
+    def check_quiz_section_fields(self, errors):
+        if not self.section_type == "Q":
             if self.pre_assessment:
                 errors.append(
                     ValidationError(
@@ -470,27 +443,127 @@ class Section(TimeStampedModel):
             if self.final_assessment:
                 errors.append(
                     ValidationError(
-                        _("To enable 'final assessment', the section type must be Quiz.")
+                        _(
+                            "To enable 'final assessment', the section type must be Quiz."
+                        )
                     )
                 )
-        if self.section_type == 'Q' and self.pre_assessment and self.final_assessment:
+        if self.section_type == "Q" and self.pre_assessment and self.final_assessment:
             errors.append(
                 ValidationError(
-                    _("A quiz section can not be 'pre assessment' and 'final assessment' simultaneously.")
+                    _(
+                        "A quiz section can not be 'pre assessment' and 'final assessment' simultaneously."
+                    )
                 )
             )
-        if self.show_related_video_name and not self.section_type == 'Q':
+        if self.show_related_video_name and not self.section_type == "Q":
             errors.append(
                 ValidationError(
-                    _("To enable 'show related video name', the section type must be Quiz.")
+                    _(
+                        "To enable 'show related video name', the section type must be Quiz."
+                    )
                 )
             )
-        if self.group_by_video and not self.section_type == 'Q':
+        if self.group_by_video and not self.section_type == "Q":
             errors.append(
                 ValidationError(
                     _("To enable 'group by video', the section type must be Quiz.")
                 )
             )
+
+    def check_video_and_upload_fields(self, errors):
+        if self.show_thumbnails and not (
+            self.section_type == "V" or self.section_type == "U"
+        ):
+            errors.append(
+                ValidationError(
+                    _(
+                        "To enable 'show thumbnails', the section type must be Video or Upload"
+                    )
+                )
+            )
+
+    def check_upload_section_fields(self, errors):
+        if (
+            self.create_discussions or self.section_output
+        ) and not self.section_type == "U":
+            errors.append(
+                ValidationError(
+                    _(
+                        "To set 'create discussion' or 'section output', the section type must be Upload."
+                    )
+                )
+            )
+        if (
+            self.create_discussions
+            and not self.section_output
+            and self.section_type == "U"
+        ):
+            errors.append(
+                ValidationError(
+                    _(
+                        "To create a discussion you must select a discussion section output."
+                    )
+                )
+            )
+        if self.section_output and not self.create_discussions:
+            errors.append(
+                ValidationError(
+                    _(
+                        "You can not select a section output if 'create discussions' is not enabled."
+                    )
+                )
+            )
+        if (
+            self.clone_quiz or self.clone_quiz_reference
+        ) and not self.section_type == "U":
+            errors.append(
+                ValidationError(
+                    _(
+                        "To set 'clone quiz' or 'clone quiz reference', the section type must be Upload."
+                    )
+                )
+            )
+        if (
+            self.clone_quiz
+            and not self.clone_quiz_reference
+            and self.section_type == "U"
+        ):
+            errors.append(
+                ValidationError(_("To clone a quiz you must select a quiz reference."))
+            )
+        if self.clone_quiz_reference and not self.clone_quiz:
+            errors.append(
+                ValidationError(
+                    _(
+                        "You can not select a quiz reference if 'clone quiz' is not enabled."
+                    )
+                )
+            )
+
+    def check_section_dates(self, errors):
+        if self.start_date and self.end_date:
+            if self.end_date <= self.start_date:
+                errors.append(
+                    ValidationError(
+                        _(
+                            "Section end date cannot be equal or \
+                            earlier than the start date."
+                        )
+                    )
+                )
+
+    def clean(self):
+        errors = []
+
+        # check section dates
+        self.check_section_dates(errors)
+        # check fields related to Upload Section
+        self.check_upload_section_fields(errors)
+        # check fields related to Video and Upload Sections
+        self.check_video_and_upload_fields(errors)
+        # check fields related to Quiz Section
+        self.check_quiz_section_fields(errors)
 
         if len(errors) > 0:
             raise ValidationError(errors)
@@ -535,7 +608,7 @@ class SectionItem(TimeStampedModel):
         max_length=400,
         help_text=_("Brief description (max 400 characters)"),
         blank=True,
-        null=True
+        null=True,
     )
     author = models.ForeignKey(
         User,
@@ -559,27 +632,27 @@ class SectionItem(TimeStampedModel):
         max_length=1,
         choices=PERMISSION_TYPES,
         default=PUBLIC,
-        help_text=_("Define who should have access to this item.")
+        help_text=_("Define who should have access to this item."),
     )
     author_access_override = models.BooleanField(
         _("access override for author"),
         default=False,
         help_text=_(
             "Define if author should have access to this item, regardless of the access restriction."
-        )
+        ),
     )
     show_related_content = models.BooleanField(
         _("show related content"),
         default=False,
-        help_text=_("Display content related to this item (e.g., quizzes related to a video)")
+        help_text=_(
+            "Display content related to this item (e.g., quizzes related to a video)"
+        ),
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
     )
     item_type = models.CharField(
-        _("section item type"),
-        max_length=3,
-        choices=SECTION_ITEM_TYPES
+        _("section item type"), max_length=3, choices=SECTION_ITEM_TYPES
     )
 
     objects = InheritanceManager()
@@ -596,16 +669,13 @@ class SectionItem(TimeStampedModel):
 
 class Status(TimeStampedModel):
     learner = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name="status",
-        verbose_name=_("learner")
+        User, on_delete=models.PROTECT, related_name="status", verbose_name=_("learner")
     )
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,
         related_name="status",
-        verbose_name=_("course")
+        verbose_name=_("course"),
     )
     section = models.ForeignKey(
         Section,
@@ -613,12 +683,12 @@ class Status(TimeStampedModel):
         null=True,
         on_delete=models.PROTECT,
         related_name="status",
-        verbose_name=_("section")
+        verbose_name=_("section"),
     )
     completed = models.BooleanField(
         _("item completed successfully"),
         default=False,
-        help_text=_("Whether the item has been marked as complete or not.")
+        help_text=_("Whether the item has been marked as complete or not."),
     )
 
     class Meta:
@@ -627,8 +697,8 @@ class Status(TimeStampedModel):
         unique_together = ["learner", "course", "section"]
 
     def __str__(self):
-        output = f'ID {self.pk} - Course {self.course} - User {self.learner}'
+        output = f"ID {self.pk} - Course {self.course} - User {self.learner}"
         if self.section:
-            output = output + f' - Section {self.section} - User {self.learner}'
+            output = output + f" - Section {self.section} - User {self.learner}"
 
         return output

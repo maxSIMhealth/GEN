@@ -1,7 +1,4 @@
 from adminsortable2.admin import SortableInlineAdminMixin
-from django.contrib import admin
-# from django.contrib.admin.options import InlineModelAdmin
-from django.forms import ModelForm
 from import_export import resources
 from import_export.admin import ExportActionMixin
 from import_export.fields import Field
@@ -11,7 +8,10 @@ from modeltranslation.admin import (
     TranslationTabularInline,
 )
 
-# from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.contrib import admin
+
+# from django.contrib.admin.options import InlineModelAdmin
+from django.forms import ModelForm
 
 from .forms import QuizAdminForm
 from .models import (
@@ -150,7 +150,7 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
         (
             "Access control",
@@ -159,7 +159,7 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "access_restriction",
                     "author_access_override",
                 )
-            }
+            },
         ),
         (
             "Questions options",
@@ -170,9 +170,9 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "paginate",
                     "randomize",
                     "subset",
-                    "subset_number"
+                    "subset_number",
                 )
-            }
+            },
         ),
         (
             "Answer submission options",
@@ -191,7 +191,7 @@ class QuizAdmin(TabbedTranslationAdmin):
                     "max_score",
                     "check_score",
                     "show_score",
-                    "show_correct_answers"
+                    "show_correct_answers",
                 )
             },
         ),
@@ -282,7 +282,15 @@ class QuestionAdmin(TabbedTranslationAdmin):
     Base class for questions admin layout (editing).
     """
 
-    list_display = ("content", "additional_content", "author", "quiz", "value", "image", "created")
+    list_display = (
+        "content",
+        "additional_content",
+        "author",
+        "quiz",
+        "value",
+        "image",
+        "created",
+    )
     list_filter = ("quiz",)
     search_fields = ("content", "feedback")
     actions = [duplicate_question]
@@ -312,7 +320,7 @@ class MCQuestionAdmin(QuestionAdmin):
         "feedback",
         "multiple_correct_answers",
         "created",
-        "modified"
+        "modified",
     )
     inlines = [MCAnswerInline]
 
@@ -349,7 +357,7 @@ class LikertAdmin(QuestionAdmin):
         "value",
         "image",
         "created",
-        "modified"
+        "modified",
     )
     inlines = [LikertAnswerInline]
     # readonly_fields = ["question_type"]
@@ -383,7 +391,7 @@ class OpenEndedAdmin(QuestionAdmin):
         "value",
         "image",
         "created",
-        "modified"
+        "modified",
     )
 
     class Media:
@@ -409,9 +417,7 @@ class QuestionAttemptResource(resources.ModelResource):
     question_content = Field(
         attribute="question__content", column_name="question_content"
     )
-    question_value = Field(
-        attribute="question__value", column_name="question_value"
-    )
+    question_value = Field(attribute="question__value", column_name="question_value")
     video_name = Field(attribute="video__name", column_name="video_name")
     video_internal_name = Field(
         attribute="video__internal_name", column_name="video_internal_name"
@@ -500,7 +506,7 @@ class QuestionGroupHeaderAdmin(QuestionAdmin):
         "feedback",
         "quiz",
         "created",
-        "modified"
+        "modified",
     )
 
     # setting question_type value to Group Header

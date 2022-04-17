@@ -1,4 +1,5 @@
 import django_tables2 as tables
+
 from .models import QuestionAttempt
 
 
@@ -11,4 +12,4 @@ class QuestionAttemptTable(tables.Table):
         order_by = "id"
 
     def before_render(self, request):
-        self.columns.hide('id')
+        self.columns.hide("id")

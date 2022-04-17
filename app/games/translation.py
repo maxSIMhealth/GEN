@@ -1,8 +1,16 @@
-from modeltranslation.translator import register, TranslationOptions
+from modeltranslation.translator import TranslationOptions, register
 
-from .models import Game, TextBoxesGame, TextItem, TextBoxesTerm, TextBoxesItem,\
-    MoveToColumnsGame, MoveToColumnsGroup, MoveToColumnsItem,\
-    MatchTermsGame
+from .models import (
+    Game,
+    MatchTermsGame,
+    MoveToColumnsGame,
+    MoveToColumnsGroup,
+    MoveToColumnsItem,
+    TextBoxesGame,
+    TextBoxesItem,
+    TextBoxesTerm,
+    TextItem,
+)
 
 
 @register(Game)
@@ -12,7 +20,7 @@ class GameTranslationOption(TranslationOptions):
 
 @register(TextItem)
 class TextItemTranslationOption(TranslationOptions):
-    fields = ('text', )
+    fields = ("text",)
 
 
 @register(TextBoxesGame)
@@ -42,7 +50,7 @@ class MoveToColumnsItemTranslationOption(TranslationOptions):
 
 @register(MoveToColumnsGroup)
 class MoveToColumnsGroupTranslationOption(TranslationOptions):
-    fields = ('source_name', 'choice1_name', 'choice2_name')
+    fields = ("source_name", "choice1_name", "choice2_name")
 
 
 @register(MatchTermsGame)

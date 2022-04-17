@@ -15,11 +15,16 @@ def reset(request):
         discussion_comments = user.comments.all()
         statuses = user.status.all()
 
-        user_objects = [section_items, quiz_scores, quiz_attempts_answers, discussion_comments, statuses]
+        user_objects = [
+            section_items,
+            quiz_scores,
+            quiz_attempts_answers,
+            discussion_comments,
+            statuses,
+        ]
 
         for element in user_objects:
             for item in element:
                 item.delete()
 
     return redirect("home")
-

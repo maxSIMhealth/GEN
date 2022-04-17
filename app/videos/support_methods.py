@@ -7,8 +7,8 @@ def read_frame_as_jpeg(in_filename, time):
     # https://github.com/kkroening/ffmpeg-python/blob/master/examples/read_frame_as_jpeg.py
     out, err = (
         ffmpeg.input(in_filename, ss=time)
-            # .filter('select', 'gte(n,{})'.format(frame_num))
-            .output("pipe:", vframes=1, format="image2", vcodec="mjpeg").run(
+        # .filter('select', 'gte(n,{})'.format(frame_num))
+        .output("pipe:", vframes=1, format="image2", vcodec="mjpeg").run(
             capture_stdout=True
         )
     )
