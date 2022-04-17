@@ -1,6 +1,6 @@
-from django import template
-
 from core.models import FooterLogoFile
+
+from django import template
 
 register = template.Library()
 
@@ -9,6 +9,4 @@ register = template.Library()
 def footer_logos():
     logos = FooterLogoFile.objects.all()
 
-    return {
-        "footer_logos": logos
-    }
+    return {"footer_logos": logos}

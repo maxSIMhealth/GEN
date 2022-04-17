@@ -1,5 +1,6 @@
-from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
+
+from django.contrib import admin
 
 from .models import Comment, Discussion
 
@@ -26,7 +27,11 @@ class CommentsInline(admin.TabularInline):
 
 
 class DiscussionAdmin(TabbedTranslationAdmin):
-    list_filter = ("course", "published", "author",)
+    list_filter = (
+        "course",
+        "published",
+        "author",
+    )
     list_display = (
         "name",
         "item_type",
@@ -38,7 +43,13 @@ class DiscussionAdmin(TabbedTranslationAdmin):
         "video",
         "published",
     )
-    readonly_fields = ("vote_score", "num_vote_up", "num_vote_down", "created", "modified")
+    readonly_fields = (
+        "vote_score",
+        "num_vote_up",
+        "num_vote_down",
+        "created",
+        "modified",
+    )
     inlines = (CommentsInline,)
     actions = [duplicate, refresh]
 
@@ -68,7 +79,7 @@ class DiscussionAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
         (
             "Access control",
@@ -76,7 +87,6 @@ class DiscussionAdmin(TabbedTranslationAdmin):
                 "fields": (
                     "access_restriction",
                     "author_access_override",
-
                 )
             },
         ),
@@ -88,8 +98,8 @@ class DiscussionAdmin(TabbedTranslationAdmin):
                     "num_vote_up",
                     "num_vote_down",
                 )
-            }
-        )
+            },
+        ),
     )
 
 
@@ -104,12 +114,18 @@ class CommentsAdmin(admin.ModelAdmin):
         "num_vote_up",
         "num_vote_down",
         "created",
-        "modified"
+        "modified",
     )
     list_display = ("message", "author", "discussion")
     list_display_links = ("message",)
     list_filter = ("author", "discussion")
-    readonly_fields = ("vote_score", "num_vote_up", "num_vote_down", "created", "modified")
+    readonly_fields = (
+        "vote_score",
+        "num_vote_up",
+        "num_vote_down",
+        "created",
+        "modified",
+    )
 
 
 # admin.site.register(MediaFile)

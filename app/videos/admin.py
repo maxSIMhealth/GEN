@@ -1,6 +1,7 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
-from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
+
+from django.contrib import admin
 
 from .forms import VideoFileAdminForm
 from .models import Playlist, VideoFile
@@ -74,7 +75,7 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
         (
             "Access control",
@@ -82,7 +83,6 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                 "fields": (
                     "access_restriction",
                     "author_access_override",
-
                 )
             },
         ),
@@ -95,8 +95,8 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                     "subtitle",
                     "thumbnail",
                 )
-            }
-        )
+            },
+        ),
     )
 
 

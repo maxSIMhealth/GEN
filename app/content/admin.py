@@ -1,5 +1,6 @@
-from django.contrib import admin
 from modeltranslation.admin import TabbedTranslationAdmin
+
+from django.contrib import admin
 
 from .models import ContentItem, ImageFile, PdfFile
 
@@ -29,7 +30,11 @@ duplicate_with_file.short_description = "Duplicate selected items"
 
 
 class ContentItemAdmin(TabbedTranslationAdmin):
-    list_filter = ("published", "section__course", "section", )
+    list_filter = (
+        "published",
+        "section__course",
+        "section",
+    )
     list_display = (
         "name",
         "item_type",
@@ -60,7 +65,7 @@ class ContentItemAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
     )
 
@@ -72,14 +77,7 @@ class ImageFileAdmin(TabbedTranslationAdmin):
         "section",
         "author",
     )
-    list_display = (
-        "name",
-        "item_type",
-        "id",
-        "section",
-        "file",
-        "published"
-    )
+    list_display = ("name", "item_type", "id", "section", "file", "published")
     readonly_fields = ["created", "modified"]
     actions = [duplicate_with_file, refresh]
     fieldsets = (
@@ -102,7 +100,7 @@ class ImageFileAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
     )
 
@@ -126,16 +124,7 @@ class PdfFileAdmin(TabbedTranslationAdmin):
     fieldsets = (
         (
             None,
-            {
-                "fields": (
-                    "name",
-                    "author",
-                    "section",
-                    "published",
-                    "file",
-                    "content"
-                )
-            },
+            {"fields": ("name", "author", "section", "published", "file", "content")},
         ),
         (
             "Additional information",
@@ -144,7 +133,7 @@ class PdfFileAdmin(TabbedTranslationAdmin):
                     "created",
                     "modified",
                 )
-            }
+            },
         ),
     )
 

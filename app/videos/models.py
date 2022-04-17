@@ -3,18 +3,19 @@ import logging
 import os
 import tempfile
 
-# from django.core.validators import FileExtensionValidator
-from django.core.files.storage import get_storage_class
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from GEN.support_methods import duplicate_object
-from GEN import settings as django_settings
+from core.support_methods import user_directory_path
+from courses.models import Course, SectionItem
 from PIL import Image
 from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
-from core.support_methods import user_directory_path
-from courses.models import Course, SectionItem
+# from django.core.validators import FileExtensionValidator
+from django.core.files.storage import get_storage_class
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from GEN import settings as django_settings
+from GEN.support_methods import duplicate_object
+
 from .support_methods import crop_image, read_frame_as_jpeg
 
 # from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -58,10 +59,7 @@ class VideoFile(SectionItem):
         verbose_name=_("course"),
     )
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
-    content = HTMLField(
-        blank=True,
-        null=True
-    )
+    content = HTMLField(blank=True, null=True)
     file = models.FileField(
         _("file"),
         upload_to=user_directory_path,
@@ -73,7 +71,13 @@ class VideoFile(SectionItem):
         upload_to=user_directory_path,
         blank=True,
         null=True,
-        validators=[FileTypeValidator(allowed_types=["text/plain", ])],
+        validators=[
+            FileTypeValidator(
+                allowed_types=[
+                    "text/plain",
+                ]
+            )
+        ],
     )
     internal_name = models.CharField(
         _("internal name"),
@@ -138,11 +142,13 @@ class VideoFile(SectionItem):
             # output, 'ImageField', thumbnail_filename, 'image/jpeg', output.tell(), None)
 
             # define thumbnail file in user directory and link it to video object, postponing save command
-            self.thumbnail.save(name=thumbnail_filename, content=ffmpeg_tempfile, save=False)
+            self.thumbnail.save(
+                name=thumbnail_filename, content=ffmpeg_tempfile, save=False
+            )
 
             # calling save command, specifying that only the thumbnail field will be updated
             # this will be read by the @post_save signal receiver
-            self.save(update_fields=['thumbnail'])
+            self.save(update_fields=["thumbnail"])
 
             # closes temporary file and allows it to be deleted
             ffmpeg_tempfile.close()

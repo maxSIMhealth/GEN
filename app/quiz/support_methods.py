@@ -6,10 +6,10 @@ def quiz_score_get(user, quiz):
     Get user latest QuizScore for this quiz (if it exists).
     """
     from quiz.models import QuizScore
+
     try:
-        latest_quizscore = (
-            quiz.quizscore_set.filter(student=user, quiz=quiz)
-                .latest("attempt_number")
+        latest_quizscore = quiz.quizscore_set.filter(student=user, quiz=quiz).latest(
+            "attempt_number"
         )
     except QuizScore.DoesNotExist:
         latest_quizscore = None
@@ -50,7 +50,9 @@ def quiz_enable_check(user, quiz):
         requirement_quiz_score = quiz_score_get(user, quiz.requirement)
 
         # check if quiz requirement has been fulfilled
-        requirement_fulfilled = bool(requirement_quiz_score.exists() and requirement_quiz_score.completed)
+        requirement_fulfilled = bool(
+            requirement_quiz_score.exists() and requirement_quiz_score.completed
+        )
 
     else:
         requirement_fulfilled = True
@@ -86,6 +88,7 @@ def duplicate_quiz(quiz, course=None, section=None, suffix=None, **kwargs):
 
     # duplicate questions
     from quiz.models import Question
+
     questions = Question.objects.filter(quiz=original_quiz_pk)
     for question in questions:
         question.duplicate(quiz=duplicated_quiz)
@@ -105,13 +108,14 @@ def duplicate_question(question, quiz=None, suffix=None):
     """
 
     from quiz.models import LikertAnswer, MCAnswer
+
     original_question_pk = question.pk
 
     # get answers (if they exist) based on the type of question
     answers = None
-    if question.question_type == 'M':
+    if question.question_type == "M":
         answers = MCAnswer.objects.filter(question=original_question_pk)
-    elif question.question_type == 'L':
+    elif question.question_type == "L":
         answers = LikertAnswer.objects.filter(question=original_question_pk)
 
     # set quiz that will hold the question

@@ -1,5 +1,6 @@
-from django import template
 from discussions.support_methods import discussion_enable_check, has_user_voted
+
+from django import template
 
 register = template.Library()
 

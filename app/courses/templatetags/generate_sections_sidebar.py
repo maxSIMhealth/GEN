@@ -1,7 +1,7 @@
-from django import template
-
 from core.support_methods import course_sections_list
 from courses.support_methods import requirement_fulfilled
+
+from django import template
 
 register = template.Library()
 

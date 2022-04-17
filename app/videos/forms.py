@@ -1,12 +1,13 @@
 # from django.core.validators import FileExtensionValidator
 
+from courses.models import Section
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Button, Field, Fieldset, Layout, Submit
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from courses.models import Section
 from .models import VideoFile
 
 

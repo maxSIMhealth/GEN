@@ -1,19 +1,15 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from model_utils.models import TimeStampedModel
-
-from GEN.support_methods import duplicate_object
 from core.support_methods import user_directory_path
 from courses.models import SectionItem
 from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from GEN.support_methods import duplicate_object
+
 
 class ContentItem(SectionItem):
-    content = HTMLField(
-        blank=True,
-        null=True
-    )
+    content = HTMLField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if self.pdffile is None:
@@ -26,9 +22,7 @@ class ContentItem(SectionItem):
 
 class ImageFile(SectionItem):
     file = models.ImageField(
-        _("image"),
-        upload_to=user_directory_path,
-        help_text=_("Image file.")
+        _("image"), upload_to=user_directory_path, help_text=_("Image file.")
     )
 
     def __str__(self):
@@ -68,7 +62,7 @@ class PdfFile(ContentItem):
     def duplicate(self, published=None, file=None, suffix=None, section=None, **kwargs):
         # return duplicate_object(self, **kwargs)
         if suffix:
-            self.name += f' {suffix}'
+            self.name += f" {suffix}"
 
         new_pdf = PdfFile(
             name=self.name,

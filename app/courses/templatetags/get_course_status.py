@@ -1,6 +1,6 @@
-from django import template
-
 from courses.support_methods import progress
+
+from django import template
 
 register = template.Library()
 
@@ -15,9 +15,9 @@ def get_course_status(user, course):
     # 1 = started
     # 2 = completed
 
-    if sections_progress['current'] == sections_progress['max']:
+    if sections_progress["current"] == sections_progress["max"]:
         course_status = 2
-    elif sections_progress['max'] > sections_progress['current'] > 0:
+    elif sections_progress["max"] > sections_progress["current"] > 0:
         course_status = 1
     else:
         course_status = 0

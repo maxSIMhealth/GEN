@@ -27,24 +27,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # before deploying to production
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', False) == 'True'
+DEBUG = os.getenv("DJANGO_DEBUG", False) == "True"
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 
-INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', '127.0.0.1').split(',')
+INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
 
 # Email settings for sending error notifications to admins and emails
 # to users (e.g., password resets)
 ADMINS = [
-    ("Admin", os.getenv('DJANGO_ADMIN_EMAIL')),
+    ("Admin", os.getenv("DJANGO_ADMIN_EMAIL")),
 ]
 if not DEBUG:
     LOGGING["handlers"]["mail_admins"]["include_html"] = True
-    SERVER_EMAIL = os.getenv('SERVER_EMAIL')
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+    SERVER_EMAIL = os.getenv("SERVER_EMAIL")
+    DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 #
 # Application definition
@@ -86,7 +86,7 @@ INSTALLED_APPS = [
     "quiz",
     "videos",
     "content",
-    "games"
+    "games",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -142,7 +142,7 @@ MESSAGE_TAGS = {
 }
 
 # Django 3.2 requires defining the default value for auto-created primary keys
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = (
     # "social_core.backends.github.GithubOAuth2",
@@ -159,7 +159,7 @@ WSGI_APPLICATION = "GEN.wsgi.application"
 # itself in a frame, set X_FRAME_OPTIONS to 'DENY'
 # django-admin-interface requires this to be set to SAMEORIGIN
 X_FRAME_OPTIONS = "SAMEORIGIN"
-SILENCED_SYSTEM_CHECKS = ['security.W019']
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 #
 # Database
@@ -168,16 +168,14 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_DB', 'gen_dev'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': os.getenv('DATABASE_SERVICE', 'postgres'),
-        'PORT': os.getenv('DATABASE_PORT', 5432),
-        'OPTIONS': json.loads(
-            os.getenv('DATABASE_OPTIONS', '{}')
-        ),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.getenv("POSTGRES_DB", "gen_dev"),
+        "USER": os.getenv("POSTGRES_USER", "postgres"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "postgres"),
+        "HOST": os.getenv("DATABASE_SERVICE", "postgres"),
+        "PORT": os.getenv("DATABASE_PORT", 5432),
+        "OPTIONS": json.loads(os.getenv("DATABASE_OPTIONS", "{}")),
     }
 }
 
@@ -230,41 +228,43 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-USE_S3 = os.getenv('USE_S3') == 'True'
+USE_S3 = os.getenv("USE_S3") == "True"
 
 if USE_S3:
     # Moving static assets to DigitalOcean Spaces as per:
     # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
-    AWS_ACCESS_KEY_ID = os.getenv('STATIC_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('STATIC_SECRET_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.getenv('STATIC_BUCKET_NAME')
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_ENDPOINT_URL = os.getenv('STATIC_ENDPOINT_URL')
+    AWS_ACCESS_KEY_ID = os.getenv("STATIC_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("STATIC_SECRET_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("STATIC_BUCKET_NAME")
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_ENDPOINT_URL = os.getenv("STATIC_ENDPOINT_URL")
     AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400',
+        "CacheControl": "max-age=86400",
     }
-    AWS_LOCATION = os.getenv('GEN_INSTANCE_NAME')
+    AWS_LOCATION = os.getenv("GEN_INSTANCE_NAME")
     # Don't protect s3 urls and handle that in the model
     AWS_QUERYSTRING_AUTH = False
 
     # S3 static settings
-    STATICFILES_STORAGE = 'GEN.storage_backends.StaticStorage'
-    AWS_STATIC_LOCATION = f'{AWS_LOCATION}/static'
-    STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_STATIC_LOCATION}/'
-    STATIC_ROOT = 'static/'
-    
+    STATICFILES_STORAGE = "GEN.storage_backends.StaticStorage"
+    AWS_STATIC_LOCATION = f"{AWS_LOCATION}/static"
+    STATIC_URL = (
+        f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_STATIC_LOCATION}/"
+    )
+    STATIC_ROOT = "static/"
+
     # S3 public media settings
-    DEFAULT_FILE_STORAGE = 'GEN.storage_backends.MediaStorage'
-    AWS_MEDIA_LOCATION = f'{AWS_LOCATION}/media/public'
-    MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_MEDIA_LOCATION}/'
-    MEDIA_ROOT = 'media/'
+    DEFAULT_FILE_STORAGE = "GEN.storage_backends.MediaStorage"
+    AWS_MEDIA_LOCATION = f"{AWS_LOCATION}/media/public"
+    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_MEDIA_LOCATION}/"
+    MEDIA_ROOT = "media/"
 
 else:
-    GEN_HOME = os.getenv('GEN_HOME')
-    STATIC_URL = 'static/'
-    STATIC_ROOT = f'{GEN_HOME}/static/'
-    MEDIA_URL = 'media/'
-    MEDIA_ROOT = f'{GEN_HOME}/media/'
+    GEN_HOME = os.getenv("GEN_HOME")
+    STATIC_URL = "static/"
+    STATIC_ROOT = f"{GEN_HOME}/static/"
+    MEDIA_URL = "media/"
+    MEDIA_ROOT = f"{GEN_HOME}/media/"
     # STATICFILES_DIRS = (os.path.join(BASE_DIR, 'core/static'),)
 
 #
@@ -280,8 +280,8 @@ if not DEBUG:
     # Security / HTTPS / TLS
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    CSRF_COOKIE_DOMAIN = os.getenv('CSRF_COOKIE_DOMAIN')
-    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(',')
+    CSRF_COOKIE_DOMAIN = os.getenv("CSRF_COOKIE_DOMAIN")
+    CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS").split(",")
     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -308,7 +308,7 @@ else:
 #
 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SENDGRID_TRACK_EMAIL_OPENS = True
 SENDGRID_TRACK_CLICKS_HTML = False
 SENDGRID_TRACK_CLICKS_PLAIN = False
@@ -331,7 +331,7 @@ MAINTENANCE_MODE = None
 # by default, a file named "maintenance_mode_state.txt" will be created in the settings.py directory
 # you can customize the state file path in case the default one is not writable
 if not DEBUG:
-    MAINTENANCE_MODE_STATE_FILE_PATH = 'maintenance_mode_state.txt'
+    MAINTENANCE_MODE_STATE_FILE_PATH = "maintenance_mode_state.txt"
 
 # if True admin site will not be affected by the maintenance-mode page
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
@@ -350,9 +350,7 @@ MAINTENANCE_MODE_IGNORE_TESTS = False
 # Debug toolbar settings
 #
 
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
-}
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _request: DEBUG}
 
 #
 # Logging Configuration
@@ -362,29 +360,33 @@ DEBUG_TOOLBAR_CONFIG = {
 LOGGING_CONFIG = None
 
 # Get loglevel from env
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
 
-logging.config.dictConfig({
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'console': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+logging.config.dictConfig(
+    {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "console": {
+                "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s",
+            },
         },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'console',
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "console",
+            },
         },
-    },
-    'loggers': {
-        '': {
-            'level': LOGLEVEL,
-            'handlers': ['console', ],
+        "loggers": {
+            "": {
+                "level": LOGLEVEL,
+                "handlers": [
+                    "console",
+                ],
+            },
         },
-    },
-})
+    }
+)
 
 #
 # Social authentication settings
@@ -392,8 +394,8 @@ logging.config.dictConfig({
 # Documentation:
 # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
 # https://python-social-auth.readthedocs.io/en/latest/pipeline.html
-USE_SOCIAL_AUTH = os.getenv('USE_SOCIAL_AUTH', 'False') == 'True'
-USE_SOCIAL_AUTH_ONLY = os.getenv('USE_SOCIAL_AUTH_ONLY', 'False') == 'True'
+USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
+USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/settings/"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "home"
@@ -403,13 +405,15 @@ SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ["username", "first_name", "email"]
 
 # SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
 # SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
 
-USE_SOCIAL_AUTH_WHITELIST = os.getenv('USE_SOCIAL_AUTH_WHITELIST', 'False') == 'True'
+USE_SOCIAL_AUTH_WHITELIST = os.getenv("USE_SOCIAL_AUTH_WHITELIST", "False") == "True"
 if USE_SOCIAL_AUTH_WHITELIST:
-    SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS').split(',')
+    SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = os.getenv(
+        "SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS"
+    ).split(",")
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple
@@ -451,33 +455,35 @@ SOCIAL_AUTH_PIPELINE = (
 #
 TINYMCE_DEFAULT_CONFIG = {
     # 'selector': 'textarea',
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 20,
+    "cleanup_on_startup": True,
+    "custom_undo_redo_levels": 20,
     # 'theme': 'modern',
-    'plugins': '''
+    "plugins": """
             textcolor save link image media preview codesample contextmenu
             table code lists fullscreen insertdatetime searchreplace wordcount visualblocks
             visualchars code autolink lists charmap print anchor
-            ''',
-    'toolbar1': '''
+            """,
+    "toolbar1": """
             fullscreen | bold italic underline | styleselect | fontsizeselect |
             forecolor | alignleft aligncenter alignright alignjustify | indent outdent |
             bullist numlist table | link image media | codesample |
             visualblocks visualchars | charmap hr pagebreak nonbreaking anchor | insertdatetime |
             searchreplace | code
-            ''',
-    'contextmenu': 'formats | link image | code',
-    'menubar': False,
-    'statusbar': True,
-    'height': 400,
+            """,
+    "contextmenu": "formats | link image | code",
+    "menubar": False,
+    "statusbar": True,
+    "height": 400,
 }
 TINYMCE_SPELLCHECKER = False
 
 #
 # GEN Settings
 #
-SUPPORT_EMAILS = os.getenv('SUPPORT_EMAILS').split(',')
+SUPPORT_EMAILS = os.getenv("SUPPORT_EMAILS").split(",")
 
-USE_EMAIL_DOMAINS_WHITELIST = os.getenv('USE_EMAIL_DOMAINS_WHITELIST', 'False') == 'True'
+USE_EMAIL_DOMAINS_WHITELIST = (
+    os.getenv("USE_EMAIL_DOMAINS_WHITELIST", "False") == "True"
+)
 if USE_EMAIL_DOMAINS_WHITELIST:
-    VALID_EMAIL_DOMAINS = os.getenv('VALID_EMAIL_DOMAINS').split(',')
+    VALID_EMAIL_DOMAINS = os.getenv("VALID_EMAIL_DOMAINS").split(",")

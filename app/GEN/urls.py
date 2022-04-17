@@ -13,20 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from core import views as core_views
+
 from django.conf import settings
 from django.conf.urls import re_path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
-
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import include, path
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import JavaScriptCatalog
-
-
-from core import views as core_views
-
 
 urlpatterns = [
     path(
@@ -36,15 +33,15 @@ urlpatterns = [
     re_path(
         r"^favicon.ico$",
         RedirectView.as_view(
-            url=staticfiles_storage.url("favicon.ico"),
-            permanent=False),
-        name="favicon"
+            url=staticfiles_storage.url("favicon.ico"), permanent=False
+        ),
+        name="favicon",
     ),
 ]
 
 # tiny mce
 urlpatterns += [
-    path('tinymce/', include('tinymce.urls')),
+    path("tinymce/", include("tinymce.urls")),
 ]
 
 urlpatterns += i18n_patterns(

@@ -1,12 +1,12 @@
+from courses.models import Course, SectionItem
+from model_utils.models import TimeStampedModel
+from videos.models import VideoFile
+from vote.models import VoteModel
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from model_utils.models import TimeStampedModel
-from vote.models import VoteModel
-
 from GEN.support_methods import duplicate_object
-from courses.models import Course, SectionItem
-from videos.models import VideoFile
 
 
 def user_directory_path(instance, filename):

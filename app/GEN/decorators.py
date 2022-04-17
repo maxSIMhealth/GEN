@@ -1,10 +1,10 @@
 from functools import wraps
 
-from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404
-
 from courses.models import Course, Section
 from courses.support_methods import requirement_fulfilled
+
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 
 
 def course_enrollment_check(test_func):
@@ -42,12 +42,12 @@ def check_permission(item_type):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            from courses.models import Section, SectionItem
             from core.support_methods import allow_access
+            from courses.models import Section, SectionItem
 
             course_pk = kwargs["pk"]
             course_obj = get_object_or_404(Course, pk=course_pk)
-            if item_type == 'section':
+            if item_type == "section":
                 item_pk = kwargs["section_pk"]
                 item_obj = get_object_or_404(Section, pk=item_pk)
             else:
@@ -89,10 +89,14 @@ def check_requirement():
             if fulfilled:
                 return view_func(request, *args, **kwargs)
             else:
-                raise PermissionDenied("You have not fulfilled the requirement to access the requested item.")
+                raise PermissionDenied(
+                    "You have not fulfilled the requirement to access the requested item."
+                )
 
         return _wrapped_view
+
     return decorator
+
 
 # def subject_test(f, subject):
 #     def test_user_for_subject(request, subject, *args, **kwargs):

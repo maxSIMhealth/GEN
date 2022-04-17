@@ -1,8 +1,8 @@
-from django.contrib.auth import views as auth_views
-from django.urls import path, re_path, include
-from django.conf import settings
-
 from accounts import views as account_views
+
+from django.conf import settings
+from django.contrib.auth import views as auth_views
+from django.urls import include, path, re_path
 
 urlpatterns = [
     path("login/", account_views.Login.as_view(), name="login"),
@@ -11,7 +11,7 @@ urlpatterns = [
 ]
 
 # only allow access if social auth only is DISABLED
-if (not settings.USE_SOCIAL_AUTH_ONLY):
+if not settings.USE_SOCIAL_AUTH_ONLY:
     urlpatterns += [
         path("signup/", account_views.signup, name="signup"),
         path("settings/password", account_views.oauth_password, name="oauth_password"),
@@ -42,14 +42,16 @@ if (not settings.USE_SOCIAL_AUTH_ONLY):
             name="account_activation_sent",
         ),
         path(
-            "activate/<slug:uidb64>/<slug:token>/", account_views.activate, name="activate",
+            "activate/<slug:uidb64>/<slug:token>/",
+            account_views.activate,
+            name="activate",
         ),
     ]
 
 # only allow access if social auth is ENABLED
-if (settings.USE_SOCIAL_AUTH):
+if settings.USE_SOCIAL_AUTH:
     urlpatterns += [
         # social login
-        path('oauth/', include('social_django.urls', namespace='social')),
+        path("oauth/", include("social_django.urls", namespace="social")),
         # path("settings/", account_views.settings, name="settings"),
     ]

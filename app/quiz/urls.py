@@ -1,6 +1,6 @@
-from django.urls import path
-
 from quiz import views as quiz_views
+
+from django.urls import path
 
 urlpatterns = (
     path(

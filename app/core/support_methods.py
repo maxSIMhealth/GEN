@@ -1,8 +1,8 @@
 import uuid
 
-from django.db.models import Q
+from courses.models import ADMINS, EDITORS, INSTRUCTORS, LEARNERS, PUBLIC
 
-from courses.models import PUBLIC, LEARNERS, INSTRUCTORS, EDITORS, ADMINS
+from django.db.models import Q
 
 
 def allow_access(user, course, item):
@@ -55,12 +55,18 @@ def filter_by_access_restriction(course_object, items, user):
     if user.is_superuser or user.is_staff:
         items_filtered = items.all()
     elif is_editor:
-        items_filtered = items.filter(Q(access_restriction=PUBLIC) | Q(access_restriction=EDITORS))
+        items_filtered = items.filter(
+            Q(access_restriction=PUBLIC) | Q(access_restriction=EDITORS)
+        )
     elif is_instructor:
-        items_filtered = items.filter(Q(access_restriction=PUBLIC) | Q(access_restriction=INSTRUCTORS))
+        items_filtered = items.filter(
+            Q(access_restriction=PUBLIC) | Q(access_restriction=INSTRUCTORS)
+        )
     else:
         items_filtered = items.filter(
-            (Q(access_restriction=PUBLIC) | Q(access_restriction=LEARNERS)) & Q(published=True))
+            (Q(access_restriction=PUBLIC) | Q(access_restriction=LEARNERS))
+            & Q(published=True)
+        )
         items_override = items.filter(Q(author_access_override=True) & Q(author=user))
         items_filtered = items_filtered | items_override
 

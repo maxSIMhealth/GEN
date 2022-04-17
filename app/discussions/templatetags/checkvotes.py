@@ -1,6 +1,6 @@
-from django import template
-
 from discussions.models import Comment, Discussion
+
+from django import template
 
 register = template.Library()
 

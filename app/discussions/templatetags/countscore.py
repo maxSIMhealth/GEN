@@ -1,9 +1,9 @@
+from discussions.models import Comment, Discussion
+from quiz.models import QuizScore
+
 from django import template
 from django.contrib.auth.models import User
 from django.db.models import Count
-
-from discussions.models import Comment, Discussion
-from quiz.models import QuizScore
 
 register = template.Library()
 
@@ -75,39 +75,13 @@ def rank_get(user_id, course_id, kind):
     rank_user = 0
 
     if kind == "discussion":
-        if discussions.exists():
-            # get discussions by authors (username), counts the likes (votes)
-            # and order them from highest to lowest
-            items = (
-                discussions.values("author__username")
-                .annotate(Count("votes"))
-                .order_by("-votes__count")
-            )
+        items = get_discussion_score(discussions)
 
     elif kind == "comment":
-        counter = 0
-
-        if discussions.exists():
-            for discussion in discussions:
-                if counter == 0:
-                    items = discussion.comments.values("author__username").annotate(
-                        Count("votes")
-                    )
-                else:
-                    items = items | discussion.comments.values(
-                        "author__username"
-                    ).annotate(Count("votes"))
-                counter += 1
-
-            items = items.order_by("-votes__count")
+        items = get_comment_score(discussions)
 
     elif kind == "quiz":
-        if quizscore.exists():
-            items = (
-                quizscore.values("student")
-                .annotate(Count("score"))
-                .order_by("-score__count")
-            )
+        items = get_quiz_score(quizscore)
 
     # check if variable 'items' exists
     if "items" in locals():
@@ -123,3 +97,43 @@ def rank_get(user_id, course_id, kind):
     #     rank_user = 0
 
     return rank_user
+
+
+def get_quiz_score(quizscore):
+    if quizscore.exists():
+        items = (
+            quizscore.values("student")
+            .annotate(Count("score"))
+            .order_by("-score__count")
+        )
+    return items
+
+
+def get_comment_score(discussions):
+    counter = 0
+    if discussions.exists():
+        for discussion in discussions:
+            if counter == 0:
+                items = discussion.comments.values("author__username").annotate(
+                    Count("votes")
+                )
+            else:
+                items = items | discussion.comments.values("author__username").annotate(
+                    Count("votes")
+                )
+            counter += 1
+
+        items = items.order_by("-votes__count")
+    return items
+
+
+def get_discussion_score(discussions):
+    if discussions.exists():
+        # get discussions by authors (username), counts the likes (votes)
+        # and order them from highest to lowest
+        items = (
+            discussions.values("author__username")
+            .annotate(Count("votes"))
+            .order_by("-votes__count")
+        )
+    return items

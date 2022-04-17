@@ -1,6 +1,5 @@
-from django.conf import settings as django_settings
 from django import template
-
+from django.conf import settings as django_settings
 
 register = template.Library()
 
@@ -9,6 +8,4 @@ register = template.Library()
 def support_emails():
     support_emails_list = django_settings.SUPPORT_EMAILS
 
-    return {
-        'support_emails': support_emails_list
-    }
+    return {"support_emails": support_emails_list}
