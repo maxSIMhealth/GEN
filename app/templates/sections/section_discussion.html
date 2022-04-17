@@ -63,14 +63,13 @@
                                     <span class="text-muted">{{ item.name }}</span>
                                 {% endif %}
 
+                                {% if user|has_participated:item.discussion %}
+                                    <span class="badge rounded-pill bg-success float-end">{% trans "Participated" %}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-warning text-dark float-end">{% trans "To do" %}</span>
+                                {% endif %}
                                 {% if item.author == user %}
                                     <span class="badge rounded-pill bg-secondary text-light float-end">{% trans "You are the author" %}</span>
-                                {% else %}
-                                    {% if user|has_participated:item.discussion %}
-                                        <span class="badge rounded-pill bg-success float-end">{% trans "Participated" %}</span>
-                                    {% else %}
-                                        <span class="badge rounded-pill bg-warning text-dark float-end">{% trans "To do" %}</span>
-                                    {% endif %}
                                 {% endif %}
 
                                 {% comment %}
