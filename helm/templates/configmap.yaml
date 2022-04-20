@@ -30,3 +30,8 @@ data:
   SUPPORT_EMAILS: "support@maxsimgen.com"
   USE_EMAIL_DOMAINS_WHITELIST: "True"
   VALID_EMAIL_DOMAINS: "maxsimgen,ontariotechu,umontreal"
+  # Social auth
+  USE_SOCIAL_AUTH: "True"
+  USE_SOCIAL_AUTH_ONLY: "False"
+  USE_SOCIAL_AUTH_WHITELIST: "False"
+  SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS: ""
