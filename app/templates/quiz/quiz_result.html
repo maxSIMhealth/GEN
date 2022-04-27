@@ -76,14 +76,14 @@
                             {% if quiz.assessment_method and quiz.show_question_value%}(<em>{% translate "Value:" %} {{ question.value }}</em>){% endif %}
                         {% endif %}
                     </div>
-                    
+
                     {% if question.additional_content %}
                         <div class="border-bottom" style="padding: .5rem 1.25rem">
                             {{ question.additional_content }}
                         </div>
                     {% endif %}
-                        
-                    {% if quiz.check_score %}
+
+                    {% if quiz.graded %}
                         {% for attempt in attempts %}
                             {% if attempt.question_id == question.id and not question.question_type == 'O' %}
                                 <div class="border-bottom" style="padding: .5rem 1.25rem">

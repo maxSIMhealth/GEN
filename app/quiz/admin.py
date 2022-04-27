@@ -189,7 +189,7 @@ class QuizAdmin(TabbedTranslationAdmin):
             {
                 "fields": (
                     "max_score",
-                    "check_score",
+                    "graded",
                     "show_score",
                     "show_correct_answers",
                 )
