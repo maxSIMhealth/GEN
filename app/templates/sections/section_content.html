@@ -6,152 +6,161 @@
 {% load humanize %}
 
 {% block javascript_top %}
-    {% if debug %}
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    {% else %}
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
-    {% endif %}
+  {% if debug %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  {% else %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+  {% endif %}
 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.13.0/Sortable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
 
-    <script src="https://unpkg.com/vue-select@3.11.2"></script>
-    <link rel="stylesheet" href="https://unpkg.com/vue-select@3.11.2/dist/vue-select.css">
+  <script src="https://unpkg.com/vue-select@3.11.2"></script>
+  <link rel="stylesheet" href="https://unpkg.com/vue-select@3.11.2/dist/vue-select.css">
 
-    <script src="https://unpkg.com/pdfobject@2.2.7/pdfobject.min.js"></script>
+  <script src="https://unpkg.com/pdfobject@2.2.7/pdfobject.min.js"></script>
 
-    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+  <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
-    {% sri_static "js/pdf-viewer.js" %}
+  {% sri_static "js/pdf-viewer.js" %}
 {% endblock %}
 
 {% block content %}
-    {% if section.start_date or section.end_data %}
-        <ul class="list-group mb-3">
-            {% if section.start_date %}
-                <li class="list-group-item"><b>{% trans "Start" %}: </b>{{ section.start_date|naturaltime }}
-                    <small>({{ section.start_date }} UTC)</small></li>
-            {% endif %}
-            {% if section.end_date %}
-                <li class="list-group-item"><b>{% trans "End" %}: </b>{{ section.end_date|naturaltime }}
-                    <small>({{ section.end_date }} UTC)</small></li>
-            {% endif %}
-        </ul>
-    {% endif %}
+  {% if section.start_date or section.end_data %}
+    <ul class="list-group mb-3">
+      {% if section.start_date %}
+        <li class="list-group-item"><b>{% trans "Start" %}: </b>{{ section.start_date|naturaltime }}
+          <small>({{ section.start_date }} UTC)</small></li>
+      {% endif %}
+      {% if section.end_date %}
+        <li class="list-group-item"><b>{% trans "End" %}: </b>{{ section.end_date|naturaltime }}
+          <small>({{ section.end_date }} UTC)</small></li>
+      {% endif %}
+    </ul>
+  {% endif %}
 
-    {% if section.description %}
-        <p class="text-break">{{ section.description|safe|linebreaksbr }}</p>
-    {% endif %}
+  {% if section.description %}
+    <p class="text-break">{{ section.description|safe|linebreaksbr }}</p>
+  {% endif %}
 
-    {% if section_items %}
-        {% if section.paginate %}
-            <div class="card-group mb-3">
-                <div class="card quiz">
-                    <div class="card-body">
-                        <div class="pagination-items-container">
-                            {% for item in section_items %}
-                                <div class="pagination-item" style="display: none;">
-                                    <div class="fs-4">{{ item.name }}</div>
-                                    {% if item.type == 'Video' %}
-                                        {% include 'content/video.html' with video=item.videofile %}
-                                    {% elif item.type == 'Game' and item.game.type == 'MC' %}
-                                        <p>{{ item.description }}</p>
-                                        {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
-                                    {% elif item.type == 'Game' and item.game.type == 'TB' %}
-                                        <p>{{ item.description }}</p>
-                                        {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
-                                    {% elif item.type == 'Game' and item.game.type == 'MT' %}
-                                        <p>{{ item.description }}</p>
-                                        {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
-                                    {% elif item.type == 'Content' %}
-                                        {% if item.contentitem.pdffile %}
-                                            {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
-                                        {% endif %}
-                                        {% if item.contentitem.content %}
-                                            <p>{{ item.contentitem.content|safe }}</p>
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-                                {% if forloop.last %}
-                                    <div class="pagination-item" style="display:none">
-                                        <p>{% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}</p>
-                                        {% include 'partials/mark_section_completed.html' %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% if section_items|length > 0 %}
-                        <div class="card-footer">
-                            <nav aria-label="quiz navigation">
-                                <ul class="pagination justify-content-center mb-0">
-                                    <li id="pagination-navigation-previous" class="page-item disabled">
-                                        <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
-                                           onclick="previousPaginationItem()">{% trans "Previous" %}</a>
-                                    </li>
-                                    <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
-                                                                      href="javascript:void(0);" tabindex="-1"
-                                                                      aria-disabled="true">-- of --</a></li>
-                                    <li id="pagination-navigation-next" class="page-item">
-                                        <a class="page-link" href="javascript:void(0);" onclick="nextPaginationItem()">{% trans "Next" %}</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+  {% if section_items %}
+    {% if section.paginate %}
+      <div class="card-group mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="pagination-items-container">
+              {% for item in section_items %}
+                <div class="pagination-item" style="display: none;">
+                  <div class="fs-4">{{ item.name }}</div>
+                  {% if item.type == 'Video' %}
+                    {% include 'content/video.html' with video=item.videofile %}
+                  {% elif item.type == 'Game' %}
+                    {% if item.description %}
+                      <p>{{ item.description }}</p>
+                    {% else %}
+                      <p></p>
                     {% endif %}
-                </div>
-            </div>
-        {% else %}
-            {% for item in section_items %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="fs-4">{{ item.name }}</div>
-                        {% if item.type == 'Video' %}
-                            {% include 'content/video.html' with video=item.videofile %}
-                        {% elif item.type == 'Game' and item.game.type == 'MC' %}
-                            <p>{{ item.description }}</p>
-                            {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
-                        {% elif item.type == 'Game' and item.game.type == 'TB' %}
-                            <p>{{ item.description }}</p>
-                            {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
-                        {% elif item.type == 'Game' and item.game.type == 'MT' %}
-                            <p>{{ item.description }}</p>
-                            {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items%}
-                        {% elif item.type == 'Content' %}
-                            {% if item.contentitem.content %}
-                                <p>{{ item.contentitem.content|safe }}</p>
-                            {% endif %}
-                            {% if item.contentitem.pdffile %}
-                                {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
-                            {% endif %}
-                        {% endif %}
-                    </div>
+                    {% if item.game.type == 'MC' %}
+                      {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
+                    {% elif item.game.type == 'TB' %}
+                      {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+                    {% elif item.game.type == 'MT' %}
+                      {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+                    {% endif %}
+                  {% elif item.type == 'Content' %}
+                    {% if item.contentitem.pdffile %}
+                      {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+                    {% endif %}
+                    {% if item.contentitem.content %}
+                      <p>{{ item.contentitem.content|safe }}</p>
+                    {% endif %}
+                  {% endif %}
                 </div>
                 {% if forloop.last %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            {% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}
-                        </div>
-                        <div class="card-footer">
-                            {% include 'partials/mark_section_completed.html' %}
-                        </div>
-                    </div>
+                  <div class="pagination-item" style="display:none">
+                    <p>{% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}</p>
+                    {% include 'partials/mark_section_completed.html' %}
+                  </div>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% else %}
-        <div class="card mb-3 section-text">
-            <div class="card-body">
-                {{ section.content|safe }}
-
-                {% include 'partials/mark_section_completed.html' %}
+              {% endfor %}
             </div>
+          </div>
+          {% if section_items|length > 0 %}
+            <div class="card-footer">
+              <nav aria-label="navigation">
+                <ul class="pagination justify-content-center mb-0">
+                  <li id="pagination-navigation-previous" class="page-item disabled">
+                    <a class="page-link" href="javascript:void(0);" tabindex="-1" aria-disabled="true"
+                       onclick="previousPaginationItem()">{% trans "Previous" %}</a>
+                  </li>
+                  <li class="page-item disabled"><a id="pagination-navigation-position" class="page-link"
+                                                    href="javascript:void(0);" tabindex="-1"
+                                                    aria-disabled="true">-- of --</a></li>
+                  <li id="pagination-navigation-next" class="page-item">
+                    <a class="page-link" href="javascript:void(0);"
+                       onclick="nextPaginationItem()">{% trans "Next" %}</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          {% endif %}
         </div>
+      </div>
+    {% else %}
+      {% for item in section_items %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="fs-4">{{ item.name }}</div>
+            {% if item.type == 'Video' %}
+              {% include 'content/video.html' with video=item.videofile %}
+            {% elif item.type == 'Game' %}
+              {% if item.description %}
+                <p>{{ item.description }}</p>
+              {% else %}
+                <p></p>
+              {% endif %}
+              {% if item.game.type == 'MC' %}
+                {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
+              {% elif item.game.type == 'TB' %}
+                {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+              {% elif item.game.type == 'MT' %}
+                {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+              {% endif %}
+            {% elif item.type == 'Content' %}
+              {% if item.contentitem.content %}
+                <p>{{ item.contentitem.content|safe }}</p>
+              {% endif %}
+              {% if item.contentitem.pdffile %}
+                {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+        {% if forloop.last %}
+          <div class="card mb-3">
+            <div class="card-body">
+              {% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}
+            </div>
+            <div class="card-footer">
+              {% include 'partials/mark_section_completed.html' %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
     {% endif %}
+  {% else %}
+    <div class="card mb-3 section-text">
+      <div class="card-body">
+        {{ section.content|safe }}
+
+        {% include 'partials/mark_section_completed.html' %}
+      </div>
+    </div>
+  {% endif %}
 
 {% endblock content %}
 
 {% block javascript_bottom %}
-    {% sri_static "js/pagination.js" %}
-    {% sri_static "js/help-guide-course.js" %}
+  {% sri_static "js/pagination.js" %}
+  {% sri_static "js/help-guide-course.js" %}
 {% endblock javascript_bottom %}
