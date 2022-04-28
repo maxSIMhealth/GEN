@@ -60,10 +60,14 @@ class Course(TimeStampedModel):
         default=False,
         help_text=_("Show course code to instructors."),
     )
-    description = models.TextField(
+    description = HTMLField(
         _("description"),
-        max_length=2000,
-        help_text=_("Description (max 2000 characters)"),
+        help_text=_(
+            "Course description. Please try to keep it brief (under 2000 "
+            "characters)."
+        ),
+        blank=True,
+        null=True,
     )
     author = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="course", verbose_name=_("author")
@@ -260,12 +264,14 @@ class Section(TimeStampedModel):
         unique=False,
         help_text=_("Section name (max 25 characters)"),
     )
-    description = models.TextField(
+    description = HTMLField(
         _("description"),
-        max_length=1000,
+        help_text=_(
+            "Section description. Please try to keep it brief (under 1000 "
+            "characters or 150 words)."
+        ),
         blank=True,
         null=True,
-        help_text=_("Description (max 1000 characters)"),
     )
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_("author"))
     course = models.ForeignKey(
