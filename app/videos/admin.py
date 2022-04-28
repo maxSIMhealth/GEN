@@ -37,7 +37,6 @@ class VideoFileAdmin(TabbedTranslationAdmin):
         "item_type",
         "pk",
         "internal_name",
-        "description",
         "author",
         "course",
         "section",
