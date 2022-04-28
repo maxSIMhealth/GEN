@@ -268,7 +268,6 @@ class Section(TimeStampedModel):
         help_text=_("Description (max 1000 characters)"),
     )
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_("author"))
-    content = HTMLField(blank=True, null=True)
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,

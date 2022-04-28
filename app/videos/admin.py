@@ -56,7 +56,6 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                 "fields": (
                     "name",
                     "description",
-                    "content",
                     "author",
                     "course",
                     "section",

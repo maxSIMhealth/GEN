@@ -15,6 +15,3 @@
     </video>
 </div>
 {% include "partials/video_closedcaption_info.html" with background_color="bg-secondary" subtitle=video.subtitle %}
-{% if video.content %}
-    {{ video.content|safe }}
-{% endif %}
