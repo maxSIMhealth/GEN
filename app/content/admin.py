@@ -54,7 +54,7 @@ class ContentItemAdmin(TabbedTranslationAdmin):
                     "end_date",
                     "section",
                     "published",
-                    "content",
+                    "description",
                 )
             },
         ),
@@ -124,7 +124,16 @@ class PdfFileAdmin(TabbedTranslationAdmin):
     fieldsets = (
         (
             None,
-            {"fields": ("name", "author", "section", "published", "file", "content")},
+            {
+                "fields": (
+                    "name",
+                    "author",
+                    "section",
+                    "published",
+                    "file",
+                    "description",
+                )
+            },
         ),
         (
             "Additional information",

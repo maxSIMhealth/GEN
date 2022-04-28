@@ -1,6 +1,5 @@
 from core.support_methods import user_directory_path
 from courses.models import SectionItem
-from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
 from django.db import models
@@ -9,8 +8,6 @@ from GEN.support_methods import duplicate_object
 
 
 class ContentItem(SectionItem):
-    content = HTMLField(blank=True, null=True)
-
     def save(self, *args, **kwargs):
         if hasattr(self, "pdffile") is False:
             self.item_type = SectionItem.SECTION_ITEM_CONTENT
@@ -67,7 +64,6 @@ class PdfFile(ContentItem):
         new_pdf = PdfFile(
             name=self.name,
             author=self.author,
-            content=self.content,
         )
 
         if published:

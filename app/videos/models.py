@@ -6,7 +6,6 @@ import tempfile
 from core.support_methods import user_directory_path
 from courses.models import Course, SectionItem
 from PIL import Image
-from tinymce.models import HTMLField
 from upload_validator import FileTypeValidator
 
 # from django.core.validators import FileExtensionValidator
@@ -59,7 +58,6 @@ class VideoFile(SectionItem):
         verbose_name=_("course"),
     )
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
-    content = HTMLField(blank=True, null=True)
     file = models.FileField(
         _("file"),
         upload_to=user_directory_path,

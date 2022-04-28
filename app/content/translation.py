@@ -5,7 +5,7 @@ from .models import ContentItem, ImageFile, PdfFile
 
 @register(ContentItem)
 class ContentItemTranslationOptions(TranslationOptions):
-    fields = ("content",)
+    pass
 
 
 @register(ImageFile)
