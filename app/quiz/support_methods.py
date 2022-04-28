@@ -7,12 +7,16 @@ def quiz_score_get(user, quiz):
     """
     from quiz.models import QuizScore
 
-    try:
-        latest_quizscore = quiz.quizscore_set.filter(student=user, quiz=quiz).latest(
-            "attempt_number"
-        )
-    except QuizScore.DoesNotExist:
-        latest_quizscore = None
+    latest_quizscore = None
+
+    if quiz:
+        try:
+            latest_quizscore = quiz.quizscore_set.filter(
+                student=user, quiz=quiz
+            ).latest("attempt_number")
+        except QuizScore.DoesNotExist:
+            latest_quizscore = None
+
     return latest_quizscore
 
 
