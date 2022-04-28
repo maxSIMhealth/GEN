@@ -72,9 +72,9 @@
                                     <p class="mb-0">{{ item.quiz.video.name }}</p>
                                 {% endif %}
                                 {% if item.description %}
-                                    <p class="mb-0">
-                                        <small class="text-muted">{{ item.description|safe|linebreaksbr }}</small>
-                                    </p>
+                                  <div class="item-description">
+                                    <small class="text-muted">{{ item.description|safe|truncatechars_html:250 }}</small>
+                                  </div>
                                 {% endif %}
 
                                 {% if item.quiz.allow_multiple_attempts %}

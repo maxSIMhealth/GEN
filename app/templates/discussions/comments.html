@@ -44,7 +44,11 @@
             </div>
         </div>
         <div class="card-body bg-light text-dark p-3">
-            <p class="card-text">{{ discussion.description|safe|linebreaksbr }}</p>
+            {% if discussion.description %}
+              <div class="item-description">
+                {{ discussion.description|safe }}
+              </div>
+            {% endif %}
             {% if discussion.video %}
                 <div class="ratio ratio-16x9">
                     <video crossorigin="anonymous" playsinline poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}" controls>

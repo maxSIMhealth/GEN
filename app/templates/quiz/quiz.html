@@ -45,7 +45,7 @@
             </div>
         {% endif %}
 
-        
+
 
         <div class="card quiz">
             <div class="card-header bg-light">
@@ -71,11 +71,13 @@
                 {{ quiz.require_answers|json_script:"quiz_require_answers" }}
                 <div class="pagination-items-container">
                     <div {% if quiz.paginate %}class="pagination-item"{% endif %} id="quiz-description">
-                        {% if quiz.description %}
-                            <p>{{ quiz.description|safe|linebreaksbr }}</p>
-                        {% endif %}
                         {% if quiz.paginate %}
-                            <span>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</span>
+                            <h5>{% translate "Navigation Instructions" %}</h5>
+                            <p>{% translate "Please use the navigation buttons ('Previous' and 'Next') in the top right corner to navigate through the questions available for this quiz." %}</p>
+                        {% endif %}
+                        {% if quiz.description %}
+                            <h5>{% translate "Description" %}</h5>
+                            {{ quiz.description|safe }}
                         {% endif %}
                     </div>
                     {% for question in questions %}
@@ -180,7 +182,7 @@
                     {% endif %}
                 </div>
             </div>
-            
+
             <div class="card-footer">
                 {% if quiz.paginate == False %}
                 <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit answers" %}</button>
@@ -189,7 +191,7 @@
                     {% translate 'Exit quiz' %}
                 </button>
             </div>
-            
+
         {% comment %}
         <!-- Dots/bullets/indicators -->
         <div class="dot-container">

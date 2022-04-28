@@ -76,6 +76,12 @@
                                     <span class="badge rounded-pill bg-danger float-end">{% trans "Did not submit" %}</span>
                                 {% endcomment %}
 
+                                {% if item.description %}
+                                  <div class="item-description">
+                                    <small class="text-muted">{{ item.description|safe|truncatechars_html:250 }}</small>
+                                  </div>
+                                {% endif %}
+
                                 <p class="mb-0">
                                     <small class="text-muted">
                                         <strong>{% trans "Created on:" %}</strong>
@@ -105,11 +111,6 @@
                                         {% endblocktrans %}
                                     </small>
                                 {% endif %}
-
-                                {% comment %}
-                                    <p class="mb-0"><small
-                                            class="text-muted">{{ item.description|safe|linebreaksbr }}</small></p>
-                                {% endcomment %}
                             </div>
                         </div>
 

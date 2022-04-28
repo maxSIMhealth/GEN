@@ -1,0 +1,25 @@
+{% if item.description %}
+  <div class="item-description">
+    {{ item.description|safe }}
+  </div>
+{% else %}
+  <p></p>
+{% endif %}
+{% if item.type == 'Video' %}
+  {% include 'content/video.html' with video=item.videofile %}
+{% elif item.type == 'Game' %}
+  {% if item.game.type == 'MC' %}
+    {% include 'games/move_to_columns.html' with id=item.game.pk info=item.game.info_json source_list=item.game.source_items_json choice1_list=item.game.choice1_items_json choice2_list=item.game.choice2_items_json %}
+  {% elif item.game.type == 'TB' %}
+    {% include 'games/complete_text_boxes.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+  {% elif item.game.type == 'MT' %}
+    {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
+  {% endif %}
+{% elif item.type == 'Content' %}
+  {% if item.contentitem.pdffile %}
+    {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+  {% endif %}
+  {% if item.contentitem.content %}
+    <p>{{ item.contentitem.content|safe }}</p>
+  {% endif %}
+{% endif %}

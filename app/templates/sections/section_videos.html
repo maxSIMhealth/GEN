@@ -62,7 +62,7 @@
                                     <div class="fs-5 mt-1"><a href="{% url 'video_player' course.pk section.pk item.videofile.pk %}">{{ item.videofile.name }}</a></div>
 
                                     {% if item.videofile.description %}
-                                        <p>{{ item.videofile.description|linebreaksbr }}</p>
+                                      <div class="item-description"><small class="text-muted">{{ item.videofile.description|safe }}</small></div>
                                     {% endif %}
 
                                     {% if item.videofile.quizzes.all and item.videofile.show_related_content %}

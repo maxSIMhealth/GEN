@@ -99,6 +99,10 @@ body {
   text-decoration-style: dotted;
 }
 
+.item-description p:last-child {
+    margin-bottom:0;
+}
+
 /* quiz with video */
 .video+.quiz > .card-body {
     max-height: none;

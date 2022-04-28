@@ -18,7 +18,9 @@ duplicate.short_description = "Duplicate selected items"
 
 class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
     model = Section
-    exclude = ["description", "content"]
+    exclude = [
+        "description",
+    ]
     extra = 0
 
 
@@ -131,7 +133,6 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                 "fields": (
                     "name",
                     "description",
-                    "content",
                     "course",
                     "section_type",
                     "author",

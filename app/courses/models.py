@@ -603,10 +603,13 @@ class SectionItem(TimeStampedModel):
     ]
 
     name = models.CharField(_("name"), max_length=120, unique=False)
-    description = models.TextField(
+    description = HTMLField(
         _("description"),
-        max_length=400,
-        help_text=_("Brief description (max 400 characters)"),
+        help_text=_(
+            "Item description. Please try to keep it brief (under 1000 "
+            "characters or 150 words). Only the first 250 characters will be "
+            "shown in the quiz section view."
+        ),
         blank=True,
         null=True,
     )
