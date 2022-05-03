@@ -16,12 +16,11 @@ Including another URLconf
 from core import views as core_views
 
 from django.conf import settings
-from django.conf.urls import re_path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.i18n import JavaScriptCatalog
 

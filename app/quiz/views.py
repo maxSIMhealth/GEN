@@ -99,7 +99,7 @@ def question_multiplechoice_check(attempt, question, submitted_data):
                 answer_checked = str(answer.pk) in user_answers
 
                 # check if the answer was marked correctly
-                flag = answer.check == answer_checked
+                flag = answer.mark == answer_checked
 
                 # TODO: implement partial score for each correct item
 

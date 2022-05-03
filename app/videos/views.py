@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
 
