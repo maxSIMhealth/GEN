@@ -477,7 +477,7 @@ class MCQuestion(Question):
     def check_if_correct(self, guess):
         answer = MCAnswer.objects.get(id=guess)
 
-        return bool(answer.check)
+        return bool(answer.mark)
 
     def get_answers(self):
         return MCAnswer.objects.filter(question=self)
@@ -508,7 +508,7 @@ class MCAnswer(TimeStampedModel):
         help_text=_("Enter the answer text that you want displayed"),
     )
 
-    check = models.BooleanField(
+    mark = models.BooleanField(
         _("check"),
         blank=False,
         default=False,

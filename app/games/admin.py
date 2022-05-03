@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableInlineAdminMixin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
 from django.contrib import admin
@@ -31,7 +31,7 @@ def duplicate(modeladmin, request, queryset):
 duplicate.short_description = "Duplicate selected items"
 
 
-class GameAdmin(TabbedTranslationAdmin):
+class GameAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     list_filter = ("type", "section__course", "section", "author")
     list_display = ("name", "item_type", "id", "type", "section", "author", "published")
     readonly_fields = ["created", "modified"]

@@ -24,9 +24,9 @@ class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class CourseAdmin(TabbedTranslationAdmin):
+class CourseAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     # fields = ('name', 'members')
-    list_display = ("name", "id", "code", "author", "enable_gamification")
+    list_display = ("name", "id", "author", "enable_gamification", "code")
     list_filter = ("author",)
     # ordering = ("id",)
     filter_horizontal = ("members", "instructors", "editors", "learners")

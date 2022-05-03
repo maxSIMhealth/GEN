@@ -1,5 +1,5 @@
 # Official python image
-FROM python:3.9-alpine3.14 AS builder
+FROM python:3.10-alpine3.14 AS builder
 
 # Labels
 LABEL maintainer="andrei.torres@ontariotechu.net"
@@ -18,7 +18,7 @@ COPY app/requirements.txt $GEN_HOME/app/requirements.txt
 ## Install packages, create virtualenv, and install dependencies
 RUN set -ex \
     && apk add --no-cache ffmpeg libmagic gettext \
-    && apk add --no-cache --virtual .build-deps python3-dev postgresql-dev gcc make libc-dev zlib-dev jpeg-dev libffi-dev \
+    && apk add --no-cache --virtual .build-deps python3-dev postgresql-dev gcc make libc-dev zlib-dev jpeg-dev libffi-dev freetype-dev \
     && python -m venv /env \
     && /env/bin/pip install --upgrade pip setuptools wheel\
     && /env/bin/pip install --no-cache-dir -r $GEN_HOME/app/requirements.txt \
@@ -33,7 +33,7 @@ RUN set -ex \
 # Copy project
 ADD app $GEN_HOME/app
 
-FROM python:3.9-alpine3.14
+FROM python:3.10-alpine3.14
 
 # Create user that will run the project
 RUN addgroup -S gen --gid 1000 \

@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableInlineAdminMixin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from import_export import resources
 from import_export.admin import ExportActionMixin
 from import_export.fields import Field
@@ -96,7 +96,7 @@ class QuestionInline(SortableInlineAdminMixin, TranslationTabularInline):
     extra = 0
 
 
-class QuizAdmin(TabbedTranslationAdmin):
+class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     # list_display = ("name", "course", "quiz_actions")
     list_display = (
         "name",
@@ -277,12 +277,13 @@ class LikertAnswerInline(CheckerInline):
     model = LikertAnswer
 
 
-class QuestionAdmin(TabbedTranslationAdmin):
+class QuestionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
     """
     Base class for questions admin layout (editing).
     """
 
     list_display = (
+        "custom_order",
         "content",
         "additional_content",
         "author",
@@ -335,7 +336,7 @@ class MCQuestionAdmin(QuestionAdmin):
 
 
 class MCAnswerAdmin(admin.ModelAdmin):
-    list_display = ("question", "content", "check")
+    list_display = ("question", "content", "mark")
     list_filter = ("question",)
 
     class Media:
