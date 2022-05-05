@@ -1,4 +1,5 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
+from courses.models import Section
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
 from django.contrib import admin
@@ -74,6 +75,14 @@ class GameAdmin(SortableAdminMixin, TabbedTranslationAdmin):
         ),
         ("Game settings", {"fields": ("type",)}),
     )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """
+        Sorting 'section' field based on Course ID and Section ID.
+        """
+        if db_field.name == "section":
+            kwargs["queryset"] = Section.objects.all().order_by("course_id", "id")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class TextBoxesTermInline(SortableInlineAdminMixin, TranslationTabularInline):

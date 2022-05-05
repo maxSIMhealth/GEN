@@ -576,7 +576,7 @@ class Section(TimeStampedModel):
             return super().clean()
 
     def __str__(self):
-        output = "ID {0} - {1}".format(self.pk, self.name)
+        output = f"ID {self.pk} - {self.name} - part of {self.course}"
         return output
 
     def duplicate(self, *args, **kwargs):
