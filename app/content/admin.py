@@ -1,3 +1,4 @@
+from courses.models import Section
 from modeltranslation.admin import TabbedTranslationAdmin
 
 from django.contrib import admin
@@ -68,6 +69,14 @@ class ContentItemAdmin(TabbedTranslationAdmin):
             },
         ),
     )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """
+        Sorting 'section' field based on Course ID and Section ID.
+        """
+        if db_field.name == "section":
+            kwargs["queryset"] = Section.objects.all().order_by("course_id", "id")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 class ImageFileAdmin(TabbedTranslationAdmin):
@@ -145,6 +154,14 @@ class PdfFileAdmin(TabbedTranslationAdmin):
             },
         ),
     )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        """
+        Sorting 'section' field based on Course ID and Section ID.
+        """
+        if db_field.name == "section":
+            kwargs["queryset"] = Section.objects.all().order_by("course_id", "id")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 admin.site.register(ContentItem, ContentItemAdmin)
