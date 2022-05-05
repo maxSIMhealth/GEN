@@ -56,9 +56,14 @@
 
 <script>
     function getInitialData() {
+        let source_list = JSON.parse("{{ source_list|escapejs }}")
+        let info = JSON.parse("{{ info|escapejs }}")[0].fields
+        if (info.source_shuffle == true) {
+          source_list = _.shuffle(source_list)
+        }
         return {
-                info: JSON.parse("{{ info|escapejs }}")[0].fields,
-                source_list: JSON.parse("{{ source_list|escapejs }}"),
+                info: info,
+                source_list: source_list,
                 choice1_user: [],
                 choice2_user: [],
             }
