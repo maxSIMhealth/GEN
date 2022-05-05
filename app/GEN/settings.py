@@ -331,7 +331,15 @@ MAINTENANCE_MODE = None
 # by default, a file named "maintenance_mode_state.txt" will be created in the settings.py directory
 # you can customize the state file path in case the default one is not writable
 if not DEBUG:
-    MAINTENANCE_MODE_STATE_FILE_PATH = "maintenance_mode_state.txt"
+    MAINTENANCE_MODE_STATE_FILE_PATH = "GEN_maintenance_mode_state.txt"
+
+# by default, to get/set the state value a local file backend is used
+# if you want to use the db or cache, you can create a custom backend
+# custom backends must extend 'maintenance_mode.backends.AbstractStateBackend' class
+# and implement get_value(self) and set_value(self, val) methods
+# MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.LocalFileBackend"
+# alternatively it is possible to use the default storage backend
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 
 # if True admin site will not be affected by the maintenance-mode page
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
