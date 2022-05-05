@@ -94,9 +94,9 @@ class Game(SectionItem):
 class TextItem(TimeStampedModel):
     text = models.CharField(
         _("text"),
-        max_length=100,
+        max_length=250,
         unique=False,
-        help_text=_("Item text description (max 100 characters)"),
+        help_text=_("Item text description (max 250 characters)"),
     )
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
@@ -180,6 +180,9 @@ class MoveToColumnsGroup(TimeStampedModel):
         default="Source column",
         unique=False,
         help_text=_("Source column name"),
+    )
+    source_shuffle = models.BooleanField(
+        default=False, help_text=_("Defines if the source items should be shuffled.")
     )
     source_items = models.ManyToManyField(
         MoveToColumnsItem,
