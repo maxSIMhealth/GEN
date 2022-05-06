@@ -88,12 +88,14 @@
                                         {{ item.created }}
                                     </small>
                                 </p>
+                                {% if not course.blind_data %}
                                 <p class="mb-0">
                                     <small class="text-muted">
                                         <strong>{% trans "By:" %}</strong>
                                         {{ item.author.first_name }} {{ item.author.last_name }}
                                     </small>
                                 </p>
+                                {% endif %}
                                 <p class="mb-0">
                                     <small class="text-muted">
                                         <strong>{% trans "Comments:" %}</strong>
