@@ -185,11 +185,14 @@ class Course(TimeStampedModel):
             "Defines if new users should automatically be enrolled to this course/module."
         ),
     )
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
 
     class Meta:
         verbose_name = _("course")
         verbose_name_plural = _("courses")
-        ordering = ["code"]
+        ordering = ["custom_order"]
 
     def __str__(self):
         output = "ID {0} - {1} - {2}".format(self.pk, self.code, self.name)
