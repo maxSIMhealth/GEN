@@ -467,7 +467,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 20,
     # 'theme': 'modern',
     "plugins": """
-            textcolor save link image media preview codesample contextmenu
+            save link image media preview codesample
             table code lists fullscreen insertdatetime searchreplace wordcount visualblocks
             visualchars code autolink lists charmap print anchor
             """,
