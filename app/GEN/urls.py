@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from core import views as core_views
+from rest_framework.authtoken import views as authtoken_views
 
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
@@ -41,6 +42,12 @@ urlpatterns = [
 # tiny mce
 urlpatterns += [
     path("tinymce/", include("tinymce.urls")),
+]
+
+# rest framework api
+urlpatterns += [
+    path("api-auth/", include("rest_framework.urls")),
+    path("api-token-auth/", authtoken_views.obtain_auth_token, name="api-token-auth"),
 ]
 
 urlpatterns += i18n_patterns(
