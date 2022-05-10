@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     "tinymce",
     "storages",
     "django_tables2",
+    "rest_framework",
+    "rest_framework.authtoken",
     "core",
     "accounts",
     "courses",
@@ -495,3 +497,16 @@ USE_EMAIL_DOMAINS_WHITELIST = (
 )
 if USE_EMAIL_DOMAINS_WHITELIST:
     VALID_EMAIL_DOMAINS = os.getenv("VALID_EMAIL_DOMAINS").split(",")
+
+#
+# REST Framework
+#
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+}
