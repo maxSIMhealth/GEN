@@ -12,6 +12,7 @@ from reportlab.lib.pagesizes import landscape, letter
 from reportlab.pdfgen import canvas
 from werkzeug.utils import secure_filename
 
+import GEN.settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
@@ -335,6 +336,7 @@ def check_completion_status_and_display_messages(
 @check_permission("section")
 @check_requirement()
 def section_page(request, pk, section_pk):
+    debug = GEN.settings.DEBUG
     user = request.user
     course_object = get_object_or_404(Course, pk=pk)
     course_type = course_object.type_name()
@@ -415,6 +417,7 @@ def section_page(request, pk, section_pk):
             "gamification": gamification,
             "allow_submission": allow_submission,
             "message_congratulations": message_congratulations,
+            "debug": debug,
         },
     )
 
