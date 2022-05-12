@@ -135,6 +135,7 @@ def render_section_content(section_items, section_object):
                 )
             elif item.game.type == "TB":
                 # 'text boxes' game
+                item.game.info_json = serialize("json", [item.game])
                 item.game.terms = serialize("json", item.game.textboxesterm_set.all())
                 item.game.items = serialize("json", item.game.textboxesitem_set.all())
             elif item.game.type == "MT":

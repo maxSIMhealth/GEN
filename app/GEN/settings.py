@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "tinymce",
     "storages",
     "django_tables2",
+    "sortedm2m",
     "core",
     "accounts",
     "courses",

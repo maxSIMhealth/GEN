@@ -73,7 +73,10 @@ class GameAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                 )
             },
         ),
-        ("Game settings", {"fields": ("type",)}),
+        (
+            "Game settings",
+            {"fields": ("type",)},
+        ),
     )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
@@ -97,10 +100,56 @@ class TextBoxesItemInline(SortableInlineAdminMixin, TranslationTabularInline):
 
 
 class TextBoxesGameAdmin(GameAdmin):
-    def get_queryset(self, request):
-        return self.model.text_boxes.all()
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "item_type",
+                    "description",
+                    "author",
+                    "section",
+                    "start_date",
+                    "end_date",
+                    "show_related_content",
+                    "published",
+                )
+            },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            },
+        ),
+        (
+            "Access control",
+            {
+                "fields": (
+                    "access_restriction",
+                    "author_access_override",
+                )
+            },
+        ),
+        (
+            "Game settings",
+            {
+                "fields": (
+                    "type",
+                    "shuffle",
+                )
+            },
+        ),
+    )
 
     inlines = (TextBoxesTermInline, TextBoxesItemInline)
+
+    def get_queryset(self, request):
+        return self.model.text_boxes.all()
 
     # setting type value to TB (Text Boxes)
     def get_form(self, request, obj=None, **kwargs):

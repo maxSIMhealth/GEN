@@ -55,7 +55,7 @@
 </div>
 
 <script>
-    function getInitialData() {
+    function getInitialDataGame{{ id }}() {
         let source_list = JSON.parse("{{ source_list|escapejs }}")
         let info = JSON.parse("{{ info|escapejs }}")[0].fields
         if (info.source_shuffle == true) {

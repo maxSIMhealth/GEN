@@ -2,114 +2,149 @@
 {% load static %}
 
 <div id="game-alt-{{ id }}">
-    <div class="row row-cols-1 row-cols-md-3 g-2 mb-2">
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-header fs-6">{% trans "Terms" %}</div>
-                <div class="card-body">
-                    <draggable class="list-group"
-                               v-model="terms"
-                               group="game-{{ id }}-items"
-                               @change="check_answers"
-                    >
-                        <div class="list-group-item"
-                             v-for="(item, index) in terms"
-                             :key="item.fields.text"
-                             style="padding:0.5rem"
-                        >
-                            <i class="fa fa-align-justify handle"></i>
-                            <% item.fields.text %>
-                        </div>
-                    </draggable>
-                </div>
-            </div>
-        </div>
-        <div class="col" v-for="(item, index) in items">
-            <div class="card h-100">
-                <draggable class="card-body"
-                       group="game-{{ id }}-items"
-                       v-model="answers_list[index]"
-                       :disabled="!answers_list_status[index]"
-                       @add="itemAdded(index)"
+  <div class="row gx-2 mb-2">
+    <div class="col-sm-4 mb-2">
+      <div class="card h-100">
+        <div class="card-header fs-6">{% trans "Terms" %}</div>
+        <div class="card-body">
+          <draggable
+            class="list-group"
+            :list="terms"
+            group="game-{{ id }}-items"
+            @change="check_answers"
+          >
+            <div
+              class="list-group-item"
+              v-for="(element, index) in terms"
+              :key="element.fields.text"
             >
-                <span class="preserve-linebreaks"><% item.fields.text %></span>
-                <div class="list-group-item game-draggable-item mt-2"
-                     v-for="answer in answers_list[index]"
-                     :class="[correct_answers[index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger', correct_answers[index] === answer.pk ? 'correct-item' : 'incorrect-item']"
-                >
-                    <% answer.fields.text %>
-                </div>
-            </draggable>
+              <i class="fa fa-align-justify handle"></i>
+              <% element.fields.text %>
             </div>
+          </draggable>
         </div>
+      </div>
     </div>
-    <button class="btn btn-primary" @click="check_answers(false)">{% trans "Check answers" %}</button>
-    <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
+    <div class="col-sm-8">
+      <div class="card mb-2" v-for="(item, index) in items">
+        <div class="card-body">
+          <p class="card-text mb-1"><% item.fields.text %></p>
+          <div v-for="(element, element_index) in item.fields.correct_terms"
+               style="display: flex; flex-direction: row"
+               class="mt-2"
+          >
+            <div style="width: 2.5rem"># <% index+element_index+1 %>:</div>
+            <draggable :list="answers_list[index+element_index]"
+                       group="game-{{ id }}-items"
+                       class="border border-secondary rounded"
+                       style="flex: auto"
+                       :disabled="!answers_list_status[index+element_index]"
+                       @add="itemAdded(index+element_index)"
+            >
+              <div v-for="(answer, answer_index) in answers_list[index+element_index]"
+                   class="ps-1"
+                   :class="[correct_answers[index+element_index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger', correct_answers[index+element_index] === answer.pk ? 'correct-item' : 'incorrect-item']"
+              >
+                <% answer.fields.text %>
+              </div>
+            </draggable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" @click="check_answers(false)">{% trans "Check answers" %}</button>
+  <button class="btn btn-warning" @click="restart">{% trans "Restart" %}</button>
 </div>
 
 <script>
-    let game{{ id }} = new Vue({
-        el: '#game-alt-{{ id }}',
-        delimiters: ['<%', '%>'],
-        components: {
-            vuedraggable
-        },
-        data: {
-            terms: JSON.parse("{{ terms|escapejs }}"),
-            items: JSON.parse("{{ items|escapejs }}"),
-            answers: [],
-        },
-        computed: {
-            correct_answers: function () {
-                return this.items.map(item => item.fields.correct_term)
-            },
-            answers_list: function () {
-                return this.items.map(item => [])
-            },
-            answers_list_status: function () {
-                return this.items.map(item => true)
-            },
-        },
-        methods: {
-            itemAdded: function (index) {
-                this.answers_list_status[index] = false
-            },
-            check_answers: function (auto_check) {
-                // copy answers pk values to an array to make it easier to compare
-                var answers_size = Object.keys(this.answers_list).length
-                for (var i = 0; i < answers_size; i++) {
-                    if (this.answers_list[i][0]) {
-                        Vue.set(this.answers, i, this.answers_list[i][0].pk)
-                    } else {
-                        Vue.set(this.answers, i, undefined)
-                    }
-                }
+  function getInitialDataGame{{ id }}() {
+    let info = JSON.parse("{{ info|escapejs }}")[0].fields
+    let terms = JSON.parse("{{ terms|escapejs }}")
+    let items = JSON.parse("{{ items|escapejs }}")
 
-                // check if all items were answered
-                if (!this.answers.includes(undefined) && this.answers.length === this.items.length) {
-                    // check if all answers are correct
-                    let correct = this.answers.toString() === this.correct_answers.toString()
+    if (info.shuffle == true) {
+      terms = _.shuffle(terms)
+    }
 
-                    // return feedback
-                    if (correct) {
-                        return window.alert(gettext("You got it! Congratulations."))
-                    } else {
-                        return window.alert(gettext("Please try again."))
-                    }
-                } else {
-                    if (!auto_check) {
-                        return window.alert(gettext("Please answer all items."))
-                    }
-                }
-            },
-            restart: function () {
-                this.answers = []
-                this.terms = JSON.parse("{{ terms }}".replace(/&quot;/g, '\"'))
-                for (var i = 0; i < this.answers_list_status.length; i++) {
-                    Vue.set(this.answers_list_status, i, true)
-                    Vue.set(this.answers_list, i, [])
-                }
-            }
+    return {
+      info: info,
+      terms: terms,
+      items: items,
+      answers: [],
+    }
+  }
+
+  let game{{ id }} = new Vue({
+    el: '#game-alt-{{ id }}',
+    delimiters: ['<%', '%>'],
+    components: {
+      vuedraggable
+    },
+    data: getInitialDataGame{{ id }}(),
+    computed: {
+      correct_answers: function () {
+        {#return this.items.map(item => item.fields.correct_terms)#}
+        let correct_answers = [];
+        this.items.forEach((item) => {
+          let correct_terms = item.fields.correct_terms;
+          if (correct_terms.length === 1) {
+            correct_answers.push(correct_terms[0])
+          } else {
+            correct_terms.forEach((answer) => {
+              correct_answers.push(answer)
+            })
+          }
+        })
+        return correct_answers;
+      },
+      answers_list: function () {
+        return this.correct_answers.map(item => [])
+      },
+      answers_list_status: function () {
+        return this.correct_answers.map(item => true)
+      },
+    },
+    methods: {
+      itemAdded: function (index) {
+        this.answers_list_status[index] = false
+      },
+      check_answers: function (auto_check) {
+        // copy answers pk values to an array to make it easier to compare
+        var answers_size = Object.keys(this.answers_list).length
+        for (var i = 0; i < answers_size; i++) {
+          if (this.answers_list[i][0]) {
+            Vue.set(this.answers, i, this.answers_list[i][0].pk)
+          } else {
+            Vue.set(this.answers, i, undefined)
+          }
         }
-    })
+
+        // check if all items were answered
+        if (!this.answers.includes(undefined) && this.answers.length === this.correct_answers.length) {
+          // check if all answers are correct
+          let correct = this.answers.toString() === this.correct_answers.toString()
+
+          // return feedback
+          if (correct) {
+            return window.alert(gettext("You got it! Congratulations."))
+          } else {
+            return window.alert(gettext("Please try again."))
+          }
+        } else {
+          if (!auto_check) {
+            return window.alert(gettext("Please answer all items."))
+          }
+        }
+      },
+      restart: function () {
+        this.answers = []
+        this.terms = JSON.parse("{{ terms }}".replace(/&quot;/g, '\"'))
+        for (var i = 0; i < this.answers_list_status.length; i++) {
+          Vue.set(this.answers_list_status, i, true)
+          Vue.set(this.answers_list, i, [])
+        }
+      }
+    }
+  })
 </script>

@@ -9,7 +9,7 @@ class TextBoxesItemForm(forms.ModelForm):
         # check if the instance exists (if it's a new object or not)
         if self.instance.pk is not None:
             # list only terms that are related to the same game as the item
-            self.fields["correct_term"].queryset = TextBoxesTerm.objects.filter(
+            self.fields["correct_terms"].queryset = TextBoxesTerm.objects.filter(
                 game=self.instance.game
             )
 
