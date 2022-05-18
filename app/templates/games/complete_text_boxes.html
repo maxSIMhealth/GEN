@@ -33,7 +33,7 @@
                style="display: flex; flex-direction: row"
                class="mt-2"
           >
-            <div style="width: 2.5rem"># <% item.start_number+element_index %>:</div>
+            <div style="width: 2.5rem" v-if="info.show_numbers"># <% item.start_number+element_index %>:</div>
             <draggable :list="answers_list[item.start_number+element_index-1]"
                        group="game-{{ id }}-items"
                        class="border border-secondary rounded"
