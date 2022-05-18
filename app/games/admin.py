@@ -44,7 +44,7 @@ class GameAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             {
                 "fields": (
                     "name",
-                    "item_type",
+                    # "item_type",
                     "description",
                     "author",
                     "section",
@@ -106,7 +106,7 @@ class TextBoxesGameAdmin(GameAdmin):
             {
                 "fields": (
                     "name",
-                    "item_type",
+                    # "item_type",
                     "description",
                     "author",
                     "section",
