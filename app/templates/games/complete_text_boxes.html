@@ -10,7 +10,7 @@
           <draggable
             class="list-group"
             :list="terms"
-            group="game-{{ id }}-items"
+            :group="{name: 'game-{{ id }}-items'}"
             @change="check_answers"
           >
             <div
@@ -33,17 +33,17 @@
                style="display: flex; flex-direction: row"
                class="mt-2"
           >
-            <div style="width: 2.5rem"># <% index+element_index+1 %>:</div>
-            <draggable :list="answers_list[index+element_index]"
+            <div style="width: 2.5rem"># <% item.start_number+element_index %>:</div>
+            <draggable :list="answers_list[item.start_number+element_index-1]"
                        group="game-{{ id }}-items"
                        class="border border-secondary rounded"
-                       style="flex: auto"
-                       :disabled="!answers_list_status[index+element_index]"
-                       @add="itemAdded(index+element_index)"
+                       style="flex: auto; min-height: 25px"
+                       :disabled="!answers_list_status[item.start_number+element_index-1]"
+                       @add="itemAdded(item.start_number+element_index-1)"
             >
-              <div v-for="(answer, answer_index) in answers_list[index+element_index]"
+              <div v-for="(answer, answer_index) in answers_list[item.start_number+element_index-1]"
                    class="ps-1"
-                   :class="[correct_answers[index+element_index] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger', correct_answers[index+element_index] === answer.pk ? 'correct-item' : 'incorrect-item']"
+                   :class="[correct_answers[item.start_number+element_index-1] === answer.pk ? 'list-group-item-success' : 'list-group-item-danger', correct_answers[item.start_number+element_index-1] === answer.pk ? 'correct-item' : 'incorrect-item']"
               >
                 <% answer.fields.text %>
               </div>
@@ -61,7 +61,6 @@
   function getInitialDataGame{{ id }}() {
     let info = JSON.parse("{{ info|escapejs }}")[0].fields
     let terms = JSON.parse("{{ terms|escapejs }}")
-    let items = JSON.parse("{{ items|escapejs }}")
 
     if (info.shuffle == true) {
       terms = _.shuffle(terms)
@@ -70,7 +69,6 @@
     return {
       info: info,
       terms: terms,
-      items: items,
       answers: [],
     }
   }
@@ -83,8 +81,18 @@
     },
     data: getInitialDataGame{{ id }}(),
     computed: {
+      items: function () {
+        let items_parsed = JSON.parse("{{ items|escapejs }}");
+        items_parsed.forEach((item, index) => {
+          if (index > 0) {
+           item.start_number = items_parsed[index-1].start_number + items_parsed[index-1].fields.correct_terms.length;
+          } else {
+            item.start_number = index + 1;
+          }
+        })
+        return items_parsed;
+      },
       correct_answers: function () {
-        {#return this.items.map(item => item.fields.correct_terms)#}
         let correct_answers = [];
         this.items.forEach((item) => {
           let correct_terms = item.fields.correct_terms;
