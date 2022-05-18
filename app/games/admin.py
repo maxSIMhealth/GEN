@@ -141,6 +141,7 @@ class TextBoxesGameAdmin(GameAdmin):
                 "fields": (
                     "type",
                     "shuffle",
+                    "show_numbers",
                 )
             },
         ),

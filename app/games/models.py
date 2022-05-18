@@ -53,6 +53,12 @@ class Game(SectionItem):
     shuffle = models.BooleanField(
         default=False, help_text=_("Defines if the source items should be shuffled.")
     )
+    show_numbers = models.BooleanField(
+        default=True,
+        help_text=_(
+            "*ONLY FOR 'COMPLETE THE TEXT BOXES' GAME*: Defines if the answer items should be numbered."
+        ),
+    )
 
     def save(self, *args, **kwargs):
         self.item_type = SectionItem.SECTION_ITEM_GAME
