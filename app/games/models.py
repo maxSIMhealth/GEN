@@ -142,9 +142,9 @@ class TextBoxesTerm(TextItem):
 class TextBoxesItem(TextItem):
     text = models.TextField(
         _("text"),
-        max_length=400,
+        max_length=500,
         unique=False,
-        help_text=_("Item text description (max 400 characters)"),
+        help_text=_("Item text description (max 500 characters)"),
     )
     correct_terms = SortedManyToManyField(
         TextBoxesTerm,
