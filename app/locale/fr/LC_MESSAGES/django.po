@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-01 23:22+0000\n"
+"PO-Revision-Date: 2022-06-01 23:24+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
-"POT-Creation-Date: 2022-05-18 15:23+0000\n"
-"PO-Revision-Date: 2022-05-18 15:23+0000\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -108,21 +108,52 @@ msgstr "Votre mot de passe a été mis à jour avec succès."
 msgid "Please correct the error below."
 msgstr "Veuillez corriger l'erreur ci-dessous."
 
-#: content/models.py:22 dashboard/models.py:20 quiz/models.py:271
+#: content/models.py:29 dashboard/models.py:20 quiz/models.py:271
 msgid "image"
 msgstr "image"
 
-#: content/models.py:22
+#: content/models.py:29
 msgid "Image file."
 msgstr "Fichier d'image."
 
-#: content/models.py:42
+#: content/models.py:49
 msgid "pdf"
 msgstr "pdf"
 
-#: content/models.py:44
+#: content/models.py:51
 msgid "Format accepted: PDF."
 msgstr "Format accepté : PDF."
+
+#: content/models.py:103
+msgid "Zip package"
+msgstr "Colis zip"
+
+#: content/models.py:106
+msgid ""
+"Format accepted: zip. An 'index.html' file needs to exist in the root of the"
+" zip file."
+msgstr ""
+"Format accepté: zip. Un fichier 'index.html' doit exister à la racine du "
+"fichier zip."
+
+#: content/models.py:112
+#| msgid "instructors"
+msgid "directory"
+msgstr "directoire"
+
+#: content/models.py:175
+msgid "Zip file MUST contain an 'index.html' file at its base/root level."
+msgstr ""
+"Le fichier zip DOIT contenir un fichier 'index.html' à son niveau de "
+"base/racine."
+
+#: content/models.py:208
+msgid "Cannot extract zip file. Directory already exists."
+msgstr "Impossible d'extraire le fichier zip. Le répertoire existe déjà."
+
+#: content/models.py:212
+msgid "Successfully extracted file(s)."
+msgstr "Fichier(s) extrait(s) avec succès."
 
 #: core/models.py:10 videos/models.py:62
 msgid "file"
@@ -160,7 +191,7 @@ msgstr ""
 " est de 200x80 points."
 
 #: core/models.py:54 courses/models.py:64 courses/models.py:271
-#: courses/models.py:615
+#: courses/models.py:617
 msgid "description"
 msgstr "la description"
 
@@ -173,8 +204,8 @@ msgid "URL of the destination site when the user clicks on the logo."
 msgstr "URL du site de destination lorsque l'utilisateur clique sur le logo."
 
 #: core/models.py:63 core/models.py:131 courses/models.py:189
-#: courses/models.py:440 courses/models.py:663 games/models.py:126
-#: games/models.py:150 games/models.py:170 quiz/models.py:301
+#: courses/models.py:440 courses/models.py:665 games/models.py:132
+#: games/models.py:156 games/models.py:176 quiz/models.py:301
 #: quiz/models.py:519
 msgid "custom order"
 msgstr "commande personnalisée"
@@ -227,7 +258,7 @@ msgstr ""
 "message d'alerte."
 
 #: core/models.py:115 courses/models.py:75 courses/models.py:289
-#: courses/models.py:630
+#: courses/models.py:632
 msgid "start date"
 msgstr "date de début"
 
@@ -240,7 +271,7 @@ msgstr ""
 "définira également automatiquement le statut \"publié\" sur True."
 
 #: core/models.py:123 courses/models.py:76 courses/models.py:290
-#: courses/models.py:631
+#: courses/models.py:633
 msgid "end date"
 msgstr "date de fin"
 
@@ -288,7 +319,7 @@ msgstr "Certificat - Cours"
 msgid "Certificate - Custom"
 msgstr "Certificat - Personnalisé"
 
-#: courses/models.py:38 courses/models.py:265 courses/models.py:613
+#: courses/models.py:38 courses/models.py:265 courses/models.py:615
 #: dashboard/models.py:14
 msgid "name"
 msgstr "nom"
@@ -332,7 +363,7 @@ msgstr ""
 "Description du cours. Veuillez essayer d'être bref (moins de 2000 "
 "caractères)."
 
-#: courses/models.py:73 courses/models.py:279 courses/models.py:628
+#: courses/models.py:73 courses/models.py:279 courses/models.py:630
 #: discussions/models.py:71 quiz/models.py:240
 msgid "author"
 msgstr "l'auteur"
@@ -490,7 +521,7 @@ msgstr ""
 "Définit si les nouveaux utilisateurs doivent être automatiquement inscrits à"
 " ce cours/module."
 
-#: courses/models.py:193 courses/models.py:284 courses/models.py:689
+#: courses/models.py:193 courses/models.py:284 courses/models.py:691
 #: discussions/models.py:22 quiz/models.py:101 quiz/models.py:537
 #: quiz/models.py:640 videos/models.py:43 videos/models.py:58
 msgid "course"
@@ -539,7 +570,7 @@ msgstr "Quiz"
 msgid "Uploads"
 msgstr "Téléversements"
 
-#: courses/models.py:261 courses/models.py:604
+#: courses/models.py:261 courses/models.py:605
 #: templates/videos/video_player.html:34
 msgid "Content"
 msgstr "Contenu"
@@ -560,7 +591,7 @@ msgstr ""
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:300 courses/models.py:640
+#: courses/models.py:300 courses/models.py:642
 msgid "published"
 msgstr "publié"
 
@@ -584,19 +615,19 @@ msgstr ""
 "* POUR LA SECTION DE CONTENU UNIQUEMENT * : Définissez si les éléments de la"
 " section doivent être paginés."
 
-#: courses/models.py:315 courses/models.py:642
+#: courses/models.py:315 courses/models.py:644
 msgid "access restriction"
 msgstr "restriction d'accès"
 
-#: courses/models.py:319 courses/models.py:646
+#: courses/models.py:319 courses/models.py:648
 msgid "Define who should have access to this item."
 msgstr "Définissez qui doit avoir accès à cet élément."
 
-#: courses/models.py:322 courses/models.py:382 courses/models.py:649
+#: courses/models.py:322 courses/models.py:382 courses/models.py:651
 msgid "access override for author"
 msgstr "remplacement d'accès pour l'auteur"
 
-#: courses/models.py:325 courses/models.py:652
+#: courses/models.py:325 courses/models.py:654
 msgid ""
 "Define if author should have access to this item, regardless of the access "
 "restriction."
@@ -832,7 +863,7 @@ msgstr ""
 "La date de fin de section ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:589 courses/models.py:638 courses/models.py:697
+#: courses/models.py:589 courses/models.py:640 courses/models.py:699
 #: quiz/models.py:643
 msgid "section"
 msgstr "section"
@@ -841,31 +872,36 @@ msgstr "section"
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:605
+#: courses/models.py:606
 msgid "Image"
 msgstr "Image"
 
-#: courses/models.py:606
+#: courses/models.py:607
 msgid "Discussion"
 msgstr "Discussion"
 
-#: courses/models.py:607
+#: courses/models.py:608
 msgid "Game"
 msgstr "Jeu"
 
-#: courses/models.py:608
+#: courses/models.py:609
 msgid "Quiz"
 msgstr "Quiz"
 
-#: courses/models.py:609 templates/quiz/quiz.html:22
+#: courses/models.py:610 templates/quiz/quiz.html:22
 msgid "Video"
 msgstr "Vidéo"
 
-#: courses/models.py:610
+#: courses/models.py:611
 msgid "PDF"
 msgstr "PDF"
 
-#: courses/models.py:617
+#: courses/models.py:612
+#| msgid "video file"
+msgid "Zip file"
+msgstr "Fichier zip"
+
+#: courses/models.py:619
 msgid ""
 "Item description. Please try to keep it brief (under 1000 characters or 150 "
 "words). Only the first 250 characters will be shown in the quiz section "
@@ -875,46 +911,46 @@ msgstr ""
 "caractères ou 150 mots). Seuls les 250 premiers caractères seront affichés "
 "dans la vue de la section quiz."
 
-#: courses/models.py:656
+#: courses/models.py:658
 msgid "show related content"
 msgstr "afficher le contenu associé"
 
-#: courses/models.py:659
+#: courses/models.py:661
 msgid ""
 "Display content related to this item (e.g., quizzes related to a video)"
 msgstr ""
 "Afficher le contenu lié à cet élément (par exemple, des quiz liés à une "
 "vidéo)"
 
-#: courses/models.py:666
+#: courses/models.py:668
 msgid "section item type"
 msgstr "type d'élément de section"
 
-#: courses/models.py:672
+#: courses/models.py:674
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:673
+#: courses/models.py:675
 msgid "section items"
 msgstr "éléments de section"
 
-#: courses/models.py:683
+#: courses/models.py:685
 msgid "learner"
 msgstr "apprenant"
 
-#: courses/models.py:700
+#: courses/models.py:702
 msgid "item completed successfully"
 msgstr "élément terminé avec succès"
 
-#: courses/models.py:702
+#: courses/models.py:704
 msgid "Whether the item has been marked as complete or not."
 msgstr "Si l'élément a été marqué comme terminé ou non."
 
-#: courses/models.py:706
+#: courses/models.py:708
 msgid "status"
 msgstr "statut"
 
-#: courses/models.py:707
+#: courses/models.py:709
 msgid "statuses"
 msgstr "statuts"
 
@@ -955,7 +991,7 @@ msgstr "pour complétér le"
 msgid "Generated on"
 msgstr "Généré le"
 
-#: courses/views.py:74 courses/views.py:306
+#: courses/views.py:74 courses/views.py:310
 #, python-brace-format
 msgid "Congratulations! You have completed this {course_type}."
 msgstr "Toutes nos félicitations! Vous avez terminé ce {course_type}."
@@ -977,7 +1013,7 @@ msgstr ""
 "\n"
 "Veuillez vous rendre sur la page d'accueil pour accéder au prochain {course_type}."
 
-#: courses/views.py:259
+#: courses/views.py:263
 msgid ""
 "This section's contents are not yet available because the start date has not"
 " been reached."
@@ -985,7 +1021,7 @@ msgstr ""
 "Le contenu de cette section n'est pas encore disponible car la date de début"
 " n'a pas été atteinte."
 
-#: courses/views.py:268
+#: courses/views.py:272
 msgid ""
 "This section and its contents are not yet available to learners because of "
 "the start date."
@@ -993,7 +1029,7 @@ msgstr ""
 "Cette section et son contenu ne sont pas encore disponibles pour les "
 "apprenants en raison de la date de début."
 
-#: courses/views.py:283
+#: courses/views.py:287
 msgid ""
 "This section is closed and its contents have been hidden or disabled because"
 " the end date has passed."
@@ -1001,7 +1037,7 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé car la "
 "date de fin est passée."
 
-#: courses/views.py:292
+#: courses/views.py:296
 msgid ""
 "This section is closed and its contents have been hidden or disabled to "
 "learners because the end date has passed."
@@ -1009,7 +1045,7 @@ msgstr ""
 "Cette section est fermée et son contenu a été masqué ou désactivé pour les "
 "apprenants car la date de fin est passée."
 
-#: courses/views.py:308
+#: courses/views.py:312
 msgid ""
 "\n"
 "Your certificate of completion is now available in the "
@@ -1017,15 +1053,15 @@ msgstr ""
 "\n"
 "Votre certificat d'achèvement est maintenant disponible dans le"
 
-#: courses/views.py:311
+#: courses/views.py:315
 msgid "Congratulations! You have completed this section."
 msgstr "Toutes nos félicitations! Vous avez terminé cette section."
 
-#: courses/views.py:313
+#: courses/views.py:317
 msgid "Congratulations! You have passed the assessment."
 msgstr "Toutes nos félicitations! Vous avez réussi l'évaluation."
 
-#: courses/views.py:315
+#: courses/views.py:319
 msgid ""
 "\n"
 "Please navigate to the next section."
@@ -1033,11 +1069,11 @@ msgstr ""
 "\n"
 "Veuillez naviguer vers la section suivante."
 
-#: courses/views.py:452
+#: courses/views.py:456
 msgid "You have not completed this course/module yet."
 msgstr "Vous n'avez pas encore terminé ce cours/module."
 
-#: courses/views.py:458
+#: courses/views.py:462
 msgid "This course/module does not provide a certificate of conclusion."
 msgstr "Ce cours/module ne fournit pas de certificat de conclusion."
 
@@ -1168,48 +1204,58 @@ msgstr "Zones de texte"
 msgid "game type"
 msgstr "type de jeu"
 
-#: games/models.py:54 games/models.py:192
+#: games/models.py:54 games/models.py:198
 msgid "Defines if the source items should be shuffled."
 msgstr "Définit si les éléments source doivent être mélangés."
 
-#: games/models.py:100 games/models.py:138
+#: games/models.py:59
+#| msgid ""
+#| "* FOR CONTENT SECTION ONLY *: Define if section items should be paginated."
+msgid ""
+"*ONLY FOR 'COMPLETE THE TEXT BOXES' GAME*: Defines if the answer items "
+"should be numbered."
+msgstr ""
+"*UNIQUEMENT POUR LE JEU 'COMPLÉTER LES ZONES DE TEXTE'* : Définit si les "
+"éléments de réponse doivent être numérotés."
+
+#: games/models.py:106 games/models.py:144
 msgid "text"
 msgstr "texte"
 
-#: games/models.py:103
+#: games/models.py:109
 msgid "Item text description (max 250 characters)"
 msgstr "Description du texte de l'article (250 caractères max.)"
 
-#: games/models.py:141
-msgid "Item text description (max 400 characters)"
-msgstr "Description du texte de l'article (max 400 caractères)"
-
 #: games/models.py:147
-#| msgid "show correct answers"
+#| msgid "Item text description (max 400 characters)"
+msgid "Item text description (max 500 characters)"
+msgstr "Description textuelle de l'article (500 caractères maximum)"
+
+#: games/models.py:153
 msgid "List of correct terms."
 msgstr "Liste des termes corrects."
 
-#: games/models.py:185
+#: games/models.py:191
 msgid "source column name"
 msgstr "nom de la colonne source"
 
-#: games/models.py:189
+#: games/models.py:195
 msgid "Source column name"
 msgstr "Nom de la colonne source"
 
-#: games/models.py:198 games/models.py:211 games/models.py:224
+#: games/models.py:204 games/models.py:217 games/models.py:230
 msgid "List of items that are part of this column."
 msgstr "Liste des éléments qui font partie de cette colonne."
 
-#: games/models.py:201 games/models.py:214
+#: games/models.py:207 games/models.py:220
 msgid "choice 1 column name"
 msgstr "choix 1 nom de colonne"
 
-#: games/models.py:205
+#: games/models.py:211
 msgid "Choice 1 column name"
 msgstr "Choix 1 nom de la colonne"
 
-#: games/models.py:218
+#: games/models.py:224
 msgid "Choice 2 column name"
 msgstr "Choix 2 nom de la colonne"
 
@@ -1957,6 +2003,10 @@ msgstr "Télécharger le PDF"
 #: templates/content/video.html:14 templates/videos/video_player.html:25
 msgid "Sorry, your browser doesn't support embedded videos."
 msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
+
+#: templates/content/zip_embed.html:17
+msgid "URL is not valid. Please notify the support team:"
+msgstr "L'URL n'est pas valide. Veuillez informer l'équipe d'assistance :"
 
 #: templates/dashboard.html:39
 msgid "Instructions"
