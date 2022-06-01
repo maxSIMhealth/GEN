@@ -20,4 +20,6 @@
   {% if item.contentitem.content %}
     <p>{{ item.contentitem.content|safe }}</p>
   {% endif %}
+{% elif item.type == 'Zip' %}
+  {% include 'content/zip_embed.html' with item=item %}
 {% endif %}

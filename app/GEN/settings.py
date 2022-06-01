@@ -245,6 +245,7 @@ if USE_S3:
     AWS_LOCATION = os.getenv("GEN_INSTANCE_NAME")
     # Don't protect s3 urls and handle that in the model
     AWS_QUERYSTRING_AUTH = False
+    # AWS_QUERYSTRING_EXPIRE = "3600"
 
     # S3 static settings
     STATICFILES_STORAGE = "GEN.storage_backends.StaticStorage"
@@ -255,9 +256,17 @@ if USE_S3:
     STATIC_ROOT = "static/"
 
     # S3 public media settings
-    DEFAULT_FILE_STORAGE = "GEN.storage_backends.MediaStorage"
     AWS_MEDIA_LOCATION = f"{AWS_LOCATION}/media/public"
     MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_MEDIA_LOCATION}/"
+
+    # S3 private media settings
+    AWS_PRIVATE_MEDIA_LOCATION = f"{AWS_LOCATION}/media/private"
+    PRIVATE_MEDIA_URL = (
+        f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_PRIVATE_MEDIA_LOCATION}/"
+    )
+
+    # general media settings
+    DEFAULT_FILE_STORAGE = "GEN.storage_backends.MediaStorage"
     MEDIA_ROOT = "media/"
 
 else:
