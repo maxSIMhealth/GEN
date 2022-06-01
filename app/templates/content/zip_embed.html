@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load static %}
+{% load support_emails %}
+
+{% if "index.html" in item.externalobject.url %}
+  <div class="card-text text-center ratio ratio-16x9 mt-2 mb-2">
+    <div class="ratio ratio-16x9 pt-5">
+      <iframe
+        class="embed-responsive-item"
+        src="{{ item.externalobject.url }}"
+        allowfullscreen="allowfullscreen">
+      </iframe>
+    </div>
+  </div>
+{% else %}
+  <div class="alert alert-danger mb-0" role="alert">
+    {% translate "URL is not valid. Please notify the support team:" %}{% support_emails %}
+  </div>
+{% endif %}

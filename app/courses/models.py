@@ -599,6 +599,7 @@ class SectionItem(TimeStampedModel):
     SECTION_ITEM_GAME = "GAM"
     SECTION_ITEM_QUIZ = "QUZ"
     SECTION_ITEM_VIDEO = "VID"
+    SECTION_ITEM_ZIP = "ZIP"
 
     SECTION_ITEM_TYPES = [
         (SECTION_ITEM_CONTENT, _("Content")),
@@ -608,6 +609,7 @@ class SectionItem(TimeStampedModel):
         (SECTION_ITEM_QUIZ, _("Quiz")),
         (SECTION_ITEM_VIDEO, _("Video")),
         (SECTION_ITEM_PDF, _("PDF")),
+        (SECTION_ITEM_ZIP, _("Zip file")),
     ]
 
     name = models.CharField(_("name"), max_length=120, unique=False)

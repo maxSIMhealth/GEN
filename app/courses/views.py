@@ -111,14 +111,16 @@ def course(request, pk):
 
 
 def render_section_content(section_items, section_object):
+    from courses.models import SectionItem
+
     section_template = "sections/section_content.html"
     section_items = SectionItem.objects.filter(section=section_object, published=True)
     for item in section_items:
-        if hasattr(item, "videofile"):
+        if item.item_type == SectionItem.SECTION_ITEM_VIDEO:
             item.type = "Video"
-        elif hasattr(item, "contentitem"):
+        elif item.item_type == SectionItem.SECTION_ITEM_CONTENT:
             item.type = "Content"
-        elif hasattr(item, "game"):
+        elif item.item_type == SectionItem.SECTION_ITEM_GAME:
             item.type = "Game"
             if item.game.type == "MC":
                 # get 'move to column' game elements
@@ -142,6 +144,8 @@ def render_section_content(section_items, section_object):
                 # 'match terms' game
                 item.game.terms = serialize("json", item.game.textboxesterm_set.all())
                 item.game.items = serialize("json", item.game.textboxesitem_set.all())
+        elif item.item_type == SectionItem.SECTION_ITEM_ZIP:
+            item.type = "Zip"
         else:
             item.type = None
     return section_items, section_template
