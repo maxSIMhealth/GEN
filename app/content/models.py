@@ -178,6 +178,7 @@ class ExternalObject(SectionItem):
                 )
 
     def unzip_package(self, request):
+        import os
         import zipfile
         from pathlib import Path
 
@@ -185,7 +186,7 @@ class ExternalObject(SectionItem):
 
         media_storage = MediaStorage()
         zip_path = Path(self.file.name).with_suffix("")
-        zip_url = Path(self.file.url).with_suffix("")
+        zip_url = os.path.splitext(self.file.url)[0]  # stripped .zip extension from url
         output_path = f"{zip_path}_dir"
         url = f"{zip_url}_dir/index.html"
 
