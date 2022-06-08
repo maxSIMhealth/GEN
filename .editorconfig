@@ -34,3 +34,6 @@ insert_final_newline = unset
 
 [*.yml]
 indent_size = 2
+
+[*.yaml]
+indent_size = 2
