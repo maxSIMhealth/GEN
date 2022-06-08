@@ -1,9 +1,9 @@
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline
 
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.utils.translation import gettext_lazy as _
 
-# from quiz.models import Quiz
 from .forms import SectionAdminForm
 from .models import Course, Section, SectionItem, Status
 
@@ -14,6 +14,15 @@ def duplicate(modeladmin, request, queryset):
 
 
 duplicate.short_description = "Duplicate selected items"
+
+
+def update_status(modeladmin, request, queryset):
+    for item in queryset:
+        item.update()
+
+    messages.add_message(
+        request, messages.SUCCESS, _("Successfully updated status object(s).")
+    )
 
 
 class SectionInline(SortableInlineAdminMixin, TranslationTabularInline):
@@ -216,6 +225,7 @@ class StatusAdmin(admin.ModelAdmin):
     )
     list_filter = ("course", "section", "learner")
     readonly_fields = ["created", "modified"]
+    actions = [update_status]
 
 
 admin.site.register(Course, CourseAdmin)

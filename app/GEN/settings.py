@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     "videos",
     "content",
     "games",
+    "scorm",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -496,8 +497,15 @@ TINYMCE_DEFAULT_CONFIG = {
 TINYMCE_SPELLCHECKER = False
 
 #
+# SCORM Cloud Settings
+#
+SCORM_CLOUD_APP_ID = os.getenv("SCORM_CLOUD_APP_ID")
+SCORM_CLOUD_SECRET_KEY = os.getenv("SCORM_CLOUD_SECRET_KEY")
+
+#
 # GEN Settings
 #
+INSTANCE_NAME = os.getenv("GEN_INSTANCE_NAME")
 SUPPORT_EMAILS = os.getenv("SUPPORT_EMAILS").split(",")
 
 USE_EMAIL_DOMAINS_WHITELIST = (

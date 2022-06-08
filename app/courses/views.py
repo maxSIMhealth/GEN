@@ -207,6 +207,15 @@ def render_section_quiz(section_items, section_object):
     return section_items, section_template
 
 
+def render_section_scorm(is_instructor, section_items, section_object):
+    if is_instructor:
+        # getting all section items (even not published)
+        section_items = section_object.section_items
+    section_template = "sections/section_scorm.html"
+
+    return section_items, section_template
+
+
 def render_section_based_on_type(
     allow_submission,
     allow_submission_list,
@@ -217,17 +226,19 @@ def render_section_based_on_type(
     section_object,
     start_date_reached,
 ):
-    if section_object.section_type == "Q":
+    section_template = None
+
+    if section_object.section_type == Section.SECTION_TYPE_QUIZ:
         section_items, section_template = render_section_quiz(
             section_items, section_object
         )
-    elif section_object.section_type == "D":
+    elif section_object.section_type == Section.SECTION_TYPE_DISCUSSION:
         section_items, section_template = render_section_discussion(section_items)
-    elif section_object.section_type == "V":
+    elif section_object.section_type == Section.SECTION_TYPE_VIDEO:
         section_items, section_template = render_section_video(
             is_instructor, section_items, section_object
         )
-    elif section_object.section_type == "U":
+    elif section_object.section_type == Section.SECTION_TYPE_UPLOAD:
         allow_submission, section_items, section_template = render_section_upload(
             allow_submission,
             allow_submission_list,
@@ -238,10 +249,21 @@ def render_section_based_on_type(
             start_date_reached,
         )
 
-    elif section_object.section_type == "C":
+    elif section_object.section_type == Section.SECTION_TYPE_CONTENT:
         section_items, section_template = render_section_content(
             section_items, section_object
         )
+
+    elif section_object.section_type == Section.SECTION_TYPE_SCORM:
+        section_items, section_template = render_section_scorm(
+            is_instructor, section_items, section_object
+        )
+
+    if not section_template:
+        raise Exception(
+            f"Section '{section_object}' of type '{section_object.section_type}' has no template defined."
+        )
+
     return allow_submission, section_items, section_template
 
 
