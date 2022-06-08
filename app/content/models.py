@@ -206,7 +206,9 @@ class ExternalObject(SectionItem):
                             )
                 else:
                     messages.error(
-                        request, _("Cannot extract zip file. Directory already exists.")
+                        request,
+                        _("Cannot extract zip file. Directory already exists."),
+                        extra_tags="error",
                     )
                     return
 
