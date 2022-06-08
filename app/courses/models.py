@@ -2,7 +2,6 @@ from core.models import CertificateTemplate
 from courses.support_methods import duplicate_course
 from model_utils.managers import InheritanceManager
 from model_utils.models import TimeStampedModel
-from scorm.models import ScormRegistration
 from tinymce.models import HTMLField
 
 from django.contrib.auth.models import User
@@ -746,6 +745,8 @@ class Status(TimeStampedModel):
             for item in section_items.all():
                 # get Scom Registration object
                 scorm_package = item.scormpackage
+                from scorm.models import ScormRegistration
+
                 try:
                     scorm_registration_object = scorm_package.scormregistration_set.get(
                         learner=self.learner
