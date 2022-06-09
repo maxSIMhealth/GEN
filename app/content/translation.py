@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import ContentItem, ImageFile, PdfFile
+from .models import ContentItem, ExternalObject, ImageFile, PdfFile
 
 
 @register(ContentItem)
@@ -15,4 +15,9 @@ class ImageFileTranslationOptions(TranslationOptions):
 
 @register(PdfFile)
 class PdfFileTranslationOptions(TranslationOptions):
+    pass
+
+
+@register(ExternalObject)
+class ExternalObjectTranslationOptions(TranslationOptions):
     pass

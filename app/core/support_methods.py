@@ -80,9 +80,14 @@ def course_sections_list(course_object, user):
     return sections
 
 
-def user_directory_path(instance, filename):
+def user_directory_path(instance, filename, randomize_filename: bool = True):
     ext = filename.split(".")[-1]
-    random_filename = str(uuid.uuid4().hex)
-    filename = "%s.%s" % (random_filename, ext)
+    if randomize_filename:
+        random_filename = str(uuid.uuid4().hex)
+        filename = "%s.%s" % (random_filename, ext)
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return "user_{0}/{1}".format(instance.author.id, filename)
+
+
+def user_directory_path_not_random(instance, filename):
+    return user_directory_path(instance, filename, randomize_filename=False)

@@ -1,5 +1,6 @@
 from courses.models import SectionItem
 from model_utils.models import TimeStampedModel
+from sortedm2m.fields import SortedManyToManyField
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -49,6 +50,15 @@ class Game(SectionItem):
         ("TB", _("Text boxes")),
     ]
     type = models.CharField(_("game type"), max_length=2, choices=GAME_TYPES)
+    shuffle = models.BooleanField(
+        default=False, help_text=_("Defines if the source items should be shuffled.")
+    )
+    show_numbers = models.BooleanField(
+        default=True,
+        help_text=_(
+            "*ONLY FOR 'COMPLETE THE TEXT BOXES' GAME*: Defines if the answer items should be numbered."
+        ),
+    )
 
     def save(self, *args, **kwargs):
         self.item_type = SectionItem.SECTION_ITEM_GAME
@@ -132,12 +142,15 @@ class TextBoxesTerm(TextItem):
 class TextBoxesItem(TextItem):
     text = models.TextField(
         _("text"),
-        max_length=400,
+        max_length=500,
         unique=False,
-        help_text=_("Item text description (max 400 characters)"),
+        help_text=_("Item text description (max 500 characters)"),
     )
-    correct_term = models.ForeignKey(
-        TextBoxesTerm, on_delete=models.PROTECT, blank=True, null=True
+    correct_terms = SortedManyToManyField(
+        TextBoxesTerm,
+        related_name="correct_term_items",
+        verbose_name="correct term items",
+        help_text=_("List of correct terms."),
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False

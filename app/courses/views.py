@@ -12,6 +12,7 @@ from reportlab.lib.pagesizes import landscape, letter
 from reportlab.pdfgen import canvas
 from werkzeug.utils import secure_filename
 
+import GEN.settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
@@ -110,14 +111,16 @@ def course(request, pk):
 
 
 def render_section_content(section_items, section_object):
+    from courses.models import SectionItem
+
     section_template = "sections/section_content.html"
     section_items = SectionItem.objects.filter(section=section_object, published=True)
     for item in section_items:
-        if hasattr(item, "videofile"):
+        if item.item_type == SectionItem.SECTION_ITEM_VIDEO:
             item.type = "Video"
-        elif hasattr(item, "contentitem"):
+        elif item.item_type == SectionItem.SECTION_ITEM_CONTENT:
             item.type = "Content"
-        elif hasattr(item, "game"):
+        elif item.item_type == SectionItem.SECTION_ITEM_GAME:
             item.type = "Game"
             if item.game.type == "MC":
                 # get 'move to column' game elements
@@ -134,12 +137,15 @@ def render_section_content(section_items, section_object):
                 )
             elif item.game.type == "TB":
                 # 'text boxes' game
+                item.game.info_json = serialize("json", [item.game])
                 item.game.terms = serialize("json", item.game.textboxesterm_set.all())
                 item.game.items = serialize("json", item.game.textboxesitem_set.all())
             elif item.game.type == "MT":
                 # 'match terms' game
                 item.game.terms = serialize("json", item.game.textboxesterm_set.all())
                 item.game.items = serialize("json", item.game.textboxesitem_set.all())
+        elif item.item_type == SectionItem.SECTION_ITEM_ZIP:
+            item.type = "Zip"
         else:
             item.type = None
     return section_items, section_template
@@ -201,6 +207,15 @@ def render_section_quiz(section_items, section_object):
     return section_items, section_template
 
 
+def render_section_scorm(is_instructor, section_items, section_object):
+    if is_instructor:
+        # getting all section items (even not published)
+        section_items = section_object.section_items
+    section_template = "sections/section_scorm.html"
+
+    return section_items, section_template
+
+
 def render_section_based_on_type(
     allow_submission,
     allow_submission_list,
@@ -211,17 +226,19 @@ def render_section_based_on_type(
     section_object,
     start_date_reached,
 ):
-    if section_object.section_type == "Q":
+    section_template = None
+
+    if section_object.section_type == Section.SECTION_TYPE_QUIZ:
         section_items, section_template = render_section_quiz(
             section_items, section_object
         )
-    elif section_object.section_type == "D":
+    elif section_object.section_type == Section.SECTION_TYPE_DISCUSSION:
         section_items, section_template = render_section_discussion(section_items)
-    elif section_object.section_type == "V":
+    elif section_object.section_type == Section.SECTION_TYPE_VIDEO:
         section_items, section_template = render_section_video(
             is_instructor, section_items, section_object
         )
-    elif section_object.section_type == "U":
+    elif section_object.section_type == Section.SECTION_TYPE_UPLOAD:
         allow_submission, section_items, section_template = render_section_upload(
             allow_submission,
             allow_submission_list,
@@ -232,10 +249,21 @@ def render_section_based_on_type(
             start_date_reached,
         )
 
-    elif section_object.section_type == "C":
+    elif section_object.section_type == Section.SECTION_TYPE_CONTENT:
         section_items, section_template = render_section_content(
             section_items, section_object
         )
+
+    elif section_object.section_type == Section.SECTION_TYPE_SCORM:
+        section_items, section_template = render_section_scorm(
+            is_instructor, section_items, section_object
+        )
+
+    if not section_template:
+        raise Exception(
+            f"Section '{section_object}' of type '{section_object.section_type}' has no template defined."
+        )
+
     return allow_submission, section_items, section_template
 
 
@@ -335,6 +363,7 @@ def check_completion_status_and_display_messages(
 @check_permission("section")
 @check_requirement()
 def section_page(request, pk, section_pk):
+    debug = GEN.settings.DEBUG
     user = request.user
     course_object = get_object_or_404(Course, pk=pk)
     course_type = course_object.type_name()
@@ -415,6 +444,7 @@ def section_page(request, pk, section_pk):
             "gamification": gamification,
             "allow_submission": allow_submission,
             "message_congratulations": message_congratulations,
+            "debug": debug,
         },
     )
 
