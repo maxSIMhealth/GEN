@@ -38,7 +38,7 @@
         },
         computed: {
             correct_answers: function () {
-                return this.items.map(item => item.fields.correct_term)
+                return this.items.map(item => item.fields.correct_terms[0])
             }
         },
         methods: {

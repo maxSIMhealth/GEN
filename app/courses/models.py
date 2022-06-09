@@ -253,12 +253,20 @@ class Course(TimeStampedModel):
 
 
 class Section(TimeStampedModel):
+    SECTION_TYPE_DISCUSSION = "D"
+    SECTION_TYPE_VIDEO = "V"
+    SECTION_TYPE_QUIZ = "Q"
+    SECTION_TYPE_UPLOAD = "U"
+    SECTION_TYPE_CONTENT = "C"
+    SECTION_TYPE_SCORM = "S"
+
     SECTION_TYPES = [
-        ("D", _("Discussion boards")),
-        ("V", _("Videos")),
-        ("Q", _("Quizzes")),
-        ("U", _("Uploads")),
-        ("C", _("Content")),
+        (SECTION_TYPE_DISCUSSION, _("Discussion boards")),
+        (SECTION_TYPE_VIDEO, _("Videos")),
+        (SECTION_TYPE_QUIZ, _("Quizzes")),
+        (SECTION_TYPE_UPLOAD, _("Uploads")),
+        (SECTION_TYPE_CONTENT, _("Content")),
+        (SECTION_TYPE_SCORM, _("SCORM")),
     ]
 
     name = models.CharField(
@@ -599,6 +607,8 @@ class SectionItem(TimeStampedModel):
     SECTION_ITEM_GAME = "GAM"
     SECTION_ITEM_QUIZ = "QUZ"
     SECTION_ITEM_VIDEO = "VID"
+    SECTION_ITEM_ZIP = "ZIP"
+    SECTION_ITEM_SCORM = "SCO"
 
     SECTION_ITEM_TYPES = [
         (SECTION_ITEM_CONTENT, _("Content")),
@@ -608,6 +618,8 @@ class SectionItem(TimeStampedModel):
         (SECTION_ITEM_QUIZ, _("Quiz")),
         (SECTION_ITEM_VIDEO, _("Video")),
         (SECTION_ITEM_PDF, _("PDF")),
+        (SECTION_ITEM_ZIP, _("Zip file")),
+        (SECTION_ITEM_SCORM, _("SCORM")),
     ]
 
     name = models.CharField(_("name"), max_length=120, unique=False)
@@ -713,3 +725,49 @@ class Status(TimeStampedModel):
             output = output + f" - Section {self.section} - User {self.learner}"
 
         return output
+
+    def update(self):
+        # array for storing items completion status
+        items_completed = []
+
+        if self.section.section_type == Section.SECTION_TYPE_SCORM:
+            from scorm.models import ScormPackage
+
+            # get only scorm package items and which are set as published
+            section_items = ScormPackage.objects.filter(
+                section=self.section, published=True
+            )
+
+            # scorm_package_items = published_items.get(section__in=[x.section.pk for x in
+            #                                  ScormPackage.objects.filter(
+            #                                      section__isnull=False)])
+
+            for item in section_items.all():
+                # get Scom Registration object
+                scorm_package = item.scormpackage
+                from scorm.models import ScormRegistration
+
+                try:
+                    scorm_registration_object = scorm_package.scormregistration_set.get(
+                        learner=self.learner
+                    )
+                except ScormRegistration.DoesNotExist:
+                    scorm_registration_object = None
+
+                # update learner's section status based on Scorm Registration data
+                if scorm_registration_object:
+                    if scorm_registration_object.activity_completion == "COMPLETED":
+                        items_completed.append(True)
+                    else:
+                        items_completed.append(False)
+                else:
+                    items_completed.append(False)
+
+        # set section status as completed only if ALL items have been completed
+        if all(items_completed):
+            self.completed = True
+        else:
+            self.completed = False
+
+        # save updated 'completed' field value
+        self.save(update_fields=["completed"])

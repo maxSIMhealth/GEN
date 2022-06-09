@@ -58,6 +58,7 @@ urlpatterns += i18n_patterns(
     path("", include("videos.urls")),
     path("", include("quiz.urls")),
     path("", include("discussions.urls")),
+    path("", include("scorm.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     prefix_default_language=False
     # admin

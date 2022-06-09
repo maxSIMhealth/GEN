@@ -1,0 +1,33 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block submit_buttons_bottom %}
+  <fieldset class="module aligned">
+    <h2>{% translate "ScormCloud Actions" %}</h2>
+    {% if add %}
+      <div class="form-row">
+        {% translate "These actions will be enabled after saving or when you are editing an existing SCORM registration." %}
+      </div>
+    {% endif %}
+{#    <div class="form-row">#}
+{#      <label>{% translate "Enroll leaners" %}</label>#}
+{#      <div>#}
+{#        <input type="submit" value="Enroll learners" name="_enroll_learners" {% if add %}disabled{% endif %}>#}
+{#        <div class="help">#}
+{#          {% translate "Enroll all learners currently members of"  %}#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <div class="form-row">
+      <label>{% translate "Sync with ScormCloud" %}</label>
+      <div>
+        <input type="submit" value="Sync with ScormCloud" name="_sync_with_storm_cloud" {% if add %}disabled{% endif %}>
+        <div class="help">
+          {% translate "Pulls the latest registration data from ScormCloud." %}
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  {{ block.super }}
+{% endblock %}
