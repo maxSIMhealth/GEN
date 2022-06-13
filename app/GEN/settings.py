@@ -80,7 +80,7 @@ INSTALLED_APPS = [
     "django_tables2",
     "sortedm2m",
     "rest_framework",
-    "rest_framework_authtoken",
+    "rest_framework.authtoken",
     "core",
     "accounts",
     "courses",
