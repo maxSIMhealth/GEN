@@ -7,7 +7,9 @@ from .views import (
     CourseListApiView,
     SectionDetailApiView,
     SectionItemDetailApiView,
+    UploadVideoApiView,
     UserRecordView,
+    UsersRecordView,
 )
 
 app_name = "api"
@@ -22,7 +24,8 @@ router = routers.DefaultRouter(trailing_slash=False)
 urlpatterns = [
     # path("api/user/", UserRecordView.as_view(), name="user-record"),
     path("", include(router.urls)),
-    path("user/", UserRecordView.as_view(), name="users"),
+    path("profile/", UserRecordView.as_view(), name="profile"),
+    path("users/", UsersRecordView.as_view(), name="users"),
     path("courses/", CourseListApiView.as_view(), name="course-list"),
     path("courses/<int:pk>/", CourseDetailApiView.as_view(), name="course-detail"),
     path(
@@ -34,5 +37,10 @@ urlpatterns = [
         "courses/<int:course_pk>/section/<int:section_pk>/item/<int:pk>/",
         SectionItemDetailApiView.as_view(),
         name="section-item-detail",
+    ),
+    path(
+        "courses/<int:course_pk>/section/<int:section_pk>/upload/",
+        UploadVideoApiView.as_view(),
+        name="upload-video",
     ),
 ]

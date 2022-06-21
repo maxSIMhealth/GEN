@@ -21,13 +21,35 @@ from .models import Course, Section, SectionItem
 
 
 class VideoFileSerializer(serializers.ModelSerializer):
+    # author_id = serializers.StringRelatedField(
+    #     default=serializers.CurrentUserDefault(),
+    #     read_only=True
+    # )
+
     class Meta:
         model = VideoFile
         fields = [
-            # "published",
+            # "author",
+            # "course",
+            # "section",
+            "name",
+            "published",
             "file",
             "thumbnail",
         ]
+        read_only_fields = [
+            "name",
+            "published",
+            "thumbnail",
+        ]
+
+    # def validate(self, attrs):
+    #     author = attrs.get("author")
+    #     if author != self.request.user:
+
+    # def validate_author(self, value):
+    #     if value != self.request.user:
+    #         raise serializers.ValidationError("Author must be the current user.")
 
 
 class SectionItemSerializer(serializers.ModelSerializer):
@@ -76,11 +98,25 @@ class SectionSerializer(serializers.ModelSerializer):
 
 
 class SectionDetailSerializer(serializers.ModelSerializer):
-    items = SectionItemSerializer(many=True, read_only=True, source="section_items")
+    # items = SectionItemSerializer(many=True, read_only=True, source="section_items")
     type = serializers.SerializerMethodField("get_section_type")
+    items = serializers.SerializerMethodField("get_filtered_items")
+
+    def _user(self):
+        request = self.context["request"]
+        if request:
+            return request.user
 
     def get_section_type(self, item):
         return item.section_type
+
+    def get_filtered_items(self, item):
+        # filtering items queryset to show only items authored by the current user.
+        items_queryset = SectionItem.objects.filter(author=self._user())
+        serializer = SectionItemSerializer(
+            instance=items_queryset, many=True, context=self.context
+        )
+        return serializer.data
 
     class Meta:
         model = Section
