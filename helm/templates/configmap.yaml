@@ -12,7 +12,7 @@ data:
   DJANGO_LOGLEVEL: "info"
   DJANGO_DEBUG: "False"
   CSRF_COOKIE_DOMAIN: ".maxsimgen.com"
-  CSRF_TRUSTED_ORIGINS: ".maxsimgen.com"
+  CSRF_TRUSTED_ORIGINS: "https://*.maxsimgen.com"
   # Database
   POSTGRES_DB: "gen_www"
   DATABASE_SERVICE: "private-db-postgresql-tor1-98842-do-user-358345-0.b.db.ondigitalocean.com"
