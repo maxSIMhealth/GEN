@@ -54,7 +54,8 @@ class UploadVideoForm(forms.ModelForm):
                         "cancel",
                         _("Cancel"),
                         css_class="btn btn-secondary",
-                        onclick="window.location.href = window.history.go(-1); return false;",
+                        # onclick="window.location.href = window.history.go(-1); return false;",
+                        onclick="javascript:history.go(-1); return false;",
                     ),
                 ),
             )
