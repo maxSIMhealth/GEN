@@ -54,9 +54,15 @@ def filter_by_access_restriction(course_object, items, user):
     # show all sections if the user is a course instructor, superuser, or staff
     if user.is_superuser or user.is_staff:
         items_filtered = items.all()
+    elif is_editor and is_instructor:
+        items_filtered = items.filter(
+            Q(access_restriction=INSTRUCTORS)
+            | Q(access_restriction=EDITORS)
+            | Q(access_restriction=PUBLIC)
+        )
     elif is_editor:
         items_filtered = items.filter(
-            Q(access_restriction=PUBLIC) | Q(access_restriction=EDITORS)
+            Q(access_restriction=EDITORS) | Q(access_restriction=PUBLIC)
         )
     elif is_instructor:
         items_filtered = items.filter(
@@ -75,9 +81,9 @@ def filter_by_access_restriction(course_object, items, user):
 
 def course_sections_list(course_object, user):
     sections = course_object.sections.all()
-    sections = filter_by_access_restriction(course_object, sections, user)
+    filtered_sections = filter_by_access_restriction(course_object, sections, user)
 
-    return sections
+    return filtered_sections
 
 
 def user_directory_path(instance, filename, randomize_filename: bool = True):
