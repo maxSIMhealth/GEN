@@ -411,7 +411,6 @@ def section_page(request, pk, section_pk):
     is_instructor = check_is_instructor(course_object, user)
 
     # check if section has start and end dates
-
     end_date_passed, section_items, start_date_reached = check_section_dates(
         end_date_passed,
         is_instructor,
@@ -421,6 +420,7 @@ def section_page(request, pk, section_pk):
         start_date_reached,
     )
 
+    # set submission permission, items and template based on section type
     allow_submission, section_items, section_template = render_section_based_on_type(
         allow_submission,
         allow_submission_list,
