@@ -90,7 +90,7 @@
                             <p {% if question.question_type != 'H'%}class="mb-0"{% endif %}>{{ question.additional_content }}</p>
                         {% endif %}
                         {% if quiz.assessment_method and quiz.show_question_value %}
-                        (<em>{% translate "Value:" %} {{ question.value }}</em>)
+                        <em>({% translate "Value:" %} {{ question.value }})</em>
                         {% endif %}
                         {% if question.image %}
                             <img src="{{ question.image.file.url }}" class="img-fluid rounded mx-auto d-block" alt="{{ question.image.description }}" title="{{ question.image.description }}">
@@ -123,7 +123,9 @@
                                     {% for value in answer.scale_range|likert_range %}
                                         <div class="item">
                                             <input type="radio" name="likert_{{ question.id }}"
-                                                    id="likert_{{ question.id }}" value="{{ value }}">
+                                                   id="likert_{{ question.id }}" value="{{ value }}"
+                                                   {% if quiz.require_answers %} required {% endif %}
+                                            >
                                             <label for="likert_{{ question.id }}">{{ value }}</label>
                                         </div>
                                     {% endfor %}
