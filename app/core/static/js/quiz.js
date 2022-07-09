@@ -143,7 +143,7 @@ function showPagination(paginationItemNumber) {
 }
 
 function toggleCheckboxes(event, action) {
-  var parent = event.closest('ul');
+  var parent = event.closest('ol');
   var checkboxes = parent.querySelectorAll('input[type=checkbox]');
   //console.log(checkboxes);
   if (action == "on") {
