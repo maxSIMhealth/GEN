@@ -134,9 +134,9 @@ def publish_video(request, pk, section_pk, sectionitem_pk):
                 # if section has parameter 'clone_quiz' enabled, clone the reference
                 # quiz and set cloned quiz video parameter as the uploaded video
                 if section.clone_quiz:
-                    cloned_quiz = section.clone_quiz_reference.duplicate(
-                        field="video_id", value=video.pk
-                    )
+                    cloned_quiz = section.clone_quiz_reference.duplicate()
+                    # setting uploaded video as the cloned quiz video
+                    cloned_quiz.video = video
                     # setting quiz parameters to the current course (since the reference probably has different values)
                     cloned_quiz.course = course
                     cloned_quiz.section = section.clone_quiz_output_section
