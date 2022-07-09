@@ -179,8 +179,7 @@
                                           disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
                             {% else %}
                                 <input type="text" class="form-control" name="openended_{{ question.id }}"
-                                       id="openended_{{ question.id }}" disabled value="
-                                        {% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}">
+                                       id="openended_{{ question.id }}" disabled value="{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}">
                             {% endif %}
                         {% endif %}
 
