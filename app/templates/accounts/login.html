@@ -7,95 +7,117 @@
 {% block title %}{% translate "Sign in to GEN" %}{% endblock title %}
 
 {% block content %}
-    <div class="card" id="login-card">
-        <div class="card-header bg-light text-dark">
-            {% if messages %}
-                {% include 'partials/messages.html' %}
-            {% endif %}
-            <h3 class="m-0">{% translate "Log in to GEN" %}</h3>
-        </div>
-        <div class="card-group">
-            {% if not use_social_auth_only %}
-            <div class="card mb-0">
-                <div class="card-body bg-light text-dark">
-                    <form method="post" novalidate>
-                        {% csrf_token %}
-                        {% include 'partials/form.html' %}
-                        <button type="submit" class="btn btn-primary btn-block">{% translate "Log in" %}</button>
-                    </form>
-                </div>
-            </div>
-            {% endif %}
-            {% if use_social_auth %}
-            <div class="card mb-0">
-                <div class="card-body bg-light text-dark text-center">
-                    {% if not use_social_auth_only %}<p>{% translate "Or use:" %}</p>{% endif %}
-                    <a href="{% url "social:begin" "google-oauth2" %}">
-                        <img src="{% static 'img/btn_google_signin_dark_normal_web@2x.png' %}" alt="{% translate "Sign in with Google button" %}" id="login-btn-google">
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-        <div class="login-alerts">
-            {% for alert_message in alert_messages %}
-                {% with type=alert_message.type %}
-                <div class="alert m-2 {% if type == "W" %} alert-warning {% elif type == "U" %} alert-danger {% elif type == "N" %} alert-primary {% endif %}">
-                    {{ alert_message.content|safe }}
-                    {% if alert_message.show_dates %}
-                        {% if alert_message.start_date %}
-                            <p><small>{% translate "Posted on:" %} {{ alert_message.start_date }}</small></p>
-                        {% endif %}
-                        {% if alert_message.end_date %}
-                            <p><small>{% translate "Expires on:" %} {{ alert_message.end_date }}</small></p>
-                        {% endif %}
-                    {% endif %}
-                </div>
-                {% endwith %}
-            {% endfor %}
-
-            <div class="alert alert-info m-2">
-                {% translate "If you have problems logging into GEN, please contact us at" %}
-                {% support_emails %}
-            </div>
-        </div>
+  <div class="card" id="login-card">
+    <div class="card-header bg-light text-dark">
+      {% if messages %}
+        {% include 'partials/messages.html' %}
+      {% endif %}
+      <h3 class="m-0">{% translate "Log in to GEN" %}</h3>
     </div>
+    <div class="card-group">
+      {% if not use_social_auth_only %}
+        <div class="card mb-0">
+          <div class="card-body bg-light text-dark">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {% include 'partials/form.html' %}
+              <button type="submit" class="btn btn-primary btn-block">{% translate "Log in" %}</button>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+      {% if use_social_auth %}
+        <div class="card mb-0">
+          <div class="card-body bg-light text-dark text-center mb-0 pb-0">
+            {% if use_social_auth_only %}
+              <p>{% translate "Please use your work or school account:" %}</p>
+            {% else %}
+              <p>{% translate "Or use your work or school account:" %}</p>
+            {% endif %}
+            <div id="signin-buttons">
+              {% if "google" in social_auth_providers %}
+                <div class="mb-3">
+                  <a href="{% url "social:begin" "google-oauth2" %}">
+                    <img src="{% static 'img/btn_google_signin_dark_normal_web@2x.png' %}"
+                         alt="{% translate "Sign in with Google button" %}" id="login-btn-google">
+                  </a>
+                </div>
+              {% endif %}
+              {% if "azuread" in social_auth_providers %}
+                <div class="mb-3">
+                  <a href="{% url "social:begin" "azuread-oauth2" %}">
+                    <img src="{% static 'img/ms-symbollockup_signin_dark.svg' %}"
+                         alt="{% translate "Sign in with Microsoft button" %}" id="login-btn-azure">
+                  </a>
+                </div>
+              {% endif %}
 
-    {% if not use_social_auth_only %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="login-alerts">
+      {% for alert_message in alert_messages %}
+        {% with type=alert_message.type %}
+          <div
+            class="alert m-2 {% if type == "W" %} alert-warning {% elif type == "U" %} alert-danger {% elif type == "N" %} alert-primary {% endif %}">
+            {{ alert_message.content|safe }}
+            {% if alert_message.show_dates %}
+              {% if alert_message.start_date %}
+                <p><small>{% translate "Posted on:" %} {{ alert_message.start_date }}</small></p>
+              {% endif %}
+              {% if alert_message.end_date %}
+                <p><small>{% translate "Expires on:" %} {{ alert_message.end_date }}</small></p>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endwith %}
+      {% endfor %}
+
+      <div class="alert alert-info m-2">
+        {% translate "If you have problems logging into GEN, please contact us at" %}
+        {% support_emails %}
+      </div>
+    </div>
+  </div>
+
+  {% if not use_social_auth_only %}
     <div class="text-center bg-dark text-white py-2">
-        <a href="{% url 'signup' %}" class="text-light">{% translate "New to GEN? Sign up" %}</a> | <a href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
+      <a href="{% url 'signup' %}" class="text-light">{% translate "New to GEN? Sign up" %}</a> | <a
+      href="{% url 'password_reset' %}" class="text-light">{% trans "Forgot your password?" %}</a>
     </div>
-    {% endif %}
+  {% endif %}
 {% endblock content %}
 
 {% block footer %}
-    <div class="footer mb-2">
-        <div class="text-center pt-2 pb-2 text-light">
-            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="form-select form-select-sm"
-                        aria-label="{% trans "List of languages" %}">
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local|capfirst }} ({{ language.code }})
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Go" class="btn btn-primary btn-sm">
-            </form>
-        </div>
-        <div class="text-center text-light">
-            <div class="text-center">
-                <a href="http://www.ontariotechu.ca"><img
-                        src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}"
-                        alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
-                <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo_white.png' %}"
-                                                           alt="{% trans 'maxSIMhealth logo' %}" width="200px"></a>
-                <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario
-                    Tech University</u></a> - <u><a href="http://www.maxsimhealth.com"
-                                                    class="text-light">maxSIMhealth</a></u></p>
-                <p>GEN - Gamified Educational Network (2022)</p>
-            </div>
-        </div>
+  <div class="footer mb-2">
+    <div class="text-center pt-2 pb-2 text-light">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <label for="language">{% trans "Language:" %}</label>
+        <select name="language" id="language" class="form-select form-select-sm"
+                aria-label="{% trans "List of languages" %}">
+          {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+              {{ language.name_local|capfirst }} ({{ language.code }})
+            </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Go" class="btn btn-primary btn-sm">
+      </form>
     </div>
+    <div class="text-center text-light">
+      <div class="text-center">
+        <a href="http://www.ontariotechu.ca"><img
+          src="{% static 'img/OntarioTechUniversity_Primary_Colour_RGB_DK_Bkgnd_150ppi.png' %}"
+          alt="{% trans 'Ontario Tech University colour logo in a dark background' %}" width="200px"></a>
+        <a href="http://www.maxsimhealth.com"><img src="{% static 'img/maxSIMhealth_Logo_white.png' %}"
+                                                   alt="{% trans 'maxSIMhealth logo' %}" width="200px"></a>
+        <p class="mb-0">{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario
+          Tech University</u></a> - <u><a href="http://www.maxsimhealth.com"
+                                          class="text-light">maxSIMhealth</a></u></p>
+        <p>GEN - Gamified Educational Network (2022)</p>
+      </div>
+    </div>
+  </div>
 {% endblock footer %}

@@ -51,11 +51,13 @@ class Login(LoginView):
 
     use_social_auth = django_settings.USE_SOCIAL_AUTH
     use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
+    social_auth_providers = django_settings.SOCIAL_AUTH_PROVIDERS
 
     extra_context = {
         "support_emails": django_settings.SUPPORT_EMAILS,
         "use_social_auth": use_social_auth,
         "use_social_auth_only": use_social_auth_only,
+        "social_auth_providers": social_auth_providers,
     }
 
     def get(self, request, *args, **kwargs):
@@ -186,18 +188,29 @@ class UserUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
         user = self.request.user
+        social_auth_providers = django_settings.SOCIAL_AUTH_PROVIDERS
+
+        # Social Auth: Google
         try:
             google_login = user.social_auth.get(provider="google-oauth2")
         except UserSocialAuth.DoesNotExist:
             google_login = None
 
+        # Social Auth: Azure AD (Microsoft)
+        try:
+            azure_login = user.social_auth.get(provider="azuread-oauth2")
+        except UserSocialAuth.DoesNotExist:
+            azure_login = None
+
         can_disconnect = user.social_auth.count() > 1 or user.has_usable_password()
         use_social_auth = django_settings.USE_SOCIAL_AUTH
         use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
         context["google_login"] = google_login
+        context["azure_login"] = azure_login
         context["can_disconnect"] = can_disconnect
         context["use_social_auth"] = use_social_auth
         context["use_social_auth_only"] = use_social_auth_only
+        context["social_auth_providers"] = social_auth_providers
 
         return context
 

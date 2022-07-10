@@ -34,4 +34,8 @@ data:
   USE_SOCIAL_AUTH: "True"
   USE_SOCIAL_AUTH_ONLY: "False"
   USE_SOCIAL_AUTH_WHITELIST: "False"
+  # NOTE: if Social Authentication is enabled, at least ONE provider should be listed.
+  # Possible values: google, azuread (microsoft)
+  SOCIAL_AUTH_PROVIDERS: "google,azuread"
   SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS: ""
+  SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS: ""

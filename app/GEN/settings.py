@@ -155,6 +155,7 @@ AUTHENTICATION_BACKENDS = (
     # "social_core.backends.facebook.FacebookOAuth2",
     # "social_core.backends.google.GoogleOpenId",
     "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.azuread.AzureADOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -418,6 +419,7 @@ logging.config.dictConfig(
 # https://python-social-auth.readthedocs.io/en/latest/pipeline.html
 USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
 USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
+SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/settings/"
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "home"
@@ -430,11 +432,16 @@ SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ["username", "first_name", "email"]
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
+SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_AZUREAD_OAUTH2_KEY")
+SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET")
 
 USE_SOCIAL_AUTH_WHITELIST = os.getenv("USE_SOCIAL_AUTH_WHITELIST", "False") == "True"
 if USE_SOCIAL_AUTH_WHITELIST:
     SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = os.getenv(
         "SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS"
+    ).split(",")
+    SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS = os.getenv(
+        "SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS"
     ).split(",")
 
 SOCIAL_AUTH_PIPELINE = (
