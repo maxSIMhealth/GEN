@@ -3,9 +3,11 @@ from accounts import views as account_views
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.urls import include, path, re_path
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path("login/", account_views.Login.as_view(), name="login"),
+    path("", account_views.Login.as_view(), name="login"),
+    path("login/", RedirectView.as_view(url="/"), name="login-redirect"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
 ]
