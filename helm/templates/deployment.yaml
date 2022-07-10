@@ -82,6 +82,16 @@ spec:
               secretKeyRef:
                 name: gen-secrets
                 key: SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+          - name: SOCIAL_AUTH_AZUREAD_OAUTH2_KEY
+            valueFrom:
+              secretKeyRef:
+                name: gen-secrets
+                key: SOCIAL_AUTH_AZUREAD_OAUTH2_KEY
+          - name: SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: gen-secrets
+                key: SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET
           - name: SENDGRID_API_KEY
             valueFrom:
               secretKeyRef:
