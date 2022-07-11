@@ -21,8 +21,10 @@ data:
   # S3 storage
   USE_S3: "True"
   GEN_INSTANCE_NAME: "gen-www"
-  STATIC_ENDPOINT_URL: "https://nyc3.digitaloceanspaces.com"
-  STATIC_BUCKET_NAME: "gen-data"
+  AWS_S3_ENDPOINT_URL: "https://s3.ca-central-1.amazonaws.com"
+  AWS_S3_REGION_NAME: "ca-central-1"
+  AWS_S3_SIGNATURE_VERSION: "s3v4"
+  AWS_STORAGE_BUCKET_NAME: "gen-data"
   # Email
   DJANGO_ADMIN_EMAIL: "admin@maxsimgen.com"
   SERVER_EMAIL: "system@maxsimgen.com"

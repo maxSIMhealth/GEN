@@ -13,6 +13,7 @@ from django.core.files.storage import get_storage_class
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from GEN import settings as django_settings
+from GEN.storage_backends import PrivateMediaStorage
 from GEN.support_methods import duplicate_object
 
 from .support_methods import crop_image, read_frame_as_jpeg
@@ -61,6 +62,7 @@ class VideoFile(SectionItem):
     file = models.FileField(
         _("file"),
         upload_to=user_directory_path,
+        storage=PrivateMediaStorage(),
         # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
         validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
     )
@@ -114,7 +116,7 @@ class VideoFile(SectionItem):
 
             if django_settings.USE_S3:
                 # get video full S3 url path
-                video_url = media_storage.url(name=video.file.name)
+                video_url = video.file.url
             else:
                 # get video full local path
                 video_url = video.file.path
