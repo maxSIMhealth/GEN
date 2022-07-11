@@ -239,11 +239,13 @@ USE_S3 = os.getenv("USE_S3") == "True"
 if USE_S3:
     # Moving static assets to DigitalOcean Spaces as per:
     # https://www.digitalocean.com/community/tutorials/how-to-set-up-object-storage-with-django
-    AWS_ACCESS_KEY_ID = os.getenv("STATIC_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("STATIC_SECRET_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("STATIC_BUCKET_NAME")
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
     AWS_DEFAULT_ACL = "public-read"
-    AWS_S3_ENDPOINT_URL = os.getenv("STATIC_ENDPOINT_URL")
+    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+    AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION")
     AWS_S3_OBJECT_PARAMETERS = {
         "CacheControl": "max-age=86400",
     }

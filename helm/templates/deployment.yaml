@@ -52,16 +52,16 @@ spec:
               secretKeyRef:
                 name: gen-secrets
                 key: POSTGRES_PASSWORD
-          - name: STATIC_ACCESS_KEY_ID
+          - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
                 name: gen-secrets
-                key: STATIC_ACCESS_KEY_ID
-          - name: STATIC_SECRET_KEY
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: gen-secrets
-                key: STATIC_SECRET_KEY
+                key: AWS_SECRET_ACCESS_KEY
           - name: SOCIAL_AUTH_GITHUB_KEY
             valueFrom:
               secretKeyRef:
