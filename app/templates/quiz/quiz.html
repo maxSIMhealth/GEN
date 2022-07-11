@@ -104,7 +104,11 @@
                                         <input type="{{ question.multiple_correct_answers|yesno:'checkbox,radio' }}"
                                                 class="form-check-input me-1"
                                                 name="mcquestion_{{ question.pk }}" id="{{ choice.pk }}"
-                                                value="{{ choice.pk }}"> {{ choice.content }}
+                                                value="{{ choice.pk }}"
+                                                {% if not question.multiple_correct_answers and quiz.require_answers %}
+                                                required
+                                                {% endif %}
+                                        > {{ choice.content }}
                                     </label>
                                 </li>
                             {% endfor %}
