@@ -69,6 +69,7 @@ class VideoFile(SectionItem):
     subtitle = models.FileField(
         _("subtitle"),
         upload_to=user_directory_path,
+        storage=PrivateMediaStorage(),
         blank=True,
         null=True,
         validators=[
@@ -87,7 +88,11 @@ class VideoFile(SectionItem):
         help_text=_("Video internal name (not visible to users)."),
     )
     thumbnail = models.ImageField(
-        _("thumbnail"), upload_to=user_directory_path, blank=True, null=True
+        _("thumbnail"),
+        upload_to=user_directory_path,
+        storage=PrivateMediaStorage(),
+        blank=True,
+        null=True,
     )
     # discussion = models.ForeignKey(
     #     Discussion, on_delete=models.CASCADE, related_name='video')
