@@ -1,6 +1,6 @@
 # GEN - Gamified Educational Network
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/maxsimhealth/gen/tree/0.7.1)
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/maxsimhealth/gen/tree/master)
 
 GEN is a virtual learning management system that relies on principles of active observational practice, sharing of videos, and peer-to-peer, expert facilitated feedback.
 
