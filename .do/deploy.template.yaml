@@ -89,6 +89,7 @@ spec:
     - key: DJANGO_SECRET_KEY
       scope: RUN_AND_BUILD_TIME
       type: SECRET
+      value: "placeholder-django-secret"
     - key: AWS_ACCESS_KEY_ID
       scope: RUN_TIME
       type: SECRET
