@@ -96,6 +96,7 @@ class CourseAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             "Certificate",
             {
                 "fields": (
+                    "provide_certificate",
                     "certificate_type",
                     "certificate_custom_term",
                     "certificate_template",
