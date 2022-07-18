@@ -13,7 +13,6 @@ from django.contrib import admin
 class CertificateTemplateAdmin(admin.ModelAdmin):
     list_display = ("name", "created", "modified")
     readonly_fields = ["created", "modified"]
-    filter_horizontal = ("logos",)
 
 
 class CertificateLogoFileAdmin(admin.ModelAdmin):

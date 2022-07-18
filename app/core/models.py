@@ -1,4 +1,5 @@
 from model_utils.models import TimeStampedModel
+from sortedm2m.fields import SortedManyToManyField
 from tinymce.models import HTMLField
 
 from django.db import models
@@ -37,7 +38,7 @@ class CertificateTemplate(TimeStampedModel):
             "Image to be displayed as the certificate frame/border (page size: Letter)."
         ),
     )
-    logos = models.ManyToManyField(
+    logos = SortedManyToManyField(
         CertificateLogoFile,
         blank=True,
         help_text=_(
