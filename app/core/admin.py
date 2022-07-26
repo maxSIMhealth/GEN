@@ -7,6 +7,8 @@ from core.models import (
     HelpFaq,
     LoginAlertMessage,
 )
+from import_export import resources
+from import_export.admin import ExportActionMixin, ImportExportMixin
 from modeltranslation.admin import TabbedTranslationAdmin
 
 from django.contrib import admin
@@ -45,10 +47,19 @@ class LoginAlertMessageAdmin(SortableAdminMixin, admin.ModelAdmin):
     readonly_fields = ["created", "modified"]
 
 
-class HelpFaqAdmin(SortableAdminMixin, TabbedTranslationAdmin):
+class HelpFaqResource(resources.ModelResource):
+    class Meta:
+        model = HelpFaq
+        fields = ("id", "question", "answer")
+
+
+class HelpFaqAdmin(
+    SortableAdminMixin, ImportExportMixin, ExportActionMixin, TabbedTranslationAdmin
+):
     list_display = ("question", "answer")
     exclude = ["custom_order"]
     readonly_fields = ["created", "modified"]
+    resource_class = HelpFaqResource
 
 
 admin.site.register(CertificateTemplate, CertificateTemplateAdmin)
