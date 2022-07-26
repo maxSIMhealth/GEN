@@ -2,6 +2,7 @@
 
 {% load gravatar %}
 {% load i18n %}
+{% load sri %}
 
 {% block title %}{% trans "My account" %}{% endblock %}
 
@@ -23,7 +24,7 @@
 
   <div class="card-group">
     {% if use_social_auth %}
-      <div class="card">
+      <div class="card" id="social_accounts">
         <div class="card-header bg-light fs-5">{% trans "Social accounts" %}</div>
         <div class="card-body">
           {% if "google" in social_auth_providers %}
@@ -101,7 +102,7 @@
         </div>
       </div>
     {% endif %}
-    <div class="card">
+    <div class="card" id="profile">
       <div class="card-header bg-light fs-5">{% trans "Profile" %}</div>
       <div class="card-body">
         <div class="row justify-content-md-center">
@@ -142,3 +143,7 @@
     </div>
   </div>
 {% endblock %}
+
+{% block javascript_bottom %}
+    {% sri_static "js/help-guide-account.js" %}
+{% endblock javascript_bottom %}

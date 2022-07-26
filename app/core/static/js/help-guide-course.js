@@ -125,7 +125,7 @@ const steps = [
   },
   {
     title: gettext('Getting support'),
-    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide, bye.'),
+    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide.'),
     buttons: [
       {
         action: function() {

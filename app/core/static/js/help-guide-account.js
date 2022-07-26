@@ -76,10 +76,10 @@ const steps = [
     id: 'course-name'
   },
   {
-    title: gettext('Courses'),
-    text: gettext('Here are listed the courses/modules in which you are currently enrolled.'),
+    title: gettext('Social Accounts'),
+    text: gettext('Here are listed the social accounts supported by GEN and that can be connected into your GEN account. You can connect and disconnect you GEN account to these social accounts at any moment.'),
     attachTo: {
-      element: '#courses',
+      element: '#social_accounts',
       on: 'auto'
     },
     buttons: [
@@ -97,11 +97,35 @@ const steps = [
         text: btn_next_text
       }
     ],
-    id: 'navbar-sections'
+    id: 'social-accounts'
+  },
+    {
+    id: 'profile',
+    title: gettext('Profile'),
+    text: gettext('On this area you can see your username, email address, first name, last name, and your avatar (which is generated automatically). Note that you can only modify your first and last names. If you need to update any other information, please contact support by email.'),
+    attachTo: {
+      element: '#profile',
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: btn_prev_text
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: btn_next_text
+      }
+    ],
   },
   {
     title: gettext('Getting support'),
-    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide`.'),
+    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide.'),
     buttons: [
       {
         action: function() {
