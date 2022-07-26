@@ -157,3 +157,23 @@ class LoginAlertMessage(TimeStampedModel):
                 self.archived = True
 
         self.save()
+
+
+class HelpFaq(TimeStampedModel):
+    question = models.CharField(
+        _("question"),
+        max_length=255,
+        help_text=_("Question for the Help FAQ (max 255 characters)"),
+    )
+    answer = HTMLField(
+        help_text=_("Answer for the Help FAQ question."),
+    )
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
+
+    class Meta:
+        ordering = ["custom_order"]
+
+    def __str__(self):
+        return f"ID {self.pk} - {self.question}"
