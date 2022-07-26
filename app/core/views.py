@@ -1,9 +1,11 @@
+from core.models import HelpFaq
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
 # FIXME: this is a DEBUG ONLY function
 from django.utils.decorators import method_decorator
-from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 
 
 @login_required
@@ -34,8 +36,9 @@ def reset(request):
 
 
 @method_decorator(login_required, name="dispatch")
-class HelpPageView(TemplateView):
+class HelpPageView(ListView):
 
+    model = HelpFaq
     template_name = "help/help.html"
 
     def get_context_data(self, **kwargs):

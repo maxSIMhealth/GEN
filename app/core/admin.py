@@ -4,8 +4,10 @@ from core.models import (
     CertificateLogoFile,
     CertificateTemplate,
     FooterLogoFile,
+    HelpFaq,
     LoginAlertMessage,
 )
+from modeltranslation.admin import TabbedTranslationAdmin
 
 from django.contrib import admin
 
@@ -43,8 +45,15 @@ class LoginAlertMessageAdmin(SortableAdminMixin, admin.ModelAdmin):
     readonly_fields = ["created", "modified"]
 
 
+class HelpFaqAdmin(SortableAdminMixin, TabbedTranslationAdmin):
+    list_display = ("question", "answer")
+    exclude = ["custom_order"]
+    readonly_fields = ["created", "modified"]
+
+
 admin.site.register(CertificateTemplate, CertificateTemplateAdmin)
 admin.site.register(CertificateLogoFile, CertificateLogoFileAdmin)
 admin.site.register(CertificateFrameFile, CertificateFrameFileAdmin)
 admin.site.register(FooterLogoFile, FooterLogoFileAdmin)
 admin.site.register(LoginAlertMessage, LoginAlertMessageAdmin)
+admin.site.register(HelpFaq, HelpFaqAdmin)
