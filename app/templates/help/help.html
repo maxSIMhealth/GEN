@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load sri %}
+{% load support_emails %}
+
+{% block title %}{% trans "Help and FAQ (Frequently Asked Questions)" %}{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'help' %}">{% trans "Help and FAQ" %}</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="card bg-dark mb-3" id="page-name">
+    <div class="card-header">
+      <div class="card-text text-white fs-5 p-0">{% trans "Help and FAQ (Frequently Asked Questions)" %}</div>
+    </div>
+  </div>
+
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingSix">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+          How can I reach out for support?
+        </button>
+      </h2>
+      <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p class="mb-0">
+            You can contact GEN's support by sending an email to {% support_emails %}.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne">
+          How do I navigate between sections?
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>If you are using a desktop computer or a laptop, a course/module sections list is visible on the left side of
+          the course main page. If the section is unlocked, you can click on it to access its contents. And if you are
+          using a mobile device, the section list is available at the top portion of the page, right under the
+          course/module name. You just need to tap on the <strong>Toggle</strong> button.</p>
+          <p>You can also navigate between sections by using the <strong>Previous section</strong> and <strong>Next section</strong>
+          buttons available at the end of the section content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo">
+          Why is a course/module locked?
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          Some course/modules might require you to complete another course/module before allowing you to access its
+          contents. The missing requirement should be listed right under course/module name.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                aria-expanded="false" aria-controls="collapseThree">
+          Why is a section locked?
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          Some sections might require you to complete a requirement before allowing you to access its contents. Please
+          check the section tooltip to check which requirement is missing.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          How do I get my certificate of completion?
+        </button>
+      </h2>
+      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>
+            If your course/module provides a certificate of completion, you should see a
+            <strong>Download certificate</strong> below the course/module description. If the button is visible but
+            greyed out it means that you have not completed the requirements necessary to mark the course/module as
+            completed and to be able to obtain the certificate.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFive">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Why is the 3D simulation game not working correctly?
+        </button>
+      </h2>
+      <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+           data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>
+            To get the best experience with the 3D simulation game we recommend that you use one of the following
+            browsers:
+          </p>
+          <ul>
+            <li><a href="https://www.google.com/chrome/">Google Chrome</a></li>
+            <li><a href="https://www.firefox.com">Mozilla Firefox</a></li>
+            <li><a href="https://www.microsoft.com/edge">Microsoft Edge</a></li>
+          </ul>
+          <p>
+            Please note that at this moment the 3D simulation games <u>does not</u> work with mobile devices.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript_bottom %}
+  {% sri_static "js/help-guide-help.js" %}
+{% endblock javascript_bottom %}

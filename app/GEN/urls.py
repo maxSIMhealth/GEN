@@ -51,10 +51,12 @@ urlpatterns += [
     path("api/", include("api.urls", namespace="api")),
 ]
 
+# GEN apps
 urlpatterns += i18n_patterns(
     path("", include("dashboard.urls")),
     path("", include("accounts.urls")),
     path("", include("courses.urls")),
+    path("", include("core.urls")),
     path("", include("videos.urls")),
     path("", include("quiz.urls")),
     path("", include("discussions.urls")),

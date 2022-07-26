@@ -52,6 +52,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#" onClick="tour.start();">{% trans "Tutorial" %}</a>
                     </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link active" href="{% url 'faq' %}">{% trans "FAQ" %}</a>#}
+{#                    </li>#}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'help' %}">{% trans "Help / FAQ" %}</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav">
                     {% if user.is_staff %}
