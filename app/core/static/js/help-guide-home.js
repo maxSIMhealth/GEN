@@ -76,6 +76,7 @@ const steps = [
     id: 'course-name'
   },
   {
+    id: 'navbar-sections',
     title: gettext('Courses'),
     text: gettext('Here are listed the courses/modules in which you are currently enrolled.'),
     attachTo: {
@@ -96,12 +97,35 @@ const steps = [
         },
         text: btn_next_text
       }
-    ],
-    id: 'navbar-sections'
+    ]
+  },
+    {
+    id: 'language-bar',
+    title: gettext('Language'),
+    text: gettext('And here you can choose which language you prefer using. You can change it at any moment.'),
+    attachTo: {
+      element: '#footer-language-selector',
+      on: 'auto'
+    },
+    buttons: [
+      {
+        action: function() {
+          return this.back();
+        },
+        secondary: true,
+        text: btn_prev_text
+      },
+      {
+        action: function() {
+          return this.next();
+        },
+        text: btn_next_text
+      }
+    ]
   },
   {
     title: gettext('Getting support'),
-    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide`.'),
+    text: gettext('If you need to get in touch in case of any questions or issues, please send an email to <a href="mailto:support@maxsimgen.com">support@maxsimgen.com</a>.<br><br>Thank you for using this guide.'),
     buttons: [
       {
         action: function() {
