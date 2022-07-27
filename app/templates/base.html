@@ -104,7 +104,7 @@
 {% block footer %}
 
     <div class="footer bg-light pb-2">
-        <div class="text-center pt-2 pb-2 language-selector">
+        <div class="text-center pt-2 pb-2 language-selector" id="footer-language-selector">
             <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <label for="language">{% trans "Language:" %}</label>
                 <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}">
