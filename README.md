@@ -1,13 +1,15 @@
 # GEN - Gamified Educational Network
 
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/maxsimhealth/gen/tree/master)
+[![Made with Django.](https://www.djangoproject.com/m/img/badges/djangomade124x25.gif)](http://www.djangoproject.com/)
 
 GEN is a virtual learning management system that relies on principles of active observational practice, sharing of videos, and peer-to-peer, expert facilitated feedback.
 
 For more information, check our pages at [www.maxsimgen.com](https://www.maxsimgen.com) and [maxSIMhealth](https://maxsimhealth.com/gen).
 
-# How to install
-Please check the [wiki](https://github.com/maxsimhealth/GEN/wiki).
+# Deployment
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/maxsimhealth/gen/tree/master)
+
+Please check the [wiki](https://github.com/maxsimhealth/GEN/wiki) for specific details.
 
 # Publications
 
