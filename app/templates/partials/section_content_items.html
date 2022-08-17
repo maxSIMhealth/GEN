@@ -13,13 +13,10 @@
   {% elif item.game.type == 'MT' %}
     {% include 'games/match_terms.html' with id=item.game.pk terms=item.game.terms items=item.game.items %}
   {% endif %}
-{% elif item.type == 'Content' %}
-  {% if item.contentitem.pdffile %}
-    {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
-  {% endif %}
-  {% if item.contentitem.content %}
-    <p>{{ item.contentitem.content|safe }}</p>
-  {% endif %}
-{% elif item.type == 'Zip' %}
+{% elif item.item_type == 'Content' %}
+  <p>{{ item.contentitem.content|safe }}</p>
+{% elif item.item_type == "PDF" %}
+  {% include 'content/pdf.html' with item=item.contentitem.pdffile %}
+{% elif item.item_type == 'ZIP' %}
   {% include 'content/zip_embed.html' with item=item %}
 {% endif %}

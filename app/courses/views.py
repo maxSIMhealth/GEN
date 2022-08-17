@@ -116,6 +116,7 @@ def render_section_content(section_items, section_object):
     section_template = "sections/section_content.html"
     section_items = SectionItem.objects.filter(section=section_object, published=True)
     for item in section_items:
+        # FIXME: it shouldn't be necessary to manually set item.type, the template should use item.item_type directly
         if item.item_type == SectionItem.SECTION_ITEM_VIDEO:
             item.type = "Video"
         elif item.item_type == SectionItem.SECTION_ITEM_CONTENT:
