@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load is_instructor %}
+{% load is_editor %}
 {% load has_participated %}
 {% load discussion_details_get %}
 
@@ -28,7 +29,7 @@
     <div class="card mb-3">
         <div class="card-header bg-light d-flex fs-5">
             <span class="pt-1 me-auto">{% trans "Discussion boards" %}</span>
-            {% if user|is_instructor:course %}
+            {% if user|is_editor:course %}
                 <a href="{% url 'new_discussion' course.pk section.pk %}" class="btn btn-sm btn-labeled btn-warning">
                     <span class="btn-label"><i class="fas fa-plus"></i></span>
                     {% trans "Create new" %}

@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from GEN.decorators import check_permission, course_enrollment_check
 from GEN.support_methods import enrollment_test
 
-from .forms import NewCommentForm, NewDiscussionForm
+from .forms import NewCommentForm, NewDiscussionForm, EditDiscussionForm
 from .models import Comment, Discussion
 from .support_methods import discussion_enable_check, has_participated
 
@@ -129,7 +129,7 @@ def update_discussion_section_status(request, section):
 
 @login_required
 @course_enrollment_check(enrollment_test)
-def new_discussion(request, pk, section_pk):
+def new_discussion(request: object, pk: object, section_pk: object) -> object:
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     discussion = Discussion.objects.all()
@@ -183,6 +183,38 @@ def new_discussion(request, pk, section_pk):
             "section": section,
             "form": form,
         },
+    )
+
+def edit_discussion(request, pk, section_pk, sectionitem_pk):
+    course = get_object_or_404(Course, pk=pk)
+    section = get_object_or_404(Section, pk=section_pk)
+    discussion = Discussion.objects.all()
+
+    if request.method == "POST":
+        form = EditDiscussionForm(course, request.POST, instance=get_object_or_404(discussion, pk=pk))
+        if form.is_valid():
+            Discussion.objects.filter(pk=sectionitem_pk).update(
+                course=course,
+                section=section,
+                published=True,
+                name=form.cleaned_data.get("name"),
+                description=form.cleaned_data.get("description"),
+                video=form.cleaned_data.get("video"),
+                author=request.user,
+            )
+        messages.success(request, _("Discussion board edited."))
+        return redirect("section", pk=course.pk, section_pk=section.pk)
+    else:
+        form = EditDiscussionForm(course, instance=get_object_or_404(discussion, pk=pk))
+    return render(
+        request,
+        "discussions/edit_discussion.html",
+        {
+            "discussion": discussion,
+            "course": course,
+            "section": section,
+            "form": form
+        }
     )
 
 

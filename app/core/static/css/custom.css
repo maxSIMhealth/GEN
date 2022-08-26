@@ -173,6 +173,10 @@ body {
 }
 
 /* buttons with labels (icons) */
+.btn-right{
+    float: right;
+    margin-top: -46px;
+}
 .btn-label {
     position: relative;
     left: -12px;
@@ -189,7 +193,6 @@ body {
     padding-top: 0;
     padding-bottom: 0;
 }
-
 /* video player */
 #card-video-player {
     height: 80vh;

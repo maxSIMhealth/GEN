@@ -5,22 +5,21 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans "Start a New Discussion Board" %}{% endblock %}
+{% block title %}{% trans "Edit Discussion Board" %}{% endblock %}
 
 {% block content_title %}
-  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "New discussion" %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "Edit discussion" %}
 {% endblock content_title %}
 
 {% block content %}
   <div class="card mb-3">
-    <div class="card-header fs-5">{% trans "New discussion" %}</div>
+    <div class="card-header fs-5">{% trans "Edit discussion" %}</div>
     <div class="card-body pb-0">
       <form enctype="multipart/form-data" method="post">
         {% crispy form %}
       </form>
     </div>
-  </div>
-{% endblock %}
+  </div>{% endblock %}
 
 {% block navbar %}
 {% endblock navbar %}

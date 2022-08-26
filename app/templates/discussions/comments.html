@@ -42,6 +42,12 @@
                     {% endif %}
                 </div>
             </div>
+            {% if user.id == discussion.author.id%}
+              <a href="{% url 'edit_discussion' course.pk section.pk discussion.pk %}" class="btn btn-right btn-sm btn-labeled btn-primary">
+                  <span class="btn-label"><i class="fas fa-pencil"></i></span>
+                  {% trans "Edit discussion" %}
+              </a>
+            {% endif %}
         </div>
         <div class="card-body bg-light text-dark p-3">
             {% if discussion.description %}

@@ -9,6 +9,11 @@ urlpatterns = [
         name="new_discussion",
     ),
     path(
+        "courses/<int:pk>/section/<int:section_pk>/discussion/<int:sectionitem_pk>/edit/",
+        discussion_views.edit_discussion,
+        name="edit_discussion",
+    ),
+    path(
         "courses/<int:pk>/section/<int:section_pk>/discussion/<int:sectionitem_pk>/",
         discussion_views.discussion_comments,
         name="discussion_comments",

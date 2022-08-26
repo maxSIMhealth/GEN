@@ -61,6 +61,54 @@ class NewDiscussionForm(forms.ModelForm):
         )
         self.helper.form_method = "POST"
 
+class EditDiscussionForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(),
+        max_length=100,
+        label=_("Discussion board name"),
+        help_text=_("The max length for the discussion board name is 100."),
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": 4}),
+        max_length=400,
+        label=_("Description"),
+        help_text=_("The max length for the discussion board description is 400."),
+    )
+    class Meta:
+        model = Discussion
+        fields = ["name", "description", "video"]
+        # exclude = ['course', 'vote_score',
+        #    'num_vote_up', 'num_vote_down']
+
+    def __init__(self, course, *args, **kwargs):
+        super(EditDiscussionForm, self).__init__(*args, **kwargs)
+        self.fields["video"].queryset = VideoFile.objects.filter(course=course)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Fieldset(
+                # "Create new discussion board",
+                "",
+                "name",
+                "description",
+                "video",
+            ),
+            FormActions(
+                Submit("submit", _("Update"), css_class="btn btn-primary"),
+                Button(
+                    "cancel",
+                    _("Cancel"),
+                    css_class="btn btn-secondary",
+                    onclick="window.location.href = window.history.go(-1); return false;",
+                ),
+                # Submit(
+                #     "submit",
+                #     "Cancel",
+                #     css_class="btn btn-danger",
+                #     formnovalidate="formnovalidate",
+                # ),
+            ),
+        )
+        self.helper.form_method = "POST"
 
 # class NewMediaForm(forms.ModelForm):
 #     title = forms.CharField(
