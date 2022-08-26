@@ -338,3 +338,4 @@ env
 env-dev*
 env-production*
 db-data
+dev.env
