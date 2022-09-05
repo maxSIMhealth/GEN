@@ -1,0 +1,31 @@
+{% extends 'base_course_section.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Manage Sections" %}{% endblock %}
+
+{% block content %}
+  <div class="card mb-3">
+    <div class="card-header fs-5">{% trans "Manage Sections" %}</div>
+    <div class="card-body pb-0">
+      <ul class="list-group list-group-flush">
+        {% for section in sections %}
+          section: {{ section }}
+        {% endfor %}
+
+        {% if section_items.all %}
+                {{section_items}}
+            {% else %}
+                <li class="list-group-item">
+                    {% trans "No section available." %}
+                </li>
+            {% endif %}
+      </ul>
+    </div>
+  </div>{% endblock %}
+
+{% block navbar %}
+{% endblock navbar %}

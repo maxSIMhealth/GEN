@@ -11,6 +11,11 @@ urlpatterns = [
         course_views.section_page,
         name="section",
     ),
+    path(
+        "courses/<int:pk>/manage_sections/",
+        course_views.manage_sections,
+        name="manage_sections",
+    ),
     # certificate
     path(
         "courses/<int:pk>/certificate",

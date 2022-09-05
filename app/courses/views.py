@@ -449,6 +449,27 @@ def section_page(request, pk, section_pk):
         },
     )
 
+@login_required
+def manage_sections(request, pk):
+    course_object = get_object_or_404(Course, pk=pk)
+    # section = Section.objects.all()
+    sections = Section.objects.filter(course=course_object)
+    section_name = "Manage Sections" # FIXME: make it work with generate_sections_sidebar
+
+    return render(
+        request,
+        "sections/section_manage.html",
+        {
+            # "discussion": discussion,
+            "course": course_object,
+            "sections": sections,
+            "section_name": section_name,
+            # "section": section,
+            # "form": form
+        }
+    )
+
+
 
 @login_required
 @course_enrollment_check(enrollment_test)
