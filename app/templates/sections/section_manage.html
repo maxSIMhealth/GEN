@@ -4,25 +4,34 @@
 {% load i18n %}
 {% load humanize %}
 {% load crispy_forms_tags %}
+{% load is_editor %}
 
 {% block title %}{% trans "Manage Sections" %}{% endblock %}
 
 {% block content %}
   <div class="card mb-3">
-    <div class="card-header fs-5">{% trans "Manage Sections" %}</div>
+    <div class="card-header bg-light d-flex fs-5">
+      <span class="pt-1 me-auto">{% trans "Manage Sections" %}</span>
+      {% if user|is_editor:course %}
+          <a href="{% url 'new_section' course.pk %}" class="btn btn-sm btn-labeled btn-warning">
+              <span class="btn-label"><i class="fas fa-plus"></i></span>
+              {% trans "Create new" %}
+          </a>
+      {% endif %}
+    </div>
     <div class="card-body pb-0">
       <ul class="list-group list-group-flush">
-        {% for section in sections %}
-          section: {{ section }}
-        {% endfor %}
-
-        {% if section_items.all %}
-                {{section_items}}
-            {% else %}
-                <li class="list-group-item">
-                    {% trans "No section available." %}
-                </li>
-            {% endif %}
+        {% if sections|length > 0 %}
+          {% for section in sections %}
+            <li class="list-group-item">
+              {{ section.name }}
+            </li>
+          {% endfor %}
+        {% else %}
+          <li class="list-group-item">
+            {% trans "No section available." %}
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>{% endblock %}

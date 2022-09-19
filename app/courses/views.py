@@ -1,6 +1,9 @@
 import io
 import textwrap
 
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView
+
 from core.support_methods import check_is_instructor, filter_by_access_restriction
 from courses.support_methods import (
     mark_section_completed,
@@ -452,7 +455,6 @@ def section_page(request, pk, section_pk):
 @login_required
 def manage_sections(request, pk):
     course_object = get_object_or_404(Course, pk=pk)
-    # section = Section.objects.all()
     sections = Section.objects.filter(course=course_object)
     section_name = "Manage Sections" # FIXME: make it work with generate_sections_sidebar
 
@@ -464,12 +466,32 @@ def manage_sections(request, pk):
             "course": course_object,
             "sections": sections,
             "section_name": section_name,
-            # "section": section,
-            # "form": form
         }
     )
 
+@method_decorator(login_required, name="dispatch")
+@method_decorator(course_enrollment_check(enrollment_test()), name="dispatch")
+class SectionNew(CreateView):
+    model = Section
+    fields = ["name", "description", "section_type", "requirement", "start_date", "end_date", "published"]
 
+    def get_context_data(self, **kwargs):
+        context = super(SectionNew, self).get_context_data(**kwargs)
+        sections_list = Section.objects.all()
+        course_pk = context['view'].kwargs["pk"]
+        course_object = get_object_or_404(Course, pk=course_pk)
+        context["course"] = course_object
+        context["section"] = sections_list
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        course_object = context["course"]
+        new_object = form.save(commit=False)
+        new_object.course = course_object
+        new_object.author = self.request.user
+        new_object.save()
+        return redirect("manage_sections", pk=course_object.pk)
 
 @login_required
 @course_enrollment_check(enrollment_test)
