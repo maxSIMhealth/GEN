@@ -102,6 +102,18 @@ spec:
     - key: SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
       scope: RUN_TIME
       type: SECRET
+    - key: SOCIAL_AUTH_AZUREAD_OAUTH2_KEY
+      scope: RUN_TIME
+      type: SECRET
+    - key: SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET
+      scope: RUN_TIME
+      type: SECRET
+    - key: SCORM_CLOUD_APP_ID
+      scope: RUN_TIME
+      type: SECRET
+    - key: SCORM_CLOUD_SECRET_KEY
+      scope: RUN_TIME
+      type: SECRET
     - key: SENDGRID_API_KEY
       scope: RUN_TIME
       type: SECRET
