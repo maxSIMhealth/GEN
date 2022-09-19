@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "sortedm2m",
     "rest_framework",
     "rest_framework.authtoken",
+    "simple_history",
     "core",
     "accounts",
     "courses",
@@ -110,6 +111,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "social_django.middleware.SocialAuthExceptionMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 # Provide a lists of languages which your site supports.

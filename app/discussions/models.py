@@ -1,3 +1,5 @@
+from simple_history.models import HistoricalRecords
+
 from courses.models import Course, SectionItem
 from model_utils.models import TimeStampedModel
 from videos.models import VideoFile
@@ -40,6 +42,7 @@ class Discussion(VoteModel, SectionItem):
         null=True,
         verbose_name=_("video"),
     )
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = _("discussion")

@@ -1,4 +1,5 @@
 from modeltranslation.admin import TabbedTranslationAdmin
+from simple_history.admin import SimpleHistoryAdmin
 
 from django.contrib import admin
 
@@ -26,7 +27,7 @@ class CommentsInline(admin.TabularInline):
     extra = 0
 
 
-class DiscussionAdmin(TabbedTranslationAdmin):
+class DiscussionAdmin(TabbedTranslationAdmin, SimpleHistoryAdmin):
     list_filter = (
         "course",
         "published",
