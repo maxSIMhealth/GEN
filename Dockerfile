@@ -72,4 +72,4 @@ ENV PATH /env/bin:$PATH
 # Set communication port
 EXPOSE 8000
 
-CMD ["gunicorn", "GEN.asgi:application", "--bind", ":8000", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--worker-tmp-dir", "/dev/shm", "--log-level", ${GUNICORN_LOGLEVEL}]
+CMD ["gunicorn", "GEN.asgi:application", "--bind", ":8000", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--worker-tmp-dir", "/dev/shm", "--log-level", "${GUNICORN_LOGLEVEL}"]
