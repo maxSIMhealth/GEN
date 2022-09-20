@@ -13,7 +13,7 @@ services:
       - ./app:/gen/app
       - ./static:/gen/static
       - ./media:/gen/media
-    command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker
+    command: gunicorn GEN.asgi:application --workers 2 --bind :8000 --worker-class uvicorn.workers.UvicornWorker --worker-tmp-dir /dev/shm
     ports:
       - 8000:8000
     depends_on:
