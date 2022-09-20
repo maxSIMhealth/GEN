@@ -32,7 +32,14 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", False) == "True"
 
+# Getting list of allowed hosts from environemnt variable
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
+# On production, appending server local ip to avoid issues while doing health checks
+if not DEBUG:
+    import socket
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    ALLOWED_HOSTS.append(local_ip)
 
 INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
 
