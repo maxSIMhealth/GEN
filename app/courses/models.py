@@ -271,9 +271,9 @@ class Section(TimeStampedModel):
 
     name = models.CharField(
         _("name"),
-        max_length=25,
+        max_length=40,
         unique=False,
-        help_text=_("Section name (max 25 characters)"),
+        help_text=_("Section name (max 40 characters)"),
     )
     description = HTMLField(
         _("description"),
