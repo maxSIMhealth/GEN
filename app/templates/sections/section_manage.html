@@ -25,6 +25,16 @@
           {% for section in sections %}
             <li class="list-group-item">
               {{ section.name }}
+              {% if user.id == section.author.id%}
+                <a href="{% url 'edit_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-primary">
+                    <span class="btn-label"><i class="fas fa-pencil"></i></span>
+                    {% trans "Edit" %}
+                </a>
+                <a href="{% url 'delete_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-warning">
+                    <span class="btn-label"><i class="fas fa-trash-o"></i></span>
+                    {% trans "Delete" %}
+                </a>
+              {% endif %}
             </li>
           {% endfor %}
         {% else %}

@@ -1,8 +1,9 @@
 import io
 import textwrap
 
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from core.support_methods import check_is_instructor, filter_by_access_restriction
 from courses.support_methods import (
@@ -19,7 +20,7 @@ import GEN.settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -492,6 +493,81 @@ class SectionNew(CreateView):
         new_object.author = self.request.user
         new_object.save()
         return redirect("manage_sections", pk=course_object.pk)
+
+@method_decorator(login_required, name="dispatch")
+@method_decorator(course_enrollment_check(enrollment_test()), name="dispatch")
+class SectionEdit(UpdateView):
+    model = Section
+    fields = ["name", "description", "section_type", "requirement", "start_date",
+              "end_date", "published"]
+    pk_url_kwarg = 'section_pk'
+
+    def get_context_data(self, **kwargs):
+        context_edit = super(SectionEdit, self).get_context_data(**kwargs)
+        course_pk = context_edit['view'].kwargs["pk"]
+        course_object = get_object_or_404(Course, pk=course_pk)
+        section_pk = context_edit['view'].kwargs["section_pk"]
+        section_object = get_object_or_404(Section, pk=section_pk)
+        context_edit["course"] = course_object
+        context_edit["section"] = section_object
+        return context_edit
+
+    def form_valid(self, form):
+        context_edit = self.get_context_data()
+        course_object = context_edit["course"]
+        edit_object = form.save(commit=False)
+        edit_object.course = course_object
+        edit_object.author = self.request.user
+        edit_object.save()
+        return redirect("manage_sections", pk=course_object.pk)
+
+@method_decorator(login_required, name="dispatch")
+@method_decorator(course_enrollment_check(enrollment_test()), name="dispatch")
+class SectionDelete(DeleteView):
+    model = Section
+    pk_url_kwarg = 'section_pk'
+
+    def get_context_data(self, **kwargs):
+        context_delete = super(SectionDelete, self).get_context_data(**kwargs)
+        course_pk = context_delete['view'].kwargs["pk"]
+        course_object = get_object_or_404(Course, pk=course_pk)
+        section_pk = context_delete['view'].kwargs["section_pk"]
+        section_object = get_object_or_404(Section, pk=section_pk)
+        context_delete["course"] = course_object
+        context_delete["section"] = section_object
+        return context_delete
+
+    def delete(self, request, *args, **kwargs):
+        context_delete = self.get_context_data()
+
+        course_object = context_delete["course"]
+        delete_object = self.get_object()
+
+        # get status objects related to the section to be deleted
+        section_status_objects = Status.objects.filter(section=delete_object)
+        # filter status objects that do not belong to the current user
+        section_status_objects_learners = section_status_objects.exclude(learner=request.user)
+
+        if section_status_objects_learners.count() > 0:
+            messages.error(
+                request, _("You cannot delete a section that learners have already accessed. Please contact support.")
+            )
+        else:
+            # deleting status objects to be able to delete the section object
+            section_status_objects = Status.objects.filter(section=delete_object)
+            for status_object in section_status_objects:
+                status_object.delete()
+
+            delete_object.delete()
+
+        return redirect("manage_sections", pk=course_object.pk)
+
+    def form_valid(self, form):
+        context_delete = self.get_context_data()
+        course_object = context_delete["course"]
+        self.delete(self.request)
+        return redirect("manage_sections", pk=course_object.pk)
+
 
 @login_required
 @course_enrollment_check(enrollment_test)

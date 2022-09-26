@@ -21,6 +21,16 @@ urlpatterns = [
         course_views.SectionNew.as_view(),
         name="new_section",
     ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/edit/",
+        course_views.SectionEdit.as_view(),
+        name="edit_section",
+    ),
+    path(
+        "courses/<int:pk>/section/<int:section_pk>/delete/",
+        course_views.SectionDelete.as_view(),
+        name="delete_section",
+    ),
     # certificate
     path(
         "courses/<int:pk>/certificate",
