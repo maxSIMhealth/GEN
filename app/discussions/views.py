@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from GEN.decorators import check_permission, course_enrollment_check
 from GEN.support_methods import enrollment_test
 
-from .forms import NewCommentForm, NewDiscussionForm, EditDiscussionForm
+from .forms import EditDiscussionForm, NewCommentForm, NewDiscussionForm
 from .models import Comment, Discussion
 from .support_methods import discussion_enable_check, has_participated
 
@@ -185,13 +185,16 @@ def new_discussion(request: object, pk: object, section_pk: object) -> object:
         },
     )
 
+
 def edit_discussion(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     discussion = Discussion.objects.all()
 
     if request.method == "POST":
-        form = EditDiscussionForm(course, request.POST, instance=get_object_or_404(discussion, pk=pk))
+        form = EditDiscussionForm(
+            course, request.POST, instance=get_object_or_404(discussion, pk=pk)
+        )
         if form.is_valid():
             Discussion.objects.filter(pk=sectionitem_pk).update(
                 course=course,
@@ -209,12 +212,7 @@ def edit_discussion(request, pk, section_pk, sectionitem_pk):
     return render(
         request,
         "discussions/edit_discussion.html",
-        {
-            "discussion": discussion,
-            "course": course,
-            "section": section,
-            "form": form
-        }
+        {"discussion": discussion, "course": course, "section": section, "form": form},
     )
 
 

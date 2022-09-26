@@ -37,6 +37,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 # On production, appending server local ip to avoid issues while doing health checks
 if not DEBUG:
     import socket
+
     hostname = socket.gethostname()
     local_ip = socket.gethostbyname(hostname)
     ALLOWED_HOSTS.append(local_ip)

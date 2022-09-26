@@ -61,6 +61,7 @@ class NewDiscussionForm(forms.ModelForm):
         )
         self.helper.form_method = "POST"
 
+
 class EditDiscussionForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.TextInput(),
@@ -74,6 +75,7 @@ class EditDiscussionForm(forms.ModelForm):
         label=_("Description"),
         help_text=_("The max length for the discussion board description is 400."),
     )
+
     class Meta:
         model = Discussion
         fields = ["name", "description", "video"]
@@ -109,6 +111,7 @@ class EditDiscussionForm(forms.ModelForm):
             ),
         )
         self.helper.form_method = "POST"
+
 
 # class NewMediaForm(forms.ModelForm):
 #     title = forms.CharField(
