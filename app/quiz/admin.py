@@ -319,6 +319,7 @@ class MCQuestionAdmin(QuestionAdmin):
         "value",
         "image",
         "feedback",
+        "feedback_image",
         "multiple_correct_answers",
         "created",
         "modified",

@@ -266,6 +266,17 @@ class Question(TimeStampedModel):
         blank=True,
         help_text=_("Feedback to be shown after the question has been answered."),
     )
+    feedback_image = models.ForeignKey(
+        ImageFile,
+        verbose_name=_("feedback image"),
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        help_text=_(
+            "Optional feedback image file to be shown after the question has been answered."
+        ),
+        related_name="feedback_image",
+    )
     image = models.ForeignKey(
         ImageFile,
         verbose_name=_("image"),
@@ -311,6 +322,21 @@ class Question(TimeStampedModel):
 
     def duplicate(self, **kwargs):
         return duplicate_question(self, **kwargs)
+
+    def clean(self):
+        errors = []
+
+        if self.feedback_image and not self.feedback:
+            errors.append(
+                ValidationError(
+                    _("Feedback text has to defined to enable feedback image.")
+                )
+            )
+
+        if len(errors) > 0:
+            raise ValidationError(errors)
+        else:
+            return super().clean()
 
 
 #     def save(self, *args, **kwargs):

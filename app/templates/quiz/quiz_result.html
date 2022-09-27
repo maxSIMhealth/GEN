@@ -185,13 +185,17 @@
 
                         {% if question.feedback %}
                             {% if question.question_type == 'H' %}
-                                <span>{{ question.feedback }}</span>
+                                <div><span>{{ question.feedback }}</span></div>
+                                {% include "partials/feedback_image.html" with feedback_image=question.feedback_image %}
                             {% else %}
                                 <div class="card bg-light mb-0 mt-3">
                                     <div class="card-body">
                                         <div class="card-subtitle bg-light fs-6">
-                                    <span class="card-text"><strong>{% trans "Feedback" %}:</strong>
-                                        <span>{{ question.feedback }}</span></span>
+                                            <div class="card-text">
+                                                <strong>{% trans "Feedback" %}:</strong>
+                                                <span>{{ question.feedback }}</span>
+                                            </div>
+                                            {% include "partials/feedback_image.html" with feedback_image=question.feedback_image %}
                                         </div>
                                     </div>
                                 </div>
