@@ -14,6 +14,9 @@ spec:
     - key: DJANGO_LOGLEVEL
       scope: RUN_AND_BUILD_TIME
       value: "info"
+    - key: GUNICORN_LOGLEVEL
+      scope: RUN_AND_BUILD_TIME
+      value: "info"
     - key: DJANGO_DEBUG
       scope: RUN_AND_BUILD_TIME
       value: "False"
@@ -122,4 +125,4 @@ spec:
       registry: andreibosco
       registry_type: DOCKER_HUB
       repository: gen
-      tag: 0.7.1
+      tag: 0.7.4
