@@ -1,6 +1,6 @@
 {% if feedback_image and feedback_image.published %}
   <div>
-    <a href="{{ feedback_image.file.url }}" target="_blank">
+    <a href="{{ feedback_image.file.url }}" target="_blank" rel="noopener noreferrer">
       <img class="img-fluid" src="{{ feedback_image.file.url }}"
            alt="{{ feedback_image.description }}">
     </a>
