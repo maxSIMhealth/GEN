@@ -27,68 +27,70 @@
 
   {% if section_items.all %}
     {% for item in section_items.all %}
-      {% if item.scormpackage %}
-        {% generate_scorm_object_url user item.scormpackage as launch_url %}
-        {% get_scorm_registration_details user item.scormpackage as scorm_package_details %}
-{#        scorm_package_details.activity_completion: {{ scorm_package_details.activity_completion }}<br>#}
-{#        scorm_package_details.activity_success: {{ scorm_package_details.activity_success }}<br>#}
-        <div class="card mb-3 section-scorm">
-          <div class="card-header fs-5">
-            {{ item.name }}
-            <div class="float-end">
-              {% if scorm_package_details.activity_completion == "COMPLETED" %}
-                <span class="badge rounded-pill bg-primary">{% trans "Completed" %}</span>
-              {% elif scorm_package_details.activity_completion == "INCOMPLETE" or scorm_package_details.activity_completion == "UNKNOWN" %}
-                <span class="badge rounded-pill bg-warning text-dark">{% trans "Incomplete" %}</span>
-              {% else %}
-                <span class="badge rounded-pill bg-secondary">{% trans "Not started" %}</span>
-              {% endif %}
-              {% if scorm_package_details.activity_success == "PASSED" %}
-                <span class="badge rounded-pill bg-success">{% trans "Passed" %}</span>
-              {% elif scorm_package_details.activity_success == "FAILED" %}
-                <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
-{#              {% else %}#}
-{#                <span class="badge rounded-pill bg-secondary">{% trans "Not started" %}</span>#}
-              {% endif %}
-            </div>
-          </div>
-          <div class="card-body pt-2 pb-2">
-            {% if item.description %}
-              <div class="item-description">
-                <small class="text-muted">{{ item.description|safe|truncatechars_html:250 }}</small>
+      {% if item.published %}
+        {% if item.scormpackage %}
+          {% generate_scorm_object_url user item.scormpackage as launch_url %}
+          {% get_scorm_registration_details user item.scormpackage as scorm_package_details %}
+  {#        scorm_package_details.activity_completion: {{ scorm_package_details.activity_completion }}<br>#}
+  {#        scorm_package_details.activity_success: {{ scorm_package_details.activity_success }}<br>#}
+          <div class="card mb-3 section-scorm">
+            <div class="card-header fs-5">
+              {{ item.name }}
+              <div class="float-end">
+                {% if scorm_package_details.activity_completion == "COMPLETED" %}
+                  <span class="badge rounded-pill bg-primary">{% trans "Completed" %}</span>
+                {% elif scorm_package_details.activity_completion == "INCOMPLETE" or scorm_package_details.activity_completion == "UNKNOWN" %}
+                  <span class="badge rounded-pill bg-warning text-dark">{% trans "Incomplete" %}</span>
+                {% else %}
+                  <span class="badge rounded-pill bg-secondary">{% trans "Not started" %}</span>
+                {% endif %}
+                {% if scorm_package_details.activity_success == "PASSED" %}
+                  <span class="badge rounded-pill bg-success">{% trans "Passed" %}</span>
+                {% elif scorm_package_details.activity_success == "FAILED" %}
+                  <span class="badge rounded-pill bg-danger">{% trans "Failed" %}</span>
+  {#              {% else %}#}
+  {#                <span class="badge rounded-pill bg-secondary">{% trans "Not started" %}</span>#}
+                {% endif %}
               </div>
-            {% endif %}
-            <p class="mb-0">
-              <small class="text-muted">
-                <strong>{% trans "Attempts:" %}</strong> {{ scorm_package_details.attempts }}
-              </small>
-            </p>
-            {% if scorm_package_details.score %}
+            </div>
+            <div class="card-body pt-2 pb-2">
+              {% if item.description %}
+                <div class="item-description">
+                  <small class="text-muted">{{ item.description|safe|truncatechars_html:250 }}</small>
+                </div>
+              {% endif %}
               <p class="mb-0">
                 <small class="text-muted">
-                  <strong>{% trans "Score:" %}</strong>
-                  {{ scorm_package_details.score }}
+                  <strong>{% trans "Attempts:" %}</strong> {{ scorm_package_details.attempts }}
                 </small>
               </p>
-            {% endif %}
-{#            <p class="mb-0">#}
-{#              <small class="text-muted">#}
-{#                <strong>{% trans "Completion amount:" %}</strong>#}
-{#                {{ scorm_package_details.completion_amount }}#}
-{#              </small>#}
-{#            </p>#}
+              {% if scorm_package_details.score %}
+                <p class="mb-0">
+                  <small class="text-muted">
+                    <strong>{% trans "Score:" %}</strong>
+                    {{ scorm_package_details.score }}
+                  </small>
+                </p>
+              {% endif %}
+  {#            <p class="mb-0">#}
+  {#              <small class="text-muted">#}
+  {#                <strong>{% trans "Completion amount:" %}</strong>#}
+  {#                {{ scorm_package_details.completion_amount }}#}
+  {#              </small>#}
+  {#            </p>#}
+            </div>
+            <div class="card-footer">
+              <p class="mb-0">
+                <a class="btn btn-primary" title="SCORM Activity" href="{{ launch_url }}" target="_self"
+                   rel="noopener">{% translate "Start activity" %}</a>
+              </p>
+            </div>
           </div>
-          <div class="card-footer">
-            <p class="mb-0">
-              <a class="btn btn-primary" title="SCORM Activity" href="{{ launch_url }}" target="_self"
-                 rel="noopener">{% translate "Start activity" %}</a>
-            </p>
+        {% else %}
+          <div class="alert alert-danger" role="alert">
+            {% translate "Failed to generate SCORM url. Please notify the support team:" %}{% support_emails %}
           </div>
-        </div>
-      {% else %}
-        <div class="alert alert-danger" role="alert">
-          {% translate "Failed to generate SCORM url. Please notify the support team:" %}{% support_emails %}
-        </div>
+        {% endif %}
       {% endif %}
     {% endfor %}
   {% else %}
