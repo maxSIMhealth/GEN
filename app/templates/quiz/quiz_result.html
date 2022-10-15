@@ -112,15 +112,15 @@
                                         {% if question.multiple_correct_answers %}
                                             {% if mcquestion_user_answers|dict_key:choice.id %}
                                                 <li class="correct-item pt-1 pb-1">
-                                                    {% else %}
+                                            {% else %}
                                                 <li class="incorrect-item pt-1 pb-1">
                                             {% endif %}
                                         {% else %}
-                                        {% if choice.check %}
-                                            <li class="correct-item pt-1 pb-1">
-                                                {% else %}
-                                            <li class="pt-1 pb-1">
-                                        {% endif %}
+                                            {% if choice.mark %}
+                                                <li class="correct-item pt-1 pb-1">
+                                            {% else %}
+                                                <li class="pt-1 pb-1">
+                                            {% endif %}
                                         {% endif %}
                                     {% else %}
                                         <li class="pt-1 pb-1">
