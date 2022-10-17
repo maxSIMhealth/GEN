@@ -19,31 +19,35 @@
           </a>
       {% endif %}
     </div>
-    <div class="card-body pb-0">
-      <ul class="list-group list-group-flush">
-        {% if sections|length > 0 %}
+
+      {% if sections|length > 0 %}
+        {% csrf_token %}
+        <form class="sortable list-group" hx-trigger="end" hx-post="{% url 'manage_sections' course.pk %}" hx-target="body">
           {% for section in sections %}
-            <li class="list-group-item">
-              {{ section.name }}
-              {% if user.id == section.author.id%}
-                <a href="{% url 'edit_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-primary">
-                    <span class="btn-label"><i class="fas fa-pencil"></i></span>
-                    {% trans "Edit" %}
-                </a>
-                <a href="{% url 'delete_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-warning">
-                    <span class="btn-label"><i class="fas fa-trash-o"></i></span>
-                    {% trans "Delete" %}
-                </a>
-              {% endif %}
-            </li>
+            <div class="mb-0">
+              <input type="hidden" name="custom_order" value="{{ section.pk }}" />
+              <li class="list-group-item custom_order">
+                <i class="fas game-draggable-item"></i> {{ section.name }}
+                {% if user.id == section.author.id%}
+                  <a href="{% url 'edit_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-primary">
+                      <span class="btn-label"><i class="fas fa-pencil"></i></span>
+                      {% trans "Edit" %}
+                  </a>
+                  <a href="{% url 'delete_section' course.pk section.pk %}" class="btn btn-right btn-sm btn-labeled btn-warning">
+                      <span class="btn-label"><i class="fas fa-trash-o"></i></span>
+                      {% trans "Delete" %}
+                  </a>
+                {% endif %}
+              </li>
+            </div>
           {% endfor %}
-        {% else %}
-          <li class="list-group-item">
-            {% trans "No section available." %}
-          </li>
-        {% endif %}
-      </ul>
-    </div>
+        </form>
+      {% else %}
+        <li class="list-group-item">
+          {% trans "No section available." %}
+        </li>
+      {% endif %}
+
   </div>{% endblock %}
 
 {% block navbar %}

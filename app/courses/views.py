@@ -459,11 +459,19 @@ def manage_sections(request, pk):
     sections = Section.objects.filter(course=course_object)
     section_name = "Manage Sections" # FIXME: make it work with generate_sections_sidebar
 
+    if request.method == "POST":
+        section_pks_order = request.POST.getlist('custom_order')
+
+        for idx, section_pk in enumerate(section_pks_order, start=1):
+            user_section = Section.objects.get(pk=section_pk)
+            user_section.custom_order = idx
+            user_section.save()
+        return redirect("manage_sections", pk=course_object.pk)
+
     return render(
         request,
         "sections/section_manage.html",
         {
-            # "discussion": discussion,
             "course": course_object,
             "sections": sections,
             "section_name": section_name,
