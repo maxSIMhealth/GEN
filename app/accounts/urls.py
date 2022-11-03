@@ -52,8 +52,14 @@ if not settings.USE_SOCIAL_AUTH_ONLY:
 
 # only allow access if social auth is ENABLED
 if settings.USE_SOCIAL_AUTH:
+    # urlpatterns += [
+    #     # social login
+    #     path("oauth/", include("social_django.urls", namespace="social")),
+    #     # path("settings/", account_views.settings, name="settings"),
+    # ]
     urlpatterns += [
-        # social login
-        path("oauth/", include("social_django.urls", namespace="social")),
-        # path("settings/", account_views.settings, name="settings"),
+        # re_path(r'^accounts/logout/$', django.contrib.auth.views.LogoutView)
+        # (r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+        #  {'next_page': '/'}),
+        path("accounts/", include("allauth.urls")),
     ]

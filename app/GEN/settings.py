@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "widget_tweaks",
@@ -74,7 +75,6 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "vote",
     "debug_toolbar",
-    "social_django",
     "crispy_forms",
     "crispy_bootstrap5",
     "adminsortable2",
@@ -89,6 +89,11 @@ INSTALLED_APPS = [
     "sortedm2m",
     "rest_framework",
     "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.microsoft",
     "core",
     "accounts",
     "courses",
@@ -101,6 +106,8 @@ INSTALLED_APPS = [
     "scorm",
     "api",
 ]
+
+SITE_ID = 1
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -158,13 +165,8 @@ MESSAGE_TAGS = {
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = (
-    # "social_core.backends.github.GithubOAuth2",
-    # "social_core.backends.twitter.TwitterOAuth",
-    # "social_core.backends.facebook.FacebookOAuth2",
-    # "social_core.backends.google.GoogleOpenId",
-    "social_core.backends.google.GoogleOAuth2",
-    "social_core.backends.azuread.AzureADOAuth2",
     "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 WSGI_APPLICATION = "GEN.wsgi.application"
@@ -425,69 +427,50 @@ logging.config.dictConfig(
 # Social authentication settings
 #
 # Documentation:
-# https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
-# https://python-social-auth.readthedocs.io/en/latest/pipeline.html
+# https://django-allauth.readthedocs.io/en/latest/index.html
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
 USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
 USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
 SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/settings/"
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = "home"
-SOCIAL_AUTH_RAISE_EXCEPTIONS = False
-SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ["username", "first_name", "email"]
 
-# SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
-# SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
-SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
-SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_AZUREAD_OAUTH2_KEY")
-SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET")
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "VERIFIED_EMAIL": True,
+        "APP": {
+            "client_id": os.getenv("SOCIAL_AUTH_GOOGLE_KEY"),
+            "secret": os.getenv("SOCIAL_AUTH_GOOGLE_SECRET"),
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+    "microsoft": {
+        "VERIFIED_EMAIL": True,
+        "APP": {
+            "client_id": os.getenv("SOCIAL_AUTH_AZUREAD_KEY"),
+            "secret": os.getenv("SOCIAL_AUTH_AZUREAD_SECRET"),
+            "key": "",
+        },
+        "SCOPE": [
+            "User.Read",
+        ],
+    },
+}
 
-USE_SOCIAL_AUTH_WHITELIST = os.getenv("USE_SOCIAL_AUTH_WHITELIST", "False") == "True"
-if USE_SOCIAL_AUTH_WHITELIST:
-    SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = os.getenv(
-        "SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS"
-    ).split(",")
-    SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS = os.getenv(
-        "SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS"
-    ).split(",")
-
-SOCIAL_AUTH_PIPELINE = (
-    # Get the information we can about the user and return it in a simple
-    # format to create the user instance later. On some cases the details are
-    # already part of the auth response from the provider, but sometimes this
-    # could hit a provider API.
-    "social_core.pipeline.social_auth.social_details",
-    # Get the social uid from whichever service we're authing through. The uid is
-    # the unique identifier of the given user in the provider.
-    "social_core.pipeline.social_auth.social_uid",
-    # Verifies that the current auth process is valid within the current
-    # project, this is where emails and domains whitelists are applied (if
-    # defined).
-    "social_core.pipeline.social_auth.auth_allowed",
-    # Checks if the current social-account is already associated in the site.
-    "social_core.pipeline.social_auth.social_user",
-    # Make up a username for this person, appends a random string at the end if
-    # there's any collision.
-    "social_core.pipeline.user.get_username",
-    # Send a validation email to the user to verify its email address.
-    # Disabled by default.
-    # 'social_core.pipeline.mail.mail_validation',
-    # Associates the current social details with another user account with
-    # a similar email address. Disabled by default.
-    "social_core.pipeline.social_auth.associate_by_email",
-    # Create a user account if we haven't found one yet.
-    "social_core.pipeline.user.create_user",
-    # Create the record that associates the social account with the user.
-    "social_core.pipeline.social_auth.associate_user",
-    # Populate the extra_data field in the social record with the values
-    # specified by settings (and the default ones like access_token, etc).
-    "social_core.pipeline.social_auth.load_extra_data",
-    # Update the user record with any changed info from the auth service.
-    "social_core.pipeline.user.user_details",
-)
+ACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_QUERY_EMAIL = ACCOUNT_EMAIL_REQUIRED
+SOCIALACCOUNT_EMAIL_REQUIRED = ACCOUNT_EMAIL_REQUIRED
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400  # 1 day in seconds
 
 #
 # TinyMCE
