@@ -6,7 +6,6 @@ django-vote>=2.3.0,<2.4.0
 django-widget-tweaks>=1.4.12,<1.5.0
 cryptography>=38.0.1,!=37.0.2,<39.0.0
 six==1.16.0
-social-auth-app-django>=5.0.0,<5.1.0
 Pillow>=9.2.0,<9.3.0
 ffmpeg-python==0.2.0
 django-bootstrap5>=21.3,<22

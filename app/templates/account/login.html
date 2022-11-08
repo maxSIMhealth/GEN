@@ -1,0 +1,97 @@
+{% extends 'base_accounts.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load support_emails %}
+{% load account socialaccount %}
+
+{% block title %}{% translate "Sign in to GEN" %}{% endblock title %}
+
+{% block content %}
+  <div class="card" id="login-card">
+    <div class="card-header bg-light text-dark">
+      {% if messages %}
+        {% include 'partials/messages.html' %}
+      {% endif %}
+      <h3 class="m-0">{% translate "Sign in to GEN" %}</h3>
+    </div>
+    <div class="card-group">
+      {% if not use_social_auth_only %}
+        <div class="card mb-0">
+          <div class="card-body bg-light text-dark">
+            <form method="post" action="{% url 'account_login' %}">
+              {% csrf_token %}
+              {% include 'partials/form.html' %}
+              {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+              {% endif %}
+              <button type="submit" class="btn btn-primary btn-block">{% translate "Sign in" %}</button>
+            </form>
+{#            <form class="login" method="POST" action="{% url 'account_login' %}">#}
+{#              {% csrf_token %}#}
+{#              {{ form.as_p }}#}
+{#              {% include 'partials/form.html' %}#}
+{#              {% if redirect_field_value %}#}
+{#                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>#}
+{#              {% endif %}#}
+{#              <button class="btn btn-primary btn-block" type="submit">{% translate "Sign In" %}</button>#}
+{#            </form>#}
+          </div>
+        </div>
+      {% endif %}
+      {% if use_social_auth %}
+        <div class="card mb-0">
+          <div class="card-body bg-light text-dark text-center mb-0 pb-0">
+{#            <div class="socialaccount_ballot">#}
+{#              <ul class="socialaccount_providers">#}
+{#                {% include "socialaccount/snippets/provider_list.html" with process="login" %}#}
+{#              </ul>#}
+{#            </div>#}
+
+            {% include "socialaccount/snippets/login_extra.html" %}
+
+            {#  MY OLD CODE  #}
+
+            {% if use_social_auth_only %}
+              <p>{% translate "Please use your work or school account:" %}</p>
+            {% else %}
+              <p>{% translate "Or use your work or school account:" %}</p>
+            {% endif %}
+            {% include "socialaccount/snippets/provider_list_buttons.html" with process="login" %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="login-alerts">
+      {% for alert_message in alert_messages %}
+        {% with type=alert_message.type %}
+          <div
+            class="alert m-2 {% if type == "W" %} alert-warning {% elif type == "U" %} alert-danger {% elif type == "N" %} alert-primary {% endif %}">
+            {{ alert_message.content|safe }}
+            {% if alert_message.show_dates %}
+              {% if alert_message.start_date %}
+                <p><small>{% translate "Posted on:" %} {{ alert_message.start_date }}</small></p>
+              {% endif %}
+              {% if alert_message.end_date %}
+                <p><small>{% translate "Expires on:" %} {{ alert_message.end_date }}</small></p>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endwith %}
+      {% endfor %}
+
+      <div class="alert alert-info m-2">
+        {% translate "If you have problems logging into GEN, please contact us at" %}
+        {% support_emails %}
+      </div>
+    </div>
+  </div>
+
+  {% if not use_social_auth_only %}
+    <div class="text-center bg-dark text-white py-2">
+      <a href="{{ signup_url }}" class="text-light">{% translate "New to GEN? Sign up" %}</a> | <a
+      href="{% url 'account_reset_password' %}" class="text-light">{% trans "Forgot your password?" %}</a>
+    </div>
+  {% endif %}
+
+{% endblock %}

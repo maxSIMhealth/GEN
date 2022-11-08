@@ -1,5 +1,6 @@
 import random
 
+from allauth.account.views import LoginView as AllAuthLoginView
 from core.models import LoginAlertMessage
 from courses.models import Course
 from social_django.models import UserSocialAuth
@@ -42,6 +43,17 @@ def random_course_assign(user):
     course_selected = random.choice(courses)
     course_selected.members.add(user)
     course_selected.learners.add(user)
+
+
+class AllAuthLogin(AllAuthLoginView):
+    use_social_auth = django_settings.USE_SOCIAL_AUTH
+    use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
+
+    extra_context = {
+        "support_emails": django_settings.SUPPORT_EMAILS,
+        "use_social_auth": use_social_auth,
+        "use_social_auth_only": use_social_auth_only,
+    }
 
 
 class Login(LoginView):

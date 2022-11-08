@@ -6,7 +6,7 @@ from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path("", account_views.Login.as_view(), name="login"),
+    path("", account_views.AllAuthLogin.as_view(), name="login"),
     path("login/", RedirectView.as_view(url="/"), name="login-redirect"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
@@ -61,5 +61,6 @@ if settings.USE_SOCIAL_AUTH:
         # re_path(r'^accounts/logout/$', django.contrib.auth.views.LogoutView)
         # (r'^accounts/logout/$', 'django.contrib.auth.views.logout',
         #  {'next_page': '/'}),
+        path("accounts/login/", account_views.AllAuthLogin.as_view()),
         path("accounts/", include("allauth.urls")),
     ]

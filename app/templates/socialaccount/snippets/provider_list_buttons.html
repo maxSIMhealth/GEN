@@ -1,0 +1,20 @@
+{% load socialaccount %}
+{% load socialaccount_custom %}
+{% load i18n %}
+{% load static %}
+
+{% get_socialapps_with_context as socialaccount_apps %}
+
+<div id="signin-buttons">
+  {% for socialapp in socialaccount_apps %}
+    <div class="mb-3">
+      <a title="{{ socialapp.name }}"
+         class="socialaccount_provider {{ socialapp.provider }}"
+         href="{% provider_login_url socialapp.provider process=process scope=scope auth_params=auth_params %}">
+        <img src="{% static 'img/' %}btn_signin_{{ socialapp.provider }}.png"
+             id="login-btn-{{ socialapp.provider }}"
+             alt="{% blocktranslate with provider_id=socialapp.provider %}Button to sign in using a {{ provider_id }} account.{% endblocktranslate %}">
+      </a>
+    </div>
+  {% endfor %}
+</div>
