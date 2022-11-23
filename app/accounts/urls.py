@@ -15,7 +15,7 @@ urlpatterns = [
 # only allow access if social auth only is DISABLED
 if not settings.USE_SOCIAL_AUTH_ONLY:
     urlpatterns += [
-        path("signup/", account_views.signup, name="signup"),
+        # path("signup/", account_views.signup, name="signup"),
         path("settings/password", account_views.oauth_password, name="oauth_password"),
         path(
             "password_reset/",
