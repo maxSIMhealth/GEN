@@ -18,11 +18,13 @@ def input_class(bound_field):
         elif field_type(bound_field) != "PasswordInput":
             css_class_list.append("is-valid")
 
+    # workaround because checkbox input looks weird with 'form-control' class
     if bound_field.widget_type == "checkbox":
         css_class_list.append("form-check-input")
         css_class = " ".join(css_class_list)
         return "{}".format(css_class)
 
+    # converting list into string
     css_class = " ".join(css_class_list)
 
     return "form-control {}".format(css_class)
