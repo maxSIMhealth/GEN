@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load humanize %}
+{% load gravatar %}
+
+{% comment %}
+  {% block breadcrumb %}
+    <li class="breadcrumb-item active">{% trans "Home" %}</li>
+  {% endblock breadcrumb %}
+{% endcomment %}
+
+{% block content %}
+  <div class="card bg-dark mb-3" id="page-name">
+    <div class="card-header">
+      <div class="card-text text-white fs-5 p-0">{% block page_title %}{% endblock page_title %}</div>
+    </div>
+  </div>
+
+  {% if messages %}
+    {% include 'partials/messages.html' %}
+  {% endif %}
+
+  {% block content_body %}
+  {% endblock content_body %}
+
+{% endblock content %}

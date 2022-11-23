@@ -4,45 +4,59 @@
 {% load i18n %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row justify-content-center mt-3 mb-3">
-            <div class="col-lg-8 col-md-10 col-sm-12">
-                <div class="card bg-dark text-white">
-                    <h1 class="card-header bg-white text-center">
-                        <img src="{% static 'img/GEN-logo-new.png' %}" alt="{% trans 'GEN logo' %}" id="login-logo">
-                    </h1>
-                    {% block content %}
-                    {% endblock content %}
-                </div>
-            </div>
+  <div class="container">
+    <div class="row justify-content-center mt-3 mb-3">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card bg-dark text-white">
+          <div class="card-header bg-white text-center">
+            <img src="{% static 'img/GEN-logo-new.png' %}" alt="{% trans 'GEN logo' %}" id="login-logo">
+            {% if messages %}
+              {% include 'partials/messages.html' %}
+            {% endif %}
+          </div>
+          {#          {% if messages %}#}
+          {#            <div class="card" style="border-radius: 0">#}
+          {#              <div class="card-header bg-light text-dark">#}
+          {#                {% include 'partials/messages.html' %}#}
+          {#              </div>#}
+          {#            </div>#}
+          {#          {% endif %}#}
+          {% block content %}
+          {% endblock content %}
         </div>
+      </div>
     </div>
+  </div>
+{% endblock %}
+
+{% block extra_body %}
 {% endblock %}
 
 {% block footer %}
-    <div class="footer mb-2">
-        <div class="text-center pt-2 pb-2 text-light">
-            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}">
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local|capfirst }} ({{ language.code }})
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Go" class="btn btn-primary btn-sm">
-            </form>
-        </div>
-        <div class="text-center text-light">
-            <p class="mb-0">GEN - Gamified Educational Network (2022)</p>
-            <p>{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech
-                University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u>
-            </p>
-        </div>
+  <div class="footer mb-2">
+    <div class="text-center pt-2 pb-2 text-light">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <label for="language">{% trans "Language:" %}</label>
+        <select name="language" id="language" class="form-select form-select-sm"
+                aria-label="{% trans "List of languages" %}">
+          {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+              {{ language.name_local|capfirst }} ({{ language.code }})
+            </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Go" class="btn btn-primary btn-sm">
+      </form>
     </div>
+    <div class="text-center text-light">
+      <p class="mb-0">GEN - Gamified Educational Network (2022)</p>
+      <p>{% trans "Developed at" %} <a href="http://www.ontariotechu.ca" class="text-light"><u>Ontario Tech
+        University</u></a> - <u><a href="http://www.maxsimhealth.com" class="text-light">maxSIMhealth</a></u>
+      </p>
+    </div>
+  </div>
 {% endblock footer %}

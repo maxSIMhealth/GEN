@@ -5,7 +5,7 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans "Edit Discussion Board" %}{% endblock %}
+{% block head_title %}{% trans "Edit Discussion Board" %}{% endblock %}
 
 {% block content_title %}
   <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "Edit discussion" %}
