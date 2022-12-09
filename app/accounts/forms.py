@@ -11,7 +11,7 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254, required=True, widget=forms.EmailInput(), label=_("E-mail")
     )
-    institution = forms.CharField(max_length=50, label=_("Institution"))
+    institution = forms.CharField(max_length=50, required=True, label=_("Institution"))
 
     def clean_email(self):
         """
