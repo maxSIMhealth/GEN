@@ -36,12 +36,26 @@ class SignUpForm(UserCreationForm):
 
         return data
 
+    def save(self, request):
+        user = super(SignUpForm, self).save(request)
+        # set username based on id/pk
+        user.username = f"user_{user.id}"
+        # save user info to db
+        user.save()
+        # load the profile instance created by the signal
+        user.refresh_from_db()
+        # set user institution in auxiliary profile model
+        user.profile.institution = self.cleaned_data.get("institution")
+        # save update user info to db
+        user.save()
+        return user
+
     class Meta:
         model = User
         fields = (
             "first_name",
             "last_name",
-            "username",
+            # "username",
             "email",
             "institution",
             "password1",
