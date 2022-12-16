@@ -1,26 +1,17 @@
-{% extends "base_accounts.html" %}
+{% extends "base_accounts_information.html" %}
 
 {% load i18n %}
 
 {% block head_title %}{% translate "Verify Your E-mail Address" %}{% endblock %}
 
-{% block content %}
-  <div class="card-body bg-light text-dark">
-    <div class="card-title fs-3">
-      {% translate "Verify Your E-mail Address" %}
-    </div>
-    {% url 'account_email' as email_url %}
+{% block content_title %}{% translate "Verify Your E-mail Address" %}{% endblock %}
 
-    <p>{% blocktranslate %}This part of the site requires us to verify that
-      you are who you claim to be. For this purpose, we require that you
-      verify ownership of your e-mail address. {% endblocktranslate %}</p>
+{% block content_body %}
+  {% url 'account_email' as email_url %}
 
-    <p>{% blocktranslate %}We have sent an e-mail to you for
-      verification. Please click on the link inside that e-mail. If you do not see the verification e-mail in your main
-      inbox, check your spam folder. Otherwise
-      contact us if you do not receive it within a few minutes.{% endblocktranslate %}</p>
+  <p>{% blocktranslate %}This part of the site requires us to verify that you are who you claim to be. For this purpose, we require that you verify ownership of your e-mail address.{% endblocktranslate %}</p>
 
-    <p>{% blocktranslate %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>
-      .{% endblocktranslate %}</p>
-  </div>
+  <p>{% blocktranslate %}We have sent an e-mail to you for verification. Please click on the link inside that e-mail. If you do not see the verification e-mail in your main inbox, check your spam folder. Otherwise, contact us if you do not receive it within a few minutes.{% endblocktranslate %}</p>
+
+  <p>{% blocktranslate %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>.{% endblocktranslate %}</p>
 {% endblock %}
