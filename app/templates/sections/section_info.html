@@ -8,7 +8,7 @@
 {% load generate_sections_sidebar %}
 
 {% block content_tabs %}
-    <a class="list-group-item list-group-item-action active" href="#">{{ course.initial_section_name }}</a>
+    <a class="list-group-item list-group-item-action active" aria-current="true" href="#">{{ course.initial_section_name }}</a>
     {% generate_sections_sidebar %}
 {% endblock content_tabs %}
 
