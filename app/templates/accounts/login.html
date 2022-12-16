@@ -2,7 +2,6 @@
 
 {% load static %}
 {% load i18n %}
-{% load support_emails %}
 {% load socialaccount %}
 
 {% block head_title %}{% translate "Sign in to GEN" %}{% endblock head_title %}
@@ -76,10 +75,7 @@
         {% endwith %}
       {% endfor %}
 
-      <div class="alert alert-info m-2">
-        {% translate "If you have problems logging into GEN, please contact us at" %}
-        {% support_emails %}
-      </div>
+      {% include "partials/contact_us_snippet.html" %}
     </div>
   </div>
 
