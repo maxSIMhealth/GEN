@@ -19,6 +19,9 @@ from django.contrib.messages import constants as messages
 from django.utils.log import DEFAULT_LOGGING as LOGGING
 from django.utils.translation import gettext_lazy as _
 
+# import ast
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -123,7 +126,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "social_django.middleware.SocialAuthExceptionMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
 ]
 
@@ -146,8 +148,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "social_django.context_processors.backends",
-                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -432,7 +432,7 @@ logging.config.dictConfig(
 USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
 USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
 SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
-
+# SOCIALACCOUNT_PROVIDERS = ast.literal_eval(os.getenv("SOCIAL_AUTH"))
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "VERIFIED_EMAIL": True,

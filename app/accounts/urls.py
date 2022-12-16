@@ -65,4 +65,8 @@ if settings.USE_SOCIAL_AUTH:
         #  {'next_page': '/'}),
         path("accounts/login/", account_views.AllAuthLogin.as_view()),
         path("accounts/", include("allauth.urls")),
+        # path("accounts/password/change/", RedirectView.as_view(url="/settings/password/"), name="oauth_password-redirect"),
+        # path("settings/password/",
+        #      RedirectView.as_view(url="/accounts/password/change/"),
+        #      name="oauth_password-redirect"),
     ]

@@ -3,7 +3,6 @@ import random
 from allauth.account.views import LoginView as AllAuthLoginView
 from core.models import LoginAlertMessage
 from courses.models import Course
-from social_django.models import UserSocialAuth
 
 from django.conf import settings as django_settings
 from django.contrib import messages
@@ -197,27 +196,27 @@ class UserUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(UserUpdateView, self).get_context_data(**kwargs)
-        user = self.request.user
+        # user = self.request.user
         social_auth_providers = django_settings.SOCIAL_AUTH_PROVIDERS
 
-        # Social Auth: Google
-        try:
-            google_login = user.social_auth.get(provider="google-oauth2")
-        except UserSocialAuth.DoesNotExist:
-            google_login = None
+        # # Social Auth: Google
+        # try:
+        #     google_login = user.social_auth.get(provider="google-oauth2")
+        # except UserSocialAuth.DoesNotExist:
+        #     google_login = None
+        #
+        # # Social Auth: Azure AD (Microsoft)
+        # try:
+        #     azure_login = user.social_auth.get(provider="azuread-oauth2")
+        # except UserSocialAuth.DoesNotExist:
+        #     azure_login = None
 
-        # Social Auth: Azure AD (Microsoft)
-        try:
-            azure_login = user.social_auth.get(provider="azuread-oauth2")
-        except UserSocialAuth.DoesNotExist:
-            azure_login = None
-
-        can_disconnect = user.social_auth.count() > 1 or user.has_usable_password()
+        # can_disconnect = user.social_auth.count() > 1 or user.has_usable_password()
         use_social_auth = django_settings.USE_SOCIAL_AUTH
         use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
-        context["google_login"] = google_login
-        context["azure_login"] = azure_login
-        context["can_disconnect"] = can_disconnect
+        # context["google_login"] = google_login
+        # context["azure_login"] = azure_login
+        # context["can_disconnect"] = can_disconnect
         context["use_social_auth"] = use_social_auth
         context["use_social_auth_only"] = use_social_auth_only
         context["social_auth_providers"] = social_auth_providers
