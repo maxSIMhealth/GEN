@@ -9,14 +9,16 @@ urlpatterns = [
     path("", account_views.AllAuthLogin.as_view(), name="login"),
     path("login/", RedirectView.as_view(url="/"), name="login-redirect"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    path("settings/account", account_views.UserUpdateView.as_view(), name="my_account"),
+    path(
+        "accounts/settings/", account_views.UserUpdateView.as_view(), name="my_account"
+    ),
 ]
 
 # only allow access if social auth only is DISABLED
 if not settings.USE_SOCIAL_AUTH_ONLY:
     urlpatterns += [
         # path("signup/", account_views.signup, name="signup"),
-        path("settings/password", account_views.oauth_password, name="oauth_password"),
+        # path("settings/password", account_views.oauth_password, name="oauth_password"),
         path(
             "password_reset/",
             auth_views.PasswordResetView.as_view(),
