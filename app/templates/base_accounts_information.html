@@ -9,7 +9,15 @@
       {% block content_body %}{% endblock content_body %}
     </div>
     <div class="card-footer">
-      <a href="{% url 'home' %}" class="btn btn-secondary">{% translate "Return home" %}</a>
+      {% block content_footer %}
+        <a href="{% url 'home' %}" class="btn btn-secondary">{% translate "Return home" %}</a>
+      {% endblock %}
     </div>
+  </div>
+{% endblock %}
+
+{% block post_content %}
+  <div class="mt-2">
+    {% include "partials/contact_us_snippet.html" %}
   </div>
 {% endblock %}
