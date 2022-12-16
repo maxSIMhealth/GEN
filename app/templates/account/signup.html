@@ -1,26 +1,24 @@
-{% extends "base_accounts.html" %}
+{% extends "base_accounts_information.html" %}
 
 {% load i18n %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block head_title %}{% translate "Signup" %}{% endblock %}
 
-{% block content %}
-  <div class="card-body bg-light text-dark">
-    <div class="card-title fs-3">{% translate "Sign up" %}</div>
-    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+{% block content_title %}{% translate "Signup" %}{% endblock %}
+
+{% block content_body %}
+  <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
       {% csrf_token %}
-      {#      {{ form.as_p }}#}
       {% include 'partials/form.html' %}
       {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
       {% endif %}
-      <button type="submit" class="btn btn-primary btn-block">{% trans "Sign Up" %} &raquo;</button>
+      <button type="submit" class="btn btn-primary btn-block">{% translate "Sign up" %}</button>
     </form>
-  </div>
-  <div class="card-footer bg-light text-muted text-center">
-    {% blocktranslate %}
-      Already have an account? Then please <a href="{{ login_url }}"> sign in</a>.
-    {% endblocktranslate %}
-  </div>
+{% endblock %}
 
+{% block content_footer %}
+  {% blocktranslate %}
+    Already have an account? Then please <a href="{{ login_url }}"> sign in</a>.
+  {% endblocktranslate %}
 {% endblock %}
