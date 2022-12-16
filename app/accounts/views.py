@@ -7,9 +7,7 @@ from social_django.models import UserSocialAuth
 
 from django.conf import settings as django_settings
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
@@ -190,6 +188,9 @@ class UserUpdateView(UpdateView):
     fields = (
         "first_name",
         "last_name",
+        # "location",
+        # "institution",
+        # "user",
     )
     template_name = "accounts/my_account.html"
     success_url = reverse_lazy("my_account")
@@ -226,30 +227,38 @@ class UserUpdateView(UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_form(self, form_class=None):
+        form = super(UserUpdateView, self).get_form(form_class)
+        # setting first and last name fields as required
+        form.fields["first_name"].required = True
+        form.fields["last_name"].required = True
+        return form
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+
         messages.success(request, _("Profile updated successfully."))
         return super().post(request, *args, **kwargs)
 
 
-@login_required
-def oauth_password(request):
-    """Handles defining and updating password for users created locally and with OAuth authentication."""
-    if request.user.has_usable_password():
-        password_form = PasswordChangeForm
-    else:
-        password_form = AdminPasswordChangeForm
-
-    if request.method == "POST":
-        form = password_form(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            messages.success(request, _("Your password was successfully updated."))
-            return redirect("my_account")
-        else:
-            messages.error(request, _("Please correct the error below."))
-    else:
-        form = password_form(request.user)
-
-    return render(request, "accounts/password_change.html", {"form": form})
+# @login_required
+# def oauth_password(request):
+#     """Handles defining and updating password for users created locally and with OAuth authentication."""
+#     if request.user.has_usable_password():
+#         password_form = PasswordChangeForm
+#     else:
+#         password_form = AdminPasswordChangeForm
+#
+#     if request.method == "POST":
+#         form = password_form(request.user, request.POST)
+#         if form.is_valid():
+#             form.save()
+#             update_session_auth_hash(request, form.user)
+#             messages.success(request, _("Your password was successfully updated."))
+#             return redirect("my_account")
+#         else:
+#             messages.error(request, _("Please correct the error below."))
+#     else:
+#         form = password_form(request.user)
+#
+#     return render(request, "accounts/password_change.html", {"form": form})
