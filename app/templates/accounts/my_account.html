@@ -22,45 +22,40 @@
       <div class="row justify-content-md-center">
         <div class="col-sm-10">
           {% if not use_social_auth_only %}
-            name: {{ user.socialaccount_set.all.0.extra_data.name }} <br>
+{#            name: {{ user.socialaccount_set.all.0.extra_data.name }} <br>#}
 
-            <div class="mb-2">
-              <label for="username">{% trans "Username" %}:</label>
-              <input type="text" class="form-control" name="username" id="username"
-                     value="{{ user.username }}" disabled>
-            </div>
-            {#                    <div class="mb-2">#}
-            {#                        <label for="username">{% trans "Institution" %}:</label>#}
-            {#                        <input type="text" class="form-control" name="username" id="username"#}
-            {#                               value="{{ user.profile.institution }}">#}
-            {#                    </div>#}
-            <div class="mb-2">
-              <label for="username">{% trans "Email address" %}:</label>
-              <input type="text" class="form-control" name="username" id="username"
+{#            <div class="mb-2">#}
+{#              <label for="user_id">{% trans "User ID number" %}:</label>#}
+{#              <input type="text" class="form-control" name="user_id" id="user_id"#}
+{#                     value="{{ user.id }}" disabled>#}
+{#            </div>#}
+            <label for="user_email">{% trans "Primary e-mail" %}:</label>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" name="user_email" id="user_email"
                      value="{{ user.email }}"
                      disabled>
+              <a href="{% url 'account_email' %}" class="btn btn-primary">Manage</a>
             </div>
           {% endif %}
           <form method="post" novalidate>
             {% csrf_token %}
             {% include 'partials/form.html' %}
+{#            <div class="mb-2">#}
+{#                <label for="institution">{% trans "Institution" %}:</label>#}
+{#                <input type="text" class="form-control" name="institution" id="institution"#}
+{#                       value="{{ user.profile.institution }}">#}
+{#            </div>#}
             <button type="submit" class="btn btn-primary">{% trans "Save changes" %}</button>
             {% if not use_social_auth_only %}
-              <a href="{% url 'oauth_password' %}" class="btn btn-warning">{% trans "Change password" %}</a>
+              <a href="{% url 'account_change_password' %}" class="btn btn-warning">{% trans "Change password" %}</a>
             {% endif %}
           </form>
         </div>
         <div class="col-sm-2 ps-0">
-          <img src="{{ user|gravatar }}" alt="{{ user.username }}" class="w-100">
+          <img src="{{ user|gravatar }}" alt="{% translate 'User avatar generated automatically which looks like a robot.' %}" class="w-100">
           <p class="text-center small">{% trans "This avatar is generated automatically." %}</p>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="card mt-3" id="email_accounts">
-    <div class="card-header bg-light fs-5">{% translate "Email accounts" %}</div>
-    <div class="card-body">
-      <a href="{% url 'account_email' %}" class="btn btn-primary">Manage email accounts</a>
     </div>
   </div>
   {% if use_social_auth %}
