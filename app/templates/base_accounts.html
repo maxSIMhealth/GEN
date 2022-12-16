@@ -13,7 +13,9 @@
       <div class="col-lg-8 col-md-10 col-sm-12">
         <div class="card bg-dark text-white">
           <div class="card-header bg-white text-center">
-            <img src="{% static 'img/GEN-logo-new.png' %}" alt="{% trans 'GEN logo' %}" id="login-logo">
+            <a href="{% url 'login' %}">
+              <img src="{% static 'img/GEN-logo-new.png' %}" alt="{% trans 'GEN logo' %}" id="login-logo">
+            </a>
             {% if messages %}
               {% include 'partials/messages.html' %}
             {% endif %}
@@ -28,6 +30,8 @@
           {% block content %}
           {% endblock content %}
         </div>
+        {% block post_content %}
+        {% endblock %}
       </div>
     </div>
   </div>
