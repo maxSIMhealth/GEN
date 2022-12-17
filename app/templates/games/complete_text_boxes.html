@@ -8,7 +8,7 @@
         <div class="card-header fs-6">{% trans "Terms" %}</div>
         <div class="card-body">
           <draggable
-            class="list-group"
+            class="list-group sticky-top"
             :list="terms"
             :group="{name: 'game-{{ id }}-items'}"
             @change="check_answers"
