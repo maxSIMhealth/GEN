@@ -4,6 +4,7 @@ from content.models import ImageFile
 from courses.models import Course, Section, SectionItem
 from model_utils.models import TimeStampedModel
 from quiz.support_methods import duplicate_question, duplicate_quiz
+from tinymce.models import HTMLField
 from videos.models import VideoFile
 
 from django.contrib.auth.models import User
@@ -246,13 +247,13 @@ class Question(TimeStampedModel):
         blank=False,
         on_delete=models.CASCADE,
     )
-    content = models.TextField(
+    content = HTMLField(
         _("content"),
         max_length=1000,
         blank=False,
         help_text=_("Main text content of the question (max 1000 characters)."),
     )
-    additional_content = models.TextField(
+    additional_content = HTMLField(
         _("additional content"),
         max_length=1000,
         blank=True,
@@ -261,7 +262,7 @@ class Question(TimeStampedModel):
             "Optional: additional text that will be shown under the main text content. (max 1000 characters)."
         ),
     )
-    feedback = models.TextField(
+    feedback = HTMLField(
         _("feedback"),
         blank=True,
         help_text=_("Feedback to be shown after the question has been answered."),

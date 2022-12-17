@@ -83,11 +83,13 @@
                     {% for question in questions %}
                     <div {% if quiz.paginate %}class="pagination-item" style="display: none"{% endif %} class="mb-3">
                         <div class="fs-6">
-                            <strong>{% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}</strong>
+                            {% if quiz.show_question_number %}<strong>{% translate "Question" %} {{ forloop.counter }}: </strong>{% endif %}
+                          <br />
+                            {{ question.content|safe }}
                         </div>
                         <div>
                         {% if question.additional_content %}
-                            <p {% if question.question_type != 'H'%}class="mb-0"{% endif %}>{{ question.additional_content }}</p>
+                            <p {% if question.question_type != 'H'%}class="mb-0"{% endif %}>{{ question.additional_content|safe }}</p>
                         {% endif %}
                         {% if quiz.assessment_method and quiz.show_question_value %}
                         <em>({% translate "Value:" %} {{ question.value }})</em>
