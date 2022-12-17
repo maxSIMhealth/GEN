@@ -241,9 +241,9 @@ class Course(TimeStampedModel):
 
     def type_name(self):
         course_type_val = self.type
-        if course_type_val is COURSE:
+        if course_type_val == COURSE:
             course_type = "course"
-        elif course_type_val is MODULE:
+        elif course_type_val == MODULE:
             course_type = "module"
 
         return course_type
