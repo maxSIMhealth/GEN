@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 00:56+0000\n"
-"PO-Revision-Date: 2022-07-26 00:57+0000\n"
-"Last-Translator:   <>\n"
+"POT-Creation-Date: 2022-12-17 20:27+0000\n"
+"PO-Revision-Date: 2022-12-17 20:29+0000\n"
+"Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -38,13 +38,13 @@ msgid "Close"
 msgstr "Fermer"
 
 #: core/static/js/help-guide-account.js:18
-#: core/static/js/help-guide-course.js:18 core/static/js/help-guide-help.js:19
+#: core/static/js/help-guide-course.js:19 core/static/js/help-guide-help.js:19
 #: core/static/js/help-guide-home.js:18
 msgid "GEN Guide"
 msgstr "Guide GEN"
 
 #: core/static/js/help-guide-account.js:19
-#: core/static/js/help-guide-course.js:19 core/static/js/help-guide-help.js:20
+#: core/static/js/help-guide-course.js:20 core/static/js/help-guide-help.js:20
 #: core/static/js/help-guide-home.js:19
 msgid ""
 "Welcome to GEN's help. This quick guide will briefly explain each area of "
@@ -54,13 +54,13 @@ msgstr ""
 "chaque interface de GEN."
 
 #: core/static/js/help-guide-account.js:31
-#: core/static/js/help-guide-course.js:31 core/static/js/help-guide-help.js:32
+#: core/static/js/help-guide-course.js:32 core/static/js/help-guide-help.js:32
 #: core/static/js/help-guide-home.js:31
 msgid "Top navigation bar"
 msgstr "Bar de navigation supérieur"
 
 #: core/static/js/help-guide-account.js:32
-#: core/static/js/help-guide-course.js:32 core/static/js/help-guide-help.js:33
+#: core/static/js/help-guide-course.js:33 core/static/js/help-guide-help.js:33
 #: core/static/js/help-guide-home.js:32
 msgid ""
 "In this area are located two elements: <b>Help</b> (which activated this "
@@ -113,20 +113,31 @@ msgstr ""
 " Si vous avez besoin de mettre à jour d'autres informations, veuillez "
 "contacter l'assistance par e-mail."
 
-#: core/static/js/help-guide-account.js:127
-#: core/static/js/help-guide-course.js:127
-#: core/static/js/help-guide-help.js:104 core/static/js/help-guide-home.js:103
+#: core/static/js/help-guide-account.js:128
+#: core/static/js/help-guide-course.js:152
+#: core/static/js/help-guide-help.js:104 core/static/js/help-guide-home.js:104
+msgid "Language"
+msgstr "Langue"
+
+#: core/static/js/help-guide-account.js:129
+#: core/static/js/help-guide-course.js:153
+#: core/static/js/help-guide-help.js:105 core/static/js/help-guide-home.js:105
+msgid ""
+"And here you can choose which language you prefer using. You can change it "
+"at any moment."
+msgstr ""
+"Et ici, vous pouvez choisir la langue que vous préférez utiliser. Vous "
+"pouvez le changer à tout moment."
+
+#: core/static/js/help-guide-account.js:151
+#: core/static/js/help-guide-course.js:176
+#: core/static/js/help-guide-help.js:128 core/static/js/help-guide-home.js:127
 msgid "Getting support"
 msgstr "Obtenir du soutient."
 
-#: core/static/js/help-guide-account.js:128
-#: core/static/js/help-guide-course.js:128
-#: core/static/js/help-guide-help.js:105
-#| msgid ""
-#| "If you need to get in touch in case of any questions or issues, please send "
-#| "an email to <a "
-#| "href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Thank"
-#| " you for using this guide, bye."
+#: core/static/js/help-guide-account.js:152
+#: core/static/js/help-guide-course.js:177
+#: core/static/js/help-guide-help.js:129 core/static/js/help-guide-home.js:128
 msgid ""
 "If you need to get in touch in case of any questions or issues, please send "
 "an email to <a "
@@ -138,19 +149,19 @@ msgstr ""
 "href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Merci"
 " d’avoir utilisé ce guide."
 
-#: core/static/js/help-guide-course.js:55
+#: core/static/js/help-guide-course.js:56
 msgid "Course Name"
 msgstr "Nom du cours"
 
-#: core/static/js/help-guide-course.js:56
+#: core/static/js/help-guide-course.js:57
 msgid "This area displays the current course/module name."
 msgstr "Cette zone affiche le nom actuel du cours/module."
 
-#: core/static/js/help-guide-course.js:79
+#: core/static/js/help-guide-course.js:80
 msgid "Sections"
 msgstr "Sections"
 
-#: core/static/js/help-guide-course.js:80
+#: core/static/js/help-guide-course.js:81
 msgid ""
 "This interactable element allows you to navigate through the sections "
 "available in the current course/module. You should follow these sections in "
@@ -162,17 +173,32 @@ msgstr ""
 "dans lequel elles sont présentées. Si l'une des sections a des exigences, "
 "elles seront également affichées ici."
 
-#: core/static/js/help-guide-course.js:103
-msgid "Section content"
+#: core/static/js/help-guide-course.js:104
+#| msgid "Section content"
+msgid "Section Content"
 msgstr "Contenu de la section"
 
-#: core/static/js/help-guide-course.js:104
+#: core/static/js/help-guide-course.js:105
 msgid ""
 "This is the main content area, where the selected section data is displayed "
 "and most GEN interactions takes place."
 msgstr ""
 "Il s'agit de la zone de contenu principale, où les données de section "
 "sélectionnées sont affichées et la plupart des interactions GEN ont lieu."
+
+#: core/static/js/help-guide-course.js:128
+#| msgid "Top navigation bar"
+msgid "Footer navigation bar"
+msgstr "Barre de navigation du pied de page"
+
+#: core/static/js/help-guide-course.js:129
+msgid ""
+"You can also navigate between sections using the footer navigation bar. It "
+"allows you to go to the previous or the next section."
+msgstr ""
+"Vous pouvez également naviguer entre les sections à l'aide de la barre de "
+"navigation du pied de page. Il permet de passer à la section précédente ou "
+"suivante."
 
 #: core/static/js/help-guide-help.js:80
 msgid "Help"
@@ -184,34 +210,15 @@ msgid ""
 msgstr ""
 "Voici la liste des questions fréquemment posées sur GEN et ses composants."
 
-#: core/static/js/help-guide-home.js:79
+#: core/static/js/help-guide-home.js:80
 msgid "Courses"
 msgstr "Cours"
 
-#: core/static/js/help-guide-home.js:80
-#| msgid ""
-#| "Here are listed the courses in which you are currently enrolled."
+#: core/static/js/help-guide-home.js:81
 msgid ""
 "Here are listed the courses/modules in which you are currently enrolled."
 msgstr ""
 "Voici la liste des cours/modules auxquels vous êtes actuellement inscrit."
-
-#: core/static/js/help-guide-home.js:104
-#| msgid ""
-#| "If you need to get in touch in case of any questions or issues, please send "
-#| "an email to <a "
-#| "href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Thank"
-#| " you for using this guide, bye."
-msgid ""
-"If you need to get in touch in case of any questions or issues, please send "
-"an email to <a "
-"href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Thank"
-" you for using this guide`."
-msgstr ""
-"Si jamais vous avez besoin davantage d’aide, n’hésitez pas d’envoyer un "
-"courriel à <a "
-"href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Merci"
-" d’avoir utilisé ce guide."
 
 #: core/static/js/pdf-viewer.js:1
 msgid ""
@@ -228,6 +235,17 @@ msgstr "Veuillez répondre à la question."
 #: core/static/js/upload-video.js:3
 msgid "Uploading. Please wait."
 msgstr "Téléchargement. S'il vous plaît, attendez."
+
+#~ msgid ""
+#~ "If you need to get in touch in case of any questions or issues, please send "
+#~ "an email to <a "
+#~ "href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Thank"
+#~ " you for using this guide`."
+#~ msgstr ""
+#~ "Si jamais vous avez besoin davantage d’aide, n’hésitez pas d’envoyer un "
+#~ "courriel à <a "
+#~ "href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>.<br><br>Merci"
+#~ " d’avoir utilisé ce guide."
 
 #, fuzzy
 #~ msgid "Next22"
