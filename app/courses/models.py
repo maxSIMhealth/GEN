@@ -444,6 +444,13 @@ class Section(TimeStampedModel):
         default=False,
         help_text=_("* FOR QUIZ ONLY *: group quizzes by videos."),
     )
+    show_mark_as_complete_instruction = models.BooleanField(
+        _("show instructions to mark section as completed"),
+        default=True,
+        help_text=_(
+            "*FOR CONTENT ONLY *: show the instructions message to mark section as completed. If disabled, only the 'mark as completed' button will be rendered."
+        ),
+    )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
     )
@@ -557,6 +564,16 @@ class Section(TimeStampedModel):
                 )
             )
 
+    def check_content_section_fields(self, errors):
+        if self.show_mark_as_complete_instruction and not self.section_type == "C":
+            errors.append(
+                ValidationError(
+                    _(
+                        "To set 'show instructions to mark section as completed', the section type must be Content."
+                    )
+                )
+            )
+
     def check_section_dates(self, errors):
         if self.start_date and self.end_date:
             if self.end_date <= self.start_date:
@@ -580,6 +597,8 @@ class Section(TimeStampedModel):
         self.check_video_and_upload_fields(errors)
         # check fields related to Quiz Section
         self.check_quiz_section_fields(errors)
+        # check fields related to Content Section
+        self.check_content_section_fields(errors)
 
         if len(errors) > 0:
             raise ValidationError(errors)

@@ -171,6 +171,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "show_thumbnails",
                     "show_related_video_name",
                     "group_by_video",
+                    "show_mark_as_complete_instruction",
                 )
             },
         ),

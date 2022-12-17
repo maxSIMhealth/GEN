@@ -59,7 +59,9 @@
                 </div>
                 {% if forloop.last %}
                   <div class="pagination-item p-3" style="display:none">
-                    <p>{% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}</p>
+                    {% if section.show_mark_as_complete_instruction %}
+                      <p>{% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}</p>
+                    {% endif %}
                     {% include 'partials/mark_section_completed.html' %}
                   </div>
                 {% endif %}
@@ -96,14 +98,20 @@
           </div>
         </div>
         {% if forloop.last %}
-          <div class="card mb-3">
-            <div class="card-body">
-              {% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}
+          {% if section.show_mark_as_complete_instruction %}
+            <div class="card mb-3">
+              <div class="card-body">
+                {% translate "Congratulations, you have reached the end of this section. If you feel that you are ready to continue, please click the button below to mark this section as completed." %}
+              </div>
+              <div class="card-footer">
+                {% include 'partials/mark_section_completed.html' %}
+              </div>
             </div>
-            <div class="card-footer">
+          {% else %}
+            <div class="mb-3">
               {% include 'partials/mark_section_completed.html' %}
             </div>
-          </div>
+          {% endif %}
         {% endif %}
       {% endfor %}
     {% endif %}
