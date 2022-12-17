@@ -18,6 +18,7 @@
 {% endblock %}
 
 {% block content_footer %}
+  {% url 'account_login' as login_url %}
   {% blocktranslate %}
     Already have an account? Then please <a href="{{ login_url }}"> sign in</a>.
   {% endblocktranslate %}
