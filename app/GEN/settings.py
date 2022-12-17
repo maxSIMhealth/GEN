@@ -436,11 +436,6 @@ SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "VERIFIED_EMAIL": True,
-        "APP": {
-            "client_id": os.getenv("SOCIAL_AUTH_GOOGLE_KEY"),
-            "secret": os.getenv("SOCIAL_AUTH_GOOGLE_SECRET"),
-            "key": "",
-        },
         "SCOPE": [
             "profile",
             "email",
@@ -451,11 +446,6 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     "microsoft": {
         "VERIFIED_EMAIL": True,
-        "APP": {
-            "client_id": os.getenv("SOCIAL_AUTH_AZUREAD_KEY"),
-            "secret": os.getenv("SOCIAL_AUTH_AZUREAD_SECRET"),
-            "key": "",
-        },
         "SCOPE": [
             "User.Read",
         ],
