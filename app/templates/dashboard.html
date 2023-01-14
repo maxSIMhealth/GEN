@@ -1,62 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'base_logged.html' %}
 
 {% load i18n %}
-{% load humanize %}
-{% load gravatar %}
 
-{% comment %}
-    {% block breadcrumb %}
-        <li class="breadcrumb-item active">{% trans "Home" %}</li>
-    {% endblock breadcrumb %}
-{% endcomment %}
+{% block page_title %}
+  {% trans "Home" %}
+{% endblock page_title %}
 
-{% block content %}
-    <div class="card bg-dark mb-3" id="page-name">
-        <div class="card-header">
-            <div class="card-text text-white fs-5 p-0">{% trans "Home" %}</div>
-        </div>
+{% block content_body %}
+  {% if dashboard_info %}
+    <div class="card mb-3">
+      {% if dashboard_info.image %}
+        <img src="{{ dashboard_info.image.url }}" class="card-img-top" alt="Hero image">
+      {% endif %}
+      <div
+        class="card-body {% if dashboard_info.description or dashboard_info.instructions %}pb-0{% else %}pb-2{% endif %}">
+        <h5 class="card-title">{{ dashboard_info.name }}</h5>
+        {% if dashboard_info.description %}
+          <div class="card-text">
+            <h6>{% translate "Description" %}</h6>
+            {{ dashboard_info.description|safe }}
+          </div>
+        {% endif %}
+        {% if dashboard_info.instructions %}
+          <div class="card-text">
+            <h6>{% translate "Instructions" %}</h6>
+            {{ dashboard_info.instructions|safe }}
+          </div>
+        {% endif %}
+      </div>
+      {#            <div class="card-header">#}
+      {#                <div class="card-text fs-5 p-0">{{ dashboard_info.name }}</div>#}
+      {#            </div>#}
     </div>
+  {% endif %}
 
-    {% if messages %}
-        {% include 'partials/messages.html' %}
-    {% endif %}
+  {% if courses %}
+    {% include 'partials/dashboard_items.html' with items=courses type='courses' %}
+  {% endif %}
 
-    {% if dashboard_info %}
-        <div class="card mb-3">
-            {% if dashboard_info.image %}
-                <img src="{{ dashboard_info.image.url }}" class="card-img-top" alt="Hero image">
-            {% endif %}
-            <div class="card-body {% if dashboard_info.description or dashboard_info.instructions %}pb-0{% else %}pb-2{% endif %}">
-                <h5 class="card-title">{{ dashboard_info.name }}</h5>
-                {% if dashboard_info.description %}
-                    <div class="card-text">
-                        <h6>{% translate "Description" %}</h6>
-                        {{ dashboard_info.description|safe }}
-                    </div>
-                {% endif %}
-                {% if dashboard_info.instructions %}
-                    <div class="card-text">
-                        <h6>{% translate "Instructions" %}</h6>
-                        {{ dashboard_info.instructions|safe }}
-                    </div>
-                {% endif %}
-            </div>
-{#            <div class="card-header">#}
-{#                <div class="card-text fs-5 p-0">{{ dashboard_info.name }}</div>#}
-{#            </div>#}
-        </div>
-    {% endif %}
+  {% if modules %}
+    {% include 'partials/dashboard_items.html' with items=modules type='modules' %}
+  {% endif %}
 
-    {% if courses %}
-        {% include 'partials/dashboard_items.html' with items=courses type='courses' %}
-    {% endif %}
+  {% if not courses and not modules %}
+    <li class="list-group-item">{% blocktranslate %} Not enrolled in any course/module. Please wait for the
+      administrator to assign you.{% endblocktranslate %}</li>
+  {% endif %}
 
-    {% if modules %}
-        {% include 'partials/dashboard_items.html' with items=modules type='modules' %}
-    {% endif %}
-
-    {% if not courses and not modules %}
-        <li class="list-group-item">{% blocktranslate %} Not enrolled in any course/module. Please wait for the administrator to assign you.{% endblocktranslate %}</li>
-    {% endif %}
-
-{% endblock content %}
+{% endblock content_body %}

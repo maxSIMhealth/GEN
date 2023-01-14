@@ -1,0 +1,69 @@
+{#{% extends "socialaccount/base.html" %}#}
+{% extends "base_logged.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Account Social Connections" %}{% endblock %}
+
+{% block page_title %}
+  {% trans "Account Social Connections" %}
+{% endblock page_title %}
+
+{% block content_body %}
+  <div class="card">
+    <div class="card-header bg-light fs-5">{% trans "Connected Social Accounts" %}</div>
+    <div class="card-body">
+      {% if form.accounts %}
+        <p>{% blocktrans %}You can sign in to your GEN account using any of the following third party
+          accounts:{% endblocktrans %}</p>
+
+        <form method="post" action="{% url 'socialaccount_connections' %}">
+          {% csrf_token %}
+
+          <fieldset>
+            {% if form.non_field_errors %}
+              {% for error in form.non_field_errors %}
+                <div class="alert alert-warning mt-2" role="alert">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+
+            <div class="list-group mb-3">
+              {% for base_account in form.accounts %}
+                {% with base_account.get_provider_account as account %}
+                  <label class="list-group-item" for="id_account_{{ base_account.id }}">
+                    <input class="form-check-input" id="id_account_{{ base_account.id }}" type="radio" name="account"
+                           value="{{ base_account.id }}"/>
+                    <span
+                      class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }}">{{ account.get_brand.id|title }}: </span>
+                    {{ account }}
+                  </label>
+                {% endwith %}
+              {% endfor %}
+            </div>
+
+            <div class="mt-2">
+              <button type="submit" class="btn btn-danger">{% trans 'Remove' %}</button>
+            </div>
+
+          </fieldset>
+
+        </form>
+
+      {% else %}
+        {% trans 'You currently have no social network accounts connected to this account.' %}
+      {% endif %}
+
+      {% include "socialaccount/snippets/login_extra.html" %}
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-header bg-light fs-5">{% trans "Add Social Accounts" %}</div>
+    <div class="card-body p-0">
+      <div class="socialaccount_providers list-group list-group-flush">
+        {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

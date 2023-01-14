@@ -5,141 +5,158 @@
 {% load django_bootstrap5 %}
 {% load footer_logos %}
 {% load support_emails %}
+{% load get_user_fullname %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 {% get_language_info_list for LANGUAGES as languages %}
+{% get_user_fullname as user_fullname %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <meta charset="utf-8">
-    <title>{% block title %}GEN{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
-    {% bootstrap_css %}
-    {% sri_static "css/custom.css" %}
-    {% sri_static "css/shepherd.css" %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-add-css="false"
-            crossorigin="anonymous"
-            integrity="sha384-heKROmDHlJdBb+n64p+i+wLplNYUZPaZmp2HZ4J6KCqzmd33FJ8QClrOV3IdHZm5"></script>
-    <link href="https://use.fontawesome.com/releases/v5.13.1/css/svg-with-js.css" rel="stylesheet"/>
+  <meta charset="utf-8">
+  <title>{% block head_title %}{% endblock %} | GEN</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+  {% bootstrap_css %}
+  {% sri_static "css/custom.css" %}
+  {% sri_static "css/shepherd.css" %}
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-add-css="false"
+          crossorigin="anonymous"
+          integrity="sha384-heKROmDHlJdBb+n64p+i+wLplNYUZPaZmp2HZ4J6KCqzmd33FJ8QClrOV3IdHZm5"></script>
+  <link href="https://use.fontawesome.com/releases/v5.13.1/css/svg-with-js.css" rel="stylesheet"/>
 
-    {% block javascript_top %}
-    {% endblock %}
+  {% block javascript_top %}
+  {% endblock %}
 
-    {% block stylesheet %}
-    {% endblock stylesheet %}
+  {% block extra_head %}
+  {% endblock %}
+
+  {% block stylesheet %}
+  {% endblock stylesheet %}
 </head>
 <body>
 {% block body %}
-    <nav class="navbar navbar-expand-md navbar-light bg-light" id="main-navbar">
-        <div class="container">
-            <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="{% trans 'Return to GEN home page' %}">
-                <img src="{% static 'img/GEN-logo-new-compact.png' %}" height="45" class="d-inline-block align-top"
-                     alt="{% trans 'GEN logo' %}">
+  <nav class="navbar navbar-expand-md navbar-light bg-light" id="main-navbar">
+    <div class="container">
+      <a class="navbar-brand pt-0 pb-0" href="{% url 'home' %}" title="{% trans 'Return to GEN home page' %}">
+        <img src="{% static 'img/GEN-logo-new-compact.png' %}" height="45" class="d-inline-block align-top"
+             alt="{% trans 'GEN logo' %}">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
+              aria-controls="mainMenu" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
+        <span class="navbar-toggler-icon"></span>
+        {% trans "Toggle" %}
+      </button>
+      <div class="collapse navbar-collapse" id="mainMenu">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home' %}">{% trans "Home" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#" onClick="tour.start();">{% trans "Tutorial" %}</a>
+          </li>
+          {#                    <li class="nav-item">#}
+          {#                        <a class="nav-link active" href="{% url 'faq' %}">{% trans "FAQ" %}</a>#}
+          {#                    </li>#}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'help' %}">{% trans "Help / FAQ" %}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          {% if user.is_staff %}
+            <a class="btn btn-danger" href="{% url 'admin:index' %}" role="button">{% trans "Admin" %}</a>
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="userMenu" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ user|gravatar }}" alt="{{ user_fullname }} avatar image" id="navbar-avatar">
+              {{ user_fullname }}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
-                    aria-controls="mainMenu" aria-expanded="false" aria-label="{% trans 'Toggle navigation' %}">
-                <span class="navbar-toggler-icon"></span>
-                {% trans "Toggle" %}
-            </button>
-            <div class="collapse navbar-collapse" id="mainMenu">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'home' %}">{% trans "Home" %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" onClick="tour.start();">{% trans "Tutorial" %}</a>
-                    </li>
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link active" href="{% url 'faq' %}">{% trans "FAQ" %}</a>#}
-{#                    </li>#}
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'help' %}">{% trans "Help / FAQ" %}</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    {% if user.is_staff %}
-                        <a class="btn btn-danger" href="{% url 'admin:index' %}" role="button">{% trans "Admin" %}</a>
-                    {% endif %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" href="#" id="userMenu" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ user|gravatar }}" alt="{{ user.username }} avatar image" id="navbar-avatar">
-                            {{ user.username }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="userMenu">
-                            <li><a class="dropdown-item" href="{% url 'my_account' %}">{% trans "My account" %}</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+            <ul class="dropdown-menu" aria-labelledby="userMenu">
+              <li><a class="dropdown-item" href="{% url 'my_account' %}">{% trans "My account" %}</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">{% trans "Log out" %}</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <div class="bg-white">
-        <div class="container pt-3 pb-3">
-            {% block container %}
+  <div class="bg-white">
+    <div class="container pt-3 pb-3">
+      {% block container %}
 
-                {% comment %}
+        {% comment %}
           <ol class="breadcrumb my-3">
             {% block breadcrumb %}
             {% endblock breadcrumb %}
           </ol>
-          {% endcomment %}
+        {% endcomment %}
 
-                {% block content %}
-                {% endblock content %}
-            {% endblock container %}
-        </div>
+        {% block content %}
+        {% endblock content %}
+
+        {% block post_content %}
+        {% endblock %}
+
+      {% endblock container %}
     </div>
+  </div>
 
 {% endblock body %}
 
+{% block extra_body %}
+{% endblock %}
+
 {% block footer %}
 
-    <div class="footer bg-light pb-2">
-        <div class="text-center pt-2 pb-2 language-selector" id="footer-language-selector">
-            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <label for="language">{% trans "Language:" %}</label>
-                <select name="language" id="language" class="form-select form-select-sm" aria-label="{% trans "List of languages" %}">
-                    {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                            {{ language.name_local|capfirst }} ({{ language.code }})
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="Go" class="btn btn-primary btn-sm">
-            </form>
-        </div>
-        <div class="text-center text-dark">
-            {% footer_logos %}
-            <p class="mb-0">GEN - Gamified Educational Network (2022)</p>
-            <p class="mb-0">{% support_emails %}</p>
-        </div>
+  <div class="footer bg-light pb-2">
+    <div class="text-center pt-2 pb-2 language-selector" id="footer-language-selector">
+      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <label for="language">{% trans "Language:" %}</label>
+        <select name="language" id="language" class="form-select form-select-sm"
+                aria-label="{% trans "List of languages" %}">
+          {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+              {{ language.name_local|capfirst }} ({{ language.code }})
+            </option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Go" class="btn btn-primary btn-sm">
+      </form>
     </div>
+    <div class="text-center text-dark">
+      {% footer_logos %}
+      <p class="mb-0">GEN - Gamified Educational Network (2022)</p>
+      <p class="mb-0">{% support_emails %}</p>
+    </div>
+  </div>
 {% endblock footer %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-Qg00WFl9r0Xr6rUqNLv1ffTSSKEFFCDCKVyHZ+sVt8KuvG99nWw5RNvbhuKgif9z" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha384-Qg00WFl9r0Xr6rUqNLv1ffTSSKEFFCDCKVyHZ+sVt8KuvG99nWw5RNvbhuKgif9z"
+        crossorigin="anonymous"></script>
 {% bootstrap_javascript %}
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.js" integrity="sha384-3A5gQlOj3qV5ZlOxNleXClvoa3C6pd+qgoiG1+zs5PGx6QkFAIvAxIDFnguYCqKp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.js"
+        integrity="sha384-3A5gQlOj3qV5ZlOxNleXClvoa3C6pd+qgoiG1+zs5PGx6QkFAIvAxIDFnguYCqKp"
+        crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% comment %}
-    {% url 'javascript-catalog' as javascript_catalog_url %}
-    {% sri_static javascript_catalog_url %}
+  {% url 'javascript-catalog' as javascript_catalog_url %}
+  {% sri_static javascript_catalog_url %}
 {% endcomment %}
 <script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 </script>
 {% block javascript_bottom %}
-    {% sri_static "js/help-guide-home.js" %}
+  {% sri_static "js/help-guide-home.js" %}
 {% endblock javascript_bottom %}
 </body>
 </html>

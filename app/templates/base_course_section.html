@@ -7,7 +7,7 @@
 {% load sri %}
 {% load django_bootstrap5 %}
 
-{% block title %}GEN - {{course.name}} - {{ section.name }}{% endblock title %}
+{% block head_title %}GEN - {{course.name}} - {{ section.name }}{% endblock head_title %}
 
 {% block container %}
     {% comment %}
@@ -36,7 +36,7 @@
                     </button>
                 </nav>
                 <div class="collapse d-lg-block navbar-collapse" id="sidebar">
-                    <div class="list-group-flush navbar-nav">
+                    <div class="list-group list-group-flush navbar-nav">
                         {% block content_tabs %}
                             <a class="list-group-item list-group-item-action" href="{% url 'course' course.pk %}">{{ course.initial_section_name }}</a>
                             {% generate_sections_sidebar %}

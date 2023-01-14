@@ -9,6 +9,20 @@
 {% endif %}
 
 {% for field in form %}
+
+{#  field {{ field|field_type }}<br>#}
+{#  widget_type: {{ field|widget_type }}<br>#}
+{#  html_name: {{ field.html_name }}<br>#}
+{##}
+{#  {% if field|widget_type == "checkboxinput" %}#}
+{#    <div class="mb-2 form-check">#}
+{#    {{ field.label_tag }}#}
+{##}
+{#    {% render_field field class=field|input_class %}#}
+{#    </div>#}
+{##}
+{#  {% endif %}#}
+
   <div class="mb-2">
     {{ field.label_tag }}
 

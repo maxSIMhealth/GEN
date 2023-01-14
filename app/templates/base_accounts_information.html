@@ -1,0 +1,23 @@
+{% extends "base_accounts.html" %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="card bg-light text-dark" id="login-card">
+    <div class="card-body">
+      <h3 class="card-title">{% block content_title %}{% endblock content_title %}</h3>
+      {% block content_body %}{% endblock content_body %}
+    </div>
+    <div class="card-footer">
+      {% block content_footer %}
+        <a href="{% url 'home' %}" class="btn btn-secondary">{% translate "Return home" %}</a>
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block post_content %}
+  <div class="mt-2">
+    {% include "partials/contact_us_snippet.html" %}
+  </div>
+{% endblock %}

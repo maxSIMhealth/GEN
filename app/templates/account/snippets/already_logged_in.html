@@ -1,0 +1,5 @@
+{% load i18n %}
+{% load account %}
+
+{% user_display user as user_display %}
+<strong>{% translate "Note" %}:</strong> {% blocktranslate %}you are already logged in.{% endblocktranslate %}

@@ -2,9 +2,9 @@
 
 {% load static %}
 {% load i18n %}
-{% load support_emails %}
+{% load socialaccount %}
 
-{% block title %}{% translate "Sign in to GEN" %}{% endblock title %}
+{% block head_title %}{% translate "Sign in to GEN" %}{% endblock head_title %}
 
 {% block content %}
   <div class="card" id="login-card">
@@ -37,7 +37,7 @@
             <div id="signin-buttons">
               {% if "google" in social_auth_providers %}
                 <div class="mb-3">
-                  <a href="{% url "social:begin" "google-oauth2" %}">
+                  <a href="{% provider_login_url 'google' %}">
                     <img src="{% static 'img/btn_google_signin_dark_normal_web@2x.png' %}"
                          alt="{% translate "Sign in with Google button" %}" id="login-btn-google">
                   </a>
@@ -45,7 +45,7 @@
               {% endif %}
               {% if "azuread" in social_auth_providers %}
                 <div class="mb-3">
-                  <a href="{% url "social:begin" "azuread-oauth2" %}">
+                  <a href="{% provider_login_url 'microsoft' %}">
                     <img src="{% static 'img/ms-symbollockup_signin_dark.svg' %}"
                          alt="{% translate "Sign in with Microsoft button" %}" id="login-btn-azure">
                   </a>
@@ -75,10 +75,7 @@
         {% endwith %}
       {% endfor %}
 
-      <div class="alert alert-info m-2">
-        {% translate "If you have problems logging into GEN, please contact us at" %}
-        {% support_emails %}
-      </div>
+      {% include "partials/contact_us_snippet.html" %}
     </div>
   </div>
 
