@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-17 20:17+0000\n"
-"PO-Revision-Date: 2022-12-17 20:29+0000\n"
+"POT-Creation-Date: 2023-01-14 01:15+0000\n"
+"PO-Revision-Date: 2023-01-14 01:33+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.9.8\n"
 
-#: GEN/settings.py:125
+#: GEN/settings.py:134
 msgid "English"
 msgstr "Anglais"
 
-#: GEN/settings.py:126
+#: GEN/settings.py:135
 msgid "French"
 msgstr "Français"
 
@@ -75,19 +75,11 @@ msgstr "profil"
 msgid "profiles"
 msgstr "profils"
 
-#: accounts/views.py:113
-msgid "Activate Your GEN Account"
-msgstr "Activez votre compte GEN"
-
-#: accounts/views.py:131
-msgid "You already have an account."
-msgstr "Avez vous déjà un compte."
-
-#: accounts/views.py:162
+#: accounts/views.py:168
 msgid "Account activated successfully. Please log in into GEN."
 msgstr "Compte activé avec succès. Veuillez vous connecter à GEN."
 
-#: accounts/views.py:169
+#: accounts/views.py:175
 msgid ""
 "Try logging in now. The confirmation link has been used or expired. Get in "
 "touch if you are having issues: support@maxsimgen.com"
@@ -96,17 +88,9 @@ msgstr ""
 "ou a expiré. Contactez-nous si vous rencontrez des problèmes: "
 "support@maxsimgen.com"
 
-#: accounts/views.py:222
+#: accounts/views.py:239
 msgid "Profile updated successfully."
 msgstr "Mise à jour du profil réussie."
-
-#: accounts/views.py:239
-msgid "Your password was successfully updated."
-msgstr "Votre mot de passe a été mis à jour avec succès."
-
-#: accounts/views.py:242
-msgid "Please correct the error below."
-msgstr "Veuillez corriger l'erreur ci-dessous."
 
 #: content/models.py:29 dashboard/models.py:20 quiz/models.py:283
 msgid "image"
@@ -288,7 +272,6 @@ msgid "question"
 msgstr "question"
 
 #: core/models.py:166
-#| msgid "Brief description of the logo (max 255 characters)"
 msgid "Question for the Help FAQ (max 255 characters)"
 msgstr "Question pour la FAQ d'aide (max 255 caractères)"
 
@@ -297,7 +280,6 @@ msgid "Answer for the Help FAQ question."
 msgstr "Répondez à la question FAQ de l'aide."
 
 #: courses/admin.py:24
-#| msgid "Successfully extracted file(s)."
 msgid "Successfully updated status object(s)."
 msgstr "Objet(s) d'état mis à jour avec succès."
 
@@ -598,7 +580,6 @@ msgid "SCORM"
 msgstr "SCORM"
 
 #: courses/models.py:276
-#| msgid "Section name (max 25 characters)"
 msgid "Section name (max 40 characters)"
 msgstr "Nom de la section (max 40 caractères)"
 
@@ -806,7 +787,6 @@ msgid "* FOR QUIZ ONLY *: group quizzes by videos."
 msgstr "* POUR QUIZ UNIQUEMENT * : groupe de quiz par vidéos."
 
 #: courses/models.py:448
-#| msgid "Mark section as completed"
 msgid "show instructions to mark section as completed"
 msgstr "afficher les instructions pour marquer la section comme terminée"
 
@@ -894,9 +874,6 @@ msgstr ""
 " pas activé."
 
 #: courses/models.py:572
-#| msgid ""
-#| "To set 'create discussion' or 'section output', the section type must be "
-#| "Upload."
 msgid ""
 "To set 'show instructions to mark section as completed', the section type "
 "must be Content."
@@ -1157,7 +1134,7 @@ msgstr "Nom du forum de discussion"
 msgid "The max length for the discussion board name is 100."
 msgstr "La longueur maximale du nom du forum de discussion est 100."
 
-#: discussions/forms.py:22 discussions/forms.py:75 templates/dashboard.html:33
+#: discussions/forms.py:22 discussions/forms.py:75 templates/dashboard.html:20
 #: templates/quiz/quiz.html:79 templates/sections/section_info.html:53
 #: videos/forms.py:16
 msgid "Description"
@@ -1173,7 +1150,8 @@ msgid "Submit"
 msgstr "Soumettre"
 
 #: discussions/forms.py:50 discussions/forms.py:101
-#: templates/accounts/password_change.html:28 videos/forms.py:55
+#: templates/account/password_change.html:29
+#: templates/deprecated/password_change.html:28 videos/forms.py:55
 #: videos/forms.py:78
 msgid "Cancel"
 msgstr "Annuler"
@@ -1232,7 +1210,6 @@ msgid "Discussion board created."
 msgstr "Un forum de discussion a été créé."
 
 #: discussions/views.py:208
-#| msgid "Discussion board created."
 msgid "Discussion board edited."
 msgstr "Forum de discussion édité."
 
@@ -1549,12 +1526,10 @@ msgid "Feedback to be shown after the question has been answered."
 msgstr "Rétroaction à afficher après la réponse à la question."
 
 #: quiz/models.py:272
-#| msgid "feedback"
 msgid "feedback image"
 msgstr "image de retour"
 
 #: quiz/models.py:277
-#| msgid "Feedback to be shown after the question has been answered."
 msgid ""
 "Optional feedback image file to be shown after the question has been "
 "answered."
@@ -1821,12 +1796,10 @@ msgstr ""
 "Enregistrement(s) mis à jour avec succès avec les données de ScormCloud."
 
 #: scorm/models.py:23
-#| msgid "Zip package"
 msgid "SCORM package"
 msgstr "Paquet SCORM"
 
 #: scorm/models.py:26
-#| msgid "Format accepted: PDF."
 msgid "Format accepted: zip."
 msgstr "Format accepté : zip."
 
@@ -1865,19 +1838,24 @@ msgstr ""
 "Si vous pensez qu'il s'agit d'une erreur, contactez-nous à"
 
 #: templates/403.html:31 templates/503.html:27
-#: templates/accounts/login.html:113
+#: templates/deprecated/login.html:110
 msgid "Ontario Tech University colour logo in a dark background"
 msgstr "Logo couleur de l'Ontario Tech University sur fond sombre"
 
 #: templates/403.html:33 templates/503.html:28
-#: templates/accounts/login.html:115 templates/partials/footer_logos.html:12
+#: templates/deprecated/login.html:112 templates/partials/footer_logos.html:12
 msgid "maxSIMhealth logo"
 msgstr "Logo maxSIMhealth"
 
-#: templates/403.html:34 templates/503.html:29
-#: templates/accounts/login.html:116 templates/base_accounts.html:43
+#: templates/403.html:34 templates/503.html:29 templates/base_accounts.html:61
+#: templates/deprecated/login.html:113
 msgid "Developed at"
 msgstr "Développé à"
+
+#: templates/503.html:6
+#| msgid "GEN is currently under maintenance. Please try again later."
+msgid "GEN is currently under maintenance"
+msgstr "GEN est actuellement en maintenance."
 
 #: templates/503.html:13
 msgid "Under Maintenance"
@@ -1896,233 +1874,520 @@ msgstr ""
 "\n"
 "Vous pouvez nous contacter via l'e-mail suivant: <a href=\"mailto:support@maxsimgen.com\">support@maxsimgen.com</a>"
 
-#: templates/accounts/login.html:7
+#: templates/account/account_inactive.html:5
+#: templates/account/account_inactive.html:7
+msgid "Account Inactive"
+msgstr "Compte Inactif"
+
+#: templates/account/account_inactive.html:10
+msgid "This account is inactive."
+msgstr "Ce compte est inactif."
+
+#: templates/account/email.html:5
+#| msgid "Email address"
+msgid "E-mail Addresses"
+msgstr "Adresses électronique"
+
+#: templates/account/email.html:8
+#| msgid "Email address"
+msgid "Manage E-mail Addresses"
+msgstr "Gérer les adresses électronique"
+
+#: templates/account/email.html:13
+#| msgid "Email address"
+msgid "Associated E-mail Addresses"
+msgstr "Adresse électronique associées"
+
+#: templates/account/email.html:16
+msgid "The following e-mail addresses are associated with your account:"
+msgstr "Les adresses e-mail suivantes sont associées à votre compte :"
+
+#: templates/account/email.html:34
+msgid "Verified"
+msgstr "Vérifié"
+
+#: templates/account/email.html:36
+msgid "Unverified"
+msgstr "Non vérifié"
+
+#: templates/account/email.html:38
+msgid "Primary"
+msgstr "Primaire"
+
+#: templates/account/email.html:44
+msgid "Make Primary"
+msgstr "Rendre primaire"
+
+#: templates/account/email.html:46
+#| msgid "Requires gamification"
+msgid "Re-send Verification"
+msgstr "Renvoyer vérification"
+
+#: templates/account/email.html:47 templates/socialaccount/connections.html:45
+msgid "Remove"
+msgstr "Éliminer"
+
+#: templates/account/email.html:55
+msgid "Warning:"
+msgstr "Avertissement:"
+
+#: templates/account/email.html:55
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, "
+"etc."
+msgstr ""
+"Vous n'avez actuellement aucune adresse e-mail configurée. Vous devriez "
+"vraiment ajouter une adresse e-mail pour pouvoir recevoir des notifications,"
+" réinitialiser votre mot de passe, etc."
+
+#: templates/account/email.html:63
+#| msgid "Email address"
+msgid "Add E-mail Address"
+msgstr "Ajouter une adresse e-mail"
+
+#: templates/account/email.html:69
+#| msgid "E-mail"
+msgid "Add E-mail"
+msgstr "Ajouter un e-mail"
+
+#: templates/account/email.html:80
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr "Voulez-vous vraiment supprimer l'adresse e-mail sélectionnée ?"
+
+#: templates/account/email/base_message.txt:1
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr "Bonjour de %(site_name)s!"
+
+#: templates/account/email/base_message.txt:5
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"%(site_domain)s"
+msgstr "Merci d'utiliser %(site_name)s! %(site_domain)s"
+
+#: templates/account/email/email_confirmation_message.txt:6
+#, python-format
+msgid ""
+"You're receiving this e-mail because user %(user_fullname)s has given your e-mail address to register an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr ""
+"Vous recevez cet e-mail car l'utilisateur %(user_fullname)s a donné votre adresse e-mail pour enregistrer un compte sur %(site_domain)s.\n"
+"\n"
+"Pour confirmer que c'est correct, allez à %(activate_url)s"
+
+#: templates/account/email/email_confirmation_subject.txt:3
+msgid "Please Confirm Your E-mail Address"
+msgstr "Merci de Confirmer Votre Adresse E-mail"
+
+#: templates/account/email/password_reset_key_message.txt:4
+msgid ""
+"You're receiving this e-mail because you or someone else has requested a password for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset your password.\n"
+"Please note that the link is valid for 24 hours. If it expires, you will need to request a new one."
+msgstr ""
+"Vous recevez cet e-mail parce que vous ou quelqu'un d'autre avez demandé un mot de passe pour votre compte d'utilisateur.\n"
+"Il peut être ignoré en toute sécurité si vous n'avez pas demandé de réinitialisation du mot de passe. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe.\n"
+"Veuillez noter que le lien est valide pendant 24 heures. S'il expire, vous devrez en demander un nouveau."
+
+#: templates/account/email/password_reset_key_message.txt:10
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr "En cas d'oubli, votre nom d'utilisateur est %(username)s."
+
+#: templates/account/email/password_reset_key_subject.txt:3
+#: templates/account/email/unknown_account_subject.txt:3
+#| msgid "Password reset"
+msgid "Password Reset E-mail"
+msgstr "E-mail de réinitialisation du mot de passe"
+
+#: templates/account/email/unknown_account_message.txt:4
+#, python-format
+msgid ""
+"You are receiving this e-mail because you or someone else has requested a\n"
+"password for your user account. However, we do not have any record of a user\n"
+"with email %(email)s in our database.\n"
+"\n"
+"This mail can be safely ignored if you did not request a password reset.\n"
+"\n"
+"If it was you, you can sign up for an account using the link below."
+msgstr ""
+"Vous recevez cet e-mail parce que vous ou quelqu'un d'autre avez demandé un mot de passe pour votre compte utilisateur. Cependant, nous n'avons aucun enregistrement d'un utilisateur avec l'e-mail %(email)s dans notre base de données.\n"
+"\n"
+"Ce courrier peut être ignoré en toute sécurité si vous n'avez pas demandé de réinitialisation de mot de passe.\n"
+"\n"
+"Si c'était vous, vous pouvez créer un compte en utilisant le lien ci-dessous."
+
+#: templates/account/email_confirm.html:6
+#: templates/account/email_confirm.html:8
+#| msgid "Email address"
+msgid "Confirm E-mail Address"
+msgstr "Confirmez votre adresse e-mail"
+
+#: templates/account/email_confirm.html:13
+#, python-format
+msgid ""
+"\n"
+"        Please confirm that\n"
+"        <a href=\"mailto:%(email)s\">%(email)s</a> is a valid e-mail address for user %(user_firstname)s\n"
+"        %(user_lastname)s."
+msgstr ""
+"\n"
+"Confirmez s'il-vous-plaît\n"
+"<a href=\"mailto:%(email)s\">%(email)s</a> est une adresse e-mail valide pour l'utilisateur %(user_firstname)s\n"
+"%(user_lastname)s."
+
+#: templates/account/email_confirm.html:21
+#| msgid "Confirmation"
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: templates/account/email_confirm.html:27
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please\n"
+"        <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+"Ce lien de confirmation par e-mail a expiré ou n'est pas valide. S'il vous plaît\n"
+"<a href=\"%(email_url)s\">envoyer une nouvelle demande de confirmation par e-mail</a>."
+
+#: templates/account/login.html:7 templates/account/login.html:27
+#| msgid "Sign up"
+msgid "Sign in"
+msgstr "S'identifier"
+
+#: templates/account/login.html:15 templates/deprecated/login.html:7
 msgid "Sign in to GEN"
 msgstr "Connectez-vous à GEN"
 
-#: templates/accounts/login.html:15
-msgid "Log in to GEN"
-msgstr "Connectez-vous à GEN"
-
-#: templates/accounts/login.html:24 templates/accounts/signup.html:18
-#: templates/registration/password_reset_complete.html:12
-msgid "Log in"
-msgstr "S'identifier"
-
-#: templates/accounts/login.html:33
+#: templates/account/login.html:55 templates/deprecated/login.html:33
 msgid "Please use your work or school account:"
 msgstr "Veuillez utiliser votre compte professionnel ou scolaire:"
 
-#: templates/accounts/login.html:35
+#: templates/account/login.html:57 templates/deprecated/login.html:35
 msgid "Or use your work or school account:"
 msgstr "Ou utilisez votre compte professionnel ou scolaire:"
 
-#: templates/accounts/login.html:42
-msgid "Sign in with Google button"
-msgstr "Button: sign in with Google"
-
-#: templates/accounts/login.html:50
-#| msgid "Sign in with Google button"
-msgid "Sign in with Microsoft button"
-msgstr "Se connecter avec le bouton Microsoft"
-
-#: templates/accounts/login.html:68
+#: templates/account/login.html:72 templates/deprecated/login.html:68
 msgid "Posted on:"
 msgstr "Posté sur:"
 
-#: templates/accounts/login.html:71
+#: templates/account/login.html:75 templates/deprecated/login.html:71
 msgid "Expires on:"
 msgstr "Expire le:"
 
-#: templates/accounts/login.html:79
-msgid "If you have problems logging into GEN, please contact us at"
-msgstr ""
-"Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous "
-"contacter à"
-
-#: templates/accounts/login.html:87
+#: templates/account/login.html:88 templates/deprecated/login.html:84
 msgid "New to GEN? Sign up"
 msgstr "Nouveau sur GEN ? S'inscrire"
 
-#: templates/accounts/login.html:88
+#: templates/account/login.html:89 templates/deprecated/login.html:85
 msgid "Forgot your password?"
 msgstr "Mot de passe oublié?"
 
-#: templates/accounts/login.html:97 templates/base.html:110
-#: templates/base_accounts.html:30
-msgid "Language:"
-msgstr "Langue:"
+#: templates/account/logout.html:5 templates/account/logout.html:7
+#| msgid "Sign up"
+msgid "Sign Out"
+msgstr "Se Déconnecter"
 
-#: templates/accounts/login.html:99 templates/base.html:111
-#: templates/base_accounts.html:31
-msgid "List of languages"
-msgstr "Liste des langues"
+#: templates/account/logout.html:10
+#| msgid "Are you sure that you want to delete the following video?"
+msgid "Are you sure you want to sign out?"
+msgstr "Êtes-vous certain de vouloir vous déconnecter?"
 
-#: templates/accounts/my_account.html:7 templates/accounts/my_account.html:11
-#: templates/accounts/my_account.html:17 templates/base.html:73
-msgid "My account"
-msgstr "Mon compte"
-
-#: templates/accounts/my_account.html:10
-#: templates/accounts/password_change.html:8 templates/base.html:50
-#: templates/dashboard.html:16
-msgid "Home"
-msgstr "Accueil"
-
-#: templates/accounts/my_account.html:28
-msgid "Social accounts"
-msgstr "Comptes sociaux"
-
-#: templates/accounts/my_account.html:34
-#, python-format
-#| msgid ""
-#| "\n"
-#| "                                Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
-#| "                            "
-msgid ""
-"\n"
-"                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
-"                "
-msgstr ""
-"\n"
-"Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
-
-#: templates/accounts/my_account.html:43 templates/accounts/my_account.html:50
-msgid ""
-"This will break the link between your Google account and your GEN account."
-msgstr "Cela rompra le lien entre votre compte Google et votre compte GEN."
-
-#: templates/accounts/my_account.html:45 templates/accounts/my_account.html:52
-msgid "Disconnect from Google"
-msgstr "Se déconnecter de Google"
-
-#: templates/accounts/my_account.html:55
-msgid ""
-"You must set a password for your GEN account before being able to disconnect"
-" from Google."
-msgstr ""
-"Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
-"vous déconnecter de Google."
-
-#: templates/accounts/my_account.html:56 templates/accounts/my_account.html:92
-msgid "Set your password now."
-msgstr "Définissez votre mot de passe maintenant."
-
-#: templates/accounts/my_account.html:60 templates/accounts/my_account.html:96
-#: templates/base.html:77
-msgid "Log out"
+#: templates/account/logout.html:17
+#| msgid "Sign up"
+msgid "Sign out"
 msgstr "Se déconnecter"
 
-#: templates/accounts/my_account.html:63
-msgid "Connect to Google"
-msgstr "Connectez-vous à Google"
-
-#: templates/accounts/my_account.html:70
+#: templates/account/messages/cannot_delete_primary_email.txt:2
 #, python-format
-#| msgid ""
-#| "\n"
-#| "                                Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
-#| "                            "
-msgid ""
-"\n"
-"                  Connected as %(azure_uid)s - %(azure_first_name)s %(azure_last_name)s\n"
-"                "
+msgid "You cannot remove your primary e-mail address (%(email)s)."
 msgstr ""
-"\n"
-"Connecté en tant que %(azure_uid)s - %(azure_first_name)s %(azure_last_name)s"
+"Vous ne pouvez pas supprimer votre adresse e-mail principale (%(email)s)."
 
-#: templates/accounts/my_account.html:79 templates/accounts/my_account.html:86
-#| msgid ""
-#| "This will break the link between your Google account and your GEN account."
-msgid ""
-"This will break the link between your Microsoft account and your GEN "
-"account."
-msgstr "Cela rompra le lien entre votre compte Microsoft et votre compte GEN."
+#: templates/account/messages/email_confirmation_sent.txt:2
+#, python-format
+msgid "Confirmation e-mail sent to %(email)s."
+msgstr "E-mail de confirmation envoyé à %(email)s."
 
-#: templates/accounts/my_account.html:81 templates/accounts/my_account.html:88
-#| msgid "Disconnect from Google"
-msgid "Disconnect from Microsoft"
-msgstr "Se déconnecter de Microsoft"
+#: templates/account/messages/email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr "Vous avez confirmé %(email)s."
 
-#: templates/accounts/my_account.html:91
-#| msgid ""
-#| "You must set a password for your GEN account before being able to disconnect"
-#| " from Google."
-msgid ""
-"You must set a password for your GEN account before being able to disconnect"
-" from Microsoft."
-msgstr ""
-"Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
-"vous déconnecter de Microsoft."
+#: templates/account/messages/email_deleted.txt:2
+#, python-format
+msgid "Removed e-mail address %(email)s."
+msgstr "Adresse e-mail supprimée %(email)s."
 
-#: templates/accounts/my_account.html:99
-#| msgid "Connect to Google"
-msgid "Connect to Microsoft"
-msgstr "Connectez-vous à Microsoft"
+#: templates/account/messages/logged_in.txt:3
+#| msgid "Successfully extracted file(s)."
+msgid "Successfully signed in."
+msgstr "Connexion réussie."
 
-#: templates/accounts/my_account.html:106
-msgid "Profile"
-msgstr "Profil"
+#: templates/account/messages/logged_out.txt:2
+#| msgid "You already have an account."
+msgid "You have signed out."
+msgstr "Vous vous êtes déconnecté."
 
-#: templates/accounts/my_account.html:112
-msgid "Username"
-msgstr "Nom d'utilisateur"
+#: templates/account/messages/password_changed.txt:2
+#| msgid "Your password was successfully updated."
+msgid "Password successfully changed."
+msgstr "Mot de passe changé avec succès."
 
-#: templates/accounts/my_account.html:122
-msgid "Email address"
-msgstr "Adresse électronique"
+#: templates/account/messages/password_set.txt:2
+#| msgid "Password change successful"
+msgid "Password successfully set."
+msgstr "Mot de passe défini avec succès."
 
-#: templates/accounts/my_account.html:131
-msgid "Save changes"
-msgstr "Sauvegarder les modifications"
+#: templates/account/messages/primary_email_set.txt:2
+#| msgid "Email address"
+msgid "Primary e-mail address set."
+msgstr "Adresse e-mail principale définie."
 
-#: templates/accounts/my_account.html:133
-#: templates/accounts/password_change.html:5
-#: templates/accounts/password_change.html:9
-#: templates/accounts/password_change.html:14
-#: templates/accounts/password_change.html:27
-#: templates/accounts/password_change_done.html:8
+#: templates/account/messages/unverified_primary_email.txt:2
+msgid "Your primary e-mail address must be verified."
+msgstr "Votre adresse e-mail principale doit être vérifiée."
+
+#: templates/account/password_change.html:5
+#: templates/account/password_change.html:9
+#: templates/account/password_change.html:14
+#: templates/account/password_change.html:28
+#: templates/accounts/my_account.html:50
+#: templates/deprecated/password_change.html:5
+#: templates/deprecated/password_change.html:9
+#: templates/deprecated/password_change.html:14
+#: templates/deprecated/password_change.html:27
+#: templates/deprecated/password_change_done.html:8
 #: templates/registration/password_reset_confirm.html:11
 #: templates/registration/password_reset_confirm.html:15
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/accounts/my_account.html:139
-msgid "This avatar is generated automatically."
-msgstr "Cet avatar est généré automatiquement."
+#: templates/account/password_change.html:8
+#: templates/accounts/my_account.html:10 templates/base.html:55
+#: templates/dashboard.html:6 templates/deprecated/password_change.html:8
+msgid "Home"
+msgstr "Accueil"
 
-#: templates/accounts/password_change.html:18
+#: templates/account/password_change.html:18
+#: templates/deprecated/password_change.html:18
 msgid "Your account does not have a password yet. Please define it below."
 msgstr ""
 "Votre compte n'a pas encore de mot de passe. Veuillez le définir ci-dessous."
 
-#: templates/accounts/password_change_done.html:5
-msgid "Password change successful"
-msgstr "Changement de mot de passe réussi"
+#: templates/account/password_reset.html:5
+#: templates/account/password_reset.html:7
+#: templates/account/password_reset_done.html:5
+#: templates/account/password_reset_done.html:7
+#: templates/account/password_reset_from_key.html:5
+#: templates/account/password_reset_from_key.html:7
+#: templates/account/password_reset_from_key_done.html:5
+#: templates/account/password_reset_from_key_done.html:7
+#| msgid "Password reset"
+msgid "Password Reset"
+msgstr "Réinitialisation du Mot de Passe"
 
-#: templates/accounts/password_change_done.html:9
-msgid " Success"
-msgstr "Succès"
+#: templates/account/password_reset.html:16
+#| msgid ""
+#| "Forgotten your password? Enter your email address below, and we’ll email "
+#| "instructions for setting a new one."
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll send you"
+" an e-mail allowing you to reset it."
+msgstr ""
+"Mot de passe oublié? Entrez votre adresse e-mail ci-dessous, et nous vous "
+"enverrons un e-mail vous permettant de le réinitialiser."
 
-#: templates/accounts/password_change_done.html:14
-msgid "<strong>Success!</strong> Your password has been changed!"
-msgstr "<strong>Succès!</strong> Votre mot de passe a été changé!"
+#: templates/account/password_reset.html:21
+#: templates/registration/password_reset_form.html:15
+msgid "Reset my password"
+msgstr "Réinitialiser mon mot de passe"
 
-#: templates/accounts/password_change_done.html:16
-msgid "Return to home page"
-msgstr "Retour à la page d'accueil"
+#: templates/account/password_reset_done.html:16
+msgid ""
+"We have sent you an e-mail. If you have not received it please check your "
+"spam folder. Otherwise contact us if you do not receive it in a few minutes."
+msgstr ""
+"Nous vous avons envoyé un e-mail. Si vous ne l'avez pas reçu, veuillez "
+"vérifier votre dossier spam. Sinon contactez-nous si vous ne le recevez pas "
+"dans quelques minutes."
 
-#: templates/accounts/signup.html:10
+#: templates/account/password_reset_from_key.html:7
+msgid "Bad Token"
+msgstr "Mauvais Jeton"
+
+#: templates/account/password_reset_from_key.html:12
+#, python-format
+#| msgid ""
+#| "The password reset link was invalid, possibly because it has already been "
+#| "used. Please request a new password reset."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
+msgstr ""
+"Le lien de réinitialisation du mot de passe n'était pas valide, peut-être "
+"parce qu'il a déjà été utilisé. Veuillez demander une <a "
+"href=\"%(passwd_reset_url)s\">réinitialisation du nouveau mot de passe</a>."
+
+#: templates/account/password_reset_from_key.html:18
+#| msgid "Change password"
+msgid "Change my password"
+msgstr "Changer mon mot de passe"
+
+#: templates/account/password_reset_from_key_done.html:10
+#| msgid "Your password has been set. You may go ahead and log in now."
+msgid "Your password is now changed. Please try to sign in now."
+msgstr ""
+"Votre mot de passe est maintenant modifié. Veuillez essayer de vous "
+"connecter maintenant."
+
+#: templates/account/password_set.html:5 templates/account/password_set.html:7
+#: templates/account/password_set.html:14
+#| msgid "Reset my password"
+msgid "Set Password"
+msgstr "Définir le Mot de Passe"
+
+#: templates/account/signup.html:5 templates/account/signup.html:7
+#: templates/socialaccount/signup.html:5 templates/socialaccount/signup.html:7
+#| msgid "Sign up"
+msgid "Signup"
+msgstr "S'inscrire"
+
+#: templates/account/signup.html:16 templates/deprecated/signup.html:10
 msgid "Sign up"
 msgstr "S'inscrire"
 
-#: templates/accounts/signup.html:14
-msgid "Create an account"
-msgstr "Créer un compte"
+#: templates/account/signup.html:22 templates/socialaccount/signup.html:25
+#, python-format
+msgid ""
+"\n"
+"    Already have an account? Then please <a href=\"%(login_url)s\"> sign in</a>.\n"
+"  "
+msgstr ""
+"\n"
+"Vous avez déjà un compte? Alors s'il vous plait <a href=\"%(login_url)s\"> sign in</a>."
 
-#: templates/accounts/signup.html:18
-msgid "Already have an account?"
-msgstr "Vous avez déjà un compte?"
+#: templates/account/signup_closed.html:5
+#: templates/account/signup_closed.html:7
+msgid "Sign Up Closed"
+msgstr "Inscriptions Closes"
+
+#: templates/account/signup_closed.html:10
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "Nous sommes désolés, mais l'inscription est actuellement fermée."
+
+#: templates/account/snippets/already_logged_in.html:5
+msgid "Note"
+msgstr "Note"
+
+#: templates/account/snippets/already_logged_in.html:5
+msgid "you are already logged in."
+msgstr "vous êtes déjà connecté."
+
+#: templates/account/snippets/password_rules.html:3
+msgid ""
+"\n"
+"<ul>\n"
+"  <li>Your password can’t be too similar to your other personal information (e.g., your e-mail).</li>\n"
+"  <li>Your password must contain at least 8 characters.</li>\n"
+"  <li>Your password can’t be a commonly used password.</li>\n"
+"  <li>Your password can’t be entirely numeric.</li>\n"
+"</ul>\n"
+msgstr ""
+"\n"
+"<ul>\n"
+"<li>Votre mot de passe ne doit pas être trop similaire à vos autres informations personnelles (par exemple, votre adresse e-mail).</li>\n"
+"<li>Votre mot de passe doit contenir au moins 8 caractères.</li>\n"
+"<li>Votre mot de passe ne peut pas être un mot de passe couramment utilisé.</li>\n"
+"<li>Votre mot de passe ne peut pas être entièrement numérique.</li>\n"
+"</ul>\n"
+
+#: templates/account/verification_sent.html:5
+#: templates/account/verification_sent.html:7
+#: templates/account/verified_email_required.html:5
+#: templates/account/verified_email_required.html:7
+#| msgid "Email address"
+msgid "Verify Your E-mail Address"
+msgstr "Vérifiez votre adresse e-mail"
+
+#: templates/account/verification_sent.html:10
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to finalize the\n"
+"    signup process. If you do not see the verification e-mail in your main inbox, check your spam folder. Please\n"
+"    contact us if you do not receive the verification e-mail within a few minutes."
+msgstr ""
+"Nous vous avons envoyé un e-mail pour vérification. Suivez le lien fourni "
+"pour finaliser le processus d'inscription. Si vous ne voyez pas l'e-mail de "
+"vérification dans votre boîte de réception principale, vérifiez votre "
+"dossier spam. Veuillez nous contacter si vous ne recevez pas l'e-mail de "
+"vérification dans quelques minutes."
+
+#: templates/account/verified_email_required.html:12
+msgid ""
+"This part of the site requires us to verify that you are who you claim to "
+"be. For this purpose, we require that you verify ownership of your e-mail "
+"address."
+msgstr ""
+"Cette partie du site nous oblige à vérifier que vous êtes bien la personne "
+"que vous prétendez être. À cette fin, nous vous demandons de vérifier la "
+"propriété de votre adresse e-mail."
+
+#: templates/account/verified_email_required.html:14
+msgid ""
+"We have sent an e-mail to you for verification. Please click on the link "
+"inside that e-mail. If you do not see the verification e-mail in your main "
+"inbox, check your spam folder. Otherwise, contact us if you do not receive "
+"it within a few minutes."
+msgstr ""
+"Nous vous avons envoyé un e-mail pour vérification. Veuillez cliquer sur le "
+"lien à l'intérieur de cet e-mail. Si vous ne voyez pas l'e-mail de "
+"vérification dans votre boîte de réception principale, vérifiez votre "
+"dossier spam. Sinon, contactez-nous si vous ne le recevez pas dans quelques "
+"minutes."
+
+#: templates/account/verified_email_required.html:16
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still <a href=\"%(email_url)s\">change your "
+"e-mail address</a>."
+msgstr ""
+"<strong>Remarque :</strong> vous pouvez toujours <a "
+"href=\"%(email_url)s\">modifier votre adresse e-mail</a>."
+
+#: templates/accounts/my_account.html:7 templates/accounts/my_account.html:11
+#: templates/accounts/my_account.html:15 templates/base.html:78
+msgid "My account"
+msgstr "Mon compte"
+
+#: templates/accounts/my_account.html:20
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/accounts/my_account.html:32
+msgid "Primary e-mail"
+msgstr "Courriel principal"
+
+#: templates/accounts/my_account.html:48
+msgid "Save changes"
+msgstr "Sauvegarder les modifications"
+
+#: templates/accounts/my_account.html:55
+#| msgid "This avatar is generated automatically."
+msgid "User avatar generated automatically which looks like a robot."
+msgstr ""
+"Avatar de l'utilisateur généré automatiquement qui ressemble à un robot."
+
+#: templates/accounts/my_account.html:56
+msgid "This avatar is generated automatically."
+msgstr "Cet avatar est généré automatiquement."
+
+#: templates/accounts/my_account.html:63
+msgid "Social accounts"
+msgstr "Comptes sociaux"
 
 #: templates/admin/scorm_package_change_form.html:6
 #: templates/admin/scorm_registration_change_form.html:6
@@ -2161,33 +2426,52 @@ msgstr "Synchroniser avec ScormCloud"
 msgid "Pulls the latest registration data from ScormCloud."
 msgstr "Extrait les dernières données d'enregistrement de ScormCloud."
 
-#: templates/base.html:38
+#: templates/base.html:43
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: templates/base.html:40 templates/base_accounts.html:16
+#: templates/base.html:45 templates/base_accounts.html:17
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: templates/base.html:43
+#: templates/base.html:48
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: templates/base.html:45 templates/base_course_section.html:36
+#: templates/base.html:50 templates/base_course_section.html:36
 msgid "Toggle"
 msgstr "Cabillot"
 
-#: templates/base.html:53
+#: templates/base.html:58
 msgid "Tutorial"
 msgstr "Didacticiel"
 
-#: templates/base.html:59
+#: templates/base.html:64
 msgid "Help / FAQ"
 msgstr "Aide / FAQ"
 
-#: templates/base.html:64
+#: templates/base.html:69
 msgid "Admin"
 msgstr "Admin"
+
+#: templates/base.html:82
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: templates/base.html:122 templates/base_accounts.html:47
+#: templates/deprecated/login.html:94
+msgid "Language:"
+msgstr "Langue:"
+
+#: templates/base.html:124 templates/base_accounts.html:49
+#: templates/deprecated/login.html:96
+msgid "List of languages"
+msgstr "Liste des langues"
+
+#: templates/base_accounts_information.html:13
+#| msgid "Return to home page"
+msgid "Return home"
+msgstr "Rentrer à la maison"
 
 #: templates/base_course_section.html:31
 msgid "Sections"
@@ -2209,17 +2493,61 @@ msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrée
 msgid "URL is not valid. Please notify the support team:"
 msgstr "L'URL n'est pas valide. Veuillez informer l'équipe d'assistance :"
 
-#: templates/dashboard.html:39
+#: templates/dashboard.html:26
 msgid "Instructions"
 msgstr "Instructions"
 
-#: templates/dashboard.html:59
+#: templates/dashboard.html:46
+#| msgid ""
+#| " Not enrolled in any course/module. Please wait for the administrator to "
+#| "assign you."
 msgid ""
-" Not enrolled in any course/module. Please wait for the administrator to "
-"assign you."
+" Not enrolled in any course/module. Please wait for the\n"
+"      administrator to assign you."
 msgstr ""
-"Non inscrit à aucun cours/module. Veuillez attendre que l'administrateur "
-"vous affecte."
+"Non inscrit à aucun cours/module. Veuillez attendre le\n"
+"administrateur de vous attribuer."
+
+#: templates/deprecated/login.html:15
+msgid "Log in to GEN"
+msgstr "Connectez-vous à GEN"
+
+#: templates/deprecated/login.html:24 templates/deprecated/signup.html:18
+#: templates/registration/password_reset_complete.html:12
+msgid "Log in"
+msgstr "S'identifier"
+
+#: templates/deprecated/login.html:42
+msgid "Sign in with Google button"
+msgstr "Button: sign in with Google"
+
+#: templates/deprecated/login.html:50
+msgid "Sign in with Microsoft button"
+msgstr "Se connecter avec le bouton Microsoft"
+
+#: templates/deprecated/password_change_done.html:5
+msgid "Password change successful"
+msgstr "Changement de mot de passe réussi"
+
+#: templates/deprecated/password_change_done.html:9
+msgid " Success"
+msgstr "Succès"
+
+#: templates/deprecated/password_change_done.html:14
+msgid "<strong>Success!</strong> Your password has been changed!"
+msgstr "<strong>Succès!</strong> Votre mot de passe a été changé!"
+
+#: templates/deprecated/password_change_done.html:16
+msgid "Return to home page"
+msgstr "Retour à la page d'accueil"
+
+#: templates/deprecated/signup.html:14
+msgid "Create an account"
+msgstr "Créer un compte"
+
+#: templates/deprecated/signup.html:18
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
 
 #: templates/discussions/comments.html:42
 #: templates/sections/section_discussion.html:96
@@ -2231,7 +2559,6 @@ msgstr "Par:"
 #: templates/discussions/comments.html:49
 #: templates/discussions/edit_discussion.html:11
 #: templates/discussions/edit_discussion.html:16
-#| msgid "discussion"
 msgid "Edit discussion"
 msgstr "Modifier la discussion"
 
@@ -2270,7 +2597,6 @@ msgid "This discussion has no comments."
 msgstr "Cette discussion n'a aucun commentaire."
 
 #: templates/discussions/edit_discussion.html:8
-#| msgid "Discussion boards"
 msgid "Edit Discussion Board"
 msgstr "Modifier le forum de discussion"
 
@@ -2324,6 +2650,12 @@ msgstr ""
 #: templates/new_media.html:5
 msgid "Add new Media"
 msgstr "Ajouter de nouveaux médias"
+
+#: templates/partials/contact_us_snippet.html:5
+msgid "Please contact us if you have any trouble using GEN:"
+msgstr ""
+"Veuillez nous contacter si vous rencontrez des problèmes lors de "
+"l'utilisation de GEN :"
 
 #: templates/partials/dashboard_items.html:9
 msgid "Courses"
@@ -2440,7 +2772,6 @@ msgstr ""
 "quiz."
 
 #: templates/quiz/quiz.html:86
-#| msgid "Questions"
 msgid "Question"
 msgstr "Question"
 
@@ -2719,10 +3050,6 @@ msgstr ""
 "Mot de passe oublié? Saisissez votre adresse e-mail ci-dessous et nous vous "
 "enverrons par e-mail des instructions pour en définir une nouvelle."
 
-#: templates/registration/password_reset_form.html:15
-msgid "Reset my password"
-msgstr "Réinitialiser mon mot de passe"
-
 #: templates/sections/section_content.html:33
 #: templates/sections/section_discussion.html:15
 #: templates/sections/section_info.html:40
@@ -2919,7 +3246,6 @@ msgid "quizzes with no video"
 msgstr "quiz sans vidéo"
 
 #: templates/sections/section_scorm.html:43
-#| msgid "Completed"
 msgid "Incomplete"
 msgstr "Incomplet"
 
@@ -2928,7 +3254,6 @@ msgid "Passed"
 msgstr "Passé"
 
 #: templates/sections/section_scorm.html:64
-#| msgid "Attempts left:"
 msgid "Attempts:"
 msgstr "Tentatives:"
 
@@ -2937,13 +3262,11 @@ msgid "Start activity"
 msgstr "Démarrer l'activité"
 
 #: templates/sections/section_scorm.html:91
-#| msgid "URL is not valid. Please notify the support team:"
 msgid "Failed to generate SCORM url. Please notify the support team:"
 msgstr ""
 "Impossible de générer l'URL SCORM. Veuillez informer l'équipe d'assistance:"
 
 #: templates/sections/section_scorm.html:97
-#| msgid "No data available."
 msgid "No SCORM package available."
 msgstr "Aucun paquet SCORM disponible."
 
@@ -3073,6 +3396,138 @@ msgstr "Annuler la publication"
 #: templates/sections/section_videos.html:114
 msgid "No video available."
 msgstr "Aucune vidéo disponible."
+
+#: templates/socialaccount/authentication_error.html:5
+#: templates/socialaccount/authentication_error.html:7
+msgid "Social Network Login Failure"
+msgstr "Échec de la Connexion au Réseau Social"
+
+#: templates/socialaccount/authentication_error.html:10
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+"Une erreur s'est produite lors de la tentative de connexion via votre compte"
+" de réseau social."
+
+#: templates/socialaccount/connections.html:6
+#: templates/socialaccount/connections.html:9
+msgid "Account Social Connections"
+msgstr "Connexions Sociales du Compte"
+
+#: templates/socialaccount/connections.html:14
+#| msgid "Social accounts"
+msgid "Connected Social Accounts"
+msgstr "Comptes sociaux connectés"
+
+#: templates/socialaccount/connections.html:17
+msgid ""
+"You can sign in to your GEN account using any of the following third party\n"
+"          accounts:"
+msgstr ""
+"Vous pouvez vous connecter à votre compte GEN à l'aide de l'un des comptes "
+"tiers suivants :"
+
+#: templates/socialaccount/connections.html:53
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+"Vous n'avez actuellement aucun compte de réseau social connecté à ce compte."
+
+#: templates/socialaccount/connections.html:61
+#| msgid "Social accounts"
+msgid "Add Social Accounts"
+msgstr "Ajouter des comptes sociaux"
+
+#: templates/socialaccount/login.html:4
+#| msgid "Sign up"
+msgid "Sign In"
+msgstr "S'identifier"
+
+#: templates/socialaccount/login.html:8
+#, python-format
+#| msgid "Connect to Microsoft"
+msgid "Connect %(provider)s"
+msgstr "Connecter %(provider)s"
+
+#: templates/socialaccount/login.html:10
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr "Connectez-vous Via %(provider)s"
+
+#: templates/socialaccount/login.html:16
+#, python-format
+msgid ""
+"You are about to connect a new third party\n"
+"      account from %(provider)s."
+msgstr ""
+"Vous êtes sur le point de connecter un nouveau tiers\n"
+"compte de %(provider)s."
+
+#: templates/socialaccount/login.html:19
+#, python-format
+msgid ""
+"You are about to sign in using a third party\n"
+"      account from %(provider)s."
+msgstr ""
+"Vous êtes sur le point de vous connecter en utilisant un tiers compte de "
+"%(provider)s."
+
+#: templates/socialaccount/login.html:27
+#| msgid "Content"
+msgid "Continue"
+msgstr "Continuez"
+
+#: templates/socialaccount/login_cancelled.html:5
+#: templates/socialaccount/login_cancelled.html:10
+msgid "Login Cancelled"
+msgstr "Connexion Annulée"
+
+#: templates/socialaccount/login_cancelled.html:12
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing accounts. If this was a\n"
+"        mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+"Vous avez décidé d'annuler la connexion à notre site en utilisant l'un de "
+"vos comptes existants. S'il s'agit d'une erreur, veuillez passer à <a "
+"href=\"%(login_url)s\">sign in</a>."
+
+#: templates/socialaccount/messages/account_connected.txt:2
+#| msgid "This data has been anonymized."
+msgid "The social account has been connected."
+msgstr "Le compte social a été connecté."
+
+#: templates/socialaccount/messages/account_connected_other.txt:2
+msgid "The social account is already connected to a different account."
+msgstr "Le compte social est déjà connecté à un autre compte."
+
+#: templates/socialaccount/messages/account_disconnected.txt:2
+msgid "The social account has been disconnected."
+msgstr "Le compte social a été déconnecté."
+
+#: templates/socialaccount/signup.html:10
+#, python-format
+msgid ""
+"You are about to use your %(provider_name)s account to login to\n"
+"  %(site_name)s. As a final step, please complete the following form:"
+msgstr ""
+"Vous êtes sur le point d'utiliser votre %(provider_name)s compte pour vous "
+"connecter à %(site_name)s. En dernier lieu, veuillez remplir le formulaire "
+"suivant :"
+
+#: templates/socialaccount/signup.html:19
+#| msgid "Sign up"
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#: templates/socialaccount/snippets/provider_list_buttons.html:16
+#, python-format
+msgid "Button to sign in using a %(provider_id)s account."
+msgstr "Bouton pour se connecter à l'aide d'un compte %(provider_id)s."
+
+#: templates/socialaccount/snippets/provider_list_buttons.html:21
+msgid "No social account service configured."
+msgstr "Aucun service de compte social configuré."
 
 #: templates/videos/delete_video_confirmation.html:6
 #: templates/videos/unpublish_video_confirmation.html:6
@@ -3221,6 +3676,73 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:196
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid "Activate Your GEN Account"
+#~ msgstr "Activez votre compte GEN"
+
+#~ msgid "Please correct the error below."
+#~ msgstr "Veuillez corriger l'erreur ci-dessous."
+
+#~ msgid "If you have problems logging into GEN, please contact us at"
+#~ msgstr ""
+#~ "Si vous rencontrez des problèmes pour vous connecter à GEN, veuillez nous "
+#~ "contacter à"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                  Connected as %(google_uid)s - %(google_first_name)s %(google_last_name)s\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "Connecté en tant que %(google_uid)s - %(google_first_name)s %(google_last_name)s"
+
+#~ msgid ""
+#~ "This will break the link between your Google account and your GEN account."
+#~ msgstr "Cela rompra le lien entre votre compte Google et votre compte GEN."
+
+#~ msgid "Disconnect from Google"
+#~ msgstr "Se déconnecter de Google"
+
+#~ msgid ""
+#~ "You must set a password for your GEN account before being able to disconnect"
+#~ " from Google."
+#~ msgstr ""
+#~ "Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
+#~ "vous déconnecter de Google."
+
+#~ msgid "Set your password now."
+#~ msgstr "Définissez votre mot de passe maintenant."
+
+#~ msgid "Connect to Google"
+#~ msgstr "Connectez-vous à Google"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                  Connected as %(azure_uid)s - %(azure_first_name)s %(azure_last_name)s\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "Connecté en tant que %(azure_uid)s - %(azure_first_name)s %(azure_last_name)s"
+
+#~ msgid ""
+#~ "This will break the link between your Microsoft account and your GEN "
+#~ "account."
+#~ msgstr "Cela rompra le lien entre votre compte Microsoft et votre compte GEN."
+
+#~ msgid "Disconnect from Microsoft"
+#~ msgstr "Se déconnecter de Microsoft"
+
+#~ msgid ""
+#~ "You must set a password for your GEN account before being able to disconnect"
+#~ " from Microsoft."
+#~ msgstr ""
+#~ "Vous devez définir un mot de passe pour votre compte GEN avant de pouvoir "
+#~ "vous déconnecter de Microsoft."
+
+#~ msgid "Username"
+#~ msgstr "Nom d'utilisateur"
 
 #~ msgid "Or use:"
 #~ msgstr "Ou utiliser:"
