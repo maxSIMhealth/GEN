@@ -13,6 +13,9 @@
 {% endblock content_title %}
 
 {% block content %}
+
+{% translate "Submit is disabled because you are the author." as submitDisabledAuthor %}
+
 <form enctype="multipart/form-data" method="POST" action="{% url 'quiz' course.pk section.pk quiz.pk %}" class="form-horizontal" name="QuizForm">
 {% csrf_token %}
 
@@ -177,23 +180,30 @@
                     {% endfor %}
                     {% if quiz.paginate %}
                     <div class="pagination-item" style="display: none">
-                        <p>{% translate "This is the end of the quiz." %}</p>
-                        {% if quiz.author == user %}
-                        <p>{% translate "You have reached the end of the quiz preview. You can <strong>not</strong> submit your answers since you are the author" %}</p>
-                        <p>{% blocktranslate with section.name as section_name %}Please use the 'exit quiz' button to return to {{ section_name}} page.{% endblocktranslate %}</p>
-                        {% else %}
-                            <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
-                            exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
-                        {% endif %}
-                        <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit answers" %}</button>
-                        </div>
+                      <p>{% translate "This is the end of the quiz." %}</p>
+                      <p>{% blocktrans with section.name as section_name %} You can now submit your answers or
+                        exit and return to the {{ section_name }} page. {% endblocktrans %}</p>
+                      {% if quiz.author == user %}
+                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{{ submitDisabledAuthor }}">
+                          <button type="submit" class="btn btn-secondary" disabled>{% translate "Submit answers" %}</button>
+                        </span>
+                      {% else %}
+                        <button type="submit" class="btn btn-primary">{% translate "Submit answers" %}</button>
+                      {% endif %}
+                      </div>
                     {% endif %}
                 </div>
             </div>
 
             <div class="card-footer">
                 {% if quiz.paginate == False %}
-                <button type="submit" class="btn btn-primary" {% if quiz.author == user %}disabled{% endif %}>{% translate "Submit answers" %}</button>
+                  {% if quiz.author == user %}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{{ submitDisabledAuthor }}">
+                      <button type="submit" class="btn btn-secondary" disabled>{% translate "Submit answers" %}</button>
+                    </span>
+                  {% else %}
+                    <button type="submit" class="btn btn-primary">{% translate "Submit answers" %}</button>
+                  {% endif %}
                 {% endif %}
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exitQuizModal">
                     {% translate 'Exit quiz' %}
