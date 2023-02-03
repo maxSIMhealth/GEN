@@ -269,6 +269,14 @@ class Section(TimeStampedModel):
         (SECTION_TYPE_SCORM, _("SCORM")),
     ]
 
+    ITEMS_ORDERING_CREATION_DATE = "CRE"
+    ITEMS_ORDERING_CUSTOM = "CUS"
+
+    ITEMS_ORDERING = [
+        (ITEMS_ORDERING_CREATION_DATE, _("Creation date")),
+        (ITEMS_ORDERING_CUSTOM, _("Custom order")),
+    ]
+
     name = models.CharField(
         _("name"),
         max_length=40,
@@ -453,6 +461,15 @@ class Section(TimeStampedModel):
     )
     custom_order = models.PositiveIntegerField(
         _("custom order"), default=0, blank=False, null=False
+    )
+    items_ordering = models.CharField(
+        _("items ordering"),
+        choices=ITEMS_ORDERING,
+        max_length=3,
+        default=ITEMS_ORDERING_CUSTOM,
+        help_text=_(
+            "* FOR DISCUSSION SECTION ONLY *: Set the order for displaying section items."
+        ),
     )
 
     def check_quiz_section_fields(self, errors):

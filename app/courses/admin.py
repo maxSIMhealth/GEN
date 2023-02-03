@@ -158,6 +158,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             "Additional information",
             {
                 "fields": (
+                    "items_ordering",
                     "created",
                     "modified",
                 )

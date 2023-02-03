@@ -44,6 +44,7 @@ class Discussion(VoteModel, SectionItem):
     class Meta:
         verbose_name = _("discussion")
         verbose_name_plural = _("discussions")
+        ordering = ["custom_order"]
 
     def get_comment_count(self):
         return Discussion.objects.filter(comments__discussion=self).count()

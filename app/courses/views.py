@@ -192,9 +192,12 @@ def render_section_video(is_instructor, section_items, section_object):
     return section_items, section_template
 
 
-def render_section_discussion(section_items):
-    # sorting discussions by newest first
-    section_items = section_items.order_by("-created")
+def render_section_discussion(section_object, section_items):
+    # sorting discussions based on parameter defined in the section
+    # by default sectionitems are manually sorted (custom)
+    section_items_ordering = section_object.items_ordering
+    if section_items_ordering == section_object.ITEMS_ORDERING_CREATION_DATE:
+        section_items = section_items.order_by("-created")
     section_template = "sections/section_discussion.html"
     return section_items, section_template
 
@@ -234,7 +237,9 @@ def render_section_based_on_type(
             section_items, section_object
         )
     elif section_object.section_type == Section.SECTION_TYPE_DISCUSSION:
-        section_items, section_template = render_section_discussion(section_items)
+        section_items, section_template = render_section_discussion(
+            section_object, section_items
+        )
     elif section_object.section_type == Section.SECTION_TYPE_VIDEO:
         section_items, section_template = render_section_video(
             is_instructor, section_items, section_object
