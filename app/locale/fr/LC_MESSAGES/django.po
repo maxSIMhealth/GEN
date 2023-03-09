@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 20:00+0000\n"
-"PO-Revision-Date: 2023-03-09 20:01+0000\n"
+"POT-Creation-Date: 2023-03-09 21:28+0000\n"
+"PO-Revision-Date: 2023-03-09 21:29+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -580,12 +580,10 @@ msgid "SCORM"
 msgstr "SCORM"
 
 #: courses/models.py:276
-#| msgid "end date"
 msgid "Creation date"
 msgstr "Date de création"
 
 #: courses/models.py:277
-#| msgid "custom order"
 msgid "Custom order"
 msgstr "Commande personnalisée"
 
@@ -811,13 +809,10 @@ msgstr ""
 "'marquer comme terminé' sera rendu."
 
 #: courses/models.py:466
-#| msgid "custom order"
 msgid "items ordering"
 msgstr "commande d'articles"
 
 #: courses/models.py:471
-#| msgid ""
-#| "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgid ""
 "* FOR DISCUSSION SECTION ONLY *: Set the order for displaying section items."
 msgstr ""
@@ -2736,7 +2731,7 @@ msgstr ""
 
 #: templates/quiz/quiz.html:17
 msgid "Submit is disabled because you are the author."
-msgstr ""
+msgstr "La soumission est désactivée car vous en êtes l'auteur."
 
 #: templates/quiz/quiz.html:59
 msgid "Questions"
@@ -2793,9 +2788,6 @@ msgstr "C'est la fin du quiz."
 
 #: templates/quiz/quiz.html:192
 #, python-format
-#| msgid ""
-#| " You can now submit your answers or\n"
-#| "                            exit and return to the %(section_name)s page. "
 msgid ""
 " You can now submit your answers or\n"
 "                  exit and return to the %(section_name)s page. "
@@ -3469,8 +3461,6 @@ msgstr ""
 "href=\"%(login_url)s\">sign in</a>."
 
 #: templates/socialaccount/messages/account_connected.txt:2
-#| msgid ""
-#| "The social account is already connected to a different account."
 msgid "The social account has been connected to the existing GEN account."
 msgstr "Le compte social a été connecté au compte GEN existant."
 
@@ -3495,6 +3485,12 @@ msgstr ""
 #: templates/socialaccount/signup.html:19
 msgid "Sign Up"
 msgstr "S'inscrire"
+
+#: templates/socialaccount/snippets/provider_list.html:26
+#| msgid "No social account service configured."
+msgid "No social account service configured. Please contact support."
+msgstr ""
+"Aucun service de compte social configuré. Veuillez contacter l'assistance."
 
 #: templates/socialaccount/snippets/provider_list_buttons.html:16
 #, python-format
