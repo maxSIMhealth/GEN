@@ -1,18 +1,28 @@
 {% load socialaccount %}
+{% load socialaccount_custom %}
+{% load i18n %}
 
-{% get_providers as socialaccount_providers %}
+{% get_socialapps_with_context as socialaccount_apps %}
 
-{% for provider in socialaccount_providers %}
-  {% if provider.id == "openid" %}
-    {% for brand in provider.get_brands %}
+{% for socialaccount_app in socialaccount_apps %}
+  {% if socialaccount_app.id == "openid" %}
+    {% for brand in socialaccount_app.get_brands %}
       <a title="{{ brand.name }}"
-         class="list-group-item list-group-item-action socialaccount_provider {{ provider.id }} {{ brand.id }}"
-         href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-      >{{ brand.name }}</a>
+         class="list-group-item list-group-item-action socialaccount_provider {{ socialaccount_app.provider }} {{ brand.id }}"
+         href="{% provider_login_url socialaccount_app.provider openid=brand.openid_url process=process %}"
+      >
+        {{ brand.name }}
+      </a>
     {% endfor %}
   {% endif %}
-  <a title="{{ provider.name }}"
-     class="list-group-item list-group-item-action socialaccount_provider {{ provider.id }}"
-     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"
-  >{{ provider.id|title }}</a>
+  <a title="{{ socialaccount_app.name }}"
+     class="list-group-item list-group-item-action socialaccount_provider {{ socialaccount_app.provider }}"
+     href="{% provider_login_url socialaccount_app.provider process=process scope=scope auth_params=auth_params %}"
+  >
+    {{ socialaccount_app.name|title }}
+  </a>
+  {% empty %}
+  <div class="list-group-item list-group-item-warning">
+    {% translate "No social account service configured. Please contact support." %}
+  </div>
 {% endfor %}
