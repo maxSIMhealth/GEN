@@ -432,6 +432,7 @@ logging.config.dictConfig(
 USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
 USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
 SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
+SOCIALACCOUNT_ADAPTER = 'accounts.adapter.CustomSocialAccountAdapter'
 # SOCIALACCOUNT_PROVIDERS = ast.literal_eval(os.getenv("SOCIAL_AUTH"))
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
