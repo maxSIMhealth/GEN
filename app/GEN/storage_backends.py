@@ -1,12 +1,13 @@
 from storages.backends.s3boto3 import S3Boto3Storage
+from storages.utils import clean_name
 
 from django.conf import settings
 
 
 class CustomS3Storage(S3Boto3Storage):
     def copy(self, from_path, to_path):
-        from_path = self._normalize_name(self._clean_name(from_path))
-        to_path = self._normalize_name(self._clean_name(to_path))
+        from_path = self._normalize_name(clean_name(from_path))
+        to_path = self._normalize_name(clean_name(to_path))
 
         result = self.connection.meta.client.copy_object(
             Bucket=self.bucket_name,
@@ -22,7 +23,7 @@ class CustomS3Storage(S3Boto3Storage):
     def delete_directory(self, directory_path):
         objects_to_delete_list = self.connection.meta.client.list_objects(
             Bucket=self.bucket_name,
-            Prefix=self._normalize_name((self._clean_name(directory_path))),
+            Prefix=self._normalize_name(clean_name(directory_path)),
         )
         objects_to_delete_temp = dict(Objects=[])
         result = False
@@ -50,7 +51,7 @@ class CustomS3Storage(S3Boto3Storage):
         """
         s3 = self.connection.meta.client
         exists = False
-        path = self._normalize_name((self._clean_name(path))).rstrip("/")
+        path = self._normalize_name(clean_name(path)).rstrip("/")
         resp = s3.list_objects(
             Bucket=self.bucket_name, Prefix=path, Delimiter="/", MaxKeys=1
         )
