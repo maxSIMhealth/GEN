@@ -29,19 +29,7 @@
               <tbody>
               <tr>
                 <div class="ratio ratio-16x9">
-                  <video crossorigin="anonymous" playsinline
-                         poster="{% if quiz.video.thumbnail %} {{ quiz.video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}"
-                         controls>
-                    {% if quiz.video.subtitle %}
-                      <track default
-                             kind="captions"
-                             srclang="en"
-                             label="English"
-                             src="{{ quiz.video.subtitle.url }}"/>
-                    {% endif %}
-                    <source src="{{ quiz.video.file.url }}" type="video/mp4">
-                    {% translate "Sorry, your browser does not support embedded videos." %}
-                  </video>
+                  {% include "partials/video_player.html" with video=quiz.video %}
                 </div>
                 {% include "partials/video_closedcaption_info.html" with background_color="bg-dark" subtitle=quiz.video.subtitle %}
               </tr>

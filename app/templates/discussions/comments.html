@@ -57,17 +57,7 @@
             {% endif %}
             {% if discussion.video %}
                 <div class="ratio ratio-16x9">
-                    <video crossorigin="anonymous" playsinline poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}" controls>
-                        {% if video.subtitle %}
-                        <track default
-                               kind="captions"
-                               srclang="en"
-                               label="English"
-                               src="{{ video.subtitle.url }}" />
-                        {% endif %}
-                        <source src="{{ video.file.url }}" type="video/mp4">
-                        {% trans "Sorry, your browser does not support embedded videos." %}
-                    </video>
+                    {% include "partials/video_player.html" with video=video %}
                 </div>
             {% endif %}
             {% comment %}
