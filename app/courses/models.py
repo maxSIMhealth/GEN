@@ -454,7 +454,7 @@ class Section(TimeStampedModel):
     )
     show_mark_as_complete_instruction = models.BooleanField(
         _("show instructions to mark section as completed"),
-        default=True,
+        default=False,
         help_text=_(
             "*FOR CONTENT ONLY *: show the instructions message to mark section as completed. If disabled, only the 'mark as completed' button will be rendered."
         ),
