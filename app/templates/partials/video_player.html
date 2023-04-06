@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load static %}
+
+<video crossorigin="anonymous" playsinline
+       poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}"
+       controls>
+  {% if video.subtitle %}
+    <track default
+           kind="captions"
+           srclang="{{ LANGUAGE_CODE }}"
+           src="{{ video.subtitle.url }}"/>
+  {% endif %}
+  <source src="{{ video.file.url }}" type="video/mp4">
+  {% trans "Sorry, your browser doesn't support embedded videos." %}
+</video>
