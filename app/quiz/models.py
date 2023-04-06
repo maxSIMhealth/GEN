@@ -249,17 +249,17 @@ class Question(TimeStampedModel):
     )
     content = HTMLField(
         _("content"),
-        max_length=1000,
+        max_length=2000,
         blank=False,
-        help_text=_("Main text content of the question (max 1000 characters)."),
+        help_text=_("Main text content of the question (max 2000 characters)."),
     )
     additional_content = HTMLField(
         _("additional content"),
-        max_length=1000,
+        max_length=2000,
         blank=True,
         null=True,
         help_text=_(
-            "Optional: additional text that will be shown under the main text content. (max 1000 characters)."
+            "Optional: additional text that will be shown under the main text content (max 2000 characters)."
         ),
     )
     feedback = HTMLField(
@@ -530,9 +530,11 @@ class MCAnswer(TimeStampedModel):
 
     content = models.CharField(
         _("content"),
-        max_length=1000,
+        max_length=2000,
         blank=False,
-        help_text=_("Enter the answer text that you want displayed"),
+        help_text=_(
+            "Enter the answer text that you want displayed (max 2000 characters)."
+        ),
     )
 
     mark = models.BooleanField(
