@@ -4,7 +4,7 @@ from .models import VideoFile
 
 
 class VideoFileTranslationOptions(TranslationOptions):
-    pass
+    fields = ("file", "subtitle")
 
 
 translator.register(VideoFile, VideoFileTranslationOptions)
