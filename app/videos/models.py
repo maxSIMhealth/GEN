@@ -72,13 +72,7 @@ class VideoFile(SectionItem):
         storage=PrivateMediaStorage(),
         blank=True,
         null=True,
-        validators=[
-            FileTypeValidator(
-                allowed_types=[
-                    "text/plain",
-                ]
-            )
-        ],
+        validators=[FileTypeValidator(allowed_types=["text/plain", "text/vtt"])],
     )
     internal_name = models.CharField(
         _("internal name"),
