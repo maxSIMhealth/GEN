@@ -25,10 +25,10 @@ PERMISSION_TYPES = [
 COURSE = "C"
 MODULE = "M"
 COURSE_TYPES = [(COURSE, _("Course")), (MODULE, _("Module"))]
-CERTIFICATE_COURSE = "CC"
+CERTIFICATE_DEFAULT = "CD"
 CERTIFICATE_CUSTOM = "CX"
 CERTIFICATE_TYPES = [
-    (CERTIFICATE_COURSE, _("Certificate - Course")),
+    (CERTIFICATE_DEFAULT, _("Certificate - Default")),
     (CERTIFICATE_CUSTOM, _("Certificate - Custom")),
 ]
 
@@ -132,7 +132,7 @@ class Course(TimeStampedModel):
         _("certificate type"),
         max_length=2,
         choices=CERTIFICATE_TYPES,
-        default=CERTIFICATE_COURSE,
+        default=CERTIFICATE_DEFAULT,
         help_text=_(
             "Defines if the certificate provided will be for the current course or use a customized term."
         ),

@@ -23,7 +23,7 @@ from django.utils.translation import gettext_lazy as _
 from GEN.decorators import check_permission, check_requirement, course_enrollment_check
 from GEN.support_methods import enrollment_test
 
-from .models import CERTIFICATE_COURSE, Course, Section, SectionItem, Status
+from .models import CERTIFICATE_DEFAULT, Course, Section, SectionItem, Status
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
 certificate_title = _("Certificate of Completion")
@@ -501,7 +501,7 @@ def render_certificate_pdf(course_object, date, filename, template, request, use
     certificate.setTitle(str(certificate_title))
 
     # Define 'term' for the course/module name
-    if course_object.certificate_type == CERTIFICATE_COURSE:
+    if course_object.certificate_type == CERTIFICATE_DEFAULT:
         # actual course/module name
         certificate_term = course_object.name
     else:
