@@ -33,6 +33,85 @@ CERTIFICATE_TYPES = [
 ]
 
 
+class Group(TimeStampedModel):
+    name = models.CharField(
+        _("name"),
+        max_length=150,
+        unique=False,
+        help_text=_("Group name (max 150 characters)."),
+    )
+    code = models.CharField(
+        _("group code"),
+        unique=True,
+        max_length=10,
+        help_text=_("Unique group code (max 10 characters)"),
+    )
+    show_code = models.BooleanField(
+        _("show group code"),
+        default=False,
+        help_text=_("Show group code to instructors."),
+    )
+    description = HTMLField(
+        _("description"),
+        help_text=_(
+            "Course description. Please try to keep it brief (under 2000 "
+            "characters)."
+        ),
+        blank=True,
+        null=True,
+    )
+    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_("author"))
+    requirement = models.ForeignKey(
+        "self",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        verbose_name=_("requirement"),
+    )
+    provide_certificate = models.BooleanField(
+        _("provide certificate"),
+        default=False,
+        help_text=_("Defines if this group provides a certificate of completion."),
+    )
+    certificate_type = models.CharField(
+        _("certificate type"),
+        max_length=2,
+        choices=CERTIFICATE_TYPES,
+        default=CERTIFICATE_DEFAULT,
+        help_text=_(
+            "Defines if the certificate provided will used the name of the group or a customized term."
+        ),
+    )
+    certificate_custom_term = models.CharField(
+        _("certificate custom term"),
+        max_length=150,
+        unique=False,
+        blank=True,
+        help_text=_("Certificate custom term to be used instead of the group name."),
+    )
+    certificate_template = models.ForeignKey(
+        CertificateTemplate,
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+        help_text=_(
+            "Certificate template to be used (logos and frame). If no template is defined, certificate will still be created, but on a basic white canvas."
+        ),
+    )
+    custom_order = models.PositiveIntegerField(
+        _("custom order"), default=0, blank=False, null=False
+    )
+
+    class Meta:
+        verbose_name = _("group")
+        verbose_name_plural = _("groups")
+        ordering = ["custom_order"]
+
+    def __str__(self):
+        output = "ID {0} - {1} - {2}".format(self.pk, self.code, self.name)
+        return output
+
+
 class Course(TimeStampedModel):
     name = models.CharField(
         _("name"),
@@ -80,6 +159,13 @@ class Course(TimeStampedModel):
         blank=True,
         null=True,
         verbose_name=_("requirement"),
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        help_text=_("Defines which group the course/module will be part of."),
     )
     members = models.ManyToManyField(
         User,

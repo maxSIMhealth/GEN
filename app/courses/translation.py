@@ -1,6 +1,13 @@
 from modeltranslation.translator import TranslationOptions, translator
 
-from .models import Course, Section, SectionItem
+from .models import Course, Group, Section, SectionItem
+
+
+class GroupTranslationOptions(TranslationOptions):
+    fields = (
+        "name",
+        "description",
+    )
 
 
 class CourseTranslationOptions(TranslationOptions):
@@ -15,6 +22,7 @@ class SectionItemTranslationOptions(TranslationOptions):
     fields = ("name", "description")
 
 
+translator.register(Group, GroupTranslationOptions)
 translator.register(Course, CourseTranslationOptions)
 translator.register(Section, SectionTranslationOptions)
 translator.register(SectionItem, SectionItemTranslationOptions)

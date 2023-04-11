@@ -5,7 +5,7 @@ from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 
 from .forms import SectionAdminForm
-from .models import Course, Section, SectionItem, Status
+from .models import Course, Group, Section, SectionItem, Status
 
 
 def duplicate(modeladmin, request, queryset):
@@ -54,6 +54,7 @@ class CourseAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "code",
                     "show_code",
                     "type",
+                    "group",
                     "initial_section_name",
                     "description",
                     "requirement",
@@ -231,6 +232,69 @@ class StatusAdmin(admin.ModelAdmin):
     actions = [update_status]
 
 
+class CourseInline(SortableInlineAdminMixin, TranslationTabularInline):
+    model = Course
+    exclude = [
+        "description",
+        "start_date",
+        "end_date",
+        "members",
+        "learners",
+        # "learners_max_number",
+        "instructors",
+        "editors",
+    ]
+    extra = 0
+
+
+class GroupAdmin(SortableAdminMixin, TabbedTranslationAdmin):
+    list_display = ("name", "id", "author", "code")
+    list_filter = ("author",)
+    # ordering = ("id",)
+    # filter_horizontal = ("members", "instructors", "editors", "learners")
+    # actions = [duplicate]
+    inlines = (CourseInline,)
+    save_as = True
+    readonly_fields = ["created", "modified"]
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "author",
+                    "code",
+                    "show_code",
+                    "description",
+                    "requirement",
+                )
+            },
+        ),
+        (
+            "Additional information",
+            {
+                "fields": (
+                    "created",
+                    "modified",
+                )
+            },
+        ),
+        (
+            "Certificate",
+            {
+                "fields": (
+                    "provide_certificate",
+                    "certificate_type",
+                    "certificate_custom_term",
+                    "certificate_template",
+                )
+            },
+        ),
+    )
+
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Section, SectionAdmin)
 admin.site.register(Status, StatusAdmin)
+admin.site.register(Group, GroupAdmin)
