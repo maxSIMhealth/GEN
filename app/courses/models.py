@@ -165,6 +165,7 @@ class Course(TimeStampedModel):
         on_delete=models.PROTECT,
         blank=True,
         null=True,
+        related_name="courses",
         help_text=_("Defines which group the course/module will be part of."),
     )
     members = models.ManyToManyField(
