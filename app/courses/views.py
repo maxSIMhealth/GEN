@@ -20,15 +20,20 @@ from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from GEN.decorators import check_permission, check_requirement, course_enrollment_check
+from GEN.decorators import (
+    check_permission,
+    check_requirement,
+    course_enrollment_check,
+    course_group_enrollment_check,
+)
 from GEN.support_methods import enrollment_test
 
-from .models import CERTIFICATE_DEFAULT, Course, Section, SectionItem, Status
+from .models import CERTIFICATE_DEFAULT, Course, Group, Section, SectionItem, Status
 
 not_enrolled_error = _("You are not enrolled in the requested course.")
 certificate_title = _("Certificate of Completion")
 certificate_presented_to = _("This certificate is presented to")
-certificate_for_completing = _("for completing the")
+certificate_for_completing = _("for completing")
 certificate_generated_on = _("Generated on")
 
 
@@ -459,7 +464,7 @@ def section_page(request, pk, section_pk):
 @course_enrollment_check(enrollment_test)
 def generate_certificate(request, pk):
     """
-    Generates certificate of conclusion as a PDF file.
+    Generates certificate of conclusion for a Course as a PDF file.
     If CertificateLogoFiles exists, they will be used on the header portion.
     """
     course_object = get_object_or_404(Course, pk=pk)
@@ -492,34 +497,80 @@ def generate_certificate(request, pk):
         return redirect("course", pk=course_object.pk)
 
 
-def render_certificate_pdf(course_object, date, filename, template, request, user):
+@login_required
+@course_group_enrollment_check(enrollment_test)
+def generate_certificate_group(request, pk):
+    """
+    Generates certificate of conclusion for a Course Group as a PDF file.
+    If CertificateLogoFiles exists, they will be used on the header portion.
+    """
+    course_group_object = get_object_or_404(Group, pk=pk)
+
+    if course_group_object.provide_certificate:
+        user = request.user
+
+        courses = course_group_object.courses.all()
+        courses_status_list = []
+        courses_status_objects = []
+
+        # get all Status objects for Courses related to the current user
+        for course_object in courses:
+            status_queryset = Status.objects.filter(
+                learner=user, course=course_object, section=None
+            )
+            if status_queryset.count() == 0:
+                # the count will be 0 if the user never started the course,
+                # meaning that the Status object does not exist
+                courses_status_list.append(False)
+            else:
+                courses_status_list.append(True)
+                courses_status_objects.append(status_queryset.first())
+
+        # courses_statuses = Status.objects.filter(learner=user, section=None)
+        filename = f"GEN - {course_group_object.code} - {request.user.first_name} {request.user.last_name}.pdf"
+        certificate_template = course_group_object.certificate_template
+        date = timezone.localtime().isoformat()
+
+        courses_completed = []
+        for item in courses_status_objects:
+            courses_completed.append(item.completed)
+
+        if all(courses_completed) and all(courses_status_list):
+            return render_certificate_pdf(
+                course_group_object, date, filename, certificate_template, request, user
+            )
+        else:
+            messages.warning(
+                request,
+                _(
+                    "You have not completed all courses/modules related to this group yet."
+                ),
+            )
+            return redirect("home")
+    else:
+        messages.warning(
+            request,
+            _("This group does not provide a certificate of conclusion."),
+        )
+        return redirect("home")
+
+
+def render_certificate_pdf(item_object, date, filename, template, request, user):
+    (
+        certificate_term,
+        course_type_name,
+        frame,
+        item_type,
+        logos,
+        use_custom_term,
+    ) = get_certificate_details(item_object, template)
+
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()
 
     # Create the PDF object, using the buffer as its "file."
     certificate = canvas.Canvas(buffer, pagesize=landscape(letter))
     certificate.setTitle(str(certificate_title))
-
-    # Define 'term' for the course/module name
-    if course_object.certificate_type == CERTIFICATE_DEFAULT:
-        # actual course/module name
-        certificate_term = course_object.name
-    else:
-        # custom name
-        certificate_term = course_object.certificate_custom_term
-
-    # Define if the course is referred to as course or as module
-    course_type_name = course_object.type_name()
-
-    # Template to be used
-    if template is None:
-        logos = None
-        frame = None
-    else:
-        frame = template.frame
-        logos = template.logos.all()
-        if logos.count() == 0:
-            logos = None
 
     # Page
     page_width = landscape(letter)[0]
@@ -579,23 +630,39 @@ def render_certificate_pdf(course_object, date, filename, template, request, use
         395, 264 + logos_reserved_space / 2, f"{user.first_name} {user.last_name}"
     )
 
-    # Course info
+    # Course/Module or Course Group info
     certificate.setFont("Times-Roman", 18, leading=None)
     certificate.drawCentredString(
         395,
         210 + logos_reserved_space / 2,
         f"{certificate_for_completing} {course_type_name}",
     )
-    certificate.setFont("Times-Italic", 26, leading=None)
     course_name = textwrap.wrap(certificate_term, width=60)
+    certificate.setFont("Times-BoldItalic", 26, leading=None)
     course_name_position = 160 + logos_reserved_space / 2
     for line in course_name:
         certificate.drawCentredString(395, course_name_position, line)
         course_name_position = course_name_position - 30
+    # Render list of courses/module that are part of the course group only if the custom term is not defined
+    if item_type == "group" and use_custom_term is False:
+        certificate.setFont("Times-Italic", 20, leading=None)
+        courses_names = ""
+        courses_queryset = item_object.courses.all().order_by("custom_order")
+        for index, course_object in enumerate(courses_queryset):
+            if index == courses_queryset.count() - 1:
+                suffix = "."
+            else:
+                suffix = ", "
+            courses_names = f"{courses_names}{course_object.name}{suffix}"
+        courses_names_text = textwrap.wrap(courses_names, width=65)
+        courses_names_position = course_name_position - 5
+        for line in courses_names_text:
+            certificate.drawCentredString(395, courses_names_position, line)
+            courses_names_position = courses_names_position - 30
 
     # Footer
     certificate.setFont("Helvetica", 12, leading=None)
-    certificate.drawCentredString(395, 60, f"{certificate_generated_on} {date}")
+    certificate.drawCentredString(395, 55, f"{certificate_generated_on} {date}")
 
     # Close the PDF object cleanly, and we're done.
     certificate.showPage()
@@ -605,3 +672,33 @@ def render_certificate_pdf(course_object, date, filename, template, request, use
     # present the option to save the file.
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=secure_filename(filename))
+
+
+def get_certificate_details(item_object, template):
+    # Define 'term' for the course/module name
+    if item_object.certificate_type == CERTIFICATE_DEFAULT:
+        # actual course/module name
+        certificate_term = item_object.name
+        use_custom_term = False
+    else:
+        # custom name
+        certificate_term = item_object.certificate_custom_term
+        use_custom_term = True
+    # Check if the object is a course/module
+    if item_object._meta.model_name == "course":
+        item_type = "course"
+        # Define if the course is referred to as course or as module
+        course_type_name = item_object.type_name()
+    else:
+        item_type = "group"
+        course_type_name = ""
+    # Template to be used
+    if template is None:
+        logos = None
+        frame = None
+    else:
+        frame = template.frame
+        logos = template.logos.all()
+        if logos.count() == 0:
+            logos = None
+    return certificate_term, course_type_name, frame, item_type, logos, use_custom_term
