@@ -1,6 +1,6 @@
 from functools import wraps
 
-from courses.models import Course, Section
+from courses.models import Course, Group, Section
 from courses.support_methods import requirement_fulfilled
 
 from django.core.exceptions import PermissionDenied
@@ -24,6 +24,39 @@ def course_enrollment_check(test_func):
                 raise PermissionDenied("Access denied. User not enrolled in course.")
             else:
                 return view_func(request, *args, **kwargs)
+
+        return _wrapped_view
+
+    return decorator
+
+
+def course_group_enrollment_check(test_func):
+    """
+    Checks if the user is enrolled in all courses of the requested group.
+    Code based on the native 'user_passes_test' django decorator.
+    """
+
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            pk = kwargs["pk"]
+            course_group_object = get_object_or_404(Group, pk=pk)
+            user = request.user
+
+            is_member_list = []
+
+            for course in course_group_object.courses.all():
+                if user not in course.members.all():
+                    is_member_list.append(False)
+                else:
+                    is_member_list.append(True)
+
+            if all(is_member_list):
+                return view_func(request, *args, **kwargs)
+            else:
+                raise PermissionDenied(
+                    f"Access denied. User not enrolled in all courses/modules related to the group {course_group_object}."
+                )
 
         return _wrapped_view
 
