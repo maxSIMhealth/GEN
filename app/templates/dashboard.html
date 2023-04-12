@@ -34,13 +34,10 @@
     </div>
   {% endif %}
 
-  {% if courses %}
-    {% include 'partials/dashboard_items.html' with items=courses type='courses' %}
-  {% endif %}
-
-  {% if modules %}
-    {% include 'partials/dashboard_items.html' with items=modules type='modules' %}
-  {% endif %}
+  {% regroup courses by group as group_list %}
+  {% for group in group_list %}
+    {% include 'partials/dashboard_group_item.html' with group=group %}
+  {% endfor %}
 
   {% if not courses and not modules %}
     <li class="list-group-item">{% blocktranslate %} Not enrolled in any course/module. Please wait for the

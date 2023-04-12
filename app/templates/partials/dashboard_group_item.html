@@ -1,0 +1,77 @@
+{% load i18n %}
+{% load is_instructor %}
+{% load get_course_status %}
+
+<div class="card mb-3" id="courses">
+    <div class="card-header bg-light">
+        <div class="row">
+            <div class="col-10 pt-0">
+                <div class="fs-5 m-0">
+                  <i class="fas fa-laptop-code pr-1"></i> {% if group.grouper is None %}{% translate "Courses and Modules" %}{% else %}{{ group.grouper.name }}{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+            {% if group.grouper.description %}
+                <li class="list-group-item">
+                    <div class="group-description">{{ group.grouper.description|safe }}</div>
+                </li>
+            {% endif %}
+            {% for course in group.list %}
+                <li class="list-group-item">
+                    <div class="fs-5">
+                        {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
+                            <a href="{% url 'course' course.pk %}">
+                                {% if user|is_instructor:course and course.show_code %}
+                                    {{ course.code }} -
+                                {% endif %}
+                                {{ course.name }}
+                            </a>
+                        {% endif %}
+                        {% if course.requirement and not course.requirement.fulfilled %}
+                            <span>
+                                {% if user|is_instructor:course %}
+                                    {{ course.code }} -
+                                {% endif %}
+                                {{ course.name }}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <strong>{% translate 'Status:' %}</strong>
+                        {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
+                            {% get_course_status user course as course_status %}
+                            <span style="font-size: 1.2em">
+                                {% if course_status == 0 %}
+                                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Not started" %}</span>
+                                    {% elif course_status == 1 %}
+                                    <span class="badge rounded-pill bg-primary">{% translate "Started" %}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-success">{% translate "Completed" %}</span>
+                                {% endif %}
+                            </span>
+                        {% endif %}
+                        {% if course.requirement and not course.requirement.fulfilled %}
+                            <span style="font-size: 1.2em">
+                                <span class="badge rounded-pill bg-info text-dark">{% translate 'Requirement must be met first:' %} {{ course.requirement.name }}</span>
+                            </span>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if group.grouper.provide_certificate %}
+            <div class="card-footer">
+                {% if group_completed %}
+                    <a class="btn btn-primary" href="{% url 'group_certificate' group.pk %}" role="button">{% trans "Download certificate" %}</a>
+                {% else %}
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% translate 'Complete all items to download the certificate' %}">
+                        <button class="btn btn-outline-dark" style="pointer-events: none;" type="button">{% trans "Download certificate" %}</button>
+                    </span>
+                {% endif %}
+            </div>
+    {% endif %}
+</div>

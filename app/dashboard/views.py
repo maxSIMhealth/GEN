@@ -1,4 +1,3 @@
-from courses.models import COURSE, MODULE
 from courses.support_methods import requirement_fulfilled
 
 from django.contrib.auth.decorators import login_required
@@ -17,7 +16,9 @@ def check_items_requirement(user, items):
 @login_required
 def dashboard(request):
     user = request.user
-    courses_all = user.member.all()
+
+    # get courses that the user is a member of, and sort them by group
+    courses_all = user.member.all().order_by("group", "custom_order")
 
     # get dashboard information, if any exists and is set as active
     try:
@@ -25,16 +26,16 @@ def dashboard(request):
     except IndexError:
         dashboard_info = None
 
-    # split into different courses types
-    courses = courses_all.filter(type=COURSE)
-    modules = courses_all.filter(type=MODULE)
-
     # check requirements
-    check_items_requirement(user, courses)
-    check_items_requirement(user, modules)
+    check_items_requirement(user, courses_all)
+    # check_items_requirement(user, modules)
 
     return render(
         request,
         "dashboard.html",
-        {"dashboard_info": dashboard_info, "courses": courses, "modules": modules},
+        {
+            "dashboard_info": dashboard_info,
+            "courses": courses_all,
+            # "modules": modules
+        },
     )
