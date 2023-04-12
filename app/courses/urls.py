@@ -17,6 +17,12 @@ urlpatterns = [
         course_views.generate_certificate,
         name="course_certificate",
     ),
+    # certificate
+    path(
+        "course_group/<int:pk>/certificate",
+        course_views.generate_certificate_group,
+        name="course_group_certificate",
+    ),
     # tests / WIP
     # FIXME: list_pdfs has to be reimplemented
     # path('courses/<int:pk>/pdfs/', views.list_pdfs, name='list_pdfs'),
