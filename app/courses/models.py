@@ -84,10 +84,12 @@ class Group(TimeStampedModel):
     )
     certificate_custom_term = models.CharField(
         _("certificate custom term"),
-        max_length=150,
+        max_length=200,
         unique=False,
         blank=True,
-        help_text=_("Certificate custom term to be used instead of the group name."),
+        help_text=_(
+            "Certificate custom term to be used instead of the group name. Max length: 200 characters."
+        ),
     )
     certificate_template = models.ForeignKey(
         CertificateTemplate,
