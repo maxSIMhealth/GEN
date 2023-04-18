@@ -42,13 +42,12 @@
                     <div>
                         <strong>{% translate 'Status:' %}</strong>
                         {% if course.requirement and course.requirement.fulfilled or not course.requirement %}
-                            {% get_course_status user course as course_status %}
                             <span style="font-size: 1.2em">
-                                {% if course_status == 0 %}
+                                {% if course.progress == "not started" %}
                                     <span class="badge rounded-pill bg-warning text-dark">{% translate "Not started" %}</span>
-                                    {% elif course_status == 1 %}
+                                {% elif course.progress == "stated" %}
                                     <span class="badge rounded-pill bg-primary">{% translate "Started" %}</span>
-                                {% else %}
+                                {% elif course.progress == "completed" %}
                                     <span class="badge rounded-pill bg-success">{% translate "Completed" %}</span>
                                 {% endif %}
                             </span>
