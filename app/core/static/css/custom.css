@@ -44,6 +44,11 @@ body {
     color: rgba(255, 255, 255, 1.0);
 }
 
+/* dashboard */
+.group-description p:last-of-type{
+    margin-bottom: 0;
+}
+
 /* section list (sidebar) */
 .list-group-flush.navbar-nav :not(:last-child) {
   border-bottom: 1px solid rgba(0,0,0,.125);
