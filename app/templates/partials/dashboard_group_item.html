@@ -1,6 +1,6 @@
 {% load i18n %}
 {% load is_instructor %}
-{% load get_course_status %}
+{% load get_group_status %}
 
 <div class="card mb-3" id="courses">
     <div class="card-header bg-light">
@@ -63,9 +63,10 @@
         </ul>
     </div>
     {% if group.grouper.provide_certificate %}
+            {% get_group_status user group.grouper as group_status %}
             <div class="card-footer">
-                {% if group_completed %}
-                    <a class="btn btn-primary" href="{% url 'group_certificate' group.pk %}" role="button">{% trans "Download certificate" %}</a>
+                {% if group_status.completed %}
+                    <a class="btn btn-primary" href="{% url 'course_group_certificate' group.grouper.pk %}" role="button">{% trans "Download certificate" %}</a>
                 {% else %}
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="{% translate 'Complete all items to download the certificate' %}">
                         <button class="btn btn-outline-dark" style="pointer-events: none;" type="button">{% trans "Download certificate" %}</button>
