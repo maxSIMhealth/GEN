@@ -432,7 +432,7 @@ logging.config.dictConfig(
 USE_SOCIAL_AUTH = os.getenv("USE_SOCIAL_AUTH", "False") == "True"
 USE_SOCIAL_AUTH_ONLY = os.getenv("USE_SOCIAL_AUTH_ONLY", "False") == "True"
 SOCIAL_AUTH_PROVIDERS = os.getenv("SOCIAL_AUTH_PROVIDERS").split(",")
-SOCIALACCOUNT_ADAPTER = 'accounts.adapter.CustomSocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = "accounts.adapter.CustomSocialAccountAdapter"
 # SOCIALACCOUNT_PROVIDERS = ast.literal_eval(os.getenv("SOCIAL_AUTH"))
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -474,12 +474,12 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 20,
     # 'theme': 'modern',
     "plugins": """
-            save link image media preview codesample
+            paste save link image media preview codesample
             table code lists fullscreen insertdatetime searchreplace wordcount visualblocks
             visualchars code autolink lists charmap print anchor
             """,
     "toolbar1": """
-            fullscreen | bold italic underline | styleselect | fontsizeselect |
+            paste | fullscreen | bold italic underline | styleselect | fontsizeselect |
             forecolor | alignleft aligncenter alignright alignjustify | indent outdent |
             bullist numlist table | link image media | codesample |
             visualblocks visualchars | charmap hr pagebreak nonbreaking anchor | insertdatetime |
@@ -489,6 +489,8 @@ TINYMCE_DEFAULT_CONFIG = {
     "menubar": False,
     "statusbar": True,
     "height": 400,
+    "paste_block_drop": True,
+    "paste_as_text": True,
 }
 TINYMCE_SPELLCHECKER = False
 
