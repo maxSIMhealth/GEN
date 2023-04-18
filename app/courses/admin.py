@@ -223,6 +223,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
 class StatusAdmin(admin.ModelAdmin):
     list_display = (
         "learner",
+        "type",
         "course",
         "section",
         "completed",
