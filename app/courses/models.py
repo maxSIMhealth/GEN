@@ -610,6 +610,19 @@ class Section(TimeStampedModel):
                     )
                 )
 
+    def check_custom_completion_message(self, errors):
+        if self.custom_completion_message_replace:
+            if self.custom_completion_message == "":
+                errors.append(
+                    ValidationError(
+                        _(
+                            "Custom completion message MUST be defined to be able to \
+                        enable the option 'Replace completion message with \
+                        custom message'."
+                        )
+                    )
+                )
+
     def clean(self):
         errors = []
 
@@ -623,6 +636,8 @@ class Section(TimeStampedModel):
         self.check_quiz_section_fields(errors)
         # check fields related to Content Section
         self.check_content_section_fields(errors)
+        # check fields related to Custom completion message
+        self.check_custom_completion_message(errors)
 
         if len(errors) > 0:
             raise ValidationError(errors)
