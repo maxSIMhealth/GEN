@@ -357,13 +357,20 @@ class Section(TimeStampedModel):
             "completed the course/module?"
         ),
     )
-    completion_message = models.CharField(
-        _("completion message"),
+    custom_completion_message = models.CharField(
+        _("Custom completion message"),
         max_length=200,
         unique=False,
         blank=True,
         help_text=_(
-            "A message to be displayed after the participant has successfully completed the section. (max 200 characters)"
+            "A custom message to be displayed after the participant has successfully completed the section. (max 200 characters)"
+        ),
+    )
+    custom_completion_message_replace = models.BooleanField(
+        _("Replace completion message with custom completion message"),
+        default=False,
+        help_text=_(
+            "Defines if the custom completion message should replace the default completion message or be displayed along side it."
         ),
     )
     create_discussions = models.BooleanField(
@@ -603,6 +610,19 @@ class Section(TimeStampedModel):
                     )
                 )
 
+    def check_custom_completion_message(self, errors):
+        if self.custom_completion_message_replace:
+            if self.custom_completion_message == "":
+                errors.append(
+                    ValidationError(
+                        _(
+                            "Custom completion message MUST be defined to be able to \
+                        enable the option 'Replace completion message with \
+                        custom message'."
+                        )
+                    )
+                )
+
     def clean(self):
         errors = []
 
@@ -616,6 +636,8 @@ class Section(TimeStampedModel):
         self.check_quiz_section_fields(errors)
         # check fields related to Content Section
         self.check_content_section_fields(errors)
+        # check fields related to Custom completion message
+        self.check_custom_completion_message(errors)
 
         if len(errors) > 0:
             raise ValidationError(errors)

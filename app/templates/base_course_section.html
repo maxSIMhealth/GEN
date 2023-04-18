@@ -71,11 +71,17 @@
 {#            {% endif %}#}
 
             {% if message_congratulations %}
-                {% bootstrap_alert message_congratulations alert_type="success" dismissible=False %}
+                {% if not section.custom_completion_message_replace %}
+                    {% bootstrap_alert message_congratulations alert_type="success" dismissible=False %}
+                {% endif %}
             {% endif %}
 
-            {% if section_status.completed and section.completion_message %}
-                {% bootstrap_alert section.completion_message alert_type="info" dismissible=False %}
+            {% if section_status.completed and section.custom_completion_message %}
+                {% if section.custom_completion_message_replace %}
+                    {% bootstrap_alert section.custom_completion_message alert_type="success" dismissible=False %}
+                {% else %}
+                    {% bootstrap_alert section.custom_completion_message alert_type="info" dismissible=False %}
+                {% endif %}
             {% endif %}
 
             {% block content %}
