@@ -366,6 +366,13 @@ class Section(TimeStampedModel):
             "A message to be displayed after the participant has successfully completed the section. (max 200 characters)"
         ),
     )
+    custom_completion_message_replace = models.BooleanField(
+        _("Replace completion message with custom completion message"),
+        default=False,
+        help_text=_(
+            "Defines if the custom completion message should replace the default completion message or be displayed along side it."
+        ),
+    )
     create_discussions = models.BooleanField(
         _("create discussion"),
         default=False,

@@ -151,6 +151,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "requirement",
                     "published",
                     "custom_completion_message",
+                    "custom_completion_message_replace",
                 )
             },
         ),
