@@ -78,7 +78,7 @@ def review_course_status(request, course, force: bool = False) -> bool:
     from courses.models import Status
 
     # course_type = course.type_name()
-    # completion_message = _(f"Congratulations, you have completed this {course_type}.")
+    # custom_completion_message = _(f"Congratulations, you have completed this {course_type}.")
 
     course_completed = False
 
@@ -91,7 +91,7 @@ def review_course_status(request, course, force: bool = False) -> bool:
             status.completed = True
             status.save()
             course_completed = True
-            # messages.success(request, completion_message)
+            # messages.success(request, custom_completion_message)
     else:
         # if no section is set as incomplete, mark course status as completed
         if not status_objects.filter(completed=False).exclude(section=None):
@@ -99,7 +99,7 @@ def review_course_status(request, course, force: bool = False) -> bool:
             course_status.completed = True
             course_status.save()
             course_completed = True
-            # messages.success(request, completion_message)
+            # messages.success(request, custom_completion_message)
 
     return course_completed
 

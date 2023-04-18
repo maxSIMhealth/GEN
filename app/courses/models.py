@@ -357,8 +357,8 @@ class Section(TimeStampedModel):
             "completed the course/module?"
         ),
     )
-    completion_message = models.CharField(
-        _("completion message"),
+    custom_completion_message = models.CharField(
+        _("Custom completion message"),
         max_length=200,
         unique=False,
         blank=True,

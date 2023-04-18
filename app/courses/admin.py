@@ -150,7 +150,7 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                     "end_date",
                     "requirement",
                     "published",
-                    "completion_message",
+                    "custom_completion_message",
                 )
             },
         ),
