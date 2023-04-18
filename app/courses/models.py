@@ -23,8 +23,17 @@ PERMISSION_TYPES = [
     (ADMINS, _("Admins")),
 ]
 COURSE = "C"
+SECTION = "S"
 MODULE = "M"
+GROUP = "G"
+NONE = "N"
 COURSE_TYPES = [(COURSE, _("Course")), (MODULE, _("Module"))]
+STATUS_TYPES = [
+    (GROUP, _("Group")),
+    (COURSE, _("Course")),
+    (SECTION, _("Section")),
+    (NONE, _("None")),
+]
 CERTIFICATE_DEFAULT = "CD"
 CERTIFICATE_CUSTOM = "CX"
 CERTIFICATE_TYPES = [
@@ -819,8 +828,26 @@ class Status(TimeStampedModel):
     learner = models.ForeignKey(
         User, on_delete=models.PROTECT, related_name="status", verbose_name=_("learner")
     )
+    type = models.CharField(
+        _("status type"),
+        max_length=1,
+        choices=STATUS_TYPES,
+        default=NONE,
+        help_text=_(
+            "Sets what kind of object the status is related to: group, course, or section."
+        ),
+    )
+    group = models.ForeignKey(
+        Group,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        related_name="status",
+    )
     course = models.ForeignKey(
         Course,
+        blank=True,
+        null=True,
         on_delete=models.PROTECT,
         related_name="status",
         verbose_name=_("course"),
