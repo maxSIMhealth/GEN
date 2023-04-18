@@ -363,7 +363,7 @@ class Section(TimeStampedModel):
         unique=False,
         blank=True,
         help_text=_(
-            "A message to be displayed after the participant has successfully completed the section. (max 200 characters)"
+            "A custom message to be displayed after the participant has successfully completed the section. (max 200 characters)"
         ),
     )
     custom_completion_message_replace = models.BooleanField(
