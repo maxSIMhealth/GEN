@@ -1,0 +1,658 @@
+digraph model_graph {
+	graph [bb="0,0,1920,810",
+		fontname=Roboto,
+		fontsize=8,
+		rankdir=TB,
+		splines=true
+	];
+	node [fontname=Roboto,
+		fontsize=8,
+		label="\N",
+		shape=plaintext
+	];
+	edge [fontname=Roboto,
+		fontsize=8
+	];
+	games_models_TextItem	[height=1.6389,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TextItem<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>game</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">text</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">text_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">text_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="764,286",
+		width=5.8611];
+	model_utils_models_TimeStampedModel	[height=0.79167,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TimeStampedModel
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">created</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">AutoCreatedField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">modified</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">AutoLastModifiedField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="477,131.5",
+		width=5.125];
+	games_models_TextItem -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="661.5,200",
+		pos="e,528.5,159.87 655.09,227.13 615.54,206.12 572.27,183.12 538.28,165.06"];
+	games_models_Game	[height=1.1528,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Game
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">show_numbers</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">BooleanField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">shuffle</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">BooleanField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">type</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="1170,131.5",
+		width=5.5417];
+	games_models_TextItem -> games_models_Game	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" game (textitem)",
+		lp="1069.5,200",
+		pos="s,913.81,227.04 921.94,223.93 950.87,212.88 980.81,201.53 1009,191 1024.7,185.12 1041.4,178.99 1057.7,173"];
+	courses_models_SectionItem	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">SectionItem</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="1170,18",
+		width=1.9444];
+	games_models_Game -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="1215.5,63",
+		pos="e,1170,35.904 1170,90.246 1170,75.918 1170,60.108 1170,47.028"];
+	games_models_TextBoxesGame	[height=0.5,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TextBoxesGame
+    </B></FONT></TD></TR>
+  
+    </TABLE>
+    >,
+		pos="1102,286",
+		width=3.0278];
+	games_models_TextBoxesGame -> games_models_Game	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" proxy\ninheritance",
+		lp="1183.5,200",
+		pos="e,1150.3,172.99 1108.9,268.26 1116.7,249.39 1129.9,217.83 1142,191 1143.2,188.44 1144.4,185.83 1145.6,183.19"];
+	games_models_TextBoxesTerm	[height=2,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TextBoxesTerm<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>AutoField</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I><B>game</B></I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I><B>ForeignKey (sectionitem_ptr)</B></I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">custom_order</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PositiveIntegerField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>text</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>CharField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>text_en</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>TranslationCharField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>text_fr</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>TranslationCharField</I></FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="1493,471",
+		width=6.2778];
+	games_models_TextBoxesTerm -> games_models_TextItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="1459.5,372",
+		pos="e,974.87,343.55 1437.5,399.15 1422.7,382.29 1408,367.78 1398,363 1358.7,344.3 1064.4,351.04 986.19,344.77"];
+	games_models_TextBoxesTerm -> games_models_Game	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" game (textboxesterm)",
+		lp="1570,286",
+		pos="s,1511.6,399.27 1511.4,390.44 1510.7,380.86 1508.5,371.48 1504,363 1456.1,271.77 1353.9,209.55 1275.1,172.96"];
+	games_models_TextBoxesItem	[height=2,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TextBoxesItem<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>AutoField</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I><B>game</B></I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I><B>ForeignKey (sectionitem_ptr)</B></I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">custom_order</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PositiveIntegerField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">text</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">TextField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">text_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">text_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="1239,699",
+		width=6.2778];
+	games_models_TextBoxesItem -> games_models_TextItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="1105.5,471",
+		pos="e,833.8,344.84 1161.9,627.08 1138.3,605.67 1112.2,582.23 1088,561 1005.1,488.41 908.53,407.14 842.51,352.09"];
+	games_models_TextBoxesItem -> games_models_Game	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" game (textboxesitem)",
+		lp="1313,372",
+		pos="s,1238.4,627.19 1238.3,618.3 1236.8,480.46 1233,210.34 1225,191 1222.3,184.56 1218.6,178.4 1214.4,172.66"];
+	games_models_TextBoxesItem -> games_models_TextBoxesTerm	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" correct_terms (correct_term_items)",
+		lp="1519.5,565.5",
+		pos="s,1318.7,627.11 e,1413.6,542.64 1325.1,621.38 1351.5,597.89 1380.6,572.04 1407,548.55"];
+	games_models_MoveToColumnsGame	[height=0.5,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    MoveToColumnsGame
+    </B></FONT></TD></TR>
+  
+    </TABLE>
+    >,
+		pos="411,286",
+		width=3.4444];
+	games_models_MoveToColumnsGame -> games_models_Game	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" proxy\ninheritance",
+		lp="548.5,200",
+		pos="e,970.89,148.46 422.34,268.23 438.32,246.16 469.71,208.17 507,191 517.4,186.21 769.36,164.9 959.59,149.38"];
+	games_models_MoveToColumnsItem	[height=2,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    MoveToColumnsItem<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>AutoField</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>game</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">custom_order</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PositiveIntegerField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>text</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>CharField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>text_en</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>TranslationCharField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>text_fr</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><I>TranslationCharField</I></FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="572,471",
+		width=6.2778];
+	games_models_MoveToColumnsItem -> games_models_TextItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="741.5,372",
+		pos="e,717.9,344.77 664.32,399.05 671.12,393.1 677.75,387.04 684,381 692.94,372.36 701.93,362.81 710.5,353.2"];
+	games_models_MoveToColumnsItem -> games_models_MoveToColumnsGame	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" game (movetocolumnsitem)",
+		lp="586,372",
+		pos="s,509.75,399.25 503.97,392.68 474.9,359.64 443.61,324.07 425.76,303.77"];
+	games_models_MoveToColumnsGroup	[height=3.0833,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    MoveToColumnsGroup<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>AutoField</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>game</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>OneToOneField (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">choice1_name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">choice1_name_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">choice1_name_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">choice2_name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">choice2_name_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">choice2_name_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">source_name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">source_name_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">source_name_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">source_shuffle</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">BooleanField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="248,699",
+		width=6.8889];
+	games_models_MoveToColumnsGroup -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="191.5,372",
+		pos="e,395.41,159.99 179.23,588.03 146.78,521.8 120.9,436.37 150,363 189.98,262.18 302.86,198.59 384.82,164.33"];
+	games_models_MoveToColumnsGroup -> games_models_MoveToColumnsGame	[arrowhead=none,
+		arrowtail=none,
+		dir=both,
+		label=" game (columns)",
+		lp="280.5,471",
+		pos="210.45,588.09 196.89,528.54 191.84,455.75 224,399 251.61,350.27 309.8,320.45 353.98,303.96"];
+	games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" source_items (source_column_items)",
+		lp="380.5,565.5",
+		pos="s,235.44,588.12 e,346.01,539.36 238.12,579.98 240.75,573.18 244.31,566.77 249,561 272.8,531.7 295.43,552.36 332,543 333.88,542.52 \
+335.77,542.03 337.66,541.54"];
+	games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" choice1_items (choice1_column_items)",
+		lp="660,565.5",
+		pos="s,490.35,588.01 e,535.41,542.99 497.31,582.54 502.36,578.47 507.27,574.29 512,570 518.62,564 524.76,557.1 530.39,549.8"];
+	games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" choice2_items (choice2_column_items)",
+		lp="945,565.5",
+		pos="s,495.95,671.14 e,797.89,519.13 504.65,669.8 631.03,650.08 764.48,618.41 803,570 817.45,551.84 815.88,536.99 804.33,524.86"];
+	games_models_MatchTermsGame	[height=0.5,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    MatchTermsGame
+    </B></FONT></TD></TR>
+  
+    </TABLE>
+    >,
+		pos="1807,286",
+		width=3.1389];
+	games_models_MatchTermsGame -> games_models_Game	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" proxy\ninheritance",
+		lp="1653.5,200",
+		pos="e,1369.4,155.28 1774.5,268.1 1749.3,255.47 1713.1,238.47 1680,227 1584.2,193.82 1474.1,171.55 1380.7,157.01"];
+	"\n\n\n"	[height=0.5,
+		pos="1510,699",
+		width=0.75];
+}

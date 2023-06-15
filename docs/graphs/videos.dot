@@ -1,0 +1,193 @@
+digraph model_graph {
+	graph [bb="0,0,905.5,264",
+		fontname=Roboto,
+		fontsize=8,
+		rankdir=TB,
+		splines=true
+	];
+	node [fontname=Roboto,
+		fontsize=8,
+		label="\N",
+		shape=plaintext
+	];
+	edge [fontname=Roboto,
+		fontsize=8
+	];
+	videos_models_Playlist	[height=0.79167,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Playlist
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>course</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="199.5,177",
+		width=5.5417];
+	courses_models_Course	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">Course</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="343.5,18",
+		width=1.4167];
+	videos_models_Playlist -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (videolists)",
+		lp="273,63",
+		pos="s,190.01,148.63 187.81,139.99 181.59,113.44 178.64,77.911 197.5,54 209.32,39.008 255.43,29.713 292.71,24.504"];
+	courses_models_SectionItem	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">SectionItem</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="499.5,18",
+		width=1.9444];
+	videos_models_Playlist -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="413,63",
+		pos="e,429.5,30.693 242.14,148.69 272.62,128.59 314.14,100 348.5,72 357.52,64.651 357.34,59.666 367.5,54 383.19,45.249 401.16,38.612 \
+418.68,33.605"];
+	videos_models_VideoFile	[height=2.4167,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    VideoFile
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>course</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">file</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">FileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">file_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">file_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">internal_name</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">FileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle_en</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle_fr</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">thumbnail</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">ImageField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">uploaded_at</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="626.5,177",
+		width=5.75];
+	videos_models_VideoFile -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (videos)",
+		lp="542,63",
+		pos="s,504.14,90.082 497.28,84.721 491.9,80.482 486.62,76.23 481.5,72 472.53,64.593 472.58,59.802 462.5,54 450.6,47.152 421.04,38.444 \
+394.35,31.427"];
+	videos_models_VideoFile -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="662,63",
+		pos="e,569.47,29.849 624.54,90.036 620.98,76.869 615.3,64.267 606.5,54 599.25,45.541 589.92,39.114 579.81,34.233"];
+	"\n\n\n"	[height=0.5,
+		pos="878.5,177",
+		width=0.75];
+}

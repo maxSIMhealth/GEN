@@ -1,0 +1,5523 @@
+digraph model_graph {
+	graph [bb="0,0,10473,4580",
+		fontname=Roboto,
+		fontsize=8,
+		rankdir=TB,
+		splines=true
+	];
+	node [fontname=Roboto,
+		fontsize=8,
+		label="\N",
+		shape=plaintext
+	];
+	edge [fontname=Roboto,
+		fontsize=8
+	];
+	subgraph cluster_core {
+		graph [bb="2741,581.5,4141,2037",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>core</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="3441,2023.5",
+			lwidth=4.78,
+			style=rounded
+		];
+		model_utils_models_TimeStampedModel	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TimeStampedModel
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">created</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">AutoCreatedField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">modified</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">AutoLastModifiedField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3911,618",
+			width=5.9583];
+		core_models_LogoFile	[height=0.91667,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      LogoFile<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">ImageField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="3891,967.5",
+			width=4.4028];
+		core_models_LogoFile -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="3945.5,732",
+			pos="e,3909.4,646.18 3892.8,934.74 3896.5,870.75 3904.8,726.55 3908.8,657.4"];
+		core_models_CertificateFrameFile	[height=0.61111,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      CertificateFrameFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>logofile_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3914,1490.5",
+			width=6.0694];
+		core_models_CertificateFrameFile -> core_models_LogoFile	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" multi-table\ninheritance",
+			lp="3946.5,1203",
+			pos="e,3892.4,1000.3 3913.1,1468.8 3909.7,1391.3 3897.6,1118.2 3892.9,1011.6"];
+		core_models_CertificateLogoFile	[height=0.61111,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      CertificateLogoFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>logofile_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="2988,1490.5",
+			width=6.0694];
+		core_models_CertificateLogoFile -> core_models_LogoFile	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" multi-table\ninheritance",
+			lp="3612.5,1203",
+			pos="e,3871.6,1000.4 2999,1468.7 3027.2,1417.8 3107.5,1286.6 3216,1230 3263.5,1205.2 3647.1,1199.9 3695,1176 3770.6,1138.2 3832.5,1058.6 \
+3865.4,1009.7"];
+		core_models_CertificateTemplate	[height=1.0972,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      CertificateTemplate<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>frame</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (logofile_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3538,1935.5",
+			width=6.0556];
+		core_models_CertificateTemplate -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="3285.5,1203",
+			pos="e,3847.5,646.41 3320.2,1913 3115.2,1887.7 2829.7,1837.8 2761,1751 2617.3,1569.4 2603.5,1399.7 2761,1230 2834.2,1151.1 3136.5,1200.2 \
+3244,1194 3268.2,1192.6 3662.3,1192.6 3680,1176 3749.2,1111 3676,832.94 3724,751 3749.8,706.9 3796.9,673.79 3837.3,651.77"];
+		core_models_CertificateTemplate -> core_models_CertificateFrameFile	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" frame (certificatetemplate)",
+			lp="3775.5,1778",
+			pos="s,3570.4,1896.3 3576.2,1889.5 3656.2,1795.2 3838.7,1580.2 3896.3,1512.4"];
+		core_models_CertificateTemplate -> core_models_CertificateLogoFile	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" logos (certificatetemplate)",
+			lp="3361.5,1778",
+			pos="s,3453.5,1896 e,3002.6,1512.4 3445.8,1892.3 3378.5,1859.1 3287,1808.8 3216,1751 3127.4,1678.8 3044.3,1570.2 3007.7,1519.5"];
+		core_models_FooterLogoFile	[height=1.1528,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      FooterLogoFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>logofile_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">description</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">url</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">URLField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3451,1490.5",
+			width=6.2778];
+		core_models_FooterLogoFile -> core_models_LogoFile	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" multi-table\ninheritance",
+			lp="3742.5,1203",
+			pos="e,3864.1,1000.4 3485.2,1449.1 3567.2,1351.9 3774.6,1106.3 3856.7,1009.1"];
+		core_models_LoginAlertMessage	[height=2.3611,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      LoginAlertMessage<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">archived</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">end_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">published</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_dates</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">start_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3445,967.5",
+			width=6.2778];
+		core_models_LoginAlertMessage -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="3643.5,732",
+			pos="e,3765.4,646.43 3481.2,882.68 3507.7,830.14 3548.4,764.71 3602,723 3646.2,688.6 3702.4,665.26 3754.7,649.57"];
+		core_models_HelpFaq	[height=2,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      HelpFaq<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">answer</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">answer_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">answer_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">question</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">question_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">question_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="2975,967.5",
+			width=6.2778];
+		core_models_HelpFaq -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="3303.5,732",
+			pos="e,3696.5,628.74 3032.9,895.74 3076.5,847.33 3140.5,785.82 3210,751 3358.1,676.85 3542.9,644.15 3685.5,629.82"];
+	}
+	subgraph cluster_accounts {
+		graph [bb="6689,911.5,7165,1077.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>accounts</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="6927,1064",
+			lwidth=5.19,
+			style=rounded
+		];
+		accounts_models_Profile	[height=1.3333,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Profile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">email_confirmed</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">institution</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">location</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6927,967.5",
+			width=6.375];
+	}
+	subgraph cluster_courses {
+		graph [bb="7173,751,8844,2128",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>courses</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="8008.5,2114.5",
+			lwidth=5.08,
+			style=rounded
+		];
+		courses_models_Course	[height=5.7917,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Course<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>author</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>certificate_template</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>requirement</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">auto_enroll</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">blind_data</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">certificate_custom_term</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">certificate_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">code</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">enable_gamification</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">end_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">initial_section_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">initial_section_name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">initial_section_name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">learners_max_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">IntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">provide_certificate</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_code</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_leaderboard</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_progress_tracker</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_scoreboard</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">start_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="8392,967.5",
+			width=7.4167];
+		courses_models_Course -> courses_models_Course	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" requirement (course)",
+			lp="8756,967.5",
+			pos="s,8658.8,994.41 8666.1,989.22 8673.1,983.19 8677,975.95 8677,967.5 8677,956.46 8670.3,947.49 8658.8,940.59"];
+		courses_models_Section	[height=7.2361,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Section<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>author</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>clone_quiz_output_section</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>clone_quiz_reference</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>requirement</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>section_output</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">access_restriction</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">author_access_override</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">clone_quiz</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">clone_quiz_update_owner</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">create_discussions</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">custom_completion_message</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">custom_completion_message_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">custom_completion_message_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_completion_message_replace</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">end_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">final_assessment</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">group_by_video</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">items_ordering</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">output_access_restriction</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">output_author_access_override</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">paginate</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">pre_assessment</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">published</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">section_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_mark_as_complete_instruction</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_related_video_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_thumbnails</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">start_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7516,1490.5",
+			width=9.2917];
+		courses_models_Section -> courses_models_Course	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" course (sections)",
+			lp="8074,1203",
+			pos="s,7850.3,1290.7 7857.8,1286.2 7946.6,1233.4 8041,1177.3 8125.3,1127.1"];
+		courses_models_Section -> courses_models_Section	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" requirement (sections)",
+			lp="7955,1490.5",
+			pos="s,7850.3,1500.5 7858.8,1498.1 7865.1,1495.9 7868.5,1493.4 7868.5,1490.5 7868.5,1486.5 7861.9,1483.1 7850.3,1480.5"];
+		courses_models_Section -> courses_models_Section	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" section_output (sections_output)",
+			lp="8165.5,1490.5",
+			pos="s,7850.3,1526.2 7859.1,1526.1 7960,1523.9 8041.5,1512.1 8041.5,1490.5 8041.5,1468.3 7955.2,1456.4 7850.3,1454.8"];
+		courses_models_Section -> courses_models_Section	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" clone_quiz_output_section (clone_quiz_section)",
+			lp="8466,1490.5",
+			pos="s,7850.4,1542.5 7859.1,1542.8 8068.3,1550.1 8289.5,1532.6 8289.5,1490.5 8289.5,1447.8 8062.1,1430.5 7850.4,1438.5"];
+		courses_models_SectionItem	[height=3.625,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      SectionItem<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>author</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>section</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">access_restriction</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">author_access_override</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">end_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">item_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">published</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_related_content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">start_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7504,1935.5",
+			width=7.3194];
+		courses_models_SectionItem -> courses_models_Section	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" section (section_items)",
+			lp="7598.5,1778",
+			pos="s,7507.5,1805.2 7507.7,1796.6 7508.1,1781.8 7508.6,1766.5 7509,1750.9"];
+		courses_models_Status	[height=1.4583,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Status<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>learner</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>section</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">completed</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="7981,1935.5",
+			width=5.4306];
+		courses_models_Status -> courses_models_Course	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" course (status)",
+			lp="8770.5,1490.5",
+			pos="s,8176.3,1910.6 8185.1,1909.3 8371.4,1881.6 8626.7,1830.3 8688,1751 8723.4,1705.2 8711.8,1282.8 8688,1230 8679.5,1211.1 8668.8,1193 \
+8656.7,1175.8"];
+		courses_models_Status -> courses_models_Section	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" section (status)",
+			lp="7881,1778",
+			pos="s,7927.2,1883.2 7920.8,1877.1 7885.5,1843.5 7838.1,1798.4 7788.2,1750.8"];
+	}
+	subgraph cluster_discussions {
+		graph [bb="8182,2274.5,9057,3012",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>discussions</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="8619.5,2998.5",
+			lwidth=5.50,
+			style=rounded
+		];
+		vote_models_VoteModel	[height=0.97222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      VoteModel
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">num_vote_down</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">num_vote_up</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">vote_score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">IntegerField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="8534,2317.5",
+			width=6.375];
+		discussions_models_Discussion	[height=1.4583,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Discussion<BR/>&lt;<FONT FACE="Roboto"><I>VoteModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>requirement</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>video</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">last_updated</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="8576,2660.5",
+			width=7.4167];
+		discussions_models_Discussion -> vote_models_VoteModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="8596.5,2490",
+			pos="e,8538.2,2352.2 8569.7,2608.1 8561.5,2541.5 8547.3,2426.6 8539.5,2363.4"];
+		discussions_models_Discussion -> discussions_models_Discussion	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" requirement (discussion)",
+			lp="8955,2660.5",
+			pos="s,8842.8,2680 8850.5,2676 8857.2,2671.6 8861,2666.5 8861,2660.5 8861,2652.5 8854.3,2646 8842.8,2641"];
+		discussions_models_Comment	[height=1.2778,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Comment<BR/>&lt;<FONT FACE="Roboto"><I>VoteModel,TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>author</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>discussion</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">message</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="8688,2904",
+			width=6.9028];
+		discussions_models_Comment -> vote_models_VoteModel	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="8258.5,2660.5",
+			pos="e,8473.1,2352.4 8439.7,2884.6 8342.5,2871.8 8247,2850.2 8217,2814 8132.8,2712.4 8153.1,2632.5 8217,2517 8230.8,2492.1 8374.1,2408.3 \
+8463.3,2357.9"];
+		discussions_models_Comment -> discussions_models_Discussion	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" discussion (comments)",
+			lp="8740,2831",
+			pos="s,8667.2,2858.1 8663.5,2850.2 8644.6,2809.4 8618.5,2753.2 8599.8,2712.8"];
+	}
+	subgraph cluster_dashboard {
+		graph [bb="2243,861.5,2733,1127.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>dashboard</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="2488,1114",
+			lwidth=5.28,
+			style=rounded
+		];
+		dashboard_models_DashboardSetting	[height=2.7222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      DashboardSetting<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">active</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">description_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">image</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ImageField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">instructions</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">instructions_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">instructions_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="2488,967.5",
+			width=6.5833];
+	}
+	subgraph cluster_quiz {
+		graph [bb="6835,2164,8144,4230",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>quiz</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="7489.5,4216.5",
+			lwidth=4.78,
+			style=rounded
+		];
+		quiz_models_Quiz	[height=4.0417,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Quiz
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>requirement</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>video</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">allow_multiple_attempts</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">assessment_max_mistakes</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">assessment_method</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">assessment_min_percentage</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">attempts_max_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">graded</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">max_score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">paginate</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">randomize</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">require_answers</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_correct_answers</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_question_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_question_value</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">subset</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">subset_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7476,2317.5",
+			width=8.4583];
+		quiz_models_Quiz -> quiz_models_Quiz	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" requirement (quiz)",
+			lp="7870,2317.5",
+			pos="s,7780.3,2336.2 7788,2332.3 7794.8,2328.1 7798.5,2323.2 7798.5,2317.5 7798.5,2309.9 7791.9,2303.7 7780.3,2298.8"];
+		quiz_models_Question	[height=3.9861,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Question<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>author</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>feedback_image</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>image</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>quiz</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">additional_content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">additional_content_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">additional_content_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">content_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">content_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">feedback</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">HTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">feedback_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">feedback_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationHTMLField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">multiple_correct_answers</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">openended_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">question_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">value</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7184,2660.5",
+			width=8.3611];
+		quiz_models_Question -> quiz_models_Quiz	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" quiz (questions)",
+			lp="7394,2490",
+			pos="s,7305.7,2517.4 7311.5,2510.6 7325.1,2494.8 7338.8,2478.7 7352.4,2462.9"];
+		quiz_models_Likert	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Likert
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="6948,2904",
+			width=2.9167];
+		quiz_models_Likert -> quiz_models_Question	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7065.5,2831",
+			pos="e,7045,2803.8 6964.6,2886 6981,2869.3 7007.7,2841.9 7037.1,2811.9"];
+		quiz_models_LikertAnswer	[height=2,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      LikertAnswer<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>question</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">answer_range</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">IntegerRangeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">check_answer</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">legend</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">legend_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">legend_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">scale_range</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">IntegerRangeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7069,3332",
+			width=6.2778];
+		quiz_models_LikertAnswer -> quiz_models_Likert	[arrowhead=none,
+			arrowtail=none,
+			dir=both,
+			label=" question (likertanswer)",
+			lp="7478.5,3118",
+			pos="7252.9,3260 7276.7,3251.1 7300.9,3242.2 7324,3234 7347.8,3225.5 7363.2,3236.5 7378,3216 7390.7,3198.3 7393.2,3035.6 7378,3020 7365.7,\
+3007.4 7078.2,3018.7 7062,3012 7016.3,2993.2 6978,2947.1 6959.6,2922"];
+		quiz_models_OpenEnded	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      OpenEnded
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="7791,2904",
+			width=3.2222];
+		quiz_models_OpenEnded -> quiz_models_Question	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7735.5,2831",
+			pos="e,7485,2750.9 7767.5,2886 7742.2,2868.3 7700.2,2840.5 7661,2822 7608.8,2797.3 7551.7,2774.7 7495.8,2754.7"];
+		quiz_models_MCQuestion	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MCQuestion
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="7517,2904",
+			width=3.3333];
+		quiz_models_MCQuestion -> quiz_models_Question	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7468.5,2831",
+			pos="e,7380.2,2803.8 7493.6,2886 7470.1,2869 7431.6,2841 7389.5,2810.5"];
+		quiz_models_MCAnswer	[height=1.8194,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MCAnswer<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>question</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">content_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">content_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">mark</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="7559,3332",
+			width=6.2778];
+		quiz_models_MCAnswer -> quiz_models_MCQuestion	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" question (answers)",
+			lp="7664.5,3118",
+			pos="s,7575.8,3266.7 7577.7,3257.9 7590.9,3194.1 7602.9,3099.5 7582,3020 7572,2981.9 7546.1,2943.1 7530.2,2921.7"];
+		quiz_models_QuizScore	[height=2.7222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      QuizScore<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>quiz</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>student</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">attempt_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">completed</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">expert_feedback</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">max_mistakes</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">max_score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">min_percentage</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">num_mistakes</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7110,3118",
+			width=7.4167];
+		quiz_models_QuizScore -> quiz_models_Quiz	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" quiz (quizscore)",
+			lp="7988,2831",
+			pos="s,7376.9,3020.8 7385.5,3020.2 7455.5,3017.9 7906.2,3021.9 7916,3012 7926.4,3001.5 7929.5,2493.1 7921,2481 7886.6,2431.8 7835.6,2397.4 \
+7780.3,2373.5"];
+		quiz_models_QuestionGroupHeader	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      QuestionGroupHeader
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="7225,2904",
+			width=4.2778];
+		quiz_models_QuestionGroupHeader -> quiz_models_Question	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7255.5,2831",
+			pos="e,7208.2,2803.8 7222.1,2886 7219.4,2869.8 7214.9,2843.7 7210,2814.9"];
+		quiz_models_QuestionAttempt	[height=2.9028,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      QuestionAttempt<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>multiplechoice_answer</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>question</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>quiz</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>quiz_score</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>section</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>student</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>video</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">answer_content</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">attempt_number</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">correct</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">question_type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7846,3631.5",
+			width=8.0417];
+		quiz_models_QuestionAttempt -> quiz_models_Quiz	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" quiz (questionattempt)",
+			lp="8091.5,2904",
+			pos="s,7884.6,3527.3 7887.6,3518.9 7916.5,3436.4 7953.5,3320.7 7974,3216 7989.3,3137.6 7956.3,2921.3 8005,2858 8019.4,2839.3 8041.4,2859.3 \
+8055,2840 8059.6,2833.5 8056.4,2829.9 8055,2822 8026.1,2662.7 8042.2,2594.7 7927,2481 7886,2440.5 7834.1,2410 7780.4,2387.1"];
+		quiz_models_QuestionAttempt -> quiz_models_Question	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" question (questionattempt)",
+			lp="7872.5,3118",
+			pos="s,7858.5,3527.1 7858.4,3518.6 7858.1,3512.3 7857.7,3506.1 7857,3500 7842.9,3379.3 7859.5,3336.3 7794,3234 7787,3223.1 7777.6,3227.2 \
+7771,3216 7726.3,3140 7803.9,3080.8 7740,3020 7716,2997.2 7689.6,3035.1 7666,3012 7616.7,2963.7 7687.7,2913 7646,2858 7605.1,2804.1 \
+7546.5,2764.8 7484.8,2736.2"];
+		quiz_models_QuestionAttempt -> quiz_models_MCAnswer	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" multiplechoice_answer (questionattempt)",
+			lp="7706.5,3504.5",
+			pos="s,7569.9,3527.1 7564.2,3520.3 7561.3,3516.6 7558.6,3512.9 7556,3509 7534.5,3476.7 7535.1,3433.1 7541.1,3397.4"];
+		quiz_models_QuestionAttempt -> quiz_models_QuizScore	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" quiz_score (questionattempt)",
+			lp="7438,3504.5",
+			pos="s,7556.7,3588.6 7548,3586.8 7452.9,3567.4 7363.3,3541.4 7329,3509 7284.4,3466.8 7336.4,3286.1 7304,3234 7300.1,3227.7 7295.7,3221.7 \
+7290.8,3216"];
+		quiz_models_LikertAttempt	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      LikertAttempt
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="8005,4150",
+			width=3.6389];
+		quiz_models_LikertAttempt -> quiz_models_QuestionAttempt	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7929.5,3763",
+			pos="e,7877.8,3735.9 7999.8,4132.1 7981.7,4073.4 7920.7,3875 7881.1,3746.6"];
+		quiz_models_OpenEndedAttempt	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      OpenEndedAttempt
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="7713,4150",
+			width=3.9722];
+		quiz_models_OpenEndedAttempt -> quiz_models_QuestionAttempt	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7841.5,3763",
+			pos="e,7805.7,3735.9 7715.8,4132.2 7725.1,4077.3 7757.1,3898 7800,3754 7800.7,3751.6 7801.5,3749.1 7802.2,3746.7"];
+		quiz_models_MCQuestionAttempt	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MCQuestionAttempt
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="7406,4150",
+			width=4.0556];
+		quiz_models_MCQuestionAttempt -> quiz_models_QuestionAttempt	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="7626.5,3763",
+			pos="e,7613.8,3735.8 7408.9,4132.2 7419.4,4075.9 7460.3,3891.4 7561,3782 7574.2,3767.7 7589,3754.5 7604.9,3742.4"];
+	}
+	subgraph cluster_videos {
+		graph [bb="9065,2222.5,10033,2466.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>videos</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="9549,2453",
+			lwidth=4.97,
+			style=rounded
+		];
+		videos_models_Playlist	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Playlist
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="9795,2317.5",
+			width=6.375];
+		videos_models_VideoFile	[height=2.4167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      VideoFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>course</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">file_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">file_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">internal_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">subtitle_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationFileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">thumbnail</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ImageField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">uploaded_at</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="9310,2317.5",
+			width=6.5833];
+	}
+	subgraph cluster_content {
+		graph [bb="5300,1905.5,6827,2421",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>content</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="6063.5,2407.5",
+			lwidth=5.08,
+			style=rounded
+		];
+		content_models_ContentItem	[height=0.61111,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ContentItem
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6265,1935.5",
+			width=6.375];
+		content_models_ImageFile	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ImageFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">ImageField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6112,2317.5",
+			width=6.375];
+		content_models_PdfFile	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      PdfFile
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>contentitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="5586,2317.5",
+			width=7.7222];
+		content_models_PdfFile -> content_models_ContentItem	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" multi-table\ninheritance",
+			lp="5950.5,2145",
+			pos="e,6227.8,1957.3 5635.1,2289 5761,2218.5 6094.2,2032.1 6217.9,1962.9"];
+		content_models_ExternalObject	[height=1.1528,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ExternalObject
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">directory</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">url</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">URLField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6589,2317.5",
+			width=6.375];
+	}
+	subgraph cluster_games {
+		graph [bb="91,2268,1673,3492",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>games</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="882,3478.5",
+			lwidth=4.86,
+			style=rounded
+		];
+		games_models_TextItem	[height=1.2778,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TextItem<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>game</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">text</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">text_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">text_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="336,2660.5",
+			width=6.5833];
+		games_models_Game	[height=1.1528,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Game
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_numbers</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">shuffle</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">type</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="1074,2317.5",
+			width=6.375];
+		games_models_TextItem -> games_models_Game	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" game (textitem)",
+			lp="543.5,2490",
+			pos="s,361.71,2614.7 366.4,2607.3 392.44,2567.1 433.53,2513.1 483,2481 591.16,2410.9 729.27,2370.7 844.78,2347.9"];
+		games_models_TextBoxesGame	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TextBoxesGame
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="1534,2660.5",
+			width=3.6389];
+		games_models_TextBoxesGame -> games_models_Game	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="1411.5,2490",
+			pos="e,1150.1,2358.9 1520,2642.9 1496,2614.9 1444.6,2557.5 1394,2517 1319.8,2457.7 1226.8,2401.7 1160.2,2364.5"];
+		games_models_TextBoxesTerm	[height=0.91667,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TextBoxesTerm<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="592,2904",
+			width=6.2778];
+		games_models_TextBoxesTerm -> games_models_TextItem	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="562.5,2831",
+			pos="e,381.49,2706.4 555.62,2871.2 544.43,2861.3 532.13,2850.3 521,2840 476.08,2798.4 426.2,2750.2 389.56,2714.3"];
+		games_models_TextBoxesTerm -> games_models_Game	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" game (textboxesterm)",
+			lp="697,2660.5",
+			pos="s,599.01,2871.1 600.61,2862.5 601.94,2855.1 603.15,2847.3 604,2840 612.3,2768.6 577.33,2576.2 618,2517 673.78,2435.8 770.45,2387.5 \
+860.47,2359"];
+		games_models_TextBoxesItem	[height=1.4583,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TextBoxesItem<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">text</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">text_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">text_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationTextField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="500,3332",
+			width=6.2778];
+		games_models_TextBoxesItem -> games_models_TextItem	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="315.5,2904",
+			pos="e,314.54,2706.4 448.01,3279.7 392.55,3221 308.07,3119 274,3012 241.68,2910.5 281.01,2786.7 310.14,2716.7"];
+		games_models_TextBoxesItem -> games_models_Game	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" game (textboxesitem)",
+			lp="1064,2831",
+			pos="s,689.14,3279.7 696.96,3275.3 723.11,3260 746.78,3240.6 764,3216 789.02,3180.2 746.63,3052.3 776,3020 791.44,3003 810.99,3028.4 \
+827,3012 875.15,2962.6 801.37,2909.8 847,2858 888.91,2810.4 922.62,2833.2 985,2822 1002.4,2818.9 1052,2827 1064,2814 1094.5,2780.9 \
+1081.8,2470.9 1076.2,2358.7"];
+		games_models_TextBoxesItem -> games_models_TextBoxesTerm	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" correct_terms (correct_term_items)",
+			lp="632.5,3118",
+			pos="s,490.18,3279.7 e,556.9,2937 488.86,3271 479.52,3206.8 471.9,3103.2 501,3020 511.08,2991.2 531.71,2964.1 550.78,2943.5"];
+		games_models_MoveToColumnsGame	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MoveToColumnsGame
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="1239,2660.5",
+			width=4.0556];
+		games_models_MoveToColumnsGame -> games_models_Game	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="1198.5,2490",
+			pos="e,1093.5,2358.9 1230.8,2642.6 1206.9,2593.1 1136.2,2447 1098.4,2369"];
+		games_models_MoveToColumnsItem	[height=1.0972,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MoveToColumnsItem<BR/>&lt;<FONT FACE="Roboto"><I>TextItem</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>game</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">custom_order</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="1112,2904",
+			width=7.1111];
+		games_models_MoveToColumnsItem -> games_models_TextItem	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="754.5,2831",
+			pos="e,395.07,2706.3 872.98,2864.5 741.22,2843 601.33,2819.3 587,2814 520.8,2789.3 452.72,2746.7 404.2,2712.7"];
+		games_models_MoveToColumnsItem -> games_models_MoveToColumnsGame	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" game (movetocolumnsitem)",
+			lp="1248,2831",
+			pos="s,1132.1,2864.7 1136.2,2857 1164.8,2802.7 1210.8,2715.1 1230.1,2678.5"];
+		games_models_MoveToColumnsGroup	[height=2.7222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MoveToColumnsGroup<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>game</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">choice1_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">choice1_name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">choice1_name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">choice2_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">choice2_name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">choice2_name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">source_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">source_name_en</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">source_name_fr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TranslationCharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">source_shuffle</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="1380,3332",
+			width=7.7222];
+		games_models_MoveToColumnsGroup -> games_models_MoveToColumnsGame	[arrowhead=none,
+			arrowtail=none,
+			dir=both,
+			label=" game (columns)",
+			lp="1622.5,2904",
+			pos="1644.9,3234.2 1650,3228.5 1654.7,3222.4 1659,3216 1671.1,3197.9 1673.7,3036 1659,3020 1645,3004.7 1584.7,3021.1 1566,3012 1483.9,\
+2972 1302.2,2742.9 1252,2678.4"];
+		games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" source_items (source_column_items)",
+			lp="1226.5,3118",
+			pos="s,1109.2,3234.2 e,1104.3,2943.2 1103.4,3227.3 1100.4,3223.7 1097.6,3219.9 1095,3216 1066.7,3174.1 1088.8,3027.8 1102.8,2951.7"];
+		games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" choice1_items (choice1_column_items)",
+			lp="1517,3118",
+			pos="s,1378,3234.1 e,1258.2,2943.4 1377.8,3225.3 1375.1,3141.9 1369.6,3036.8 1358,3020 1335.7,2987.6 1301.8,2964.1 1266.3,2947.1"];
+		games_models_MoveToColumnsGroup -> games_models_MoveToColumnsItem	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" choice2_items (choice2_column_items)",
+			lp="939,3118",
+			pos="s,1102.3,3309.2 e,1027.1,2943.4 1093.6,3308.1 967.37,3291.5 838.85,3263.3 800,3216 772.36,3182.3 772.23,3053.6 800,3020 812.11,3005.4 \
+823.75,3017.3 842,3012 902.21,2994.5 967.63,2968.8 1019,2946.9"];
+		games_models_MatchTermsGame	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      MatchTermsGame
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="920,2660.5",
+			width=3.75];
+		games_models_MatchTermsGame -> games_models_Game	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="1027.5,2490",
+			pos="e,1050.1,2358.8 925.24,2642.9 935.54,2611 959.69,2539.1 986,2481 1003.5,2442.4 1026.4,2400.3 1044.4,2368.7"];
+	}
+	subgraph cluster_scorm {
+		graph [bb="4682,2274.5,5262,2814",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>scorm</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="4972,2800.5",
+			lwidth=4.86,
+			style=rounded
+		];
+		scorm_models_ScormPackage	[height=0.97222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ScormPackage
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">file</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">package_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4984,2317.5",
+			width=6.375];
+		scorm_models_ScormRegistration	[height=2.5417,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ScormRegistration<BR/>&lt;<FONT FACE="Roboto"><I>TimeStampedModel</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>BigAutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>learner</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>package_object</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">activity_completion</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">activity_success</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">attempts</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">IntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">completion_amount</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">FloatField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">registration_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">score</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">FloatField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">time_tracked</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">title</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4972,2660.5",
+			width=7.8333];
+		scorm_models_ScormRegistration -> scorm_models_ScormPackage	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" package_object (scormregistration)",
+			lp="5096.5,2490",
+			pos="s,4965,2569.1 4964.7,2560.4 4963.7,2534.6 4963.5,2506.7 4965,2481 4967.6,2436.3 4974.2,2385.1 4978.9,2352.3"];
+	}
+	subgraph cluster_rest_framework_authtoken {
+		graph [bb="5332,924.5,5842,1570.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>rest_framework.authtoken</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="5587,1557",
+			lwidth=6.86,
+			style=rounded
+		];
+		rest_framework_authtoken_models_Token	[height=0.97222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Token
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>key</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>CharField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">created</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="5634,967.5",
+			width=5.5417];
+		rest_framework_authtoken_models_TokenProxy	[height=0.5,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      TokenProxy
+      </B></FONT></TD></TR>
+    
+      </TABLE>
+      >,
+			pos="5634,1490.5",
+			width=3.3333];
+		rest_framework_authtoken_models_TokenProxy -> rest_framework_authtoken_models_Token	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" proxy\ninheritance",
+			lp="5675.5,1203",
+			pos="e,5634,1002.2 5634,1472.8 5634,1401.7 5634,1123.5 5634,1013.6"];
+	}
+	subgraph cluster_allauth_account {
+		graph [bb="5850,911.5,6292,1600.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>allauth.account</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="6071,1587",
+			lwidth=5.92,
+			style=rounded
+		];
+		allauth_account_models_EmailAddress	[height=1.3333,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      EmailAddress
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">email</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">EmailField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">primary</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">verified</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6070,967.5",
+			width=5.3333];
+		allauth_account_models_EmailConfirmation	[height=1.3333,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      EmailConfirmation
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>email_address</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">created</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">key</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">sent</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6069,1490.5",
+			width=5.8472];
+		allauth_account_models_EmailConfirmation -> allauth_account_models_EmailAddress	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" email_address (emailconfirmation)",
+			lp="6168,1203",
+			pos="s,6059.7,1442.7 6058.1,1433.9 6047.7,1374.6 6034.5,1277.8 6040,1194 6044.1,1131.9 6054.5,1060.9 6061.9,1015.4"];
+	}
+	subgraph cluster_allauth_socialaccount {
+		graph [bb="4179,898.5,4965,1607",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>allauth.socialaccount</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="4572,1593.5",
+			lwidth=6.53,
+			style=rounded
+		];
+		allauth_socialaccount_models_SocialApp	[height=1.5139,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      SocialApp
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">client_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">key</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">provider</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">secret</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4360,967.5",
+			width=4.8056];
+		allauth_socialaccount_models_SocialAccount	[height=1.6944,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      SocialAccount
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">date_joined</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">extra_data</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">JSONField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">last_login</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">provider</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">uid</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4754,967.5",
+			width=5.6389];
+		allauth_socialaccount_models_SocialToken	[height=1.5139,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      SocialToken
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>account</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>app</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">expires_at</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">token</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">token_secret</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4554,1490.5",
+			width=5.75];
+		allauth_socialaccount_models_SocialToken -> allauth_socialaccount_models_SocialApp	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" app (socialtoken)",
+			lp="4513,1203",
+			pos="s,4534.2,1436.2 4531.1,1428 4492.7,1325 4416,1119 4379.8,1021.7"];
+		allauth_socialaccount_models_SocialToken -> allauth_socialaccount_models_SocialAccount	[arrowhead=none,
+			arrowtail=dot,
+			dir=both,
+			label=" account (socialtoken)",
+			lp="4748,1203",
+			pos="s,4574.5,1436.2 4577.6,1427.9 4616.4,1327 4692.9,1127.7 4731.1,1028.1"];
+	}
+	subgraph cluster_django_contrib_contenttypes {
+		graph [bb="6026,8,6558,148",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>django.contrib.contenttypes</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="6292,134.5",
+			lwidth=7.17,
+			style=rounded
+		];
+		django_contrib_contenttypes_models_ContentType	[height=0.97222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      ContentType
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">app_label</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">model</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6292,51",
+			width=4.8056];
+	}
+	subgraph cluster_django_contrib_sessions {
+		graph [bb="8841,3595,9343,4232",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>django.contrib.sessions</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="9092,4218.5",
+			lwidth=6.75,
+			style=rounded
+		];
+		django_contrib_sessions_base_session_AbstractBaseSession	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      AbstractBaseSession
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">expire_date</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">session_data</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="9092,3631.5",
+			width=5.5417];
+		django_contrib_sessions_models_Session	[height=0.55556,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Session<BR/>&lt;<FONT FACE="Roboto"><I>AbstractBaseSession</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="9092,4150",
+			width=3.2222];
+		django_contrib_sessions_models_Session -> django_contrib_sessions_base_session_AbstractBaseSession	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="9133.5,3763",
+			pos="e,9092,3659.7 9092,4130 9092,4054.5 9092,3774.4 9092,3671.1"];
+	}
+	subgraph cluster_django_contrib_sites {
+		graph [bb="4170,575,4650,715",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>django.contrib.sites</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="4410,701.5",
+			lwidth=6.44,
+			style=rounded
+		];
+		django_contrib_sites_models_Site	[height=0.97222,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Site
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">domain</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="4360,618",
+			width=4.5];
+	}
+	subgraph cluster_django_contrib_auth {
+		graph [bb="5995,188,6947,706.5",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>django.contrib.auth</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="6471,693",
+			lwidth=6.33,
+			style=rounded
+		];
+		django_contrib_auth_models_AbstractUser	[height=1.8194,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      AbstractUser<BR/>&lt;<FONT FACE="Roboto"><I>AbstractBaseUser,PermissionsMixin</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">date_joined</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">email</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">EmailField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">first_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">is_active</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">is_staff</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">last_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">username</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6743,463.5",
+			width=5.4306];
+		django_contrib_auth_models_Permission	[height=1.1528,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Permission
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>content_type</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">codename</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6292,237.5",
+			width=5.75];
+		django_contrib_auth_models_Group	[height=0.79167,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Group
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="6375,463.5",
+			width=4.2917];
+		django_contrib_auth_models_Group -> django_contrib_auth_models_Permission	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" permissions (group)",
+			lp="6418.5,371",
+			pos="s,6364.8,435.03 e,6306.9,278.69 6361.8,426.82 6347.8,389.05 6325.6,329.19 6310,287.12"];
+		django_contrib_auth_models_User	[height=0.73611,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      User<BR/>&lt;<FONT FACE="Roboto"><I>AbstractUser</I></FONT>&gt;
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      </TABLE>
+      >,
+			pos="6467,618",
+			width=4.0833];
+		django_contrib_auth_models_User -> django_contrib_auth_models_AbstractUser	[arrowhead=empty,
+			arrowtail=none,
+			dir=both,
+			label=" abstract\ninheritance",
+			lp="6629.5,556",
+			pos="e,6626.4,528.91 6512.9,591.65 6541.4,575.9 6579.5,554.83 6616.5,534.38"];
+		django_contrib_auth_models_User -> django_contrib_auth_models_Permission	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" user_permissions (user)",
+			lp="6121.5,463.5",
+			pos="s,6320.1,606.95 e,6175,278.97 6311.2,606.05 6200.8,594.68 6066.4,572.2 6031,529 5994.1,483.94 6002.5,448.78 6031,398 6060.5,345.35 \
+6115.3,308.01 6167.1,282.77"];
+		django_contrib_auth_models_User -> django_contrib_auth_models_Group	[arrowhead=dot,
+			arrowtail=dot,
+			dir=both,
+			label=" groups (user)",
+			lp="6487,556",
+			pos="s,6451.8,591.82 e,6391.5,491.78 6447.3,584.36 6432.2,559.37 6411.5,524.95 6396.1,499.4"];
+	}
+	subgraph cluster_admin_interface {
+		graph [bb="3085,3782,3801,4572",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>admin_interface</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="3443,4558.5",
+			lwidth=5.92,
+			style=rounded
+		];
+		admin_interface_models_Theme	[height=10,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Theme
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">active</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_delete_button_background_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_delete_button_background_hover_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_delete_button_text_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_generic_link_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_generic_link_hover_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_header_background_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_header_link_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_header_link_hover_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_header_text_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_background_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_background_selected_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_link_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_link_hover_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_link_selected_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">css_module_rounded_corners</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_module_text_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_save_button_background_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_save_button_background_hover_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">css_save_button_text_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">env_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">env_name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">env_visible_in_favicon</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">env_visible_in_header</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">favicon</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">foldable_apps</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">form_pagination_sticky</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">form_submit_sticky</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">language_chooser_active</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">language_chooser_control</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">language_chooser_display</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">list_filter_dropdown</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">list_filter_highlight</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">list_filter_removal_links</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">list_filter_sticky</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">logo</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">FileField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">logo_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">logo_max_height</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">PositiveSmallIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">logo_max_width</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">PositiveSmallIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">logo_visible</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">name</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">recent_actions_visible</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">related_modal_active</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">related_modal_background_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">related_modal_background_opacity</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">related_modal_close_button_visible</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">related_modal_rounded_corners</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_fieldsets_as_tabs</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">show_inlines_as_tabs</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">title</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">title_color</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">ColorField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">title_visible</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BooleanField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="3443,4150",
+			width=9.7083];
+	}
+	subgraph cluster_django_contrib_admin {
+		graph [bb="1715,892,2235,1097",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>django.contrib.admin</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="1975,1083.5",
+			lwidth=6.44,
+			style=rounded
+		];
+		django_contrib_admin_models_LogEntry	[height=1.875,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      LogEntry
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>content_type</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">action_flag</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveSmallIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">action_time</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">change_message</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">object_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">TextField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">object_repr</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">CharField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="1975,967.5",
+			width=7];
+	}
+	subgraph cluster_vote {
+		graph [bb="7339,175,7845,354",
+			color=olivedrab4,
+			label=<
+          <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+          <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER">
+          <FONT FACE="Roboto" COLOR="Black" POINT-SIZE="10">
+          <B>vote</B>
+          </FONT>
+          </TD></TR>
+          </TABLE>
+          >,
+			lheight=0.26,
+			lp="7592,340.5",
+			lwidth=4.78,
+			style=rounded
+		];
+		vote_models_Vote	[height=1.5139,
+			label=<
+      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+      Vote
+      </B></FONT></TD></TR>
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>id</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>AutoField</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>content_type</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">action</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveSmallIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">create_at</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">object_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">PositiveIntegerField</FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto">user_id</FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto">BigIntegerField</FONT>
+      </TD></TR>
+    
+    
+      </TABLE>
+      >,
+			pos="7592,237.5",
+			width=6.7917];
+	}
+	django_contrib_admin_models_LogEntry -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" user (logentry)",
+		lp="2676.5,732",
+		pos="s,2032.5,900.13 2038.7,893.74 2087.7,843.37 2160.3,780.33 2239,751 2275,737.57 2548,751.54 2585,741 2600.3,736.64 2600.6,727.17 \
+2616,723 2643.3,715.59 4625.7,715.8 4654,715 5273.9,697.38 6011.8,650.14 6320.2,629.22"];
+	django_contrib_admin_models_LogEntry -> django_contrib_contenttypes_models_ContentType	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" content_type (logentry)",
+		lp="1772.5,463.5",
+		pos="s,1868.8,900.13 1861.9,895 1779.4,833.16 1682,735.48 1682,619 1682,619 1682,619 1682,236.5 1682,123.27 5280.8,66.097 6119,54.317"];
+	django_contrib_auth_base_user_AbstractBaseUser	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">AbstractBaseUser</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="7044,237.5",
+		width=2.4722];
+	django_contrib_auth_models_AbstractUser -> django_contrib_auth_base_user_AbstractBaseUser	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="6977.5,371",
+		pos="e,7033.8,255.23 6885.9,398.07 6908.7,384.99 6931.2,370.21 6951,354 6982.6,328.06 7010.8,289.82 7027.7,264.55"];
+	django_contrib_auth_models_PermissionsMixin	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">PermissionsMixin</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="7240,237.5",
+		width=2.4722];
+	django_contrib_auth_models_AbstractUser -> django_contrib_auth_models_PermissionsMixin	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="7163.5,371",
+		pos="e,7230.3,255.44 6938.4,433.88 7006.5,417.75 7081.1,392.71 7142,354 7177.7,331.33 7207.2,291.62 7224.2,265.19"];
+	django_contrib_auth_models_Permission -> django_contrib_contenttypes_models_ContentType	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" content_type (permission)",
+		lp="6390,160.5",
+		pos="s,6292,196.01 6292,187.23 6292,155.22 6292,114.3 6292,85.905"];
+	vote_models_Vote -> django_contrib_contenttypes_models_ContentType	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" content_type (vote)",
+		lp="7328.5,160.5",
+		pos="s,7379.3,183.02 7370.5,181.22 7359.5,179 7348.7,176.91 7338,175 7032.7,120.3 6672.8,84.084 6464.6,65.876"];
+	rest_framework_authtoken_models_Token -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=none,
+		dir=both,
+		label=" user (auth_token)",
+		lp="5959,732",
+		pos="5657.1,932.81 5692,884.51 5763.2,796.42 5846,751 5994.6,669.53 6188.7,638.31 6320,626.36"];
+	allauth_account_models_EmailAddress -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" user (emailaddress)",
+		lp="6271.5,732",
+		pos="s,6083,919.83 6085.8,911.31 6104,856.63 6139.1,773.91 6196,723 6238.5,684.95 6296.5,660.21 6347.9,644.45"];
+	allauth_socialaccount_models_SocialApp -> django_contrib_sites_models_Site	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" sites (socialapp)",
+		lp="4428,732",
+		pos="s,4360,913.34 e,4360,652.72 4360,904.61 4360,834.63 4360,722.54 4360,661.68"];
+	allauth_socialaccount_models_SocialAccount -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" user (socialaccount)",
+		lp="5110,732",
+		pos="s,4801.3,906.7 4807,900.09 4857.7,842.05 4939.7,761.23 5031,723 5147.7,674.12 5977.8,637.51 6320,624.33"];
+	accounts_models_Profile -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=none,
+		dir=both,
+		label=" user (profile)",
+		lp="6722.5,732",
+		pos="6879.1,919.69 6831.4,874.14 6755.1,804.21 6683,751 6627.3,709.89 6558.4,669.4 6513.6,644.33"];
+	courses_models_Course -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (course)",
+		lp="8442.5,732",
+		pos="s,8395.3,759.04 8391.3,751.06 8385.6,740.81 8378.6,731.34 8370,723 8307.1,662.25 7049.2,630.89 6613.8,621.83"];
+	courses_models_Course -> django_contrib_auth_models_User	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" members (member)",
+		lp="8582,732",
+		pos="s,8525.9,759.26 e,6613.6,621.01 8523.7,750.59 8520.6,740.85 8515.2,731.58 8507,723 8442.3,654.93 7087.9,628.3 6622.4,621.14"];
+	courses_models_Course -> django_contrib_auth_models_User	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" learners (learners)",
+		lp="7164.5,732",
+		pos="s,8125.1,918.32 e,6608,644.46 8116.2,916.72 7703.4,842.2 6938.8,704.18 6616.5,645.99"];
+	courses_models_Course -> django_contrib_auth_models_User	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" instructors (instructor)",
+		lp="7431,732",
+		pos="s,8125.2,903.9 e,6613.9,635.3 8116.7,901.95 7884.8,849.08 7544,774.81 7244,723 7029.6,685.97 6780,654.64 6622.8,636.32"];
+	courses_models_Course -> django_contrib_auth_models_User	[arrowhead=dot,
+		arrowtail=dot,
+		dir=both,
+		label=" editors (editor)",
+		lp="7664,732",
+		pos="s,8125.2,877.99 e,6613.7,625.14 8116.8,875.36 7948.7,823.1 7728.5,760.61 7529,723 7210.2,662.91 6830.6,636.36 6622.6,625.59"];
+	courses_models_Course -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="6597.5,732",
+		pos="e,3966.1,646.3 8125.3,906.94 7878.6,854.88 7501.1,782.77 7169,751 7033.4,738.03 6692.1,747.96 6556,741 6462.9,736.24 6440.1,727.17 \
+6347,723 6286.5,720.29 4225.6,725.96 4166,715 4099.1,702.7 4026.9,673.94 3976.5,651.08"];
+	courses_models_Course -> core_models_CertificateTemplate	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" certificate_template (course)",
+		lp="6541,1490.5",
+		pos="s,8125.3,1024.3 8116.6,1026 7869.6,1075 7496.8,1142.6 7169,1176 6941.2,1199.2 6881,1163.5 6654,1194 6619.6,1198.6 6612.2,1205.9 \
+6578,1212 6544.9,1217.9 6453.2,1207.8 6428,1230 6248.6,1387.7 6483.5,1603 6296,1751 6266.8,1774 4995.1,1766.6 4958,1769 4530.4,1796.7 \
+4033.8,1862.3 3755.7,1902.1"];
+	courses_models_Section -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (section)",
+		lp="6621,967.5",
+		pos="s,7181.6,1306.7 7173.7,1303 7079.5,1259.7 6975.5,1219 6875,1194 6840.7,1185.4 6582.4,1200.7 6557,1176 6484.6,1105.5 6546.3,820.26 \
+6519,723 6511,694.62 6495.2,664.79 6483.1,644.39"];
+	courses_models_Section -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="6436.5,967.5",
+		pos="e,3966.6,646.47 7181.7,1372.5 7021,1320.8 6824.5,1264.1 6644,1230 6597.1,1221.1 6466.1,1243.3 6430,1212 6271.2,1074.3 6486.7,884.13 \
+6324,751 6321.2,748.69 5276.7,723.06 5273,723 5211.5,721.96 4226.5,726.23 4166,715 4099.3,702.62 4027.4,674.02 3977,651.23"];
+	courses_models_Section -> quiz_models_Quiz	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" clone_quiz_reference (clone_quiz_reference)",
+		lp="7066.5,1935.5",
+		pos="s,7181.8,1583.8 7173.8,1587.3 7067.7,1634.9 6962.6,1704.4 6901,1805 6863.5,1866.2 6858.9,2069.9 6901,2128 6935.9,2176.2 7052.5,2218.6 \
+7171.6,2251"];
+	courses_models_SectionItem -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (section_items)",
+		lp="6714.5,1203",
+		pos="s,7252.4,1805.1 7245,1800.5 7220.1,1784.8 7195.6,1768.2 7173,1751 6913.5,1554.3 6924.1,1417.7 6658,1230 6627.1,1208.2 6616.4,1207.3 \
+6581,1194 6554.1,1183.9 6537.2,1198.2 6519,1176 6487,1136.9 6486.5,773.21 6481,723 6478.1,696.01 6473.8,665.21 6470.7,644.18"];
+	courses_models_SectionItem -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="5284.5,1203",
+		pos="e,3966.6,646.46 7240.5,1806.1 7239,1805.7 7237.5,1805.4 7236,1805 7135.3,1780.9 6407.5,1789.9 6304,1787 6276.9,1786.2 5348.3,1769 \
+5328,1751 5241.4,1674.3 5251.7,798.42 5164,723 5153.5,713.96 4179.6,717.54 4166,715 4099.4,702.59 4027.4,673.99 3977,651.22"];
+	courses_models_Status -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" learner (status)",
+		lp="6493,1203",
+		pos="s,7919.2,1883.1 7912.3,1878 7874.8,1850.5 7826,1820.3 7777,1805 7703,1781.9 6435.8,1806.9 6382,1751 6301.7,1667.6 6330.6,1333.7 \
+6382,1230 6384.2,1225.6 6450.7,1180.4 6453,1176 6477.4,1128.4 6470.1,747.02 6467.6,644.37"];
+	courses_models_Status -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="6357.5,1203",
+		pos="e,3966.6,646.46 7920.3,1883.3 7881.9,1854.2 7829.7,1820.7 7777,1805 7706.6,1784 6527.6,1797.9 6455,1787 6398.7,1778.5 6367,1796 \
+6332,1751 6297.9,1707.1 6335.8,789.79 6296,751 6285.8,741.09 5287.1,742.47 5273,741 5232.4,736.78 5223.6,727.18 5183,723 5126.8,\
+717.21 4221.5,725.34 4166,715 4099.4,702.6 4027.4,674 3977,651.22"];
+	discussions_models_Discussion -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (discussions)",
+		lp="9086,1935.5",
+		pos="s,8731.9,2608.1 8739.9,2604.7 8861.8,2552.4 9007,2460.3 9007,2318.5 9007,2318.5 9007,2318.5 9007,1489.5 9007,1294.5 8824.7,1157.4 \
+8658.6,1072.9"];
+	discussions_models_Discussion -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="8250.5,2317.5",
+		pos="e,7659.7,2066 8478.6,2608.1 8426.8,2580.9 8362,2547 8304,2517 8260.1,2494.3 8234.6,2506 8205,2466.5 8123,2357 8249,2256.3 8148,2164 \
+8086.9,2108.1 7854.7,2156.7 7777,2128 7739.9,2114.3 7703.2,2094.2 7669.2,2072.2"];
+	discussions_models_Discussion -> videos_models_VideoFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" video (discussions)",
+		lp="9128.5,2490",
+		pos="s,8744.8,2608 8753.3,2605.2 8836.3,2577.3 8935.5,2540.5 9021,2499 9076.9,2471.9 9135.5,2436.6 9185.3,2404.5"];
+	discussions_models_Comment -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (comments)",
+		lp="10197,1935.5",
+		pos="s,8936.3,2869.3 8944.8,2868.3 8982.4,2864.2 9020.6,2860.6 9057,2858 9250.6,2844.2 9738.1,2868.9 9930,2840 9971.6,2833.7 9993.1,2845.4 \
+10021,2814 10065,2764 10058,2583 10069,2517 10096,2352.1 10129,2313 10129,2146 10129,2146 10129,2146 10129,966.5 10129,641.83 9750.9,\
+806.56 9431,751 8880.2,655.33 7132.5,627 6613.6,620.59"];
+	discussions_models_Comment -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="10066,1935.5",
+		pos="e,3966.1,646.32 8936.3,2859.1 9289.5,2790.8 9908.7,2648.2 10037,2466.5 10076,2411.6 10049,2230.2 10037,2164 10034,2147.2 10028,2144.6 \
+10024,2128 9935.6,1721 10195,1529.4 9948,1194 9635.6,769.55 9364.8,854.37 8848,751 8802.4,741.88 8057.5,741.82 8011,741 7670.1,734.96 \
+7585,727.44 7244,723 7201.3,722.44 4208,722.71 4166,715 4099.1,702.74 4026.9,673.97 3976.5,651.1"];
+	dashboard_models_DashboardSetting -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="2543.5,732",
+		pos="e,3696.8,619.59 2466,869.5 2460.7,819.2 2465,760.58 2502,723 2583.1,640.62 3308.4,623.17 3685.5,619.69"];
+	quiz_models_Quiz -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (quizzes)",
+		lp="8919,1778",
+		pos="s,7780.5,2236.5 7789.1,2234.5 7909.8,2206.6 8049.4,2178.8 8178,2164 8196.5,2161.9 8836.9,2167.3 8850,2154 8868,2135.7 8847.9,1252.2 \
+8835,1230 8794.7,1160.7 8728.2,1107.9 8658.8,1068.5"];
+	quiz_models_Quiz -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="7534.5,2145",
+		pos="e,7494.5,2065.8 7486.6,2172 7488.9,2140.9 7491.4,2108.1 7493.6,2077.1"];
+	quiz_models_Quiz -> videos_models_VideoFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" video (quizzes)",
+		lp="7859,2490",
+		pos="s,7780.1,2398.5 7788.8,2400.5 7904.2,2427.2 8036.7,2453.3 8159,2466.5 8258.6,2477.2 8964.4,2493.2 9061,2466.5 9107.5,2453.7 9154,\
+2429.6 9194.1,2404.5"];
+	quiz_models_Question -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (question)",
+		lp="6278,1778",
+		pos="s,7076.1,2517.2 7071,2509.9 7000.1,2407.8 6913.6,2266.5 6867,2128 6844,2059.5 6884.1,1853.9 6831,1805 6818.3,1793.3 6227.2,1787.6 \
+6210,1787 6161,1785.3 5362,1786.4 5328,1751 5289.5,1710.9 5291,792.48 5328,751 5392.9,678.1 6027.3,639.41 6320.2,625.31"];
+	quiz_models_Question -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="5342.5,1778",
+		pos="e,3966.6,646.42 6883.2,2650.4 6377.1,2632 5400.2,2581.9 5296,2466.5 5246.7,2411.9 5291.9,1878.4 5296,1805 5296.9,1789 5307.4,1781.9 \
+5298,1769 5282.6,1747.9 5259.3,1770.6 5242,1751 5092.3,1581.5 5215.1,908.75 5053,751 5033,731.53 5017.4,750.03 4991,741 4975.2,735.59 \
+4974.2,727.21 4958,723 4915.4,711.91 4209.3,723.1 4166,715 4099.4,702.52 4027.4,673.93 3977,651.18"];
+	quiz_models_Question -> content_models_ImageFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" feedback_image (feedback_image)",
+		lp="6535.5,2490",
+		pos="s,6883.2,2614.4 6874.7,2612.7 6714.5,2582.4 6518,2535.4 6351,2466.5 6273.6,2434.6 6192.7,2379 6147.6,2345.8"];
+	quiz_models_Question -> content_models_ImageFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" image (question)",
+		lp="6325,2490",
+		pos="s,6883,2629.9 6874.3,2628.9 6648,2602.2 6363.4,2558.5 6261,2499 6197.1,2461.8 6148.7,2386.3 6126.1,2345.7"];
+	quiz_models_LikertAnswer -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="1795.5,2145",
+		pos="e,3696.8,624.01 6843.1,3329.1 6351.8,3323.3 5149.9,3301 4147,3216 3614.6,3170.9 1763,3439.3 1763,2905 1763,2905 1763,2905 1763,2316.5 \
+1763,2229.5 1651.3,814.35 1711,751 1778,679.89 3138.1,638.23 3685.6,624.29"];
+	quiz_models_MCAnswer -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="4202.5,2145",
+		pos="e,3955.3,646.35 7414.1,3266.6 7378.7,3253.5 7340.6,3241.4 7304,3234 7201.6,3213.1 6938.3,3222.1 6834,3216 6257.9,3182.3 4753.7,3284.6 \
+4245,3012 4191.7,2983.4 4161,2965.5 4161,2905 4161,2905 4161,2905 4161,1777 4161,1547.9 4170.3,951.3 4059,751 4036.5,710.56 3996.9,\
+676.21 3964.3,652.69"];
+	quiz_models_QuizScore -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" student (quizscore)",
+		lp="4476.5,2145",
+		pos="s,6843.1,3111.9 6834.5,3111.8 6246.3,3099.6 4904.7,3066.3 4704,3012 4521.7,2962.7 4436,2968.9 4328,2814 4245.2,2695.2 4185.6,2272.1 \
+4282,2164 4295,2149.5 4351.5,2162.4 4369,2154 4567.9,2058.6 4527,1908.2 4722,1805 4735.8,1797.7 4985.9,1761.9 4997,1751 5163.3,1587 \
+5034.1,868.33 5217,723 5301.7,655.69 6008.3,630.21 6320.1,622.18"];
+	quiz_models_QuizScore -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="4304.5,2145",
+		pos="e,3967.1,646.41 6843,3113.6 6172.6,3104.2 4463.9,3074.1 4358,3012 4269,2959.8 4266.1,2912.9 4237,2814 4196.3,2675.4 4154.3,2287.7 \
+4229,2164 4233.9,2155.8 4241.4,2160.9 4248,2154 4366.4,2030.1 4271.9,1903.8 4412,1805 4418.4,1800.5 4963.8,1756.8 4969,1751 4987.7,\
+1730.4 4988,771.22 4969,751 4938.4,718.5 4209.8,723.52 4166,715 4099.7,702.11 4028,673.71 3977.5,651.13"];
+	quiz_models_QuizScore -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (quizscore)",
+		lp="4384.5,2317.5",
+		pos="s,6843.3,3109.4 6834.5,3109.1 6265.5,3088.8 4981.9,3020.9 4602,2814 4425.6,2717.9 4381.3,2655.4 4313,2466.5 4290.1,2403.3 4266.2,\
+2212.2 4313,2164 4326.4,2150.2 4641.4,2159.1 4660,2154 4971.1,2069.4 4984.4,1887.8 5296,1805 5406.9,1775.5 6214.4,1794.3 6329,1787 \
+6401.5,1782.4 6604.2,1803.9 6654,1751 6696.5,1705.9 6637.9,1237.5 6682,1194 6701.3,1175 7142.1,1178.8 7169,1176 7500.7,1141.9 7878.4,\
+1073.1 8125.3,1024.1"];
+	quiz_models_QuestionAttempt -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" student (questionattempt)",
+		lp="4580,2317.5",
+		pos="s,7917.3,3527.3 7921.9,3519.9 7927.5,3510.6 7933,3501.2 7938,3492 8009.4,3361.7 8254.4,2963.7 8150,2858 8141.5,2849.4 4688.4,2820.1 \
+4678,2814 4525.5,2723.6 4527,2638 4482,2466.5 4464.9,2401.5 4435.6,2212.6 4482,2164 4498.7,2146.5 4678.8,2165.8 4700,2154 4881.6,\
+2053.2 4790.8,1882.1 4965,1769 5001.8,1745.1 5031.7,1782.7 5062,1751 5142.8,1666.5 5102,1342.1 5135,1230 5142.5,1204.6 5151.8,1201.2 \
+5160,1176 5219.5,992.89 5126.8,903.74 5244,751 5308.6,666.85 6009.6,633.81 6320.3,623.23"];
+	quiz_models_QuestionAttempt -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="41.5,2317.5",
+		pos="e,3696.6,621.96 7556.6,3629.3 6168.1,3623 249.77,3590.5 87,3492 18.074,3450.3 0,3413.6 0,3333 0,3333 0,3333 0,966.5 0,743.38 219.06,\
+760.53 439,723 756.8,668.78 2966.3,632.57 3685.4,622.12"];
+	quiz_models_QuestionAttempt -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (questionattempt)",
+		lp="10379,2490",
+		pos="s,8135.3,3595.7 8144,3594.8 8340.6,3572.3 8603.8,3544.4 8837,3527 9179.9,3501.3 9269.2,3537.8 9610,3492 9928.3,3449.2 10315,3654.2 \
+10315,3333 10315,3333 10315,3333 10315,2830 10315,2690.5 10327,2651.9 10291,2517 10242,2332.1 10160,2311.8 10107,2128 10067,1989.1 \
+10111,1943.2 10069,1805 9984.8,1530 9987.7,1420.3 9772,1230 9737.2,1199.3 9719.6,1202.6 9674,1194 9492.7,1159.7 9023.8,1217.3 8844,\
+1176 8781.9,1161.7 8718.1,1138.5 8658.7,1112.6"];
+	quiz_models_QuestionAttempt -> courses_models_Section	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" section (questionattempt)",
+		lp="10189,2660.5",
+		pos="s,8135.5,3599.5 8144.4,3598.6 8755.2,3532.2 10091,3381.5 10091,3333 10091,3333 10091,3333 10091,2489 10091,2342.6 10128,2278.6 10037,\
+2164 10037,2164 9169,1805 9169,1805 9090.1,1781.1 9068.8,1779.5 8987,1769 8853.2,1751.9 8817.6,1769.7 8684,1751 8400,1711.3 8082.6,\
+1638.9 7850.4,1580.7"];
+	quiz_models_QuestionAttempt -> videos_models_VideoFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" video (questionattempt)",
+		lp="9250.5,2904",
+		pos="s,8135.5,3554.3 8144,3551.6 8419.5,3463.8 8821.5,3295.5 9061,3012 9214.8,2830 9276.6,2545.7 9298.9,2404.4"];
+	videos_models_Playlist -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (videolists)",
+		lp="9597.5,1778",
+		pos="s,9783.8,2289.2 9780.4,2281 9715.7,2127.6 9439,1515.5 9021,1194 8915.5,1112.8 8778.2,1059.1 8658.8,1024.6"];
+	videos_models_Playlist -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="9568.5,2145",
+		pos="e,7654.4,2065.8 9764.1,2289.3 9720.9,2253.2 9638.6,2190.9 9556,2164 9365.5,2101.9 9306.3,2142.8 9106,2136 9069.1,2134.7 7812.2,2139.2 \
+7777,2128 7737.6,2115.4 7699,2095 7663.7,2072"];
+	videos_models_VideoFile -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (videos)",
+		lp="9851.5,1778",
+		pos="s,9428.2,2230.5 9435.7,2225.8 9473.2,2202.5 9515.4,2179.6 9557,2164 9582.7,2154.4 9596.1,2170.6 9618,2154 9761.4,2045.3 9750.1,1962.7 \
+9789,1787 9847.5,1522.8 9857.3,1369.1 9651,1194 9629.9,1176.1 9430.4,1179.8 9403,1176 9148.4,1140.8 8861.7,1079.9 8658.8,1033.1"];
+	videos_models_VideoFile -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="9056.5,2145",
+		pos="e,7655.2,2065.9 9197.5,2230.6 9156.7,2204.2 9108.8,2178.3 9061,2164 8876.5,2108.8 8387.5,2141 8195,2136 8171.8,2135.4 7799.1,2135.2 \
+7777,2128 7738,2115.3 7699.6,2094.9 7664.6,2072.1"];
+	content_models_ContentItem -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="6558,2145",
+		pos="e,7326.6,2065.8 6308.8,1957.4 6446.1,2023.1 6879.6,2207.8 7226,2108.8 7256.8,2099.9 7287.6,2086.6 7316.7,2071.2"];
+	content_models_ImageFile -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="6819.5,2145",
+		pos="e,7349.7,2066 6142.8,2289 6185.9,2252.6 6268.1,2190 6351,2164 6404.9,2147.1 6548.7,2158.1 6605,2154 6680.3,2148.5 6698.6,2140.7 \
+6774,2136 6799.1,2134.4 7202.1,2135.7 7226,2128 7265.6,2115.3 7304.6,2094.9 7340.2,2072.1"];
+	content_models_ExternalObject -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="7242.5,2145",
+		pos="e,7345.6,2065.9 6637.3,2276.2 6683.8,2240 6757.6,2188.9 6831,2164 6998,2107.4 7060.2,2188 7226,2128 7263.9,2114.3 7301.6,2094.1 \
+7336.3,2071.9"];
+	games_models_TextItem -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="406.5,1778",
+		pos="e,3696.8,618.68 342.26,2614.6 350.78,2549.5 365,2425 365,2318.5 365,2318.5 365,2318.5 365,966.5 365,388.28 1068.7,790.53 1643,723 \
+2387.2,635.5 3276.7,620.6 3685.4,618.73"];
+	games_models_Game -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="5119.5,2145",
+		pos="e,7350.6,2065.9 1303.1,2304.6 1828.7,2277.5 3161.8,2210.1 4277,2164 4321.3,2162.2 5029.7,2136.9 5074,2136 5103.9,2135.4 7197.5,2136.9 \
+7226,2128 7265.9,2115.5 7305.2,2095.1 7341.1,2072.1"];
+	games_models_MoveToColumnsGroup -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="1699.5,2145",
+		pos="e,3696.6,622.94 1655.2,3234.1 1660.5,3228.4 1665.4,3222.4 1670,3216 1762.3,3086.3 1680.2,3017.2 1679,2858 1677.9,2706.4 1678.4,2668.5 \
+1674,2517 1669.3,2355.6 1661.9,2315.4 1658,2154 1655.6,2057.4 1657,2033.2 1657,1936.5 1657,1936.5 1657,1936.5 1657,966.5 1657,857.1 \
+1603.1,785.35 1693,723 1773.9,666.92 3137.2,634.13 3685.4,623.16"];
+	scorm_models_ScormPackage -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="5250.5,2145",
+		pos="e,7350.6,2065.9 5011.9,2282.5 5050.1,2238.9 5123.4,2165.3 5205,2136 5257.8,2117 7172.4,2144.8 7226,2128 7265.9,2115.5 7305.2,2095.1 \
+7341.1,2072.1"];
+	scorm_models_ScormRegistration -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" learner (scormregistration)",
+		lp="5192.5,1778",
+		pos="s,5166.5,2569 5173.4,2563.4 5195.2,2545 5214.4,2523.6 5228,2499 5231.9,2492 5228.1,2489 5228,2481 5226.9,2340.1 5248.4,2302.6 5223,\
+2164 5190.9,1988.8 5117.7,1962.5 5087,1787 5085.6,1779.1 5082.4,1775.6 5087,1769 5100,1750.3 5119.9,1768.1 5135,1751 5297.6,1566.2 \
+5224.6,1455.3 5262,1212 5293.2,1008.9 5193.5,929.02 5296,751 5346.5,663.39 6017.3,632.37 6320.3,622.79"];
+	scorm_models_ScormRegistration -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="5022.5,1778",
+		pos="e,3966.6,646.41 4828.2,2569 4795.1,2540.6 4764.3,2506.1 4746,2466.5 4689.7,2344.4 4710.4,2293.6 4746,2164 4800.2,1967 4860.4,1933.9 \
+4981,1769 4987.3,1760.4 4993.2,1761 4997,1751 5076.3,1543.4 5134.7,927 4999,751 4988.3,737.17 4977,748.03 4961,741 4947.5,735.04 \
+4947.2,727.24 4933,723 4892.2,710.78 4207.9,722.85 4166,715 4099.4,702.51 4027.4,673.92 3977,651.17"];
+	"\n\n\n"	[height=0.5,
+		pos="9378,4150",
+		width=0.75];
+}

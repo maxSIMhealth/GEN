@@ -1,0 +1,338 @@
+digraph model_graph {
+	graph [bb="0,0,1292.5,479",
+		fontname=Roboto,
+		fontsize=8,
+		rankdir=TB,
+		splines=true
+	];
+	node [fontname=Roboto,
+		fontsize=8,
+		label="\N",
+		shape=plaintext
+	];
+	edge [fontname=Roboto,
+		fontsize=8
+	];
+	model_utils_models_TimeStampedModel	[height=0.79167,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    TimeStampedModel
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">created</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">AutoCreatedField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">modified</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">AutoLastModifiedField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="184.5,196",
+		width=5.125];
+	vote_models_VoteModel	[height=0.97222,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    VoteModel
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">num_vote_down</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PositiveIntegerField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">num_vote_up</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">PositiveIntegerField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">vote_score</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">IntegerField</FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="405.5,35",
+		width=5.5417];
+	discussions_models_Discussion	[height=2,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Discussion<BR/>&lt;<FONT FACE="Roboto"><I>VoteModel</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>sectionitem_ptr</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>OneToOneField (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>course</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><B>requirement</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><B>video</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">last_updated</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Roboto">DateTimeField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>num_vote_down</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>PositiveIntegerField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>num_vote_up</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>PositiveIntegerField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>vote_score</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>IntegerField</I></FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="743.5,196",
+		width=6.5833];
+	discussions_models_Discussion -> vote_models_VoteModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="596,97",
+		pos="e,477.4,69.822 592.79,124.1 556.57,107.07 519.22,89.495 487.49,74.57"];
+	discussions_models_Discussion -> discussions_models_Discussion	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" requirement (discussion)",
+		lp="1092.5,196",
+		pos="s,980.28,207.85 988.79,205.11 995.01,202.58 998.5,199.54 998.5,196 998.5,191.07 991.75,187.12 980.28,184.15"];
+	courses_models_Course	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">Course</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="674.5,35",
+		width=1.4167];
+	discussions_models_Discussion -> courses_models_Course	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" course (discussions)",
+		lp="754.5,97",
+		pos="s,683.52,124.12 679.64,116.29 678.09,112.9 676.7,109.46 675.5,106 669.49,88.658 670.23,67.42 671.84,52.916"];
+	videos_models_VideoFile	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">VideoFile</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="855.5,35",
+		width=1.7222];
+	discussions_models_Discussion -> videos_models_VideoFile	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" video (discussions)",
+		lp="918,97",
+		pos="s,820.8,124.15 826.06,117.17 828.7,113.5 831.2,109.77 833.5,106 843.65,89.361 849.53,67.607 852.61,52.796"];
+	courses_models_SectionItem	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">SectionItem</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="1029.5,35",
+		width=1.9444];
+	discussions_models_Discussion -> courses_models_SectionItem	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" multi-table\ninheritance",
+		lp="1058,97",
+		pos="e,1025.8,52.966 974.91,124.01 982.85,118.45 990.42,112.46 997.5,106 1009.7,94.844 1017.6,78.093 1022.5,63.774"];
+	discussions_models_Comment	[height=2.1806,
+		label=<
+    <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
+    <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
+    Comment<BR/>&lt;<FONT FACE="Roboto"><I>VoteModel,TimeStampedModel</I></FONT>&gt;
+    </B></FONT></TD></TR>
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>id</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>AutoField</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>author</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><B>discussion</B></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><B>ForeignKey (sectionitem_ptr)</B></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>created</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoCreatedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto">message</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto">TextField</FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>modified</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>AutoLastModifiedField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>num_vote_down</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>PositiveIntegerField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>num_vote_up</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>PositiveIntegerField</I></FONT>
+    </TD></TR>
+  
+  
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Roboto"><I>vote_score</I></FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Roboto"><I>IntegerField</I></FONT>
+    </TD></TR>
+  
+  
+    </TABLE>
+    >,
+		pos="498.5,400.5",
+		width=6.375];
+	discussions_models_Comment -> model_utils_models_TimeStampedModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="350,295",
+		pos="e,211.95,224.2 337.25,322.01 327.37,316.17 317.71,310.15 308.5,304 276.7,282.76 244.09,254.31 220.3,232.08"];
+	discussions_models_Comment -> vote_models_VoteModel	[arrowhead=empty,
+		arrowtail=none,
+		dir=both,
+		label=" abstract\ninheritance",
+		lp="456,196",
+		pos="e,401.37,69.975 439.73,322.2 429.53,305.16 420.33,286.61 414.5,268 394.95,205.59 396.56,129.1 400.37,81.444"];
+	discussions_models_Comment -> discussions_models_Discussion	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" discussion (comments)",
+		lp="719.5,295",
+		pos="s,592.17,322.08 599.05,316.39 618.6,300.24 638.91,283.45 657.92,267.74"];
+	django_contrib_auth_models_User	[height=0.5,
+		label=<
+  <TABLE BGCOLOR="white" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="#1b563f">
+  <FONT FACE="Roboto" POINT-SIZE="12" COLOR="white">User</FONT>
+  </TD></TR>
+  </TABLE>
+  >,
+		pos="1248.5,196",
+		width=1.2222];
+	discussions_models_Comment -> django_contrib_auth_models_User	[arrowhead=none,
+		arrowtail=dot,
+		dir=both,
+		label=" author (comments)",
+		lp="1222.5,295",
+		pos="s,727.86,324.17 736.6,322.2 736.9,322.13 737.2,322.07 737.5,322 937.73,278.18 1018,370.46 1195.5,268 1216.9,255.62 1232.4,230.73 \
+1240.9,213.96"];
+	"\n\n\n"	[height=0.5,
+		pos="773.5,400.5",
+		width=0.75];
+}
