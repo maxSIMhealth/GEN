@@ -19,7 +19,7 @@ class SignUpForm(UserCreationForm):
         if it is already registered to another user
         """
         data = self.cleaned_data["email"]
-        email_domain = data.split("@")[-1].split(".")[0]
+        email_domain = data.split("@")[1]
 
         use_email_domains_whitelist = django_settings.USE_EMAIL_DOMAINS_WHITELIST
 
