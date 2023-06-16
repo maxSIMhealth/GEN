@@ -1,4 +1,4 @@
-Django>=4.1.9,<4.2
+Django>=4.2.2,<4.3
 django-debug-toolbar>=4.1.0,<4.2
 django-embed-video>=1.4.8,<1.5
 django-model-utils>=4.3.1,<4.4.0
