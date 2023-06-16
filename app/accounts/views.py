@@ -39,6 +39,15 @@ def random_course_assign(user):
     course_selected.learners.add(user)
 
 
+def render_alert_messages():
+    """Gets alert messages and returns them if they are active, published and not archived"""
+    alert_messages = LoginAlertMessage.objects.filter(archived=False)
+    for message in alert_messages:
+        message.check_if_active()
+    alert_messages = alert_messages.filter(archived=False, published=True)
+    return alert_messages
+
+
 class AllAuthLogin(AllAuthLoginView):
     use_social_auth = django_settings.USE_SOCIAL_AUTH
     use_social_auth_only = django_settings.USE_SOCIAL_AUTH_ONLY
@@ -48,6 +57,14 @@ class AllAuthLogin(AllAuthLoginView):
         "use_social_auth": use_social_auth,
         "use_social_auth_only": use_social_auth_only,
     }
+
+    def get_context_data(self, **kwargs):
+        context = super(AllAuthLogin, self).get_context_data(**kwargs)
+        # render alert messages (if any is defined)
+        alert_messages = render_alert_messages()
+        context["alert_messages"] = alert_messages
+
+        return context
 
 
 class Login(LoginView):
@@ -77,13 +94,8 @@ class Login(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super(Login, self).get_context_data(**kwargs)
-        alert_messages = LoginAlertMessage.objects.filter(archived=False)
-
-        for message in alert_messages:
-            message.check_if_active()
-
-        alert_messages = alert_messages.filter(archived=False, published=True)
-
+        # render alert messages (if any is defined)
+        alert_messages = render_alert_messages()
         context["alert_messages"] = alert_messages
 
         return context
