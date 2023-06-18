@@ -54,8 +54,9 @@ class HelpFaqResource(resources.ModelResource):
 
 
 class HelpFaqAdmin(
-    SortableAdminMixin, ImportExportMixin, ExportActionMixin, TabbedTranslationAdmin
+    ImportExportMixin, ExportActionMixin, SortableAdminMixin, TabbedTranslationAdmin
 ):
+    change_list_template = "admin/import_export/change_list_export.html"
     list_display = ("question", "answer")
     exclude = ["custom_order"]
     readonly_fields = ["created", "modified"]
