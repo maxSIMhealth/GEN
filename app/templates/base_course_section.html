@@ -4,7 +4,7 @@
 {% load i18n %}
 {% load generate_sections_sidebar %}
 {% load generate_sections_navbar %}
-{% load sri %}
+{#{% load sri %}#}
 {% load django_bootstrap5 %}
 
 {% block head_title %}GEN - {{course.name}} - {{ section.name }}{% endblock head_title %}
@@ -95,5 +95,6 @@
 {% endblock container %}
 
 {% block javascript_bottom %}
-    {% sri_static "js/help-guide-course.js" %}
+  <script src="{% static 'js/help-guide-course.js' %}"></script>
+{#  {% sri_static "js/help-guide-course.js" %}#}
 {% endblock javascript_bottom %}

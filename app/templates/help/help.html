@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load sri %}
+{#{% load sri %}#}
 {% load support_emails %}
 
 {% block head_title %}{% trans "Help and FAQ (Frequently Asked Questions)" %}{% endblock %}
@@ -52,5 +52,6 @@
 {% endblock %}
 
 {% block javascript_bottom %}
-  {% sri_static "js/help-guide-help.js" %}
+  <script src="{% static 'js/help-guide-help.js' %}"></script>
+  {#  {% sri_static "js/help-guide-help.js" %}#}
 {% endblock javascript_bottom %}

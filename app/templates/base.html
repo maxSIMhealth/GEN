@@ -1,7 +1,7 @@
 {% load static %}
 {% load gravatar %}
 {% load i18n %}
-{% load sri %}
+{#{% load sri %}#}
 {% load django_bootstrap5 %}
 {% load footer_logos %}
 {% load support_emails %}
@@ -19,8 +19,10 @@
   <title>{% block head_title %}{% endblock %} | GEN</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
   {% bootstrap_css %}
-  {% sri_static "css/custom.css" %}
-  {% sri_static "css/shepherd.css" %}
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'css/shepherd.css' %}">
+{#  {% sri_static "css/custom.css" %}#}
+{#  {% sri_static "css/shepherd.css" %}#}
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js" data-auto-add-css="false"
           crossorigin="anonymous"
@@ -148,7 +150,8 @@
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 {% comment %}
   {% url 'javascript-catalog' as javascript_catalog_url %}
-  {% sri_static javascript_catalog_url %}
+  <script src="{% static javascript_catalog_url %}"></script>
+{#  {% sri_static javascript_catalog_url %}#}
 {% endcomment %}
 <script>
   $(function () {
@@ -156,7 +159,8 @@
   })
 </script>
 {% block javascript_bottom %}
-  {% sri_static "js/help-guide-home.js" %}
+  <script src='{% static "js/help-guide-home.js" %}' ></script>
+  {#  {% sri_static "js/help-guide-home.js" %}#}
 {% endblock javascript_bottom %}
 </body>
 </html>

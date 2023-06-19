@@ -83,7 +83,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     "django_extensions",
     "import_export",
-    "sri",
+    # "sri",
     "rosetta",
     "maintenance_mode",
     "tinymce",

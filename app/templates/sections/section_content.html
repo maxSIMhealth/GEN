@@ -2,7 +2,7 @@
 
 {% load static %}
 {% load i18n %}
-{% load sri %}
+{#{% load sri %}#}
 {% load humanize %}
 
 {% block javascript_top %}
@@ -23,7 +23,8 @@
 
   <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
-  {% sri_static "js/pdf-viewer.js" %}
+  <script src="{% static 'js/pdf-viewer.js' %}"></script>
+{#  {% sri_static "js/pdf-viewer.js" %}#}
 {% endblock %}
 
 {% block content %}
@@ -128,6 +129,8 @@
 {% endblock content %}
 
 {% block javascript_bottom %}
-  {% sri_static "js/pagination.js" %}
-  {% sri_static "js/help-guide-course.js" %}
+  <script src="{% static 'js/pagination.js' %}"></script>
+  <script src="{% static 'js/help-guide-course.js' %}"></script>
+{#  {% sri_static "js/pagination.js" %}#}
+{#  {% sri_static "js/help-guide-course.js" %}#}
 {% endblock javascript_bottom %}

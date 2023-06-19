@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load humanize %}
-{% load sri %}
+{#{% load sri %}#}
 {% load check_attribute %}
 {% load likert_range %}
 
@@ -232,6 +232,8 @@
 {% endblock navbar %}
 
 {% block javascript_bottom %}
-  {% sri_static "js/help-guide-course.js" %}
-  {% sri_static "js/quiz.js" %}
+  <script src="{% static 'js/help-guide-course.js' %}"></script>
+  <script src="{% static 'js/quiz.js' %}"></script>
+{#  {% sri_static "js/help-guide-course.js" %}#}
+{#  {% sri_static "js/quiz.js" %}#}
 {% endblock javascript_bottom %}
