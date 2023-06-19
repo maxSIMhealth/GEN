@@ -2,7 +2,7 @@
 
 {% load gravatar %}
 {% load i18n %}
-{% load sri %}
+{#{% load sri %}#}
 
 {% block head_title %}{% trans "My account" %}{% endblock %}
 
@@ -69,5 +69,6 @@
 {% endblock content_body %}
 
 {% block javascript_bottom %}
-  {% sri_static "js/help-guide-account.js" %}
+  <script src="{% static 'js/help-guide-account.js' %}"></script>
+{#  {% sri_static "js/help-guide-account.js" %}#}
 {% endblock javascript_bottom %}

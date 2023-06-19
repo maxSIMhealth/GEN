@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
-{% load sri %}
+{#{% load sri %}#}
 
 {% block content_title %}
   <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "New video" %}
@@ -22,6 +22,8 @@
 {% endblock navbar %}
 
 {% block javascript_bottom %}
-{% sri_static "js/help-guide-course.js" %}
-{% sri_static "js/upload-video.js" %}
+  <script src="{% static 'js/help-guide-course.js' %}"></script>
+  <script src="{% static 'js/upload-video.js' %}"></script>
+{#{% sri_static "js/help-guide-course.js" %}#}
+{#{% sri_static "js/upload-video.js" %}#}
 {% endblock javascript_bottom %}
