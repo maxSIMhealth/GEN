@@ -346,10 +346,11 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                 request.session["quiz_questions"] = questions_ids
 
                 # if the quiz author is accessing, warn that the quiz can not be submitted
-                messages.warning(
-                    request,
-                    "This quiz is in PREVIEW mode. Submitting is DISABLED because you are the author.",
-                )
+                if quiz.author == request.user:
+                    messages.warning(
+                        request,
+                        "This quiz is in PREVIEW mode. Submitting is DISABLED because you are the author.",
+                    )
 
                 # if the max number of attempts has been reached, redirect back to quiz list
                 if attempts_left <= 0:
