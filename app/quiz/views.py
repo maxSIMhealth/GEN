@@ -14,6 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy
 from GEN.decorators import check_permission, course_enrollment_check
 from GEN.support_methods import enrollment_test
 
@@ -306,7 +307,7 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                 if quiz.author == request.user:
                     messages.error(
                         request,
-                        _(
+                        gettext_lazy(
                             "Submission denied. You can not submit a quiz of which you are the author."
                         ),
                     )
@@ -349,14 +350,18 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                 if quiz.author == request.user:
                     messages.warning(
                         request,
-                        "This quiz is in PREVIEW mode. Submitting is DISABLED because you are the author.",
+                        gettext_lazy(
+                            "This quiz is in PREVIEW mode. Submitting is DISABLED because you are the author."
+                        ),
                     )
 
                 # if the max number of attempts has been reached, redirect back to quiz list
                 if attempts_left <= 0:
                     messages.error(
                         request,
-                        _("You have already reached the maximum number of attempts."),
+                        gettext_lazy(
+                            "You have already reached the maximum number of attempts."
+                        ),
                     )
                     return HttpResponseRedirect(
                         reverse("section", args=[pk, section.pk])
@@ -376,7 +381,7 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
         else:
             messages.error(
                 request,
-                _("Access denied."),
+                gettext_lazy("Access denied."),
             )
             return HttpResponseRedirect(reverse("section", args=[pk, section.pk]))
     else:
