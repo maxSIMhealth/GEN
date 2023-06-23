@@ -243,6 +243,10 @@ body {
     padding: 0.5em 1.4em 0.5em 0.5em;
 }
 
+.game-draggable-hand {
+    cursor: pointer;
+}
+
 .correct-item {
     color: #0f5132;
     background-color: #d1e7dd;
