@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GEN 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-09 21:28+0000\n"
-"PO-Revision-Date: 2023-03-09 21:29+0000\n"
+"POT-Creation-Date: 2023-06-23 17:57+0000\n"
+"PO-Revision-Date: 2023-06-23 17:58+0000\n"
 "Last-Translator: Andrei Torres <andrei.torres@ontariotechu.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Translated-Using: django-rosetta 0.9.8\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
 
 #: GEN/settings.py:134
 msgid "English"
@@ -75,11 +75,11 @@ msgstr "profil"
 msgid "profiles"
 msgstr "profils"
 
-#: accounts/views.py:168
+#: accounts/views.py:180
 msgid "Account activated successfully. Please log in into GEN."
 msgstr "Compte activé avec succès. Veuillez vous connecter à GEN."
 
-#: accounts/views.py:175
+#: accounts/views.py:187
 msgid ""
 "Try logging in now. The confirmation link has been used or expired. Get in "
 "touch if you are having issues: support@maxsimgen.com"
@@ -88,7 +88,7 @@ msgstr ""
 "ou a expiré. Contactez-nous si vous rencontrez des problèmes: "
 "support@maxsimgen.com"
 
-#: accounts/views.py:239
+#: accounts/views.py:251
 msgid "Profile updated successfully."
 msgstr "Mise à jour du profil réussie."
 
@@ -174,7 +174,7 @@ msgstr ""
 " est de 200x80 points."
 
 #: core/models.py:55 courses/models.py:64 courses/models.py:287
-#: courses/models.py:663
+#: courses/models.py:685
 msgid "description"
 msgstr "la description"
 
@@ -187,9 +187,9 @@ msgid "URL of the destination site when the user clicks on the logo."
 msgstr "URL du site de destination lorsque l'utilisateur clique sur le logo."
 
 #: core/models.py:64 core/models.py:132 core/models.py:172
-#: courses/models.py:189 courses/models.py:463 courses/models.py:711
+#: courses/models.py:189 courses/models.py:470 courses/models.py:733
 #: games/models.py:132 games/models.py:156 games/models.py:176
-#: quiz/models.py:313 quiz/models.py:546
+#: quiz/models.py:313 quiz/models.py:548
 msgid "custom order"
 msgstr "commande personnalisée"
 
@@ -241,7 +241,7 @@ msgstr ""
 "message d'alerte."
 
 #: core/models.py:116 courses/models.py:75 courses/models.py:305
-#: courses/models.py:678
+#: courses/models.py:700
 msgid "start date"
 msgstr "date de début"
 
@@ -254,7 +254,7 @@ msgstr ""
 "définira également automatiquement le statut \"publié\" sur True."
 
 #: core/models.py:124 courses/models.py:76 courses/models.py:306
-#: courses/models.py:679
+#: courses/models.py:701
 msgid "end date"
 msgstr "date de fin"
 
@@ -267,7 +267,7 @@ msgstr ""
 "définira également automatiquement le statut 'publié' sur Faux."
 
 #: core/models.py:164 quiz/models.py:317 quiz/models.py:428 quiz/models.py:528
-#: quiz/models.py:674
+#: quiz/models.py:676
 msgid "question"
 msgstr "question"
 
@@ -319,7 +319,7 @@ msgstr "Certificat - Cours"
 msgid "Certificate - Custom"
 msgstr "Certificat - Personnalisé"
 
-#: courses/models.py:38 courses/models.py:281 courses/models.py:661
+#: courses/models.py:38 courses/models.py:281 courses/models.py:683
 #: dashboard/models.py:14
 msgid "name"
 msgstr "nom"
@@ -363,7 +363,7 @@ msgstr ""
 "Description du cours. Veuillez essayer d'être bref (moins de 2000 "
 "caractères)."
 
-#: courses/models.py:73 courses/models.py:295 courses/models.py:676
+#: courses/models.py:73 courses/models.py:295 courses/models.py:698
 #: discussions/models.py:72 quiz/models.py:241
 msgid "author"
 msgstr "l'auteur"
@@ -521,9 +521,9 @@ msgstr ""
 "Définit si les nouveaux utilisateurs doivent être automatiquement inscrits à"
 " ce cours/module."
 
-#: courses/models.py:193 courses/models.py:300 courses/models.py:737
-#: discussions/models.py:22 quiz/models.py:102 quiz/models.py:564
-#: quiz/models.py:667 videos/models.py:44 videos/models.py:59
+#: courses/models.py:193 courses/models.py:300 courses/models.py:759
+#: discussions/models.py:22 quiz/models.py:102 quiz/models.py:566
+#: quiz/models.py:669 videos/models.py:44 videos/models.py:59
 msgid "course"
 msgstr "le cours"
 
@@ -570,12 +570,12 @@ msgstr "Quiz"
 msgid "Uploads"
 msgstr "Téléversements"
 
-#: courses/models.py:268 courses/models.py:650
-#: templates/videos/video_player.html:34
+#: courses/models.py:268 courses/models.py:672
+#: templates/videos/video_player.html:24
 msgid "Content"
 msgstr "Contenu"
 
-#: courses/models.py:269 courses/models.py:658
+#: courses/models.py:269 courses/models.py:680
 msgid "SCORM"
 msgstr "SCORM"
 
@@ -603,7 +603,7 @@ msgstr ""
 msgid "section type"
 msgstr "type de section"
 
-#: courses/models.py:316 courses/models.py:688
+#: courses/models.py:316 courses/models.py:710
 msgid "published"
 msgstr "publié"
 
@@ -627,19 +627,19 @@ msgstr ""
 "* POUR LA SECTION DE CONTENU UNIQUEMENT * : Définissez si les éléments de la"
 " section doivent être paginés."
 
-#: courses/models.py:331 courses/models.py:690
+#: courses/models.py:331 courses/models.py:712
 msgid "access restriction"
 msgstr "restriction d'accès"
 
-#: courses/models.py:335 courses/models.py:694
+#: courses/models.py:335 courses/models.py:716
 msgid "Define who should have access to this item."
 msgstr "Définissez qui doit avoir accès à cet élément."
 
-#: courses/models.py:338 courses/models.py:398 courses/models.py:697
+#: courses/models.py:338 courses/models.py:405 courses/models.py:719
 msgid "access override for author"
 msgstr "remplacement d'accès pour l'auteur"
 
-#: courses/models.py:341 courses/models.py:700
+#: courses/models.py:341 courses/models.py:722
 msgid ""
 "Define if author should have access to this item, regardless of the access "
 "restriction."
@@ -672,22 +672,39 @@ msgstr ""
 "finale pour évaluer si l'apprenant a terminé avec succès le cours/module ?"
 
 #: courses/models.py:361
-msgid "completion message"
-msgstr "message d'achèvement"
+#| msgid "completion message"
+msgid "Custom completion message"
+msgstr "Message d'achèvement personnalisé"
 
 #: courses/models.py:366
+#| msgid ""
+#| "A message to be displayed after the participant has successfully completed "
+#| "the section. (max 200 characters)"
 msgid ""
-"A message to be displayed after the participant has successfully completed "
-"the section. (max 200 characters)"
+"A custom message to be displayed after the participant has successfully "
+"completed the section. (max 200 characters)"
 msgstr ""
-"Un message à afficher une fois que le participant a terminé avec succès la "
-"section. (max 200 caractères)"
+"Un message personnalisé à afficher une fois que le participant a terminé "
+"avec succès la section. (max 200 caractères)"
 
 #: courses/models.py:370
+msgid "Replace completion message with custom completion message"
+msgstr ""
+"Remplacer le message d'achèvement par un message d'achèvement personnalisé"
+
+#: courses/models.py:373
+msgid ""
+"Defines if the custom completion message should replace the default "
+"completion message or be displayed along side it."
+msgstr ""
+"Définit si le message d'achèvement personnalisé doit remplacer le message "
+"d'achèvement par défaut ou s'afficher à côté de celui-ci."
+
+#: courses/models.py:377
 msgid "create discussion"
 msgstr "créer une discussion"
 
-#: courses/models.py:373
+#: courses/models.py:380
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically create a discussion board based "
 "on participant's video submissions."
@@ -695,7 +712,7 @@ msgstr ""
 "* POUR LA SECTION TÉLÉCHARGEMENT UNIQUEMENT * : créez automatiquement un "
 "forum de discussion basé sur les soumissions vidéo des participants."
 
-#: courses/models.py:384
+#: courses/models.py:391
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define the section in which to create the "
 "discussion boards."
@@ -703,15 +720,15 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définissez la section "
 "dans laquelle créer les forums de discussion."
 
-#: courses/models.py:386
+#: courses/models.py:393
 msgid "section output"
 msgstr "sortie de section"
 
-#: courses/models.py:389
+#: courses/models.py:396
 msgid "output access restriction"
 msgstr "restriction d'accès à la sortie"
 
-#: courses/models.py:394
+#: courses/models.py:401
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define who should have access to the new "
 "discussion board."
@@ -719,7 +736,7 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir qui devrait avoir"
 " accès au nouveau forum de discussion."
 
-#: courses/models.py:401
+#: courses/models.py:408
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define if author should have access, regardless"
 " of the access restriction."
@@ -727,11 +744,11 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir si l'auteur doit "
 "avoir accès, quelle que soit la restriction d'accès."
 
-#: courses/models.py:405
+#: courses/models.py:412
 msgid "clone quiz"
 msgstr "quiz de clonage"
 
-#: courses/models.py:408
+#: courses/models.py:415
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: automatically clones an existing quiz and "
 "connect it to the participant's video after it gets published."
@@ -740,7 +757,7 @@ msgstr ""
 "quiz existant et connectez-le à la vidéo du participant après sa "
 "publication."
 
-#: courses/models.py:419
+#: courses/models.py:426
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: quiz that will be cloned and connected to the "
 "participant's video afterit gets published."
@@ -748,7 +765,7 @@ msgstr ""
 "* POUR LA SECTION TÉLÉCHARGEMENT UNIQUEMENT * : quiz qui sera cloné et "
 "connecté à la vidéo du participant après sa publication."
 
-#: courses/models.py:430
+#: courses/models.py:437
 msgid ""
 "* FOR UPLOAD SECTION ONLY *: define the section which the cloned quiz will "
 "be related to."
@@ -756,49 +773,49 @@ msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : définir la section à "
 "laquelle le quiz cloné sera lié."
 
-#: courses/models.py:434
+#: courses/models.py:441
 msgid "update cloned quiz owner"
 msgstr "mettre à jour le propriétaire du quiz cloné"
 
-#: courses/models.py:436
+#: courses/models.py:443
 msgid "* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"
 msgstr ""
 "* POUR LA SECTION DE TÉLÉCHARGEMENT UNIQUEMENT * : met à jour la propriété "
 "du quiz à l'uploader."
 
-#: courses/models.py:439
+#: courses/models.py:446
 msgid "show thumbnails"
 msgstr "affiche des vignettes"
 
-#: courses/models.py:442
+#: courses/models.py:449
 msgid ""
 "* FOR VIDEO AND UPLOAD SECTIONS ONLY *: enables displaying video thumbnails."
 msgstr ""
 "* POUR LES SECTIONS VIDÉO ET TÉLÉVERSER UNIQUEMENT *: permet d'afficher les "
 "miniatures vidéo."
 
-#: courses/models.py:446
+#: courses/models.py:453
 msgid "show related video name"
 msgstr "afficher le nom de la vidéo associée"
 
-#: courses/models.py:448
+#: courses/models.py:455
 msgid "* FOR QUIZ ONLY *: enables displaying related video's name."
 msgstr ""
 "* POUR LE QUIZ UNIQUEMENT * : permet d'afficher le nom de la vidéo associée."
 
-#: courses/models.py:451
+#: courses/models.py:458
 msgid "group by video"
 msgstr "grouper par vidéo"
 
-#: courses/models.py:453
+#: courses/models.py:460
 msgid "* FOR QUIZ ONLY *: group quizzes by videos."
 msgstr "* POUR QUIZ UNIQUEMENT * : groupe de quiz par vidéos."
 
-#: courses/models.py:456
+#: courses/models.py:463
 msgid "show instructions to mark section as completed"
 msgstr "afficher les instructions pour marquer la section comme terminée"
 
-#: courses/models.py:459
+#: courses/models.py:466
 msgid ""
 "*FOR CONTENT ONLY *: show the instructions message to mark section as "
 "completed. If disabled, only the 'mark as completed' button will be "
@@ -808,27 +825,27 @@ msgstr ""
 "marquer la section comme terminée. S'il est désactivé, seul le bouton "
 "'marquer comme terminé' sera rendu."
 
-#: courses/models.py:466
+#: courses/models.py:473
 msgid "items ordering"
 msgstr "commande d'articles"
 
-#: courses/models.py:471
+#: courses/models.py:478
 msgid ""
 "* FOR DISCUSSION SECTION ONLY *: Set the order for displaying section items."
 msgstr ""
 "* POUR LA SECTION DE DISCUSSION UNIQUEMENT * : Définissez l'ordre "
 "d'affichage des éléments de la section."
 
-#: courses/models.py:480
+#: courses/models.py:487
 msgid "To enable 'pre assessment', the section type must be Quiz."
 msgstr "Pour activer la 'pré-évaluation', le type de section doit être Quiz."
 
-#: courses/models.py:487
+#: courses/models.py:494
 msgid "To enable 'final assessment', the section type must be Quiz."
 msgstr ""
 "Pour activer 'l'évaluation finale', le type de section doit être Quiz."
 
-#: courses/models.py:495
+#: courses/models.py:502
 msgid ""
 "A quiz section can not be 'pre assessment' and 'final assessment' "
 "simultaneously."
@@ -836,24 +853,24 @@ msgstr ""
 "Une section de quiz ne peut pas être simultanément 'pré-évaluation' et "
 "'évaluation finale'."
 
-#: courses/models.py:503
+#: courses/models.py:510
 msgid "To enable 'show related video name', the section type must be Quiz."
 msgstr ""
 "Pour activer 'afficher le nom de la vidéo associée', le type de section doit"
 " être Quiz."
 
-#: courses/models.py:510
+#: courses/models.py:517
 msgid "To enable 'group by video', the section type must be Quiz."
 msgstr ""
 "Pour activer le 'groupe par vidéo', le type de section doit être Quiz."
 
-#: courses/models.py:521
+#: courses/models.py:528
 msgid "To enable 'show thumbnails', the section type must be Video or Upload"
 msgstr ""
 "Pour activer 'afficher les miniatures', le type de section doit être Vidéo "
 "ou Téléversement"
 
-#: courses/models.py:533
+#: courses/models.py:540
 msgid ""
 "To set 'create discussion' or 'section output', the section type must be "
 "Upload."
@@ -861,20 +878,20 @@ msgstr ""
 "Pour définir «créer une discussion» ou «sortie de section», le type de "
 "section doit être «Téléverser»."
 
-#: courses/models.py:545
+#: courses/models.py:552
 msgid "To create a discussion you must select a discussion section output."
 msgstr ""
 "Pour créer une discussion, vous devez sélectionner une sortie de section de "
 "discussion."
 
-#: courses/models.py:553
+#: courses/models.py:560
 msgid ""
 "You can not select a section output if 'create discussions' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une sortie de section si «créer des "
 "discussions» n'est pas activé."
 
-#: courses/models.py:563
+#: courses/models.py:570
 msgid ""
 "To set 'clone quiz' or 'clone quiz reference', the section type must be "
 "Upload."
@@ -882,17 +899,17 @@ msgstr ""
 "Pour définir 'clone quiz' ou 'clone quiz référence', le type de section doit"
 " être Upload."
 
-#: courses/models.py:573
+#: courses/models.py:580
 msgid "To clone a quiz you must select a quiz reference."
 msgstr "Pour cloner un quiz, vous devez sélectionner une référence de quiz."
 
-#: courses/models.py:579
+#: courses/models.py:586
 msgid "You can not select a quiz reference if 'clone quiz' is not enabled."
 msgstr ""
 "Vous ne pouvez pas sélectionner une référence de quiz si 'cloner quiz' n'est"
 " pas activé."
 
-#: courses/models.py:589
+#: courses/models.py:596
 msgid ""
 "To set 'show instructions to mark section as completed', the section type "
 "must be Content."
@@ -900,7 +917,7 @@ msgstr ""
 "Pour définir 'Afficher les instructions pour marquer la section comme "
 "terminée', le type de section doit être Contenu."
 
-#: courses/models.py:600
+#: courses/models.py:607
 msgid ""
 "Section end date cannot be equal or                             earlier than"
 " the start date."
@@ -908,44 +925,53 @@ msgstr ""
 "La date de fin de section ne peut pas être égale ou antérieure à la date de "
 "début."
 
-#: courses/models.py:633 courses/models.py:686 courses/models.py:745
-#: quiz/models.py:670
+#: courses/models.py:619
+msgid ""
+"Custom completion message MUST be defined to be able to"
+"                         enable the option 'Replace completion message with"
+"                         custom message'."
+msgstr ""
+"Le message d'achèvement personnalisé DOIT être défini pour pouvoir activer "
+"l'option \"Remplacer le message d'achèvement par un message personnalisé\"."
+
+#: courses/models.py:655 courses/models.py:708 courses/models.py:767
+#: quiz/models.py:672
 msgid "section"
 msgstr "section"
 
-#: courses/models.py:634
+#: courses/models.py:656
 msgid "sections"
 msgstr "sections"
 
-#: courses/models.py:651
+#: courses/models.py:673
 msgid "Image"
 msgstr "Image"
 
-#: courses/models.py:652
+#: courses/models.py:674
 msgid "Discussion"
 msgstr "Discussion"
 
-#: courses/models.py:653
+#: courses/models.py:675
 msgid "Game"
 msgstr "Jeu"
 
-#: courses/models.py:654
+#: courses/models.py:676
 msgid "Quiz"
 msgstr "Quiz"
 
-#: courses/models.py:655 templates/quiz/quiz.html:26
+#: courses/models.py:677 templates/quiz/quiz.html:26
 msgid "Video"
 msgstr "Vidéo"
 
-#: courses/models.py:656
+#: courses/models.py:678
 msgid "PDF"
 msgstr "PDF"
 
-#: courses/models.py:657
+#: courses/models.py:679
 msgid "Zip file"
 msgstr "Fichier zip"
 
-#: courses/models.py:665
+#: courses/models.py:687
 msgid ""
 "Item description. Please try to keep it brief (under 1000 characters or 150 "
 "words). Only the first 250 characters will be shown in the quiz section "
@@ -955,46 +981,46 @@ msgstr ""
 "caractères ou 150 mots). Seuls les 250 premiers caractères seront affichés "
 "dans la vue de la section quiz."
 
-#: courses/models.py:704
+#: courses/models.py:726
 msgid "show related content"
 msgstr "afficher le contenu associé"
 
-#: courses/models.py:707
+#: courses/models.py:729
 msgid ""
 "Display content related to this item (e.g., quizzes related to a video)"
 msgstr ""
 "Afficher le contenu lié à cet élément (par exemple, des quiz liés à une "
 "vidéo)"
 
-#: courses/models.py:714
+#: courses/models.py:736
 msgid "section item type"
 msgstr "type d'élément de section"
 
-#: courses/models.py:720
+#: courses/models.py:742
 msgid "section item"
 msgstr "élément de section"
 
-#: courses/models.py:721
+#: courses/models.py:743
 msgid "section items"
 msgstr "éléments de section"
 
-#: courses/models.py:731
+#: courses/models.py:753
 msgid "learner"
 msgstr "apprenant"
 
-#: courses/models.py:748
+#: courses/models.py:770
 msgid "item completed successfully"
 msgstr "élément terminé avec succès"
 
-#: courses/models.py:750
+#: courses/models.py:772
 msgid "Whether the item has been marked as complete or not."
 msgstr "Si l'élément a été marqué comme terminé ou non."
 
-#: courses/models.py:754
+#: courses/models.py:776
 msgid "status"
 msgstr "statut"
 
-#: courses/models.py:755
+#: courses/models.py:777
 msgid "statuses"
 msgstr "statuts"
 
@@ -1154,7 +1180,7 @@ msgid "The max length for the discussion board name is 100."
 msgstr "La longueur maximale du nom du forum de discussion est 100."
 
 #: discussions/forms.py:22 discussions/forms.py:75 templates/dashboard.html:20
-#: templates/quiz/quiz.html:87 templates/sections/section_info.html:53
+#: templates/quiz/quiz.html:75 templates/sections/section_info.html:53
 #: videos/forms.py:16
 msgid "Description"
 msgstr "La description"
@@ -1191,7 +1217,7 @@ msgstr "La longueur maximale d'un commentaire est de 400 caractères."
 msgid "last updated"
 msgstr "dernière mise à jour"
 
-#: discussions/models.py:41 quiz/models.py:110 quiz/models.py:688
+#: discussions/models.py:41 quiz/models.py:110 quiz/models.py:690
 msgid "video"
 msgstr "vidéo"
 
@@ -1365,7 +1391,7 @@ msgstr "afficher la valeur de la question"
 msgid "show correct answers"
 msgstr "afficher les bonnes réponses"
 
-#: quiz/models.py:54 quiz/models.py:568
+#: quiz/models.py:54 quiz/models.py:570
 msgid "max score"
 msgstr "score maximum"
 
@@ -1384,11 +1410,11 @@ msgstr "procédé d'évaluation"
 msgid "method for assessing if the quiz has been"
 msgstr "méthode pour évaluer si le quiz a été"
 
-#: quiz/models.py:69 quiz/models.py:582
+#: quiz/models.py:69 quiz/models.py:584
 msgid "minimum percentage acceptable"
 msgstr "pourcentage minimum acceptable"
 
-#: quiz/models.py:72 quiz/models.py:585
+#: quiz/models.py:72 quiz/models.py:587
 msgid ""
 "If the participant score percentage is below this value, the quiz is marked "
 "as failed"
@@ -1396,11 +1422,11 @@ msgstr ""
 "Si le pourcentage de score du participant est inférieur à cette valeur, le "
 "quiz est marqué comme ayant échoué"
 
-#: quiz/models.py:76 quiz/models.py:575
+#: quiz/models.py:76 quiz/models.py:577
 msgid "maximum number of mistakes"
 msgstr "nombre maximum d'erreurs"
 
-#: quiz/models.py:79 quiz/models.py:578
+#: quiz/models.py:79 quiz/models.py:580
 msgid "If the participant exceeds this value, the quiz is marked as failed"
 msgstr ""
 "Si le participant dépasse cette valeur, le quiz est marqué comme ayant "
@@ -1446,7 +1472,7 @@ msgstr "nombre maximal de tentatives"
 msgid "Show question number"
 msgstr "Afficher le numéro de la question"
 
-#: quiz/models.py:131 quiz/models.py:245 quiz/models.py:562 quiz/models.py:658
+#: quiz/models.py:131 quiz/models.py:245 quiz/models.py:564 quiz/models.py:660
 msgid "quiz"
 msgstr "quiz"
 
@@ -1512,7 +1538,7 @@ msgstr "Ouvert - Texte (long)"
 msgid "Open ended - Email"
 msgstr "Ouvert - E-mail"
 
-#: quiz/models.py:236 quiz/models.py:653
+#: quiz/models.py:236 quiz/models.py:655
 msgid "question type"
 msgstr "type de question"
 
@@ -1521,20 +1547,24 @@ msgid "content"
 msgstr "contenu"
 
 #: quiz/models.py:254
-msgid "Main text content of the question (max 1000 characters)."
-msgstr "Contenu du texte principal de la question (max 1000 caractères)."
+#| msgid "Main text content of the question (max 1000 characters)."
+msgid "Main text content of the question (max 2000 characters)."
+msgstr "Contenu du texte principal de la question (max 2000 caractères)."
 
 #: quiz/models.py:257
 msgid "additional content"
 msgstr "contenu additionnel"
 
 #: quiz/models.py:262
+#| msgid ""
+#| "Optional: additional text that will be shown under the main text content. "
+#| "(max 1000 characters)."
 msgid ""
-"Optional: additional text that will be shown under the main text content. "
-"(max 1000 characters)."
+"Optional: additional text that will be shown under the main text content "
+"(max 2000 characters)."
 msgstr ""
 "Facultatif : texte supplémentaire qui sera affiché sous le contenu du texte "
-"principal. (max 1000 caractères)."
+"principal (max 2000 caractères)."
 
 #: quiz/models.py:266
 msgid "feedback"
@@ -1670,51 +1700,54 @@ msgstr "question à choix multiples"
 msgid "multiple choice questions"
 msgstr "questions à choix multiple"
 
-#: quiz/models.py:535
-msgid "Enter the answer text that you want displayed"
-msgstr "Entrez le texte de réponse que vous souhaitez afficher"
+#: quiz/models.py:536
+#| msgid "Enter the answer text that you want displayed"
+msgid "Enter the answer text that you want displayed (max 2000 characters)."
+msgstr ""
+"Entrez le texte de réponse que vous souhaitez afficher (max 2000 "
+"caractères)."
 
-#: quiz/models.py:539
+#: quiz/models.py:541
 msgid "check"
 msgstr "cocher"
 
-#: quiz/models.py:542
+#: quiz/models.py:544
 msgid "Should this answer be checked/marked?"
 msgstr "Cette réponse doit-elle être cochée?"
 
-#: quiz/models.py:553
+#: quiz/models.py:555
 msgid "multiple choice answer"
 msgstr "réponse à choix multiples"
 
-#: quiz/models.py:554
+#: quiz/models.py:556
 msgid "multiple choice answers"
 msgstr "réponses à choix multiples"
 
-#: quiz/models.py:560 quiz/models.py:656
+#: quiz/models.py:562 quiz/models.py:658
 msgid "student"
 msgstr "l'étudiant"
 
-#: quiz/models.py:566 quiz/models.py:672
+#: quiz/models.py:568 quiz/models.py:674
 msgid "attempt number"
 msgstr "numéro de tentative"
 
-#: quiz/models.py:567
+#: quiz/models.py:569
 msgid "score"
 msgstr "score"
 
-#: quiz/models.py:570
+#: quiz/models.py:572
 msgid "number of mistakes"
 msgstr "nombre d'erreurs"
 
-#: quiz/models.py:572
+#: quiz/models.py:574
 msgid "Total number of mistakes (incorrect questions)."
 msgstr "Nombre total d'erreurs (questions incorrectes)."
 
-#: quiz/models.py:589
+#: quiz/models.py:591
 msgid "completed successfully"
 msgstr "complété avec succès"
 
-#: quiz/models.py:592
+#: quiz/models.py:594
 msgid ""
 "If quiz assessment is enabled, this field represents if the participant "
 "achieved a passing score or not."
@@ -1722,90 +1755,99 @@ msgstr ""
 "Si l'évaluation du quiz est activée, ce champ indique si le participant a "
 "obtenu une note de passage ou non."
 
-#: quiz/models.py:596
+#: quiz/models.py:598
 msgid "expert feedback"
 msgstr "commentaires d'experts"
 
-#: quiz/models.py:598
+#: quiz/models.py:600
 msgid "Defines if the quiz was submitted by an expert/instructor."
 msgstr "Définit si le quiz a été soumis par un expert/instructeur."
 
-#: quiz/models.py:602
+#: quiz/models.py:604
 msgid "quiz score"
 msgstr "score du quiz"
 
-#: quiz/models.py:603
+#: quiz/models.py:605
 msgid "quiz scores"
 msgstr "scores du quiz"
 
-#: quiz/models.py:644
+#: quiz/models.py:646
 msgid "question group header"
 msgstr "en-tête du groupe de questions"
 
-#: quiz/models.py:645
+#: quiz/models.py:647
 msgid "question group headers"
 msgstr "en-têtes de groupe de questions"
 
-#: quiz/models.py:664
+#: quiz/models.py:666
 msgid "quiz submission"
 msgstr "soumission de quiz"
 
-#: quiz/models.py:681
+#: quiz/models.py:683
 msgid "multiple choice item"
 msgstr "article à choix multiples"
 
-#: quiz/models.py:690
+#: quiz/models.py:692
 msgid "Participant answer"
 msgstr "Réponse des participants"
 
-#: quiz/models.py:691
+#: quiz/models.py:693
 msgid "correct"
 msgstr "correct"
 
-#: quiz/models.py:695
+#: quiz/models.py:697
 msgid "question attempt"
 msgstr "tentative de question"
 
-#: quiz/models.py:696
+#: quiz/models.py:698
 msgid "question attempts"
 msgstr "tentatives de questions"
 
-#: quiz/models.py:758
+#: quiz/models.py:760
 msgid "likert attempt"
 msgstr "tentative de likert"
 
-#: quiz/models.py:759
+#: quiz/models.py:761
 msgid "likert attempts"
 msgstr "tentatives de likert"
 
-#: quiz/models.py:771
+#: quiz/models.py:773
 msgid "open ended attempt"
 msgstr "tentative ouverte"
 
-#: quiz/models.py:772
+#: quiz/models.py:774
 msgid "open ended attempts"
 msgstr "tentatives ouverte"
 
-#: quiz/models.py:784
+#: quiz/models.py:786
 msgid "multiple choice questions attempt"
 msgstr "tentative de questions à choix multiples"
 
-#: quiz/models.py:785
+#: quiz/models.py:787
 msgid "multiple choice questions attempts"
 msgstr "tentatives de questions à choix multiples"
 
-#: quiz/views.py:310
+#: quiz/views.py:311
 msgid ""
 "Submission denied. You can not submit a quiz of which you are the author."
 msgstr ""
 "Soumission refusée. Vous ne pouvez pas soumettre un quiz dont vous êtes "
 "l'auteur."
 
-#: quiz/views.py:358
+#: quiz/views.py:354
+#| msgid "Submit is disabled because you are the author."
+msgid ""
+"This quiz is in PREVIEW mode. Submitting is DISABLED because you are the "
+"author."
+msgstr ""
+"Ce quiz est en mode PREVIEW. La soumission est DÉSACTIVÉE parce que vous "
+"êtes l'auteur."
+
+#: quiz/views.py:363
 msgid "You have already reached the maximum number of attempts."
 msgstr "Vous avez déjà atteint le nombre maximum de tentatives."
 
-#: quiz/views.py:378
+#: quiz/views.py:384
 msgid "Access denied."
 msgstr "Accès refusé."
 
@@ -2167,7 +2209,7 @@ msgid "Change password"
 msgstr "Changer le mot de passe"
 
 #: templates/account/password_change.html:8
-#: templates/accounts/my_account.html:10 templates/base.html:55
+#: templates/accounts/my_account.html:10 templates/base.html:57
 #: templates/dashboard.html:6 templates/deprecated/password_change.html:8
 msgid "Home"
 msgstr "Accueil"
@@ -2347,7 +2389,7 @@ msgstr ""
 "href=\"%(email_url)s\">modifier votre adresse e-mail</a>."
 
 #: templates/accounts/my_account.html:7 templates/accounts/my_account.html:11
-#: templates/accounts/my_account.html:15 templates/base.html:78
+#: templates/accounts/my_account.html:15 templates/base.html:80
 msgid "My account"
 msgstr "Mon compte"
 
@@ -2413,44 +2455,44 @@ msgstr "Synchroniser avec ScormCloud"
 msgid "Pulls the latest registration data from ScormCloud."
 msgstr "Extrait les dernières données d'enregistrement de ScormCloud."
 
-#: templates/base.html:43
+#: templates/base.html:45
 msgid "Return to GEN home page"
 msgstr "Retour à la page d'accueil de GEN"
 
-#: templates/base.html:45 templates/base_accounts.html:17
+#: templates/base.html:47 templates/base_accounts.html:17
 msgid "GEN logo"
 msgstr "Logo GEN"
 
-#: templates/base.html:48
+#: templates/base.html:50
 msgid "Toggle navigation"
 msgstr "Basculer la navigation"
 
-#: templates/base.html:50 templates/base_course_section.html:36
+#: templates/base.html:52 templates/base_course_section.html:36
 msgid "Toggle"
 msgstr "Cabillot"
 
-#: templates/base.html:58
+#: templates/base.html:60
 msgid "Tutorial"
 msgstr "Didacticiel"
 
-#: templates/base.html:64
+#: templates/base.html:66
 msgid "Help / FAQ"
 msgstr "Aide / FAQ"
 
-#: templates/base.html:69
+#: templates/base.html:71
 msgid "Admin"
 msgstr "Admin"
 
-#: templates/base.html:82
+#: templates/base.html:84
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: templates/base.html:122 templates/base_accounts.html:47
+#: templates/base.html:124 templates/base_accounts.html:47
 #: templates/deprecated/login.html:94
 msgid "Language:"
 msgstr "Langue:"
 
-#: templates/base.html:124 templates/base_accounts.html:49
+#: templates/base.html:126 templates/base_accounts.html:49
 #: templates/deprecated/login.html:96
 msgid "List of languages"
 msgstr "Liste des langues"
@@ -2470,10 +2512,6 @@ msgstr "Basculer la liste des sections"
 #: templates/content/pdf.html:9
 msgid "Download PDF"
 msgstr "Télécharger le PDF"
-
-#: templates/content/video.html:14 templates/videos/video_player.html:25
-msgid "Sorry, your browser doesn't support embedded videos."
-msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
 #: templates/content/zip_embed.html:17
 msgid "URL is not valid. Please notify the support team:"
@@ -2545,37 +2583,33 @@ msgstr "Par:"
 msgid "Edit discussion"
 msgstr "Modifier la discussion"
 
-#: templates/discussions/comments.html:70 templates/quiz/quiz.html:43
-msgid "Sorry, your browser does not support embedded videos."
-msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
-
-#: templates/discussions/comments.html:89
+#: templates/discussions/comments.html:79
 msgid "New comment"
 msgstr "Nouveau commentaire"
 
-#: templates/discussions/comments.html:97 templates/new_media.html:13
+#: templates/discussions/comments.html:87 templates/new_media.html:13
 msgid "Post"
 msgstr "Publier"
 
-#: templates/discussions/comments.html:100
+#: templates/discussions/comments.html:90
 msgid "Please login to comment."
 msgstr "Veuillez vous connecter pour commenter."
 
-#: templates/discussions/comments.html:106
+#: templates/discussions/comments.html:96
 #: templates/sections/section_info.html:78
 #: templates/sections/section_info.html:90
 msgid "Comments"
 msgstr "Commentaires"
 
-#: templates/discussions/comments.html:151
+#: templates/discussions/comments.html:141
 msgid "ADMIN"
 msgstr "ADMIN"
 
-#: templates/discussions/comments.html:155
+#: templates/discussions/comments.html:145
 msgid "Expert"
 msgstr "L'expert"
 
-#: templates/discussions/comments.html:175
+#: templates/discussions/comments.html:165
 msgid "This discussion has no comments."
 msgstr "Cette discussion n'a aucun commentaire."
 
@@ -2729,27 +2763,31 @@ msgstr ""
 "Chrome et Edge : appuyez sur les trois points en bas à droite du lecteur "
 "vidéo et cliquez sur 'Légendes'."
 
+#: templates/partials/video_player.html:14
+msgid "Sorry, your browser doesn't support embedded videos."
+msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
+
 #: templates/quiz/quiz.html:17
 msgid "Submit is disabled because you are the author."
 msgstr "La soumission est désactivée car vous en êtes l'auteur."
 
-#: templates/quiz/quiz.html:59
+#: templates/quiz/quiz.html:47
 msgid "Questions"
 msgstr "Des questions"
 
-#: templates/quiz/quiz.html:65 templates/sections/section_content.html:77
+#: templates/quiz/quiz.html:53 templates/sections/section_content.html:78
 msgid "Previous"
 msgstr "Précédent"
 
-#: templates/quiz/quiz.html:72 templates/sections/section_content.html:84
+#: templates/quiz/quiz.html:60 templates/sections/section_content.html:85
 msgid "Next"
 msgstr "Suivant"
 
-#: templates/quiz/quiz.html:83
+#: templates/quiz/quiz.html:71
 msgid "Navigation Instructions"
 msgstr "Consignes de navigation"
 
-#: templates/quiz/quiz.html:84
+#: templates/quiz/quiz.html:72
 msgid ""
 "Please use the navigation buttons ('Previous' and 'Next') in the top right "
 "corner to navigate through the questions available for this quiz."
@@ -2758,35 +2796,35 @@ msgstr ""
 "le coin supérieur droit pour parcourir les questions disponibles pour ce "
 "quiz."
 
-#: templates/quiz/quiz.html:95
+#: templates/quiz/quiz.html:83
 msgid "Question"
 msgstr "Question"
 
-#: templates/quiz/quiz.html:105 templates/quiz/quiz_result.html:76
+#: templates/quiz/quiz.html:93 templates/quiz/quiz_result.html:76
 msgid "Value:"
 msgstr "Valeur:"
 
-#: templates/quiz/quiz.html:131
+#: templates/quiz/quiz.html:119
 msgid "Select all"
 msgstr "Tout sélectionner"
 
-#: templates/quiz/quiz.html:133
+#: templates/quiz/quiz.html:121
 msgid "Deselect all"
 msgstr "Tout déselectionner"
 
-#: templates/quiz/quiz.html:153 templates/quiz/quiz_result.html:167
+#: templates/quiz/quiz.html:141 templates/quiz/quiz_result.html:167
 msgid "Scale legend"
 msgstr "Légende de l'échelle"
 
-#: templates/quiz/quiz.html:162 templates/quiz/quiz_result.html:174
+#: templates/quiz/quiz.html:150 templates/quiz/quiz_result.html:174
 msgid "Your answer:"
 msgstr "Ta Réponse:"
 
-#: templates/quiz/quiz.html:191
+#: templates/quiz/quiz.html:179
 msgid "This is the end of the quiz."
 msgstr "C'est la fin du quiz."
 
-#: templates/quiz/quiz.html:192
+#: templates/quiz/quiz.html:180
 #, python-format
 msgid ""
 " You can now submit your answers or\n"
@@ -2795,16 +2833,16 @@ msgstr ""
 "Vous pouvez maintenant soumettre vos réponses ou\n"
 "quittez et revenez à la page %(section_name)s."
 
-#: templates/quiz/quiz.html:197 templates/quiz/quiz.html:200
-#: templates/quiz/quiz.html:211 templates/quiz/quiz.html:214
+#: templates/quiz/quiz.html:185 templates/quiz/quiz.html:188
+#: templates/quiz/quiz.html:199 templates/quiz/quiz.html:202
 msgid "Submit answers"
 msgstr "Soumettre les réponses"
 
-#: templates/quiz/quiz.html:218
+#: templates/quiz/quiz.html:206
 msgid "Exit quiz"
 msgstr "Sortir quiz"
 
-#: templates/quiz/quiz.html:239
+#: templates/quiz/quiz.html:227
 msgid ""
 "This will cancel the current quiz and return to the section page. Are you "
 "sure?"
@@ -2812,15 +2850,15 @@ msgstr ""
 "Cela annulera le quiz en cours et reviendra à la page de la section. Es-tu "
 "sûr?"
 
-#: templates/quiz/quiz.html:240
+#: templates/quiz/quiz.html:228
 msgid "No, continue on quiz."
 msgstr "Non, continuez le quiz."
 
-#: templates/quiz/quiz.html:241
+#: templates/quiz/quiz.html:229
 msgid "Yes, exit quiz."
 msgstr "Oui, quittez le quiz."
 
-#: templates/quiz/quiz.html:242 templates/sections/section_info.html:102
+#: templates/quiz/quiz.html:230 templates/sections/section_info.html:102
 msgid "You have not completed any section yet."
 msgstr "Vous n'avez encore terminé aucune section."
 
@@ -3023,7 +3061,7 @@ msgstr ""
 "Mot de passe oublié? Saisissez votre adresse e-mail ci-dessous et nous vous "
 "enverrons par e-mail des instructions pour en définir une nouvelle."
 
-#: templates/sections/section_content.html:33
+#: templates/sections/section_content.html:34
 #: templates/sections/section_discussion.html:15
 #: templates/sections/section_info.html:40
 #: templates/sections/section_quiz.html:14
@@ -3034,7 +3072,7 @@ msgstr ""
 msgid "Start"
 msgstr "Début"
 
-#: templates/sections/section_content.html:37
+#: templates/sections/section_content.html:38
 #: templates/sections/section_discussion.html:19
 #: templates/sections/section_info.html:47
 #: templates/sections/section_quiz.html:18
@@ -3045,8 +3083,8 @@ msgstr "Début"
 msgid "End"
 msgstr "Fin"
 
-#: templates/sections/section_content.html:63
-#: templates/sections/section_content.html:104
+#: templates/sections/section_content.html:64
+#: templates/sections/section_content.html:105
 msgid ""
 "Congratulations, you have reached the end of this section. If you feel that "
 "you are ready to continue, please click the button below to mark this "
@@ -3487,7 +3525,6 @@ msgid "Sign Up"
 msgstr "S'inscrire"
 
 #: templates/socialaccount/snippets/provider_list.html:26
-#| msgid "No social account service configured."
 msgid "No social account service configured. Please contact support."
 msgstr ""
 "Aucun service de compte social configuré. Veuillez contacter l'assistance."
@@ -3600,23 +3637,23 @@ msgstr "téléchargé sur"
 msgid "subtitle"
 msgstr "sous-titre"
 
-#: videos/models.py:84
+#: videos/models.py:78
 msgid "internal name"
 msgstr "nom interne"
 
-#: videos/models.py:88
+#: videos/models.py:82
 msgid "Video internal name (not visible to users)."
 msgstr "Nom interne de la vidéo (non visible pour les utilisateurs)"
 
-#: videos/models.py:91
+#: videos/models.py:85
 msgid "thumbnail"
 msgstr "la vignette"
 
-#: videos/models.py:102
+#: videos/models.py:96
 msgid "video file"
 msgstr "fichier vidéo"
 
-#: videos/models.py:103
+#: videos/models.py:97
 msgid "video files"
 msgstr "fichiers vidéo"
 
@@ -3648,6 +3685,9 @@ msgstr "Vous n'êtes pas autorisé à le faire."
 #: videos/views.py:196
 msgid "The requested video is already unpublished."
 msgstr "La vidéo demandée est déjà inédite."
+
+#~ msgid "Sorry, your browser does not support embedded videos."
+#~ msgstr "Désolé, votre navigateur ne prend pas en charge les vidéos intégrées."
 
 #~ msgid ""
 #~ "You have reached the end of the quiz preview. You can <strong>not</strong> "
