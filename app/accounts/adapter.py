@@ -16,12 +16,16 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
     def check_social_domain(self, request, social_user):
         """Check if email associated with social account is listed in permitted domains"""
-        email_domain = social_user.email.split("@")[1]
+        email_domain = social_user.email.split("@")[1].lower()
         permitted_domains = GEN_settings.VALID_EMAIL_DOMAINS
 
         if email_domain not in permitted_domains:
             raise ImmediateHttpResponse(
-                render(template_name="403.html", request=request)
+                render(
+                    request,
+                    "errors/email_domain_not_allowed.html",
+                    {"blocked_domain": email_domain},
+                )
             )
 
     def pre_social_login(self, request, sociallogin):
