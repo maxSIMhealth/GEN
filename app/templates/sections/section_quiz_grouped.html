@@ -46,7 +46,7 @@
                                         {% if item.quiz.requirement %}
                                             <span class="text-muted text-underline-dashed" data-toggle="tooltip"
                                                   data-placement="auto" data-html="true"
-                                                  title="{% trans 'Requirement must be met first:' %} <u>{% trans item.quiz.requirement.name %}</u>">{{ item.name }}</span>
+                                                  title="{% trans 'Requirement must be met first:' %} {% trans item.quiz.requirement.name %}">{{ item.name }}</span>
                                         {% else %}
                                             <span class="text-muted">{{ item.name }}</span>
                                         {% endif %}
