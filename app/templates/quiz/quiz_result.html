@@ -70,9 +70,9 @@
                 <div class="card mb-3">
                     <div class="card-header fs-6">
                         {% if question.question_type != 'H' or question.question_type == 'O' %}
-                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}
+                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content|striptags }}
                         {% else %}
-                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content }}
+                            {% if quiz.show_question_number %}{{ forloop.counter }} - {% endif %}{{ question.content|striptags }}
                             {% if quiz.assessment_method and quiz.show_question_value%}(<em>{% translate "Value:" %} {{ question.value }}</em>){% endif %}
                         {% endif %}
                     </div>
@@ -193,8 +193,9 @@
                                         <div class="card-subtitle bg-light fs-6">
                                             <div class="card-text">
                                                 <strong>{% trans "Feedback" %}:</strong>
-                                                <span>{{ question.feedback }}</span>
+                                                <span>{{ question.feedback|safe }}</span>
                                             </div>
+                                            {% include "partials/feedback_video.html" with feedback_video=question.feedback_video %}
                                             {% include "partials/feedback_image.html" with feedback_image=question.feedback_image %}
                                         </div>
                                     </div>
