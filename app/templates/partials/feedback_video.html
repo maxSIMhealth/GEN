@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load static %}
+
+{% if feedback_video and feedback_video.published %}
+  <div class="card-text text-center ratio ratio-16x9 mt-2 mb-2" id="video-player">
+    <video crossorigin="anonymous" playsinline
+           poster="{% if feedback_video.thumbnail %} {{ feedback_video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}"
+           controls>
+      {% if feedback_video.subtitle %}
+        <track default
+               kind="captions"
+               srclang="{{ LANGUAGE_CODE }}"
+               src="{{ feedback_video.subtitle.url }}"/>
+      {% endif %}
+      <source src="{{ feedback_video.file.url }}" type="video/mp4">
+      {% trans "Sorry, your browser doesn't support embedded videos." %}
+    </video>
+  </div>
+{% endif %}

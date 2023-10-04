@@ -278,6 +278,17 @@ class Question(TimeStampedModel):
         ),
         related_name="feedback_image",
     )
+    feedback_video = models.ForeignKey(
+        VideoFile,
+        verbose_name=_("feedback_video"),
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        help_text=_(
+            "Optional feedback video file to be shown after the question has been answered."
+        ),
+        related_name="feedback_video",
+    )
     image = models.ForeignKey(
         ImageFile,
         verbose_name=_("image"),
