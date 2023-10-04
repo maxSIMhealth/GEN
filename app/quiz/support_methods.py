@@ -55,7 +55,7 @@ def quiz_enable_check(user, quiz):
 
         # check if quiz requirement has been fulfilled
         requirement_fulfilled = bool(
-            requirement_quiz_score.exists() and requirement_quiz_score.completed
+            requirement_quiz_score and requirement_quiz_score.completed
         )
 
     else:
