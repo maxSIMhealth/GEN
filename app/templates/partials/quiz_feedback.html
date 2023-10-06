@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<div class="card bg-light mb-0 mt-3">
+  <div class="card-body pb-0">
+    <div class="card-subtitle bg-light text-black fs-6">
+      <div class="card-text">
+        <strong>{% trans "Feedback" %}:</strong>
+        <span>{{ item.feedback|safe }}</span>
+      </div>
+      {% include "partials/feedback_video.html" with feedback_video=item.feedback_video %}
+      {% include "partials/feedback_image.html" with feedback_image=item.feedback_image %}
+    </div>
+  </div>
+</div>
