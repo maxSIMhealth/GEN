@@ -205,6 +205,14 @@ class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                 )
             },
         ),
+        (
+            "Feedback options",
+            {
+                "fields": (
+                    "feedback",
+                )
+            }
+        )
     )
 
     # filter_horizontal = ('questions', )

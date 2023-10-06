@@ -126,6 +126,11 @@ class Quiz(SectionItem):
         _("Show question number"),
         default=True,
     )
+    feedback = HTMLField(
+        _("feedback"),
+        blank=True,
+        help_text=_("Feedback to be shown after the quiz has been answered."),
+    )
 
     class Meta:
         verbose_name = _("quiz")
