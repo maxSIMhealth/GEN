@@ -50,6 +50,15 @@ class Quiz(SectionItem):
     )
     show_question_value = models.BooleanField(_("show question value"), default=True)
     show_correct_answers = models.BooleanField(_("show correct answers"), default=False)
+    show_submissions_count = models.BooleanField(
+        _("show submissions count"),
+        default=False,
+        help_text=_(
+            "Defines if the total number of submissions should be visible to ALL users "
+            "(including learners). If false, only the quiz author, instructors, and "
+            "admins will be able to see this information."
+        ),
+    )
     max_score = models.PositiveIntegerField(
         _("max score"),
         default=0,

@@ -210,6 +210,7 @@ class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             {
                 "fields": (
                     "feedback",
+                    "show_submissions_count",
                 )
             }
         )
