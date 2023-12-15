@@ -61,8 +61,15 @@ def quiz_enable_check(user, quiz):
     else:
         requirement_fulfilled = True
 
+    # check if submissions limit has been defined
+    submissions_limit_reached = False
+    if quiz.limit_submissions:
+        submissions_max_number = quiz.limit_submissions_max
+        if quiz.quizscore_set.count() >= submissions_max_number:
+            submissions_limit_reached = True
+
     # check if quiz should be still available
-    if not attempts_limit_reached and requirement_fulfilled:
+    if not attempts_limit_reached and requirement_fulfilled and not submissions_limit_reached:
         quiz_enable = True
 
     return quiz_enable, current_attempt_number, attempts_left, latest_quizscore

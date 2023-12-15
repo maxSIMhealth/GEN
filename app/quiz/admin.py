@@ -206,11 +206,20 @@ class QuizAdmin(SortableAdminMixin, TabbedTranslationAdmin):
             },
         ),
         (
+            "Submissions info and limit options",
+            {
+                "fields": (
+                    "show_submissions_count",
+                    "limit_submissions",
+                    "limit_submissions_max",
+                )
+            }
+        ),
+        (
             "Feedback options",
             {
                 "fields": (
                     "feedback",
-                    "show_submissions_count",
                 )
             }
         )

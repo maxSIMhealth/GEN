@@ -59,6 +59,18 @@ class Quiz(SectionItem):
             "admins will be able to see this information."
         ),
     )
+    limit_submissions = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Defines if the quiz should be disabled after reaching a specific number "
+            "of submissions."
+        ),
+    )
+    limit_submissions_max = models.PositiveIntegerField(
+        _("Limit number of submissions"),
+        default=1,
+        help_text=_("Maximum number of submissions allowed for the quiz.")
+    )
     max_score = models.PositiveIntegerField(
         _("max score"),
         default=0,
@@ -194,6 +206,16 @@ class Quiz(SectionItem):
                     ValidationError(
                         _(
                             "Since subset is enabled, subset number must be greater than 0."
+                        )
+                    )
+                )
+
+        if self.limit_submissions:
+            if self.limit_submissions_max == 0:
+                errors.append(
+                    ValidationError(
+                        _(
+                            "Since limit submissions is enabled, max submissions value must be greater than 0."
                         )
                     )
                 )
