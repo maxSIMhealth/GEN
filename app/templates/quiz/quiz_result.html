@@ -181,10 +181,7 @@
               <label for="openended_{{ question.id }}" class="mb-1">{% trans "Your answer:" %}</label>
               {# OT: text, OA: textarea, ON: numeric, OD: date, OH: hour/time, OE: email #}
               {% if question.openended_type == 'OA' %}
-                <textarea rows="5" class="form-control" name="openended_{{ question.id }}"
-                          id="openended_{{ question.id }}"
-                          disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}
-                  {{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
+                <textarea rows="5" class="form-control" name="openended_{{ question.id }}"  id="openended_{{ question.id }}" disabled>{% for attempt in attempt_openended %}{% if attempt.question_id == question.id %}{{ attempt.answer_content }}{% endif %}{% endfor %}</textarea>
               {% else %}
                 <input type="text" class="form-control" name="openended_{{ question.id }}"
                        id="openended_{{ question.id }}" disabled value="
