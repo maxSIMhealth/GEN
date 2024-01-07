@@ -491,6 +491,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "height": 400,
     "paste_block_drop": True,
     "paste_as_text": True,
+    "entity_encoding": "raw"
 }
 TINYMCE_SPELLCHECKER = False
 
