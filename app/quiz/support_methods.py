@@ -72,6 +72,10 @@ def quiz_enable_check(user, quiz):
     if not attempts_limit_reached and requirement_fulfilled and not submissions_limit_reached:
         quiz_enable = True
 
+    # override for superuser
+    if user.is_superuser:
+        quiz_enable = True
+
     return quiz_enable, current_attempt_number, attempts_left, latest_quizscore
 
 
