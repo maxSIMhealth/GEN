@@ -17,6 +17,12 @@ spec:
     - key: GUNICORN_LOGLEVEL
       scope: RUN_AND_BUILD_TIME
       value: "info"
+    - key: GUNICORN_TIMEOUT
+      scope: RUN_AND_BUILD_TIME
+      value: "1000"
+    - key: GUNICORN_WORKERS
+      scope: RUN_AND_BUILD_TIME
+      value: "2"
     - key: DJANGO_DEBUG
       scope: RUN_AND_BUILD_TIME
       value: "False"
@@ -82,13 +88,6 @@ spec:
     - key: SOCIAL_AUTH_PROVIDERS
       scope: RUN_TIME
       value: "google,azuread"
-    - key: USE_SOCIAL_AUTH_WHITELIST
-      scope: RUN_TIME
-      value: "False"
-    - key: SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS
-      scope: RUN_TIME
-    - key: SOCIAL_AUTH_AZUREAD_OAUTH2_WHITELISTED_DOMAINS
-      scope: RUN_TIME
     - key: DJANGO_SECRET_KEY
       scope: RUN_AND_BUILD_TIME
       type: SECRET
@@ -97,18 +96,6 @@ spec:
       scope: RUN_TIME
       type: SECRET
     - key: AWS_SECRET_ACCESS_KEY
-      scope: RUN_TIME
-      type: SECRET
-    - key: SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
-      scope: RUN_TIME
-      type: SECRET
-    - key: SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
-      scope: RUN_TIME
-      type: SECRET
-    - key: SOCIAL_AUTH_AZUREAD_OAUTH2_KEY
-      scope: RUN_TIME
-      type: SECRET
-    - key: SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET
       scope: RUN_TIME
       type: SECRET
     - key: SCORM_CLOUD_APP_ID
@@ -125,4 +112,4 @@ spec:
       registry: andreibosco
       registry_type: DOCKER_HUB
       repository: gen
-      tag: 0.7.4
+      tag: 0.8.15
