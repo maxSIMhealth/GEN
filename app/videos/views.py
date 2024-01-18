@@ -59,7 +59,7 @@ def upload_video(request, pk, section_pk):
                     description=form.cleaned_data.get("description"),
                     author=request.user,
                     course=course,
-                    file=form.files.get("file"),
+                    file_en=form.files.get("file"),
                     section=section,
                     # if instructor, the video gets published
                     published=False,
