@@ -258,6 +258,7 @@ if USE_S3:
     AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION")
     AWS_S3_OBJECT_PARAMETERS = {
         "CacheControl": "max-age=86400",
+        "StorageClass": os.getenv("AWS_STORAGE_CLASS"),
     }
     AWS_LOCATION = os.getenv("GEN_INSTANCE_NAME")
     # Don't protect s3 urls and handle that in the model

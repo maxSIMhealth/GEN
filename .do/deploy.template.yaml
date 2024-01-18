@@ -65,6 +65,9 @@ spec:
       value: s3v4
     - key: AWS_STORAGE_BUCKET_NAME
       scope: RUN_TIME
+    - key: AWS_STORAGE_CLASS
+      scope: RUN_TIME
+      value: "INTELLIGENT_TIERING"
     - key: DJANGO_ADMIN_EMAIL
       scope: RUN_TIME
     - key: SERVER_EMAIL
