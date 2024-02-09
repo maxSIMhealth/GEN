@@ -88,6 +88,10 @@ class VideoFile(SectionItem):
         blank=True,
         null=True,
     )
+    mute_audio = models.BooleanField(
+        default=False,
+        help_text=_("Sets volume to 'mute', but can be manually adjusted by the user.")
+    )
     # discussion = models.ForeignKey(
     #     Discussion, on_delete=models.CASCADE, related_name='video')
     # validators = [FileExtensionValidator(allowed_extensions=("mp4"))]

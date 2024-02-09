@@ -3,7 +3,9 @@
 
 <video crossorigin="anonymous" playsinline
        poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}"
-       controls>
+       controls
+       {% if video.mute_audio %}muted{% endif %}
+>
   {% if video.subtitle %}
     <track default
            kind="captions"

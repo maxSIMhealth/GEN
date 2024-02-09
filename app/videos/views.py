@@ -61,6 +61,7 @@ def upload_video(request, pk, section_pk):
                     course=course,
                     file_en=form.files.get("file"),
                     section=section,
+                    mute_audio=section.mute_audio,
                     # if instructor, the video gets published
                     published=False,
                 )
