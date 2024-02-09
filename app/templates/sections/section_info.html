@@ -28,7 +28,7 @@
         <div class="card-header bg-light fs-5">{% blocktranslate %}{{ course_type }} Details{% endblocktranslate %}</div>
         <table class="table mb-0 course-info">
             <tbody>
-            {% if user|is_instructor:course %}
+            {% if user|is_instructor:item and item.show_code %}
                 <tr>
                     <th scope="row" class="th-small ps-3">{% trans "Code" %}</th>
                     <td class="pe-4">{{course.code}}</td>
