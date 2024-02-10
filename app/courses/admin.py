@@ -217,6 +217,14 @@ class SectionAdmin(SortableAdminMixin, TabbedTranslationAdmin):
                 )
             },
         ),
+        (
+            "Other settings",
+            {
+                "fields": (
+                    "mute_audio",
+                )
+            }
+        )
     )
 
 

@@ -442,6 +442,11 @@ class Section(TimeStampedModel):
         default=False,
         help_text=_("* FOR UPLOAD SECTION ONLY *: updates quiz ownership to uploader"),
     )
+    mute_audio = models.BooleanField(
+        _("mute audio"),
+        default=False,
+        help_text=_("* FOR UPLOAD SECTION: set audio volume to 'mute', but can be manually adjusted by the user.")
+    )
     show_thumbnails = models.BooleanField(
         _("show thumbnails"),
         default=False,
@@ -586,6 +591,10 @@ class Section(TimeStampedModel):
                         "You can not select a quiz reference if 'clone quiz' is not enabled."
                     )
                 )
+            )
+        if self.mute_audio and not self.section_type == "U":
+            errors.append(
+                ValidationError(_("To set 'mute audio', the section type must be Upload"))
             )
 
     def check_content_section_fields(self, errors):

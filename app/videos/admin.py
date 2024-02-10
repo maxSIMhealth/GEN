@@ -92,6 +92,7 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                     "internal_name",
                     "subtitle",
                     "thumbnail",
+                    "mute_audio"
                 )
             },
         ),
