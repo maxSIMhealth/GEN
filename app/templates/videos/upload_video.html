@@ -6,7 +6,8 @@
 {#{% load sri %}#}
 
 {% block content_title %}
-  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> / {% trans "New video" %}
+  <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> /
+  {% trans "New video" %}
 {% endblock content_title %}
 
 {% block content %}
@@ -14,6 +15,18 @@
     <div class="card-header fs-5">{% trans "New Video Information" %}</div>
     <div class="card-body">
       {% crispy form %}
+      <div id="upload-status" class="alert alert-warning" role="alert" style="display:none">
+        <div>
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Uploading. Please
+          wait.
+        </div>
+        <div class="progress mt-1">
+          <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+               aria-valuemax="100"><span id="progress-bar-value">0%</span>
+          </div>
+        </div>
+      </div>
+      <div id="progress-status"></div>
     </div>
   </div>
 {% endblock %}
@@ -24,6 +37,7 @@
 {% block javascript_bottom %}
   <script src="{% static 'js/help-guide-course.js' %}"></script>
   <script src="{% static 'js/upload-video.js' %}"></script>
-{#{% sri_static "js/help-guide-course.js" %}#}
-{#{% sri_static "js/upload-video.js" %}#}
+
+  {#{% sri_static "js/help-guide-course.js" %}#}
+  {#{% sri_static "js/upload-video.js" %}#}
 {% endblock javascript_bottom %}
