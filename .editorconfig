@@ -14,8 +14,11 @@ charset = utf-8
 [*.py]
 max_line_length = 88
 
-# Use 2 spaces for the HTML files
+# Use 2 spaces for the HTML and JS files
 [*.html]
+indent_size = 2
+
+[*.js]
 indent_size = 2
 
 # The JSON files contain newlines inconsistently
