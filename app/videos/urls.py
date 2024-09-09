@@ -9,6 +9,11 @@ urlpatterns = [
         name="upload_video",
     ),
     path(
+        "courses/<int:pk>/section/<int:section_pk>/signed-url/",
+        video_views.SignedURLView.as_view(),
+        name="signed_url",
+    ),
+    path(
         "courses/<int:pk>/section/<int:section_pk>/videos/<int:sectionitem_pk>/publish",
         video_views.publish_video,
         name="publish_video",

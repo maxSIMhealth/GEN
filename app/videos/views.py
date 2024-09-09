@@ -1,11 +1,18 @@
+from django.utils.decorators import method_decorator
+
 from courses.models import Course, Section, User
 from discussions.models import Discussion
 
+import boto3
+import json
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils.translation import gettext_lazy as _
+from django.views import generic
 from GEN.decorators import course_enrollment_check
 from GEN.support_methods import enrollment_test
 
@@ -271,3 +278,27 @@ def video_player(request, pk, section_pk, sectionitem_pk):
         )
     else:
         raise Http404("This video is not published.")
+
+# @method_decorator(login_required, name="dispatch")
+class SignedURLView(generic.View):
+    def post(self, request, *args, **kwargs):
+        session = boto3.session.Session()
+        client = session.client(
+            "s3",
+            region_name=settings.AWS_S3_REGION_NAME,
+            endpoint_url=settings.AWS_S3_ENDPOINT_URL,
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        )
+        user = get_object_or_404(User, pk=request.user.pk)
+
+        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        url = client.generate_presigned_url(
+            ClientMethod="put_object",
+            Params={
+              "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
+              "Key": f"{settings.AWS_LOCATION}/media/private/user_{user.id}/{json.loads(request.body)['fileName']}",
+            },
+            ExpiresIn=300,
+        )
+        return JsonResponse({"url": url})

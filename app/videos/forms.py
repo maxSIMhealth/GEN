@@ -48,10 +48,13 @@ class UploadVideoForm(forms.ModelForm):
                     "file",
                 ),
                 FormActions(
-                    Submit("submit", _("Submit"), css_class="btn btn-primary"),
-                    # Button("cancel", _("Cancel"), css_class="btn btn-secondary"),
+                    Submit(
+                        "submitBtn",
+                        _("Submit"),
+                        css_class="btn btn-primary"
+                    ),
                     Button(
-                        "cancel",
+                        "cancelBtn",
                         _("Cancel"),
                         css_class="btn btn-secondary",
                         # onclick="window.location.href = window.history.go(-1); return false;",
@@ -71,10 +74,12 @@ class UploadVideoForm(forms.ModelForm):
                     "file",
                 ),
                 FormActions(
-                    Submit("submit", _("Submit"), css_class="btn btn-primary"),
-                    # Button("cancel", _("Cancel"), css_class="btn btn-secondary"),
+                    Submit(
+                        "submitBtn",
+                        _("Submit"),
+                        css_class="btn btn-primary"),
                     Button(
-                        "cancel",
+                        "cancelBtn",
                         _("Cancel"),
                         css_class="btn btn-secondary",
                         onclick="window.location.href = window.history.go(-1); return false;",

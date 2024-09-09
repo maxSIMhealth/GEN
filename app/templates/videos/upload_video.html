@@ -41,12 +41,71 @@
     const form = document.getElementById("form-upload-video")
     const progressBar = document.getElementById("progress-bar")
     const progressBarValue = document.getElementById("progress-bar-value")
-    const submitButton = document.getElementById("submit-id-submit")
+    const submitButton = document.getElementById("submit-id-submitbtn")
     const uploadStatus = document.getElementById("upload-status")
     const log = document.getElementById("progress-status")
+    const selectedFile = document.getElementById("id_file")
+    let submitting = false
+    let file = null
+
+    function setIsSubmitting(value) {
+      submitting = value;
+    }
+
+    function setFile(value) {
+      file = value;
+    }
+    
+    const getSignedUrl = async () => {
+      const body = {
+        fileName: file.name,
+        fileType: file.type
+      }
+
+      const response = await fetch("{% url 'signed_url' course.pk section.pk %}", {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': "{{ csrf_token }}"}
+      })
+
+      const {url} = await response.json()
+
+      return url;
+    }
+    
+    const handleSubmit = async event => {
+      setIsSubmitting(true);
+
+      const signedUrl = await getSignedUrl();
+
+      try {
+        uploadFile(signedUrl)
+      } catch (error) {
+        setIsSubmitting(false);
+        console.log(error);
+        alert("Error while uploading file.")
+        throw error;
+      }
+
+      setIsSubmitting(false);
+    }
+    
+    async function submitForm() {
+      form.submit();
+    }
+    
+    // event listeners
+    
+    selectedFile.addEventListener("change", event => {
+      // FIXME: this doesn't work if the user refreshes the page and uses the file that has been selected previously
+      let fileInfo = event.target.files[0];
+      let fileSize = (fileInfo.size * 10 ** -6).toFixed(2);
+      console.log(`Selected file info >> name: ${fileInfo.name}, size: ${fileSize} (mb), type: ${fileInfo.type}`);
+      setFile(fileInfo);
+    })
 
     submitButton.addEventListener("click", event => {
-      uploadFile();
+      handleSubmit(event);
       submitButton.disabled = true;
     })
 
@@ -63,6 +122,12 @@
         progressBar.textContent = 'Upload Complete';
       }
     }
+    
+    function loadHandler(event) {
+      log.innerText = event.target.responseText;
+      progressBar.style.width = "0";
+      progressBarValue.innerText = "0%";
+    }
 
     function errorHandler(event) {
       log.innerText = `Upload failed: ${event.target.responseText}`;
@@ -71,10 +136,15 @@
     function abortHandler(event) {
       log.innerText = `Upload aborted: ${event.target.responseText}`;
     }
+    
+    async function loadendHandler(event) {
+      submitButton.disabled = false;
+      await submitForm();
+    }
 
     // file upload
 
-    function uploadFile() {
+    function uploadFile(signedUrl) {
       let formData = new FormData(form);
       let xhr = new XMLHttpRequest();
 
@@ -82,17 +152,11 @@
       progressBarValue.innerText = "0%";
 
       xhr.upload.addEventListener("progress", progressHandler, false);
+      xhr.addEventListener("load", loadHandler, false);
       xhr.addEventListener("error", errorHandler, false);
       xhr.addEventListener("abort", abortHandler, false);
-      xhr.addEventListener("loadend", function () {
-        if (xhr.status === 200) {
-          window.location.href = '{% url "section" course.pk section.pk %}';
-        } else {
-          alert('Upload failed')
-        }
-      });
-
-      xhr.open("POST", '{% url "upload_video" course.pk section.pk %}', true);
+      xhr.addEventListener("loadend", loadendHandler, false);
+      xhr.open("PUT", signedUrl);
       xhr.send(formData);
     }
   </script>
