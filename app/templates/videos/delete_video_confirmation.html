@@ -12,7 +12,7 @@
         <div class="card mb-3">
             <div class="row g-0">
                 <div class="col-md-3">
-                    <img src="{{ video.thumbnail.url }}" class="me-3" alt="{% trans 'Video thumbnail' %}">
+                    <img src="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}" class="me-3" alt="{% trans 'Video thumbnail' %}">
                 </div>
                 <div class="col-md-9">
                     <div class="card-body ps-0">
