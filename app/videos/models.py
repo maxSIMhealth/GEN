@@ -61,7 +61,7 @@ class VideoFile(SectionItem):
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
     file = models.FileField(
         _("file"),
-        upload_to=user_directory_path,
+        # upload_to=user_directory_path,
         storage=PrivateMediaStorage(),
         # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
         validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
