@@ -20,6 +20,52 @@ from .forms import UploadVideoForm
 from .models import VideoFile
 
 
+decorators=[login_required, course_enrollment_check(enrollment_test)]
+
+@method_decorator(decorators, name='dispatch')
+class UploadVideoView(generic.CreateView):
+    model = VideoFile
+    form_class = UploadVideoForm
+    template_name = 'videos/upload_video.html'
+    success_url = '/'
+
+    # def __init__(self, **kwargs):
+    #     super().__init__(kwargs)
+    #     self.course = None
+    #     self.section = None
+
+    def dispatch(self, request, *args, **kwargs):
+        # Initialize course and section here
+        self.course = get_object_or_404(Course, pk=self.kwargs["pk"])
+        self.section = get_object_or_404(Section, pk=self.kwargs["section_pk"])
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Use instance variables set in dispatch
+        context["course"] = self.course
+        context["section"] = self.section
+        return context
+
+    def get_success_url(self):
+        course_pk = self.object.course.pk
+        section_pk = self.object.section.pk
+
+        messages.success(self.request, _("Upload successful."))
+
+        return reverse("section", args=[course_pk, section_pk])
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        # Use instance variables set in dispatch
+        form.instance.author = user
+        form.instance.course = self.course
+        form.instance.section = self.section
+
+        return super().form_valid(form)
+
+
 @login_required
 @course_enrollment_check(enrollment_test)
 def upload_video(request, pk, section_pk):
@@ -66,7 +112,7 @@ def upload_video(request, pk, section_pk):
                     description=form.cleaned_data.get("description"),
                     author=request.user,
                     course=course,
-                    file_en=form.files.get("file"),
+                    file=form.files.get("file"),
                     section=section,
                     mute_audio=section.mute_audio,
                     # if instructor, the video gets published
