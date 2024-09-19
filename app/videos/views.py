@@ -286,6 +286,11 @@ def delete_video(request, pk, section_pk, sectionitem_pk):
     # check if user is a course instructor
     is_instructor = bool(course in request.user.instructor.all())
 
+    if video.s3_key:
+        s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
+    else:
+        s3_url = None
+
     if video.author == user:
         # instructor should be able to delete published videos
         if is_instructor or (not video.published):
@@ -297,7 +302,7 @@ def delete_video(request, pk, section_pk, sectionitem_pk):
                 return render(
                     request,
                     "videos/delete_video_confirmation.html",
-                    {"course": course, "section": section, "video": video},
+                    {"course": course, "section": section, "video": video, "s3_url": s3_url},
                 )
         else:
             messages.error(

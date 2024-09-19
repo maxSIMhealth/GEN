@@ -2,7 +2,7 @@
 {% load static %}
 
 <video crossorigin="anonymous" playsinline
-       poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% else %} {% static 'img/thumbnail_missing.png' %} {% endif %}"
+       poster="{% if video.thumbnail %} {{ video.thumbnail.url }} {% endif %}"
        controls
        {% if video.mute_audio %}muted{% endif %}
 >
