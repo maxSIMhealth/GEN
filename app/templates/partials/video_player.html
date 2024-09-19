@@ -12,6 +12,11 @@
            srclang="{{ LANGUAGE_CODE }}"
            src="{{ video.subtitle.url }}"/>
   {% endif %}
-  <source src="{{ video.file.url }}" type="video/mp4">
+  {% if video.file %}
+    <source src="{{ video.file.url }}" type="video/mp4">
+  {% endif %}
+  {% if s3_url %}
+    <source src="{{ s3_url }}" type="video/mp4">
+  {% endif %}
   {% trans "Sorry, your browser doesn't support embedded videos." %}
 </video>

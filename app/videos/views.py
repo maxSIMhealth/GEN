@@ -1,5 +1,9 @@
+import uuid
+
 from django.utils.decorators import method_decorator
 
+from GEN.settings import AWS_STORAGE_BUCKET_NAME
+from core.support_methods import create_presigned_url
 from courses.models import Course, Section, User
 from discussions.models import Discussion
 
@@ -62,6 +66,7 @@ class UploadVideoView(generic.CreateView):
         form.instance.author = user
         form.instance.course = self.course
         form.instance.section = self.section
+        form.instance.file = None
 
         return super().form_valid(form)
 
@@ -316,11 +321,21 @@ def video_player(request, pk, section_pk, sectionitem_pk):
     video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
+    if video.s3_key:
+        s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
+    else:
+        s3_url = None
+
     if video.published or user == video.author:
         return render(
             request,
             "videos/video_player.html",
-            {"course": course, "section": section, "video": video},
+            {
+                "course": course,
+                "section": section,
+                "video": video,
+                "s3_url": s3_url
+            },
         )
     else:
         raise Http404("This video is not published.")
@@ -332,18 +347,24 @@ class SignedURLView(generic.View):
         client = session.client(
             "s3",
             region_name=settings.AWS_S3_REGION_NAME,
-            endpoint_url=settings.AWS_S3_ENDPOINT_URL,
+            # endpoint_url=settings.AWS_S3_ENDPOINT_URL,
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
         )
         user = get_object_or_404(User, pk=request.user.pk)
 
-        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        # Randomize file name
+        original_filename = json.loads(request.body)['fileName']
+        ext = original_filename.split(".")[-1]
+        random_filename = str(uuid.uuid4().hex)
+        new_filename = "%s.%s" % (random_filename, ext)
+
+        # File will be uploaded to MEDIA_ROOT/user_<id>/<filename>
         url = client.generate_presigned_url(
             ClientMethod="put_object",
             Params={
               "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
-              "Key": f"{settings.AWS_LOCATION}/media/private/user_{user.id}/{json.loads(request.body)['fileName']}",
+              "Key": f"{settings.AWS_LOCATION}/media/private/user_{user.id}/{new_filename}",
             },
             ExpiresIn=300,
         )

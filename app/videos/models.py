@@ -65,7 +65,11 @@ class VideoFile(SectionItem):
         storage=PrivateMediaStorage(),
         # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
         validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
+        blank=True,
+        null=True,
     )
+    original_file_name = models.CharField(max_length=255, blank=True, null=True)
+    s3_key = models.CharField(max_length=255, unique=True, blank=True, null=True)
     subtitle = models.FileField(
         _("subtitle"),
         upload_to=user_directory_path,

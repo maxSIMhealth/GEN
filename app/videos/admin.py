@@ -41,6 +41,8 @@ class VideoFileAdmin(TabbedTranslationAdmin):
         "course",
         "section",
         "file",
+        "s3_key",
+        "original_file_name",
         "thumbnail",
     )
     readonly_fields = ["created", "modified"]
@@ -90,6 +92,8 @@ class VideoFileAdmin(TabbedTranslationAdmin):
                 "fields": (
                     "file",
                     "internal_name",
+                    "s3_key",
+                    "original_file_name",
                     "subtitle",
                     "thumbnail",
                     "mute_audio"
