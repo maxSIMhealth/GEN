@@ -163,6 +163,9 @@
         // Remove the leading slash to get the S3 key
         s3KeyInput.value = tempUrlPath.substring(1);
         
+        // Reset file field
+        selectedFile.value = null
+        
         await submitForm();  
       } else {
         alert(messageUploadFailed)

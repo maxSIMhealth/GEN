@@ -37,6 +37,7 @@ class UploadVideoForm(forms.ModelForm):
         super(UploadVideoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_id = "form-upload-video"
+        self.fields["file"].required = False
         if blind_data:
             self.helper.layout = Layout(
                 # FIXME: find a new to get first fieldset value (the legend) to be
