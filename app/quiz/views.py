@@ -1,8 +1,9 @@
 import logging
 import random
 
+from GEN.settings import AWS_STORAGE_BUCKET_NAME
 from core.mixins import BlockPeersAccessMixin
-from core.support_methods import check_is_instructor
+from core.support_methods import check_is_instructor, create_presigned_url
 from courses.models import Course, Section
 from courses.support_methods import mark_section_completed, review_course_status
 from django_tables2 import SingleTableView
@@ -298,6 +299,11 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
         else:
             pass
 
+        if quiz.video.s3_key:
+            s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, quiz.video.s3_key)
+        else:
+            s3_url = None
+
         # check if quiz has a requirement and if it should be enabled
         (quiz_enabled, _, attempts_left, _) = quiz_enable_check(request.user, quiz)
 
@@ -376,6 +382,7 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
                             "section": section,
                             "quiz": quiz,
                             "questions": questions,
+                            "s3_url": s3_url
                         },
                     )
         else:
