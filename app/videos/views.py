@@ -1,7 +1,5 @@
 import uuid
 
-from django.utils.decorators import method_decorator
-
 from GEN.settings import AWS_STORAGE_BUCKET_NAME
 from core.support_methods import create_presigned_url
 from courses.models import Course, Section, User
@@ -24,51 +22,86 @@ from .forms import UploadVideoForm
 from .models import VideoFile
 
 
-decorators=[login_required, course_enrollment_check(enrollment_test)]
-
-@method_decorator(decorators, name='dispatch')
-class UploadVideoView(generic.CreateView):
-    model = VideoFile
-    form_class = UploadVideoForm
-    template_name = 'videos/upload_video.html'
-    success_url = '/'
-
-    # def __init__(self, **kwargs):
-    #     super().__init__(kwargs)
-    #     self.course = None
-    #     self.section = None
-
-    def dispatch(self, request, *args, **kwargs):
-        # Initialize course and section here
-        self.course = get_object_or_404(Course, pk=self.kwargs["pk"])
-        self.section = get_object_or_404(Section, pk=self.kwargs["section_pk"])
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Use instance variables set in dispatch
-        context["course"] = self.course
-        context["section"] = self.section
-        return context
-
-    def get_success_url(self):
-        course_pk = self.object.course.pk
-        section_pk = self.object.section.pk
-
-        messages.success(self.request, _("Upload successful."))
-
-        return reverse("section", args=[course_pk, section_pk])
-
-    def form_valid(self, form):
-        user = self.request.user
-
-        # Use instance variables set in dispatch
-        form.instance.author = user
-        form.instance.course = self.course
-        form.instance.section = self.section
-        form.instance.file = None
-
-        return super().form_valid(form)
+# WIP: refactoring `upload_video` method into a class-based view `UploadVideoView`.
+# The current issue is blocking access if submission is not allowed or if the user is not a student.
+# decorators=[login_required, course_enrollment_check(enrollment_test), block_instructor_access]
+#
+# @method_decorator(decorators, name='dispatch')
+# class UploadVideoView(generic.CreateView):
+#     model = VideoFile
+#     form_class = UploadVideoForm
+#     template_name = 'videos/upload_video.html'
+#     success_url = '/'
+#
+#     # def __init__(self, **kwargs):
+#     #     super().__init__(kwargs)
+#     #     self.course = None
+#     #     self.section = None
+#
+#     def check_if_submission_is_allowed(self, request, *args, **kwargs):
+#         self.allow_submission = False
+#         # check if section type is upload
+#         if self.section.section_type == "U":
+#             section_items = self.section.section_items.filter(author=request.user)
+#             if not section_items:
+#                 self.allow_submission = True
+#         elif self.section.section_type == "V":
+#             if self.is_instructor:
+#                 self.allow_submission = True
+#         else:
+#             messages.error(
+#                 request,
+#                 _("This section does not support uploads."),
+#             )
+#             return HttpResponseRedirect(reverse("section", args=[self.course.pk, self.section.pk]))
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         # Initialize course and section here
+#         self.course = get_object_or_404(Course, pk=self.kwargs["pk"])
+#         self.section = get_object_or_404(Section, pk=self.kwargs["section_pk"])
+#         # Check if user is a course instructor
+#         self.is_instructor = bool(self.course in request.user.instructor.all())
+#         # self.allow_submission = False
+#
+#         return super().dispatch(request, *args, **kwargs)
+#
+#     def get(self, request, *args, **kwargs):
+#         # self.block_instructor_access(request)
+#         self.check_if_submission_is_allowed(request, *args, **kwargs)
+#
+#         self.object = None
+#         return super().get(request, *args, **kwargs)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # Use instance variables set in dispatch
+#         context["course"] = self.course
+#         context["section"] = self.section
+#
+#         return context
+#
+#     def get_success_url(self):
+#         course_pk = self.object.course.pk
+#         section_pk = self.object.section.pk
+#
+#         messages.success(self.request, _("Upload successful."))
+#
+#         return reverse("section", args=[course_pk, section_pk])
+#
+#     def form_valid(self, form):
+#         user = self.request.user
+#
+#         # Use instance variables set in dispatch
+#         form.instance.author = user
+#         form.instance.course = self.course
+#         form.instance.section = self.section
+#         if self.section.mute_audio:
+#             form.instance.mute_audio = True
+#         else:
+#             form.instance.mute_audio = False
+#         form.instance.file = None
+#
+#         return super().form_valid(form)
 
 
 @login_required
@@ -112,7 +145,7 @@ def upload_video(request, pk, section_pk):
             # if "Cancel" in request.POST["submit"]:
             #     return redirect("section", pk=course.pk, section_pk=section.pk)
             if form.is_valid():
-                video = VideoFile.objects.populate(True).create(
+                VideoFile.objects.populate(True).create(
                     name=form.cleaned_data.get("name"),
                     description=form.cleaned_data.get("description"),
                     author=request.user,
@@ -120,10 +153,11 @@ def upload_video(request, pk, section_pk):
                     file=form.files.get("file"),
                     section=section,
                     mute_audio=section.mute_audio,
+                    s3_key=form.cleaned_data.get("s3_key"),
+                    original_file_name=form.cleaned_data.get("original_file_name"),
                     # if instructor, the video gets published
                     published=False,
                 )
-                video.save()
                 messages.success(request, _("Upload successful."))
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:

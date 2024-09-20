@@ -48,8 +48,8 @@ class UploadVideoForm(forms.ModelForm):
                     Field("name", type="hidden"),
                     Field("description", type="hidden"),
                     "file",
-                    Field("s3_key"),
-                    Field("original_file_name"),
+                    Field("s3_key", type="hidden"),
+                    Field("original_file_name", type="hidden"),
                 ),
                 FormActions(
                     Submit(
@@ -76,8 +76,8 @@ class UploadVideoForm(forms.ModelForm):
                     "name",
                     "description",
                     "file",
-                    Field("s3_key"),
-                    Field("original_file_name"),
+                    Field("s3_key", type="hidden"),
+                    Field("original_file_name", type="hidden"),
                 ),
                 FormActions(
                     Submit(

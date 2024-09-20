@@ -105,3 +105,43 @@ def check_requirement():
 #         else:
 #             return f(request, *args, **kwargs)
 #     return test_user_for_subject
+
+# WIP: refactoring `upload_video` method into a class-based view `UploadVideoView`.
+# Decorators `block_instructor_access` and `check_if_submission_is_allowd` are related to it.
+#
+# def block_instructor_access(view_func):
+#     def wrapper(request, *args, **kwargs):
+#         user = request.user
+#         course = Course.objects.get(pk=kwargs["pk"])
+#         section = Section.objects.get(pk=kwargs["section_pk"])
+#         is_instructor = bool(course in user.instructor.all())
+#         if is_instructor:
+#             messages.error(
+#                 request,
+#                 "Only learners are allowed to upload in this section.",
+#             )
+#             return HttpResponseRedirect(
+#                 reverse("section", args=[course.pk, section.pk]))
+#         else:
+#             return view_func(request, *args, **kwargs)
+#     return wrapper
+#
+# def check_if_submission_is_allowed(view_func):
+#     def wrapper(request, *args, **kwargs):
+#         request.allow_submission = False
+#         # check if section type is upload
+#         if request.section.section_type == "U":
+#             section_items = request.section.section_items.filter(author=request.user)
+#             if not section_items:
+#                 request.allow_submission = True
+#         elif request.section.section_type == "V":
+#             if request.is_instructor:
+#                 request.allow_submission = True
+#         else:
+#             messages.error(
+#                 request,
+#                 "This section does not support uploads.",
+#             )
+#             return HttpResponseRedirect(
+#                 reverse("section", args=[request.course.pk, request.section.pk]))
+#     return wrapper
