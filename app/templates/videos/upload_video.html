@@ -88,20 +88,27 @@
       submitButton.disabled = true;
       setIsSubmitting(true);
       getSelectedFile();
-
-      signedUrl = await getSignedUrl();
-      originalFilenameInput.value = selectedFile.files[0].name
-
-      try {
-        uploadFile(signedUrl)
-      } catch (error) {
+      
+      // check if field has valid data
+      if (file == null) {
         setIsSubmitting(false);
-        console.log(error);
-        alert(errorUploadingFile)
-        throw error;
-      }
+        submitButton.disabled = false;
+        alert("You must select a video file to submit.")
+      } else {
+        signedUrl = await getSignedUrl();
+        originalFilenameInput.value = selectedFile.files[0].name
 
-      setIsSubmitting(false);
+        try {
+          uploadFile(signedUrl)
+        } catch (error) {
+          setIsSubmitting(false);
+          console.log(error);
+          alert(errorUploadingFile)
+          throw error;
+        }
+
+        setIsSubmitting(false);
+      }
     }
 
     async function submitForm() {
@@ -115,11 +122,14 @@
       setFile(fileInfo);
     }
 
-    // event listener
+    // event listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      selectedFile.setAttribute("required","true"); 
+    })
+    
     form.addEventListener("submit", handleSubmit);
 
     // form handlers
-
     function progressHandler(event) {
       uploadStatus.style.display = "block";
 
