@@ -3,7 +3,6 @@
 {% load static %}
 {% load i18n %}
 {% load crispy_forms_tags %}
-{#{% load sri %}#}
 
 {% block content_title %}
   <a href="{% url 'section' course.pk section.pk %}" class="text-underline-dashed">{{ section.name }}</a> /
@@ -15,6 +14,7 @@
     <div class="card-header fs-5">{% trans "New Video Information" %}</div>
     <div class="card-body">
       {% crispy form %}
+      
       <div id="upload-status" class="alert alert-warning" role="alert" style="display:none">
         <div>
           <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Uploading. Please
@@ -36,7 +36,7 @@
 
 {% block javascript_bottom %}
   <script src="{% static 'js/help-guide-course.js' %}"></script>
-  {#<script src="{% static 'js/upload-video.js' %}"></script>#}
+  
   <script>
     const form = document.getElementById("form-upload-video")
     const progressBar = document.getElementById("progress-bar")
@@ -45,8 +45,12 @@
     const uploadStatus = document.getElementById("upload-status")
     const log = document.getElementById("progress-status")
     const selectedFile = document.getElementById("id_file")
+    const s3KeyInput = document.getElementById("id_s3_key");
+    const originalFilenameInput = document.getElementById("id_original_file_name")
     let submitting = false
     let file = null
+    let signedUrl = null
+    let xhr = null
     
     // translatable messages
     const errorUploadingFile = gettext("Error while uploading file.");
@@ -84,19 +88,27 @@
       submitButton.disabled = true;
       setIsSubmitting(true);
       getSelectedFile();
-
-      const signedUrl = await getSignedUrl();
-
-      try {
-        uploadFile(signedUrl)
-      } catch (error) {
+      
+      // check if field has valid data
+      if (file == null) {
         setIsSubmitting(false);
-        console.log(error);
-        alert(errorUploadingFile)
-        throw error;
-      }
+        submitButton.disabled = false;
+        alert("You must select a video file to submit.")
+      } else {
+        signedUrl = await getSignedUrl();
+        originalFilenameInput.value = selectedFile.files[0].name
 
-      setIsSubmitting(false);
+        try {
+          uploadFile(signedUrl)
+        } catch (error) {
+          setIsSubmitting(false);
+          console.log(error);
+          alert(errorUploadingFile)
+          throw error;
+        }
+
+        setIsSubmitting(false);
+      }
     }
 
     async function submitForm() {
@@ -110,11 +122,14 @@
       setFile(fileInfo);
     }
 
-    // event listener
+    // event listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      selectedFile.setAttribute("required","true"); 
+    })
+    
     form.addEventListener("submit", handleSubmit);
 
     // form handlers
-
     function progressHandler(event) {
       uploadStatus.style.display = "block";
 
@@ -145,16 +160,33 @@
     }
 
     async function loadendHandler(event) {
-      submitButton.disabled = false;
-      progressBar.style.width = "100%";
-      await submitForm();
+      if (xhr.status === 200) {
+        submitButton.disabled = false;
+        progressBar.style.width = "100%";
+        
+        // Create a new URL object
+        const tempUrl = new URL(signedUrl);
+        
+        // Get the pathname from the URL object
+        const tempUrlPath = tempUrl.pathname;
+        
+        // Remove the leading slash to get the S3 key
+        s3KeyInput.value = tempUrlPath.substring(1);
+        
+        // Reset file field
+        selectedFile.value = null
+        
+        await submitForm();  
+      } else {
+        alert(messageUploadFailed)
+      }
     }
 
     // file upload
-
     function uploadFile(signedUrl) {
-      let formData = new FormData(form);
-      let xhr = new XMLHttpRequest();
+      let formData = new FormData();
+      formData.append("file", file);
+      xhr = new XMLHttpRequest();
 
       progressBar.style.width = '0';
       progressBarValue.innerText = "0%";
@@ -165,10 +197,9 @@
       xhr.addEventListener("abort", abortHandler, false);
       xhr.addEventListener("loadend", loadendHandler, false);
       xhr.open("PUT", signedUrl);
-      xhr.send(formData);
+      xhr.setRequestHeader("Content-Type", file.type);
+      xhr.send(formData.get("file"));
     }
   </script>
 
-  {#{% sri_static "js/help-guide-course.js" %}#}
-  {#{% sri_static "js/upload-video.js" %}#}
 {% endblock javascript_bottom %}

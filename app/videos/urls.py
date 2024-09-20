@@ -6,6 +6,7 @@ urlpatterns = [
     path(
         "courses/<int:pk>/section/<int:section_pk>/upload/",
         video_views.upload_video,
+        # video_views.UploadVideoView.as_view(),
         name="upload_video",
     ),
     path(

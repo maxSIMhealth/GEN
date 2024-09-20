@@ -79,7 +79,8 @@
                                             <a href="{% url 'publish_video' course.pk section.pk item.videofile.pk %}"
                                                class="btn btn-primary" data-toggle="tooltip" data-placement="auto"
                                                data-html="true"
-                                               title="{% trans 'WARNING: after publishing you will not be able to delete this submission.' %}">{% trans "Publish submission" %}</a>                                        <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}"
+                                               title="{% trans 'WARNING: after publishing you will not be able to delete this submission.' %}">{% trans "Publish submission" %}</a>
+                                          <a href="{% url 'delete_video' course.pk section.pk item.videofile.pk %}"
                                                class="btn btn-danger">{% trans "Delete" %}</a>
                                         {% else %}
                                             <div class="alert alert-success" role="alert">

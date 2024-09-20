@@ -23,10 +23,11 @@ class UploadVideoForm(forms.ModelForm):
         widget=forms.FileInput(attrs={"accept": "video/mp4,video/quicktime"}),
         help_text=_("Select a video to upload. Accepted video formats are: mp4, mov."),
     )
+    # s3_key = forms.CharField()
 
     class Meta:
         model = VideoFile
-        fields = ["name", "description", "file"]
+        fields = ["name", "description", "s3_key", "original_file_name"]
 
     # class Media:
     #     js = ("js/upload-video.js",)
@@ -36,6 +37,7 @@ class UploadVideoForm(forms.ModelForm):
         super(UploadVideoForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_id = "form-upload-video"
+        self.fields["file"].required = False
         if blind_data:
             self.helper.layout = Layout(
                 # FIXME: find a new to get first fieldset value (the legend) to be
@@ -46,6 +48,8 @@ class UploadVideoForm(forms.ModelForm):
                     Field("name", type="hidden"),
                     Field("description", type="hidden"),
                     "file",
+                    Field("s3_key", type="hidden"),
+                    Field("original_file_name", type="hidden"),
                 ),
                 FormActions(
                     Submit(
@@ -72,6 +76,8 @@ class UploadVideoForm(forms.ModelForm):
                     "name",
                     "description",
                     "file",
+                    Field("s3_key", type="hidden"),
+                    Field("original_file_name", type="hidden"),
                 ),
                 FormActions(
                     Submit(

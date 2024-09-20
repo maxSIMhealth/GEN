@@ -1,5 +1,11 @@
+import logging
 import uuid
 
+import boto3
+from botocore.exceptions import ClientError
+from botocore.client import Config
+
+from GEN import settings
 from courses.models import ADMINS, EDITORS, INSTRUCTORS, LEARNERS, PUBLIC
 
 from django.db.models import Q
@@ -97,3 +103,68 @@ def user_directory_path(instance, filename, randomize_filename: bool = True):
 
 def user_directory_path_not_random(instance, filename):
     return user_directory_path(instance, filename, randomize_filename=False)
+
+
+# def generate_presigned_url(file_path):
+#     # Get the storage backend
+#     storage = PrivateMediaStorage
+#
+#     # Generate the presigned URL using the url method of the storage backend
+#     url = storage.url(file_path)
+#     # url = storage.url(name=file_path)
+#
+#     return url
+
+def create_presigned_url(bucket_name, object_name, expiration=3600):
+    """Generate a presigned URL to share an S3 object
+
+    :param bucket_name: string
+    :param object_name: string
+    :param expiration: Time in seconds for the presigned URL to remain valid
+    :return: Presigned URL as string. If error, returns None.
+    """
+
+    # Initialize a session using Amazon S3
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        config=Config(
+            region_name=settings.AWS_S3_REGION_NAME,
+            signature_version=settings.AWS_S3_SIGNATURE_VERSION
+        ),
+    )
+
+    # Generate a presigned URL for the S3 object
+    try:
+        response = s3_client.generate_presigned_url('get_object',
+                                                    Params={'Bucket': bucket_name,
+                                                            'Key': object_name},
+                                                    ExpiresIn=expiration)
+    except ClientError as e:
+        logging.error(e)
+        return None
+
+    # The response contains the presigned URL
+    return response
+
+
+def delete_file_from_s3(bucket_name, file_key):
+    # Initialize a session using Amazon S3
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        config=Config(
+            region_name=settings.AWS_S3_REGION_NAME,
+            signature_version=settings.AWS_S3_SIGNATURE_VERSION
+        ),
+    )
+
+    try:
+        # Use the delete_object method to delete the file
+        response = s3_client.delete_object(Bucket=bucket_name, Key=file_key)
+        print(f"File {file_key} deleted successfully from bucket {bucket_name}.")
+        return response
+    except Exception as e:
+        print(f"Error deleting file {file_key}: {e}")

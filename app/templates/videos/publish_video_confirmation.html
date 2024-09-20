@@ -10,16 +10,12 @@
         <div class="card-title fs-3">{% trans "Confirmation" %}</div>
         <p class="card-text">{% trans "Are you sure that you want to publish this video? You WILL NOT be able to delete it after publishing." %}</p>
         <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-3">
-                    <img src="{{ video.thumbnail.url }}" class="me-3" alt="{% trans 'Video thumbnail' %}">
+            <div class="card-body mt-0 pt-0">
+              <div class="card-text text-center ratio ratio-16x9" id="video-player">
+                    {% include "partials/video_player.html" with video=video %}
                 </div>
-                <div class="col-md-9">
-                    <div class="card-body ps-0">
-                        <div class="card-title fs-5">{{ video.name }}</div>
+              <div class="card-title fs-5">{{ video.name }}</div>
                         <p class="card-text">{{ video.description|linebreaksbr }}</p>
-                    </div>
-                </div>
             </div>
         </div>
         <form method="post" novalidate>

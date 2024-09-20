@@ -1,5 +1,7 @@
-from django.utils.decorators import method_decorator
+import uuid
 
+from GEN.settings import AWS_STORAGE_BUCKET_NAME
+from core.support_methods import create_presigned_url
 from courses.models import Course, Section, User
 from discussions.models import Discussion
 
@@ -18,6 +20,88 @@ from GEN.support_methods import enrollment_test
 
 from .forms import UploadVideoForm
 from .models import VideoFile
+
+
+# WIP: refactoring `upload_video` method into a class-based view `UploadVideoView`.
+# The current issue is blocking access if submission is not allowed or if the user is not a student.
+# decorators=[login_required, course_enrollment_check(enrollment_test), block_instructor_access]
+#
+# @method_decorator(decorators, name='dispatch')
+# class UploadVideoView(generic.CreateView):
+#     model = VideoFile
+#     form_class = UploadVideoForm
+#     template_name = 'videos/upload_video.html'
+#     success_url = '/'
+#
+#     # def __init__(self, **kwargs):
+#     #     super().__init__(kwargs)
+#     #     self.course = None
+#     #     self.section = None
+#
+#     def check_if_submission_is_allowed(self, request, *args, **kwargs):
+#         self.allow_submission = False
+#         # check if section type is upload
+#         if self.section.section_type == "U":
+#             section_items = self.section.section_items.filter(author=request.user)
+#             if not section_items:
+#                 self.allow_submission = True
+#         elif self.section.section_type == "V":
+#             if self.is_instructor:
+#                 self.allow_submission = True
+#         else:
+#             messages.error(
+#                 request,
+#                 _("This section does not support uploads."),
+#             )
+#             return HttpResponseRedirect(reverse("section", args=[self.course.pk, self.section.pk]))
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         # Initialize course and section here
+#         self.course = get_object_or_404(Course, pk=self.kwargs["pk"])
+#         self.section = get_object_or_404(Section, pk=self.kwargs["section_pk"])
+#         # Check if user is a course instructor
+#         self.is_instructor = bool(self.course in request.user.instructor.all())
+#         # self.allow_submission = False
+#
+#         return super().dispatch(request, *args, **kwargs)
+#
+#     def get(self, request, *args, **kwargs):
+#         # self.block_instructor_access(request)
+#         self.check_if_submission_is_allowed(request, *args, **kwargs)
+#
+#         self.object = None
+#         return super().get(request, *args, **kwargs)
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # Use instance variables set in dispatch
+#         context["course"] = self.course
+#         context["section"] = self.section
+#
+#         return context
+#
+#     def get_success_url(self):
+#         course_pk = self.object.course.pk
+#         section_pk = self.object.section.pk
+#
+#         messages.success(self.request, _("Upload successful."))
+#
+#         return reverse("section", args=[course_pk, section_pk])
+#
+#     def form_valid(self, form):
+#         user = self.request.user
+#
+#         # Use instance variables set in dispatch
+#         form.instance.author = user
+#         form.instance.course = self.course
+#         form.instance.section = self.section
+#         if self.section.mute_audio:
+#             form.instance.mute_audio = True
+#         else:
+#             form.instance.mute_audio = False
+#         form.instance.file = None
+#
+#         return super().form_valid(form)
 
 
 @login_required
@@ -61,18 +145,19 @@ def upload_video(request, pk, section_pk):
             # if "Cancel" in request.POST["submit"]:
             #     return redirect("section", pk=course.pk, section_pk=section.pk)
             if form.is_valid():
-                video = VideoFile.objects.populate(True).create(
+                VideoFile.objects.populate(True).create(
                     name=form.cleaned_data.get("name"),
                     description=form.cleaned_data.get("description"),
                     author=request.user,
                     course=course,
-                    file_en=form.files.get("file"),
+                    file=form.files.get("file"),
                     section=section,
                     mute_audio=section.mute_audio,
+                    s3_key=form.cleaned_data.get("s3_key"),
+                    original_file_name=form.cleaned_data.get("original_file_name"),
                     # if instructor, the video gets published
                     published=False,
                 )
-                video.save()
                 messages.success(request, _("Upload successful."))
                 return redirect("section", pk=course.pk, section_pk=section.pk)
         else:
@@ -235,6 +320,11 @@ def delete_video(request, pk, section_pk, sectionitem_pk):
     # check if user is a course instructor
     is_instructor = bool(course in request.user.instructor.all())
 
+    if video.s3_key:
+        s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
+    else:
+        s3_url = None
+
     if video.author == user:
         # instructor should be able to delete published videos
         if is_instructor or (not video.published):
@@ -246,7 +336,7 @@ def delete_video(request, pk, section_pk, sectionitem_pk):
                 return render(
                     request,
                     "videos/delete_video_confirmation.html",
-                    {"course": course, "section": section, "video": video},
+                    {"course": course, "section": section, "video": video, "s3_url": s3_url},
                 )
         else:
             messages.error(
@@ -270,11 +360,21 @@ def video_player(request, pk, section_pk, sectionitem_pk):
     video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
 
+    if video.s3_key:
+        s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
+    else:
+        s3_url = None
+
     if video.published or user == video.author:
         return render(
             request,
             "videos/video_player.html",
-            {"course": course, "section": section, "video": video},
+            {
+                "course": course,
+                "section": section,
+                "video": video,
+                "s3_url": s3_url
+            },
         )
     else:
         raise Http404("This video is not published.")
@@ -286,18 +386,24 @@ class SignedURLView(generic.View):
         client = session.client(
             "s3",
             region_name=settings.AWS_S3_REGION_NAME,
-            endpoint_url=settings.AWS_S3_ENDPOINT_URL,
+            # endpoint_url=settings.AWS_S3_ENDPOINT_URL,
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
         )
         user = get_object_or_404(User, pk=request.user.pk)
 
-        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+        # Randomize file name
+        original_filename = json.loads(request.body)['fileName']
+        ext = original_filename.split(".")[-1]
+        random_filename = str(uuid.uuid4().hex)
+        new_filename = "%s.%s" % (random_filename, ext)
+
+        # File will be uploaded to MEDIA_ROOT/user_<id>/<filename>
         url = client.generate_presigned_url(
             ClientMethod="put_object",
             Params={
               "Bucket": settings.AWS_STORAGE_BUCKET_NAME,
-              "Key": f"{settings.AWS_LOCATION}/media/private/user_{user.id}/{json.loads(request.body)['fileName']}",
+              "Key": f"{settings.AWS_LOCATION}/media/private/user_{user.id}/{new_filename}",
             },
             ExpiresIn=300,
         )

@@ -3,7 +3,8 @@ import logging
 import os
 import tempfile
 
-from core.support_methods import user_directory_path
+from GEN.settings import AWS_STORAGE_BUCKET_NAME
+from core.support_methods import user_directory_path, delete_file_from_s3
 from courses.models import Course, SectionItem
 from PIL import Image
 from upload_validator import FileTypeValidator
@@ -61,11 +62,15 @@ class VideoFile(SectionItem):
     uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
     file = models.FileField(
         _("file"),
-        upload_to=user_directory_path,
+        # upload_to=user_directory_path,
         storage=PrivateMediaStorage(),
         # validators=[FileExtensionValidator(allowed_extensions=("mp4", "m4v", "mov"))],
         validators=[FileTypeValidator(allowed_types=["video/mp4", "video/quicktime"])],
+        blank=True,
+        null=True,
     )
+    original_file_name = models.CharField(max_length=255, blank=True, null=True)
+    s3_key = models.CharField(max_length=255, unique=True, blank=True, null=True)
     subtitle = models.FileField(
         _("subtitle"),
         upload_to=user_directory_path,
@@ -157,12 +162,23 @@ class VideoFile(SectionItem):
             ffmpeg_tempfile.close()
 
     def delete(self, *args, **kwargs):
-        self.file.delete(save=False)  # Delete the actual video file
+        # Delete the actual video file
+        self.file.delete(save=False)
+
+        # Delete file from S3 storage (if uploaded without using django-storages)
+        if self.s3_key:
+            delete_file_from_s3(AWS_STORAGE_BUCKET_NAME, self.s3_key)
+
+        # Delete thumbnail file
         if self.thumbnail:
-            self.thumbnail.delete(save=False)  # Delete the thumbnail file
+            self.thumbnail.delete(save=False)
+
+        # Delete subtitle file
         if self.subtitle:
-            self.subtitle.delete(save=False)  # Delete the subtitle file
-        super().delete(*args, **kwargs)  # Call the "real" delete() method.
+            self.subtitle.delete(save=False)
+
+        # Call the "real" delete() method.
+        super().delete(*args, **kwargs)
 
     def duplicate(self, **kwargs):
         # return duplicate_item(self, callback=duplicate_name)
