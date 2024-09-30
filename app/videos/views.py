@@ -316,14 +316,13 @@ def delete_video(request, pk, section_pk, sectionitem_pk):
     section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
+    s3_url = None
 
     # check if user is a course instructor
     is_instructor = bool(course in request.user.instructor.all())
 
     if video.s3_key:
         s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
-    else:
-        s3_url = None
 
     if video.author == user:
         # instructor should be able to delete published videos
@@ -359,11 +358,10 @@ def video_player(request, pk, section_pk, sectionitem_pk):
     section = get_object_or_404(Section, pk=section_pk)
     video = get_object_or_404(VideoFile, pk=sectionitem_pk)
     user = get_object_or_404(User, pk=request.user.pk)
+    s3_url = None
 
     if video.s3_key:
         s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, video.s3_key)
-    else:
-        s3_url = None
 
     if video.published or user == video.author:
         return render(

@@ -291,6 +291,7 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
     course = get_object_or_404(Course, pk=pk)
     section = get_object_or_404(Section, pk=section_pk)
     quiz = get_object_or_404(Quiz, pk=sectionitem_pk)
+    s3_url = None
 
     if quiz.published:
         # check if the quiz has a related video and if it has been published
@@ -299,10 +300,8 @@ def quiz_page(request, pk, section_pk, sectionitem_pk):
         else:
             pass
 
-        if quiz.video.s3_key:
-            s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, quiz.video.s3_key)
-        else:
-            s3_url = None
+        if quiz.video and quiz.video.s3_key:
+                s3_url = create_presigned_url(AWS_STORAGE_BUCKET_NAME, quiz.video.s3_key)
 
         # check if quiz has a requirement and if it should be enabled
         (quiz_enabled, _, attempts_left, _) = quiz_enable_check(request.user, quiz)
