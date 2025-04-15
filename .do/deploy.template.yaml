@@ -22,7 +22,7 @@ spec:
       value: "1000"
     - key: GUNICORN_WORKERS
       scope: RUN_AND_BUILD_TIME
-      value: "2"
+      value: "5"
     - key: DJANGO_DEBUG
       scope: RUN_AND_BUILD_TIME
       value: "False"
@@ -66,7 +66,7 @@ spec:
     - key: AWS_STORAGE_BUCKET_NAME
       scope: RUN_TIME
     - key: AWS_STORAGE_CLASS
-      scope: RUN_TIME
+      scope: RUN_AND_BUILD_TIME
       value: "INTELLIGENT_TIERING"
     - key: DJANGO_ADMIN_EMAIL
       scope: RUN_TIME
@@ -78,28 +78,28 @@ spec:
       scope: RUN_TIME
     - key: USE_EMAIL_DOMAINS_WHITELIST
       scope: RUN_TIME
-      value: "False"
+      value: "True"
     - key: VALID_EMAIL_DOMAINS
       scope: RUN_TIME
-      value: "ontariotechu"
+      value: ontariotechu.ca,ontariotechu.net
     - key: USE_SOCIAL_AUTH
       scope: RUN_TIME
-      value: "True"
+      value: "False"
     - key: USE_SOCIAL_AUTH_ONLY
       scope: RUN_TIME
       value: "False"
     - key: SOCIAL_AUTH_PROVIDERS
       scope: RUN_TIME
-      value: "google,azuread"
+      value: google,azuread
     - key: DJANGO_SECRET_KEY
       scope: RUN_AND_BUILD_TIME
       type: SECRET
       value: "placeholder-django-secret"
     - key: AWS_ACCESS_KEY_ID
-      scope: RUN_TIME
+      scope: RUN_AND_BUILD_TIME
       type: SECRET
     - key: AWS_SECRET_ACCESS_KEY
-      scope: RUN_TIME
+      scope: RUN_AND_BUILD_TIME
       type: SECRET
     - key: SCORM_CLOUD_APP_ID
       scope: RUN_TIME
@@ -108,11 +108,11 @@ spec:
       scope: RUN_TIME
       type: SECRET
     - key: SENDGRID_API_KEY
-      scope: RUN_TIME
+      scope: RUN_AND_BUILD_TIME
       type: SECRET
     http_port: 8000
     image:
       registry: andreibosco
       registry_type: DOCKER_HUB
       repository: gen
-      tag: 0.8.15
+      tag: 0.8.18.1
